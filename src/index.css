@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Sans TC', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-clip-text text-transparent;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+  }
+
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl;
+  }
+
+  .btn-primary {
+    @apply px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-full
+           hover:from-primary-400 hover:to-accent-400 transition-all duration-300
+           shadow-lg hover:shadow-primary-500/50 hover:scale-105;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold text-center mb-4;
+  }
+}

@@ -1,0 +1,8 @@
+# AI講師陳彥彤 官方網站
+# https://yanchen184.github.io/ai-lecturer-bob/
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://yanchen184.github.io/ai-lecturer-bob/sitemap.xml
