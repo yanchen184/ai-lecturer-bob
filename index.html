@@ -42,7 +42,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD Structured Data: Person -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -73,7 +73,63 @@
     }
     </script>
 
-    <!-- Course Schema -->
+    <!-- JSON-LD Structured Data: LocalBusiness (增加可信度) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "AI講師陳彥彤 - 人工智慧教育服務",
+      "alternateName": "AI講師陳彥彤",
+      "description": "提供專業人工智慧教育培訓服務，包含ChatGPT應用、Prompt Engineering、機器學習、深度學習等企業培訓課程。",
+      "url": "https://yanchen184.github.io/ai-lecturer-bob/",
+      "email": "bobchen184@gmail.com",
+      "image": "https://yanchen184.github.io/ai-lecturer-bob/og-image.png",
+      "priceRange": "$$",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Taiwan"
+      },
+      "serviceType": ["AI教育培訓", "企業培訓", "技術顧問"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "AI講師課程服務",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ChatGPT 與 AI 應用實戰課程",
+              "description": "從零開始學習 ChatGPT 與人工智慧應用"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Prompt Engineering 進階班",
+              "description": "掌握與 AI 溝通的藝術"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "企業 AI 導入顧問",
+              "description": "協助企業規劃 AI 轉型策略"
+            }
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "500",
+        "bestRating": "5"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: Course -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -90,7 +146,112 @@
     }
     </script>
 
-    <!-- FAQ Schema -->
+    <!-- JSON-LD Structured Data: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首頁",
+          "item": "https://yanchen184.github.io/ai-lecturer-bob/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "部落格",
+          "item": "https://yanchen184.github.io/ai-lecturer-bob/#/blog"
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: Blog -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "AI講師陳彥彤的部落格",
+      "description": "AI講師陳彥彤分享人工智慧教學心得、ChatGPT實戰技巧、企業培訓經驗",
+      "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog",
+      "author": {
+        "@type": "Person",
+        "name": "陳彥彤",
+        "url": "https://yanchen184.github.io/ai-lecturer-bob/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "陳彥彤"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "headline": "AI講師的教學心得：如何讓人工智慧變得易懂",
+          "description": "身為一名AI講師，我深知將複雜的人工智慧概念轉化為易懂內容的重要性。本文分享我多年教學經驗中累積的教學方法與心得。",
+          "author": {
+            "@type": "Person",
+            "name": "陳彥彤"
+          },
+          "datePublished": "2024-01-15",
+          "dateModified": "2024-03-01",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/ai-lecturer-teaching-experience",
+          "keywords": ["AI講師", "人工智慧", "教學方法", "企業培訓"]
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "ChatGPT Prompt Engineering 完整教學：AI講師的實戰技巧",
+          "description": "AI講師陳彥彤分享 Prompt Engineering 的核心技巧，從基礎到進階，教你如何與 ChatGPT 有效溝通，提升工作效率。",
+          "author": {
+            "@type": "Person",
+            "name": "陳彥彤"
+          },
+          "datePublished": "2024-02-20",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/chatgpt-prompt-engineering-guide",
+          "keywords": ["AI講師", "ChatGPT", "Prompt Engineering", "實戰技巧"]
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "企業AI培訓完整指南：AI講師教你如何導入人工智慧教育",
+          "description": "企業如何有效導入AI培訓？資深AI講師分享企業培訓規劃、課程設計、成效評估的完整方法論。",
+          "author": {
+            "@type": "Person",
+            "name": "陳彥彤"
+          },
+          "datePublished": "2024-03-10",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/enterprise-ai-training-guide",
+          "keywords": ["AI講師", "企業培訓", "人工智慧", "數位轉型"]
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "機器學習入門：AI講師帶你認識人工智慧的核心技術",
+          "description": "AI講師用最簡單的方式解釋機器學習，從監督式學習到深度學習，讓初學者也能輕鬆理解人工智慧原理。",
+          "author": {
+            "@type": "Person",
+            "name": "陳彥彤"
+          },
+          "datePublished": "2024-04-05",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/machine-learning-for-beginners",
+          "keywords": ["AI講師", "機器學習", "人工智慧", "深度學習", "Python"]
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "2024 年 AI 趨勢分析：資深 AI 講師的產業觀察",
+          "description": "AI講師陳彥彤分析 2024 年人工智慧發展趨勢，從生成式AI到多模態模型，剖析企業與個人應該關注的重點。",
+          "author": {
+            "@type": "Person",
+            "name": "陳彥彤"
+          },
+          "datePublished": "2024-05-12",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/ai-lecturer-2024-trends",
+          "keywords": ["AI講師", "2024趨勢", "生成式AI", "人工智慧", "企業轉型"]
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -111,8 +272,39 @@
             "@type": "Answer",
             "text": "可透過Email：bobchen184@gmail.com 聯繫，或透過網站表單預約諮詢。"
           }
+        },
+        {
+          "@type": "Question",
+          "name": "AI講師陳彥彤的授課經驗有多少？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI講師陳彥彤擁有超過500場企業授課經驗，學員累積達10,000人以上，合作企業客戶超過50家。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "企業如何預約AI培訓課程？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可透過網站聯繫表單或Email預約諮詢，AI講師會根據企業需求客製化課程內容與時程。"
+          }
         }
       ]
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: WebSite (for Sitelinks Search Box) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "AI講師陳彥彤",
+      "url": "https://yanchen184.github.io/ai-lecturer-bob/",
+      "description": "專業人工智慧教育講師，提供ChatGPT、機器學習、深度學習等企業培訓課程",
+      "publisher": {
+        "@type": "Person",
+        "name": "陳彥彤"
+      }
     }
     </script>
   </head>

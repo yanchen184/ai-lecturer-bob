@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,7 +16,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location]);
+
+  const homeNavItems = [
     { label: '關於我', href: '#about' },
     { label: '專業技能', href: '#skills' },
     { label: '課程服務', href: '#courses' },
@@ -21,10 +30,23 @@ const Navbar = () => {
     { label: '聯繫我', href: '#contact' },
   ];
 
+  const handleHomeNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (!isHomePage) {
+      e.preventDefault();
+      // Navigate to home with hash
+      window.location.href = `/#${href.replace('#', '')}`;
+    }
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-slate-900/95 backdrop-blur-lg shadow-lg' : 'bg-transparent'
+        isScrolled || !isHomePage
+          ? 'bg-slate-900/95 backdrop-blur-lg shadow-lg'
+          : 'bg-transparent'
       }`}
       role="navigation"
       aria-label="主要導覽"
@@ -32,8 +54,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a
-            href="#"
+          <Link
+            to="/"
             className="flex items-center space-x-2 group"
             aria-label="回到首頁"
           >
@@ -44,25 +66,36 @@ const Navbar = () => {
               <span className="text-lg font-bold gradient-text">AI講師</span>
               <span className="text-white ml-1">陳彥彤</span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
+            {homeNavItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
+                onClick={(e) => handleHomeNavClick(e, item.href)}
                 className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
               >
                 {item.label}
               </a>
             ))}
-            <a
-              href="#contact"
+            <Link
+              to="/blog"
+              className={`px-4 py-2 rounded-lg transition-all duration-200 ${
+                location.pathname.startsWith('/blog')
+                  ? 'text-primary-400 bg-white/10'
+                  : 'text-gray-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              部落格
+            </Link>
+            <Link
+              to="/#contact"
               className="ml-4 px-6 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium rounded-full hover:shadow-lg hover:shadow-primary-500/30 transition-all duration-300"
             >
               預約諮詢
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -72,11 +105,26 @@ const Navbar = () => {
             aria-label="切換選單"
             aria-expanded={isMobileMenuOpen}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
@@ -85,23 +133,35 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-white/10">
-            {navItems.map((item) => (
+            {homeNavItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
+                onClick={(e) => {
+                  handleHomeNavClick(e, item.href);
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all"
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.label}
               </a>
             ))}
-            <a
-              href="#contact"
+            <Link
+              to="/blog"
+              className={`block px-4 py-3 rounded-lg transition-all ${
+                location.pathname.startsWith('/blog')
+                  ? 'text-primary-400 bg-white/10'
+                  : 'text-gray-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              部落格
+            </Link>
+            <Link
+              to="/#contact"
               className="block mx-4 mt-4 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium rounded-full text-center"
-              onClick={() => setIsMobileMenuOpen(false)}
             >
               預約諮詢
-            </a>
+            </Link>
           </div>
         )}
       </div>
