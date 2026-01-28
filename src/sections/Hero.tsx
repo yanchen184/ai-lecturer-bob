@@ -21,31 +21,38 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 mb-8">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2" />
-            <span className="text-sm text-gray-300">目前開放企業培訓與顧問諮詢</span>
+            <span className="text-sm text-gray-300">目前開放企業培訓與程式教學諮詢</span>
           </div>
 
           {/* Title - SEO H1 */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="text-white">你好，我是</span>
             <br />
-            <span className="gradient-text">AI講師陳彥彤</span>
+            <span className="gradient-text">程式講師陳彥彤</span>
           </h1>
 
           {/* Subtitle - SEO keywords */}
           <p className="text-xl sm:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-            專業<strong className="text-primary-400">人工智慧教學專家</strong>
+            <strong className="text-primary-400">資深後端工程師</strong> / <strong className="text-accent-400">技術講師</strong>
           </p>
 
           {/* Description with keywords */}
           <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-            專精於 <span className="text-primary-300">ChatGPT 應用</span>、
-            <span className="text-accent-300">Prompt Engineering</span>、
-            <span className="text-primary-300">機器學習</span>、
-            <span className="text-accent-300">深度學習</span> 教學
+            專精於 <span className="text-primary-300">Spring Boot</span>、
+            <span className="text-accent-300">React</span>、
+            <span className="text-primary-300">MySQL</span>、
+            <span className="text-accent-300">Redis</span> 開發教學
             <br />
-            超過 <strong className="text-white">500+ 場</strong>企業授課經驗，
-            學員累積 <strong className="text-white">10,000+ 人</strong>
+            <strong className="text-white">5-6 年</strong>電商核心系統開發經驗，
+            <strong className="text-white">10-50 場</strong>企業授課經歷
           </p>
+
+          {/* Quote */}
+          <div className="mb-8 text-gray-300 italic">
+            <span className="text-primary-400">"</span>
+            工程師不是寫 code 的人，是解決問題的人。
+            <span className="text-primary-400">"</span>
+          </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -70,9 +77,9 @@ const Hero = () => {
         {/* Stats */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
           {[
-            { number: '500+', label: '企業授課場次' },
-            { number: '10,000+', label: '培訓學員人數' },
-            { number: '50+', label: '合作企業客戶' },
+            { number: '5-6 年', label: 'Java 後端開發經驗' },
+            { number: '10-50 場', label: '企業授課經歷' },
+            { number: 'AZ-900', label: 'Azure 雲端認證' },
             { number: '98%', label: '學員滿意度' },
           ].map((stat, index) => (
             <div key={index} className="glass-card p-6">

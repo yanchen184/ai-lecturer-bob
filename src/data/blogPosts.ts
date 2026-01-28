@@ -1,6 +1,6 @@
 /**
  * 部落格文章資料
- * AI講師陳彥彤的專業文章 - SEO 優化內容
+ * 程式講師陳彥彤的專業文章 - SEO 優化內容
  */
 
 export interface BlogPost {
@@ -21,307 +21,394 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: '1',
-    slug: 'ai-lecturer-teaching-experience',
-    title: 'AI講師的教學心得：如何讓人工智慧變得易懂',
-    excerpt: '身為一名AI講師，我深知將複雜的人工智慧概念轉化為易懂內容的重要性。本文分享我多年教學經驗中累積的教學方法與心得。',
+    slug: 'springboot-high-concurrency',
+    title: 'Spring Boot 高併發系統設計實戰：程式講師的電商經驗分享',
+    excerpt: '分享在電商核心系統中處理高併發的實戰經驗，包含 Redis 快取策略、分布式鎖、資料庫優化等技術，系統每日處理上萬筆 API 請求。',
     content: `
-## AI講師的使命
+## 程式講師的實戰經驗
 
-作為一名專業的AI講師，我最重要的使命就是讓人工智慧技術變得平易近人。在超過500場的企業培訓經驗中，我發現許多人對AI既期待又害怕——期待它能帶來效率提升，卻又擔心自己學不會。
+作為一名程式講師，我經常被問到：「如何設計一個能處理高併發的系統？」這篇文章將分享我在電商核心系統的實戰經驗。
 
-## 教學方法論
+## 系統背景
 
-### 1. 從實際案例出發
-AI講師在授課時，最忌諱一開始就講理論。我的做法是先展示實際應用案例，讓學員看到AI能做什麼，再回頭解釋背後原理。
+在電商核心系統團隊工作期間，我負責智能倉儲系統(WMS)、訂單管理系統(MOX)的開發與維護。系統每日處理上萬筆 API 請求，平均延遲需維持在 200ms 以下。
 
-### 2. 動手實作優先
-紙上談兵永遠學不會AI。作為AI講師，我堅持每堂課都要有實作環節，讓學員親手操作ChatGPT、訓練簡單模型。
+## 高併發解決方案
 
-### 3. 循序漸進的課程設計
-從Prompt Engineering入門，到機器學習基礎，再到深度學習應用，AI講師要能夠根據學員程度調整教學節奏。
+### 1. Redis 快取策略
 
-## 常見教學挑戰
+作為程式講師，我在課程中特別強調快取設計的重要性：
 
-身為AI講師，我經常遇到以下挑戰：
-- 學員背景差異大，從工程師到行銷人員都有
-- 企業期望快速見效，但AI學習需要時間
-- 技術更新太快，教材需要不斷更新
+\`\`\`java
+@Service
+public class InventoryService {
+    @Cacheable(value = "inventory", key = "#skuId")
+    public Inventory getInventory(String skuId) {
+        return inventoryRepository.findBySkuId(skuId);
+    }
 
-## 給想成為AI講師的建議
+    @CacheEvict(value = "inventory", key = "#skuId")
+    public void updateInventory(String skuId, int quantity) {
+        // 更新庫存邏輯
+    }
+}
+\`\`\`
 
-如果你也想成為AI講師，我的建議是：
-1. 持續學習最新技術
-2. 累積實戰專案經驗
-3. 練習用簡單的語言解釋複雜概念
-4. 多與不同產業的人交流
+透過這個策略，我們成功降低資料庫讀取壓力約 20%。
 
-希望這篇文章對有志成為AI講師的朋友有所幫助。
+### 2. 分布式鎖實作
+
+在處理庫存扣減時，必須確保不會發生超賣問題：
+
+\`\`\`java
+public boolean deductInventory(String skuId, int quantity) {
+    String lockKey = "lock:inventory:" + skuId;
+    RLock lock = redissonClient.getLock(lockKey);
+
+    try {
+        if (lock.tryLock(5, 10, TimeUnit.SECONDS)) {
+            // 執行庫存扣減
+            return true;
+        }
+    } finally {
+        lock.unlock();
+    }
+    return false;
+}
+\`\`\`
+
+### 3. 資料庫優化
+
+程式講師在教學中必須強調的 MySQL 優化要點：
+- 合理設計 Index，避免全表掃描
+- 大表使用 Partition 策略
+- 定期執行 Housekeeping 清理歷史資料
+
+## 總結
+
+身為程式講師，我深知理論與實戰的差距。這些經驗都來自真實的電商系統，希望能幫助正在學習後端開發的你。
     `,
     author: '陳彥彤',
     publishDate: '2024-01-15',
     updateDate: '2024-03-01',
-    category: '教學心得',
-    tags: ['AI講師', '人工智慧', '教學方法', '企業培訓'],
-    readingTime: 5,
+    category: '後端開發',
+    tags: ['程式講師', 'Spring Boot', '高併發', 'Redis', '後端開發'],
+    readingTime: 8,
     featured: true,
   },
   {
     id: '2',
-    slug: 'chatgpt-prompt-engineering-guide',
-    title: 'ChatGPT Prompt Engineering 完整教學：AI講師的實戰技巧',
-    excerpt: 'AI講師陳彥彤分享 Prompt Engineering 的核心技巧，從基礎到進階，教你如何與 ChatGPT 有效溝通，提升工作效率。',
+    slug: 'fullstack-architecture-guide',
+    title: 'React + Spring Boot 全端專案架構指南：程式講師的最佳實踐',
+    excerpt: '從系統設計到實作部署，完整的全端專案開發流程與最佳實踐。程式講師陳彥彤分享前後端分離架構的設計心得。',
     content: `
-## 什麼是 Prompt Engineering？
+## 為什麼選擇 React + Spring Boot？
 
-作為AI講師，我被問最多的問題就是：「為什麼我問 ChatGPT 得到的答案不好？」答案往往在於 Prompt 的品質。
+作為程式講師，我經常需要評估各種技術組合。React + Spring Boot 是目前最受企業歡迎的全端組合之一，原因如下：
 
-Prompt Engineering 是一門與 AI 溝通的藝術。好的 Prompt 能讓 ChatGPT 給出精準、有用的回答；差的 Prompt 則會得到模糊、離題的結果。
+1. **Spring Boot** 提供完善的後端生態系統
+2. **React** 擁有最活躍的前端社群
+3. 前後端分離架構便於團隊協作
 
-## AI講師的 Prompt 技巧
+## 專案架構設計
 
-### 技巧一：明確指定角色
-告訴 ChatGPT 它應該扮演什麼角色，例如：
-- 你是一位資深 AI 講師
-- 你是一位企業培訓專家
-- 你是一位技術文件撰寫者
+### 後端架構（Spring Boot）
 
-### 技巧二：提供充分背景
-AI講師在使用 ChatGPT 備課時，會提供：
-- 學員背景（工程師/行銷人員/主管）
-- 課程時長
-- 預期達成的學習目標
-
-### 技巧三：要求特定格式
-指定輸出格式能讓結果更符合需求：
-- 請用條列式說明
-- 請提供範例程式碼
-- 請控制在 200 字以內
-
-### 技巧四：迭代優化
-AI講師的經驗告訴我們，一次得到完美答案是奢望。正確做法是：
-1. 先問一個基本問題
-2. 根據回答追問細節
-3. 請 ChatGPT 改進或重寫
-
-## 實戰案例
-
-身為AI講師，我在製作課程簡報時會這樣下 Prompt：
+程式講師推薦的標準專案結構：
 
 \`\`\`
-你是一位專業的AI講師，正在為非技術背景的企業主管準備一場
-1小時的 ChatGPT 應用課程。請幫我設計課程大綱，包含：
-1. 破冰與案例展示（10分鐘）
-2. 核心概念講解（20分鐘）
-3. 實作練習（20分鐘）
-4. Q&A（10分鐘）
+src/
+├── controller/     # API 入口
+├── service/        # 業務邏輯
+├── repository/     # 資料存取
+├── entity/         # 資料實體
+├── dto/            # 資料傳輸物件
+└── config/         # 配置類別
+\`\`\`
 
-請針對每個環節提供具體內容建議。
+### 前端架構（React）
+
+\`\`\`
+src/
+├── components/     # 可重用元件
+├── pages/          # 頁面元件
+├── hooks/          # 自訂 Hooks
+├── services/       # API 呼叫
+└── utils/          # 工具函數
+\`\`\`
+
+## API 設計規範
+
+程式講師在授課時強調的 RESTful 設計原則：
+
+- 使用正確的 HTTP 方法（GET, POST, PUT, DELETE）
+- 統一的錯誤處理格式
+- JWT 認證與授權機制
+
+## 部署策略
+
+使用 Docker + CI/CD 實現自動化部署：
+
+\`\`\`yaml
+# docker-compose.yml
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
 \`\`\`
 
 ## 結語
 
-Prompt Engineering 是每位想善用 AI 的人必備的技能。作為AI講師，我會持續分享更多實用技巧，幫助大家在工作中發揮 AI 的最大價值。
+全端開發需要同時掌握前後端技術，這正是程式講師課程設計的核心理念。歡迎參加我的全端專案實作班！
     `,
     author: '陳彥彤',
     publishDate: '2024-02-20',
-    category: 'ChatGPT',
-    tags: ['AI講師', 'ChatGPT', 'Prompt Engineering', '實戰技巧'],
-    readingTime: 7,
+    category: '全端開發',
+    tags: ['程式講師', 'React', 'Spring Boot', '全端開發', '系統架構'],
+    readingTime: 10,
     featured: true,
   },
   {
     id: '3',
-    slug: 'enterprise-ai-training-guide',
-    title: '企業AI培訓完整指南：AI講師教你如何導入人工智慧教育',
-    excerpt: '企業如何有效導入AI培訓？資深AI講師分享企業培訓規劃、課程設計、成效評估的完整方法論。',
+    slug: 'mysql-performance-optimization',
+    title: 'MySQL 效能優化實戰：Index、Partition 與 Housekeeping 經驗分享',
+    excerpt: '從電商系統實戰經驗分享 MySQL 效能優化技巧，包含索引設計、分區策略、查詢優化，讓資料庫效能提升 10 倍。',
     content: `
-## 為什麼企業需要AI培訓？
+## 程式講師的資料庫優化心得
 
-在數位轉型浪潮下，AI 已成為企業競爭力的關鍵。作為服務過50+企業的AI講師，我觀察到一個共同現象：技術導入容易，人才培養困難。
+在多年的後端開發經驗中，我發現資料庫效能往往是系統瓶頸的主要來源。這篇文章分享我在電商系統中的實戰優化經驗。
 
-## AI講師的企業培訓方法論
+## Index 設計原則
 
-### 第一步：需求訪談
-AI講師在接案前必須了解：
-- 企業目前的AI應用狀況
-- 學員的技術背景
-- 期望達成的業務目標
-- 可投入的培訓時間
+### 1. 選擇正確的欄位建立索引
 
-### 第二步：客製化課程設計
-根據訪談結果，AI講師會設計專屬課程：
+程式講師在教學中常強調的 Index 設計原則：
 
-| 學員類型 | 課程重點 | 時數建議 |
-|---------|---------|---------|
-| 高階主管 | AI 策略與應用案例 | 2-4小時 |
-| 中階主管 | 部門 AI 導入規劃 | 4-8小時 |
-| 第一線員工 | 工具操作與實作 | 8-16小時 |
+\`\`\`sql
+-- 良好的複合索引設計
+CREATE INDEX idx_order_status_date
+ON orders (status, created_at);
 
-### 第三步：混合式教學
-有效的企業AI培訓應該結合：
-- 線上預習（基礎知識）
-- 實體授課（互動與實作）
-- 課後任務（應用於實際工作）
+-- 查詢時充分利用索引
+SELECT * FROM orders
+WHERE status = 'PENDING'
+AND created_at > '2024-01-01';
+\`\`\`
 
-### 第四步：成效追蹤
-AI講師要協助企業評估培訓成效：
-- 學員滿意度調查
-- 知識測驗
-- 實際應用案例分享
-- 3個月後的追蹤訪談
+### 2. 避免 Index 失效的情況
 
-## 常見問題解答
+- 對索引欄位使用函數
+- 使用 OR 連接非索引欄位
+- LIKE 以 % 開頭
 
-**Q: 企業請AI講師的預算大約多少？**
-A: 依課程內容和時數而定，一般單日培訓在數萬元不等。
+## Partition 策略
 
-**Q: 需要多少時間才能看到培訓成效？**
-A: 基礎應用約1-2週可見效，深度應用需要1-3個月持續練習。
+當單表資料量超過 1000 萬筆時，建議使用分區：
 
-**Q: 員工沒有技術背景可以學AI嗎？**
-A: 完全可以！AI講師的責任就是讓非技術人員也能上手AI工具。
+\`\`\`sql
+CREATE TABLE orders (
+    id BIGINT,
+    created_at DATE,
+    ...
+) PARTITION BY RANGE (YEAR(created_at)) (
+    PARTITION p2023 VALUES LESS THAN (2024),
+    PARTITION p2024 VALUES LESS THAN (2025)
+);
+\`\`\`
+
+## Housekeeping 策略
+
+定期清理歷史資料是維持效能的關鍵：
+
+\`\`\`java
+@Scheduled(cron = "0 0 2 * * ?")
+public void cleanupOldLogs() {
+    int deleted = logRepository.deleteByCreatedAtBefore(
+        LocalDateTime.now().minusMonths(3)
+    );
+    log.info("Cleaned up {} old logs", deleted);
+}
+\`\`\`
 
 ## 結語
 
-企業AI培訓的成功關鍵在於：找對AI講師、設計對課程、持續追蹤成效。如果你的企業正在考慮導入AI培訓，歡迎與我聯繫討論。
+資料庫優化是後端工程師的必備技能。作為程式講師，我會在課程中深入講解這些實戰技巧。
     `,
     author: '陳彥彤',
     publishDate: '2024-03-10',
-    category: '企業培訓',
-    tags: ['AI講師', '企業培訓', '人工智慧', '數位轉型'],
-    readingTime: 6,
+    category: '資料庫',
+    tags: ['程式講師', 'MySQL', '效能優化', '資料庫', 'Index'],
+    readingTime: 7,
     featured: false,
   },
   {
     id: '4',
-    slug: 'machine-learning-for-beginners',
-    title: '機器學習入門：AI講師帶你認識人工智慧的核心技術',
-    excerpt: 'AI講師用最簡單的方式解釋機器學習，從監督式學習到深度學習，讓初學者也能輕鬆理解人工智慧原理。',
+    slug: 'redis-distributed-lock-cache',
+    title: 'Redis 分布式鎖與快取策略設計：避免超賣問題的實戰指南',
+    excerpt: '深入解析 Redis 在高併發系統中的應用，包含分布式鎖實作、快取穿透防護、樂觀鎖機制。程式講師的電商系統實戰經驗。',
     content: `
-## 什麼是機器學習？
+## 為什麼需要分布式鎖？
 
-很多人問我這位AI講師：「機器學習到底是什麼？」簡單來說，機器學習是讓電腦從資料中自動學習規律的技術，而不是由人類一條一條寫程式規則。
+在分散式系統中，多個服務實例可能同時操作相同資源。作為程式講師，我以電商庫存系統為例說明：
 
-## AI講師的機器學習教學法
+當兩個使用者同時購買最後一件商品，如果沒有適當的鎖機制，就會發生超賣。
 
-### 用生活案例解釋
+## Redis 分布式鎖實作
 
-身為AI講師，我喜歡用這個例子：
+### 基本實作
 
-想像你在教小朋友認識貓和狗。你不會告訴他「貓有三角形的耳朵、狗有垂耳」這種規則，而是給他看很多貓狗的照片，讓他自己歸納特徵。機器學習就是這樣運作的！
+\`\`\`java
+public boolean acquireLock(String key, String value, long expireTime) {
+    Boolean result = redisTemplate.opsForValue()
+        .setIfAbsent(key, value, expireTime, TimeUnit.SECONDS);
+    return Boolean.TRUE.equals(result);
+}
+\`\`\`
 
-### 三種主要類型
+### 使用 Redisson 實作
 
-AI講師必教的機器學習分類：
+程式講師推薦使用 Redisson 處理複雜場景：
 
-1. **監督式學習 (Supervised Learning)**
-   - 給電腦標記好的資料
-   - 例：這是垃圾郵件、這不是垃圾郵件
+\`\`\`java
+@Service
+public class InventoryService {
+    @Autowired
+    private RedissonClient redissonClient;
 
-2. **非監督式學習 (Unsupervised Learning)**
-   - 讓電腦自己找資料的模式
-   - 例：將顧客分群、找出異常交易
+    public boolean deductStock(String skuId, int quantity) {
+        RLock lock = redissonClient.getLock("lock:stock:" + skuId);
+        try {
+            if (lock.tryLock(3, 10, TimeUnit.SECONDS)) {
+                // 檢查庫存 -> 扣減庫存
+                return doDeduct(skuId, quantity);
+            }
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
+        return false;
+    }
+}
+\`\`\`
 
-3. **強化學習 (Reinforcement Learning)**
-   - 透過獎勵和懲罰讓電腦學習
-   - 例：訓練 AI 下棋、玩遊戲
+## 快取策略設計
 
-## 機器學習的應用
+### 快取穿透防護
 
-作為AI講師，我常在課堂上展示這些應用：
+\`\`\`java
+public Product getProduct(String id) {
+    // 先查快取
+    Product cached = cacheService.get("product:" + id);
+    if (cached != null) return cached;
 
-- **圖像辨識**：人臉解鎖、醫療影像分析
-- **自然語言處理**：ChatGPT、翻譯軟體
-- **推薦系統**：Netflix、Spotify 的推薦
-- **預測分析**：股票預測、銷售預測
+    // 查資料庫
+    Product product = productRepository.findById(id);
 
-## 如何開始學習？
+    // 空值也快取（防穿透）
+    cacheService.set("product:" + id,
+        product != null ? product : EMPTY_PRODUCT,
+        product != null ? 3600 : 60);
 
-AI講師的學習路徑建議：
-
-1. **基礎數學**：線性代數、機率統計
-2. **程式語言**：Python 是首選
-3. **工具框架**：scikit-learn、TensorFlow
-4. **實作專案**：從 Kaggle 競賽開始
+    return product;
+}
+\`\`\`
 
 ## 結語
 
-機器學習是人工智慧的核心，也是AI講師必備的專業知識。如果你想更深入學習，歡迎參加我的機器學習課程！
+Redis 是後端開發必備的技能之一。作為程式講師，我會在課程中詳細講解這些進階應用。
     `,
     author: '陳彥彤',
     publishDate: '2024-04-05',
-    category: '技術教學',
-    tags: ['AI講師', '機器學習', '人工智慧', '深度學習', 'Python'],
-    readingTime: 8,
+    category: '後端開發',
+    tags: ['程式講師', 'Redis', '分布式鎖', '快取', '高併發'],
+    readingTime: 9,
     featured: false,
   },
   {
     id: '5',
-    slug: 'ai-lecturer-2024-trends',
-    title: '2024 年 AI 趨勢分析：資深 AI 講師的產業觀察',
-    excerpt: 'AI講師陳彥彤分析 2024 年人工智慧發展趨勢，從生成式AI到多模態模型，剖析企業與個人應該關注的重點。',
+    slug: 'event-driven-architecture',
+    title: '從電商系統學習事件驅動架構：RabbitMQ 實戰經驗分享',
+    excerpt: '以電商核心系統為例，分享事件驅動架構的設計原則與 RabbitMQ 實戰經驗。程式講師帶你理解現代微服務架構。',
     content: `
-## AI講師看 2024 趨勢
+## 什麼是事件驅動架構？
 
-身為每天接觸企業與學員的AI講師，我對 2024 年的 AI 發展有第一手觀察。以下是我認為最值得關注的趨勢。
+作為程式講師，我經常用電商系統來解釋事件驅動架構的概念。
 
-## 趨勢一：生成式 AI 進入成熟期
+當使用者完成訂單後，系統需要：
+1. 更新庫存
+2. 發送確認郵件
+3. 通知物流系統
+4. 更新數據報表
 
-作為AI講師，我在 2023 年的課程中花了很多時間介紹 ChatGPT 基礎。但 2024 年，企業更關心的是「如何落地」。
+傳統同步呼叫會造成效能瓶頸，而事件驅動架構可以完美解決這個問題。
 
-- **企業應用深化**：不再只是玩玩，而是整合進工作流程
-- **客製化模型興起**：Fine-tuning 和 RAG 需求增加
-- **AI講師的課程升級**：從「認識 AI」變成「活用 AI」
+## RabbitMQ 基礎
 
-## 趨勢二：多模態 AI 崛起
+### 生產者
 
-2024 年的 AI 不只會看文字，還會看圖、聽聲音、甚至理解影片。
+\`\`\`java
+@Service
+public class OrderEventPublisher {
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
-AI講師的教學重點轉變：
-- 圖像生成（Midjourney、DALL-E）
-- 語音合成與辨識
-- 影片分析與生成
+    public void publishOrderCreated(Order order) {
+        OrderCreatedEvent event = new OrderCreatedEvent(order);
+        rabbitTemplate.convertAndSend(
+            "order.exchange",
+            "order.created",
+            event
+        );
+    }
+}
+\`\`\`
 
-## 趨勢三：AI 治理與倫理
+### 消費者
 
-隨著 AI 應用越來越廣，企業開始重視：
-- AI 的偏見與公平性
-- 資料隱私與安全
-- AI 決策的透明度
+\`\`\`java
+@Component
+public class InventoryEventHandler {
+    @RabbitListener(queues = "inventory.queue")
+    public void handleOrderCreated(OrderCreatedEvent event) {
+        // 扣減庫存邏輯
+        inventoryService.deduct(event.getSkuId(), event.getQuantity());
+    }
+}
+\`\`\`
 
-身為AI講師，我也在課程中加入了AI倫理的討論環節。
+## 設計原則
 
-## 趨勢四：AI 賦能而非取代
+程式講師在教學中強調的事件驅動設計原則：
 
-很多人擔心被 AI 取代。作為AI講師，我的觀點是：
+1. **事件不可變** - 一旦發布就不應修改
+2. **冪等處理** - 消費者需能處理重複事件
+3. **事件版本控制** - 方便向後相容
+4. **監控與追蹤** - 完善的日誌記錄
 
-> AI 會取代的是不會用 AI 的人，而不是工作本身。
+## 實際應用場景
 
-2024 年，每個人都需要學會與 AI 協作。這也是為什麼AI講師的需求持續成長。
-
-## AI講師的建議
-
-針對不同族群，我的建議是：
-
-**給企業主管**：
-- 開始規劃全員 AI 培訓
-- 找專業 AI 講師進行企業輔導
-- 建立 AI 應用的內部規範
-
-**給個人**：
-- 持續學習，不要被時代淘汰
-- 找到 AI 在你工作中的應用場景
-- 培養與 AI 協作的能力
+在電商系統中，我們使用事件驅動處理：
+- 訂單狀態變更
+- 庫存同步
+- 價格更新通知
+- 使用者行為追蹤
 
 ## 結語
 
-2024 年將是 AI 從話題變成日常的一年。作為AI講師，我會持續觀察產業動態，分享最新知識。歡迎持續關注我的部落格！
+事件驅動架構是現代分散式系統的核心概念。作為程式講師，我會在進階課程中深入講解這些架構設計。
     `,
     author: '陳彥彤',
     publishDate: '2024-05-12',
-    category: '產業觀察',
-    tags: ['AI講師', '2024趨勢', '生成式AI', '人工智慧', '企業轉型'],
-    readingTime: 6,
+    category: '系統架構',
+    tags: ['程式講師', '事件驅動', 'RabbitMQ', '系統架構', '微服務'],
+    readingTime: 8,
     featured: true,
   },
 ];

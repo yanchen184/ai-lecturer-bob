@@ -1,48 +1,48 @@
 const Skills = () => {
   const skillCategories = [
     {
-      title: 'AI 與機器學習',
+      title: '後端開發',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
         </svg>
       ),
       skills: [
-        { name: 'ChatGPT / GPT-4', level: 98 },
-        { name: 'Prompt Engineering', level: 95 },
-        { name: '機器學習 (ML)', level: 90 },
-        { name: '深度學習 (DL)', level: 88 },
-        { name: 'LangChain / RAG', level: 85 },
+        { name: 'Java / Spring Boot', level: 95 },
+        { name: 'Spring Data JPA / Hibernate', level: 92 },
+        { name: 'RESTful API 設計', level: 90 },
+        { name: 'RabbitMQ 訊息佇列', level: 85 },
+        { name: 'Python / FastAPI', level: 80 },
       ],
     },
     {
-      title: '程式語言',
+      title: '資料庫與快取',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
         </svg>
       ),
       skills: [
-        { name: 'Python', level: 95 },
-        { name: 'TypeScript / JavaScript', level: 92 },
-        { name: 'Java / Spring Boot', level: 88 },
-        { name: 'SQL / NoSQL', level: 85 },
-        { name: 'React / Vue', level: 90 },
+        { name: 'MySQL (Index, Partition)', level: 92 },
+        { name: 'Redis 快取策略', level: 90 },
+        { name: '分布式鎖 / 樂觀鎖', level: 88 },
+        { name: 'DB Housekeeping', level: 85 },
+        { name: 'PostgreSQL', level: 78 },
       ],
     },
     {
-      title: '工具與框架',
+      title: 'DevOps 與雲端',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
         </svg>
       ),
       skills: [
-        { name: 'PyTorch / TensorFlow', level: 88 },
-        { name: 'Hugging Face', level: 85 },
-        { name: 'Docker / K8s', level: 82 },
-        { name: 'AWS / GCP', level: 80 },
-        { name: 'Git / CI/CD', level: 90 },
+        { name: 'Docker / Kubernetes', level: 85 },
+        { name: 'GitLab CI/CD / Argo CD', level: 88 },
+        { name: 'Azure (AZ-900 認證)', level: 82 },
+        { name: 'ELK / Prometheus / Grafana', level: 80 },
+        { name: 'Linux 系統管理', level: 78 },
       ],
     },
   ];
@@ -60,7 +60,7 @@ const Skills = () => {
             <span className="gradient-text">專業技能</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            AI講師陳彥彤具備全方位的技術能力，從人工智慧到全端開發，提供最專業的教學服務
+            程式講師陳彥彤具備全方位的技術能力，從後端開發到 DevOps，提供最專業的教學服務
           </p>
         </div>
 
@@ -100,23 +100,48 @@ const Skills = () => {
           ))}
         </div>
 
+        {/* Frontend Skills */}
+        <div className="mt-12 glass-card p-8">
+          <h3 className="text-xl font-bold text-white text-center mb-6">前端開發技能</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { name: 'React / TypeScript', level: 88 },
+              { name: 'Tailwind CSS', level: 85 },
+              { name: 'JavaScript / ES6+', level: 90 },
+            ].map((skill, index) => (
+              <div key={index}>
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-300">{skill.name}</span>
+                  <span className="text-accent-400">{skill.level}%</span>
+                </div>
+                <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-accent-500 to-primary-500 rounded-full transition-all duration-1000"
+                    style={{ width: `${skill.level}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Tech Tags */}
         <div className="mt-16 text-center">
           <h3 className="text-white font-semibold mb-6">其他專業領域</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              '自然語言處理 (NLP)',
-              '電腦視覺',
+              'NLP / NER 分析',
+              'Hugging Face',
               'API 設計',
-              '資料分析',
-              '敏捷開發',
-              '技術寫作',
+              '事件驅動架構',
+              '高併發系統設計',
+              '技術文件撰寫',
               '簡報技巧',
               '課程設計',
               '企業顧問',
-              'Claude AI',
-              'Midjourney',
-              'Stable Diffusion',
+              'ChatGPT 輔助開發',
+              'Git Flow',
+              'Agile / Scrum',
             ].map((tag, index) => (
               <span
                 key={index}

@@ -1,59 +1,63 @@
 const Courses = () => {
   const courses = [
     {
-      title: 'ChatGPT 與 AI 應用實戰',
-      subtitle: '企業最熱門課程',
-      description: '從零開始學習 ChatGPT，掌握 Prompt Engineering 技巧，將 AI 應用於實際工作場景中。',
+      title: 'Spring Boot 後端開發實戰',
+      subtitle: '主力課程',
+      description: '從零開始建立企業級後端系統，涵蓋 Spring Boot、Spring Data JPA、MySQL、Redis 等核心技術。',
       features: [
-        'ChatGPT 基礎與進階應用',
-        'Prompt Engineering 系統化教學',
-        'AI 輔助工作流程設計',
-        '實際案例演練與討論',
+        'Spring Boot 專案架構設計',
+        'RESTful API 設計與實作',
+        'MySQL 效能優化與 Index 設計',
+        'Redis 快取策略與分布式鎖',
+        '實際電商系統案例分析',
       ],
-      duration: '6-12 小時',
-      level: '初學者友善',
+      duration: '18-36 小時',
+      level: '需基礎程式概念',
       popular: true,
     },
     {
-      title: 'Python 程式設計入門',
-      subtitle: '程式新手必修',
-      description: '專為零基礎學員設計的 Python 課程，從基礎語法到實際專案開發，循序漸進建立程式思維。',
+      title: 'React + TypeScript 前端開發',
+      subtitle: '現代前端',
+      description: '學習 React 18 最新特性，掌握 TypeScript 型別系統，建立可維護的前端應用程式。',
       features: [
-        'Python 基礎語法與觀念',
-        '資料處理與分析',
-        '網頁爬蟲實作',
-        '小專案實戰練習',
+        'React Hooks 與狀態管理',
+        'TypeScript 型別系統精通',
+        'Tailwind CSS 快速開發',
+        '前端效能優化技巧',
+        '與後端 API 整合實作',
       ],
       duration: '12-24 小時',
-      level: '零基礎可學',
+      level: '需 JavaScript 基礎',
       popular: false,
     },
     {
-      title: '機器學習實戰班',
-      subtitle: '進階 AI 課程',
-      description: '深入了解機器學習核心概念，從監督式學習到非監督式學習，建立完整的 ML 知識體系。',
+      title: '全端專案實作班',
+      subtitle: '完整專案',
+      description: '從前端到後端，完整專案開發流程。結合 React + Spring Boot，打造真實可用的全端應用。',
       features: [
-        '機器學習理論基礎',
-        'Scikit-learn 實戰應用',
-        '特徵工程與模型調校',
-        '真實數據集專案練習',
+        '系統架構設計與規劃',
+        '前後端分離開發模式',
+        'JWT 認證與權限管理',
+        'Docker 容器化部署',
+        'CI/CD 自動化流程',
       ],
-      duration: '18-36 小時',
-      level: '需程式基礎',
+      duration: '24-48 小時',
+      level: '需前後端基礎',
       popular: false,
     },
     {
-      title: '企業 AI 轉型顧問',
-      subtitle: '客製化服務',
-      description: '為企業量身打造 AI 導入策略，從需求評估到實際落地，協助企業在 AI 時代取得競爭優勢。',
+      title: 'AI 輔助開發工作坊',
+      subtitle: '效率提升',
+      description: '學習如何使用 ChatGPT、GitHub Copilot 等 AI 工具輔助程式開發，提升 3 倍以上開發效率。',
       features: [
-        'AI 應用場景評估',
-        '員工 AI 素養培訓',
-        '工具導入與流程優化',
-        '持續追蹤與優化',
+        'ChatGPT 輔助程式開發',
+        'Prompt Engineering 技巧',
+        'AI 程式碼審查與優化',
+        'AI 輔助文件撰寫',
+        '實際工作流程整合',
       ],
-      duration: '依需求客製',
-      level: '企業專屬',
+      duration: '6-12 小時',
+      level: '需程式開發經驗',
       popular: false,
     },
   ];
@@ -71,7 +75,7 @@ const Courses = () => {
             <span className="gradient-text">課程服務</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            AI講師陳彥彤提供多元化的人工智慧與程式教學課程，滿足不同程度學員的學習需求
+            程式講師陳彥彤提供專業的後端開發、前端開發、全端專案與 AI 輔助開發課程
           </p>
         </div>
 
