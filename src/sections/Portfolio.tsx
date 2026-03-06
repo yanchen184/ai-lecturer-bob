@@ -1,6 +1,14 @@
 const Portfolio = () => {
   const projects = [
     {
+      title: 'DTM Racing Sport 官方網站',
+      category: '前端接案',
+      description: '為專業賽車改裝品牌打造的官方網站，負責前端開發與視覺呈現。',
+      tech: ['前端開發', '品牌官網', '響應式設計'],
+      link: 'https://dtmracingsport.com/',
+      image: 'client',
+    },
+    {
       title: 'iT邦幫忙技術文章',
       category: '技術分享',
       description: '在 iT邦幫忙發表技術文章，分享後端開發經驗、系統架構設計、效能優化技巧等實戰心得。',
@@ -36,6 +44,7 @@ const Portfolio = () => {
 
   const getGradient = (type: string) => {
     const gradients: Record<string, string> = {
+      client: 'from-red-500 to-orange-500',
       blog: 'from-blue-500 to-indigo-500',
       dev: 'from-orange-500 to-red-500',
       game: 'from-green-500 to-emerald-500',
@@ -46,6 +55,11 @@ const Portfolio = () => {
 
   const getIcon = (type: string) => {
     const icons: Record<string, React.ReactNode> = {
+      client: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+        </svg>
+      ),
       blog: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -143,6 +157,17 @@ const Portfolio = () => {
 
         {/* External Links */}
         <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <a
+            href="https://dtmracingsport.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 text-gray-300 rounded-full hover:bg-white/20 transition-all"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+            </svg>
+            <span>DTM Racing Sport</span>
+          </a>
           <a
             href="https://github.com/yanchen184"
             target="_blank"
