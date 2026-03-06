@@ -4,6 +4,7 @@ import Skills from '../sections/Skills';
 import Courses from '../sections/Courses';
 import Portfolio from '../sections/Portfolio';
 import Testimonials from '../sections/Testimonials';
+import MessageBoard from '../sections/MessageBoard';
 import Contact from '../sections/Contact';
 
 const HomePage = () => {
@@ -15,6 +16,7 @@ const HomePage = () => {
       <Courses />
       <Portfolio />
       <Testimonials />
+      <MessageBoard />
       <Contact />
     </main>
   );

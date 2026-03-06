@@ -5,8 +5,10 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
+import AdminPage from './pages/AdminPage';
+import { trackVisitor } from './firebase';
 
-const VERSION = '1.3.0';
+const VERSION = '1.4.0';
 
 function App() {
   const location = useLocation();
@@ -17,6 +19,7 @@ function App() {
       'color: #0ea5e9; font-size: 16px; font-weight: bold;'
     );
     console.log('%c 技術棧: React + TypeScript + Tailwind CSS', 'color: #d946ef;');
+    trackVisitor();
   }, []);
 
   // Scroll to top on route change, handle hash for sections
@@ -32,6 +35,15 @@ function App() {
       window.scrollTo(0, 0);
     }
   }, [location]);
+
+  // Admin 頁面用獨立 layout
+  if (location.pathname === '/admin') {
+    return (
+      <Routes>
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
+    );
+  }
 
   return (
     <div className="gradient-bg min-h-screen text-white">
