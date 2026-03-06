@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
 
-const VERSION = '1.1.0';
+const VERSION = '1.3.0';
 
 function App() {
   const location = useLocation();
