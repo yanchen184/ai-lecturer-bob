@@ -9,6 +9,14 @@ const Portfolio = () => {
       image: 'client',
     },
     {
+      title: '禁忌之美 募資網站',
+      category: '前端接案',
+      description: '藝術實驗電影的群眾募資頁面，負責前端開發與互動體驗設計。',
+      tech: ['React', 'TypeScript', '募資頁面', '響應式設計'],
+      link: 'https://yanchen184.github.io/forbidden-beauty/',
+      image: 'client',
+    },
+    {
       title: 'iT邦幫忙技術文章',
       category: '技術分享',
       description: '在 iT邦幫忙發表技術文章，分享後端開發經驗、系統架構設計、效能優化技巧等實戰心得。',
