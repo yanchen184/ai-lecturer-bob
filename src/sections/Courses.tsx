@@ -1,6 +1,24 @@
 const Courses = () => {
   const courses = [
     {
+      title: 'Kubernetes 容器編排實戰教材',
+      subtitle: '線上教材',
+      description:
+        '完整的 Kubernetes 課程教材，從 Linux 基礎到 K8s 叢集部署，含互動式 PPT 簡報。',
+      features: [
+        'Linux 基礎指令與檔案系統',
+        'Docker 容器化技術',
+        'Kubernetes 核心概念',
+        'Pod / Deployment / Service',
+        '互動式簡報教學',
+      ],
+      duration: '24-48 小時',
+      level: '需基礎 Linux 概念',
+      popular: false,
+      hasMaterial: true,
+      materialLink: 'https://yanchen184.github.io/k8s-course-site/',
+    },
+    {
       title: 'Kubernetes 入門到叢集管理員實務班',
       subtitle: '產業人才投資方案',
       description:
@@ -204,7 +222,22 @@ const Courses = () => {
                   </div>
 
                   {/* CTA */}
-                  {course.link ? (
+                  {course.hasMaterial ? (
+                    <a
+                      href={course.materialLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium text-sm hover:opacity-90 transition-all"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      查看教材
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  ) : course.link ? (
                     <a
                       href={course.link}
                       target="_blank"
