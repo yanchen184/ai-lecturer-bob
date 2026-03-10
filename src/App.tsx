@@ -8,7 +8,7 @@ import BlogPost from './pages/BlogPost';
 import AdminPage from './pages/AdminPage';
 import { trackVisitor } from './firebase';
 
-const VERSION = '1.4.0';
+const VERSION = '1.5.0';
 
 function App() {
   const location = useLocation();

@@ -101,17 +101,27 @@ export const addGuestMessage = async (nickname: string, content: string) => {
   })
 }
 
-export const subscribeToMessages = (callback: (messages: GuestMessage[]) => void) => {
+export const subscribeToMessages = (
+  callback: (messages: GuestMessage[]) => void,
+  onError?: (error: Error) => void
+) => {
   const q = query(collection(db, 'bob_messages'), orderBy('createdAt', 'desc'))
-  return onSnapshot(q, (snapshot) => {
-    const messages: GuestMessage[] = snapshot.docs.map((d) => ({
-      id: d.id,
-      nickname: d.data().nickname || '匿名',
-      content: d.data().content || '',
-      createdAt: d.data().createdAt as Timestamp | null,
-    }))
-    callback(messages)
-  })
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const messages: GuestMessage[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        nickname: d.data().nickname || '匿名',
+        content: d.data().content || '',
+        createdAt: d.data().createdAt as Timestamp | null,
+      }))
+      callback(messages)
+    },
+    (error) => {
+      console.error('留言訂閱失敗:', error)
+      onError?.(error)
+    }
+  )
 }
 
 // ============ Admin 用的訂閱 ============
