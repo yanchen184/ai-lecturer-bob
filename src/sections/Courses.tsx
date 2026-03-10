@@ -250,15 +250,15 @@ const Courses = () => {
                       </svg>
                     </a>
                   ) : (
-                    <a
-                      href="#contact"
-                      className="inline-flex items-center gap-2 text-primary-400 font-medium hover:text-primary-300 transition-colors"
+                    <button
+                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="inline-flex items-center gap-2 text-primary-400 font-medium hover:text-primary-300 transition-colors cursor-pointer"
                     >
-                      了解更多
+                      聯繫諮詢
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
-                    </a>
+                    </button>
                   )}
                 </div>
               </div>
@@ -271,12 +271,15 @@ const Courses = () => {
           <p className="text-gray-400 mb-6">
             需要客製化課程或企業內訓？歡迎與我聯繫討論您的需求
           </p>
-          <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="btn-primary inline-flex items-center gap-2"
+          >
             <span>預約免費諮詢</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </section>
