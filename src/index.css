@@ -1,8 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Liquid Glass Design Tokens */
+  --glass-blur: 40px;
+  --glass-saturate: 180%;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.14);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-border-light: rgba(255, 255, 255, 0.3);
+  --glass-radius: 24px;
+  --glass-radius-lg: 32px;
+  --glass-radius-sm: 16px;
+
+  /* Liquid Glass Shadows */
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  --glass-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.1);
+  --glass-inner-light: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  --glass-inner-glow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+
+  /* Colors */
+  --color-blue: #007AFF;
+  --color-purple: #AF52DE;
+  --color-green: #34C759;
+  --color-bg-start: #0f0f1a;
+  --color-bg-end: #1a1a2e;
+
+  /* Transitions */
+  --spring-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 * {
   margin: 0;
@@ -15,14 +45,15 @@ html {
 }
 
 body {
-  font-family: 'Noto Sans TC', system-ui, sans-serif;
+  font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
 }
 
-/* Custom scrollbar for message board and similar containers */
+/* Custom scrollbar for Liquid Glass theme */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -30,23 +61,23 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* Firefox scrollbar */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
 
 /* Focus visible outline for accessibility */
 *:focus-visible {
-  outline: 2px solid #0ea5e9;
+  outline: 2px solid var(--color-blue);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -64,25 +95,61 @@ body {
 }
 
 @layer components {
+  /* Liquid Glass gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-300 bg-clip-text text-transparent;
   }
 
+  /* Liquid Glass background - deep dark with subtle gradient */
   .gradient-bg {
-    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+    background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #16162a 70%, #0f0f1a 100%);
   }
 
+  /* Core Liquid Glass card */
   .glass-card {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--glass-radius);
+    box-shadow:
+      var(--glass-shadow),
+      var(--glass-inner-light),
+      var(--glass-inner-glow);
+    transition: all 0.4s var(--smooth-ease);
   }
 
+  .glass-card:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-light);
+    box-shadow:
+      var(--glass-shadow-hover),
+      var(--glass-inner-light),
+      var(--glass-inner-glow);
+    transform: translateY(-2px);
+  }
+
+  /* Primary button - Liquid Glass style */
   .btn-primary {
-    @apply px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-full
-           hover:from-primary-400 hover:to-accent-400 transition-all duration-300
-           shadow-lg hover:shadow-primary-500/50 hover:scale-105;
+    @apply px-8 py-4 text-white font-semibold transition-all duration-300;
+    background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+    border-radius: var(--glass-radius);
+    box-shadow:
+      0 8px 32px rgba(0, 122, 255, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
+  .btn-primary:hover {
+    box-shadow:
+      0 12px 48px rgba(0, 122, 255, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.1);
+  }
+
+  /* Section title */
   .section-title {
     @apply text-4xl md:text-5xl font-bold text-center mb-4;
+    letter-spacing: -0.02em;
   }
 }

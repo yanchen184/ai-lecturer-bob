@@ -98,19 +98,19 @@ const Contact = () => {
       aria-labelledby="contact-title"
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-800/50 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 mb-6">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2" />
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-[40px] border border-white/[0.15] text-sm text-white/50 mb-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+            <span className="w-2 h-2 bg-success-400 rounded-full animate-pulse mr-2" />
             目前開放諮詢預約
           </div>
           <h2 id="contact-title" className="section-title">
             <span className="gradient-text">聯繫我</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-white/40 text-lg max-w-2xl mx-auto font-light">
             想了解更多課程資訊或企業培訓方案？歡迎與AI講師陳彥彤聯繫
           </p>
         </div>
@@ -118,34 +118,34 @@ const Contact = () => {
         <div className="grid lg:grid-cols-5 gap-12">
           {/* Contact Info - 2 cols */}
           <div className="lg:col-span-2">
-            <h3 className="text-xl font-bold text-white mb-3">聯繫方式</h3>
-            <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+            <h3 className="text-xl font-semibold text-white/90 mb-3 tracking-tight">聯繫方式</h3>
+            <p className="text-white/40 text-sm mb-8 leading-relaxed font-light">
               無論是企業培訓、個人課程諮詢，或是 AI 導入顧問服務，
               都歡迎透過以下方式與我聯繫。我會在 24 小時內回覆您的訊息。
             </p>
 
-            {/* Contact Cards */}
+            {/* Contact Cards - Liquid Glass */}
             <div className="space-y-3 mb-8">
               {contactInfo.map((info, index) => (
                 <div
                   key={index}
-                  className="group flex items-center gap-4 p-4 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.12] rounded-2xl transition-all duration-300"
+                  className="group flex items-center gap-4 p-4 bg-white/[0.04] hover:bg-white/[0.08] backdrop-blur-[20px] border border-white/[0.1] hover:border-white/[0.2] rounded-glass-sm transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 border border-white/10 flex items-center justify-center text-primary-400 group-hover:text-primary-300 transition-colors flex-shrink-0">
+                  <div className="w-11 h-11 rounded-glass-sm bg-gradient-to-br from-primary-500/15 to-accent-400/15 border border-white/[0.1] flex items-center justify-center text-primary-400/80 group-hover:text-primary-400 transition-colors flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
                     {info.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-gray-500 text-xs mb-0.5">{info.label}</div>
+                    <div className="text-white/30 text-xs mb-0.5 font-light">{info.label}</div>
                     {'action' in info && info.action ? (
                       <button
                         onClick={info.action}
-                        className="text-white hover:text-primary-400 transition-colors text-sm font-medium flex items-center gap-2"
+                        className="text-white/80 hover:text-primary-400 transition-colors text-sm font-medium flex items-center gap-2"
                       >
                         <span className="truncate">{info.value}</span>
                         <span className={`text-xs px-2 py-0.5 rounded-full transition-all duration-200 flex-shrink-0 ${
                           emailCopied
-                            ? 'bg-emerald-500/20 text-emerald-400'
-                            : 'bg-white/10 text-gray-500 group-hover:text-gray-300'
+                            ? 'bg-success-400/15 text-success-400'
+                            : 'bg-white/[0.06] text-white/30 group-hover:text-white/50'
                         }`}>
                           {info.actionLabel}
                         </span>
@@ -155,53 +155,53 @@ const Contact = () => {
                         href={info.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-primary-400 transition-colors text-sm font-medium"
+                        className="text-white/80 hover:text-primary-400 transition-colors text-sm font-medium"
                       >
                         {info.value}
                       </a>
                     ) : (
-                      <span className="text-white text-sm font-medium">{info.value}</span>
+                      <span className="text-white/80 text-sm font-medium">{info.value}</span>
                     )}
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Quick Response Status */}
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-primary-500/[0.08] to-accent-500/[0.08] border border-primary-500/10">
+            {/* Quick Response Status - Liquid Glass */}
+            <div className="p-5 rounded-glass-sm bg-gradient-to-br from-primary-500/[0.06] to-accent-400/[0.06] backdrop-blur-[20px] border border-primary-500/[0.1]">
               <div className="flex items-center gap-3 mb-3">
                 <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-400"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-success-400"></span>
                 </span>
-                <span className="text-white font-semibold text-sm">目前狀態</span>
+                <span className="text-white/80 font-semibold text-sm">目前狀態</span>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <p className="text-white/40 text-sm leading-relaxed font-light">
                 開放企業培訓與顧問諮詢預約中，線上課程隨時可以開始學習。
               </p>
             </div>
           </div>
 
-          {/* Contact Form - 3 cols */}
+          {/* Contact Form - 3 cols - Liquid Glass */}
           <div className="lg:col-span-3">
             <div className="glass-card p-6 lg:p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-10 h-10 rounded-glass-sm bg-gradient-to-br from-primary-500/20 to-accent-400/20 border border-white/[0.15] flex items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+                  <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">填寫諮詢表單</h3>
-                  <p className="text-gray-500 text-xs">會開啟您的郵件客戶端發送</p>
+                  <h3 className="text-lg font-semibold text-white/90 tracking-tight">填寫諮詢表單</h3>
+                  <p className="text-white/30 text-xs font-light">會開啟您的郵件客戶端發送</p>
                 </div>
               </div>
 
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-gray-400 text-sm mb-1.5">
-                      姓名 <span className="text-red-400">*</span>
+                    <label htmlFor="name" className="block text-white/50 text-sm mb-1.5 font-light">
+                      姓名 <span className="text-red-400/80">*</span>
                     </label>
                     <input
                       type="text"
@@ -209,13 +209,13 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
                       placeholder="您的姓名"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-gray-400 text-sm mb-1.5">
-                      Email <span className="text-red-400">*</span>
+                    <label htmlFor="email" className="block text-white/50 text-sm mb-1.5 font-light">
+                      Email <span className="text-red-400/80">*</span>
                     </label>
                     <input
                       type="email"
@@ -223,7 +223,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -231,7 +231,7 @@ const Contact = () => {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="company" className="block text-gray-400 text-sm mb-1.5">
+                    <label htmlFor="company" className="block text-white/50 text-sm mb-1.5 font-light">
                       公司名稱
                     </label>
                     <input
@@ -239,35 +239,35 @@ const Contact = () => {
                       id="company"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
                       placeholder="您的公司或組織"
                     />
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-gray-400 text-sm mb-1.5">
-                      諮詢主題 <span className="text-red-400">*</span>
+                    <label htmlFor="subject" className="block text-white/50 text-sm mb-1.5 font-light">
+                      諮詢主題 <span className="text-red-400/80">*</span>
                     </label>
                     <select
                       id="subject"
                       required
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200 appearance-none"
+                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 appearance-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
                       style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
                     >
-                      <option value="" className="bg-slate-800">請選擇諮詢主題</option>
-                      <option value="企業培訓" className="bg-slate-800">企業培訓</option>
-                      <option value="個人課程" className="bg-slate-800">個人課程</option>
-                      <option value="AI顧問" className="bg-slate-800">AI 顧問服務</option>
-                      <option value="合作邀約" className="bg-slate-800">合作邀約</option>
-                      <option value="其他" className="bg-slate-800">其他</option>
+                      <option value="" className="bg-surface-900">請選擇諮詢主題</option>
+                      <option value="企業培訓" className="bg-surface-900">企業培訓</option>
+                      <option value="個人課程" className="bg-surface-900">個人課程</option>
+                      <option value="AI顧問" className="bg-surface-900">AI 顧問服務</option>
+                      <option value="合作邀約" className="bg-surface-900">合作邀約</option>
+                      <option value="其他" className="bg-surface-900">其他</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-gray-400 text-sm mb-1.5">
-                    訊息內容 <span className="text-red-400">*</span>
+                  <label htmlFor="message" className="block text-white/50 text-sm mb-1.5 font-light">
+                    訊息內容 <span className="text-red-400/80">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -275,7 +275,7 @@ const Contact = () => {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200 resize-none"
+                    className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 resize-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
                     placeholder="請描述您的需求或問題..."
                   />
                 </div>
@@ -283,7 +283,11 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-xl hover:from-primary-400 hover:to-accent-400 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3.5 text-white font-semibold rounded-glass-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  style={{
+                    background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
+                    boxShadow: '0 8px 32px rgba(0, 122, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                  }}
                 >
                   {isSubmitting ? (
                     <>
@@ -305,15 +309,15 @@ const Contact = () => {
 
                 {/* Status Messages */}
                 {submitStatus === 'success' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                    <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-2 justify-center p-3 bg-success-400/[0.08] backdrop-blur-sm border border-success-400/[0.15] rounded-glass-sm">
+                    <svg className="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-emerald-400 text-sm">郵件客戶端已開啟，請在郵件中確認送出！</span>
+                    <span className="text-success-400 text-sm">郵件客戶端已開啟，請在郵件中確認送出！</span>
                   </div>
                 )}
                 {submitStatus === 'error' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+                  <div className="flex items-center gap-2 justify-center p-3 bg-red-500/[0.08] backdrop-blur-sm border border-red-500/[0.15] rounded-glass-sm">
                     <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -327,7 +331,7 @@ const Contact = () => {
                 )}
 
                 {/* Helper text */}
-                <p className="text-gray-600 text-xs text-center">
+                <p className="text-white/20 text-xs text-center font-light">
                   點擊送出後會開啟您的郵件客戶端，表單內容會自動填入信件中
                 </p>
               </form>

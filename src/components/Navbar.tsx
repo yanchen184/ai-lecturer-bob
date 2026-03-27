@@ -106,9 +106,9 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled || !isHomePage
-            ? 'bg-slate-900/90 backdrop-blur-xl shadow-lg shadow-black/10'
+            ? 'bg-surface-900/70 backdrop-blur-[40px] saturate-[180%] border-b border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.12)]'
             : 'bg-transparent'
         }`}
         role="navigation"
@@ -122,12 +122,12 @@ const Navbar = () => {
               className="flex items-center space-x-2 group flex-shrink-0"
               aria-label="回到首頁"
             >
-              <div className="w-9 h-9 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary-500/30 transition-shadow duration-300">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-accent-400 flex items-center justify-center shadow-[0_4px_16px_rgba(0,122,255,0.25)] group-hover:shadow-[0_6px_24px_rgba(0,122,255,0.35)] transition-shadow duration-300">
                 <span className="text-white font-bold text-lg">陳</span>
               </div>
               <div className="hidden sm:block">
-                <span className="text-base font-bold gradient-text">AI講師</span>
-                <span className="text-white/90 ml-1 text-sm">陳彥彤</span>
+                <span className="text-base font-semibold gradient-text">AI講師</span>
+                <span className="text-white/80 ml-1 text-sm font-light">陳彥彤</span>
               </div>
             </Link>
 
@@ -138,10 +138,10 @@ const Navbar = () => {
                   key={item.href}
                   href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
                   onClick={(e) => handleHomeNavClick(e, item.href)}
-                  className={`relative px-3 py-1.5 text-sm rounded-lg transition-all duration-200 ${
+                  className={`relative px-3 py-1.5 text-sm rounded-lg transition-all duration-300 ${
                     isActive(item.href)
-                      ? 'text-white bg-white/10'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'text-white/90 bg-white/[0.1] backdrop-blur-sm'
+                      : 'text-white/45 hover:text-white/80 hover:bg-white/[0.06]'
                   }`}
                 >
                   {item.label}
@@ -152,17 +152,21 @@ const Navbar = () => {
               ))}
               <Link
                 to="/blog"
-                className={`px-3 py-1.5 text-sm rounded-lg transition-all duration-200 ${
+                className={`px-3 py-1.5 text-sm rounded-lg transition-all duration-300 ${
                   location.pathname.startsWith('/blog')
-                    ? 'text-white bg-white/10'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                    ? 'text-white/90 bg-white/[0.1] backdrop-blur-sm'
+                    : 'text-white/45 hover:text-white/80 hover:bg-white/[0.06]'
                 }`}
               >
                 部落格
               </Link>
               <Link
                 to="/#contact"
-                className="ml-3 px-5 py-2 text-sm bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium rounded-full hover:shadow-lg hover:shadow-primary-500/25 hover:scale-105 transition-all duration-300"
+                className="ml-3 px-5 py-2 text-sm font-medium text-white rounded-full transition-all duration-300 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
+                  boxShadow: '0 4px 16px rgba(0, 122, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+                }}
               >
                 預約諮詢
               </Link>
@@ -170,7 +174,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden relative w-10 h-10 flex items-center justify-center text-gray-300 hover:text-white rounded-lg hover:bg-white/10 transition-all"
+              className="lg:hidden relative w-10 h-10 flex items-center justify-center text-white/60 hover:text-white/90 rounded-lg hover:bg-white/[0.08] transition-all"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="切換選單"
               aria-expanded={isMobileMenuOpen}
@@ -205,15 +209,15 @@ const Navbar = () => {
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300 ${
             isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
-        {/* Menu Panel */}
+        {/* Menu Panel - Liquid Glass */}
         <div
-          className={`absolute top-0 right-0 w-72 h-full bg-slate-900/98 backdrop-blur-xl border-l border-white/10 transition-transform duration-300 ease-out ${
+          className={`absolute top-0 right-0 w-72 h-full bg-surface-900/80 backdrop-blur-[60px] saturate-[180%] border-l border-white/[0.1] transition-transform duration-300 ease-out shadow-[-8px_0_32px_rgba(0,0,0,0.2)] ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -224,10 +228,10 @@ const Navbar = () => {
                   key={item.href}
                   href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
                   onClick={(e) => handleHomeNavClick(e, item.href)}
-                  className={`flex items-center px-4 py-3 rounded-xl text-base transition-all duration-200 ${
+                  className={`flex items-center px-4 py-3 rounded-glass-sm text-base transition-all duration-300 ${
                     isActive(item.href)
-                      ? 'text-white bg-white/10 font-medium'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'text-white/90 bg-white/[0.1] font-medium'
+                      : 'text-white/45 hover:text-white/80 hover:bg-white/[0.06]'
                   }`}
                   style={{
                     transitionDelay: isMobileMenuOpen ? `${index * 30}ms` : '0ms',
@@ -244,21 +248,25 @@ const Navbar = () => {
               <Link
                 to="/blog"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center px-4 py-3 rounded-xl text-base transition-all duration-200 ${
+                className={`flex items-center px-4 py-3 rounded-glass-sm text-base transition-all duration-300 ${
                   location.pathname.startsWith('/blog')
-                    ? 'text-white bg-white/10 font-medium'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                    ? 'text-white/90 bg-white/[0.1] font-medium'
+                    : 'text-white/45 hover:text-white/80 hover:bg-white/[0.06]'
                 }`}
               >
                 部落格
               </Link>
             </div>
 
-            <div className="pt-4 border-t border-white/10">
+            <div className="pt-4 border-t border-white/[0.08]">
               <Link
                 to="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium rounded-xl text-center hover:shadow-lg transition-all duration-300"
+                className="block w-full py-3 text-white font-medium rounded-glass-sm text-center transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
+                  boxShadow: '0 4px 16px rgba(0, 122, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+                }}
               >
                 預約諮詢
               </Link>

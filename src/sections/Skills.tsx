@@ -50,46 +50,49 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="py-20 lg:py-32 relative bg-slate-800/50"
+      className="py-20 lg:py-32 relative"
       aria-labelledby="skills-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Subtle section divider glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 id="skills-title" className="section-title">
             <span className="gradient-text">專業技能</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-white/40 text-lg max-w-2xl mx-auto font-light">
             程式講師陳彥彤具備全方位的技術能力，從後端開發到 DevOps，提供最專業的教學服務
           </p>
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Skills Grid - Liquid Glass */}
+        <div className="grid md:grid-cols-3 gap-6">
           {skillCategories.map((category, catIndex) => (
             <div
               key={catIndex}
-              className="glass-card p-6 hover:bg-white/15 transition-all duration-300"
+              className="glass-card p-6"
             >
               {/* Category Header */}
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center text-white">
+                <div className="w-14 h-14 rounded-glass-sm bg-gradient-to-br from-primary-500/20 to-accent-400/20 backdrop-blur-sm border border-white/[0.15] flex items-center justify-center text-primary-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white">{category.title}</h3>
+                <h3 className="text-xl font-semibold text-white/90 tracking-tight">{category.title}</h3>
               </div>
 
               {/* Skills List */}
               <div className="space-y-4">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-gray-300">{skill.name}</span>
-                      <span className="text-primary-400">{skill.level}%</span>
+                    <div className="flex justify-between mb-1.5">
+                      <span className="text-white/60 text-sm font-light">{skill.name}</span>
+                      <span className="text-primary-400/80 text-sm font-medium">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all duration-1000"
+                        className="h-full bg-gradient-to-r from-primary-500 to-accent-400 rounded-full transition-all duration-1000"
                         style={{ width: `${skill.level}%` }}
                       />
                     </div>
@@ -100,9 +103,9 @@ const Skills = () => {
           ))}
         </div>
 
-        {/* Frontend Skills */}
-        <div className="mt-12 glass-card p-8">
-          <h3 className="text-xl font-bold text-white text-center mb-6">前端開發技能</h3>
+        {/* Frontend Skills - Liquid Glass */}
+        <div className="mt-10 glass-card p-8">
+          <h3 className="text-xl font-semibold text-white/90 text-center mb-6 tracking-tight">前端開發技能</h3>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { name: 'React / TypeScript', level: 88 },
@@ -110,13 +113,13 @@ const Skills = () => {
               { name: 'JavaScript / ES6+', level: 90 },
             ].map((skill, index) => (
               <div key={index}>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-300">{skill.name}</span>
-                  <span className="text-accent-400">{skill.level}%</span>
+                <div className="flex justify-between mb-1.5">
+                  <span className="text-white/60 text-sm font-light">{skill.name}</span>
+                  <span className="text-accent-400/80 text-sm font-medium">{skill.level}%</span>
                 </div>
-                <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-accent-500 to-primary-500 rounded-full transition-all duration-1000"
+                    className="h-full bg-gradient-to-r from-accent-400 to-primary-500 rounded-full transition-all duration-1000"
                     style={{ width: `${skill.level}%` }}
                   />
                 </div>
@@ -125,9 +128,9 @@ const Skills = () => {
           </div>
         </div>
 
-        {/* Tech Tags */}
+        {/* Tech Tags - Liquid Glass pills */}
         <div className="mt-16 text-center">
-          <h3 className="text-white font-semibold mb-6">其他專業領域</h3>
+          <h3 className="text-white/80 font-semibold mb-6 tracking-tight">其他專業領域</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {[
               'NLP / NER 分析',
@@ -145,7 +148,7 @@ const Skills = () => {
             ].map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-white/10 text-gray-300 rounded-full text-sm hover:bg-white/20 transition-colors cursor-default"
+                className="px-4 py-2 bg-white/[0.06] backdrop-blur-sm text-white/55 rounded-full text-sm font-light border border-white/[0.1] hover:bg-white/[0.12] hover:text-white/70 hover:border-white/[0.2] transition-all duration-300 cursor-default shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
               >
                 {tag}
               </span>
