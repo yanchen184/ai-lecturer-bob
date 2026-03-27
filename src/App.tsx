@@ -16,9 +16,9 @@ function App() {
   useEffect(() => {
     console.log(
       `%c AI講師陳彥彤 個人網站 v${VERSION}`,
-      'color: #0ea5e9; font-size: 16px; font-weight: bold;'
+      'color: #00FF88; font-size: 16px; font-weight: bold;'
     );
-    console.log('%c 技術棧: React + TypeScript + Tailwind CSS', 'color: #d946ef;');
+    console.log('%c 技術棧: React + TypeScript + Tailwind CSS', 'color: #7B61FF;');
     trackVisitor();
   }, []);
 
