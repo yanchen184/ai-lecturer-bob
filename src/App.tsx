@@ -14,35 +14,20 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(
-      `%c AI講師陳彥彤 個人網站 v${VERSION}`,
-      'color: #0ea5e9; font-size: 16px; font-weight: bold;'
-    );
-    console.log('%c 技術棧: React + TypeScript + Tailwind CSS', 'color: #d946ef;');
+    console.log(`%c AI講師陳彥彤 個人網站 v${VERSION}`, 'color: #00FF88; font-size: 16px; font-weight: bold;');
+    console.log('%c 技術棧: React + TypeScript + Tailwind CSS', 'color: #7B61FF;');
     trackVisitor();
   }, []);
 
-  // Scroll to top on route change, handle hash for sections
   useEffect(() => {
     if (location.hash && location.pathname === '/') {
       const element = document.querySelector(location.hash);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    } else if (!location.hash) {
-      window.scrollTo(0, 0);
-    }
+      if (element) { setTimeout(() => { element.scrollIntoView({ behavior: 'smooth' }); }, 100); }
+    } else if (!location.hash) { window.scrollTo(0, 0); }
   }, [location]);
 
-  // Admin 頁面用獨立 layout
   if (location.pathname === '/admin') {
-    return (
-      <Routes>
-        <Route path="/admin" element={<AdminPage />} />
-      </Routes>
-    );
+    return (<Routes><Route path="/admin" element={<AdminPage />} /></Routes>);
   }
 
   return (
