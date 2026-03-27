@@ -27,8 +27,8 @@ const ThemePage = () => {
       <div className="theme-ai-native-wrapper">
         <Navbar />
         <Hero />
-        <About />
         <Skills />
+        <About />
         <Courses />
         <Contact />
         <Footer />

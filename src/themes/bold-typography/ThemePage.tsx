@@ -28,8 +28,8 @@ const ThemePage = () => {
         <Navbar />
         <Hero />
         <About />
-        <Skills />
         <Courses />
+        <Skills />
         <Contact />
         <Footer />
       </div>

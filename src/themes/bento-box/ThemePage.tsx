@@ -27,9 +27,9 @@ const ThemePage = () => {
       <div className="theme-bento-box-wrapper">
         <Navbar />
         <Hero />
-        <About />
-        <Skills />
         <Courses />
+        <Skills />
+        <About />
         <Contact />
         <Footer />
       </div>

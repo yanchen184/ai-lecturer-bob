@@ -27,9 +27,9 @@ const ThemePage = () => {
       <div className="theme-liquid-glass-wrapper">
         <Navbar />
         <Hero />
-        <About />
         <Skills />
         <Courses />
+        <About />
         <Contact />
         <Footer />
       </div>

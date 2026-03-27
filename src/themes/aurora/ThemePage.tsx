@@ -27,9 +27,9 @@ const ThemePage = () => {
       <div className="theme-aurora-wrapper">
         <Navbar />
         <Hero />
+        <Courses />
         <About />
         <Skills />
-        <Courses />
         <Contact />
         <Footer />
       </div>

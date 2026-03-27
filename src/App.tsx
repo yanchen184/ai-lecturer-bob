@@ -14,6 +14,13 @@ import { trackVisitor } from './firebase';
 
 const VERSION = '2.0.0';
 
+/** Resolve which theme is active for the current path */
+function resolveCurrentTheme(pathname: string): string | null {
+  if (pathname === '/') return 'ai-native';
+  const matched = themes.find(t => pathname === t.path);
+  return matched ? matched.id : null;
+}
+
 function App() {
   const location = useLocation();
 
@@ -27,7 +34,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (location.hash && location.pathname === '/') {
+    if (location.hash && (location.pathname === '/' || location.pathname.startsWith('/style/'))) {
       const element = document.querySelector(location.hash);
       if (element) {
         setTimeout(() => {
@@ -50,9 +57,11 @@ function App() {
     );
   }
 
-  // Style theme pages
-  const currentStyleRoute = themes.find(t => location.pathname === t.path);
-  if (currentStyleRoute) {
+  // Style theme pages (including `/` as default AI-Native)
+  const currentThemeId = resolveCurrentTheme(location.pathname);
+  if (currentThemeId) {
+    const themeEntry = themes.find(t => t.id === currentThemeId)!;
+
     return (
       <HelmetProvider>
         <Suspense fallback={
@@ -60,29 +69,29 @@ function App() {
             <div className="text-white text-lg">載入中...</div>
           </div>
         }>
-          <StyleSwitcher currentTheme={currentStyleRoute.id} />
-          <div style={{ paddingTop: '2.5rem' }}>
-            <Routes>
-              {themes.map(theme => (
-                <Route
-                  key={theme.id}
-                  path={theme.path}
-                  element={<theme.loader />}
-                />
-              ))}
-            </Routes>
-          </div>
+          <StyleSwitcher currentTheme={currentThemeId} />
+          <Routes>
+            {/* `/` renders the AI-Native ThemePage */}
+            <Route path="/" element={<themeEntry.loader />} />
+            {themes.map(theme => (
+              <Route
+                key={theme.id}
+                path={theme.path}
+                element={<theme.loader />}
+              />
+            ))}
+          </Routes>
         </Suspense>
       </HelmetProvider>
     );
   }
 
-  // Style showcase homepage
-  if (location.pathname === '/') {
+  // Style showcase gallery (optional, kept at /styles)
+  if (location.pathname === '/styles') {
     return (
       <HelmetProvider>
         <Routes>
-          <Route path="/" element={<StyleShowcase />} />
+          <Route path="/styles" element={<StyleShowcase />} />
         </Routes>
       </HelmetProvider>
     );
