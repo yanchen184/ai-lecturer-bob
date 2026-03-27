@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+.theme-bento-box {
+  background-color: #FFFFFF;
+  color: #1D1D1F;
+  font-family: 'Inter', 'SF Pro Display', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+.theme-bento-box ::selection {
+  background-color: #007AFF;
+  color: #FFFFFF;
+}
+
+.theme-bento-box *:focus-visible {
+  outline: 2px solid #007AFF;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.theme-bento-box-wrapper {
+  min-height: 100vh;
+}

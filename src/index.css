@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -15,47 +15,28 @@ html {
 }
 
 body {
-  font-family: 'Noto Sans TC', system-ui, sans-serif;
+  font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar for message board and similar containers */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-}
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 9999px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+.custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.1) transparent; }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 9999px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Firefox scrollbar */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
-}
-
-/* Focus visible outline for accessibility */
+/* Focus visible */
 *:focus-visible {
   outline: 2px solid #0ea5e9;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Reduced motion preferences */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -63,26 +44,85 @@ body {
   }
 }
 
+/* ============================================================
+   Base layer - text glow utilities (AI-Native, Bold Typography)
+   ============================================================ */
+@layer base {
+  .text-glow-green { text-shadow: 0 0 10px rgba(0,255,136,0.5), 0 0 20px rgba(0,255,136,0.2); }
+  .text-glow-purple { text-shadow: 0 0 10px rgba(123,97,255,0.5), 0 0 20px rgba(123,97,255,0.2); }
+  .text-glow-blue { text-shadow: 0 0 10px rgba(0,212,255,0.5), 0 0 20px rgba(0,212,255,0.2); }
+}
+
+/* ============================================================
+   Components layer - shared utility classes across all themes
+   ============================================================ */
 @layer components {
+  /* --- Default / Showcase --- */
   .gradient-text {
     @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-clip-text text-transparent;
   }
-
   .gradient-bg {
     @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
   }
-
   .glass-card {
     @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl;
   }
-
   .btn-primary {
     @apply px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-full
            hover:from-primary-400 hover:to-accent-400 transition-all duration-300
            shadow-lg hover:shadow-primary-500/50 hover:scale-105;
   }
-
   .section-title {
     @apply text-4xl md:text-5xl font-bold text-center mb-4;
+  }
+
+  /* --- AI-Native specific --- */
+  .skill-bar {
+    @apply h-2 rounded-full overflow-hidden;
+    background: rgba(0, 255, 136, 0.08);
+  }
+  .skill-bar-fill {
+    @apply h-full rounded-full transition-all duration-1000;
+    background: linear-gradient(90deg, #00FF88, #00D4FF, #7B61FF);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+  }
+  .ai-input {
+    @apply w-full px-4 py-3 rounded-xl transition-all duration-200;
+    background: rgba(0, 255, 136, 0.03);
+    border: 1px solid rgba(0, 255, 136, 0.1);
+    color: #e2e8f0;
+  }
+  .ai-input::placeholder { color: rgba(0, 255, 136, 0.25); }
+  .ai-input:focus {
+    outline: none;
+    border-color: rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.1), inset 0 0 15px rgba(0, 255, 136, 0.02);
+    background: rgba(0, 255, 136, 0.05);
+  }
+  .terminal-cursor::after {
+    content: '|';
+    color: #00FF88;
+    margin-left: 2px;
+    animation: blink-caret 0.75s step-end infinite;
+  }
+  @keyframes blink-caret { from, to { opacity: 1; } 50% { opacity: 0; } }
+
+  /* --- Bento Box specific --- */
+  .bento-card {
+    @apply bg-bento-card rounded-bento-lg p-6 transition-all duration-300 hover:shadow-bento-hover hover:scale-[1.02];
+  }
+
+  /* --- Swiss Modernism (Bold) specific --- */
+  .bold-bg { @apply bg-bold-bg; }
+  .bold-card { @apply bg-bold-surface border border-bold-border p-6 rounded-none; }
+  .bold-divider { @apply w-full h-px bg-bold-border; }
+
+  /* --- Aurora specific --- */
+  .aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    pointer-events: none;
   }
 }

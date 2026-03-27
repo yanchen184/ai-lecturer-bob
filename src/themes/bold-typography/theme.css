@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+.theme-bold-typography {
+  background-color: #0A0E17;
+  color: #e2e8f0;
+  font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+.theme-bold-typography ::selection {
+  background: rgba(0, 255, 136, 0.25);
+  color: #ffffff;
+}
+
+.theme-bold-typography ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.theme-bold-typography ::-webkit-scrollbar-track {
+  background: #0A0E17;
+}
+
+.theme-bold-typography ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00FF88, #7B61FF);
+  border-radius: 9999px;
+}
+
+.theme-bold-typography *:focus-visible {
+  outline: 2px solid #00FF88;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.theme-bold-typography-wrapper {
+  min-height: 100vh;
+}

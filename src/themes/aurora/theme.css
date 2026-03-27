@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+.theme-aurora {
+  background: linear-gradient(180deg, #0F0F1A 0%, #1A1A2E 50%, #0F0F1A 100%);
+  background-attachment: fixed;
+  color: #e2e8f0;
+  font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+.theme-aurora ::selection {
+  background-color: rgba(122, 95, 255, 0.4);
+  color: #FFFFFF;
+}
+
+.theme-aurora *:focus-visible {
+  outline: 2px solid #00D2FF;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.theme-aurora-wrapper {
+  min-height: 100vh;
+}

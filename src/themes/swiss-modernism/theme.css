@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+.theme-swiss-modernism {
+  background-color: #0A0A0A;
+  color: #FAFAFA;
+  font-family: 'Space Grotesk', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+.theme-swiss-modernism ::selection {
+  background-color: #FF3D00;
+  color: #FAFAFA;
+}
+
+.theme-swiss-modernism *:focus-visible {
+  outline: 2px solid #FF3D00;
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+.theme-swiss-modernism-wrapper {
+  min-height: 100vh;
+}
