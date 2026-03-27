@@ -24,14 +24,14 @@ const BlogList = () => {
   };
 
   return (
-    <div className="gradient-bg min-h-screen text-white pt-24">
+    <div className="bg-white min-h-screen text-bento-text pt-24">
       {/* Hero Section */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="gradient-text">AI講師</span>部落格
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-bento-text-secondary max-w-2xl mx-auto">
             AI講師陳彥彤分享人工智慧教學心得、ChatGPT 實戰技巧、企業培訓經驗，
             幫助你掌握 AI 時代的核心競爭力。
           </p>
@@ -46,8 +46,8 @@ const BlogList = () => {
               onClick={() => setSelectedCategory('all')}
               className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
                 selectedCategory === 'all'
-                  ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
-                  : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                  ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-bento-text'
+                  : 'bg-bento-card text-bento-text-secondary hover:bg-bento-card-hover'
               }`}
             >
               全部文章
@@ -58,8 +58,8 @@ const BlogList = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
                   selectedCategory === category
-                    ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                    ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-bento-text'
+                    : 'bg-bento-card text-bento-text-secondary hover:bg-bento-card-hover'
                 }`}
               >
                 {category}
@@ -76,12 +76,12 @@ const BlogList = () => {
             {filteredPosts.map((post: BlogPost) => (
               <article
                 key={post.id}
-                className="glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-300"
+                className="bg-bento-card rounded-bento-lg overflow-hidden group hover:scale-[1.02] transition-all duration-300"
               >
                 {/* Featured Badge */}
                 {post.featured && (
                   <div className="absolute top-4 right-4 z-10">
-                    <span className="px-3 py-1 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-xs font-bold rounded-full">
+                    <span className="px-3 py-1 bg-gradient-to-r from-primary-500 to-accent-500 text-bento-text text-xs font-bold rounded-full">
                       精選
                     </span>
                   </div>
@@ -91,23 +91,23 @@ const BlogList = () => {
                 <div className="p-6 relative">
                   {/* Category */}
                   <div className="mb-4">
-                    <span className="px-3 py-1 bg-primary-500/20 text-primary-300 text-sm rounded-full">
+                    <span className="px-3 py-1 bg-primary-500/20 text-primary-600 text-sm rounded-full">
                       {post.category}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors line-clamp-2">
+                  <h2 className="text-xl font-bold text-bento-text mb-3 group-hover:text-primary-600 transition-colors line-clamp-2">
                     <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                   </h2>
 
                   {/* Excerpt */}
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                  <p className="text-bento-text-secondary text-sm mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
 
                   {/* Meta Info */}
-                  <div className="flex items-center justify-between text-sm text-gray-500">
+                  <div className="flex items-center justify-between text-sm text-bento-text-secondary">
                     <div className="flex items-center space-x-2">
                       <svg
                         className="w-4 h-4"
@@ -145,7 +145,7 @@ const BlogList = () => {
                   {/* Read More Link */}
                   <Link
                     to={`/blog/${post.slug}`}
-                    className="mt-4 inline-flex items-center text-primary-400 hover:text-primary-300 transition-colors"
+                    className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-600 transition-colors"
                   >
                     <span>閱讀全文</span>
                     <svg
@@ -170,7 +170,7 @@ const BlogList = () => {
           {/* Empty State */}
           {filteredPosts.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-gray-400 text-lg">
+              <p className="text-bento-text-secondary text-lg">
                 目前沒有此分類的文章
               </p>
             </div>
@@ -180,16 +180,16 @@ const BlogList = () => {
 
       {/* SEO Content Section */}
       <section className="px-4 pb-20">
-        <div className="max-w-4xl mx-auto glass-card p-8">
-          <h2 className="text-2xl font-bold text-white mb-4">
+        <div className="max-w-4xl mx-auto bg-bento-card rounded-bento-lg p-8">
+          <h2 className="text-2xl font-bold text-bento-text mb-4">
             關於 AI講師陳彥彤的部落格
           </h2>
-          <p className="text-gray-300 mb-4">
+          <p className="text-bento-text-secondary mb-4">
             歡迎來到 AI講師陳彥彤的專業部落格。這裡分享人工智慧教學的第一手經驗，
             包含 ChatGPT 應用技巧、Prompt Engineering 實戰、機器學習入門教學、
             企業 AI 培訓規劃等豐富內容。
           </p>
-          <p className="text-gray-300">
+          <p className="text-bento-text-secondary">
             作為專業的 AI 講師，陳彥彤致力於讓複雜的人工智慧技術變得平易近人，
             無論你是想學習 AI 的初學者，還是尋求企業培訓的主管，都能在這裡找到實用的知識。
           </p>

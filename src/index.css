@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -15,12 +15,13 @@ html {
 }
 
 body {
-  font-family: 'Noto Sans TC', system-ui, sans-serif;
+  font-family: 'Inter', 'SF Pro Display', 'Noto Sans TC', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FFFFFF;
+  color: #1D1D1F;
 }
 
-/* Custom scrollbar for message board and similar containers */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
@@ -30,28 +31,25 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
-/* Firefox scrollbar */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
 }
 
-/* Focus visible outline for accessibility */
 *:focus-visible {
-  outline: 2px solid #0ea5e9;
+  outline: 2px solid #007AFF;
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-/* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -63,26 +61,35 @@ body {
   }
 }
 
+::selection {
+  background-color: #007AFF;
+  color: #FFFFFF;
+}
+
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent;
   }
 
   .gradient-bg {
-    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+    @apply bg-white;
   }
 
   .glass-card {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl;
+    @apply bg-bento-card rounded-bento-lg;
+  }
+
+  .bento-card {
+    @apply bg-bento-card rounded-bento-lg p-6 transition-all duration-300 hover:shadow-bento-hover hover:scale-[1.02];
   }
 
   .btn-primary {
-    @apply px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-full
-           hover:from-primary-400 hover:to-accent-400 transition-all duration-300
-           shadow-lg hover:shadow-primary-500/50 hover:scale-105;
+    @apply px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-semibold rounded-full
+           hover:opacity-90 transition-all duration-300
+           shadow-lg hover:shadow-bento-hover hover:scale-105;
   }
 
   .section-title {
-    @apply text-4xl md:text-5xl font-bold text-center mb-4;
+    @apply text-4xl md:text-5xl font-bold text-center mb-4 text-bento-text tracking-tight;
   }
 }

@@ -44,23 +44,23 @@ const BlogPost = () => {
   const parseContent = (content: string): string => {
     return content
       // Headers
-      .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold text-white mt-8 mb-4">$1</h2>')
-      .replace(/^### (.+)$/gm, '<h3 class="text-xl font-bold text-white mt-6 mb-3">$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold text-bento-text mt-8 mb-4">$1</h2>')
+      .replace(/^### (.+)$/gm, '<h3 class="text-xl font-bold text-bento-text mt-6 mb-3">$1</h3>')
       // Bold text
-      .replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong class="text-bento-text font-semibold">$1</strong>')
       // Inline code
-      .replace(/`([^`]+)`/g, '<code class="bg-slate-700 px-2 py-1 rounded text-primary-300">$1</code>')
+      .replace(/`([^`]+)`/g, '<code class="bg-bento-card px-2 py-1 rounded text-primary-600">$1</code>')
       // Code blocks
       .replace(/```[\s\S]*?```/g, (match) => {
         const code = match.replace(/```\w*\n?/g, '').replace(/```/g, '');
-        return `<pre class="bg-slate-800 p-4 rounded-lg overflow-x-auto my-4"><code class="text-gray-300 text-sm">${code}</code></pre>`;
+        return `<pre class="bg-bento-card p-4 rounded-lg overflow-x-auto my-4"><code class="text-bento-text-secondary text-sm">${code}</code></pre>`;
       })
       // Blockquotes
-      .replace(/^> (.+)$/gm, '<blockquote class="border-l-4 border-primary-500 pl-4 my-4 text-gray-300 italic">$1</blockquote>')
+      .replace(/^> (.+)$/gm, '<blockquote class="border-l-4 border-primary-500 pl-4 my-4 text-bento-text-secondary italic">$1</blockquote>')
       // Unordered lists
-      .replace(/^- (.+)$/gm, '<li class="text-gray-300 ml-4 mb-2">$1</li>')
+      .replace(/^- (.+)$/gm, '<li class="text-bento-text-secondary ml-4 mb-2">$1</li>')
       // Ordered lists
-      .replace(/^\d+\. (.+)$/gm, '<li class="text-gray-300 ml-4 mb-2 list-decimal">$1</li>')
+      .replace(/^\d+\. (.+)$/gm, '<li class="text-bento-text-secondary ml-4 mb-2 list-decimal">$1</li>')
       // Tables
       .replace(/\|(.+)\|/g, (match) => {
         const cells = match.split('|').filter(cell => cell.trim());
@@ -70,16 +70,16 @@ const BlogPost = () => {
         const isHeader = match.includes('---|');
         if (isHeader) return '';
         const cellHtml = cells.map(cell =>
-          `<td class="border border-slate-600 px-4 py-2 text-gray-300">${cell.trim()}</td>`
+          `<td class="border border-slate-600 px-4 py-2 text-bento-text-secondary">${cell.trim()}</td>`
         ).join('');
         return `<tr>${cellHtml}</tr>`;
       })
       // Paragraphs (double newline)
-      .replace(/\n\n/g, '</p><p class="text-gray-300 mb-4 leading-relaxed">')
+      .replace(/\n\n/g, '</p><p class="text-bento-text-secondary mb-4 leading-relaxed">')
       // Single newlines within paragraphs
       .replace(/\n/g, '<br/>')
       // Wrap in paragraph
-      .replace(/^(.+)/, '<p class="text-gray-300 mb-4 leading-relaxed">$1')
+      .replace(/^(.+)/, '<p class="text-bento-text-secondary mb-4 leading-relaxed">$1')
       .replace(/(.+)$/, '$1</p>');
   };
 
@@ -88,40 +88,40 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="gradient-bg min-h-screen text-white pt-24">
+    <div className="bg-white min-h-screen text-bento-text pt-24">
       {/* Breadcrumb */}
       <nav className="max-w-4xl mx-auto px-4 py-4" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-2 text-sm">
           <li>
-            <Link to="/" className="text-gray-400 hover:text-primary-400 transition-colors">
+            <Link to="/" className="text-bento-text-secondary hover:text-primary-500 transition-colors">
               首頁
             </Link>
           </li>
-          <li className="text-gray-500">/</li>
+          <li className="text-bento-text-secondary">/</li>
           <li>
-            <Link to="/blog" className="text-gray-400 hover:text-primary-400 transition-colors">
+            <Link to="/blog" className="text-bento-text-secondary hover:text-primary-500 transition-colors">
               部落格
             </Link>
           </li>
-          <li className="text-gray-500">/</li>
-          <li className="text-primary-400 truncate max-w-[200px]">{post.title}</li>
+          <li className="text-bento-text-secondary">/</li>
+          <li className="text-primary-500 truncate max-w-[200px]">{post.title}</li>
         </ol>
       </nav>
 
       {/* Article Header */}
       <header className="max-w-4xl mx-auto px-4 py-8">
         <div className="mb-4">
-          <span className="px-4 py-1 bg-primary-500/20 text-primary-300 rounded-full text-sm">
+          <span className="px-4 py-1 bg-primary-500/20 text-primary-600 rounded-full text-sm">
             {post.category}
           </span>
         </div>
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bento-text mb-6 leading-tight">
           {post.title}
         </h1>
-        <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-6">
+        <div className="flex flex-wrap items-center gap-4 text-bento-text-secondary text-sm mb-6">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">陳</span>
+              <span className="text-bento-text font-bold text-sm">陳</span>
             </div>
             <span>{post.author}</span>
           </div>
@@ -148,7 +148,7 @@ const BlogPost = () => {
             <span>{post.readingTime} 分鐘閱讀</span>
           </div>
         </div>
-        <p className="text-lg text-gray-300 leading-relaxed">{post.excerpt}</p>
+        <p className="text-lg text-bento-text-secondary leading-relaxed">{post.excerpt}</p>
       </header>
 
       {/* Article Content */}
@@ -159,13 +159,13 @@ const BlogPost = () => {
         />
 
         {/* Tags */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-4">標籤</h3>
+        <div className="mt-12 pt-8 border-t border-bento-border">
+          <h3 className="text-lg font-semibold text-bento-text mb-4">標籤</h3>
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-4 py-2 bg-white/10 text-gray-300 rounded-full text-sm hover:bg-white/20 transition-colors"
+                className="px-4 py-2 bg-bento-card text-bento-text-secondary rounded-full text-sm hover:bg-bento-card-hover transition-colors"
               >
                 #{tag}
               </span>
@@ -176,21 +176,21 @@ const BlogPost = () => {
 
       {/* Author Info */}
       <section className="max-w-4xl mx-auto px-4 pb-16">
-        <div className="glass-card p-8">
-          <h3 className="text-xl font-bold text-white mb-4">關於作者</h3>
+        <div className="bg-bento-card rounded-bento-lg p-8">
+          <h3 className="text-xl font-bold text-bento-text mb-4">關於作者</h3>
           <div className="flex items-start space-x-4">
             <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center flex-shrink-0">
-              <span className="text-white font-bold text-2xl">陳</span>
+              <span className="text-bento-text font-bold text-2xl">陳</span>
             </div>
             <div>
-              <h4 className="text-lg font-bold text-white">AI講師陳彥彤</h4>
-              <p className="text-gray-400 mt-2">
+              <h4 className="text-lg font-bold text-bento-text">AI講師陳彥彤</h4>
+              <p className="text-bento-text-secondary mt-2">
                 專業人工智慧教育講師，專精於 ChatGPT 應用、Prompt Engineering、
                 機器學習、深度學習教學。超過 500+ 場企業授課經驗，學員累積 10,000+ 人。
               </p>
               <Link
                 to="/#contact"
-                className="inline-flex items-center mt-4 text-primary-400 hover:text-primary-300 transition-colors"
+                className="inline-flex items-center mt-4 text-primary-500 hover:text-primary-600 transition-colors"
               >
                 <span>預約課程諮詢</span>
                 <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -210,20 +210,20 @@ const BlogPost = () => {
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 pb-20">
-          <h3 className="text-2xl font-bold text-white mb-8">相關文章</h3>
+          <h3 className="text-2xl font-bold text-bento-text mb-8">相關文章</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPosts.map((relatedPost: BlogPostType) => (
               <article
                 key={relatedPost.id}
-                className="glass-card p-6 group hover:scale-[1.02] transition-all duration-300"
+                className="bg-bento-card rounded-bento-lg p-6 group hover:scale-[1.02] transition-all duration-300"
               >
-                <h4 className="text-lg font-bold text-white mb-3 group-hover:text-primary-300 transition-colors line-clamp-2">
+                <h4 className="text-lg font-bold text-bento-text mb-3 group-hover:text-primary-600 transition-colors line-clamp-2">
                   <Link to={`/blog/${relatedPost.slug}`}>{relatedPost.title}</Link>
                 </h4>
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">{relatedPost.excerpt}</p>
+                <p className="text-bento-text-secondary text-sm mb-4 line-clamp-2">{relatedPost.excerpt}</p>
                 <Link
                   to={`/blog/${relatedPost.slug}`}
-                  className="text-primary-400 hover:text-primary-300 text-sm inline-flex items-center"
+                  className="text-primary-500 hover:text-primary-600 text-sm inline-flex items-center"
                 >
                   閱讀更多
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -245,7 +245,7 @@ const BlogPost = () => {
       <section className="max-w-4xl mx-auto px-4 pb-20 text-center">
         <Link
           to="/blog"
-          className="inline-flex items-center px-8 py-4 bg-white/10 text-white font-medium rounded-full hover:bg-white/20 transition-all duration-300"
+          className="inline-flex items-center px-8 py-4 bg-bento-card text-bento-text font-medium rounded-full hover:bg-bento-card-hover transition-all duration-300"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

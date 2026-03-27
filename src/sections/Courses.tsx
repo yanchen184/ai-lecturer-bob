@@ -110,7 +110,7 @@ const Courses = () => {
   return (
     <section
       id="courses"
-      className="py-20 lg:py-32 relative"
+      className="py-20 lg:py-32 relative bg-white"
       aria-labelledby="courses-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,31 +119,31 @@ const Courses = () => {
           <h2 id="courses-title" className="section-title">
             <span className="gradient-text">課程服務</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-bento-text-secondary text-lg max-w-2xl mx-auto">
             程式講師陳彥彤提供專業的後端開發、前端開發、全端專案與 AI 輔助開發課程
           </p>
         </div>
 
-        {/* Courses Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Courses Grid - Bento Layout */}
+        <div className="grid md:grid-cols-2 gap-4">
           {courses.map((course, index) => (
             <article
               key={index}
-              className={`glass-card p-8 relative overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300 ${
+              className={`bg-bento-card rounded-bento-lg p-8 relative overflow-hidden hover:shadow-bento-hover hover:scale-[1.01] transition-all duration-300 ${
                 course.popular ? 'ring-2 ring-primary-500' : ''
               } ${course.official ? 'md:col-span-2' : ''}`}
             >
               {/* Badge */}
               {course.popular && (
                 <div className="absolute top-0 right-0">
-                  <div className="bg-gradient-to-r from-primary-500 to-accent-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
+                  <div className="bg-gradient-to-r from-primary-500 to-accent-500 text-white text-xs font-bold px-4 py-1 rounded-bl-bento">
                     熱門推薦
                   </div>
                 </div>
               )}
               {course.official && (
                 <div className="absolute top-0 right-0">
-                  <div className="bg-emerald-500/90 text-white text-xs font-medium px-3 py-1 rounded-bl-lg">
+                  <div className="bg-emerald-500 text-white text-xs font-medium px-3 py-1 rounded-bl-bento">
                     實際開課紀錄
                   </div>
                 </div>
@@ -153,28 +153,28 @@ const Courses = () => {
                 <div>
                   {/* Course Header */}
                   <div className="mb-6">
-                    <span className={`text-sm font-medium ${course.official ? 'text-emerald-400' : 'text-primary-400'}`}>
+                    <span className={`text-sm font-medium ${course.official ? 'text-emerald-600' : 'text-primary-500'}`}>
                       {course.subtitle}
                     </span>
-                    <h3 className="text-2xl font-bold text-white mt-1">{course.title}</h3>
+                    <h3 className="text-2xl font-bold text-bento-text mt-1">{course.title}</h3>
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-400 mb-6">{course.description}</p>
+                  <p className="text-bento-text-secondary mb-6">{course.description}</p>
 
                   {/* Features */}
                   <ul className="space-y-3 mb-6">
                     {course.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start gap-3">
                         <svg
-                          className={`w-5 h-5 flex-shrink-0 mt-0.5 ${course.official ? 'text-emerald-400' : 'text-primary-400'}`}
+                          className={`w-5 h-5 flex-shrink-0 mt-0.5 ${course.official ? 'text-emerald-500' : 'text-primary-500'}`}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-gray-300">{feature}</span>
+                        <span className="text-bento-text-secondary">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -184,20 +184,20 @@ const Courses = () => {
                   {/* Official course extra info */}
                   {course.official && course.officialMeta && (
                     <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm text-bento-text-secondary">
+                        <svg className="w-4 h-4 text-bento-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         <span>{course.officialMeta.period}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm text-bento-text-secondary">
+                        <svg className="w-4 h-4 text-bento-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         </svg>
                         <span>{course.officialMeta.location}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm text-bento-text-secondary">
+                        <svg className="w-4 h-4 text-bento-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                         <span>{course.officialMeta.source}</span>
@@ -207,13 +207,13 @@ const Courses = () => {
 
                   {/* Meta Info */}
                   <div className="flex flex-wrap gap-4 mb-6 text-sm">
-                    <div className="flex items-center gap-2 text-gray-400">
+                    <div className="flex items-center gap-2 text-bento-text-secondary">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>{course.duration}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-400">
+                    <div className="flex items-center gap-2 text-bento-text-secondary">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                       </svg>
@@ -227,7 +227,7 @@ const Courses = () => {
                       href={course.materialLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium text-sm hover:opacity-90 transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium text-sm hover:opacity-90 transition-all"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -242,7 +242,7 @@ const Courses = () => {
                       href={course.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition-colors"
+                      className="inline-flex items-center gap-2 text-emerald-600 font-medium hover:text-emerald-500 transition-colors"
                     >
                       課程資訊頁面
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,7 +252,7 @@ const Courses = () => {
                   ) : (
                     <button
                       onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="inline-flex items-center gap-2 text-primary-400 font-medium hover:text-primary-300 transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-2 text-primary-500 font-medium hover:text-primary-600 transition-colors cursor-pointer"
                     >
                       聯繫諮詢
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -268,7 +268,7 @@ const Courses = () => {
 
         {/* CTA Section */}
         <div className="mt-16 text-center">
-          <p className="text-gray-400 mb-6">
+          <p className="text-bento-text-secondary mb-6">
             需要客製化課程或企業內訓？歡迎與我聯繫討論您的需求
           </p>
           <button

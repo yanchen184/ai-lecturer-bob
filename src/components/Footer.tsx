@@ -54,30 +54,24 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-slate-950 border-t border-white/5" role="contentinfo">
-      {/* Decorative gradient line at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/50 to-transparent" />
-
-      {/* Main Footer Content */}
+    <footer className="relative bg-bento-card border-t border-bento-border" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-4">
             <Link to="/" className="flex items-center space-x-2 mb-5 group">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary-500/30 transition-shadow">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary-500/20 transition-shadow">
                 <span className="text-white font-bold text-xl">陳</span>
               </div>
               <div>
                 <span className="text-lg font-bold gradient-text">AI講師</span>
-                <span className="text-white ml-1">陳彥彤</span>
+                <span className="text-bento-text ml-1">陳彥彤</span>
               </div>
             </Link>
-            <p className="text-gray-500 text-sm leading-relaxed mb-6 max-w-sm">
+            <p className="text-bento-text-secondary text-sm leading-relaxed mb-6 max-w-sm">
               專業人工智慧教育講師，致力於將複雜的 AI 技術轉化為易懂的知識，
               幫助企業與個人掌握 AI 時代的核心競爭力。
             </p>
-
-            {/* Social Icons */}
             <div className="flex items-center space-x-3">
               {socialLinks.map((social) => (
                 <a
@@ -85,7 +79,7 @@ const Footer = () => {
                   href={social.href}
                   target={social.href.startsWith('http') ? '_blank' : undefined}
                   rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 hover:border-primary-500/30 transition-all duration-300"
+                  className="w-10 h-10 rounded-bento bg-white border border-bento-border flex items-center justify-center text-bento-text-secondary hover:text-primary-500 hover:border-primary-500/30 transition-all duration-300"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -96,26 +90,16 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">
-              快速連結
-            </h3>
+            <h3 className="text-bento-text font-semibold text-sm uppercase tracking-wider mb-5">快速連結</h3>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
                 <li key={item.label}>
                   {'to' in item && item.to ? (
-                    <Link
-                      to={item.to}
-                      className="text-gray-500 hover:text-primary-400 text-sm transition-colors duration-200 inline-flex items-center group"
-                    >
-                      <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                    <Link to={item.to} className="text-bento-text-secondary hover:text-primary-500 text-sm transition-colors duration-200">
                       {item.label}
                     </Link>
                   ) : (
-                    <a
-                      href={item.href}
-                      className="text-gray-500 hover:text-primary-400 text-sm transition-colors duration-200 inline-flex items-center group"
-                    >
-                      <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                    <a href={item.href} className="text-bento-text-secondary hover:text-primary-500 text-sm transition-colors duration-200">
                       {item.label}
                     </a>
                   )}
@@ -126,17 +110,11 @@ const Footer = () => {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">
-              服務項目
-            </h3>
+            <h3 className="text-bento-text font-semibold text-sm uppercase tracking-wider mb-5">服務項目</h3>
             <ul className="space-y-3">
               {serviceLinks.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-gray-500 hover:text-primary-400 text-sm transition-colors duration-200 inline-flex items-center group"
-                  >
-                    <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                  <a href={item.href} className="text-bento-text-secondary hover:text-primary-500 text-sm transition-colors duration-200">
                     {item.label}
                   </a>
                 </li>
@@ -144,25 +122,20 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter / Contact CTA */}
+          {/* Contact CTA */}
           <div className="lg:col-span-3">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">
-              保持聯繫
-            </h3>
-            <p className="text-gray-500 text-sm mb-4">
-              有任何培訓需求或合作想法，歡迎隨時聯繫。
-            </p>
+            <h3 className="text-bento-text font-semibold text-sm uppercase tracking-wider mb-5">保持聯繫</h3>
+            <p className="text-bento-text-secondary text-sm mb-4">有任何培訓需求或合作想法，歡迎隨時聯繫。</p>
             <a
               href="/#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-300 hover:text-white hover:bg-white/10 hover:border-primary-500/30 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-bento-border rounded-bento text-sm text-bento-text-secondary hover:text-primary-500 hover:border-primary-500/30 transition-all duration-300"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
               bobchen184@gmail.com
             </a>
-
-            <div className="mt-4 flex items-center gap-2 text-gray-600 text-xs">
+            <div className="mt-4 flex items-center gap-2 text-bento-text-secondary text-xs">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -173,20 +146,15 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-14 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-xs">
+        <div className="mt-14 pt-8 border-t border-bento-border flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-bento-text-secondary text-xs">
             &copy; {currentYear} AI講師陳彥彤. All rights reserved.
           </p>
-
           <div className="flex items-center gap-6">
-            <p className="text-gray-600 text-xs">
-              Built with React + TypeScript + Tailwind CSS
-            </p>
-
-            {/* Back to top */}
+            <p className="text-bento-text-secondary text-xs">Built with React + TypeScript + Tailwind CSS</p>
             <button
               onClick={scrollToTop}
-              className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 hover:border-primary-500/30 transition-all duration-300"
+              className="w-9 h-9 rounded-bento bg-white border border-bento-border flex items-center justify-center text-bento-text-secondary hover:text-primary-500 hover:border-primary-500/30 transition-all duration-300"
               aria-label="回到頂部"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

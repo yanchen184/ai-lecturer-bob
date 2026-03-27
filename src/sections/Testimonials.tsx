@@ -50,7 +50,7 @@ const Testimonials = () => {
           <h2 id="testimonials-title" className="section-title">
             <span className="gradient-text">學員回饋</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-bento-text-secondary text-lg max-w-2xl mx-auto">
             來自不同產業的學員與企業客戶，分享他們與程式講師陳彥彤的學習經驗
           </p>
         </div>
@@ -60,7 +60,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <article
               key={index}
-              className="glass-card p-6 hover:bg-white/15 transition-all duration-300"
+              className="bg-bento-card rounded-bento-lg p-6 hover:bg-bento-card-hover transition-all duration-300"
             >
               {/* Rating */}
               <div className="flex gap-1 mb-4">
@@ -77,20 +77,20 @@ const Testimonials = () => {
               </div>
 
               {/* Content */}
-              <blockquote className="text-gray-300 mb-6 leading-relaxed">
+              <blockquote className="text-bento-text-secondary mb-6 leading-relaxed">
                 "{testimonial.content}"
               </blockquote>
 
               {/* Author */}
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center">
-                  <span className="text-white font-bold">
+                  <span className="text-bento-text font-bold">
                     {testimonial.name.charAt(0)}
                   </span>
                 </div>
                 <div>
-                  <div className="text-white font-semibold">{testimonial.name}</div>
-                  <div className="text-gray-400 text-sm">{testimonial.role}</div>
+                  <div className="text-bento-text font-semibold">{testimonial.name}</div>
+                  <div className="text-bento-text-secondary text-sm">{testimonial.role}</div>
                 </div>
               </div>
             </article>
@@ -98,7 +98,7 @@ const Testimonials = () => {
         </div>
 
         {/* Stats */}
-        <div className="mt-16 glass-card p-8 md:p-12">
+        <div className="mt-16 bg-bento-card rounded-bento-lg p-8 md:p-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { value: '98%', label: '學員滿意度' },
@@ -110,7 +110,7 @@ const Testimonials = () => {
                 <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">
                   {stat.value}
                 </div>
-                <div className="text-gray-400">{stat.label}</div>
+                <div className="text-bento-text-secondary">{stat.label}</div>
               </div>
             ))}
           </div>

@@ -16,9 +16,9 @@ function App() {
   useEffect(() => {
     console.log(
       `%c AI講師陳彥彤 個人網站 v${VERSION}`,
-      'color: #0ea5e9; font-size: 16px; font-weight: bold;'
+      'color: #007AFF; font-size: 16px; font-weight: bold;'
     );
-    console.log('%c 技術棧: React + TypeScript + Tailwind CSS', 'color: #d946ef;');
+    console.log('%c 技術棧: React + TypeScript + Tailwind CSS', 'color: #AF52DE;');
     trackVisitor();
   }, []);
 
@@ -46,7 +46,7 @@ function App() {
   }
 
   return (
-    <div className="gradient-bg min-h-screen text-white">
+    <div className="bg-white min-h-screen text-bento-text">
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
