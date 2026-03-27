@@ -50,46 +50,48 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="py-20 lg:py-32 relative bg-slate-800/50"
+      className="py-26 lg:py-30 relative"
       aria-labelledby="skills-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bold-divider" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-26">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 id="skills-title" className="section-title">
-            <span className="gradient-text">專業技能</span>
+        <div className="mb-18">
+          <h2 id="skills-title" className="section-title text-left mb-4">
+            專業技能
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-bold-muted text-lg max-w-2xl">
             程式講師陳彥彤具備全方位的技術能力，從後端開發到 DevOps，提供最專業的教學服務
           </p>
         </div>
 
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-px bg-bold-border">
           {skillCategories.map((category, catIndex) => (
             <div
               key={catIndex}
-              className="glass-card p-6 hover:bg-white/15 transition-all duration-300"
+              className="bg-bold-bg p-8 hover:bg-bold-surface transition-colors duration-200"
             >
               {/* Category Header */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center text-white">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 bg-bold-surface border border-bold-border flex items-center justify-center text-bold-accent">
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white">{category.title}</h3>
+                <h3 className="text-xl font-bold text-bold-text">{category.title}</h3>
               </div>
 
               {/* Skills List */}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-gray-300">{skill.name}</span>
-                      <span className="text-primary-400">{skill.level}%</span>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-bold-muted text-sm">{skill.name}</span>
+                      <span className="text-bold-accent font-bold text-sm">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-1 bg-bold-border overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all duration-1000"
+                        className="h-full bg-bold-accent transition-all duration-200"
                         style={{ width: `${skill.level}%` }}
                       />
                     </div>
@@ -101,22 +103,22 @@ const Skills = () => {
         </div>
 
         {/* Frontend Skills */}
-        <div className="mt-12 glass-card p-8">
-          <h3 className="text-xl font-bold text-white text-center mb-6">前端開發技能</h3>
-          <div className="grid md:grid-cols-3 gap-6">
+        <div className="mt-px bg-bold-surface border border-bold-border p-8">
+          <h3 className="text-xl font-bold text-bold-text mb-8">前端開發技能</h3>
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               { name: 'React / TypeScript', level: 88 },
               { name: 'Tailwind CSS', level: 85 },
               { name: 'JavaScript / ES6+', level: 90 },
             ].map((skill, index) => (
               <div key={index}>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-300">{skill.name}</span>
-                  <span className="text-accent-400">{skill.level}%</span>
+                <div className="flex justify-between mb-2">
+                  <span className="text-bold-muted text-sm">{skill.name}</span>
+                  <span className="text-bold-accent font-bold text-sm">{skill.level}%</span>
                 </div>
-                <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div className="h-1 bg-bold-border overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-accent-500 to-primary-500 rounded-full transition-all duration-1000"
+                    className="h-full bg-bold-text transition-all duration-200"
                     style={{ width: `${skill.level}%` }}
                   />
                 </div>
@@ -126,9 +128,9 @@ const Skills = () => {
         </div>
 
         {/* Tech Tags */}
-        <div className="mt-16 text-center">
-          <h3 className="text-white font-semibold mb-6">其他專業領域</h3>
-          <div className="flex flex-wrap justify-center gap-3">
+        <div className="mt-18">
+          <h3 className="text-bold-text font-bold mb-6 uppercase tracking-wider text-sm">其他專業領域</h3>
+          <div className="flex flex-wrap gap-2">
             {[
               'NLP / NER 分析',
               'Hugging Face',
@@ -145,7 +147,7 @@ const Skills = () => {
             ].map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-white/10 text-gray-300 rounded-full text-sm hover:bg-white/20 transition-colors cursor-default"
+                className="px-4 py-2 bg-bold-surface border border-bold-border text-bold-muted text-sm hover:text-bold-text hover:border-bold-accent transition-colors duration-200 cursor-default"
               >
                 {tag}
               </span>
