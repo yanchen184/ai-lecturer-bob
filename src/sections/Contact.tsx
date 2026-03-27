@@ -97,14 +97,20 @@ const Contact = () => {
       className="py-20 lg:py-32 relative"
       aria-labelledby="contact-title"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-800/50 to-transparent pointer-events-none" />
+      {/* Aurora Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-aurora-deeper/50 to-transparent" />
+        <div
+          className="absolute bottom-[20%] right-[10%] w-[400px] h-[400px] rounded-full animate-aurora-breathe opacity-10"
+          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.4) 0%, transparent 70%)', animationDelay: '-3s' }}
+        />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 mb-6">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2" />
+            <span className="w-2 h-2 bg-aurora-green rounded-full animate-pulse mr-2" />
             目前開放諮詢預約
           </div>
           <h2 id="contact-title" className="section-title">
@@ -131,7 +137,7 @@ const Contact = () => {
                   key={index}
                   className="group flex items-center gap-4 p-4 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.12] rounded-2xl transition-all duration-300"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 border border-white/10 flex items-center justify-center text-primary-400 group-hover:text-primary-300 transition-colors flex-shrink-0">
+                  <div className="w-11 h-11 rounded-xl border border-white/10 flex items-center justify-center text-aurora-ice group-hover:text-aurora-ice/80 transition-colors flex-shrink-0" style={{ background: 'linear-gradient(135deg, rgba(0,210,255,0.1), rgba(122,95,255,0.1))' }}>
                     {info.icon}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -139,7 +145,7 @@ const Contact = () => {
                     {'action' in info && info.action ? (
                       <button
                         onClick={info.action}
-                        className="text-white hover:text-primary-400 transition-colors text-sm font-medium flex items-center gap-2"
+                        className="text-white hover:text-aurora-ice transition-colors text-sm font-medium flex items-center gap-2"
                       >
                         <span className="truncate">{info.value}</span>
                         <span className={`text-xs px-2 py-0.5 rounded-full transition-all duration-200 flex-shrink-0 ${
@@ -155,7 +161,7 @@ const Contact = () => {
                         href={info.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-primary-400 transition-colors text-sm font-medium"
+                        className="text-white hover:text-aurora-ice transition-colors text-sm font-medium"
                       >
                         {info.value}
                       </a>
@@ -168,7 +174,7 @@ const Contact = () => {
             </div>
 
             {/* Quick Response Status */}
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-primary-500/[0.08] to-accent-500/[0.08] border border-primary-500/10">
+            <div className="p-5 rounded-2xl border border-aurora-ice/10" style={{ background: 'linear-gradient(135deg, rgba(0,210,255,0.06), rgba(122,95,255,0.06))' }}>
               <div className="flex items-center gap-3 mb-3">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -186,7 +192,7 @@ const Contact = () => {
           <div className="lg:col-span-3">
             <div className="glass-card p-6 lg:p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 15px rgba(0,210,255,0.2)' }}>
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
@@ -255,12 +261,12 @@ const Contact = () => {
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200 appearance-none"
                       style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
                     >
-                      <option value="" className="bg-slate-800">請選擇諮詢主題</option>
-                      <option value="企業培訓" className="bg-slate-800">企業培訓</option>
-                      <option value="個人課程" className="bg-slate-800">個人課程</option>
-                      <option value="AI顧問" className="bg-slate-800">AI 顧問服務</option>
-                      <option value="合作邀約" className="bg-slate-800">合作邀約</option>
-                      <option value="其他" className="bg-slate-800">其他</option>
+                      <option value="" className="bg-aurora-dark">請選擇諮詢主題</option>
+                      <option value="企業培訓" className="bg-aurora-dark">企業培訓</option>
+                      <option value="個人課程" className="bg-aurora-dark">個人課程</option>
+                      <option value="AI顧問" className="bg-aurora-dark">AI 顧問服務</option>
+                      <option value="合作邀約" className="bg-aurora-dark">合作邀約</option>
+                      <option value="其他" className="bg-aurora-dark">其他</option>
                     </select>
                   </div>
                 </div>
@@ -283,7 +289,8 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-xl hover:from-primary-400 hover:to-accent-400 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3.5 text-white font-bold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 20px rgba(0,210,255,0.25)' }}
                 >
                   {isSubmitting ? (
                     <>

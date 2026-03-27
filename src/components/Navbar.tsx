@@ -108,7 +108,7 @@ const Navbar = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || !isHomePage
-            ? 'bg-slate-900/90 backdrop-blur-xl shadow-lg shadow-black/10'
+            ? 'bg-aurora-dark/90 backdrop-blur-xl shadow-lg shadow-black/20 border-b border-white/[0.05]'
             : 'bg-transparent'
         }`}
         role="navigation"
@@ -122,7 +122,7 @@ const Navbar = () => {
               className="flex items-center space-x-2 group flex-shrink-0"
               aria-label="回到首頁"
             >
-              <div className="w-9 h-9 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary-500/30 transition-shadow duration-300">
+              <div className="w-9 h-9 rounded-full flex items-center justify-center transition-shadow duration-300" style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 12px rgba(0,210,255,0.2)' }}>
                 <span className="text-white font-bold text-lg">陳</span>
               </div>
               <div className="hidden sm:block">
@@ -146,7 +146,7 @@ const Navbar = () => {
                 >
                   {item.label}
                   {isActive(item.href) && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-gradient-to-r from-primary-400 to-accent-400 rounded-full" />
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #00D2FF, #7A5FFF)' }} />
                   )}
                 </a>
               ))}
@@ -162,7 +162,8 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/#contact"
-                className="ml-3 px-5 py-2 text-sm bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium rounded-full hover:shadow-lg hover:shadow-primary-500/25 hover:scale-105 transition-all duration-300"
+                className="ml-3 px-5 py-2 text-sm text-white font-medium rounded-full hover:scale-105 transition-all duration-300"
+                style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 15px rgba(0,210,255,0.2)' }}
               >
                 預約諮詢
               </Link>
@@ -213,7 +214,7 @@ const Navbar = () => {
 
         {/* Menu Panel */}
         <div
-          className={`absolute top-0 right-0 w-72 h-full bg-slate-900/98 backdrop-blur-xl border-l border-white/10 transition-transform duration-300 ease-out ${
+          className={`absolute top-0 right-0 w-72 h-full bg-aurora-dark/[0.98] backdrop-blur-xl border-l border-white/[0.08] transition-transform duration-300 ease-out ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -236,7 +237,7 @@ const Navbar = () => {
                   }}
                 >
                   {isActive(item.href) && (
-                    <span className="w-1 h-5 bg-gradient-to-b from-primary-400 to-accent-400 rounded-full mr-3" />
+                    <span className="w-1 h-5 rounded-full mr-3" style={{ background: 'linear-gradient(180deg, #00D2FF, #7A5FFF)' }} />
                   )}
                   {item.label}
                 </a>
@@ -258,7 +259,8 @@ const Navbar = () => {
               <Link
                 to="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium rounded-xl text-center hover:shadow-lg transition-all duration-300"
+                className="block w-full py-3 text-white font-medium rounded-xl text-center hover:shadow-lg transition-all duration-300"
+                style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 15px rgba(0,210,255,0.2)' }}
               >
                 預約諮詢
               </Link>

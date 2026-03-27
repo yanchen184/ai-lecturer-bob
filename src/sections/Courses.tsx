@@ -130,13 +130,13 @@ const Courses = () => {
             <article
               key={index}
               className={`glass-card p-8 relative overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300 ${
-                course.popular ? 'ring-2 ring-primary-500' : ''
+                course.popular ? 'ring-1 ring-aurora-ice/40 shadow-[0_0_20px_rgba(0,210,255,0.1)]' : ''
               } ${course.official ? 'md:col-span-2' : ''}`}
             >
               {/* Badge */}
               {course.popular && (
                 <div className="absolute top-0 right-0">
-                  <div className="bg-gradient-to-r from-primary-500 to-accent-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
+                  <div className="text-white text-xs font-bold px-4 py-1 rounded-bl-lg" style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)' }}>
                     熱門推薦
                   </div>
                 </div>
@@ -153,7 +153,7 @@ const Courses = () => {
                 <div>
                   {/* Course Header */}
                   <div className="mb-6">
-                    <span className={`text-sm font-medium ${course.official ? 'text-emerald-400' : 'text-primary-400'}`}>
+                    <span className={`text-sm font-medium ${course.official ? 'text-emerald-400' : 'text-aurora-ice'}`}>
                       {course.subtitle}
                     </span>
                     <h3 className="text-2xl font-bold text-white mt-1">{course.title}</h3>
@@ -227,7 +227,8 @@ const Courses = () => {
                       href={course.materialLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium text-sm hover:opacity-90 transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white font-medium text-sm hover:opacity-90 transition-all"
+                      style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 15px rgba(0,210,255,0.2)' }}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -252,7 +253,7 @@ const Courses = () => {
                   ) : (
                     <button
                       onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="inline-flex items-center gap-2 text-primary-400 font-medium hover:text-primary-300 transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-2 text-aurora-ice font-medium hover:text-aurora-ice/80 transition-colors cursor-pointer"
                     >
                       聯繫諮詢
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

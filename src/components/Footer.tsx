@@ -54,9 +54,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-slate-950 border-t border-white/5" role="contentinfo">
-      {/* Decorative gradient line at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/50 to-transparent" />
+    <footer className="relative bg-aurora-dark border-t border-white/[0.05]" role="contentinfo">
+      {/* Decorative aurora gradient line at top */}
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, #00D2FF44, #7A5FFF44, #FF6B9D44, transparent)' }} />
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
@@ -64,7 +64,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-4">
             <Link to="/" className="flex items-center space-x-2 mb-5 group">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary-500/30 transition-shadow">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center transition-shadow" style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 12px rgba(0,210,255,0.2)' }}>
                 <span className="text-white font-bold text-xl">陳</span>
               </div>
               <div>
@@ -85,7 +85,7 @@ const Footer = () => {
                   href={social.href}
                   target={social.href.startsWith('http') ? '_blank' : undefined}
                   rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 hover:border-primary-500/30 transition-all duration-300"
+                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 hover:border-aurora-ice/30 transition-all duration-300"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -105,17 +105,17 @@ const Footer = () => {
                   {'to' in item && item.to ? (
                     <Link
                       to={item.to}
-                      className="text-gray-500 hover:text-primary-400 text-sm transition-colors duration-200 inline-flex items-center group"
+                      className="text-gray-500 hover:text-aurora-ice text-sm transition-colors duration-200 inline-flex items-center group"
                     >
-                      <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                      <span className="w-0 group-hover:w-2 h-px bg-aurora-ice mr-0 group-hover:mr-2 transition-all duration-200" />
                       {item.label}
                     </Link>
                   ) : (
                     <a
                       href={item.href}
-                      className="text-gray-500 hover:text-primary-400 text-sm transition-colors duration-200 inline-flex items-center group"
+                      className="text-gray-500 hover:text-aurora-ice text-sm transition-colors duration-200 inline-flex items-center group"
                     >
-                      <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                      <span className="w-0 group-hover:w-2 h-px bg-aurora-ice mr-0 group-hover:mr-2 transition-all duration-200" />
                       {item.label}
                     </a>
                   )}
@@ -134,9 +134,9 @@ const Footer = () => {
                 <li key={item.label}>
                   <a
                     href={item.href}
-                    className="text-gray-500 hover:text-primary-400 text-sm transition-colors duration-200 inline-flex items-center group"
+                    className="text-gray-500 hover:text-aurora-ice text-sm transition-colors duration-200 inline-flex items-center group"
                   >
-                    <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                    <span className="w-0 group-hover:w-2 h-px bg-aurora-ice mr-0 group-hover:mr-2 transition-all duration-200" />
                     {item.label}
                   </a>
                 </li>
@@ -154,7 +154,7 @@ const Footer = () => {
             </p>
             <a
               href="/#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-300 hover:text-white hover:bg-white/10 hover:border-primary-500/30 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-300 hover:text-white hover:bg-white/10 hover:border-aurora-ice/30 transition-all duration-300"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -186,7 +186,7 @@ const Footer = () => {
             {/* Back to top */}
             <button
               onClick={scrollToTop}
-              className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 hover:border-primary-500/30 transition-all duration-300"
+              className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 hover:border-aurora-ice/30 transition-all duration-300"
               aria-label="回到頂部"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

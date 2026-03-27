@@ -5,22 +5,48 @@ const Hero = () => {
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
       aria-label="首頁橫幅"
     >
-      {/* Background Effects */}
+      {/* Aurora Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary-500/10 to-accent-500/10 rounded-full blur-3xl" />
+        {/* Ice blue blob - top left */}
+        <div
+          className="absolute top-[10%] left-[15%] w-[500px] h-[500px] rounded-full animate-aurora-breathe"
+          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.25) 0%, transparent 70%)' }}
+        />
+        {/* Purple blob - center right */}
+        <div
+          className="absolute top-[30%] right-[10%] w-[600px] h-[600px] rounded-full animate-float-slow"
+          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.2) 0%, transparent 70%)', animationDelay: '-2s' }}
+        />
+        {/* Pink blob - bottom center */}
+        <div
+          className="absolute bottom-[15%] left-[40%] w-[400px] h-[400px] rounded-full animate-float-slower"
+          style={{ background: 'radial-gradient(circle, rgba(255,107,157,0.15) 0%, transparent 70%)', animationDelay: '-4s' }}
+        />
+        {/* Green accent blob - bottom left */}
+        <div
+          className="absolute bottom-[25%] left-[5%] w-[300px] h-[300px] rounded-full animate-aurora-drift"
+          style={{ background: 'radial-gradient(circle, rgba(195,255,104,0.1) 0%, transparent 70%)' }}
+        />
+        {/* Large sweeping aurora band */}
+        <div
+          className="absolute top-[20%] left-[-10%] w-[120%] h-[300px] rotate-[-15deg] animate-aurora-breathe opacity-20"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(0,210,255,0.3), rgba(122,95,255,0.3), rgba(255,107,157,0.2), transparent)',
+            filter: 'blur(60px)',
+            animationDelay: '-3s',
+          }}
+        />
       </div>
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50" />
+      {/* Subtle star-like dots */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMC41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMikiLz48L3N2Zz4=')] opacity-40" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Main Content */}
         <div className="animate-fade-in">
           {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 mb-8">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2" />
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-xl border border-white/[0.1] mb-8">
+            <span className="w-2 h-2 bg-aurora-green rounded-full animate-pulse mr-2" />
             <span className="text-sm text-gray-300">目前開放企業培訓與程式教學諮詢</span>
           </div>
 
@@ -33,15 +59,15 @@ const Hero = () => {
 
           {/* Subtitle - SEO keywords */}
           <p className="text-xl sm:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-            <strong className="text-primary-400">資深後端工程師</strong> / <strong className="text-accent-400">技術講師</strong>
+            <strong className="text-aurora-ice">資深後端工程師</strong> / <strong className="text-aurora-purple">技術講師</strong>
           </p>
 
           {/* Description with keywords */}
           <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-            專精於 <span className="text-primary-300">Spring Boot</span>、
-            <span className="text-accent-300">React</span>、
-            <span className="text-primary-300">MySQL</span>、
-            <span className="text-accent-300">Redis</span> 開發教學
+            專精於 <span className="text-aurora-ice">Spring Boot</span>、
+            <span className="text-aurora-purple">React</span>、
+            <span className="text-aurora-ice">MySQL</span>、
+            <span className="text-aurora-purple">Redis</span> 開發教學
             <br />
             <strong className="text-white">5-6 年</strong>電商核心系統開發經驗，
             <strong className="text-white">10-50 場</strong>企業授課經歷
@@ -49,9 +75,9 @@ const Hero = () => {
 
           {/* Quote */}
           <div className="mb-8 text-gray-300 italic">
-            <span className="text-primary-400">"</span>
+            <span className="text-aurora-pink">"</span>
             工程師不是寫 code 的人，是解決問題的人。
-            <span className="text-primary-400">"</span>
+            <span className="text-aurora-pink">"</span>
           </div>
 
           {/* CTA Buttons */}
@@ -67,7 +93,7 @@ const Hero = () => {
             </a>
             <a
               href="#courses"
-              className="px-8 py-4 border border-white/30 text-white font-medium rounded-full hover:bg-white/10 transition-all duration-300"
+              className="px-8 py-4 border border-aurora-purple/40 text-white font-medium rounded-full hover:bg-aurora-purple/10 hover:border-aurora-purple/60 hover:shadow-[0_0_20px_rgba(122,95,255,0.15)] transition-all duration-300"
             >
               瀏覽課程內容
             </a>
@@ -93,7 +119,7 @@ const Hero = () => {
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <a href="#about" aria-label="向下滾動">
-          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 text-aurora-ice/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </a>
