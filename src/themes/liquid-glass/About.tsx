@@ -1,4 +1,11 @@
 const About = () => {
+  const highlights = [
+    { icon: '>', title: '後端專精', desc: 'Spring Boot 企業級開發', rotate: '1.2deg' },
+    { icon: '>', title: '電商經驗', desc: '核心系統實戰經歷', rotate: '-0.8deg' },
+    { icon: '>', title: '實戰導向', desc: '即學即用的技能', rotate: '0.6deg' },
+    { icon: '>', title: '全端能力', desc: '前後端整合開發', rotate: '-1.5deg' },
+  ];
+
   return (
     <section
       id="about"
@@ -12,16 +19,23 @@ const About = () => {
             <div className="relative z-10">
               {/* Profile Card - sketch style */}
               <div className="glass-card p-8 md:p-12" style={{ transform: 'rotate(-0.8deg)' }}>
-                {/* Sketched circle avatar */}
-                <div className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 sketch-circle flex items-center justify-center"
+                {/* Sketched circle avatar — no gradient ring */}
+                <div
+                  className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 sketch-circle flex items-center justify-center"
                   style={{ background: 'var(--paper-white)' }}
                 >
-                  <span className="text-5xl md:text-6xl font-bold" style={{ color: 'var(--marker-black)', fontFamily: "'Lora', Georgia, serif" }}>
+                  <span
+                    className="text-5xl md:text-6xl font-bold"
+                    style={{ color: 'var(--marker-black)', fontFamily: 'var(--font-body)' }}
+                  >
                     彥
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-semibold text-center mb-2 tracking-tight" style={{ color: 'var(--marker-black)' }}>
+                <h3
+                  className="text-2xl font-semibold text-center mb-2 tracking-tight"
+                  style={{ color: 'var(--marker-black)', fontFamily: 'var(--font-body)' }}
+                >
                   陳彥彤
                 </h3>
                 <p className="text-center mb-4 mono-label">
@@ -30,7 +44,10 @@ const About = () => {
 
                 {/* Quote */}
                 <div className="text-center mb-6 px-4">
-                  <p className="italic text-lg" style={{ color: 'var(--pencil-grey)', fontFamily: "'Lora', Georgia, serif" }}>
+                  <p
+                    className="italic text-lg"
+                    style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-body)' }}
+                  >
                     <span style={{ color: 'var(--kraft-brown)' }}>&ldquo;</span>
                     工程師不是寫 code 的人，是解決問題的人。
                     <span style={{ color: 'var(--kraft-brown)' }}>&rdquo;</span>
@@ -72,7 +89,9 @@ const About = () => {
 
           {/* Content Side */}
           <div>
-            <p className="mono-label mb-3" style={{ transform: 'rotate(-0.3deg)' }}>{'/* about me */'}</p>
+            <p className="mono-label mb-3" style={{ transform: 'rotate(-0.3deg)' }}>
+              {'/* about me */'}
+            </p>
             <h2 id="about-title" className="section-title text-left">
               <span className="gradient-text">關於我</span>
             </h2>
@@ -114,20 +133,27 @@ const About = () => {
 
             {/* Highlights - sticky note cards */}
             <div className="mt-8 grid grid-cols-2 gap-4">
-              {[
-                { icon: '💻', title: '後端專精', desc: 'Spring Boot 企業級開發', rotate: '1.2deg' },
-                { icon: '🏢', title: '電商經驗', desc: '核心系統實戰經歷', rotate: '-0.8deg' },
-                { icon: '🔧', title: '實戰導向', desc: '即學即用的技能', rotate: '0.6deg' },
-                { icon: '🌐', title: '全端能力', desc: '前後端整合開發', rotate: '-1.5deg' },
-              ].map((item, index) => (
+              {highlights.map((item, index) => (
                 <div
                   key={index}
                   className="sticky-note p-4"
                   style={{ transform: `rotate(${item.rotate})` }}
                 >
-                  <span className="text-2xl mb-2 block">{item.icon}</span>
-                  <h4 className="font-semibold text-sm" style={{ color: 'var(--marker-black)' }}>{item.title}</h4>
-                  <p className="text-sm" style={{ color: 'var(--pencil-grey)' }}>{item.desc}</p>
+                  <span
+                    className="text-lg mb-2 block font-bold"
+                    style={{ color: 'var(--kraft-brown)', fontFamily: 'var(--font-mono)' }}
+                  >
+                    {item.icon}
+                  </span>
+                  <h4
+                    className="font-semibold text-sm"
+                    style={{ color: 'var(--marker-black)' }}
+                  >
+                    {item.title}
+                  </h4>
+                  <p className="text-sm" style={{ color: 'var(--pencil-grey)' }}>
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>

@@ -122,7 +122,9 @@ const Courses = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="mono-label mb-3" style={{ transform: 'rotate(-0.4deg)' }}>{'/* courses */'}</p>
+          <p className="mono-label mb-3" style={{ transform: 'rotate(-0.4deg)' }}>
+            {'/* courses */'}
+          </p>
           <h2 id="courses-title" className="section-title">
             <span className="gradient-text">課程服務</span>
           </h2>
@@ -145,15 +147,13 @@ const Courses = () => {
                 borderWidth: course.popular ? '2px' : '1px',
               }}
             >
-              {/* Badge */}
+              {/* Popular Badge — marker highlight style */}
               {course.popular && (
                 <div className="absolute top-0 right-0">
                   <div
-                    className="text-xs font-bold px-4 py-1.5"
+                    className="marker-highlight text-xs font-bold px-4 py-1.5"
                     style={{
-                      background: 'var(--marker-yellow)',
-                      color: 'var(--marker-black)',
-                      fontFamily: "'Courier Prime', monospace",
+                      fontFamily: 'var(--font-mono)',
                       transform: 'rotate(2deg)',
                     }}
                   >
@@ -161,6 +161,7 @@ const Courses = () => {
                   </div>
                 </div>
               )}
+              {/* Official Badge */}
               {course.official && (
                 <div className="absolute top-0 right-0">
                   <div
@@ -168,7 +169,7 @@ const Courses = () => {
                     style={{
                       background: 'var(--kraft-brown)',
                       color: '#FFFFFF',
-                      fontFamily: "'Courier Prime', monospace",
+                      fontFamily: 'var(--font-mono)',
                       transform: 'rotate(1deg)',
                     }}
                   >
@@ -181,22 +182,37 @@ const Courses = () => {
                 <div>
                   {/* Course Header */}
                   <div className="mb-6">
-                    <span className="mono-label" style={{ color: course.official ? 'var(--kraft-brown)' : 'var(--pencil-grey)' }}>
+                    <span
+                      className="mono-label"
+                      style={{ color: course.official ? 'var(--kraft-brown)' : 'var(--pencil-grey)' }}
+                    >
                       {course.subtitle}
                     </span>
-                    <h3 className="text-2xl font-semibold mt-1 tracking-tight" style={{ color: 'var(--marker-black)' }}>
+                    <h3
+                      className="text-2xl font-semibold mt-1 tracking-tight"
+                      style={{ color: 'var(--marker-black)' }}
+                    >
                       {course.title}
                     </h3>
                   </div>
 
                   {/* Description */}
-                  <p className="mb-6" style={{ color: 'var(--pencil-grey)' }}>{course.description}</p>
+                  <p className="mb-6" style={{ color: 'var(--pencil-grey)' }}>
+                    {course.description}
+                  </p>
 
                   {/* Features */}
                   <ul className="space-y-3 mb-6">
                     {course.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start gap-3">
-                        <span className="mt-1 flex-shrink-0" style={{ color: 'var(--kraft-brown)', fontFamily: "'Courier Prime', monospace", fontSize: '0.875rem' }}>
+                        <span
+                          className="mt-1 flex-shrink-0"
+                          style={{
+                            color: 'var(--kraft-brown)',
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.875rem',
+                          }}
+                        >
                           {'>'}
                         </span>
                         <span style={{ color: 'var(--pencil-grey)' }}>{feature}</span>
@@ -254,10 +270,10 @@ const Courses = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold"
                       style={{
-                        border: '1px dashed var(--pencil-grey)',
+                        border: '1px dashed var(--kraft-brown)',
                         borderRadius: '2px',
                         color: 'var(--marker-black)',
-                        fontFamily: "'Courier Prime', monospace",
+                        fontFamily: 'var(--font-mono)',
                       }}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

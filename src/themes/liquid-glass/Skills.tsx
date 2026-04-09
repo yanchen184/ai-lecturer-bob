@@ -50,22 +50,50 @@ const Skills = () => {
     },
   ];
 
+  const frontendSkills = [
+    { name: 'React / TypeScript', level: 88 },
+    { name: 'Tailwind CSS', level: 85 },
+    { name: 'JavaScript / ES6+', level: 90 },
+  ];
+
+  const tags = [
+    'NLP / NER 分析',
+    'Hugging Face',
+    'API 設計',
+    '事件驅動架構',
+    '高併發系統設計',
+    '技術文件撰寫',
+    '簡報技巧',
+    '課程設計',
+    '企業顧問',
+    'ChatGPT 輔助開發',
+    'Git Flow',
+    'Agile / Scrum',
+  ];
+
+  const tagRotations = [
+    '-1deg', '0.5deg', '-0.3deg', '1deg', '-0.7deg', '0.8deg',
+    '-0.5deg', '1.2deg', '-1.1deg', '0.4deg', '-0.8deg', '0.6deg',
+  ];
+
   return (
     <section
       id="skills"
       className="py-20 lg:py-32 relative"
       aria-labelledby="skills-title"
     >
-      {/* Top divider - hand-drawn feel */}
+      {/* Top divider */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-px"
-        style={{ borderTop: '1px dashed var(--pencil-grey)', opacity: 0.3 }}
+        style={{ borderTop: '1px dashed var(--kraft-brown)', opacity: 0.4 }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="mono-label mb-3" style={{ transform: 'rotate(0.5deg)' }}>{'/* skills */'}</p>
+          <p className="mono-label mb-3" style={{ transform: 'rotate(0.5deg)' }}>
+            {'/* skills */'}
+          </p>
           <h2 id="skills-title" className="section-title">
             <span className="gradient-text">專業技能</span>
           </h2>
@@ -90,7 +118,10 @@ const Skills = () => {
                 >
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-semibold tracking-tight" style={{ color: 'var(--marker-black)' }}>
+                <h3
+                  className="text-xl font-semibold tracking-tight"
+                  style={{ color: 'var(--marker-black)' }}
+                >
                   {category.title}
                 </h3>
               </div>
@@ -100,14 +131,23 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between mb-1.5">
-                      <span className="text-sm" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
+                      <span
+                        className="text-sm"
+                        style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}
+                      >
                         {skill.name}
                       </span>
-                      <span className="text-sm font-medium" style={{ color: 'var(--kraft-brown)', fontFamily: "'Courier Prime', monospace" }}>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: 'var(--kraft-brown)', fontFamily: 'var(--font-mono)' }}
+                      >
                         {skill.level}%
                       </span>
                     </div>
-                    <div className="h-2 rounded-none overflow-hidden" style={{ background: '#EEEDE9' }}>
+                    <div
+                      className="h-2 rounded-none overflow-hidden"
+                      style={{ background: '#EEEDE9' }}
+                    >
                       <div
                         className="h-full rounded-none"
                         style={{
@@ -125,25 +165,33 @@ const Skills = () => {
 
         {/* Frontend Skills */}
         <div className="mt-10 glass-card p-8" style={{ transform: 'rotate(0.3deg)' }}>
-          <h3 className="text-xl font-semibold text-center mb-6 tracking-tight" style={{ color: 'var(--marker-black)' }}>
+          <h3
+            className="text-xl font-semibold text-center mb-6 tracking-tight"
+            style={{ color: 'var(--marker-black)' }}
+          >
             前端開發技能
           </h3>
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { name: 'React / TypeScript', level: 88 },
-              { name: 'Tailwind CSS', level: 85 },
-              { name: 'JavaScript / ES6+', level: 90 },
-            ].map((skill, index) => (
+            {frontendSkills.map((skill, index) => (
               <div key={index}>
                 <div className="flex justify-between mb-1.5">
-                  <span className="text-sm" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
+                  <span
+                    className="text-sm"
+                    style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}
+                  >
                     {skill.name}
                   </span>
-                  <span className="text-sm font-medium" style={{ color: 'var(--kraft-brown)', fontFamily: "'Courier Prime', monospace" }}>
+                  <span
+                    className="text-sm font-medium"
+                    style={{ color: 'var(--kraft-brown)', fontFamily: 'var(--font-mono)' }}
+                  >
                     {skill.level}%
                   </span>
                 </div>
-                <div className="h-2 rounded-none overflow-hidden" style={{ background: '#EEEDE9' }}>
+                <div
+                  className="h-2 rounded-none overflow-hidden"
+                  style={{ background: '#EEEDE9' }}
+                >
                   <div
                     className="h-full rounded-none"
                     style={{
@@ -159,37 +207,26 @@ const Skills = () => {
 
         {/* Tech Tags - sticky note style */}
         <div className="mt-16 text-center">
-          <h3 className="font-semibold mb-6 tracking-tight" style={{ color: 'var(--marker-black)' }}>其他專業領域</h3>
+          <h3
+            className="font-semibold mb-6 tracking-tight"
+            style={{ color: 'var(--marker-black)' }}
+          >
+            其他專業領域
+          </h3>
           <div className="flex flex-wrap justify-center gap-3">
-            {[
-              'NLP / NER 分析',
-              'Hugging Face',
-              'API 設計',
-              '事件驅動架構',
-              '高併發系統設計',
-              '技術文件撰寫',
-              '簡報技巧',
-              '課程設計',
-              '企業顧問',
-              'ChatGPT 輔助開發',
-              'Git Flow',
-              'Agile / Scrum',
-            ].map((tag, index) => {
-              const rotations = ['-1deg', '0.5deg', '-0.3deg', '1deg', '-0.7deg', '0.8deg', '-0.5deg', '1.2deg', '-1.1deg', '0.4deg', '-0.8deg', '0.6deg'];
-              return (
-                <span
-                  key={index}
-                  className="sticky-note px-4 py-2 text-sm cursor-default"
-                  style={{
-                    color: 'var(--marker-black)',
-                    fontFamily: "'Courier Prime', monospace",
-                    transform: `rotate(${rotations[index % rotations.length]})`,
-                  }}
-                >
-                  {tag}
-                </span>
-              );
-            })}
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                className="sticky-note px-4 py-2 text-sm cursor-default"
+                style={{
+                  color: 'var(--marker-black)',
+                  fontFamily: 'var(--font-mono)',
+                  transform: `rotate(${tagRotations[index % tagRotations.length]})`,
+                }}
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </div>

@@ -106,14 +106,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 ${
-          isScrolled || !isHomePage
-            ? ''
-            : ''
-        }`}
+        className="fixed top-0 left-0 right-0 z-50"
         style={{
           background: isScrolled || !isHomePage ? 'var(--paper-white)' : 'transparent',
-          borderBottom: isScrolled || !isHomePage ? '1px dashed var(--pencil-grey)' : 'none',
+          borderBottom: isScrolled || !isHomePage ? '1px dashed var(--kraft-brown)' : 'none',
         }}
         role="navigation"
         aria-label="主要導覽"
@@ -130,17 +126,24 @@ const Navbar = () => {
                 className="w-9 h-9 flex items-center justify-center sketch-circle"
                 style={{ background: 'var(--paper-white)' }}
               >
-                <span className="font-bold text-lg" style={{ color: 'var(--marker-black)' }}>陳</span>
+                <span className="font-bold text-lg" style={{ color: 'var(--marker-black)' }}>
+                  陳
+                </span>
               </div>
               <div className="hidden sm:block">
-                <span className="text-base font-semibold" style={{ color: 'var(--marker-black)', fontFamily: "'Courier Prime', monospace" }}>
+                <span
+                  className="text-base font-semibold"
+                  style={{ color: 'var(--marker-black)', fontFamily: 'var(--font-mono)' }}
+                >
                   AI講師
                 </span>
-                <span className="ml-1 text-sm" style={{ color: 'var(--pencil-grey)' }}>陳彥彤</span>
+                <span className="ml-1 text-sm" style={{ color: 'var(--pencil-grey)' }}>
+                  陳彥彤
+                </span>
               </div>
             </Link>
 
-            {/* Desktop Menu */}
+            {/* Desktop Menu — NO blur, NO backdrop-filter */}
             <div className="hidden lg:flex items-center space-x-0.5">
               {homeNavItems.map((item) => (
                 <a
@@ -149,7 +152,7 @@ const Navbar = () => {
                   onClick={(e) => handleHomeNavClick(e, item.href)}
                   className="relative px-3 py-1.5 text-sm"
                   style={{
-                    fontFamily: "'Courier Prime', monospace",
+                    fontFamily: 'var(--font-mono)',
                     color: isActive(item.href) ? 'var(--marker-black)' : 'var(--pencil-grey)',
                     background: isActive(item.href) ? 'var(--marker-yellow)' : 'transparent',
                     fontWeight: isActive(item.href) ? 700 : 400,
@@ -164,7 +167,7 @@ const Navbar = () => {
                 to="/blog"
                 className="px-3 py-1.5 text-sm"
                 style={{
-                  fontFamily: "'Courier Prime', monospace",
+                  fontFamily: 'var(--font-mono)',
                   color: location.pathname.startsWith('/blog') ? 'var(--marker-black)' : 'var(--pencil-grey)',
                   background: location.pathname.startsWith('/blog') ? 'var(--marker-yellow)' : 'transparent',
                   borderRadius: '2px',
@@ -176,10 +179,10 @@ const Navbar = () => {
                 to="/#contact"
                 className="ml-3 px-5 py-2 text-sm font-bold"
                 style={{
-                  border: '2px dotted var(--marker-black)',
+                  border: '1px dashed var(--marker-black)',
                   borderRadius: '2px',
                   color: 'var(--marker-black)',
-                  fontFamily: "'Courier Prime', monospace",
+                  fontFamily: 'var(--font-mono)',
                   background: 'transparent',
                 }}
               >
@@ -197,19 +200,19 @@ const Navbar = () => {
             >
               <div className="w-5 h-4 flex flex-col justify-between">
                 <span
-                  className={`block h-0.5 rounded-full transition-all duration-300 origin-center ${
+                  className={`block h-0.5 origin-center ${
                     isMobileMenuOpen ? 'rotate-45 translate-y-[7px]' : ''
                   }`}
                   style={{ background: 'var(--marker-black)' }}
                 />
                 <span
-                  className={`block h-0.5 rounded-full transition-all duration-300 ${
-                    isMobileMenuOpen ? 'opacity-0 scale-0' : ''
+                  className={`block h-0.5 ${
+                    isMobileMenuOpen ? 'opacity-0' : ''
                   }`}
                   style={{ background: 'var(--marker-black)' }}
                 />
                 <span
-                  className={`block h-0.5 rounded-full transition-all duration-300 origin-center ${
+                  className={`block h-0.5 origin-center ${
                     isMobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''
                   }`}
                   style={{ background: 'var(--marker-black)' }}
@@ -220,51 +223,46 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay — paper bg, NO blur */}
       <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
+        className={`fixed inset-0 z-40 lg:hidden ${
           isMobileMenuOpen ? 'visible' : 'invisible'
         }`}
       >
-        {/* Backdrop */}
+        {/* Backdrop — solid paper, no blur */}
         <div
-          className={`absolute inset-0 transition-opacity duration-300 ${
+          className={`absolute inset-0 ${
             isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
           }`}
-          style={{ background: 'rgba(250, 250, 248, 0.8)' }}
+          style={{ background: 'rgba(250, 250, 248, 0.85)' }}
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
-        {/* Menu Panel */}
+        {/* Menu Panel — paper bg, dashed border */}
         <div
-          className={`absolute top-0 right-0 w-72 h-full transition-transform duration-300 ease-out ${
+          className={`absolute top-0 right-0 w-72 h-full ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           style={{
             background: 'var(--paper-white)',
-            borderLeft: '1px dashed var(--pencil-grey)',
+            borderLeft: '1px dashed var(--kraft-brown)',
           }}
         >
           <div className="flex flex-col h-full pt-20 pb-8 px-6">
             <div className="flex-1 space-y-1">
-              {homeNavItems.map((item, index) => (
+              {homeNavItems.map((item) => (
                 <a
                   key={item.href}
                   href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
                   onClick={(e) => handleHomeNavClick(e, item.href)}
                   className="flex items-center px-4 py-3 text-base"
                   style={{
-                    fontFamily: "'Courier Prime', monospace",
+                    fontFamily: 'var(--font-mono)',
                     color: isActive(item.href) ? 'var(--marker-black)' : 'var(--pencil-grey)',
                     background: isActive(item.href) ? 'var(--marker-yellow)' : 'transparent',
                     fontWeight: isActive(item.href) ? 700 : 400,
                     borderRadius: '2px',
-                    transitionDelay: isMobileMenuOpen ? `${index * 30}ms` : '0ms',
-                    opacity: isMobileMenuOpen ? 1 : 0,
-                    transform: isMobileMenuOpen
-                      ? isActive(item.href) ? 'rotate(-0.5deg)' : 'translateX(0)'
-                      : 'translateX(20px)',
-                    transition: 'opacity 0.3s, transform 0.3s',
+                    transform: isActive(item.href) ? 'rotate(-0.5deg)' : 'none',
                   }}
                 >
                   {isActive(item.href) && (
@@ -281,7 +279,7 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center px-4 py-3 text-base"
                 style={{
-                  fontFamily: "'Courier Prime', monospace",
+                  fontFamily: 'var(--font-mono)',
                   color: location.pathname.startsWith('/blog') ? 'var(--marker-black)' : 'var(--pencil-grey)',
                   background: location.pathname.startsWith('/blog') ? 'var(--marker-yellow)' : 'transparent',
                   borderRadius: '2px',
@@ -291,16 +289,16 @@ const Navbar = () => {
               </Link>
             </div>
 
-            <div className="pt-4" style={{ borderTop: '1px dashed var(--pencil-grey)' }}>
+            <div className="pt-4" style={{ borderTop: '1px dashed var(--kraft-brown)' }}>
               <Link
                 to="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block w-full py-3 font-bold text-center"
                 style={{
-                  border: '2px dotted var(--marker-black)',
+                  border: '1px dashed var(--marker-black)',
                   borderRadius: '2px',
                   color: 'var(--marker-black)',
-                  fontFamily: "'Courier Prime', monospace",
+                  fontFamily: 'var(--font-mono)',
                   background: 'transparent',
                 }}
               >

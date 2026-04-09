@@ -88,14 +88,16 @@ const Contact = () => {
     },
   ];
 
-  const inputStyle = {
+  const contactCardRotations = ['0.5deg', '-0.3deg', '0.7deg'];
+
+  const inputStyle: React.CSSProperties = {
     width: '100%',
     padding: '0.75rem 1rem',
-    background: 'var(--paper-white)',
+    background: 'var(--form-paper)',
     border: '1px dashed var(--pencil-grey)',
     borderRadius: '2px',
     color: 'var(--marker-black)',
-    fontFamily: "'Lora', Georgia, serif",
+    fontFamily: 'var(--font-body)',
     fontSize: '1rem',
   };
 
@@ -111,10 +113,10 @@ const Contact = () => {
           <div
             className="inline-flex items-center px-4 py-2 mb-6 text-sm"
             style={{
-              border: '1px dashed var(--pencil-grey)',
+              border: '1px dashed var(--kraft-brown)',
               borderRadius: '2px',
               color: 'var(--pencil-grey)',
-              fontFamily: "'Courier Prime', monospace",
+              fontFamily: 'var(--font-mono)',
             }}
           >
             <span className="w-2 h-2 rounded-full mr-2" style={{ background: 'var(--kraft-brown)' }} />
@@ -132,7 +134,12 @@ const Contact = () => {
         <div className="grid lg:grid-cols-5 gap-12">
           {/* Contact Info - 2 cols */}
           <div className="lg:col-span-2">
-            <h3 className="text-xl font-semibold mb-3 tracking-tight" style={{ color: 'var(--marker-black)' }}>聯繫方式</h3>
+            <h3
+              className="text-xl font-semibold mb-3 tracking-tight"
+              style={{ color: 'var(--marker-black)' }}
+            >
+              聯繫方式
+            </h3>
             <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--pencil-grey)' }}>
               無論是企業培訓、個人課程諮詢，或是 AI 導入顧問服務，
               都歡迎透過以下方式與我聯繫。我會在 24 小時內回覆您的訊息。
@@ -140,64 +147,63 @@ const Contact = () => {
 
             {/* Contact Cards */}
             <div className="space-y-3 mb-8">
-              {contactInfo.map((info, index) => {
-                const rotations = ['0.5deg', '-0.3deg', '0.7deg'];
-                return (
+              {contactInfo.map((info, index) => (
+                <div
+                  key={index}
+                  className="group flex items-center gap-4 p-4"
+                  style={{
+                    border: '1px dashed var(--kraft-brown)',
+                    borderRadius: '2px',
+                    background: '#FFFFFF',
+                    transform: `rotate(${contactCardRotations[index]})`,
+                  }}
+                >
                   <div
-                    key={index}
-                    className="group flex items-center gap-4 p-4"
-                    style={{
-                      border: '1px dashed var(--pencil-grey)',
-                      borderRadius: '2px',
-                      background: '#FFFFFF',
-                      transform: `rotate(${rotations[index]})`,
-                    }}
+                    className="w-11 h-11 flex items-center justify-center flex-shrink-0 sketch-circle"
+                    style={{ color: 'var(--kraft-brown)' }}
                   >
-                    <div
-                      className="w-11 h-11 flex items-center justify-center flex-shrink-0 sketch-circle"
-                      style={{ color: 'var(--kraft-brown)' }}
-                    >
-                      {info.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-xs mb-0.5 mono-label">{info.label}</div>
-                      {'action' in info && info.action ? (
-                        <button
-                          onClick={info.action}
-                          className="text-sm font-medium flex items-center gap-2"
-                          style={{ color: 'var(--marker-black)' }}
-                        >
-                          <span className="truncate">{info.value}</span>
-                          <span
-                            className="text-xs px-2 py-0.5 flex-shrink-0"
-                            style={{
-                              background: emailCopied ? 'var(--marker-yellow)' : 'var(--paper-white)',
-                              border: '1px dashed var(--pencil-grey)',
-                              borderRadius: '2px',
-                              fontFamily: "'Courier Prime', monospace",
-                              color: 'var(--pencil-grey)',
-                            }}
-                          >
-                            {info.actionLabel}
-                          </span>
-                        </button>
-                      ) : 'link' in info && info.link ? (
-                        <a
-                          href={info.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm font-medium hand-underline"
-                          style={{ color: 'var(--marker-black)' }}
-                        >
-                          {info.value}
-                        </a>
-                      ) : (
-                        <span className="text-sm font-medium" style={{ color: 'var(--marker-black)' }}>{info.value}</span>
-                      )}
-                    </div>
+                    {info.icon}
                   </div>
-                );
-              })}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs mb-0.5 mono-label">{info.label}</div>
+                    {'action' in info && info.action ? (
+                      <button
+                        onClick={info.action}
+                        className="text-sm font-medium flex items-center gap-2"
+                        style={{ color: 'var(--marker-black)' }}
+                      >
+                        <span className="truncate">{info.value}</span>
+                        <span
+                          className="text-xs px-2 py-0.5 flex-shrink-0"
+                          style={{
+                            background: emailCopied ? 'var(--marker-yellow)' : 'var(--paper-white)',
+                            border: '1px dashed var(--pencil-grey)',
+                            borderRadius: '2px',
+                            fontFamily: 'var(--font-mono)',
+                            color: 'var(--pencil-grey)',
+                          }}
+                        >
+                          {info.actionLabel}
+                        </span>
+                      </button>
+                    ) : 'link' in info && info.link ? (
+                      <a
+                        href={info.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium hand-underline"
+                        style={{ color: 'var(--marker-black)' }}
+                      >
+                        {info.value}
+                      </a>
+                    ) : (
+                      <span className="text-sm font-medium" style={{ color: 'var(--marker-black)' }}>
+                        {info.value}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Quick Response Status */}
@@ -212,7 +218,9 @@ const Contact = () => {
             >
               <div className="flex items-center gap-3 mb-3">
                 <span className="w-3 h-3 rounded-full" style={{ background: 'var(--kraft-brown)' }} />
-                <span className="font-semibold text-sm" style={{ color: 'var(--marker-black)' }}>目前狀態</span>
+                <span className="font-semibold text-sm" style={{ color: 'var(--marker-black)' }}>
+                  目前狀態
+                </span>
               </div>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--pencil-grey)' }}>
                 開放企業培訓與顧問諮詢預約中，線上課程隨時可以開始學習。
@@ -233,7 +241,12 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold tracking-tight" style={{ color: 'var(--marker-black)' }}>填寫諮詢表單</h3>
+                  <h3
+                    className="text-lg font-semibold tracking-tight"
+                    style={{ color: 'var(--marker-black)' }}
+                  >
+                    填寫諮詢表單
+                  </h3>
                   <p className="text-xs mono-label">{'// '} 會開啟您的郵件客戶端發送</p>
                 </div>
               </div>
@@ -242,7 +255,7 @@ const Contact = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-sm mb-1.5 mono-label">
-                      姓名 <span style={{ color: '#C0392B' }}>*</span>
+                      姓名 <span style={{ color: 'var(--error-red)' }}>*</span>
                     </label>
                     <input
                       type="text"
@@ -256,7 +269,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm mb-1.5 mono-label">
-                      Email <span style={{ color: '#C0392B' }}>*</span>
+                      Email <span style={{ color: 'var(--error-red)' }}>*</span>
                     </label>
                     <input
                       type="email"
@@ -286,7 +299,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label htmlFor="subject" className="block text-sm mb-1.5 mono-label">
-                      諮詢主題 <span style={{ color: '#C0392B' }}>*</span>
+                      諮詢主題 <span style={{ color: 'var(--error-red)' }}>*</span>
                     </label>
                     <select
                       id="subject"
@@ -313,7 +326,7 @@ const Contact = () => {
 
                 <div>
                   <label htmlFor="message" className="block text-sm mb-1.5 mono-label">
-                    訊息內容 <span style={{ color: '#C0392B' }}>*</span>
+                    訊息內容 <span style={{ color: 'var(--error-red)' }}>*</span>
                   </label>
                   <textarea
                     id="message"
@@ -326,23 +339,26 @@ const Contact = () => {
                   />
                 </div>
 
+                {/* Monospace annotation before button */}
+                <p className="mono-label text-xs" style={{ transform: 'rotate(-0.3deg)' }}>
+                  {'// send message'}
+                </p>
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full py-3.5 font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     background: 'transparent',
-                    border: '2px dotted var(--marker-black)',
+                    border: '1px dashed var(--marker-black)',
                     borderRadius: '2px',
                     color: 'var(--marker-black)',
-                    fontFamily: "'Courier Prime', monospace",
+                    fontFamily: 'var(--font-mono)',
                     cursor: isSubmitting ? 'not-allowed' : 'pointer',
                   }}
                 >
                   {isSubmitting ? (
-                    <>
-                      <span style={{ fontFamily: "'Courier Prime', monospace" }}>發送中...</span>
-                    </>
+                    <span style={{ fontFamily: 'var(--font-mono)' }}>發送中...</span>
                   ) : (
                     <>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -366,7 +382,9 @@ const Contact = () => {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--kraft-brown)' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-sm" style={{ color: 'var(--marker-black)' }}>郵件客戶端已開啟，請在郵件中確認送出！</span>
+                    <span className="text-sm" style={{ color: 'var(--marker-black)' }}>
+                      郵件客戶端已開啟，請在郵件中確認送出！
+                    </span>
                   </div>
                 )}
                 {submitStatus === 'error' && (
@@ -374,13 +392,13 @@ const Contact = () => {
                     className="flex items-center gap-2 justify-center p-3"
                     style={{
                       background: '#FFF0F0',
-                      border: '1px dashed #C0392B',
+                      border: '1px dashed var(--error-red)',
                       borderRadius: '2px',
                     }}
                   >
-                    <span className="text-sm" style={{ color: '#C0392B' }}>
+                    <span className="text-sm" style={{ color: 'var(--error-red)' }}>
                       發送失敗，請直接寄信至
-                      <button onClick={copyEmail} className="underline ml-1" style={{ color: '#C0392B' }}>
+                      <button onClick={copyEmail} className="underline ml-1" style={{ color: 'var(--error-red)' }}>
                         bobchen184@gmail.com
                       </button>
                     </span>

@@ -129,7 +129,10 @@ const About = () => {
             </div>
 
             {/* Highlights */}
-            <div className="mt-10 grid grid-cols-2 gap-4 scroll-reveal-stagger">
+            <div
+              ref={(el) => { revealRefs.current[3] = el; }}
+              className="mt-10 grid grid-cols-2 gap-4 scroll-reveal scroll-reveal-stagger"
+            >
               {[
                 { icon: '💻', title: '後端專精', desc: 'Spring Boot 企業級開發' },
                 { icon: '🏢', title: '電商經驗', desc: '核心系統實戰經歷' },
@@ -138,7 +141,7 @@ const About = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="glass-card p-4 transition-all duration-600"
+                  className={`scroll-reveal-item glass-card p-4 transition-all duration-600 stagger-${index + 1}`}
                 >
                   <span className="text-2xl mb-2 block">{item.icon}</span>
                   <h4 className="text-white font-semibold">{item.title}</h4>

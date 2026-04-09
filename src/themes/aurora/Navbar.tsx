@@ -113,7 +113,7 @@ const Navbar = () => {
         }`}
         style={
           isScrolled || !isHomePage
-            ? { background: 'rgba(26,26,46,0.95)', borderBottom: '1px solid rgba(15,52,96,0.3)' }
+            ? { background: 'rgba(26,26,46,0.9)', borderBottom: '1px solid rgba(15,52,96,0.3)' }
             : {}
         }
         role="navigation"

@@ -15,7 +15,9 @@ import './theme.css';
 const ThemePage = () => {
   useEffect(() => {
     document.body.className = 'theme-bold-typography';
-    return () => { document.body.className = ''; };
+    return () => {
+      document.body.className = '';
+    };
   }, []);
 
   return (

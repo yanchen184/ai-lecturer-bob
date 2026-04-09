@@ -54,7 +54,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative" role="contentinfo" style={{ background: '#0d1117', borderTop: '1px solid rgba(15,52,96,0.3)' }}>
+    <footer className="relative" role="contentinfo" style={{ background: '#12122a', borderTop: '1px solid rgba(15,52,96,0.3)' }}>
       {/* Decorative gradient line at top */}
       <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: 'linear-gradient(90deg, transparent 5%, #0f3460 30%, #e94560 50%, #0f3460 70%, transparent 95%)' }} />
 

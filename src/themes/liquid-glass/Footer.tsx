@@ -59,7 +59,7 @@ const Footer = () => {
       role="contentinfo"
       style={{
         background: 'var(--paper-white)',
-        borderTop: '1px dashed var(--pencil-grey)',
+        borderTop: '1px dashed var(--kraft-brown)',
       }}
     >
       {/* Main Footer Content */}
@@ -72,10 +72,17 @@ const Footer = () => {
                 className="w-10 h-10 flex items-center justify-center sketch-circle"
                 style={{ background: 'var(--paper-white)' }}
               >
-                <span className="font-bold text-xl" style={{ color: 'var(--marker-black)' }}>陳</span>
+                <span className="font-bold text-xl" style={{ color: 'var(--marker-black)' }}>
+                  陳
+                </span>
               </div>
               <div>
-                <span className="text-lg font-semibold" style={{ color: 'var(--marker-black)', fontFamily: "'Courier Prime', monospace" }}>AI講師</span>
+                <span
+                  className="text-lg font-semibold"
+                  style={{ color: 'var(--marker-black)', fontFamily: 'var(--font-mono)' }}
+                >
+                  AI講師
+                </span>
                 <span className="ml-1" style={{ color: 'var(--pencil-grey)' }}>陳彥彤</span>
               </div>
             </Link>
@@ -104,7 +111,10 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h3 className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label" style={{ color: 'var(--marker-black)' }}>
+            <h3
+              className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label"
+              style={{ color: 'var(--marker-black)' }}
+            >
               快速連結
             </h3>
             <ul className="space-y-3">
@@ -114,7 +124,7 @@ const Footer = () => {
                     <Link
                       to={item.to}
                       className="text-sm inline-flex items-center"
-                      style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}
+                      style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}
                     >
                       <span style={{ color: 'var(--kraft-brown)', marginRight: '0.5rem' }}>{'>'}</span>
                       {item.label}
@@ -123,7 +133,7 @@ const Footer = () => {
                     <a
                       href={item.href}
                       className="text-sm inline-flex items-center"
-                      style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}
+                      style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}
                     >
                       <span style={{ color: 'var(--kraft-brown)', marginRight: '0.5rem' }}>{'>'}</span>
                       {item.label}
@@ -136,7 +146,10 @@ const Footer = () => {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h3 className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label" style={{ color: 'var(--marker-black)' }}>
+            <h3
+              className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label"
+              style={{ color: 'var(--marker-black)' }}
+            >
               服務項目
             </h3>
             <ul className="space-y-3">
@@ -145,7 +158,7 @@ const Footer = () => {
                   <a
                     href={item.href}
                     className="text-sm inline-flex items-center"
-                    style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}
+                    style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}
                   >
                     <span style={{ color: 'var(--kraft-brown)', marginRight: '0.5rem' }}>{'>'}</span>
                     {item.label}
@@ -157,7 +170,10 @@ const Footer = () => {
 
           {/* Contact CTA */}
           <div className="lg:col-span-3">
-            <h3 className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label" style={{ color: 'var(--marker-black)' }}>
+            <h3
+              className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label"
+              style={{ color: 'var(--marker-black)' }}
+            >
               保持聯繫
             </h3>
             <p className="text-sm mb-4" style={{ color: 'var(--pencil-grey)' }}>
@@ -167,10 +183,10 @@ const Footer = () => {
               href="/#contact"
               className="inline-flex items-center gap-2 px-5 py-2.5 text-sm"
               style={{
-                border: '1px dashed var(--pencil-grey)',
+                border: '1px dashed var(--kraft-brown)',
                 borderRadius: '2px',
                 color: 'var(--marker-black)',
-                fontFamily: "'Courier Prime', monospace",
+                fontFamily: 'var(--font-mono)',
               }}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +195,10 @@ const Footer = () => {
               bobchen184@gmail.com
             </a>
 
-            <div className="mt-4 flex items-center gap-2 text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
+            <div
+              className="mt-4 flex items-center gap-2 text-xs"
+              style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}
+            >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -190,13 +209,16 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4" style={{ borderTop: '1px dashed var(--pencil-grey)' }}>
-          <p className="text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
+        <div
+          className="mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+          style={{ borderTop: '1px dashed var(--kraft-brown)' }}
+        >
+          <p className="text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}>
             &copy; {currentYear} AI講師陳彥彤. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">
-            <p className="text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
+            <p className="text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: 'var(--font-mono)' }}>
               Built with React + TypeScript + Tailwind CSS
             </p>
 
