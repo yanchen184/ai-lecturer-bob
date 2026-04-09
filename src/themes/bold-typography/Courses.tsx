@@ -63,15 +63,15 @@ const Courses = () => {
 
   return (
     <section id="courses" className="py-20 lg:py-32 relative" aria-labelledby="courses-title">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon-blue/20 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(139,156,247,0.3), transparent)' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="font-mono text-neon-green/50 text-sm mb-2">{'$ list --courses --all'}</div>
+          <div className="font-mono text-white/40 text-sm mb-2">{'$ list --courses --all'}</div>
           <h2 id="courses-title" className="section-title">
             <span className="gradient-text">課程服務</span>
           </h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+          <p className="text-white/50 text-lg max-w-2xl mx-auto">
             程式講師陳彥彤提供專業的後端開發、前端開發、全端專案與 AI 輔助開發課程
           </p>
         </div>
@@ -80,21 +80,24 @@ const Courses = () => {
           {courses.map((course, index) => (
             <article
               key={index}
-              className={`glass-card p-8 relative overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300 ${
-                course.popular ? 'ring-1 ring-neon-green/40' : ''
+              className={`glass-card p-8 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
+                course.popular ? 'ring-1' : ''
               } ${course.official ? 'md:col-span-2' : ''}`}
-              style={course.popular ? { boxShadow: '0 0 30px rgba(0,255,136,0.1)' } : undefined}
+              style={course.popular ? {
+                boxShadow: '0 0 30px rgba(102,126,234,0.15)',
+                border: '1px solid rgba(102,126,234,0.4)',
+              } : undefined}
             >
               {course.popular && (
                 <div className="absolute top-0 right-0">
-                  <div className="text-xs font-bold px-4 py-1 rounded-bl-lg font-mono" style={{ background: 'linear-gradient(135deg, #00FF88, #00D4FF)', color: '#0A0E17' }}>
+                  <div className="text-xs font-bold px-4 py-1 rounded-bl-lg font-mono" style={{ background: 'linear-gradient(135deg, #667EEA, #8B9CF7)', color: '#ffffff' }}>
                     熱門推薦
                   </div>
                 </div>
               )}
               {course.official && (
                 <div className="absolute top-0 right-0">
-                  <div className="text-xs font-medium px-3 py-1 rounded-bl-lg font-mono" style={{ background: 'rgba(0,212,255,0.9)', color: '#0A0E17' }}>
+                  <div className="text-xs font-medium px-3 py-1 rounded-bl-lg font-mono" style={{ background: 'rgba(139,156,247,0.9)', color: '#ffffff' }}>
                     實際開課紀錄
                   </div>
                 </div>
@@ -103,19 +106,19 @@ const Courses = () => {
               <div className={course.official ? 'grid md:grid-cols-2 gap-8' : ''}>
                 <div>
                   <div className="mb-6">
-                    <span className={`text-sm font-medium font-mono ${course.official ? 'text-neon-blue' : 'text-neon-green'}`}>
+                    <span className={`text-sm font-medium font-mono ${course.official ? '' : ''}`} style={{ color: course.official ? '#8B9CF7' : '#667EEA' }}>
                       {course.subtitle}
                     </span>
                     <h3 className="text-2xl font-bold text-white mt-1">{course.title}</h3>
                   </div>
-                  <p className="text-gray-400 mb-6">{course.description}</p>
+                  <p className="text-white/60 mb-6">{course.description}</p>
                   <ul className="space-y-3 mb-6">
                     {course.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start gap-3">
-                        <svg className={`w-5 h-5 flex-shrink-0 mt-0.5 ${course.official ? 'text-neon-blue' : 'text-neon-green'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: course.official ? '#8B9CF7' : '#667EEA' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-gray-300">{feature}</span>
+                        <span className="text-white/70">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -124,20 +127,20 @@ const Courses = () => {
                 <div className={course.official ? 'flex flex-col justify-between' : ''}>
                   {course.official && course.officialMeta && (
                     <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <svg className="w-4 h-4 text-neon-blue/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm text-white/50">
+                        <svg className="w-4 h-4" style={{ color: 'rgba(139,156,247,0.5)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         <span className="font-mono text-sm">{course.officialMeta.period}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <svg className="w-4 h-4 text-neon-blue/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm text-white/50">
+                        <svg className="w-4 h-4" style={{ color: 'rgba(139,156,247,0.5)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         </svg>
                         <span className="font-mono text-sm">{course.officialMeta.location}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <svg className="w-4 h-4 text-neon-blue/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm text-white/50">
+                        <svg className="w-4 h-4" style={{ color: 'rgba(139,156,247,0.5)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                         <span className="font-mono text-sm">{course.officialMeta.source}</span>
@@ -146,14 +149,14 @@ const Courses = () => {
                   )}
 
                   <div className="flex flex-wrap gap-4 mb-6 text-sm">
-                    <div className="flex items-center gap-2 text-gray-400">
-                      <svg className="w-4 h-4 text-neon-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-2 text-white/50">
+                      <svg className="w-4 h-4" style={{ color: 'rgba(102,126,234,0.5)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span className="font-mono">{course.duration}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-400">
-                      <svg className="w-4 h-4 text-neon-purple/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-2 text-white/50">
+                      <svg className="w-4 h-4" style={{ color: 'rgba(118,75,162,0.5)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                       </svg>
                       <span className="font-mono">{course.level}</span>
@@ -162,21 +165,23 @@ const Courses = () => {
 
                   {course.hasMaterial ? (
                     <a href={course.materialLink} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all font-mono hover:shadow-[0_0_15px_rgba(0,212,255,0.3)]"
-                      style={{ background: 'linear-gradient(135deg, #00D4FF, #7B61FF)', color: '#0A0E17' }}>
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all font-mono"
+                      style={{ background: 'linear-gradient(135deg, #667EEA, #764BA2)', color: '#ffffff', boxShadow: '0 4px 15px rgba(102,126,234,0.3)' }}>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                       查看教材
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                     </a>
                   ) : course.link ? (
                     <a href={course.link} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-neon-blue font-medium hover:text-neon-green transition-colors font-mono">
+                      className="inline-flex items-center gap-2 font-medium transition-colors font-mono"
+                      style={{ color: '#8B9CF7' }}>
                       課程資訊頁面
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                     </a>
                   ) : (
                     <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="inline-flex items-center gap-2 text-neon-green font-medium hover:text-neon-blue transition-colors cursor-pointer font-mono">
+                      className="inline-flex items-center gap-2 font-medium cursor-pointer font-mono transition-colors"
+                      style={{ color: '#667EEA' }}>
                       聯繫諮詢
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </button>
@@ -188,7 +193,7 @@ const Courses = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-gray-500 mb-6 font-mono text-sm">// 需要客製化課程或企業內訓？歡迎與我聯繫討論您的需求</p>
+          <p className="text-white/40 mb-6 font-mono text-sm">// 需要客製化課程或企業內訓？歡迎與我聯繫討論您的需求</p>
           <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="btn-primary inline-flex items-center gap-2">
             <span>預約免費諮詢</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>

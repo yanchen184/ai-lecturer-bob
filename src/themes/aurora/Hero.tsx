@@ -7,32 +7,33 @@ const Hero = () => {
     >
       {/* Aurora Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Ice blue blob - top left */}
+        {/* Cyan blob - top left */}
         <div
-          className="absolute top-[10%] left-[15%] w-[500px] h-[500px] rounded-full animate-aurora-breathe"
-          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.25) 0%, transparent 70%)' }}
+          className="aurora-blob top-[5%] left-[10%] w-[600px] h-[600px] animate-aurora-breathe"
+          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.35) 0%, transparent 70%)', filter: 'blur(100px)' }}
         />
         {/* Purple blob - center right */}
         <div
-          className="absolute top-[30%] right-[10%] w-[600px] h-[600px] rounded-full animate-float-slow"
-          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.2) 0%, transparent 70%)', animationDelay: '-2s' }}
+          className="aurora-blob top-[25%] right-[5%] w-[700px] h-[700px] animate-aurora-drift"
+          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.3) 0%, transparent 70%)', filter: 'blur(120px)', animationDelay: '-2s' }}
         />
         {/* Pink blob - bottom center */}
         <div
-          className="absolute bottom-[15%] left-[40%] w-[400px] h-[400px] rounded-full animate-float-slower"
-          style={{ background: 'radial-gradient(circle, rgba(255,107,157,0.15) 0%, transparent 70%)', animationDelay: '-4s' }}
+          className="aurora-blob bottom-[10%] left-[35%] w-[500px] h-[500px] animate-float-slower"
+          style={{ background: 'radial-gradient(circle, rgba(255,107,157,0.25) 0%, transparent 70%)', filter: 'blur(100px)', animationDelay: '-4s' }}
         />
         {/* Green accent blob - bottom left */}
         <div
-          className="absolute bottom-[25%] left-[5%] w-[300px] h-[300px] rounded-full animate-aurora-drift"
-          style={{ background: 'radial-gradient(circle, rgba(195,255,104,0.1) 0%, transparent 70%)' }}
+          className="aurora-blob bottom-[20%] left-[0%] w-[400px] h-[400px] animate-aurora-pulse"
+          style={{ background: 'radial-gradient(circle, rgba(195,255,104,0.15) 0%, transparent 70%)', filter: 'blur(80px)' }}
         />
         {/* Large sweeping aurora band */}
         <div
-          className="absolute top-[20%] left-[-10%] w-[120%] h-[300px] rotate-[-15deg] animate-aurora-breathe opacity-20"
+          className="absolute top-[20%] left-[-10%] w-[120%] h-[350px] rotate-[-15deg] animate-aurora-breathe"
           style={{
             background: 'linear-gradient(90deg, transparent, rgba(0,210,255,0.3), rgba(122,95,255,0.3), rgba(255,107,157,0.2), transparent)',
-            filter: 'blur(60px)',
+            filter: 'blur(80px)',
+            opacity: 0.3,
             animationDelay: '-3s',
           }}
         />
@@ -54,7 +55,7 @@ const Hero = () => {
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="text-white">你好，我是</span>
             <br />
-            <span className="gradient-text">程式講師陳彥彤</span>
+            <span className="aurora-text">程式講師陳彥彤</span>
           </h1>
 
           {/* Subtitle - SEO keywords */}
@@ -108,7 +109,7 @@ const Hero = () => {
             { number: 'AZ-900', label: 'Azure 雲端認證' },
             { number: '98%', label: '學員滿意度' },
           ].map((stat, index) => (
-            <div key={index} className="glass-card p-6">
+            <div key={index} className="glass-card aurora-border-glow p-6">
               <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">{stat.number}</div>
               <div className="text-gray-400 text-sm">{stat.label}</div>
             </div>

@@ -91,6 +91,8 @@ const Contact = () => {
     },
   ];
 
+  const inputClasses = "w-full px-4 py-3 bg-white/[0.04] backdrop-blur-glass border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]";
+
   return (
     <section
       id="contact"
@@ -103,7 +105,7 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-[40px] border border-white/[0.15] text-sm text-white/50 mb-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-glass border border-white/[0.15] text-sm text-white/50 mb-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
             <span className="w-2 h-2 bg-success-400 rounded-full animate-pulse mr-2" />
             目前開放諮詢預約
           </div>
@@ -129,9 +131,9 @@ const Contact = () => {
               {contactInfo.map((info, index) => (
                 <div
                   key={index}
-                  className="group flex items-center gap-4 p-4 bg-white/[0.04] hover:bg-white/[0.08] backdrop-blur-[20px] border border-white/[0.1] hover:border-white/[0.2] rounded-glass-sm transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+                  className="group flex items-center gap-4 p-4 bg-white/[0.04] hover:bg-white/[0.08] backdrop-blur-glass border border-white/[0.1] hover:border-white/[0.2] rounded-glass-sm transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                 >
-                  <div className="w-11 h-11 rounded-glass-sm bg-gradient-to-br from-primary-500/15 to-accent-400/15 border border-white/[0.1] flex items-center justify-center text-primary-400/80 group-hover:text-primary-400 transition-colors flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
+                  <div className="w-11 h-11 rounded-glass-sm bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-primary-400/80 group-hover:text-primary-400 transition-colors flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
                     {info.icon}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -168,7 +170,9 @@ const Contact = () => {
             </div>
 
             {/* Quick Response Status - Liquid Glass */}
-            <div className="p-5 rounded-glass-sm bg-gradient-to-br from-primary-500/[0.06] to-accent-400/[0.06] backdrop-blur-[20px] border border-primary-500/[0.1]">
+            <div className="p-5 rounded-glass-sm bg-white/[0.04] backdrop-blur-glass border border-white/[0.1]"
+              style={{ animation: 'glowPulseIridescent 6s ease-in-out infinite' }}
+            >
               <div className="flex items-center gap-3 mb-3">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-400 opacity-75"></span>
@@ -182,11 +186,11 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Form - 3 cols - Liquid Glass */}
+          {/* Contact Form - 3 cols - Premium Glass */}
           <div className="lg:col-span-3">
             <div className="glass-card p-6 lg:p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-glass-sm bg-gradient-to-br from-primary-500/20 to-accent-400/20 border border-white/[0.15] flex items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+                <div className="w-10 h-10 rounded-glass-sm bg-white/[0.06] border border-white/[0.15] flex items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
                   <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
@@ -209,7 +213,7 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                      className={inputClasses}
                       placeholder="您的姓名"
                     />
                   </div>
@@ -223,7 +227,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                      className={inputClasses}
                       placeholder="your@email.com"
                     />
                   </div>
@@ -239,7 +243,7 @@ const Contact = () => {
                       id="company"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                      className={inputClasses}
                       placeholder="您的公司或組織"
                     />
                   </div>
@@ -252,7 +256,7 @@ const Contact = () => {
                       required
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 appearance-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                      className={`${inputClasses} appearance-none`}
                       style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
                     >
                       <option value="" className="bg-surface-900">請選擇諮詢主題</option>
@@ -275,7 +279,7 @@ const Contact = () => {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none focus:border-primary-500/40 focus:bg-white/[0.06] transition-all duration-300 resize-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                    className={`${inputClasses} resize-none`}
                     placeholder="請描述您的需求或問題..."
                   />
                 </div>
@@ -283,10 +287,10 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 text-white font-semibold rounded-glass-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3.5 text-white font-semibold rounded-glass-sm transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:scale-[1.01]"
                   style={{
                     background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
-                    boxShadow: '0 8px 32px rgba(0, 122, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                    boxShadow: '0 8px 32px rgba(175, 82, 222, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
                   }}
                 >
                   {isSubmitting ? (
@@ -309,7 +313,7 @@ const Contact = () => {
 
                 {/* Status Messages */}
                 {submitStatus === 'success' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-success-400/[0.08] backdrop-blur-sm border border-success-400/[0.15] rounded-glass-sm">
+                  <div className="flex items-center gap-2 justify-center p-3 bg-success-400/[0.08] backdrop-blur-glass border border-success-400/[0.15] rounded-glass-sm">
                     <svg className="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -317,7 +321,7 @@ const Contact = () => {
                   </div>
                 )}
                 {submitStatus === 'error' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-red-500/[0.08] backdrop-blur-sm border border-red-500/[0.15] rounded-glass-sm">
+                  <div className="flex items-center gap-2 justify-center p-3 bg-red-500/[0.08] backdrop-blur-glass border border-red-500/[0.15] rounded-glass-sm">
                     <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>

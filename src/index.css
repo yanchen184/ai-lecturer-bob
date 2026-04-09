@@ -112,10 +112,23 @@ body {
     @apply bg-bento-card rounded-bento-lg p-6 transition-all duration-300 hover:shadow-bento-hover hover:scale-[1.02];
   }
 
-  /* --- Swiss Modernism (Bold) specific --- */
+  /* --- Swiss Modernism (Neubrutalism) specific --- */
   .bold-bg { @apply bg-bold-bg; }
-  .bold-card { @apply bg-bold-surface border border-bold-border p-6 rounded-none; }
-  .bold-divider { @apply w-full h-px bg-bold-border; }
+  .bold-card {
+    @apply bg-bold-surface p-6;
+    border: 3px solid #000;
+    box-shadow: 5px 5px 0 #000;
+    border-radius: 4px;
+  }
+  .bold-divider { @apply w-full bg-bold-border; height: 3px; }
+  .neu-card {
+    border: 3px solid #000;
+    box-shadow: 5px 5px 0 #000;
+    border-radius: 4px;
+  }
+  .neu-shadow { box-shadow: 5px 5px 0 #000; }
+  .neu-shadow-sm { box-shadow: 3px 3px 0 #000; }
+  .neu-border { border: 3px solid #000; }
 
   /* --- Aurora specific --- */
   .aurora-blob {

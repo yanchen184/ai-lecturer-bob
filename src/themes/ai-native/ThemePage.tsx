@@ -21,13 +21,12 @@ const ThemePage = () => {
   return (
     <>
       <Helmet>
-        <title>AI-Native UI 風格 | 程式講師陳彥彤 — AI 講師個人形象網站</title>
-        <meta name="description" content="AI-Native UI 風格展示 — 未來感科技介面，霓虹漸層搭配神經網路粒子效果。程式講師陳彥彤的個人形象網站風格之一。" />
-        <meta property="og:title" content="AI-Native UI 風格 | 程式講師陳彥彤" />
-        <meta property="og:description" content="未來感科技介面，霓虹漸層搭配神經網路粒子效果" />
-        <link rel="canonical" href="https://yanchen184.github.io/ai-lecturer-bob/style/ai-native" />
+        <title>AI講師陳彥彤YC — 個人形象網站</title>
+        <meta name="description" content="AI講師陳彥彤YC — 資深後端工程師，專精 Spring Boot、React、全端開發教學。" />
+        <meta property="og:title" content="AI講師陳彥彤YC" />
+        <meta property="og:description" content="資深後端工程師 / 技術講師" />
       </Helmet>
-      <div className="theme-ai-native-wrapper">
+      <div className="theme-ai-native-wrapper crt-overlay">
         <Navbar />
         <Hero />
         <Skills />

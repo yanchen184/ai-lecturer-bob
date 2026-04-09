@@ -1,13 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
 .theme-bold-typography {
-  background-color: #0A0E17;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-bg-hover: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: 16px;
+  --page-gradient: linear-gradient(135deg, #0F0C29, #302B63, #24243E);
+  --accent: #667EEA;
+  --accent-secondary: #764BA2;
+  --accent-gradient: linear-gradient(135deg, #667EEA, #764BA2);
+
+  background: var(--page-gradient);
   color: #e2e8f0;
   font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+  min-height: 100vh;
 }
 
 .theme-bold-typography ::selection {
-  background: rgba(0, 255, 136, 0.25);
+  background: rgba(102, 126, 234, 0.35);
   color: #ffffff;
 }
 
@@ -16,20 +26,133 @@
 }
 
 .theme-bold-typography ::-webkit-scrollbar-track {
-  background: #0A0E17;
+  background: #0F0C29;
 }
 
 .theme-bold-typography ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00FF88, #7B61FF);
+  background: var(--accent-gradient);
   border-radius: 9999px;
 }
 
 .theme-bold-typography *:focus-visible {
-  outline: 2px solid #00FF88;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 .theme-bold-typography-wrapper {
   min-height: 100vh;
+}
+
+/* Glass card utility */
+.theme-bold-typography .glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-bold-typography .glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  pointer-events: none;
+}
+
+.theme-bold-typography .glass-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Glass input */
+.theme-bold-typography .glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.75rem;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.theme-bold-typography .glass-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+}
+
+.theme-bold-typography .glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Gradient text */
+.theme-bold-typography .gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section title */
+.theme-bold-typography .section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Skill bar */
+.theme-bold-typography .skill-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.theme-bold-typography .skill-bar-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: 9999px;
+  transition: width 1s ease;
+}
+
+/* Primary button */
+.theme-bold-typography .btn-primary {
+  padding: 0.875rem 2rem;
+  background: var(--accent-gradient);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.theme-bold-typography .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+}
+
+/* Glass orb animation */
+@keyframes glass-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+@keyframes glass-float-reverse {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(20px) scale(0.95); }
+}
+
+.theme-bold-typography .glass-orb {
+  animation: glass-float 8s ease-in-out infinite;
+}
+
+.theme-bold-typography .glass-orb-reverse {
+  animation: glass-float-reverse 10s ease-in-out infinite;
 }

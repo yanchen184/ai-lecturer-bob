@@ -7,10 +7,10 @@ interface StyleSwitcherProps {
 }
 
 const themeColors: Record<string, string> = {
-  'ai-native': '#00FF88',
+  'ai-native': '#00FFFF',
   'bento-box': '#007AFF',
-  'bold-typography': '#FF3D00',
-  'swiss-modernism': '#FF0000',
+  'bold-typography': '#667EEA',
+  'swiss-modernism': '#FFEB3B',
   'aurora': '#00D2FF',
   'liquid-glass': '#AF52DE',
 };
@@ -63,7 +63,7 @@ const StyleSwitcher = ({ currentTheme }: StyleSwitcherProps) => {
   return (
     <div
       ref={dropdownRef}
-      className="fixed top-4 right-4 z-50"
+      className="fixed top-4 right-4 z-[60]"
     >
       {/* Toggle Button */}
       <button

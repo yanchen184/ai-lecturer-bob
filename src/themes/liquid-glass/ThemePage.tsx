@@ -21,11 +21,10 @@ const ThemePage = () => {
   return (
     <>
       <Helmet>
-        <title>Liquid Glass 風格 | 程式講師陳彥彤 — AI 講師個人形象網站</title>
-        <meta name="description" content="Liquid Glass 風格展示 — Apple 最新設計語言，液態玻璃質感。程式講師陳彥彤的個人形象網站風格之一。" />
-        <meta property="og:title" content="Liquid Glass 風格 | 程式講師陳彥彤" />
-        <meta property="og:description" content="Apple 最新設計語言，液態玻璃質感" />
-        <link rel="canonical" href="https://yanchen184.github.io/ai-lecturer-bob/style/liquid-glass" />
+        <title>AI講師陳彥彤YC — 個人形象網站</title>
+        <meta name="description" content="AI講師陳彥彤YC — 資深後端工程師，專精 Spring Boot、React、全端開發教學。" />
+        <meta property="og:title" content="AI講師陳彥彤YC" />
+        <meta property="og:description" content="資深後端工程師 / 技術講師" />
       </Helmet>
       <div className="theme-liquid-glass-wrapper">
         <Navbar />

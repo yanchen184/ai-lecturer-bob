@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
 .theme-aurora {
-  background: linear-gradient(180deg, #0F0F1A 0%, #1A1A2E 50%, #0F0F1A 100%);
-  background-attachment: fixed;
+  background: #0F0F1A;
   color: #e2e8f0;
   font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
 }
@@ -20,4 +19,79 @@
 
 .theme-aurora-wrapper {
   min-height: 100vh;
+}
+
+/* --- Aurora theme overrides --- */
+
+.theme-aurora .gradient-text {
+  background: linear-gradient(135deg, #00D2FF 0%, #7A5FFF 50%, #FF6B9D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-aurora .aurora-text {
+  background: linear-gradient(90deg, #00D2FF, #7A5FFF, #FF6B9D, #C3FF68);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: auroraTextShift 6s ease-in-out infinite;
+}
+
+@keyframes auroraTextShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.theme-aurora .glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+.theme-aurora .glass-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.theme-aurora .btn-primary {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #00D2FF, #7A5FFF);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.25), 0 0 40px rgba(122, 95, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.theme-aurora .btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 210, 255, 0.4), 0 0 60px rgba(122, 95, 255, 0.25);
+}
+
+.theme-aurora .section-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Aurora blob utility */
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Aurora border glow on hover */
+.aurora-border-glow {
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.aurora-border-glow:hover {
+  border-color: rgba(0, 210, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.15), 0 0 40px rgba(122, 95, 255, 0.1);
 }

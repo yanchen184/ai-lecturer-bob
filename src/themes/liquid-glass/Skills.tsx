@@ -53,8 +53,15 @@ const Skills = () => {
       className="py-20 lg:py-32 relative"
       aria-labelledby="skills-title"
     >
-      {/* Subtle section divider glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
+      {/* Subtle iridescent section glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(0,122,255,0.15), rgba(175,82,222,0.15), rgba(52,199,89,0.1), transparent)',
+          }}
+        />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
@@ -67,22 +74,25 @@ const Skills = () => {
           </p>
         </div>
 
-        {/* Skills Grid - Liquid Glass */}
+        {/* Skills Grid - Liquid Glass with iridescent borders */}
         <div className="grid md:grid-cols-3 gap-6">
           {skillCategories.map((category, catIndex) => (
             <div
               key={catIndex}
               className="glass-card p-6"
+              style={{ animation: `glowPulseIridescent 6s ease-in-out infinite ${catIndex * 2}s` }}
             >
               {/* Category Header */}
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-glass-sm bg-gradient-to-br from-primary-500/20 to-accent-400/20 backdrop-blur-sm border border-white/[0.15] flex items-center justify-center text-primary-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+                <div className="w-14 h-14 rounded-glass-sm bg-white/[0.06] backdrop-blur-glass border border-white/[0.15] flex items-center justify-center text-primary-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
+                  style={{ animation: `glowPulseIridescent 4s ease-in-out infinite ${catIndex}s` }}
+                >
                   {category.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-white/90 tracking-tight">{category.title}</h3>
               </div>
 
-              {/* Skills List */}
+              {/* Skills List with iridescent gradient bars */}
               <div className="space-y-4">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
@@ -92,7 +102,7 @@ const Skills = () => {
                     </div>
                     <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-primary-500 to-accent-400 rounded-full transition-all duration-1000"
+                        className="h-full iridescent-bar rounded-full transition-all duration-1000"
                         style={{ width: `${skill.level}%` }}
                       />
                     </div>
@@ -119,7 +129,7 @@ const Skills = () => {
                 </div>
                 <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-accent-400 to-primary-500 rounded-full transition-all duration-1000"
+                    className="h-full iridescent-bar rounded-full transition-all duration-1000"
                     style={{ width: `${skill.level}%` }}
                   />
                 </div>
@@ -148,7 +158,7 @@ const Skills = () => {
             ].map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-white/[0.06] backdrop-blur-sm text-white/55 rounded-full text-sm font-light border border-white/[0.1] hover:bg-white/[0.12] hover:text-white/70 hover:border-white/[0.2] transition-all duration-300 cursor-default shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+                className="px-4 py-2 bg-white/[0.06] backdrop-blur-sm text-white/55 rounded-full text-sm font-light border border-white/[0.1] hover:bg-white/[0.12] hover:text-white/70 hover:border-white/[0.25] transition-all duration-500 cursor-default shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
               >
                 {tag}
               </span>

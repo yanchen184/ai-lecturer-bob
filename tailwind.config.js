@@ -29,10 +29,11 @@ export default {
           text: '#1D1D1F', 'text-secondary': '#6E6E73', border: '#E8E8ED',
         },
 
-        /* === Swiss Modernism (Bold) === */
+        /* === Swiss Modernism (Neubrutalism) === */
         bold: {
-          bg: '#0A0A0A', surface: '#111111', border: '#1A1A1A',
-          text: '#FAFAFA', muted: '#808080', accent: '#FF3D00',
+          bg: '#FAFAFA', surface: '#FFFFFF', border: '#000000',
+          text: '#000000', muted: '#333333', accent: '#FFEB3B',
+          red: '#FF5252', blue: '#2196F3', green: '#4CAF50',
         },
 
         /* === Aurora === */

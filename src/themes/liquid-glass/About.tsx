@@ -10,16 +10,23 @@ const About = () => {
           {/* Image Side */}
           <div className="relative">
             <div className="relative z-10">
-              {/* Profile Card - Liquid Glass */}
+              {/* Profile Card - Premium Liquid Glass */}
               <div className="glass-card p-8 md:p-12">
-                <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full bg-gradient-to-br from-primary-500 to-accent-400 p-[3px] mb-6 shadow-[0_8px_32px_rgba(0,122,255,0.2)]">
-                  <div className="w-full h-full rounded-full bg-surface-900/90 backdrop-blur-sm flex items-center justify-center">
-                    <span className="text-5xl md:text-6xl font-bold gradient-text">彥</span>
+                {/* Iridescent Avatar Ring */}
+                <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full mb-6 iridescent-ring"
+                  style={{ animation: 'glowPulseIridescent 4s ease-in-out infinite' }}
+                >
+                  <div className="w-full h-full rounded-full p-[3px]">
+                    <div className="w-full h-full rounded-full bg-surface-900/90 backdrop-blur-glass flex items-center justify-center">
+                      <span className="text-5xl md:text-6xl font-bold gradient-text">彥</span>
+                    </div>
                   </div>
                 </div>
 
                 <h3 className="text-2xl font-semibold text-center text-white/90 mb-2 tracking-tight">陳彥彤</h3>
-                <p className="text-primary-400 text-center mb-4 font-light">資深後端工程師 / 程式講師</p>
+                <p className="text-center mb-4 font-light">
+                  <span className="gradient-text">資深後端工程師 / 程式講師</span>
+                </p>
 
                 {/* Quote */}
                 <div className="text-center mb-6 px-4">
@@ -62,9 +69,15 @@ const About = () => {
               </div>
             </div>
 
-            {/* Decorative Elements - Liquid Glass ambient glow */}
-            <div className="absolute -top-8 -right-8 w-32 h-32 bg-primary-500/10 rounded-full blur-[60px]" />
-            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-accent-400/10 rounded-full blur-[60px]" />
+            {/* Decorative Iridescent ambient glows */}
+            <div
+              className="absolute -top-8 -right-8 w-40 h-40 rounded-full blur-[80px] opacity-40"
+              style={{ background: 'radial-gradient(circle, rgba(0,122,255,0.3), transparent)' }}
+            />
+            <div
+              className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full blur-[80px] opacity-35"
+              style={{ background: 'radial-gradient(circle, rgba(175,82,222,0.25), transparent)' }}
+            />
           </div>
 
           {/* Content Side */}

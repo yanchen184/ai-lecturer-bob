@@ -60,11 +60,12 @@ const Skills = () => {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-aurora-deeper/50" />
         <div
-          className="absolute top-[10%] left-[50%] w-[600px] h-[300px] rotate-[-10deg] animate-aurora-breathe opacity-15"
-          style={{
-            background: 'linear-gradient(90deg, transparent, rgba(0,210,255,0.4), rgba(122,95,255,0.3), rgba(255,107,157,0.2), transparent)',
-            filter: 'blur(60px)',
-          }}
+          className="aurora-blob top-[5%] left-[60%] w-[500px] h-[500px] animate-aurora-breathe"
+          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.15) 0%, transparent 70%)', filter: 'blur(80px)' }}
+        />
+        <div
+          className="aurora-blob bottom-[10%] left-[10%] w-[400px] h-[400px] animate-aurora-drift"
+          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.12) 0%, transparent 70%)', filter: 'blur(80px)', animationDelay: '-3s' }}
         />
       </div>
 
@@ -84,7 +85,7 @@ const Skills = () => {
           {skillCategories.map((category, catIndex) => (
             <div
               key={catIndex}
-              className="glass-card p-6 transition-all duration-300"
+              className="glass-card aurora-border-glow p-6 transition-all duration-300"
             >
               {/* Category Header */}
               <div className="flex items-center gap-4 mb-6">
@@ -110,8 +111,8 @@ const Skills = () => {
                         className="h-full rounded-full transition-all duration-1000"
                         style={{
                           width: `${skill.level}%`,
-                          background: `linear-gradient(90deg, ${category.color}, ${category.color}88)`,
-                          boxShadow: `0 0 8px ${category.color}44`,
+                          background: `linear-gradient(90deg, ${category.color}, #7A5FFF, #FF6B9D)`,
+                          boxShadow: `0 0 10px ${category.color}55`,
                         }}
                       />
                     </div>

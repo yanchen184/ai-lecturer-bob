@@ -108,7 +108,7 @@ const Navbar = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled || !isHomePage
-            ? 'bg-surface-900/70 backdrop-blur-[40px] saturate-[180%] border-b border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.12)]'
+            ? 'bg-surface-900/70 backdrop-blur-glass-heavy saturate-[180%] border-b border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.15)]'
             : 'bg-transparent'
         }`}
         role="navigation"
@@ -122,7 +122,13 @@ const Navbar = () => {
               className="flex items-center space-x-2 group flex-shrink-0"
               aria-label="回到首頁"
             >
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-accent-400 flex items-center justify-center shadow-[0_4px_16px_rgba(0,122,255,0.25)] group-hover:shadow-[0_6px_24px_rgba(0,122,255,0.35)] transition-shadow duration-300">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-shadow duration-500"
+                style={{
+                  background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
+                  boxShadow: '0 4px 16px rgba(175,82,222,0.3)',
+                }}
+              >
                 <span className="text-white font-bold text-lg">陳</span>
               </div>
               <div className="hidden sm:block">
@@ -138,15 +144,22 @@ const Navbar = () => {
                   key={item.href}
                   href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
                   onClick={(e) => handleHomeNavClick(e, item.href)}
-                  className={`relative px-3 py-1.5 text-sm rounded-lg transition-all duration-300 ${
+                  className={`relative px-3 py-1.5 text-sm rounded-lg transition-all duration-500 ${
                     isActive(item.href)
-                      ? 'text-white/90 bg-white/[0.1] backdrop-blur-sm'
+                      ? 'text-white/90 bg-white/[0.1] backdrop-blur-glass'
                       : 'text-white/45 hover:text-white/80 hover:bg-white/[0.06]'
                   }`}
                 >
                   {item.label}
                   {isActive(item.href) && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-gradient-to-r from-primary-400 to-accent-400 rounded-full" />
+                    <span
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full"
+                      style={{
+                        background: 'linear-gradient(90deg, #007AFF, #AF52DE, #34C759)',
+                        backgroundSize: '200% 100%',
+                        animation: 'iridescentText 4s ease-in-out infinite',
+                      }}
+                    />
                   )}
                 </a>
               ))}
@@ -162,10 +175,10 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/#contact"
-                className="ml-3 px-5 py-2 text-sm font-medium text-white rounded-full transition-all duration-300 hover:scale-105"
+                className="ml-3 px-5 py-2 text-sm font-medium text-white rounded-full transition-all duration-500 hover:scale-105"
                 style={{
-                  background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
-                  boxShadow: '0 4px 16px rgba(0, 122, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+                  background: 'linear-gradient(135deg, #AF52DE, #007AFF)',
+                  boxShadow: '0 4px 16px rgba(175, 82, 222, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
                 }}
               >
                 預約諮詢
@@ -217,7 +230,7 @@ const Navbar = () => {
 
         {/* Menu Panel - Liquid Glass */}
         <div
-          className={`absolute top-0 right-0 w-72 h-full bg-surface-900/80 backdrop-blur-[60px] saturate-[180%] border-l border-white/[0.1] transition-transform duration-300 ease-out shadow-[-8px_0_32px_rgba(0,0,0,0.2)] ${
+          className={`absolute top-0 right-0 w-72 h-full bg-surface-900/80 backdrop-blur-glass-heavy saturate-[180%] border-l border-white/[0.1] transition-transform duration-500 ease-out shadow-[-8px_0_32px_rgba(0,0,0,0.25)] ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -228,9 +241,9 @@ const Navbar = () => {
                   key={item.href}
                   href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
                   onClick={(e) => handleHomeNavClick(e, item.href)}
-                  className={`flex items-center px-4 py-3 rounded-glass-sm text-base transition-all duration-300 ${
+                  className={`flex items-center px-4 py-3 rounded-glass-sm text-base transition-all duration-500 ${
                     isActive(item.href)
-                      ? 'text-white/90 bg-white/[0.1] font-medium'
+                      ? 'text-white/90 bg-white/[0.1] font-medium backdrop-blur-glass'
                       : 'text-white/45 hover:text-white/80 hover:bg-white/[0.06]'
                   }`}
                   style={{
@@ -240,7 +253,12 @@ const Navbar = () => {
                   }}
                 >
                   {isActive(item.href) && (
-                    <span className="w-1 h-5 bg-gradient-to-b from-primary-400 to-accent-400 rounded-full mr-3" />
+                    <span
+                      className="w-1 h-5 rounded-full mr-3"
+                      style={{
+                        background: 'linear-gradient(180deg, #007AFF, #AF52DE, #34C759)',
+                      }}
+                    />
                   )}
                   {item.label}
                 </a>
@@ -262,10 +280,10 @@ const Navbar = () => {
               <Link
                 to="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full py-3 text-white font-medium rounded-glass-sm text-center transition-all duration-300"
+                className="block w-full py-3 text-white font-medium rounded-glass-sm text-center transition-all duration-500"
                 style={{
-                  background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
-                  boxShadow: '0 4px 16px rgba(0, 122, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+                  background: 'linear-gradient(135deg, #AF52DE, #007AFF)',
+                  boxShadow: '0 4px 16px rgba(175, 82, 222, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
                 }}
               >
                 預約諮詢

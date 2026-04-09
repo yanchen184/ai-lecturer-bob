@@ -129,14 +129,25 @@ const Courses = () => {
           {courses.map((course, index) => (
             <article
               key={index}
-              className={`glass-card p-8 relative overflow-hidden ${
-                course.popular ? 'ring-1 ring-primary-500/40 shadow-[0_8px_32px_rgba(0,122,255,0.12)]' : ''
+              className={`glass-card p-8 relative overflow-hidden group ${
+                course.popular ? 'ring-1 ring-primary-500/30' : ''
               } ${course.official ? 'md:col-span-2' : ''}`}
+              style={{
+                boxShadow: course.popular
+                  ? '0 8px 32px rgba(175,82,222,0.12), 0 0 20px rgba(0,122,255,0.06)'
+                  : undefined,
+              }}
             >
               {/* Badge */}
               {course.popular && (
                 <div className="absolute top-0 right-0">
-                  <div className="bg-gradient-to-r from-primary-500 to-accent-400 text-white text-xs font-medium px-4 py-1.5 rounded-bl-glass-sm shadow-[0_4px_12px_rgba(0,122,255,0.3)]">
+                  <div
+                    className="text-white text-xs font-medium px-4 py-1.5 rounded-bl-glass-sm"
+                    style={{
+                      background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
+                      boxShadow: '0 4px 16px rgba(175,82,222,0.3)',
+                    }}
+                  >
                     熱門推薦
                   </div>
                 </div>
@@ -227,7 +238,7 @@ const Courses = () => {
                       href={course.materialLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-glass-sm bg-gradient-to-r from-primary-500/20 to-accent-400/20 backdrop-blur-sm border border-white/[0.15] text-white/80 font-medium text-sm hover:from-primary-500/30 hover:to-accent-400/30 hover:border-white/[0.25] transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-glass-sm bg-white/[0.06] backdrop-blur-glass border border-white/[0.15] text-white/80 font-medium text-sm hover:bg-white/[0.12] hover:border-white/[0.25] transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

@@ -5,27 +5,80 @@ const Hero = () => {
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
       aria-label="首頁橫幅"
     >
-      {/* Liquid Glass Background Effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/6 w-80 h-80 bg-primary-500/15 rounded-full blur-[80px] animate-float" />
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-400/12 rounded-full blur-[100px] animate-float" style={{ animationDelay: '-4s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-radial from-primary-500/8 to-transparent rounded-full blur-[60px]" />
+      {/* Floating Iridescent Orbs Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Large blue orb */}
+        <div
+          className="absolute w-[420px] h-[420px] rounded-full blur-[100px] opacity-40"
+          style={{
+            top: '15%',
+            left: '10%',
+            background: 'radial-gradient(circle, rgba(0,122,255,0.3) 0%, rgba(0,122,255,0.05) 70%, transparent 100%)',
+            animation: 'orbFloat 10s ease-in-out infinite',
+          }}
+        />
+        {/* Large purple orb */}
+        <div
+          className="absolute w-[500px] h-[500px] rounded-full blur-[120px] opacity-35"
+          style={{
+            bottom: '20%',
+            right: '10%',
+            background: 'radial-gradient(circle, rgba(175,82,222,0.25) 0%, rgba(175,82,222,0.05) 70%, transparent 100%)',
+            animation: 'orbFloat 12s ease-in-out infinite 2s',
+          }}
+        />
+        {/* Medium green orb */}
+        <div
+          className="absolute w-[300px] h-[300px] rounded-full blur-[80px] opacity-30"
+          style={{
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'radial-gradient(circle, rgba(52,199,89,0.2) 0%, rgba(52,199,89,0.03) 70%, transparent 100%)',
+            animation: 'orbFloat 14s ease-in-out infinite 4s',
+          }}
+        />
+        {/* Small pink accent orb */}
+        <div
+          className="absolute w-[200px] h-[200px] rounded-full blur-[60px] opacity-25"
+          style={{
+            top: '10%',
+            right: '25%',
+            background: 'radial-gradient(circle, rgba(255,107,157,0.2) 0%, transparent 70%)',
+            animation: 'orbFloat 8s ease-in-out infinite 1s',
+          }}
+        />
+        {/* Cyan accent orb */}
+        <div
+          className="absolute w-[250px] h-[250px] rounded-full blur-[70px] opacity-25"
+          style={{
+            bottom: '30%',
+            left: '30%',
+            background: 'radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%)',
+            animation: 'orbFloat 11s ease-in-out infinite 3s',
+          }}
+        />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Main Content */}
         <div className="animate-fade-in">
           {/* Badge - Liquid Glass pill */}
-          <div className="inline-flex items-center px-5 py-2.5 rounded-full bg-white/[0.08] backdrop-blur-[40px] border border-white/[0.2] mb-8 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.3)]">
+          <div className="inline-flex items-center px-5 py-2.5 rounded-full bg-white/[0.06] backdrop-blur-glass border border-white/[0.15] mb-8 shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.25)]">
             <span className="w-2 h-2 bg-success-400 rounded-full animate-pulse mr-2.5" />
             <span className="text-sm text-white/70 font-light tracking-wide">目前開放企業培訓與程式教學諮詢</span>
           </div>
 
-          {/* Title - SEO H1 */}
+          {/* Title - SEO H1 with chromatic aberration */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight">
             <span className="text-white/90 font-light">你好，我是</span>
             <br />
-            <span className="gradient-text font-bold">程式講師陳彥彤</span>
+            <span
+              className="gradient-text font-bold"
+              style={{ animation: 'chromaticAberration 8s ease-in-out infinite, iridescentText 6s ease-in-out infinite' }}
+            >
+              程式講師陳彥彤
+            </span>
           </h1>
 
           {/* Subtitle - SEO keywords */}
@@ -64,14 +117,14 @@ const Hero = () => {
             </a>
             <a
               href="#courses"
-              className="px-8 py-4 bg-white/[0.06] backdrop-blur-[40px] border border-white/[0.2] text-white/80 font-medium rounded-glass hover:bg-white/[0.12] hover:border-white/[0.3] transition-all duration-400 shadow-[0_4px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.2)]"
+              className="px-8 py-4 bg-white/[0.06] backdrop-blur-glass border border-white/[0.15] text-white/80 font-medium rounded-glass hover:bg-white/[0.12] hover:border-white/[0.25] transition-all duration-500 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.15)]"
             >
               瀏覽課程內容
             </a>
           </div>
         </div>
 
-        {/* Stats - Liquid Glass cards */}
+        {/* Stats - Liquid Glass cards with iridescent borders */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 animate-slide-up" style={{ animationDelay: '0.3s' }}>
           {[
             { number: '5-6 年', label: 'Java 後端開發經驗' },
@@ -79,7 +132,11 @@ const Hero = () => {
             { number: 'AZ-900', label: 'Azure 雲端認證' },
             { number: '98%', label: '學員滿意度' },
           ].map((stat, index) => (
-            <div key={index} className="glass-card p-6">
+            <div
+              key={index}
+              className="glass-card p-6"
+              style={{ animation: `glowPulseIridescent 6s ease-in-out infinite ${index * 1.5}s` }}
+            >
               <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">{stat.number}</div>
               <div className="text-white/40 text-sm font-light">{stat.label}</div>
             </div>

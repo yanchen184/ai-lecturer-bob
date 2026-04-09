@@ -108,7 +108,7 @@ const Navbar = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || !isHomePage
-            ? 'bg-aurora-dark/90 backdrop-blur-xl shadow-lg shadow-black/20 border-b border-white/[0.05]'
+            ? 'bg-[#0F0F1A]/95 backdrop-blur-xl shadow-lg shadow-black/30 border-b border-white/[0.06]'
             : 'bg-transparent'
         }`}
         role="navigation"
@@ -146,7 +146,7 @@ const Navbar = () => {
                 >
                   {item.label}
                   {isActive(item.href) && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #00D2FF, #7A5FFF)' }} />
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #00D2FF, #7A5FFF, #FF6B9D)', boxShadow: '0 0 8px rgba(0,210,255,0.4)' }} />
                   )}
                 </a>
               ))}
@@ -163,7 +163,7 @@ const Navbar = () => {
               <Link
                 to="/#contact"
                 className="ml-3 px-5 py-2 text-sm text-white font-medium rounded-full hover:scale-105 transition-all duration-300"
-                style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 15px rgba(0,210,255,0.2)' }}
+                style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF, #FF6B9D)', boxShadow: '0 0 15px rgba(0,210,255,0.25), 0 0 30px rgba(122,95,255,0.15)' }}
               >
                 預約諮詢
               </Link>
@@ -260,7 +260,7 @@ const Navbar = () => {
                 to="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block w-full py-3 text-white font-medium rounded-xl text-center hover:shadow-lg transition-all duration-300"
-                style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 15px rgba(0,210,255,0.2)' }}
+                style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF, #FF6B9D)', boxShadow: '0 0 15px rgba(0,210,255,0.25), 0 0 30px rgba(122,95,255,0.15)' }}
               >
                 預約諮詢
               </Link>

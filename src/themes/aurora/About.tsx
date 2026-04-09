@@ -8,12 +8,16 @@ const About = () => {
       {/* Aurora background accents */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute top-[20%] right-[-5%] w-[400px] h-[400px] rounded-full animate-aurora-breathe"
-          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.1) 0%, transparent 70%)', animationDelay: '-2s' }}
+          className="aurora-blob top-[15%] right-[-5%] w-[500px] h-[500px] animate-aurora-breathe"
+          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.15) 0%, transparent 70%)', filter: 'blur(100px)', animationDelay: '-2s' }}
         />
         <div
-          className="absolute bottom-[10%] left-[-5%] w-[350px] h-[350px] rounded-full animate-float-slow"
-          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.08) 0%, transparent 70%)' }}
+          className="aurora-blob bottom-[5%] left-[-5%] w-[450px] h-[450px] animate-aurora-drift"
+          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.12) 0%, transparent 70%)', filter: 'blur(80px)' }}
+        />
+        <div
+          className="aurora-blob top-[50%] left-[30%] w-[350px] h-[350px] animate-aurora-pulse"
+          style={{ background: 'radial-gradient(circle, rgba(255,107,157,0.08) 0%, transparent 70%)', filter: 'blur(80px)' }}
         />
       </div>
 
@@ -24,9 +28,16 @@ const About = () => {
             <div className="relative z-10">
               {/* Profile Card */}
               <div className="glass-card p-8 md:p-12">
-                <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full p-1 mb-6" style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF, #FF6B9D)' }}>
+                <div
+                  className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full p-[3px] mb-6 animate-aurora-breathe"
+                  style={{
+                    background: 'linear-gradient(135deg, #00D2FF, #7A5FFF, #FF6B9D, #C3FF68, #00D2FF)',
+                    backgroundSize: '300% 300%',
+                    animation: 'auroraTextShift 6s ease-in-out infinite, auroraBreathe 8s ease-in-out infinite',
+                  }}
+                >
                   <div className="w-full h-full rounded-full bg-aurora-dark flex items-center justify-center">
-                    <span className="text-5xl md:text-6xl font-bold gradient-text">彥</span>
+                    <span className="text-5xl md:text-6xl font-bold aurora-text">彥</span>
                   </div>
                 </div>
 
@@ -75,8 +86,8 @@ const About = () => {
             </div>
 
             {/* Decorative Aurora Glow Elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-aurora-ice/20 rounded-full blur-2xl animate-aurora-breathe" />
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-aurora-purple/20 rounded-full blur-2xl animate-float-slow" />
+            <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full animate-aurora-breathe" style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.25) 0%, transparent 70%)', filter: 'blur(30px)' }} />
+            <div className="absolute -bottom-6 -left-6 w-40 h-40 rounded-full animate-aurora-drift" style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.25) 0%, transparent 70%)', filter: 'blur(30px)', animationDelay: '-3s' }} />
           </div>
 
           {/* Content Side */}
@@ -128,7 +139,7 @@ const About = () => {
                 { icon: '🔧', title: '實戰導向', desc: '即學即用的技能' },
                 { icon: '🌐', title: '全端能力', desc: '前後端整合開發' },
               ].map((item, index) => (
-                <div key={index} className="glass-card p-4 transition-all duration-300">
+                <div key={index} className="glass-card aurora-border-glow p-4 transition-all duration-300" style={{ background: 'linear-gradient(135deg, rgba(0,210,255,0.04), rgba(122,95,255,0.04))' }}>
                   <span className="text-2xl mb-2 block">{item.icon}</span>
                   <h4 className="text-white font-semibold">{item.title}</h4>
                   <p className="text-gray-400 text-sm">{item.desc}</p>

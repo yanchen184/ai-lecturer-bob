@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
 .theme-ai-native {
-  background-color: #0A0E17;
+  background-color: #1A1A2E;
   color: #e2e8f0;
   font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
 }
 
 .theme-ai-native ::selection {
-  background: rgba(0, 255, 136, 0.25);
+  background: rgba(0, 255, 255, 0.25);
   color: #ffffff;
 }
 
@@ -16,20 +16,108 @@
 }
 
 .theme-ai-native ::-webkit-scrollbar-track {
-  background: #0A0E17;
+  background: #1A1A2E;
 }
 
 .theme-ai-native ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00FF88, #7B61FF);
+  background: linear-gradient(180deg, #00FFFF, #FF006E);
   border-radius: 9999px;
 }
 
 .theme-ai-native *:focus-visible {
-  outline: 2px solid #00FF88;
+  outline: 2px solid #00FFFF;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 .theme-ai-native-wrapper {
   min-height: 100vh;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-1px, -1px); }
+  80% { transform: translate(1px, 1px); }
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.06; }
+}
+
+.glitch-text {
+  animation: glitch 3s ease-in-out infinite;
+}
+
+.crt-overlay::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 255, 0.03) 0px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 99;
+  animation: crt-flicker 4s ease-in-out infinite;
+}
+
+/* Cyberpunk overrides for shared utility classes */
+.theme-ai-native .gradient-text {
+  background: linear-gradient(90deg, #00FFFF, #FF006E, #0080FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-ai-native .skill-bar {
+  background: rgba(0, 255, 255, 0.08);
+}
+
+.theme-ai-native .skill-bar-fill {
+  background: linear-gradient(90deg, #00FFFF, #FF006E, #5D34D0);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+.theme-ai-native .ai-input {
+  background: rgba(0, 255, 255, 0.03);
+  border: 1px solid rgba(0, 255, 255, 0.1);
+}
+
+.theme-ai-native .ai-input::placeholder {
+  color: rgba(0, 255, 255, 0.25);
+}
+
+.theme-ai-native .ai-input:focus {
+  border-color: rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.1), inset 0 0 15px rgba(0, 255, 255, 0.02);
+  background: rgba(0, 255, 255, 0.05);
+}
+
+.theme-ai-native .btn-primary {
+  background: linear-gradient(135deg, #00FFFF, #FF006E);
+  color: #1A1A2E;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.theme-ai-native .btn-primary:hover {
+  background: linear-gradient(135deg, #00FFFF, #FF006E);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.theme-ai-native .glass-card {
+  background: rgba(26, 26, 46, 0.6);
+  border-color: rgba(0, 255, 255, 0.1);
+}
+
+.theme-ai-native .terminal-cursor::after {
+  color: #00FFFF;
+}
+
+.theme-ai-native .text-glow-green {
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
 }

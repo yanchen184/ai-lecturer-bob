@@ -9,9 +9,9 @@ import './theme.css';
 
 export const theme = {
   id: 'swiss-modernism',
-  name: 'Swiss Modernism 2.0',
-  description: '瑞士國際主義設計，極致理性與秩序感',
-  preview: '亮色 . 極簡 . 網格系統',
+  name: 'Neubrutalism',
+  description: '新粗獷主義設計，大膽色彩與硬邊陰影',
+  preview: '亮色 . 粗框 . 硬陰影',
   bodyClass: 'theme-swiss-modernism',
   components: { Hero, About, Skills, Courses, Contact, Navbar, Footer },
 };

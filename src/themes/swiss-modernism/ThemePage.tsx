@@ -21,11 +21,10 @@ const ThemePage = () => {
   return (
     <>
       <Helmet>
-        <title>Swiss Modernism 2.0 風格 | 程式講師陳彥彤 — AI 講師個人形象網站</title>
-        <meta name="description" content="Swiss Modernism 2.0 風格展示 — 瑞士國際主義設計，極致理性與秩序感。程式講師陳彥彤的個人形象網站風格之一。" />
-        <meta property="og:title" content="Swiss Modernism 2.0 風格 | 程式講師陳彥彤" />
-        <meta property="og:description" content="瑞士國際主義設計，極致理性與秩序感" />
-        <link rel="canonical" href="https://yanchen184.github.io/ai-lecturer-bob/style/swiss-modernism" />
+        <title>AI講師陳彥彤YC — 個人形象網站</title>
+        <meta name="description" content="AI講師陳彥彤YC — 資深後端工程師，專精 Spring Boot、React、全端開發教學。" />
+        <meta property="og:title" content="AI講師陳彥彤YC" />
+        <meta property="og:description" content="資深後端工程師 / 技術講師" />
       </Helmet>
       <div className="theme-swiss-modernism-wrapper">
         <Navbar />

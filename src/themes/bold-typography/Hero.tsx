@@ -5,77 +5,49 @@ const Hero = () => {
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
       aria-label="首頁橫幅"
     >
-      {/* Background Effects - Neural Network / Data Flow */}
+      {/* Animated Gradient Orbs */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-green/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-purple/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-neon-green/5 to-neon-purple/5 rounded-full blur-3xl" />
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-neon-green/20 to-transparent animate-scan-line" />
-        </div>
-      </div>
-
-      {/* Circuit Board Grid Pattern */}
-      <div
-        className="absolute inset-0 opacity-30"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px',
-        }}
-      />
-
-      {/* Neural network connection dots */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-neon-green/30 rounded-full animate-circuit-pulse"
-            style={{ top: `${15 + i * 15}%`, left: `${10 + i * 12}%`, animationDelay: `${i * 0.7}s` }}
-          />
-        ))}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={`r-${i}`}
-            className="absolute w-1 h-1 bg-neon-purple/30 rounded-full animate-circuit-pulse"
-            style={{ top: `${20 + i * 12}%`, right: `${8 + i * 10}%`, animationDelay: `${i * 0.5 + 0.3}s` }}
-          />
-        ))}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl glass-orb" style={{ background: 'rgba(102,126,234,0.15)' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl glass-orb-reverse" style={{ background: 'rgba(118,75,162,0.15)', animationDelay: '-3s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl" style={{ background: 'radial-gradient(circle, rgba(102,126,234,0.08), rgba(118,75,162,0.05))' }} />
+        <div className="absolute top-[10%] right-[15%] w-64 h-64 rounded-full blur-3xl glass-orb" style={{ background: 'rgba(139,156,247,0.1)', animationDelay: '-5s' }} />
+        <div className="absolute bottom-[15%] left-[10%] w-72 h-72 rounded-full blur-3xl glass-orb-reverse" style={{ background: 'rgba(118,75,162,0.1)', animationDelay: '-7s' }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
-          {/* AI Status Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-neon-green/5 backdrop-blur-lg border border-neon-green/20 mb-8">
-            <span className="w-2 h-2 bg-neon-green rounded-full animate-pulse mr-2" />
-            <span className="text-sm text-neon-green/80 font-mono">SYSTEM_STATUS: 目前開放企業培訓與程式教學諮詢</span>
+          {/* Frosted Glass Badge */}
+          <div className="inline-flex items-center px-5 py-2.5 rounded-full mb-8" style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.2)' }}>
+            <span className="w-2 h-2 rounded-full animate-pulse mr-2" style={{ background: '#667EEA' }} />
+            <span className="text-sm text-white/80">目前開放企業培訓與程式教學諮詢</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-gray-200">你好，我是</span>
+            <span className="text-white/90">你好，我是</span>
             <br />
-            <span className="gradient-text text-glow-green">程式講師陳彥彤</span>
+            <span className="gradient-text">程式講師陳彥彤</span>
           </h1>
 
-          <p className="text-xl sm:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-            <strong className="text-neon-green">資深後端工程師</strong>
-            <span className="text-neon-blue mx-2">/</span>
-            <strong className="text-neon-purple">技術講師</strong>
+          <p className="text-xl sm:text-2xl mb-4 max-w-3xl mx-auto">
+            <strong style={{ color: '#667EEA' }}>資深後端工程師</strong>
+            <span className="text-white/40 mx-2">/</span>
+            <strong style={{ color: '#764BA2' }}>技術講師</strong>
           </p>
 
-          <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto font-mono text-sm leading-relaxed">
-            <span className="text-neon-green/60">{'>'}</span> 專精於{' '}
-            <span className="text-neon-green">Spring Boot</span>、
-            <span className="text-neon-purple">React</span>、
-            <span className="text-neon-blue">MySQL</span>、
-            <span className="text-neon-green">Redis</span> 開發教學
+          <p className="text-white/60 mb-8 max-w-2xl mx-auto font-mono text-sm leading-relaxed">
+            <span className="text-white/40">{'>'}</span> 專精於{' '}
+            <span style={{ color: '#667EEA' }}>Spring Boot</span>、
+            <span style={{ color: '#764BA2' }}>React</span>、
+            <span style={{ color: '#8B9CF7' }}>MySQL</span>、
+            <span style={{ color: '#667EEA' }}>Redis</span> 開發教學
             <br />
-            <span className="text-neon-green/60">{'>'}</span>{' '}
+            <span className="text-white/40">{'>'}</span>{' '}
             <strong className="text-white">5-6 年</strong>電商核心系統開發經驗，
             <strong className="text-white">10-50 場</strong>企業授課經歷
           </p>
 
-          <div className="mb-8 text-gray-300 italic font-mono">
-            <span className="text-neon-green">{'//'}</span>{' '}
+          <div className="mb-8 text-white/60 italic font-mono">
+            <span style={{ color: '#667EEA' }}>{'//'}</span>{' '}
             工程師不是寫 code 的人，是解決問題的人。
           </div>
 
@@ -88,7 +60,10 @@ const Hero = () => {
             </a>
             <a
               href="#courses"
-              className="px-8 py-4 border border-neon-green/30 text-neon-green font-medium rounded-full hover:bg-neon-green/10 hover:border-neon-green/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,136,0.15)]"
+              className="px-8 py-4 font-medium rounded-full transition-all duration-300"
+              style={{ border: '1px solid rgba(102,126,234,0.4)', color: '#667EEA', background: 'rgba(102,126,234,0.05)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(102,126,234,0.15)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(102,126,234,0.2)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(102,126,234,0.05)'; e.currentTarget.style.boxShadow = 'none'; }}
             >
               瀏覽課程內容
             </a>
@@ -102,9 +77,9 @@ const Hero = () => {
             { number: 'AZ-900', label: 'Azure 雲端認證' },
             { number: '98%', label: '學員滿意度' },
           ].map((stat, index) => (
-            <div key={index} className="glass-card p-6 group hover:border-neon-green/30 transition-all duration-300">
+            <div key={index} className="glass-card p-6 group transition-all duration-300">
               <div className="text-3xl md:text-4xl font-bold gradient-text mb-2 font-mono">{stat.number}</div>
-              <div className="text-gray-500 text-sm group-hover:text-gray-400 transition-colors">{stat.label}</div>
+              <div className="text-white/50 text-sm group-hover:text-white/70 transition-colors">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -112,7 +87,7 @@ const Hero = () => {
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <a href="#about" aria-label="向下滾動">
-          <svg className="w-6 h-6 text-neon-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </a>

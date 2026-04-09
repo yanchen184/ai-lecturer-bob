@@ -113,7 +113,19 @@ const Courses = () => {
       className="py-20 lg:py-32 relative"
       aria-labelledby="courses-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Aurora background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="aurora-blob top-[10%] right-[5%] w-[500px] h-[500px] animate-aurora-pulse"
+          style={{ background: 'radial-gradient(circle, rgba(255,107,157,0.1) 0%, transparent 70%)', filter: 'blur(100px)' }}
+        />
+        <div
+          className="aurora-blob bottom-[15%] left-[5%] w-[400px] h-[400px] animate-aurora-breathe"
+          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.1) 0%, transparent 70%)', filter: 'blur(80px)', animationDelay: '-4s' }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 id="courses-title" className="section-title">
@@ -129,8 +141,8 @@ const Courses = () => {
           {courses.map((course, index) => (
             <article
               key={index}
-              className={`glass-card p-8 relative overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300 ${
-                course.popular ? 'ring-1 ring-aurora-ice/40 shadow-[0_0_20px_rgba(0,210,255,0.1)]' : ''
+              className={`glass-card aurora-border-glow p-8 relative overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300 ${
+                course.popular ? 'ring-1 ring-aurora-ice/40 shadow-[0_0_20px_rgba(0,210,255,0.15)]' : ''
               } ${course.official ? 'md:col-span-2' : ''}`}
             >
               {/* Badge */}

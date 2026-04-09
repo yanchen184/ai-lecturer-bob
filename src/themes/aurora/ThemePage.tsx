@@ -21,11 +21,10 @@ const ThemePage = () => {
   return (
     <>
       <Helmet>
-        <title>Aurora UI 風格 | 程式講師陳彥彤 — AI 講師個人形象網站</title>
-        <meta name="description" content="Aurora UI 風格展示 — 極光般的漸層色彩，夢幻與優雅並存。程式講師陳彥彤的個人形象網站風格之一。" />
-        <meta property="og:title" content="Aurora UI 風格 | 程式講師陳彥彤" />
-        <meta property="og:description" content="極光般的漸層色彩，夢幻與優雅並存" />
-        <link rel="canonical" href="https://yanchen184.github.io/ai-lecturer-bob/style/aurora" />
+        <title>AI講師陳彥彤YC — 個人形象網站</title>
+        <meta name="description" content="AI講師陳彥彤YC — 資深後端工程師，專精 Spring Boot、React、全端開發教學。" />
+        <meta property="og:title" content="AI講師陳彥彤YC" />
+        <meta property="og:description" content="資深後端工程師 / 技術講師" />
       </Helmet>
       <div className="theme-aurora-wrapper">
         <Navbar />

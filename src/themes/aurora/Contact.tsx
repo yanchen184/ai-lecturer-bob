@@ -99,10 +99,14 @@ const Contact = () => {
     >
       {/* Aurora Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-aurora-deeper/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-aurora-deeper/30 to-transparent" />
         <div
-          className="absolute bottom-[20%] right-[10%] w-[400px] h-[400px] rounded-full animate-aurora-breathe opacity-10"
-          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.4) 0%, transparent 70%)', animationDelay: '-3s' }}
+          className="aurora-blob bottom-[15%] right-[5%] w-[500px] h-[500px] animate-aurora-breathe"
+          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.15) 0%, transparent 70%)', filter: 'blur(100px)', animationDelay: '-3s' }}
+        />
+        <div
+          className="aurora-blob top-[10%] left-[10%] w-[400px] h-[400px] animate-aurora-drift"
+          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.1) 0%, transparent 70%)', filter: 'blur(80px)', animationDelay: '-5s' }}
         />
       </div>
 
@@ -215,7 +219,7 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200"
                       placeholder="您的姓名"
                     />
                   </div>
@@ -229,7 +233,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -245,7 +249,7 @@ const Contact = () => {
                       id="company"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200"
                       placeholder="您的公司或組織"
                     />
                   </div>
@@ -258,7 +262,7 @@ const Contact = () => {
                       required
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200 appearance-none"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200 appearance-none"
                       style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
                     >
                       <option value="" className="bg-aurora-dark">請選擇諮詢主題</option>
@@ -281,7 +285,7 @@ const Contact = () => {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:bg-white/[0.07] transition-all duration-200 resize-none"
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200 resize-none"
                     placeholder="請描述您的需求或問題..."
                   />
                 </div>
@@ -289,8 +293,8 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 text-white font-bold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 20px rgba(0,210,255,0.25)' }}
+                  className="w-full py-3.5 text-white font-bold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:scale-[1.02]"
+                  style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF, #FF6B9D)', boxShadow: '0 0 20px rgba(0,210,255,0.25), 0 0 40px rgba(122,95,255,0.15)' }}
                 >
                   {isSubmitting ? (
                     <>

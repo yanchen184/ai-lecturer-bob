@@ -40,7 +40,7 @@ const Footer = () => {
     },
     {
       label: 'LinkedIn',
-      href: '#',
+      href: 'https://www.linkedin.com/in/yanchen184/',
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -54,10 +54,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative border-t" style={{ background: '#070A12', borderColor: 'rgba(0,255,136,0.08)' }} role="contentinfo">
-      {/* Decorative gradient line at top */}
-      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, #00FF88, #7B61FF, #00D4FF, transparent)' }} />
-
+    <footer
+      className="relative"
+      style={{ backgroundColor: '#FAFAFA', borderTop: '3px solid #000' }}
+      role="contentinfo"
+    >
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
@@ -65,20 +66,17 @@ const Footer = () => {
           <div className="lg:col-span-4">
             <Link to="/" className="flex items-center space-x-2 mb-5 group">
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-shadow"
-                style={{
-                  background: 'linear-gradient(135deg, #00FF88, #7B61FF)',
-                  boxShadow: '0 0 15px rgba(0,255,136,0.3)',
-                }}
+                className="w-10 h-10 flex items-center justify-center"
+                style={{ backgroundColor: '#FFEB3B', border: '3px solid #000' }}
               >
-                <span className="text-surface-900 font-bold text-xl">陳</span>
+                <span className="text-black font-black text-xl">陳</span>
               </div>
               <div>
-                <span className="text-lg font-bold gradient-text font-mono">AI.講師</span>
-                <span className="text-white ml-1">陳彥彤</span>
+                <span className="text-lg font-black text-black">AI.講師</span>
+                <span className="text-bold-muted ml-1 font-bold">陳彥彤</span>
               </div>
             </Link>
-            <p className="text-gray-600 text-sm leading-relaxed mb-6 max-w-sm">
+            <p className="text-bold-muted text-sm leading-relaxed mb-6 max-w-sm font-medium">
               專業人工智慧教育講師，致力於將複雜的 AI 技術轉化為易懂的知識，
               幫助企業與個人掌握 AI 時代的核心競爭力。
             </p>
@@ -91,11 +89,8 @@ const Footer = () => {
                   href={social.href}
                   target={social.href.startsWith('http') ? '_blank' : undefined}
                   rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-gray-600 hover:text-neon-green transition-all duration-300"
-                  style={{
-                    background: 'rgba(0,255,136,0.03)',
-                    border: '1px solid rgba(0,255,136,0.08)',
-                  }}
+                  className="w-10 h-10 flex items-center justify-center text-black transition-transform duration-100 hover:-translate-y-0.5"
+                  style={{ backgroundColor: '#FFFFFF', border: '2px solid #000', boxShadow: '3px 3px 0 #000' }}
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -106,8 +101,8 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5 font-mono">
-              <span className="text-neon-green">{'>'}</span> 快速連結
+            <h3 className="text-black font-black text-sm uppercase tracking-wider mb-5">
+              快速連結
             </h3>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
@@ -115,17 +110,15 @@ const Footer = () => {
                   {'to' in item && item.to ? (
                     <Link
                       to={item.to}
-                      className="text-gray-600 hover:text-neon-green text-sm transition-colors duration-200 inline-flex items-center group font-mono"
+                      className="text-bold-muted hover:text-black text-sm transition-colors duration-200 font-bold hover:underline"
                     >
-                      <span className="w-0 group-hover:w-2 h-px mr-0 group-hover:mr-2 transition-all duration-200" style={{ background: '#00FF88' }} />
                       {item.label}
                     </Link>
                   ) : (
                     <a
                       href={item.href}
-                      className="text-gray-600 hover:text-neon-green text-sm transition-colors duration-200 inline-flex items-center group font-mono"
+                      className="text-bold-muted hover:text-black text-sm transition-colors duration-200 font-bold hover:underline"
                     >
-                      <span className="w-0 group-hover:w-2 h-px mr-0 group-hover:mr-2 transition-all duration-200" style={{ background: '#00FF88' }} />
                       {item.label}
                     </a>
                   )}
@@ -136,17 +129,16 @@ const Footer = () => {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5 font-mono">
-              <span className="text-neon-purple">{'>'}</span> 服務項目
+            <h3 className="text-black font-black text-sm uppercase tracking-wider mb-5">
+              服務項目
             </h3>
             <ul className="space-y-3">
               {serviceLinks.map((item) => (
                 <li key={item.label}>
                   <a
                     href={item.href}
-                    className="text-gray-600 hover:text-neon-purple text-sm transition-colors duration-200 inline-flex items-center group font-mono"
+                    className="text-bold-muted hover:text-black text-sm transition-colors duration-200 font-bold hover:underline"
                   >
-                    <span className="w-0 group-hover:w-2 h-px mr-0 group-hover:mr-2 transition-all duration-200" style={{ background: '#7B61FF' }} />
                     {item.label}
                   </a>
                 </li>
@@ -154,21 +146,18 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter / Contact CTA */}
+          {/* Contact CTA */}
           <div className="lg:col-span-3">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5 font-mono">
-              <span className="text-neon-blue">{'>'}</span> 保持聯繫
+            <h3 className="text-black font-black text-sm uppercase tracking-wider mb-5">
+              保持聯繫
             </h3>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="text-bold-muted text-sm mb-4 font-medium">
               有任何培訓需求或合作想法，歡迎隨時聯繫。
             </p>
             <a
               href="/#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-gray-400 hover:text-neon-green transition-all duration-300 font-mono"
-              style={{
-                background: 'rgba(0,255,136,0.03)',
-                border: '1px solid rgba(0,255,136,0.1)',
-              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-black font-black transition-transform duration-100 hover:-translate-y-0.5"
+              style={{ backgroundColor: '#FFEB3B', border: '2px solid #000', boxShadow: '3px 3px 0 #000' }}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -176,7 +165,7 @@ const Footer = () => {
               bobchen184@gmail.com
             </a>
 
-            <div className="mt-4 flex items-center gap-2 text-gray-700 text-xs font-mono">
+            <div className="mt-4 flex items-center gap-2 text-bold-muted text-xs font-bold">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -187,28 +176,28 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4" style={{ borderTop: '1px solid rgba(0,255,136,0.06)' }}>
-          <p className="text-gray-700 text-xs font-mono">
+        <div
+          className="mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+          style={{ borderTop: '3px solid #000' }}
+        >
+          <p className="text-black text-xs font-bold">
             &copy; {currentYear} AI.講師.陳彥彤 // All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">
-            <p className="text-gray-700 text-xs font-mono">
-              {'<'} React + TypeScript + Tailwind CSS {' />'}
+            <p className="text-bold-muted text-xs font-bold">
+              React + TypeScript + Tailwind CSS
             </p>
 
             {/* Back to top */}
             <button
               onClick={scrollToTop}
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-600 hover:text-neon-green transition-all duration-300"
-              style={{
-                background: 'rgba(0,255,136,0.03)',
-                border: '1px solid rgba(0,255,136,0.08)',
-              }}
+              className="w-9 h-9 flex items-center justify-center text-black transition-transform duration-100 hover:-translate-y-0.5"
+              style={{ backgroundColor: '#FFFFFF', border: '2px solid #000', boxShadow: '3px 3px 0 #000' }}
               aria-label="回到頂部"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
             </button>
           </div>

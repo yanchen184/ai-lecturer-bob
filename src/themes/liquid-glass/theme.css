@@ -2,40 +2,348 @@
 
 .theme-liquid-glass {
   --glass-blur: 40px;
+  --glass-blur-heavy: 60px;
   --glass-saturate: 180%;
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-bg-hover: rgba(255, 255, 255, 0.14);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-border-light: rgba(255, 255, 255, 0.3);
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-bg-hover: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-border-light: rgba(255, 255, 255, 0.25);
   --glass-radius: 24px;
   --glass-radius-lg: 32px;
   --glass-radius-sm: 16px;
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
-  --glass-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+  --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.12);
   --glass-inner-light: inset 0 1px 0 rgba(255, 255, 255, 0.4);
   --glass-inner-glow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+  --morph-duration: 500ms;
+  --iridescent-1: #007AFF;
+  --iridescent-2: #AF52DE;
+  --iridescent-3: #34C759;
+  --iridescent-4: #FF6B9D;
+  --iridescent-5: #00D4FF;
+  --accent: #AF52DE;
   --color-blue: #007AFF;
   --color-purple: #AF52DE;
   --color-green: #34C759;
   --spring-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
   --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-  background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #16162a 70%, #0f0f1a 100%);
+  background: linear-gradient(160deg, #0A0A1A 0%, #1A1A2E 40%, #12122A 70%, #0A0A1A 100%);
   color: #e2e8f0;
   font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
 }
 
 .theme-liquid-glass ::selection {
-  background-color: rgba(0, 122, 255, 0.4);
+  background-color: rgba(175, 82, 222, 0.4);
   color: #FFFFFF;
 }
 
 .theme-liquid-glass *:focus-visible {
-  outline: 2px solid var(--color-blue);
+  outline: 2px solid var(--iridescent-2);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 .theme-liquid-glass-wrapper {
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* === Iridescent Background Shimmer === */
+.theme-liquid-glass-wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(0, 122, 255, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 70%, rgba(175, 82, 222, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(52, 199, 89, 0.02) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  animation: iridescentShimmer 12s ease-in-out infinite alternate;
+}
+
+/* === Liquid Glass Card === */
+.theme-liquid-glass .lg-card,
+.theme-liquid-glass .glass-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow), var(--glass-inner-light);
+  transition: all var(--morph-duration) var(--smooth-ease);
+  overflow: hidden;
+}
+
+/* Iridescent animated border pseudo-element */
+.theme-liquid-glass .lg-card::before,
+.theme-liquid-glass .glass-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--iridescent-1),
+    var(--iridescent-2),
+    var(--iridescent-3),
+    var(--iridescent-5),
+    var(--iridescent-1)
+  );
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0.3;
+  animation: iridescentBorder 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.theme-liquid-glass .lg-card:hover,
+.theme-liquid-glass .glass-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-light);
+  box-shadow: var(--glass-shadow-hover), var(--glass-inner-light);
+  transform: translateY(-2px);
+}
+
+.theme-liquid-glass .lg-card:hover::before,
+.theme-liquid-glass .glass-card:hover::before {
+  opacity: 0.6;
+  animation-duration: 3s;
+}
+
+/* === Gradient Text (Iridescent) === */
+.theme-liquid-glass .gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--iridescent-1) 0%,
+    var(--iridescent-2) 40%,
+    var(--iridescent-5) 70%,
+    var(--iridescent-1) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: iridescentText 6s ease-in-out infinite;
+}
+
+/* === Button Primary (Purple Accent) === */
+.theme-liquid-glass .btn-primary {
+  background: linear-gradient(135deg, var(--iridescent-1), var(--accent));
+  box-shadow:
+    0 8px 32px rgba(175, 82, 222, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 1rem 2rem;
+  transition: all var(--morph-duration) var(--smooth-ease);
+}
+
+.theme-liquid-glass .btn-primary:hover {
+  transform: scale(1.05) translateY(-1px);
+  box-shadow:
+    0 12px 40px rgba(175, 82, 222, 0.35),
+    0 0 20px rgba(0, 122, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* === Section Title === */
+.theme-liquid-glass .section-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+/* === Keyframe Animations === */
+@keyframes iridescentShimmer {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes iridescentBorder {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes iridescentText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes chromaticAberration {
+  0%, 100% {
+    text-shadow:
+      -2px 0 rgba(0, 122, 255, 0.4),
+      2px 0 rgba(175, 82, 222, 0.4);
+  }
+  25% {
+    text-shadow:
+      -3px 0 rgba(175, 82, 222, 0.5),
+      3px 0 rgba(52, 199, 89, 0.4);
+  }
+  50% {
+    text-shadow:
+      2px 0 rgba(0, 212, 255, 0.4),
+      -2px 0 rgba(255, 107, 157, 0.4);
+  }
+  75% {
+    text-shadow:
+      3px 0 rgba(52, 199, 89, 0.4),
+      -3px 0 rgba(0, 122, 255, 0.5);
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translate(30px, -40px) scale(1.1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-20px, -60px) scale(0.95);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate(40px, -20px) scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+@keyframes glowPulseIridescent {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(0, 122, 255, 0.1),
+      0 0 40px rgba(0, 122, 255, 0.05);
+  }
+  33% {
+    box-shadow:
+      0 0 25px rgba(175, 82, 222, 0.15),
+      0 0 50px rgba(175, 82, 222, 0.08);
+  }
+  66% {
+    box-shadow:
+      0 0 20px rgba(52, 199, 89, 0.1),
+      0 0 40px rgba(52, 199, 89, 0.05);
+  }
+}
+
+@keyframes avatarRingRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Iridescent avatar ring */
+.theme-liquid-glass .iridescent-ring {
+  position: relative;
+}
+
+.theme-liquid-glass .iridescent-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--iridescent-1),
+    var(--iridescent-2),
+    var(--iridescent-3),
+    var(--iridescent-5),
+    var(--iridescent-4),
+    var(--iridescent-1)
+  );
+  animation: avatarRingRotate 8s linear infinite;
+  z-index: -1;
+}
+
+/* Iridescent skill bar */
+.theme-liquid-glass .iridescent-bar {
+  background: linear-gradient(
+    90deg,
+    var(--iridescent-1),
+    var(--iridescent-2),
+    var(--iridescent-5),
+    var(--iridescent-3)
+  );
+  background-size: 200% 100%;
+  animation: iridescentText 4s ease-in-out infinite;
+}
+
+/* Focus ring for inputs (iridescent) */
+.theme-liquid-glass input:focus,
+.theme-liquid-glass textarea:focus,
+.theme-liquid-glass select:focus {
+  border-color: rgba(175, 82, 222, 0.5) !important;
+  box-shadow:
+    0 0 0 3px rgba(175, 82, 222, 0.1),
+    0 0 15px rgba(0, 122, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Iridescent top border for footer */
+.theme-liquid-glass .iridescent-top-border {
+  position: relative;
+}
+
+.theme-liquid-glass .iridescent-top-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--iridescent-1) 20%,
+    var(--iridescent-2) 40%,
+    var(--iridescent-3) 60%,
+    var(--iridescent-5) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: iridescentText 4s ease-in-out infinite;
+  opacity: 0.7;
 }

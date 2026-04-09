@@ -2,6 +2,7 @@ const Skills = () => {
   const skillCategories = [
     {
       title: '後端開發',
+      color: '#FFEB3B',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
@@ -17,6 +18,7 @@ const Skills = () => {
     },
     {
       title: '資料庫與快取',
+      color: '#2196F3',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
@@ -32,6 +34,7 @@ const Skills = () => {
     },
     {
       title: 'DevOps 與雲端',
+      color: '#FF5252',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
@@ -51,6 +54,7 @@ const Skills = () => {
     <section
       id="skills"
       className="py-26 lg:py-30 relative"
+      style={{ backgroundColor: '#FAFAFA' }}
       aria-labelledby="skills-title"
     >
       <div className="bold-divider" />
@@ -58,27 +62,38 @@ const Skills = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-26">
         {/* Header */}
         <div className="mb-18">
-          <h2 id="skills-title" className="section-title text-left mb-4">
+          <h2 id="skills-title" className="text-4xl md:text-5xl font-black text-black text-left mb-4">
             專業技能
           </h2>
-          <p className="text-bold-muted text-lg max-w-2xl">
+          <p className="text-bold-muted text-lg max-w-2xl font-medium">
             程式講師陳彥彤具備全方位的技術能力，從後端開發到 DevOps，提供最專業的教學服務
           </p>
         </div>
 
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-3 gap-px bg-bold-border">
+        <div className="grid md:grid-cols-3 gap-6">
           {skillCategories.map((category, catIndex) => (
             <div
               key={catIndex}
-              className="bg-bold-bg p-8 hover:bg-bold-surface transition-colors duration-200"
+              className="p-8 transition-transform duration-100 hover:-translate-y-1"
+              style={{
+                backgroundColor: '#FFFFFF',
+                border: '3px solid #000',
+                boxShadow: '5px 5px 0 #000',
+              }}
             >
               {/* Category Header */}
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 bg-bold-surface border border-bold-border flex items-center justify-center text-bold-accent">
+                <div
+                  className="w-14 h-14 flex items-center justify-center text-black"
+                  style={{
+                    backgroundColor: category.color,
+                    border: '3px solid #000',
+                  }}
+                >
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold text-bold-text">{category.title}</h3>
+                <h3 className="text-xl font-black text-black">{category.title}</h3>
               </div>
 
               {/* Skills List */}
@@ -86,13 +101,19 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-bold-muted text-sm">{skill.name}</span>
-                      <span className="text-bold-accent font-bold text-sm">{skill.level}%</span>
+                      <span className="text-bold-muted text-sm font-bold">{skill.name}</span>
+                      <span className="text-black font-black text-sm">{skill.level}%</span>
                     </div>
-                    <div className="h-1 bg-bold-border overflow-hidden">
+                    <div
+                      className="h-3 overflow-hidden"
+                      style={{ backgroundColor: '#E0E0E0', border: '2px solid #000' }}
+                    >
                       <div
-                        className="h-full bg-bold-accent transition-all duration-200"
-                        style={{ width: `${skill.level}%` }}
+                        className="h-full transition-all duration-200"
+                        style={{
+                          width: `${skill.level}%`,
+                          backgroundColor: category.color,
+                        }}
                       />
                     </div>
                   </div>
@@ -103,23 +124,33 @@ const Skills = () => {
         </div>
 
         {/* Frontend Skills */}
-        <div className="mt-px bg-bold-surface border border-bold-border p-8">
-          <h3 className="text-xl font-bold text-bold-text mb-8">前端開發技能</h3>
+        <div
+          className="mt-6 p-8"
+          style={{
+            backgroundColor: '#FFFFFF',
+            border: '3px solid #000',
+            boxShadow: '5px 5px 0 #000',
+          }}
+        >
+          <h3 className="text-xl font-black text-black mb-8">前端開發技能</h3>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { name: 'React / TypeScript', level: 88 },
-              { name: 'Tailwind CSS', level: 85 },
-              { name: 'JavaScript / ES6+', level: 90 },
+              { name: 'React / TypeScript', level: 88, color: '#2196F3' },
+              { name: 'Tailwind CSS', level: 85, color: '#4CAF50' },
+              { name: 'JavaScript / ES6+', level: 90, color: '#FFEB3B' },
             ].map((skill, index) => (
               <div key={index}>
                 <div className="flex justify-between mb-2">
-                  <span className="text-bold-muted text-sm">{skill.name}</span>
-                  <span className="text-bold-accent font-bold text-sm">{skill.level}%</span>
+                  <span className="text-bold-muted text-sm font-bold">{skill.name}</span>
+                  <span className="text-black font-black text-sm">{skill.level}%</span>
                 </div>
-                <div className="h-1 bg-bold-border overflow-hidden">
+                <div
+                  className="h-3 overflow-hidden"
+                  style={{ backgroundColor: '#E0E0E0', border: '2px solid #000' }}
+                >
                   <div
-                    className="h-full bg-bold-text transition-all duration-200"
-                    style={{ width: `${skill.level}%` }}
+                    className="h-full transition-all duration-200"
+                    style={{ width: `${skill.level}%`, backgroundColor: skill.color }}
                   />
                 </div>
               </div>
@@ -129,8 +160,8 @@ const Skills = () => {
 
         {/* Tech Tags */}
         <div className="mt-18">
-          <h3 className="text-bold-text font-bold mb-6 uppercase tracking-wider text-sm">其他專業領域</h3>
-          <div className="flex flex-wrap gap-2">
+          <h3 className="text-black font-black mb-6 uppercase tracking-wider text-sm">其他專業領域</h3>
+          <div className="flex flex-wrap gap-3">
             {[
               'NLP / NER 分析',
               'Hugging Face',
@@ -147,7 +178,12 @@ const Skills = () => {
             ].map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-bold-surface border border-bold-border text-bold-muted text-sm hover:text-bold-text hover:border-bold-accent transition-colors duration-200 cursor-default"
+                className="px-4 py-2 text-black text-sm font-bold cursor-default transition-transform duration-100 hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  border: '2px solid #000',
+                  boxShadow: '3px 3px 0 #000',
+                }}
               >
                 {tag}
               </span>
