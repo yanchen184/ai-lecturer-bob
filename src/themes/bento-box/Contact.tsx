@@ -88,23 +88,41 @@ const Contact = () => {
     },
   ];
 
+  const inputStyle = {
+    backgroundColor: '#FAF7F0',
+    border: '1px solid #D4C4A8',
+    color: '#3D2E1C',
+    borderRadius: '0.75rem',
+  };
+
+  const inputFocusClass =
+    'w-full px-4 py-3 transition-all duration-400 placeholder:text-[#B5A68C] focus:outline-none focus:border-[#C67B5C] focus:ring-1 focus:ring-[#C67B5C]/20';
+
   return (
     <section
       id="contact"
-      className="py-20 lg:py-32 relative bg-white"
+      className="py-20 lg:py-32 relative"
+      style={{ backgroundColor: '#F5F0E1' }}
       aria-labelledby="contact-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-bento-card text-sm text-bento-text-secondary mb-6">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2" />
+          <div
+            className="inline-flex items-center px-4 py-1.5 rounded-full text-sm mb-6"
+            style={{ backgroundColor: '#FEFDFB', color: '#6B6255', boxShadow: '0 1px 3px rgba(61,46,28,0.06)' }}
+          >
+            <span className="w-2 h-2 rounded-full animate-pulse mr-2" style={{ backgroundColor: '#6B7B3C' }} />
             目前開放諮詢預約
           </div>
-          <h2 id="contact-title" className="section-title">
-            <span className="gradient-text">聯繫我</span>
+          <h2
+            id="contact-title"
+            className="section-title text-3xl sm:text-4xl font-bold mb-4"
+            style={{ color: '#C67B5C', fontFamily: 'Georgia, "Noto Sans TC", serif' }}
+          >
+            聯繫我
           </h2>
-          <p className="text-bento-text-secondary text-lg max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: '#6B6255' }}>
             想了解更多課程資訊或企業培訓方案？歡迎與AI講師陳彥彤聯繫
           </p>
         </div>
@@ -112,8 +130,8 @@ const Contact = () => {
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Contact Info - 2 cols */}
           <div className="lg:col-span-2">
-            <h3 className="text-xl font-bold text-bento-text mb-3">聯繫方式</h3>
-            <p className="text-bento-text-secondary text-sm mb-8 leading-relaxed">
+            <h3 className="text-xl font-bold mb-3" style={{ color: '#3D2E1C' }}>聯繫方式</h3>
+            <p className="text-sm mb-8 leading-relaxed" style={{ color: '#6B6255' }}>
               無論是企業培訓、個人課程諮詢，或是 AI 導入顧問服務，
               都歡迎透過以下方式與我聯繫。我會在 24 小時內回覆您的訊息。
             </p>
@@ -123,24 +141,31 @@ const Contact = () => {
               {contactInfo.map((info, index) => (
                 <div
                   key={index}
-                  className="group flex items-center gap-4 p-4 bg-bento-card hover:bg-bento-card-hover rounded-bento transition-all duration-300"
+                  className="group flex items-center gap-4 p-4 rounded-bento transition-all duration-500"
+                  style={{ backgroundColor: '#FEFDFB', boxShadow: '0 1px 3px rgba(61,46,28,0.04)' }}
                 >
-                  <div className="w-11 h-11 rounded-bento bg-gradient-to-br from-primary-500/10 to-accent-500/10 flex items-center justify-center text-primary-500 group-hover:text-primary-600 transition-colors flex-shrink-0">
+                  <div
+                    className="w-11 h-11 rounded-bento flex items-center justify-center flex-shrink-0 transition-colors"
+                    style={{ backgroundColor: '#F5F0E1', color: '#6B7B3C' }}
+                  >
                     {info.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-bento-text-secondary text-xs mb-0.5">{info.label}</div>
+                    <div className="text-xs mb-0.5" style={{ color: '#B5A68C' }}>{info.label}</div>
                     {'action' in info && info.action ? (
                       <button
                         onClick={info.action}
-                        className="text-bento-text hover:text-primary-500 transition-colors text-sm font-medium flex items-center gap-2"
+                        className="text-sm font-medium flex items-center gap-2 transition-colors duration-300"
+                        style={{ color: '#3D2E1C' }}
                       >
                         <span className="truncate">{info.value}</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full transition-all duration-200 flex-shrink-0 ${
-                          emailCopied
-                            ? 'bg-emerald-100 text-emerald-600'
-                            : 'bg-bento-card-hover text-bento-text-secondary group-hover:text-bento-text'
-                        }`}>
+                        <span
+                          className="text-xs px-2 py-0.5 rounded-full transition-all duration-200 flex-shrink-0"
+                          style={{
+                            backgroundColor: emailCopied ? '#e8f5e9' : '#F5F0E1',
+                            color: emailCopied ? '#6B7B3C' : '#6B6255',
+                          }}
+                        >
                           {info.actionLabel}
                         </span>
                       </button>
@@ -149,12 +174,13 @@ const Contact = () => {
                         href={info.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-bento-text hover:text-primary-500 transition-colors text-sm font-medium"
+                        className="text-sm font-medium transition-colors duration-300"
+                        style={{ color: '#3D2E1C' }}
                       >
                         {info.value}
                       </a>
                     ) : (
-                      <span className="text-bento-text text-sm font-medium">{info.value}</span>
+                      <span className="text-sm font-medium" style={{ color: '#3D2E1C' }}>{info.value}</span>
                     )}
                   </div>
                 </div>
@@ -162,15 +188,21 @@ const Contact = () => {
             </div>
 
             {/* Quick Response Status */}
-            <div className="p-5 rounded-bento-lg bg-gradient-to-br from-primary-500/5 to-accent-500/5 border border-primary-500/10">
+            <div
+              className="p-5 rounded-bento-lg"
+              style={{
+                backgroundColor: '#FEFDFB',
+                border: '1px solid #D4C4A8',
+              }}
+            >
               <div className="flex items-center gap-3 mb-3">
                 <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: '#6B7B3C' }} />
+                  <span className="relative inline-flex rounded-full h-3 w-3" style={{ backgroundColor: '#6B7B3C' }} />
                 </span>
-                <span className="text-bento-text font-semibold text-sm">目前狀態</span>
+                <span className="font-semibold text-sm" style={{ color: '#3D2E1C' }}>目前狀態</span>
               </div>
-              <p className="text-bento-text-secondary text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{ color: '#6B6255' }}>
                 開放企業培訓與顧問諮詢預約中，線上課程隨時可以開始學習。
               </p>
             </div>
@@ -178,24 +210,33 @@ const Contact = () => {
 
           {/* Contact Form - 3 cols */}
           <div className="lg:col-span-3">
-            <div className="bg-bento-card rounded-bento-lg p-6 lg:p-8">
+            <div
+              className="rounded-bento-lg p-6 lg:p-8"
+              style={{
+                backgroundColor: '#FEFDFB',
+                boxShadow: '0 1px 3px rgba(61,46,28,0.06), 0 4px 16px rgba(61,46,28,0.04)',
+              }}
+            >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-bento bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center">
+                <div
+                  className="w-10 h-10 rounded-bento flex items-center justify-center"
+                  style={{ backgroundColor: '#C67B5C' }}
+                >
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-bento-text">填寫諮詢表單</h3>
-                  <p className="text-bento-text-secondary text-xs">會開啟您的郵件客戶端發送</p>
+                  <h3 className="text-lg font-bold" style={{ color: '#3D2E1C' }}>填寫諮詢表單</h3>
+                  <p className="text-xs" style={{ color: '#6B6255' }}>會開啟您的郵件客戶端發送</p>
                 </div>
               </div>
 
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-bento-text-secondary text-sm mb-1.5">
-                      姓名 <span className="text-red-500">*</span>
+                    <label htmlFor="name" className="block text-sm mb-1.5" style={{ color: '#6B6255' }}>
+                      姓名 <span style={{ color: '#C67B5C' }}>*</span>
                     </label>
                     <input
                       type="text"
@@ -203,13 +244,14 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-bento-border rounded-bento text-bento-text placeholder-bento-text-secondary/50 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/20 transition-all duration-200"
+                      className={inputFocusClass}
+                      style={inputStyle}
                       placeholder="您的姓名"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-bento-text-secondary text-sm mb-1.5">
-                      Email <span className="text-red-500">*</span>
+                    <label htmlFor="email" className="block text-sm mb-1.5" style={{ color: '#6B6255' }}>
+                      Email <span style={{ color: '#C67B5C' }}>*</span>
                     </label>
                     <input
                       type="email"
@@ -217,7 +259,8 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-bento-border rounded-bento text-bento-text placeholder-bento-text-secondary/50 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/20 transition-all duration-200"
+                      className={inputFocusClass}
+                      style={inputStyle}
                       placeholder="your@email.com"
                     />
                   </div>
@@ -225,7 +268,7 @@ const Contact = () => {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="company" className="block text-bento-text-secondary text-sm mb-1.5">
+                    <label htmlFor="company" className="block text-sm mb-1.5" style={{ color: '#6B6255' }}>
                       公司名稱
                     </label>
                     <input
@@ -233,21 +276,27 @@ const Contact = () => {
                       id="company"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-bento-border rounded-bento text-bento-text placeholder-bento-text-secondary/50 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/20 transition-all duration-200"
+                      className={inputFocusClass}
+                      style={inputStyle}
                       placeholder="您的公司或組織"
                     />
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-bento-text-secondary text-sm mb-1.5">
-                      諮詢主題 <span className="text-red-500">*</span>
+                    <label htmlFor="subject" className="block text-sm mb-1.5" style={{ color: '#6B6255' }}>
+                      諮詢主題 <span style={{ color: '#C67B5C' }}>*</span>
                     </label>
                     <select
                       id="subject"
                       required
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-bento-border rounded-bento text-bento-text focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/20 transition-all duration-200 appearance-none"
-                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236E6E73' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                      className={inputFocusClass + ' appearance-none'}
+                      style={{
+                        ...inputStyle,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236B6255' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 12px center',
+                      }}
                     >
                       <option value="">請選擇諮詢主題</option>
                       <option value="企業培訓">企業培訓</option>
@@ -260,8 +309,8 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-bento-text-secondary text-sm mb-1.5">
-                    訊息內容 <span className="text-red-500">*</span>
+                  <label htmlFor="message" className="block text-sm mb-1.5" style={{ color: '#6B6255' }}>
+                    訊息內容 <span style={{ color: '#C67B5C' }}>*</span>
                   </label>
                   <textarea
                     id="message"
@@ -269,7 +318,8 @@ const Contact = () => {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-bento-border rounded-bento text-bento-text placeholder-bento-text-secondary/50 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/20 transition-all duration-200 resize-none"
+                    className={inputFocusClass + ' resize-none'}
+                    style={inputStyle}
                     placeholder="請描述您的需求或問題..."
                   />
                 </div>
@@ -277,7 +327,12 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-bento hover:opacity-90 hover:shadow-bento-hover transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3.5 font-bold rounded-bento transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  style={{
+                    backgroundColor: '#C67B5C',
+                    color: '#FEFDFB',
+                    boxShadow: '0 2px 8px rgba(198,123,92,0.2)',
+                  }}
                 >
                   {isSubmitting ? (
                     <>
@@ -298,28 +353,34 @@ const Contact = () => {
                 </button>
 
                 {submitStatus === 'success' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-emerald-50 border border-emerald-200 rounded-bento">
-                    <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div
+                    className="flex items-center gap-2 justify-center p-3 rounded-bento"
+                    style={{ backgroundColor: '#f0f5e9', border: '1px solid #c5d6a8' }}
+                  >
+                    <svg className="w-5 h-5" style={{ color: '#6B7B3C' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-emerald-600 text-sm">郵件客戶端已開啟，請在郵件中確認送出！</span>
+                    <span className="text-sm" style={{ color: '#6B7B3C' }}>郵件客戶端已開啟，請在郵件中確認送出！</span>
                   </div>
                 )}
                 {submitStatus === 'error' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-red-50 border border-red-200 rounded-bento">
-                    <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div
+                    className="flex items-center gap-2 justify-center p-3 rounded-bento"
+                    style={{ backgroundColor: '#fdf2f0', border: '1px solid #e8c4bc' }}
+                  >
+                    <svg className="w-5 h-5" style={{ color: '#C67B5C' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-red-600 text-sm">
+                    <span className="text-sm" style={{ color: '#C67B5C' }}>
                       發送失敗，請直接寄信至
-                      <button onClick={copyEmail} className="underline ml-1 hover:text-red-500">
+                      <button onClick={copyEmail} className="underline ml-1" style={{ color: '#B5651D' }}>
                         bobchen184@gmail.com
                       </button>
                     </span>
                   </div>
                 )}
 
-                <p className="text-bento-text-secondary text-xs text-center">
+                <p className="text-xs text-center" style={{ color: '#B5A68C' }}>
                   點擊送出後會開啟您的郵件客戶端，表單內容會自動填入信件中
                 </p>
               </form>

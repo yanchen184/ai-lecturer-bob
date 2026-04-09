@@ -152,24 +152,22 @@ const StyleShowcase = () => {
 
 function getThemeColor(id: string): string {
   const colors: Record<string, string> = {
-    'ai-native': '#00FFFF',
-    'bento-box': '#007AFF',
-    'bold-typography': '#667EEA',
     'swiss-modernism': '#FFEB3B',
-    'aurora': '#00D2FF',
-    'liquid-glass': '#AF52DE',
+    'bento-box': '#C67B5C',
+    'bold-typography': '#6366F1',
+    'aurora': '#e94560',
+    'liquid-glass': '#C4A77D',
   };
   return colors[id] || '#888';
 }
 
 function getThemeGlow(id: string): string {
   const glows: Record<string, string> = {
-    'ai-native': 'rgba(0,255,255,0.2)',
-    'bento-box': 'rgba(0,122,255,0.2)',
-    'bold-typography': 'rgba(102,126,234,0.2)',
     'swiss-modernism': 'rgba(255,235,59,0.2)',
-    'aurora': 'rgba(0,210,255,0.2)',
-    'liquid-glass': 'rgba(175,82,222,0.2)',
+    'bento-box': 'rgba(198,123,92,0.2)',
+    'bold-typography': 'rgba(99,102,241,0.2)',
+    'aurora': 'rgba(233,69,96,0.2)',
+    'liquid-glass': 'rgba(196,167,125,0.2)',
   };
   return glows[id] || 'rgba(136,136,136,0.2)';
 }

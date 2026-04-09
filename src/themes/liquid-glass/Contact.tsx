@@ -19,14 +19,12 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // Build mailto link as primary method
       const mailtoLink = `mailto:bobchen184@gmail.com?subject=${encodeURIComponent(
         `[網站諮詢] ${formData.subject}`
       )}&body=${encodeURIComponent(
         `姓名：${formData.name}\n公司：${formData.company || '(未填寫)'}\nEmail：${formData.email}\n\n訊息內容：\n${formData.message}`
       )}`;
 
-      // Open in new window so we don't navigate away
       window.open(mailtoLink, '_blank');
 
       setSubmitStatus('success');
@@ -45,7 +43,6 @@ const Contact = () => {
       setEmailCopied(true);
       setTimeout(() => setEmailCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = 'bobchen184@gmail.com';
       document.body.appendChild(textArea);
@@ -91,7 +88,16 @@ const Contact = () => {
     },
   ];
 
-  const inputClasses = "w-full px-4 py-3 bg-white/[0.04] backdrop-blur-glass border border-white/[0.1] rounded-glass-sm text-white/90 placeholder-white/20 focus:outline-none transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]";
+  const inputStyle = {
+    width: '100%',
+    padding: '0.75rem 1rem',
+    background: 'var(--paper-white)',
+    border: '1px dashed var(--pencil-grey)',
+    borderRadius: '2px',
+    color: 'var(--marker-black)',
+    fontFamily: "'Lora', Georgia, serif",
+    fontSize: '1rem',
+  };
 
   return (
     <section
@@ -99,20 +105,26 @@ const Contact = () => {
       className="py-20 lg:py-32 relative"
       aria-labelledby="contact-title"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-glass border border-white/[0.15] text-sm text-white/50 mb-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
-            <span className="w-2 h-2 bg-success-400 rounded-full animate-pulse mr-2" />
+          <div
+            className="inline-flex items-center px-4 py-2 mb-6 text-sm"
+            style={{
+              border: '1px dashed var(--pencil-grey)',
+              borderRadius: '2px',
+              color: 'var(--pencil-grey)',
+              fontFamily: "'Courier Prime', monospace",
+            }}
+          >
+            <span className="w-2 h-2 rounded-full mr-2" style={{ background: 'var(--kraft-brown)' }} />
             目前開放諮詢預約
           </div>
+          <p className="mono-label mb-3">{'// send message'}</p>
           <h2 id="contact-title" className="section-title">
             <span className="gradient-text">聯繫我</span>
           </h2>
-          <p className="text-white/40 text-lg max-w-2xl mx-auto font-light">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--pencil-grey)' }}>
             想了解更多課程資訊或企業培訓方案？歡迎與AI講師陳彥彤聯繫
           </p>
         </div>
@@ -120,92 +132,117 @@ const Contact = () => {
         <div className="grid lg:grid-cols-5 gap-12">
           {/* Contact Info - 2 cols */}
           <div className="lg:col-span-2">
-            <h3 className="text-xl font-semibold text-white/90 mb-3 tracking-tight">聯繫方式</h3>
-            <p className="text-white/40 text-sm mb-8 leading-relaxed font-light">
+            <h3 className="text-xl font-semibold mb-3 tracking-tight" style={{ color: 'var(--marker-black)' }}>聯繫方式</h3>
+            <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--pencil-grey)' }}>
               無論是企業培訓、個人課程諮詢，或是 AI 導入顧問服務，
               都歡迎透過以下方式與我聯繫。我會在 24 小時內回覆您的訊息。
             </p>
 
-            {/* Contact Cards - Liquid Glass */}
+            {/* Contact Cards */}
             <div className="space-y-3 mb-8">
-              {contactInfo.map((info, index) => (
-                <div
-                  key={index}
-                  className="group flex items-center gap-4 p-4 bg-white/[0.04] hover:bg-white/[0.08] backdrop-blur-glass border border-white/[0.1] hover:border-white/[0.2] rounded-glass-sm transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
-                >
-                  <div className="w-11 h-11 rounded-glass-sm bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-primary-400/80 group-hover:text-primary-400 transition-colors flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                    {info.icon}
+              {contactInfo.map((info, index) => {
+                const rotations = ['0.5deg', '-0.3deg', '0.7deg'];
+                return (
+                  <div
+                    key={index}
+                    className="group flex items-center gap-4 p-4"
+                    style={{
+                      border: '1px dashed var(--pencil-grey)',
+                      borderRadius: '2px',
+                      background: '#FFFFFF',
+                      transform: `rotate(${rotations[index]})`,
+                    }}
+                  >
+                    <div
+                      className="w-11 h-11 flex items-center justify-center flex-shrink-0 sketch-circle"
+                      style={{ color: 'var(--kraft-brown)' }}
+                    >
+                      {info.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs mb-0.5 mono-label">{info.label}</div>
+                      {'action' in info && info.action ? (
+                        <button
+                          onClick={info.action}
+                          className="text-sm font-medium flex items-center gap-2"
+                          style={{ color: 'var(--marker-black)' }}
+                        >
+                          <span className="truncate">{info.value}</span>
+                          <span
+                            className="text-xs px-2 py-0.5 flex-shrink-0"
+                            style={{
+                              background: emailCopied ? 'var(--marker-yellow)' : 'var(--paper-white)',
+                              border: '1px dashed var(--pencil-grey)',
+                              borderRadius: '2px',
+                              fontFamily: "'Courier Prime', monospace",
+                              color: 'var(--pencil-grey)',
+                            }}
+                          >
+                            {info.actionLabel}
+                          </span>
+                        </button>
+                      ) : 'link' in info && info.link ? (
+                        <a
+                          href={info.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-medium hand-underline"
+                          style={{ color: 'var(--marker-black)' }}
+                        >
+                          {info.value}
+                        </a>
+                      ) : (
+                        <span className="text-sm font-medium" style={{ color: 'var(--marker-black)' }}>{info.value}</span>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-white/30 text-xs mb-0.5 font-light">{info.label}</div>
-                    {'action' in info && info.action ? (
-                      <button
-                        onClick={info.action}
-                        className="text-white/80 hover:text-primary-400 transition-colors text-sm font-medium flex items-center gap-2"
-                      >
-                        <span className="truncate">{info.value}</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full transition-all duration-200 flex-shrink-0 ${
-                          emailCopied
-                            ? 'bg-success-400/15 text-success-400'
-                            : 'bg-white/[0.06] text-white/30 group-hover:text-white/50'
-                        }`}>
-                          {info.actionLabel}
-                        </span>
-                      </button>
-                    ) : 'link' in info && info.link ? (
-                      <a
-                        href={info.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white/80 hover:text-primary-400 transition-colors text-sm font-medium"
-                      >
-                        {info.value}
-                      </a>
-                    ) : (
-                      <span className="text-white/80 text-sm font-medium">{info.value}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            {/* Quick Response Status - Liquid Glass */}
-            <div className="p-5 rounded-glass-sm bg-white/[0.04] backdrop-blur-glass border border-white/[0.1]"
-              style={{ animation: 'glowPulseIridescent 6s ease-in-out infinite' }}
+            {/* Quick Response Status */}
+            <div
+              className="p-5"
+              style={{
+                border: '1px dashed var(--kraft-brown)',
+                borderRadius: '2px',
+                background: 'var(--sticky-cream)',
+                transform: 'rotate(-0.5deg)',
+              }}
             >
               <div className="flex items-center gap-3 mb-3">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-success-400"></span>
-                </span>
-                <span className="text-white/80 font-semibold text-sm">目前狀態</span>
+                <span className="w-3 h-3 rounded-full" style={{ background: 'var(--kraft-brown)' }} />
+                <span className="font-semibold text-sm" style={{ color: 'var(--marker-black)' }}>目前狀態</span>
               </div>
-              <p className="text-white/40 text-sm leading-relaxed font-light">
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--pencil-grey)' }}>
                 開放企業培訓與顧問諮詢預約中，線上課程隨時可以開始學習。
               </p>
             </div>
           </div>
 
-          {/* Contact Form - 3 cols - Premium Glass */}
+          {/* Contact Form - 3 cols */}
           <div className="lg:col-span-3">
-            <div className="glass-card p-6 lg:p-8">
+            <div className="glass-card p-6 lg:p-8" style={{ transform: 'rotate(0.3deg)' }}>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-glass-sm bg-white/[0.06] border border-white/[0.15] flex items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
-                  <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div
+                  className="w-10 h-10 flex items-center justify-center sketch-circle"
+                  style={{ color: 'var(--kraft-brown)' }}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white/90 tracking-tight">填寫諮詢表單</h3>
-                  <p className="text-white/30 text-xs font-light">會開啟您的郵件客戶端發送</p>
+                  <h3 className="text-lg font-semibold tracking-tight" style={{ color: 'var(--marker-black)' }}>填寫諮詢表單</h3>
+                  <p className="text-xs mono-label">{'// '} 會開啟您的郵件客戶端發送</p>
                 </div>
               </div>
 
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-white/50 text-sm mb-1.5 font-light">
-                      姓名 <span className="text-red-400/80">*</span>
+                    <label htmlFor="name" className="block text-sm mb-1.5 mono-label">
+                      姓名 <span style={{ color: '#C0392B' }}>*</span>
                     </label>
                     <input
                       type="text"
@@ -213,13 +250,13 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={inputClasses}
+                      style={inputStyle}
                       placeholder="您的姓名"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-white/50 text-sm mb-1.5 font-light">
-                      Email <span className="text-red-400/80">*</span>
+                    <label htmlFor="email" className="block text-sm mb-1.5 mono-label">
+                      Email <span style={{ color: '#C0392B' }}>*</span>
                     </label>
                     <input
                       type="email"
@@ -227,7 +264,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className={inputClasses}
+                      style={inputStyle}
                       placeholder="your@email.com"
                     />
                   </div>
@@ -235,7 +272,7 @@ const Contact = () => {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="company" className="block text-white/50 text-sm mb-1.5 font-light">
+                    <label htmlFor="company" className="block text-sm mb-1.5 mono-label">
                       公司名稱
                     </label>
                     <input
@@ -243,35 +280,40 @@ const Contact = () => {
                       id="company"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className={inputClasses}
+                      style={inputStyle}
                       placeholder="您的公司或組織"
                     />
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-white/50 text-sm mb-1.5 font-light">
-                      諮詢主題 <span className="text-red-400/80">*</span>
+                    <label htmlFor="subject" className="block text-sm mb-1.5 mono-label">
+                      諮詢主題 <span style={{ color: '#C0392B' }}>*</span>
                     </label>
                     <select
                       id="subject"
                       required
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className={`${inputClasses} appearance-none`}
-                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                      style={{
+                        ...inputStyle,
+                        appearance: 'none' as const,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234A4A4A' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 12px center',
+                      }}
                     >
-                      <option value="" className="bg-surface-900">請選擇諮詢主題</option>
-                      <option value="企業培訓" className="bg-surface-900">企業培訓</option>
-                      <option value="個人課程" className="bg-surface-900">個人課程</option>
-                      <option value="AI顧問" className="bg-surface-900">AI 顧問服務</option>
-                      <option value="合作邀約" className="bg-surface-900">合作邀約</option>
-                      <option value="其他" className="bg-surface-900">其他</option>
+                      <option value="">請選擇諮詢主題</option>
+                      <option value="企業培訓">企業培訓</option>
+                      <option value="個人課程">個人課程</option>
+                      <option value="AI顧問">AI 顧問服務</option>
+                      <option value="合作邀約">合作邀約</option>
+                      <option value="其他">其他</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-white/50 text-sm mb-1.5 font-light">
-                    訊息內容 <span className="text-red-400/80">*</span>
+                  <label htmlFor="message" className="block text-sm mb-1.5 mono-label">
+                    訊息內容 <span style={{ color: '#C0392B' }}>*</span>
                   </label>
                   <textarea
                     id="message"
@@ -279,7 +321,7 @@ const Contact = () => {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={`${inputClasses} resize-none`}
+                    style={{ ...inputStyle, resize: 'none' as const }}
                     placeholder="請描述您的需求或問題..."
                   />
                 </div>
@@ -287,19 +329,19 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 text-white font-semibold rounded-glass-sm transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:scale-[1.01]"
+                  className="w-full py-3.5 font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
-                    boxShadow: '0 8px 32px rgba(175, 82, 222, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                    background: 'transparent',
+                    border: '2px dotted var(--marker-black)',
+                    borderRadius: '2px',
+                    color: 'var(--marker-black)',
+                    fontFamily: "'Courier Prime', monospace",
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
                   }}
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      <span>發送中...</span>
+                      <span style={{ fontFamily: "'Courier Prime', monospace" }}>發送中...</span>
                     </>
                   ) : (
                     <>
@@ -313,21 +355,32 @@ const Contact = () => {
 
                 {/* Status Messages */}
                 {submitStatus === 'success' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-success-400/[0.08] backdrop-blur-glass border border-success-400/[0.15] rounded-glass-sm">
-                    <svg className="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div
+                    className="flex items-center gap-2 justify-center p-3"
+                    style={{
+                      background: 'var(--marker-yellow)',
+                      border: '1px dashed var(--kraft-brown)',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--kraft-brown)' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-success-400 text-sm">郵件客戶端已開啟，請在郵件中確認送出！</span>
+                    <span className="text-sm" style={{ color: 'var(--marker-black)' }}>郵件客戶端已開啟，請在郵件中確認送出！</span>
                   </div>
                 )}
                 {submitStatus === 'error' && (
-                  <div className="flex items-center gap-2 justify-center p-3 bg-red-500/[0.08] backdrop-blur-glass border border-red-500/[0.15] rounded-glass-sm">
-                    <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-red-400 text-sm">
+                  <div
+                    className="flex items-center gap-2 justify-center p-3"
+                    style={{
+                      background: '#FFF0F0',
+                      border: '1px dashed #C0392B',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    <span className="text-sm" style={{ color: '#C0392B' }}>
                       發送失敗，請直接寄信至
-                      <button onClick={copyEmail} className="underline ml-1 hover:text-red-300">
+                      <button onClick={copyEmail} className="underline ml-1" style={{ color: '#C0392B' }}>
                         bobchen184@gmail.com
                       </button>
                     </span>
@@ -335,7 +388,7 @@ const Contact = () => {
                 )}
 
                 {/* Helper text */}
-                <p className="text-white/20 text-xs text-center font-light">
+                <p className="text-xs text-center mono-label">
                   點擊送出後會開啟您的郵件客戶端，表單內容會自動填入信件中
                 </p>
               </form>

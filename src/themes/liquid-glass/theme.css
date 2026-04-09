@@ -1,47 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 .theme-liquid-glass {
-  --glass-blur: 40px;
-  --glass-blur-heavy: 60px;
-  --glass-saturate: 180%;
-  --glass-bg: rgba(255, 255, 255, 0.06);
-  --glass-bg-hover: rgba(255, 255, 255, 0.12);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-border-light: rgba(255, 255, 255, 0.25);
-  --glass-radius: 24px;
-  --glass-radius-lg: 32px;
-  --glass-radius-sm: 16px;
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
-  --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.12);
-  --glass-inner-light: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  --glass-inner-glow: inset 0 0 20px rgba(255, 255, 255, 0.05);
-  --morph-duration: 500ms;
-  --iridescent-1: #007AFF;
-  --iridescent-2: #AF52DE;
-  --iridescent-3: #34C759;
-  --iridescent-4: #FF6B9D;
-  --iridescent-5: #00D4FF;
-  --accent: #AF52DE;
-  --color-blue: #007AFF;
-  --color-purple: #AF52DE;
-  --color-green: #34C759;
-  --spring-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* === Anti-Polish Palette === */
+  --paper-white: #FAFAF8;
+  --pencil-grey: #4A4A4A;
+  --marker-black: #1A1A1A;
+  --kraft-brown: #C4A77D;
+  --marker-yellow: #FFE066;
+  --sticky-cream: #FFF8DC;
+  --dashed-border: 1px dashed var(--pencil-grey);
+  --dotted-border: 2px dotted var(--pencil-grey);
 
-  background: linear-gradient(160deg, #0A0A1A 0%, #1A1A2E 40%, #12122A 70%, #0A0A1A 100%);
-  color: #e2e8f0;
-  font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+  background: var(--paper-white);
+  color: var(--marker-black);
+  font-family: 'Lora', 'Noto Sans TC', Georgia, 'Times New Roman', serif;
+}
+
+/* Paper texture grain overlay */
+.theme-liquid-glass-wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
 }
 
 .theme-liquid-glass ::selection {
-  background-color: rgba(175, 82, 222, 0.4);
-  color: #FFFFFF;
+  background-color: var(--marker-yellow);
+  color: var(--marker-black);
 }
 
 .theme-liquid-glass *:focus-visible {
-  outline: 2px solid var(--iridescent-2);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 2px dashed var(--kraft-brown);
+  outline-offset: 3px;
+  border-radius: 0;
 }
 
 .theme-liquid-glass-wrapper {
@@ -50,114 +46,62 @@
   overflow-x: hidden;
 }
 
-/* === Iridescent Background Shimmer === */
-.theme-liquid-glass-wrapper::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(0, 122, 255, 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 70%, rgba(175, 82, 222, 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(52, 199, 89, 0.02) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-  animation: iridescentShimmer 12s ease-in-out infinite alternate;
-}
-
-/* === Liquid Glass Card === */
+/* === Sketch Card (dashed border, slight rotation) === */
 .theme-liquid-glass .lg-card,
 .theme-liquid-glass .glass-card {
   position: relative;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius);
-  box-shadow: var(--glass-shadow), var(--glass-inner-light);
-  transition: all var(--morph-duration) var(--smooth-ease);
-  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px dashed var(--pencil-grey);
+  border-radius: 2px;
+  box-shadow: none;
+  transition: none;
+  overflow: visible;
 }
 
-/* Iridescent animated border pseudo-element */
+/* Kill the iridescent border pseudo-element */
 .theme-liquid-glass .lg-card::before,
 .theme-liquid-glass .glass-card::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    var(--iridescent-1),
-    var(--iridescent-2),
-    var(--iridescent-3),
-    var(--iridescent-5),
-    var(--iridescent-1)
-  );
-  background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  opacity: 0.3;
-  animation: iridescentBorder 6s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
+  display: none;
 }
 
 .theme-liquid-glass .lg-card:hover,
 .theme-liquid-glass .glass-card:hover {
-  background: var(--glass-bg-hover);
-  border-color: var(--glass-border-light);
-  box-shadow: var(--glass-shadow-hover), var(--glass-inner-light);
-  transform: translateY(-2px);
+  background: #FFFFFF;
+  border-color: var(--marker-black);
+  box-shadow: none;
+  transform: rotate(0.5deg);
 }
 
-.theme-liquid-glass .lg-card:hover::before,
-.theme-liquid-glass .glass-card:hover::before {
-  opacity: 0.6;
-  animation-duration: 3s;
-}
-
-/* === Gradient Text (Iridescent) === */
+/* === Gradient Text Override: just bold marker black === */
 .theme-liquid-glass .gradient-text {
-  background: linear-gradient(
-    135deg,
-    var(--iridescent-1) 0%,
-    var(--iridescent-2) 40%,
-    var(--iridescent-5) 70%,
-    var(--iridescent-1) 100%
-  );
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: iridescentText 6s ease-in-out infinite;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: var(--marker-black);
+  color: var(--marker-black);
+  font-weight: 700;
+  animation: none;
 }
 
-/* === Button Primary (Purple Accent) === */
+/* === Button Primary: outlined, dotted, no fill === */
 .theme-liquid-glass .btn-primary {
-  background: linear-gradient(135deg, var(--iridescent-1), var(--accent));
-  box-shadow:
-    0 8px 32px rgba(175, 82, 222, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  border: none;
-  color: #fff;
-  font-weight: 600;
-  border-radius: 9999px;
-  padding: 1rem 2rem;
-  transition: all var(--morph-duration) var(--smooth-ease);
+  background: transparent;
+  border: 2px dotted var(--marker-black);
+  color: var(--marker-black);
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-weight: 700;
+  border-radius: 2px;
+  padding: 0.875rem 2rem;
+  box-shadow: none;
+  transition: transform 0.1s ease;
+  cursor: pointer;
 }
 
 .theme-liquid-glass .btn-primary:hover {
-  transform: scale(1.05) translateY(-1px);
-  box-shadow:
-    0 12px 40px rgba(175, 82, 222, 0.35),
-    0 0 20px rgba(0, 122, 255, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: rotate(-1deg) scale(1.02);
+  box-shadow: none;
+  background: var(--marker-yellow);
+  border-color: var(--marker-black);
 }
 
 /* === Section Title === */
@@ -167,183 +111,76 @@
   text-align: center;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  font-family: 'Lora', Georgia, serif;
+  color: var(--marker-black);
 }
 
-/* === Keyframe Animations === */
-@keyframes iridescentShimmer {
-  0% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.6;
-  }
+/* === Marker Highlight === */
+.theme-liquid-glass .marker-highlight {
+  background: var(--marker-yellow);
+  padding: 0.1em 0.3em;
+  transform: skewX(-2deg);
+  display: inline-block;
+  border-radius: 1px;
 }
 
-@keyframes iridescentBorder {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
+/* === Hand-drawn underline === */
+.theme-liquid-glass .hand-underline {
+  text-decoration: none;
+  border-bottom: 2px solid var(--kraft-brown);
+  border-bottom-style: wavy;
+  padding-bottom: 2px;
 }
 
-@keyframes iridescentText {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* === Monospace label (code comment style) === */
+.theme-liquid-glass .mono-label {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  color: var(--pencil-grey);
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
 }
 
-@keyframes chromaticAberration {
-  0%, 100% {
-    text-shadow:
-      -2px 0 rgba(0, 122, 255, 0.4),
-      2px 0 rgba(175, 82, 222, 0.4);
-  }
-  25% {
-    text-shadow:
-      -3px 0 rgba(175, 82, 222, 0.5),
-      3px 0 rgba(52, 199, 89, 0.4);
-  }
-  50% {
-    text-shadow:
-      2px 0 rgba(0, 212, 255, 0.4),
-      -2px 0 rgba(255, 107, 157, 0.4);
-  }
-  75% {
-    text-shadow:
-      3px 0 rgba(52, 199, 89, 0.4),
-      -3px 0 rgba(0, 122, 255, 0.5);
-  }
+/* === Sticky note style === */
+.theme-liquid-glass .sticky-note {
+  background: var(--sticky-cream);
+  border: none;
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.08);
+  padding: 1rem;
 }
 
-@keyframes orbFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.5;
-  }
-  25% {
-    transform: translate(30px, -40px) scale(1.1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate(-20px, -60px) scale(0.95);
-    opacity: 0.4;
-  }
-  75% {
-    transform: translate(40px, -20px) scale(1.05);
-    opacity: 0.6;
-  }
-}
-
-@keyframes glowPulseIridescent {
-  0%, 100% {
-    box-shadow:
-      0 0 20px rgba(0, 122, 255, 0.1),
-      0 0 40px rgba(0, 122, 255, 0.05);
-  }
-  33% {
-    box-shadow:
-      0 0 25px rgba(175, 82, 222, 0.15),
-      0 0 50px rgba(175, 82, 222, 0.08);
-  }
-  66% {
-    box-shadow:
-      0 0 20px rgba(52, 199, 89, 0.1),
-      0 0 40px rgba(52, 199, 89, 0.05);
-  }
-}
-
-@keyframes avatarRingRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Iridescent avatar ring */
-.theme-liquid-glass .iridescent-ring {
+/* === Sketch circle (for avatar) === */
+.theme-liquid-glass .sketch-circle {
+  border: 2px dashed var(--pencil-grey);
+  border-radius: 50%;
   position: relative;
 }
 
-.theme-liquid-glass .iridescent-ring::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    var(--iridescent-1),
-    var(--iridescent-2),
-    var(--iridescent-3),
-    var(--iridescent-5),
-    var(--iridescent-4),
-    var(--iridescent-1)
-  );
-  animation: avatarRingRotate 8s linear infinite;
-  z-index: -1;
+/* === Kill all iridescent effects === */
+.theme-liquid-glass .iridescent-ring::before,
+.theme-liquid-glass .iridescent-top-border::before {
+  display: none;
 }
 
-/* Iridescent skill bar */
 .theme-liquid-glass .iridescent-bar {
-  background: linear-gradient(
-    90deg,
-    var(--iridescent-1),
-    var(--iridescent-2),
-    var(--iridescent-5),
-    var(--iridescent-3)
-  );
-  background-size: 200% 100%;
-  animation: iridescentText 4s ease-in-out infinite;
+  background: var(--kraft-brown);
+  animation: none;
 }
 
-/* Focus ring for inputs (iridescent) */
+/* === Focus ring for inputs === */
 .theme-liquid-glass input:focus,
 .theme-liquid-glass textarea:focus,
 .theme-liquid-glass select:focus {
-  border-color: rgba(175, 82, 222, 0.5) !important;
-  box-shadow:
-    0 0 0 3px rgba(175, 82, 222, 0.1),
-    0 0 15px rgba(0, 122, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--kraft-brown) !important;
+  box-shadow: none !important;
+  outline: 2px dashed var(--kraft-brown);
+  outline-offset: 2px;
 }
 
-/* Iridescent top border for footer */
-.theme-liquid-glass .iridescent-top-border {
-  position: relative;
-}
-
-.theme-liquid-glass .iridescent-top-border::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--iridescent-1) 20%,
-    var(--iridescent-2) 40%,
-    var(--iridescent-3) 60%,
-    var(--iridescent-5) 80%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: iridescentText 4s ease-in-out infinite;
-  opacity: 0.7;
-}
+/* === No animations === */
+@keyframes iridescentShimmer { 0%, 100% { opacity: 1; } }
+@keyframes iridescentBorder { 0%, 100% { background-position: 0% 0%; } }
+@keyframes iridescentText { 0%, 100% { background-position: 0% 0%; } }
+@keyframes chromaticAberration { 0%, 100% { text-shadow: none; } }
+@keyframes orbFloat { 0%, 100% { transform: none; opacity: 0; } }
+@keyframes glowPulseIridescent { 0%, 100% { box-shadow: none; } }
+@keyframes avatarRingRotate { 0%, 100% { transform: none; } }

@@ -9,9 +9,9 @@ import './theme.css';
 
 export const theme = {
   id: 'bold-typography',
-  name: 'Bold Typography',
-  description: '超大粗體排版，海報級視覺衝擊力',
-  preview: '深色 . 大字 . 海報風',
+  name: 'Motion-Driven',
+  description: '動態驅動深色主題，Stripe/Linear 風格的流暢動效',
+  preview: '深色 . 動效 . 高對比',
   bodyClass: 'theme-bold-typography',
   components: { Hero, About, Skills, Courses, Contact, Navbar, Footer },
 };

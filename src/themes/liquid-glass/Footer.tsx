@@ -55,10 +55,13 @@ const Footer = () => {
 
   return (
     <footer
-      className="relative bg-surface-900/80 backdrop-blur-glass-heavy border-t border-white/[0.06] iridescent-top-border"
+      className="relative"
       role="contentinfo"
+      style={{
+        background: 'var(--paper-white)',
+        borderTop: '1px dashed var(--pencil-grey)',
+      }}
     >
-
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
@@ -66,25 +69,22 @@ const Footer = () => {
           <div className="lg:col-span-4">
             <Link to="/" className="flex items-center space-x-2 mb-5 group">
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-shadow duration-500"
-                style={{
-                  background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
-                  boxShadow: '0 4px 16px rgba(175,82,222,0.25)',
-                }}
+                className="w-10 h-10 flex items-center justify-center sketch-circle"
+                style={{ background: 'var(--paper-white)' }}
               >
-                <span className="text-white font-bold text-xl">陳</span>
+                <span className="font-bold text-xl" style={{ color: 'var(--marker-black)' }}>陳</span>
               </div>
               <div>
-                <span className="text-lg font-semibold gradient-text">AI講師</span>
-                <span className="text-white/80 ml-1 font-light">陳彥彤</span>
+                <span className="text-lg font-semibold" style={{ color: 'var(--marker-black)', fontFamily: "'Courier Prime', monospace" }}>AI講師</span>
+                <span className="ml-1" style={{ color: 'var(--pencil-grey)' }}>陳彥彤</span>
               </div>
             </Link>
-            <p className="text-white/35 text-sm leading-relaxed mb-6 max-w-sm font-light">
+            <p className="text-sm leading-relaxed mb-6 max-w-sm" style={{ color: 'var(--pencil-grey)' }}>
               專業人工智慧教育講師，致力於將複雜的 AI 技術轉化為易懂的知識，
               幫助企業與個人掌握 AI 時代的核心競爭力。
             </p>
 
-            {/* Social Icons - Liquid Glass */}
+            {/* Social Icons */}
             <div className="flex items-center space-x-3">
               {socialLinks.map((social) => (
                 <a
@@ -92,7 +92,8 @@ const Footer = () => {
                   href={social.href}
                   target={social.href.startsWith('http') ? '_blank' : undefined}
                   rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-10 h-10 rounded-glass-sm bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/35 hover:text-white/80 hover:bg-white/[0.1] hover:border-primary-500/20 transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                  className="w-10 h-10 flex items-center justify-center sketch-circle"
+                  style={{ color: 'var(--pencil-grey)' }}
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -103,7 +104,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h3 className="text-white/70 font-semibold text-sm uppercase tracking-wider mb-5">
+            <h3 className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label" style={{ color: 'var(--marker-black)' }}>
               快速連結
             </h3>
             <ul className="space-y-3">
@@ -112,17 +113,19 @@ const Footer = () => {
                   {'to' in item && item.to ? (
                     <Link
                       to={item.to}
-                      className="text-white/35 hover:text-primary-400/90 text-sm transition-colors duration-300 inline-flex items-center group font-light"
+                      className="text-sm inline-flex items-center"
+                      style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}
                     >
-                      <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                      <span style={{ color: 'var(--kraft-brown)', marginRight: '0.5rem' }}>{'>'}</span>
                       {item.label}
                     </Link>
                   ) : (
                     <a
                       href={item.href}
-                      className="text-white/35 hover:text-primary-400/90 text-sm transition-colors duration-300 inline-flex items-center group font-light"
+                      className="text-sm inline-flex items-center"
+                      style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}
                     >
-                      <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                      <span style={{ color: 'var(--kraft-brown)', marginRight: '0.5rem' }}>{'>'}</span>
                       {item.label}
                     </a>
                   )}
@@ -133,7 +136,7 @@ const Footer = () => {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h3 className="text-white/70 font-semibold text-sm uppercase tracking-wider mb-5">
+            <h3 className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label" style={{ color: 'var(--marker-black)' }}>
               服務項目
             </h3>
             <ul className="space-y-3">
@@ -141,9 +144,10 @@ const Footer = () => {
                 <li key={item.label}>
                   <a
                     href={item.href}
-                    className="text-white/35 hover:text-primary-400/90 text-sm transition-colors duration-300 inline-flex items-center group font-light"
+                    className="text-sm inline-flex items-center"
+                    style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}
                   >
-                    <span className="w-0 group-hover:w-2 h-px bg-primary-400 mr-0 group-hover:mr-2 transition-all duration-200" />
+                    <span style={{ color: 'var(--kraft-brown)', marginRight: '0.5rem' }}>{'>'}</span>
                     {item.label}
                   </a>
                 </li>
@@ -151,17 +155,23 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter / Contact CTA */}
+          {/* Contact CTA */}
           <div className="lg:col-span-3">
-            <h3 className="text-white/70 font-semibold text-sm uppercase tracking-wider mb-5">
+            <h3 className="font-semibold text-sm uppercase tracking-wider mb-5 mono-label" style={{ color: 'var(--marker-black)' }}>
               保持聯繫
             </h3>
-            <p className="text-white/35 text-sm mb-4 font-light">
+            <p className="text-sm mb-4" style={{ color: 'var(--pencil-grey)' }}>
               有任何培訓需求或合作想法，歡迎隨時聯繫。
             </p>
             <a
               href="/#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.04] backdrop-blur-sm border border-white/[0.1] rounded-glass-sm text-sm text-white/55 hover:text-white/80 hover:bg-white/[0.08] hover:border-primary-500/20 transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm"
+              style={{
+                border: '1px dashed var(--pencil-grey)',
+                borderRadius: '2px',
+                color: 'var(--marker-black)',
+                fontFamily: "'Courier Prime', monospace",
+              }}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -169,7 +179,7 @@ const Footer = () => {
               bobchen184@gmail.com
             </a>
 
-            <div className="mt-4 flex items-center gap-2 text-white/25 text-xs font-light">
+            <div className="mt-4 flex items-center gap-2 text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -180,20 +190,21 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-14 pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/25 text-xs font-light">
+        <div className="mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4" style={{ borderTop: '1px dashed var(--pencil-grey)' }}>
+          <p className="text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
             &copy; {currentYear} AI講師陳彥彤. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">
-            <p className="text-white/25 text-xs font-light">
+            <p className="text-xs" style={{ color: 'var(--pencil-grey)', fontFamily: "'Courier Prime', monospace" }}>
               Built with React + TypeScript + Tailwind CSS
             </p>
 
-            {/* Back to top - Liquid Glass */}
+            {/* Back to top */}
             <button
               onClick={scrollToTop}
-              className="w-9 h-9 rounded-glass-sm bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/35 hover:text-white/80 hover:bg-white/[0.1] hover:border-primary-500/20 transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+              className="w-9 h-9 flex items-center justify-center sketch-circle"
+              style={{ color: 'var(--pencil-grey)' }}
               aria-label="回到頂部"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

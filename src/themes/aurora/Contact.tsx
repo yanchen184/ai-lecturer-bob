@@ -1,4 +1,4 @@
-import { useState, useRef, type FormEvent } from 'react';
+import { useState, useRef, useEffect, type FormEvent } from 'react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,26 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [emailCopied, setEmailCopied] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const revealRefs = useRef<(HTMLElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    revealRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -19,14 +39,12 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // Build mailto link as primary method
       const mailtoLink = `mailto:bobchen184@gmail.com?subject=${encodeURIComponent(
         `[網站諮詢] ${formData.subject}`
       )}&body=${encodeURIComponent(
         `姓名：${formData.name}\n公司：${formData.company || '(未填寫)'}\nEmail：${formData.email}\n\n訊息內容：\n${formData.message}`
       )}`;
 
-      // Open in new window so we don't navigate away
       window.open(mailtoLink, '_blank');
 
       setSubmitStatus('success');
@@ -45,7 +63,6 @@ const Contact = () => {
       setEmailCopied(true);
       setTimeout(() => setEmailCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = 'bobchen184@gmail.com';
       document.body.appendChild(textArea);
@@ -56,6 +73,14 @@ const Contact = () => {
       setTimeout(() => setEmailCopied(false), 2000);
     }
   };
+
+  const inputStyles = {
+    background: 'rgba(22,33,62,0.6)',
+    border: '1px solid rgba(15,52,96,0.6)',
+    color: '#e2e8f0',
+  };
+
+  const inputFocusClass = 'w-full px-4 py-3 rounded-xl placeholder-gray-600 focus:outline-none transition-all duration-600';
 
   const contactInfo = [
     {
@@ -94,42 +119,39 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="py-20 lg:py-32 relative"
+      className="py-32 lg:py-40 relative"
       aria-labelledby="contact-title"
+      style={{ background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%)' }}
     >
-      {/* Aurora Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-aurora-deeper/30 to-transparent" />
-        <div
-          className="aurora-blob bottom-[15%] right-[5%] w-[500px] h-[500px] animate-aurora-breathe"
-          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.15) 0%, transparent 70%)', filter: 'blur(100px)', animationDelay: '-3s' }}
-        />
-        <div
-          className="aurora-blob top-[10%] left-[10%] w-[400px] h-[400px] animate-aurora-drift"
-          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.1) 0%, transparent 70%)', filter: 'blur(80px)', animationDelay: '-5s' }}
-        />
-      </div>
+      <hr className="chapter-divider" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 mb-6">
-            <span className="w-2 h-2 bg-aurora-green rounded-full animate-pulse mr-2" />
+        <div
+          ref={(el) => { revealRefs.current[0] = el; }}
+          className="scroll-reveal text-center mb-16"
+        >
+          <span className="chapter-label">05 — 聯繫</span>
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full text-sm mb-6" style={{ background: 'rgba(22,33,62,0.6)', border: '1px solid rgba(15,52,96,0.6)', color: '#8892b0' }}>
+            <span className="w-2 h-2 rounded-full animate-pulse mr-2" style={{ background: '#e94560' }} />
             目前開放諮詢預約
           </div>
           <h2 id="contact-title" className="section-title">
             <span className="gradient-text">聯繫我</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: '#8892b0' }}>
             想了解更多課程資訊或企業培訓方案？歡迎與AI講師陳彥彤聯繫
           </p>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12">
           {/* Contact Info - 2 cols */}
-          <div className="lg:col-span-2">
+          <div
+            ref={(el) => { revealRefs.current[1] = el; }}
+            className="scroll-reveal lg:col-span-2"
+          >
             <h3 className="text-xl font-bold text-white mb-3">聯繫方式</h3>
-            <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+            <p className="text-sm mb-8 leading-relaxed" style={{ color: '#8892b0' }}>
               無論是企業培訓、個人課程諮詢，或是 AI 導入顧問服務，
               都歡迎透過以下方式與我聯繫。我會在 24 小時內回覆您的訊息。
             </p>
@@ -139,24 +161,27 @@ const Contact = () => {
               {contactInfo.map((info, index) => (
                 <div
                   key={index}
-                  className="group flex items-center gap-4 p-4 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.12] rounded-2xl transition-all duration-300"
+                  className="group flex items-center gap-4 p-4 rounded-2xl transition-all duration-600"
+                  style={{ background: 'rgba(22,33,62,0.5)', border: '1px solid rgba(15,52,96,0.4)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(233,69,96,0.3)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(15,52,96,0.4)'; }}
                 >
-                  <div className="w-11 h-11 rounded-xl border border-white/10 flex items-center justify-center text-aurora-ice group-hover:text-aurora-ice/80 transition-colors flex-shrink-0" style={{ background: 'linear-gradient(135deg, rgba(0,210,255,0.1), rgba(122,95,255,0.1))' }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(233,69,96,0.1)', border: '1px solid rgba(233,69,96,0.2)', color: '#e94560' }}>
                     {info.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-gray-500 text-xs mb-0.5">{info.label}</div>
+                    <div className="text-xs mb-0.5" style={{ color: '#8892b0' }}>{info.label}</div>
                     {'action' in info && info.action ? (
                       <button
                         onClick={info.action}
-                        className="text-white hover:text-aurora-ice transition-colors text-sm font-medium flex items-center gap-2"
+                        className="text-white hover:opacity-80 transition-colors text-sm font-medium flex items-center gap-2"
                       >
                         <span className="truncate">{info.value}</span>
                         <span className={`text-xs px-2 py-0.5 rounded-full transition-all duration-200 flex-shrink-0 ${
                           emailCopied
                             ? 'bg-emerald-500/20 text-emerald-400'
-                            : 'bg-white/10 text-gray-500 group-hover:text-gray-300'
-                        }`}>
+                            : 'text-gray-500'
+                        }`} style={emailCopied ? {} : { background: 'rgba(15,52,96,0.5)' }}>
                           {info.actionLabel}
                         </span>
                       </button>
@@ -165,7 +190,7 @@ const Contact = () => {
                         href={info.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-aurora-ice transition-colors text-sm font-medium"
+                        className="text-white hover:opacity-80 transition-colors text-sm font-medium"
                       >
                         {info.value}
                       </a>
@@ -178,7 +203,7 @@ const Contact = () => {
             </div>
 
             {/* Quick Response Status */}
-            <div className="p-5 rounded-2xl border border-aurora-ice/10" style={{ background: 'linear-gradient(135deg, rgba(0,210,255,0.06), rgba(122,95,255,0.06))' }}>
+            <div className="p-5 rounded-2xl" style={{ background: 'rgba(233,69,96,0.05)', border: '1px solid rgba(233,69,96,0.15)' }}>
               <div className="flex items-center gap-3 mb-3">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -186,32 +211,35 @@ const Contact = () => {
                 </span>
                 <span className="text-white font-semibold text-sm">目前狀態</span>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{ color: '#8892b0' }}>
                 開放企業培訓與顧問諮詢預約中，線上課程隨時可以開始學習。
               </p>
             </div>
           </div>
 
           {/* Contact Form - 3 cols */}
-          <div className="lg:col-span-3">
+          <div
+            ref={(el) => { revealRefs.current[2] = el; }}
+            className="scroll-reveal lg:col-span-3"
+          >
             <div className="glass-card p-6 lg:p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF)', boxShadow: '0 0 15px rgba(0,210,255,0.2)' }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#e94560', boxShadow: '0 0 15px rgba(233,69,96,0.2)' }}>
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">填寫諮詢表單</h3>
-                  <p className="text-gray-500 text-xs">會開啟您的郵件客戶端發送</p>
+                  <p className="text-xs" style={{ color: '#8892b0' }}>會開啟您的郵件客戶端發送</p>
                 </div>
               </div>
 
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-gray-400 text-sm mb-1.5">
-                      姓名 <span className="text-red-400">*</span>
+                    <label htmlFor="name" className="block text-sm mb-1.5" style={{ color: '#8892b0' }}>
+                      姓名 <span style={{ color: '#e94560' }}>*</span>
                     </label>
                     <input
                       type="text"
@@ -219,13 +247,16 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200"
+                      className={inputFocusClass}
+                      style={inputStyles}
                       placeholder="您的姓名"
+                      onFocus={(e) => { e.currentTarget.style.borderColor = '#e94560'; e.currentTarget.style.boxShadow = '0 0 12px rgba(233,69,96,0.15)'; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(15,52,96,0.6)'; e.currentTarget.style.boxShadow = 'none'; }}
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-gray-400 text-sm mb-1.5">
-                      Email <span className="text-red-400">*</span>
+                    <label htmlFor="email" className="block text-sm mb-1.5" style={{ color: '#8892b0' }}>
+                      Email <span style={{ color: '#e94560' }}>*</span>
                     </label>
                     <input
                       type="email"
@@ -233,15 +264,18 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200"
+                      className={inputFocusClass}
+                      style={inputStyles}
                       placeholder="your@email.com"
+                      onFocus={(e) => { e.currentTarget.style.borderColor = '#e94560'; e.currentTarget.style.boxShadow = '0 0 12px rgba(233,69,96,0.15)'; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(15,52,96,0.6)'; e.currentTarget.style.boxShadow = 'none'; }}
                     />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="company" className="block text-gray-400 text-sm mb-1.5">
+                    <label htmlFor="company" className="block text-sm mb-1.5" style={{ color: '#8892b0' }}>
                       公司名稱
                     </label>
                     <input
@@ -249,35 +283,45 @@ const Contact = () => {
                       id="company"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200"
+                      className={inputFocusClass}
+                      style={inputStyles}
                       placeholder="您的公司或組織"
+                      onFocus={(e) => { e.currentTarget.style.borderColor = '#e94560'; e.currentTarget.style.boxShadow = '0 0 12px rgba(233,69,96,0.15)'; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(15,52,96,0.6)'; e.currentTarget.style.boxShadow = 'none'; }}
                     />
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-gray-400 text-sm mb-1.5">
-                      諮詢主題 <span className="text-red-400">*</span>
+                    <label htmlFor="subject" className="block text-sm mb-1.5" style={{ color: '#8892b0' }}>
+                      諮詢主題 <span style={{ color: '#e94560' }}>*</span>
                     </label>
                     <select
                       id="subject"
                       required
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200 appearance-none"
-                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                      className={`${inputFocusClass} appearance-none`}
+                      style={{
+                        ...inputStyles,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238892b0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 12px center',
+                      }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = '#e94560'; e.currentTarget.style.boxShadow = '0 0 12px rgba(233,69,96,0.15)'; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(15,52,96,0.6)'; e.currentTarget.style.boxShadow = 'none'; }}
                     >
-                      <option value="" className="bg-aurora-dark">請選擇諮詢主題</option>
-                      <option value="企業培訓" className="bg-aurora-dark">企業培訓</option>
-                      <option value="個人課程" className="bg-aurora-dark">個人課程</option>
-                      <option value="AI顧問" className="bg-aurora-dark">AI 顧問服務</option>
-                      <option value="合作邀約" className="bg-aurora-dark">合作邀約</option>
-                      <option value="其他" className="bg-aurora-dark">其他</option>
+                      <option value="" style={{ background: '#16213e' }}>請選擇諮詢主題</option>
+                      <option value="企業培訓" style={{ background: '#16213e' }}>企業培訓</option>
+                      <option value="個人課程" style={{ background: '#16213e' }}>個人課程</option>
+                      <option value="AI顧問" style={{ background: '#16213e' }}>AI 顧問服務</option>
+                      <option value="合作邀約" style={{ background: '#16213e' }}>合作邀約</option>
+                      <option value="其他" style={{ background: '#16213e' }}>其他</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-gray-400 text-sm mb-1.5">
-                    訊息內容 <span className="text-red-400">*</span>
+                  <label htmlFor="message" className="block text-sm mb-1.5" style={{ color: '#8892b0' }}>
+                    訊息內容 <span style={{ color: '#e94560' }}>*</span>
                   </label>
                   <textarea
                     id="message"
@@ -285,16 +329,19 @@ const Contact = () => {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aurora-ice/40 focus:bg-white/[0.07] focus:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-200 resize-none"
+                    className={`${inputFocusClass} resize-none`}
+                    style={inputStyles}
                     placeholder="請描述您的需求或問題..."
+                    onFocus={(e) => { e.currentTarget.style.borderColor = '#e94560'; e.currentTarget.style.boxShadow = '0 0 12px rgba(233,69,96,0.15)'; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(15,52,96,0.6)'; e.currentTarget.style.boxShadow = 'none'; }}
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 text-white font-bold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:scale-[1.02]"
-                  style={{ background: 'linear-gradient(135deg, #00D2FF, #7A5FFF, #FF6B9D)', boxShadow: '0 0 20px rgba(0,210,255,0.25), 0 0 40px rgba(122,95,255,0.15)' }}
+                  className="w-full py-3.5 text-white font-bold rounded-xl transition-all duration-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:scale-[1.02]"
+                  style={{ background: '#e94560', boxShadow: '0 4px 20px rgba(233,69,96,0.3)' }}
                 >
                   {isSubmitting ? (
                     <>
@@ -338,7 +385,7 @@ const Contact = () => {
                 )}
 
                 {/* Helper text */}
-                <p className="text-gray-600 text-xs text-center">
+                <p className="text-xs text-center" style={{ color: '#0f3460' }}>
                   點擊送出後會開啟您的郵件客戶端，表單內容會自動填入信件中
                 </p>
               </form>

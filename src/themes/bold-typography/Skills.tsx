@@ -1,4 +1,53 @@
+import { useEffect, useRef } from 'react';
+
 const Skills = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const revealEls = section.querySelectorAll('.scroll-reveal');
+    const skillBarEls = section.querySelectorAll('.skill-bar-fill');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    const barObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLElement;
+            const targetWidth = target.getAttribute('data-width');
+            if (targetWidth) {
+              target.style.width = targetWidth;
+            }
+            target.classList.add('is-visible');
+            barObserver.unobserve(target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    revealEls.forEach((el) => observer.observe(el));
+    skillBarEls.forEach((el) => barObserver.observe(el));
+
+    return () => {
+      observer.disconnect();
+      barObserver.disconnect();
+    };
+  }, []);
+
   const skillCategories = [
     {
       title: '後端開發',
@@ -7,7 +56,7 @@ const Skills = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
         </svg>
       ),
-      colorHex: '#667EEA',
+      color: '#6366F1',
       skills: [
         { name: 'Java / Spring Boot', level: 95 },
         { name: 'Spring Data JPA / Hibernate', level: 92 },
@@ -23,7 +72,7 @@ const Skills = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
         </svg>
       ),
-      colorHex: '#764BA2',
+      color: '#EC4899',
       skills: [
         { name: 'MySQL (Index, Partition)', level: 92 },
         { name: 'Redis 快取策略', level: 90 },
@@ -39,7 +88,7 @@ const Skills = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
         </svg>
       ),
-      colorHex: '#8B9CF7',
+      color: '#F59E0B',
       skills: [
         { name: 'Docker / Kubernetes', level: 85 },
         { name: 'GitLab CI/CD / Argo CD', level: 88 },
@@ -52,30 +101,31 @@ const Skills = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="skills"
       className="py-20 lg:py-32 relative"
       aria-labelledby="skills-title"
     >
-      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(118,75,162,0.3), transparent)' }} />
+      <div className="section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="font-mono text-white/40 text-sm mb-2">{'$ analyze --skills --verbose'}</div>
+        <div className="text-center mb-16 scroll-reveal">
+          <div className="font-mono text-sm mb-2" style={{ color: '#6B7280' }}>{'$ analyze --skills --verbose'}</div>
           <h2 id="skills-title" className="section-title">
             <span className="gradient-text">專業技能</span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: '#9CA3AF' }}>
             程式講師陳彥彤具備全方位的技術能力，從後端開發到 DevOps，提供最專業的教學服務
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {skillCategories.map((category, catIndex) => (
-            <div key={catIndex} className="glass-card p-6 transition-all duration-300 group">
+            <div key={catIndex} className={`scroll-reveal stagger-${catIndex + 1} motion-card p-6`}>
               <div className="flex items-center gap-4 mb-6">
                 <div
                   className="w-14 h-14 rounded-xl flex items-center justify-center"
-                  style={{ background: `${category.colorHex}15`, border: `1px solid ${category.colorHex}40`, color: category.colorHex }}
+                  style={{ background: `${category.color}12`, border: `1px solid ${category.color}30`, color: category.color }}
                 >
                   {category.icon}
                 </div>
@@ -86,11 +136,11 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between mb-1">
-                      <span className="text-white/60 text-sm font-mono">{skill.name}</span>
-                      <span className="text-sm font-mono" style={{ color: category.colorHex }}>{skill.level}%</span>
+                      <span className="text-sm font-mono" style={{ color: '#9CA3AF' }}>{skill.name}</span>
+                      <span className="text-sm font-mono" style={{ color: category.color }}>{skill.level}%</span>
                     </div>
                     <div className="skill-bar">
-                      <div className="skill-bar-fill" style={{ width: `${skill.level}%` }} />
+                      <div className="skill-bar-fill" data-width={`${skill.level}%`} />
                     </div>
                   </div>
                 ))}
@@ -99,9 +149,9 @@ const Skills = () => {
           ))}
         </div>
 
-        <div className="mt-12 glass-card p-8">
+        <div className="mt-12 scroll-reveal motion-card p-8">
           <h3 className="text-xl font-bold text-white text-center mb-6 font-mono">
-            <span style={{ color: '#8B9CF7' }}>{'<'}</span>前端開發技能<span style={{ color: '#8B9CF7' }}>{' />'}</span>
+            <span style={{ color: '#6366F1' }}>{'<'}</span>前端開發技能<span style={{ color: '#6366F1' }}>{' />'}</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -111,19 +161,19 @@ const Skills = () => {
             ].map((skill, index) => (
               <div key={index}>
                 <div className="flex justify-between mb-1">
-                  <span className="text-white/60 text-sm font-mono">{skill.name}</span>
-                  <span className="text-sm font-mono" style={{ color: '#764BA2' }}>{skill.level}%</span>
+                  <span className="text-sm font-mono" style={{ color: '#9CA3AF' }}>{skill.name}</span>
+                  <span className="text-sm font-mono" style={{ color: '#EC4899' }}>{skill.level}%</span>
                 </div>
                 <div className="skill-bar">
-                  <div className="skill-bar-fill" style={{ width: `${skill.level}%` }} />
+                  <div className="skill-bar-fill" data-width={`${skill.level}%`} />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-16 text-center">
-          <h3 className="font-semibold mb-6 font-mono" style={{ color: 'rgba(102,126,234,0.8)' }}>// 其他專業領域</h3>
+        <div className="mt-16 text-center scroll-reveal">
+          <h3 className="font-semibold mb-6 font-mono" style={{ color: '#6366F1' }}>// 其他專業領域</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {[
               'NLP / NER 分析', 'Hugging Face', 'API 設計', '事件驅動架構',
@@ -132,8 +182,10 @@ const Skills = () => {
             ].map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-2 text-white/50 rounded-full text-sm font-mono hover:text-white/80 transition-all duration-300 cursor-default"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                className="px-4 py-2 rounded-full text-sm font-mono transition-all duration-300 cursor-default"
+                style={{ background: '#111111', border: '1px solid #1F1F1F', color: '#6B7280' }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#FFFFFF'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1F1F1F'; e.currentTarget.style.color = '#6B7280'; }}
               >
                 {tag}
               </span>

@@ -16,7 +16,7 @@ const VERSION = '2.0.0';
 
 /** Resolve which theme is active for the current path */
 function resolveCurrentTheme(pathname: string): string | null {
-  if (pathname === '/') return 'ai-native';
+  if (pathname === '/') return 'swiss-modernism';
   const matched = themes.find(t => pathname === t.path);
   return matched ? matched.id : null;
 }

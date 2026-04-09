@@ -1,23 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
+/* ─── Motion-Driven Theme ─── */
 .theme-bold-typography {
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-bg-hover: rgba(255, 255, 255, 0.18);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-blur: 16px;
-  --page-gradient: linear-gradient(135deg, #0F0C29, #302B63, #24243E);
-  --accent: #667EEA;
-  --accent-secondary: #764BA2;
-  --accent-gradient: linear-gradient(135deg, #667EEA, #764BA2);
+  --bg-primary: #0A0A0A;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border-subtle: #1F1F1F;
+  --border-hover: #2A2A2A;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --accent-indigo: #6366F1;
+  --accent-indigo-light: #818CF8;
+  --accent-pink: #EC4899;
+  --accent-amber: #F59E0B;
+  --accent-indigo-glow: rgba(99, 102, 241, 0.15);
 
-  background: var(--page-gradient);
-  color: #e2e8f0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
   min-height: 100vh;
 }
 
 .theme-bold-typography ::selection {
-  background: rgba(102, 126, 234, 0.35);
+  background: rgba(99, 102, 241, 0.35);
   color: #ffffff;
 }
 
@@ -26,16 +32,16 @@
 }
 
 .theme-bold-typography ::-webkit-scrollbar-track {
-  background: #0F0C29;
+  background: var(--bg-primary);
 }
 
 .theme-bold-typography ::-webkit-scrollbar-thumb {
-  background: var(--accent-gradient);
+  background: var(--accent-indigo);
   border-radius: 9999px;
 }
 
 .theme-bold-typography *:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-indigo);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -44,115 +50,164 @@
   min-height: 100vh;
 }
 
-/* Glass card utility */
-.theme-bold-typography .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
+/* ─── Motion Card ─── */
+.theme-bold-typography .motion-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 1rem;
-  position: relative;
-  overflow: hidden;
+  transition: transform 300ms ease-out, border-color 300ms ease-out, background 300ms ease-out;
+  will-change: transform;
 }
 
-.theme-bold-typography .glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  pointer-events: none;
+.theme-bold-typography .motion-card:hover {
+  transform: scale(1.02);
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
 }
 
-.theme-bold-typography .glass-card:hover {
-  background: var(--glass-bg-hover);
-  border-color: rgba(255, 255, 255, 0.3);
+/* ─── Scroll Reveal Animation ─── */
+.theme-bold-typography .scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  will-change: opacity, transform;
 }
 
-/* Glass input */
+.theme-bold-typography .scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.theme-bold-typography .scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  will-change: opacity, transform;
+}
+
+.theme-bold-typography .scroll-reveal-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.theme-bold-typography .scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  will-change: opacity, transform;
+}
+
+.theme-bold-typography .scroll-reveal-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── Glass input (dark variant) ─── */
 .theme-bold-typography .glass-input {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
   border-radius: 0.75rem;
   color: #ffffff;
-  transition: all 0.3s ease;
+  transition: border-color 300ms ease, box-shadow 300ms ease;
 }
 
 .theme-bold-typography .glass-input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+  border-color: var(--accent-indigo);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 .theme-bold-typography .glass-input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-muted);
 }
 
-/* Gradient text */
+/* ─── Gradient text ─── */
 .theme-bold-typography .gradient-text {
-  background: var(--accent-gradient);
+  background: linear-gradient(135deg, var(--accent-indigo), var(--accent-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Section title */
+/* ─── Section title ─── */
 .theme-bold-typography .section-title {
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   margin-bottom: 1rem;
 }
 
-/* Skill bar */
+/* ─── Skill bar ─── */
 .theme-bold-typography .skill-bar {
   height: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 9999px;
   overflow: hidden;
 }
 
 .theme-bold-typography .skill-bar-fill {
   height: 100%;
-  background: var(--accent-gradient);
+  background: linear-gradient(90deg, var(--accent-indigo), var(--accent-pink));
   border-radius: 9999px;
-  transition: width 1s ease;
+  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 0;
 }
 
-/* Primary button */
+.theme-bold-typography .skill-bar-fill.is-visible {
+  /* width is set via inline style */
+}
+
+/* ─── Primary button (indigo solid) ─── */
 .theme-bold-typography .btn-primary {
   padding: 0.875rem 2rem;
-  background: var(--accent-gradient);
+  background: var(--accent-indigo);
   color: #ffffff;
   font-weight: 600;
-  border-radius: 9999px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  border-radius: 0.75rem;
+  transition: transform 300ms ease-out, box-shadow 300ms ease-out, background 300ms ease-out;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25);
 }
 
 .theme-bold-typography .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+  background: var(--accent-indigo-light);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.35);
 }
 
-/* Glass orb animation */
-@keyframes glass-float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-30px) scale(1.05); }
+/* ─── Section divider ─── */
+.theme-bold-typography .section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
 }
 
-@keyframes glass-float-reverse {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(20px) scale(0.95); }
-}
+/* ─── Stagger delay helpers ─── */
+.theme-bold-typography .stagger-1 { transition-delay: 0ms; }
+.theme-bold-typography .stagger-2 { transition-delay: 100ms; }
+.theme-bold-typography .stagger-3 { transition-delay: 200ms; }
+.theme-bold-typography .stagger-4 { transition-delay: 300ms; }
+.theme-bold-typography .stagger-5 { transition-delay: 400ms; }
+.theme-bold-typography .stagger-6 { transition-delay: 500ms; }
 
-.theme-bold-typography .glass-orb {
-  animation: glass-float 8s ease-in-out infinite;
-}
+/* ─── Respect prefers-reduced-motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .theme-bold-typography .scroll-reveal,
+  .theme-bold-typography .scroll-reveal-left,
+  .theme-bold-typography .scroll-reveal-right {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 
-.theme-bold-typography .glass-orb-reverse {
-  animation: glass-float-reverse 10s ease-in-out infinite;
+  .theme-bold-typography .motion-card:hover {
+    transform: none;
+  }
+
+  .theme-bold-typography .btn-primary:hover {
+    transform: none;
+  }
+
+  .theme-bold-typography .skill-bar-fill {
+    transition: none;
+    width: auto;
+  }
 }

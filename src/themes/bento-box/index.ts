@@ -9,9 +9,9 @@ import './theme.css';
 
 export const theme = {
   id: 'bento-box',
-  name: 'Bento Box Grid',
-  description: 'Apple 風格便當格佈局，現代感資訊展示',
-  preview: '亮色 . 圓角 . Apple 風格',
+  name: 'Nature Distilled',
+  description: '溫暖有機的手作質感，靈感來自 Aesop、Kinfolk 與日式侘寂美學',
+  preview: '暖色 . 手感 . 侘寂風格',
   bodyClass: 'theme-bento-box',
   components: { Hero, About, Skills, Courses, Contact, Navbar, Footer },
 };

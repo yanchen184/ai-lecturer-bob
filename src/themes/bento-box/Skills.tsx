@@ -1,4 +1,6 @@
 const Skills = () => {
+  const categoryColors = ['#C67B5C', '#6B7B3C', '#B5651D'];
+
   const skillCategories = [
     {
       title: '後端開發',
@@ -47,36 +49,56 @@ const Skills = () => {
     },
   ];
 
+  const frontendBarColor = '#6B7B3C';
+
   return (
     <section
       id="skills"
-      className="py-20 lg:py-32 relative bg-bento-card"
+      className="py-20 lg:py-32 relative"
+      style={{ backgroundColor: '#EDE8D8' }}
       aria-labelledby="skills-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 id="skills-title" className="section-title">
-            <span className="gradient-text">專業技能</span>
+          <h2
+            id="skills-title"
+            className="section-title text-3xl sm:text-4xl font-bold mb-4"
+            style={{ color: '#C67B5C', fontFamily: 'Georgia, "Noto Sans TC", serif' }}
+          >
+            專業技能
           </h2>
-          <p className="text-bento-text-secondary text-lg max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: '#6B6255' }}>
             程式講師陳彥彤具備全方位的技術能力，從後端開發到 DevOps，提供最專業的教學服務
           </p>
         </div>
 
-        {/* Skills Grid - Bento */}
+        {/* Skills Grid */}
         <div className="grid md:grid-cols-3 gap-4">
           {skillCategories.map((category, catIndex) => (
             <div
               key={catIndex}
-              className="bg-white rounded-bento-lg p-6 shadow-bento hover:shadow-bento-hover transition-all duration-300 hover:scale-[1.02]"
+              className="rounded-bento-lg p-6 transition-all duration-500"
+              style={{
+                backgroundColor: '#FEFDFB',
+                boxShadow: '0 1px 3px rgba(61,46,28,0.06), 0 4px 16px rgba(61,46,28,0.04)',
+                borderBottom: `3px solid ${categoryColors[catIndex]}`,
+              }}
             >
               {/* Category Header */}
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-bento bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center text-white">
+                <div
+                  className="w-14 h-14 rounded-bento flex items-center justify-center"
+                  style={{
+                    backgroundColor: `${categoryColors[catIndex]}12`,
+                    color: categoryColors[catIndex],
+                  }}
+                >
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold text-bento-text">{category.title}</h3>
+                <h3 className="text-xl font-bold" style={{ color: '#3D2E1C' }}>
+                  {category.title}
+                </h3>
               </div>
 
               {/* Skills List */}
@@ -84,13 +106,25 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between mb-1">
-                      <span className="text-bento-text-secondary text-sm">{skill.name}</span>
-                      <span className="text-primary-500 text-sm font-medium">{skill.level}%</span>
+                      <span className="text-sm" style={{ color: '#6B6255' }}>{skill.name}</span>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: categoryColors[catIndex] }}
+                      >
+                        {skill.level}%
+                      </span>
                     </div>
-                    <div className="h-2 bg-bento-card rounded-full overflow-hidden">
+                    <div
+                      className="h-2 rounded-full overflow-hidden"
+                      style={{ backgroundColor: '#F0EBE0' }}
+                    >
                       <div
-                        className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all duration-1000"
-                        style={{ width: `${skill.level}%` }}
+                        className="h-full rounded-full transition-all duration-1000"
+                        style={{
+                          width: `${skill.level}%`,
+                          backgroundColor: categoryColors[catIndex],
+                          opacity: 0.7,
+                        }}
                       />
                     </div>
                   </div>
@@ -101,8 +135,19 @@ const Skills = () => {
         </div>
 
         {/* Frontend Skills */}
-        <div className="mt-6 bg-white rounded-bento-lg p-8 shadow-bento">
-          <h3 className="text-xl font-bold text-bento-text text-center mb-6">前端開發技能</h3>
+        <div
+          className="mt-6 rounded-bento-lg p-8"
+          style={{
+            backgroundColor: '#FEFDFB',
+            boxShadow: '0 1px 3px rgba(61,46,28,0.06), 0 4px 16px rgba(61,46,28,0.04)',
+          }}
+        >
+          <h3
+            className="text-xl font-bold text-center mb-6"
+            style={{ color: '#3D2E1C' }}
+          >
+            前端開發技能
+          </h3>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { name: 'React / TypeScript', level: 88 },
@@ -111,13 +156,22 @@ const Skills = () => {
             ].map((skill, index) => (
               <div key={index}>
                 <div className="flex justify-between mb-1">
-                  <span className="text-bento-text-secondary text-sm">{skill.name}</span>
-                  <span className="text-accent-500 text-sm font-medium">{skill.level}%</span>
+                  <span className="text-sm" style={{ color: '#6B6255' }}>{skill.name}</span>
+                  <span className="text-sm font-medium" style={{ color: frontendBarColor }}>
+                    {skill.level}%
+                  </span>
                 </div>
-                <div className="h-2 bg-bento-card rounded-full overflow-hidden">
+                <div
+                  className="h-2 rounded-full overflow-hidden"
+                  style={{ backgroundColor: '#F0EBE0' }}
+                >
                   <div
-                    className="h-full bg-gradient-to-r from-accent-500 to-primary-500 rounded-full transition-all duration-1000"
-                    style={{ width: `${skill.level}%` }}
+                    className="h-full rounded-full transition-all duration-1000"
+                    style={{
+                      width: `${skill.level}%`,
+                      backgroundColor: frontendBarColor,
+                      opacity: 0.7,
+                    }}
                   />
                 </div>
               </div>
@@ -127,7 +181,9 @@ const Skills = () => {
 
         {/* Tech Tags */}
         <div className="mt-16 text-center">
-          <h3 className="text-bento-text font-semibold mb-6">其他專業領域</h3>
+          <h3 className="font-semibold mb-6" style={{ color: '#3D2E1C' }}>
+            其他專業領域
+          </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {[
               'NLP / NER 分析',
@@ -145,7 +201,12 @@ const Skills = () => {
             ].map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-white text-bento-text-secondary rounded-full text-sm hover:bg-bento-card-hover hover:text-bento-text transition-colors cursor-default shadow-bento"
+                className="px-4 py-2 rounded-full text-sm cursor-default transition-colors duration-400"
+                style={{
+                  backgroundColor: '#FEFDFB',
+                  color: '#6B6255',
+                  boxShadow: '0 1px 3px rgba(61,46,28,0.06)',
+                }}
               >
                 {tag}
               </span>

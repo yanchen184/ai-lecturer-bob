@@ -1,18 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
+/* ===================================================
+   Parallax Storytelling Theme — Cinematic Navy + Crimson
+   =================================================== */
+
 .theme-aurora {
-  background: #0F0F1A;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
   color: #e2e8f0;
   font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
 }
 
 .theme-aurora ::selection {
-  background-color: rgba(122, 95, 255, 0.4);
+  background-color: rgba(233, 69, 96, 0.4);
   color: #FFFFFF;
 }
 
 .theme-aurora *:focus-visible {
-  outline: 2px solid #00D2FF;
+  outline: 2px solid #e94560;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -21,57 +25,35 @@
   min-height: 100vh;
 }
 
-/* --- Aurora theme overrides --- */
+/* --- Chapter Label --- */
+.chapter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e94560;
+  margin-bottom: 1rem;
+  display: block;
+}
 
+/* --- Chapter Divider --- */
+.chapter-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #0f3460 30%, #e94560 50%, #0f3460 70%, transparent 100%);
+  margin: 0;
+  border: none;
+  opacity: 0.5;
+}
+
+/* --- Gradient Text (cinematic) --- */
 .theme-aurora .gradient-text {
-  background: linear-gradient(135deg, #00D2FF 0%, #7A5FFF 50%, #FF6B9D 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #e94560 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.theme-aurora .aurora-text {
-  background: linear-gradient(90deg, #00D2FF, #7A5FFF, #FF6B9D, #C3FF68);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: auroraTextShift 6s ease-in-out infinite;
-}
-
-@keyframes auroraTextShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.theme-aurora .glass-card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-}
-
-.theme-aurora .glass-card:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.theme-aurora .btn-primary {
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #00D2FF, #7A5FFF);
-  color: #fff;
-  font-weight: 700;
-  border-radius: 9999px;
-  box-shadow: 0 0 20px rgba(0, 210, 255, 0.25), 0 0 40px rgba(122, 95, 255, 0.15);
-  transition: all 0.3s ease;
-}
-
-.theme-aurora .btn-primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(0, 210, 255, 0.4), 0 0 60px rgba(122, 95, 255, 0.25);
-}
-
+/* --- Section Title --- */
 .theme-aurora .section-title {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
@@ -79,19 +61,77 @@
   margin-bottom: 1rem;
 }
 
-/* Aurora blob utility */
-.aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
+/* --- Glass Card (dark navy) --- */
+.theme-aurora .glass-card {
+  background: rgba(22, 33, 62, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(15, 52, 96, 0.6);
+  border-radius: 1rem;
+  transition: border-color 0.6s ease, box-shadow 0.6s ease;
 }
 
-/* Aurora border glow on hover */
-.aurora-border-glow {
-  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+.theme-aurora .glass-card:hover {
+  border-color: rgba(233, 69, 96, 0.3);
+  box-shadow: 0 0 30px rgba(233, 69, 96, 0.08);
 }
 
-.aurora-border-glow:hover {
-  border-color: rgba(0, 210, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 210, 255, 0.15), 0 0 40px rgba(122, 95, 255, 0.1);
+/* --- Primary Button (crimson) --- */
+.theme-aurora .btn-primary {
+  padding: 1rem 2rem;
+  background: #e94560;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(233, 69, 96, 0.3);
+  transition: all 0.6s ease;
+}
+
+.theme-aurora .btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(233, 69, 96, 0.45);
+  background: #d63a54;
+}
+
+/* --- Scroll Reveal Animation --- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children */
+.scroll-reveal-stagger > .scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-reveal-stagger > .scroll-reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .scroll-reveal-stagger > .scroll-reveal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .theme-aurora .btn-primary:hover {
+    transform: none;
+  }
 }

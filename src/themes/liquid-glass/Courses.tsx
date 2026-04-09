@@ -17,6 +17,7 @@ const Courses = () => {
       popular: false,
       hasMaterial: true,
       materialLink: 'https://yanchen184.github.io/k8s-course-site/',
+      rotate: '-0.7deg',
     },
     {
       title: 'Kubernetes 入門到叢集管理員實務班',
@@ -40,6 +41,7 @@ const Courses = () => {
         source: '勞動部勞動力發展署',
       },
       link: 'https://ojt.wda.gov.tw/ClassSearch/Detail?OCID=170153&plantype=1',
+      rotate: '0.5deg',
     },
     {
       title: 'Spring Boot 後端開發實戰',
@@ -56,6 +58,7 @@ const Courses = () => {
       duration: '18-36 小時',
       level: '需基礎程式概念',
       popular: true,
+      rotate: '0.8deg',
     },
     {
       title: 'React + TypeScript 前端開發',
@@ -72,6 +75,7 @@ const Courses = () => {
       duration: '12-24 小時',
       level: '需 JavaScript 基礎',
       popular: false,
+      rotate: '-1.2deg',
     },
     {
       title: '全端專案實作班',
@@ -88,6 +92,7 @@ const Courses = () => {
       duration: '24-48 小時',
       level: '需前後端基礎',
       popular: false,
+      rotate: '0.4deg',
     },
     {
       title: 'AI 輔助開發工作坊',
@@ -104,6 +109,7 @@ const Courses = () => {
       duration: '6-12 小時',
       level: '需程式開發經驗',
       popular: false,
+      rotate: '-0.6deg',
     },
   ];
 
@@ -116,36 +122,39 @@ const Courses = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
+          <p className="mono-label mb-3" style={{ transform: 'rotate(-0.4deg)' }}>{'/* courses */'}</p>
           <h2 id="courses-title" className="section-title">
             <span className="gradient-text">課程服務</span>
           </h2>
-          <p className="text-white/40 text-lg max-w-2xl mx-auto font-light">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--pencil-grey)' }}>
             程式講師陳彥彤提供專業的後端開發、前端開發、全端專案與 AI 輔助開發課程
           </p>
         </div>
 
-        {/* Courses Grid - Liquid Glass */}
+        {/* Courses Grid */}
         <div className="grid md:grid-cols-2 gap-6">
           {courses.map((course, index) => (
             <article
               key={index}
-              className={`glass-card p-8 relative overflow-hidden group ${
-                course.popular ? 'ring-1 ring-primary-500/30' : ''
-              } ${course.official ? 'md:col-span-2' : ''}`}
+              className={`glass-card p-8 relative overflow-visible ${
+                course.official ? 'md:col-span-2' : ''
+              }`}
               style={{
-                boxShadow: course.popular
-                  ? '0 8px 32px rgba(175,82,222,0.12), 0 0 20px rgba(0,122,255,0.06)'
-                  : undefined,
+                transform: `rotate(${course.rotate})`,
+                borderStyle: course.popular ? 'dotted' : 'dashed',
+                borderWidth: course.popular ? '2px' : '1px',
               }}
             >
               {/* Badge */}
               {course.popular && (
                 <div className="absolute top-0 right-0">
                   <div
-                    className="text-white text-xs font-medium px-4 py-1.5 rounded-bl-glass-sm"
+                    className="text-xs font-bold px-4 py-1.5"
                     style={{
-                      background: 'linear-gradient(135deg, #007AFF, #AF52DE)',
-                      boxShadow: '0 4px 16px rgba(175,82,222,0.3)',
+                      background: 'var(--marker-yellow)',
+                      color: 'var(--marker-black)',
+                      fontFamily: "'Courier Prime', monospace",
+                      transform: 'rotate(2deg)',
                     }}
                   >
                     熱門推薦
@@ -154,7 +163,15 @@ const Courses = () => {
               )}
               {course.official && (
                 <div className="absolute top-0 right-0">
-                  <div className="bg-success-400/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-bl-glass-sm">
+                  <div
+                    className="text-xs font-bold px-3 py-1.5"
+                    style={{
+                      background: 'var(--kraft-brown)',
+                      color: '#FFFFFF',
+                      fontFamily: "'Courier Prime', monospace",
+                      transform: 'rotate(1deg)',
+                    }}
+                  >
                     實際開課紀錄
                   </div>
                 </div>
@@ -164,28 +181,25 @@ const Courses = () => {
                 <div>
                   {/* Course Header */}
                   <div className="mb-6">
-                    <span className={`text-sm font-medium ${course.official ? 'text-success-400' : 'text-primary-400/80'}`}>
+                    <span className="mono-label" style={{ color: course.official ? 'var(--kraft-brown)' : 'var(--pencil-grey)' }}>
                       {course.subtitle}
                     </span>
-                    <h3 className="text-2xl font-semibold text-white/90 mt-1 tracking-tight">{course.title}</h3>
+                    <h3 className="text-2xl font-semibold mt-1 tracking-tight" style={{ color: 'var(--marker-black)' }}>
+                      {course.title}
+                    </h3>
                   </div>
 
                   {/* Description */}
-                  <p className="text-white/40 mb-6 font-light">{course.description}</p>
+                  <p className="mb-6" style={{ color: 'var(--pencil-grey)' }}>{course.description}</p>
 
                   {/* Features */}
                   <ul className="space-y-3 mb-6">
                     {course.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start gap-3">
-                        <svg
-                          className={`w-5 h-5 flex-shrink-0 mt-0.5 ${course.official ? 'text-success-400/80' : 'text-primary-400/70'}`}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-white/55 font-light">{feature}</span>
+                        <span className="mt-1 flex-shrink-0" style={{ color: 'var(--kraft-brown)', fontFamily: "'Courier Prime', monospace", fontSize: '0.875rem' }}>
+                          {'>'}
+                        </span>
+                        <span style={{ color: 'var(--pencil-grey)' }}>{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -195,40 +209,40 @@ const Courses = () => {
                   {/* Official course extra info */}
                   {course.official && course.officialMeta && (
                     <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3 text-sm text-white/40">
-                        <svg className="w-4 h-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm" style={{ color: 'var(--pencil-grey)' }}>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--kraft-brown)' }}>
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span className="font-light">{course.officialMeta.period}</span>
+                        <span>{course.officialMeta.period}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-white/40">
-                        <svg className="w-4 h-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm" style={{ color: 'var(--pencil-grey)' }}>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--kraft-brown)' }}>
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         </svg>
-                        <span className="font-light">{course.officialMeta.location}</span>
+                        <span>{course.officialMeta.location}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-white/40">
-                        <svg className="w-4 h-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-3 text-sm" style={{ color: 'var(--pencil-grey)' }}>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--kraft-brown)' }}>
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
-                        <span className="font-light">{course.officialMeta.source}</span>
+                        <span>{course.officialMeta.source}</span>
                       </div>
                     </div>
                   )}
 
                   {/* Meta Info */}
-                  <div className="flex flex-wrap gap-4 mb-6 text-sm">
-                    <div className="flex items-center gap-2 text-white/40">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex flex-wrap gap-4 mb-6 text-sm" style={{ color: 'var(--pencil-grey)' }}>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--kraft-brown)' }}>
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span className="font-light">{course.duration}</span>
+                      <span>{course.duration}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-white/40">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--kraft-brown)' }}>
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                       </svg>
-                      <span className="font-light">{course.level}</span>
+                      <span>{course.level}</span>
                     </div>
                   </div>
 
@@ -238,7 +252,13 @@ const Courses = () => {
                       href={course.materialLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-glass-sm bg-white/[0.06] backdrop-blur-glass border border-white/[0.15] text-white/80 font-medium text-sm hover:bg-white/[0.12] hover:border-white/[0.25] transition-all duration-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold"
+                      style={{
+                        border: '1px dashed var(--pencil-grey)',
+                        borderRadius: '2px',
+                        color: 'var(--marker-black)',
+                        fontFamily: "'Courier Prime', monospace",
+                      }}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -253,7 +273,8 @@ const Courses = () => {
                       href={course.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-success-400/90 font-medium hover:text-success-400 transition-colors"
+                      className="inline-flex items-center gap-2 font-bold mono-label"
+                      style={{ color: 'var(--kraft-brown)' }}
                     >
                       課程資訊頁面
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -263,7 +284,8 @@ const Courses = () => {
                   ) : (
                     <button
                       onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="inline-flex items-center gap-2 text-primary-400/90 font-medium hover:text-primary-400 transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-2 font-bold mono-label cursor-pointer"
+                      style={{ color: 'var(--kraft-brown)' }}
                     >
                       聯繫諮詢
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -279,7 +301,7 @@ const Courses = () => {
 
         {/* CTA Section */}
         <div className="mt-16 text-center">
-          <p className="text-white/40 mb-6 font-light">
+          <p className="mb-6" style={{ color: 'var(--pencil-grey)' }}>
             需要客製化課程或企業內訓？歡迎與我聯繫討論您的需求
           </p>
           <button

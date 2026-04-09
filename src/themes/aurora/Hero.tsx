@@ -1,84 +1,80 @@
+import { useEffect, useRef } from 'react';
+
 const Hero = () => {
+  const revealRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    revealRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
+      className="min-h-screen flex flex-col justify-center relative overflow-hidden"
       aria-label="首頁橫幅"
+      style={{ background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%)' }}
     >
-      {/* Aurora Background Effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Cyan blob - top left */}
-        <div
-          className="aurora-blob top-[5%] left-[10%] w-[600px] h-[600px] animate-aurora-breathe"
-          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.35) 0%, transparent 70%)', filter: 'blur(100px)' }}
-        />
-        {/* Purple blob - center right */}
-        <div
-          className="aurora-blob top-[25%] right-[5%] w-[700px] h-[700px] animate-aurora-drift"
-          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.3) 0%, transparent 70%)', filter: 'blur(120px)', animationDelay: '-2s' }}
-        />
-        {/* Pink blob - bottom center */}
-        <div
-          className="aurora-blob bottom-[10%] left-[35%] w-[500px] h-[500px] animate-float-slower"
-          style={{ background: 'radial-gradient(circle, rgba(255,107,157,0.25) 0%, transparent 70%)', filter: 'blur(100px)', animationDelay: '-4s' }}
-        />
-        {/* Green accent blob - bottom left */}
-        <div
-          className="aurora-blob bottom-[20%] left-[0%] w-[400px] h-[400px] animate-aurora-pulse"
-          style={{ background: 'radial-gradient(circle, rgba(195,255,104,0.15) 0%, transparent 70%)', filter: 'blur(80px)' }}
-        />
-        {/* Large sweeping aurora band */}
-        <div
-          className="absolute top-[20%] left-[-10%] w-[120%] h-[350px] rotate-[-15deg] animate-aurora-breathe"
-          style={{
-            background: 'linear-gradient(90deg, transparent, rgba(0,210,255,0.3), rgba(122,95,255,0.3), rgba(255,107,157,0.2), transparent)',
-            filter: 'blur(80px)',
-            opacity: 0.3,
-            animationDelay: '-3s',
-          }}
-        />
-      </div>
+      {/* Cinematic dark overlay grain */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.5\'/%3E%3C/svg%3E")', backgroundRepeat: 'repeat' }} />
 
-      {/* Subtle star-like dots */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMC41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMikiLz48L3N2Zz4=')] opacity-40" />
+      {/* Subtle radial glow from center */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(15,52,96,0.4) 0%, transparent 70%)' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-32 pb-16">
         {/* Main Content */}
-        <div className="animate-fade-in">
+        <div
+          ref={(el) => { revealRefs.current[0] = el; }}
+          className="scroll-reveal"
+        >
           {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-xl border border-white/[0.1] mb-8">
-            <span className="w-2 h-2 bg-aurora-green rounded-full animate-pulse mr-2" />
-            <span className="text-sm text-gray-300">目前開放企業培訓與程式教學諮詢</span>
+          <div className="inline-flex items-center px-4 py-2 rounded-full border mb-10" style={{ background: 'rgba(22,33,62,0.6)', borderColor: 'rgba(15,52,96,0.6)' }}>
+            <span className="w-2 h-2 rounded-full animate-pulse mr-2" style={{ background: '#e94560' }} />
+            <span className="text-sm" style={{ color: '#8892b0' }}>目前開放企業培訓與程式教學諮詢</span>
           </div>
 
           {/* Title - SEO H1 */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="text-white">你好，我是</span>
             <br />
-            <span className="aurora-text">程式講師陳彥彤</span>
+            <span className="gradient-text">程式講師陳彥彤</span>
           </h1>
 
           {/* Subtitle - SEO keywords */}
-          <p className="text-xl sm:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-            <strong className="text-aurora-ice">資深後端工程師</strong> / <strong className="text-aurora-purple">技術講師</strong>
+          <p className="text-xl sm:text-2xl mb-4 max-w-3xl mx-auto" style={{ color: '#8892b0' }}>
+            <strong className="text-white">資深後端工程師</strong> / <strong style={{ color: '#e94560' }}>技術講師</strong>
           </p>
 
           {/* Description with keywords */}
-          <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-            專精於 <span className="text-aurora-ice">Spring Boot</span>、
-            <span className="text-aurora-purple">React</span>、
-            <span className="text-aurora-ice">MySQL</span>、
-            <span className="text-aurora-purple">Redis</span> 開發教學
+          <p className="text-lg mb-8 max-w-2xl mx-auto" style={{ color: '#8892b0' }}>
+            專精於 <span className="text-white">Spring Boot</span>、
+            <span className="text-white">React</span>、
+            <span className="text-white">MySQL</span>、
+            <span className="text-white">Redis</span> 開發教學
             <br />
             <strong className="text-white">5-6 年</strong>電商核心系統開發經驗，
             <strong className="text-white">10-50 場</strong>企業授課經歷
           </p>
 
           {/* Quote */}
-          <div className="mb-8 text-gray-300 italic">
-            <span className="text-aurora-pink">"</span>
+          <div className="mb-10 italic" style={{ color: '#8892b0' }}>
+            <span style={{ color: '#e94560' }}>"</span>
             工程師不是寫 code 的人，是解決問題的人。
-            <span className="text-aurora-pink">"</span>
+            <span style={{ color: '#e94560' }}>"</span>
           </div>
 
           {/* CTA Buttons */}
@@ -94,33 +90,42 @@ const Hero = () => {
             </a>
             <a
               href="#courses"
-              className="px-8 py-4 border border-aurora-purple/40 text-white font-medium rounded-full hover:bg-aurora-purple/10 hover:border-aurora-purple/60 hover:shadow-[0_0_20px_rgba(122,95,255,0.15)] transition-all duration-300"
+              className="px-8 py-4 border font-medium rounded-full transition-all duration-600"
+              style={{ borderColor: 'rgba(15,52,96,0.8)', color: '#8892b0' }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#e94560'; e.currentTarget.style.color = '#fff'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(15,52,96,0.8)'; e.currentTarget.style.color = '#8892b0'; }}
             >
               瀏覽課程內容
             </a>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          {[
-            { number: '5-6 年', label: 'Java 後端開發經驗' },
-            { number: '10-50 場', label: '企業授課經歷' },
-            { number: 'AZ-900', label: 'Azure 雲端認證' },
-            { number: '98%', label: '學員滿意度' },
-          ].map((stat, index) => (
-            <div key={index} className="glass-card aurora-border-glow p-6">
-              <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">{stat.number}</div>
-              <div className="text-gray-400 text-sm">{stat.label}</div>
-            </div>
-          ))}
+        {/* Stats — horizontal strip */}
+        <div
+          ref={(el) => { revealRefs.current[1] = el; }}
+          className="scroll-reveal mt-24"
+        >
+          <hr className="chapter-divider mb-12" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { number: '5-6 年', label: 'Java 後端開發經驗' },
+              { number: '10-50 場', label: '企業授課經歷' },
+              { number: 'AZ-900', label: 'Azure 雲端認證' },
+              { number: '98%', label: '學員滿意度' },
+            ].map((stat, index) => (
+              <div key={index} className="glass-card p-6 text-center">
+                <div className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#e94560' }}>{stat.number}</div>
+                <div className="text-sm" style={{ color: '#8892b0' }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <a href="#about" aria-label="向下滾動">
-          <svg className="w-6 h-6 text-aurora-ice/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'rgba(233,69,96,0.6)' }}>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </a>

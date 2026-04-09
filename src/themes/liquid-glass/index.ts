@@ -9,9 +9,9 @@ import './theme.css';
 
 export const theme = {
   id: 'liquid-glass',
-  name: 'Liquid Glass',
-  description: 'Apple 最新設計語言，液態玻璃質感',
-  preview: '深色 . 玻璃 . 光澤',
+  name: 'Anti-Polish Raw',
+  description: '設計師速寫本風格，手繪感美學',
+  preview: '紙白 . 手繪 . 素描',
   bodyClass: 'theme-liquid-glass',
   components: { Hero, About, Skills, Courses, Contact, Navbar, Footer },
 };

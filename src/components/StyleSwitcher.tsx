@@ -7,12 +7,11 @@ interface StyleSwitcherProps {
 }
 
 const themeColors: Record<string, string> = {
-  'ai-native': '#00FFFF',
-  'bento-box': '#007AFF',
-  'bold-typography': '#667EEA',
   'swiss-modernism': '#FFEB3B',
-  'aurora': '#00D2FF',
-  'liquid-glass': '#AF52DE',
+  'bento-box': '#C67B5C',
+  'bold-typography': '#6366F1',
+  'aurora': '#e94560',
+  'liquid-glass': '#C4A77D',
 };
 
 const StyleSwitcher = ({ currentTheme }: StyleSwitcherProps) => {

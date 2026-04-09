@@ -1,8 +1,49 @@
+import { useEffect, useRef, useState } from 'react';
+
 const Skills = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visibleBars, setVisibleBars] = useState(false);
+  const revealRefs = useRef<(HTMLElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    revealRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Animate skill bars when section enters viewport
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleBars(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const skillCategories = [
     {
       title: '後端開發',
-      color: '#00D2FF',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
@@ -18,7 +59,6 @@ const Skills = () => {
     },
     {
       title: '資料庫與快取',
-      color: '#7A5FFF',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
@@ -34,7 +74,6 @@ const Skills = () => {
     },
     {
       title: 'DevOps 與雲端',
-      color: '#FF6B9D',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
@@ -52,30 +91,25 @@ const Skills = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="skills"
-      className="py-20 lg:py-32 relative"
+      className="py-32 lg:py-40 relative"
       aria-labelledby="skills-title"
+      style={{ background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%)' }}
     >
-      {/* Aurora section background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-aurora-deeper/50" />
-        <div
-          className="aurora-blob top-[5%] left-[60%] w-[500px] h-[500px] animate-aurora-breathe"
-          style={{ background: 'radial-gradient(circle, rgba(0,210,255,0.15) 0%, transparent 70%)', filter: 'blur(80px)' }}
-        />
-        <div
-          className="aurora-blob bottom-[10%] left-[10%] w-[400px] h-[400px] animate-aurora-drift"
-          style={{ background: 'radial-gradient(circle, rgba(122,95,255,0.12) 0%, transparent 70%)', filter: 'blur(80px)', animationDelay: '-3s' }}
-        />
-      </div>
+      <hr className="chapter-divider" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div
+          ref={(el) => { revealRefs.current[0] = el; }}
+          className="scroll-reveal text-center mb-16"
+        >
+          <span className="chapter-label">02 — 技能</span>
           <h2 id="skills-title" className="section-title">
             <span className="gradient-text">專業技能</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: '#8892b0' }}>
             程式講師陳彥彤具備全方位的技術能力，從後端開發到 DevOps，提供最專業的教學服務
           </p>
         </div>
@@ -85,13 +119,15 @@ const Skills = () => {
           {skillCategories.map((category, catIndex) => (
             <div
               key={catIndex}
-              className="glass-card aurora-border-glow p-6 transition-all duration-300"
+              ref={(el) => { revealRefs.current[catIndex + 1] = el; }}
+              className="scroll-reveal glass-card p-6"
+              style={{ transitionDelay: `${catIndex * 150}ms` }}
             >
               {/* Category Header */}
               <div className="flex items-center gap-4 mb-6">
                 <div
                   className="w-14 h-14 rounded-xl flex items-center justify-center text-white"
-                  style={{ background: `linear-gradient(135deg, ${category.color}, ${category.color}88)`, boxShadow: `0 0 20px ${category.color}33` }}
+                  style={{ background: '#e94560', boxShadow: '0 0 20px rgba(233,69,96,0.2)' }}
                 >
                   {category.icon}
                 </div>
@@ -103,16 +139,18 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between mb-1">
-                      <span className="text-gray-300">{skill.name}</span>
-                      <span style={{ color: category.color }}>{skill.level}%</span>
+                      <span style={{ color: '#8892b0' }}>{skill.name}</span>
+                      <span style={{ color: '#e94560' }}>{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(15,52,96,0.5)' }}>
                       <div
-                        className="h-full rounded-full transition-all duration-1000"
+                        className="h-full rounded-full"
                         style={{
-                          width: `${skill.level}%`,
-                          background: `linear-gradient(90deg, ${category.color}, #7A5FFF, #FF6B9D)`,
-                          boxShadow: `0 0 10px ${category.color}55`,
+                          width: visibleBars ? `${skill.level}%` : '0%',
+                          background: 'linear-gradient(90deg, #e94560, #0f3460)',
+                          boxShadow: '0 0 8px rgba(233,69,96,0.3)',
+                          transition: 'width 1.2s ease',
+                          transitionDelay: `${skillIndex * 100 + catIndex * 200}ms`,
                         }}
                       />
                     </div>
@@ -124,7 +162,10 @@ const Skills = () => {
         </div>
 
         {/* Frontend Skills */}
-        <div className="mt-12 glass-card p-8">
+        <div
+          ref={(el) => { revealRefs.current[4] = el; }}
+          className="scroll-reveal mt-12 glass-card p-8"
+        >
           <h3 className="text-xl font-bold text-white text-center mb-6">前端開發技能</h3>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -134,16 +175,18 @@ const Skills = () => {
             ].map((skill, index) => (
               <div key={index}>
                 <div className="flex justify-between mb-1">
-                  <span className="text-gray-300">{skill.name}</span>
-                  <span className="text-aurora-green">{skill.level}%</span>
+                  <span style={{ color: '#8892b0' }}>{skill.name}</span>
+                  <span style={{ color: '#e94560' }}>{skill.level}%</span>
                 </div>
-                <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+                <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(15,52,96,0.5)' }}>
                   <div
-                    className="h-full rounded-full transition-all duration-1000"
+                    className="h-full rounded-full"
                     style={{
-                      width: `${skill.level}%`,
-                      background: 'linear-gradient(90deg, #C3FF68, #00D2FF)',
-                      boxShadow: '0 0 8px rgba(195,255,104,0.3)',
+                      width: visibleBars ? `${skill.level}%` : '0%',
+                      background: 'linear-gradient(90deg, #e94560, #0f3460)',
+                      boxShadow: '0 0 8px rgba(233,69,96,0.3)',
+                      transition: 'width 1.2s ease',
+                      transitionDelay: `${index * 100 + 600}ms`,
                     }}
                   />
                 </div>
@@ -153,7 +196,10 @@ const Skills = () => {
         </div>
 
         {/* Tech Tags */}
-        <div className="mt-16 text-center">
+        <div
+          ref={(el) => { revealRefs.current[5] = el; }}
+          className="scroll-reveal mt-16 text-center"
+        >
           <h3 className="text-white font-semibold mb-6">其他專業領域</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {[
@@ -172,7 +218,20 @@ const Skills = () => {
             ].map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-white/[0.06] text-gray-300 rounded-full text-sm border border-white/[0.08] hover:bg-white/[0.1] hover:border-aurora-ice/20 hover:shadow-[0_0_12px_rgba(0,210,255,0.1)] transition-all duration-300 cursor-default"
+                className="px-4 py-2 rounded-full text-sm cursor-default transition-all duration-600"
+                style={{
+                  background: 'rgba(22,33,62,0.6)',
+                  color: '#8892b0',
+                  border: '1px solid rgba(15,52,96,0.6)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(233,69,96,0.4)';
+                  e.currentTarget.style.color = '#fff';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(15,52,96,0.6)';
+                  e.currentTarget.style.color = '#8892b0';
+                }}
               >
                 {tag}
               </span>
