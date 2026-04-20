@@ -140,7 +140,7 @@ const main = async () => {
     tags,
     readingTime: estimateReadingTime(content),
     featured: false,
-    published: false, // 草稿：由 admin 後台審核後發佈
+    published: true,
     source: 'ig-create',
     // Firestore REST 沒有 serverTimestamp，改用 client 時間字串
     // Admin 介面存檔時會由 updatePost 補上真正的 serverTimestamp
