@@ -9,6 +9,7 @@ import Contact from './Contact';
 import Portfolio from '../../sections/Portfolio';
 import Testimonials from '../../sections/Testimonials';
 import MessageBoard from '../../sections/MessageBoard';
+import LatestPosts from '../../components/LatestPosts';
 import Footer from './Footer';
 import './theme.css';
 
@@ -34,6 +35,7 @@ const ThemePage = () => {
         <Courses />
         <Portfolio />
         <Testimonials />
+        <LatestPosts />
         <Contact />
         <MessageBoard />
         <Footer />

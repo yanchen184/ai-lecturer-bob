@@ -32,12 +32,46 @@ const BlogPost = () => {
     return posts.find((p) => p.slug === slug) ?? null;
   }, [slug, posts]);
 
-  // Get related posts
+  // Get related posts — prefer posts sharing the most tags.
+  // Fallback to same category when no tag overlap is found.
   const relatedPosts = useMemo(() => {
     if (!post) return [];
-    return posts
-      .filter((p) => p.id !== post.id && p.category === post.category)
-      .slice(0, 3);
+    const currentTags = new Set(post.tags);
+
+    const scored = posts
+      .filter((p) => p.id !== post.id)
+      .map((p) => ({
+        post: p,
+        tagMatches: p.tags.filter((tag) => currentTags.has(tag)).length,
+        sameCategory: p.category === post.category,
+      }));
+
+    const tagMatched = scored
+      .filter((s) => s.tagMatches > 0)
+      .sort((a, b) => {
+        if (b.tagMatches !== a.tagMatches) {
+          return b.tagMatches - a.tagMatches;
+        }
+        return (
+          new Date(b.post.publishDate).getTime() -
+          new Date(a.post.publishDate).getTime()
+        );
+      })
+      .map((s) => s.post);
+
+    if (tagMatched.length >= 2) {
+      return tagMatched.slice(0, 3);
+    }
+
+    // Fallback: fill up with same-category posts
+    const fillers = scored
+      .filter(
+        (s) =>
+          s.sameCategory && !tagMatched.some((p) => p.id === s.post.id)
+      )
+      .map((s) => s.post);
+
+    return [...tagMatched, ...fillers].slice(0, 3);
   }, [post, posts]);
 
   // Parse TOC (## headings only) from raw content
