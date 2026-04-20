@@ -1,35 +1,126 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useEffect, useMemo } from 'react';
-import { getBlogPostBySlug, blogPosts } from '../data/blogPosts';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import type { BlogPost as BlogPostType } from '../data/blogPosts';
+import { useBlogPosts } from '../hooks/useBlogPosts';
+
+interface TocItem {
+  id: string;
+  text: string;
+}
+
+const slugify = (text: string): string => {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[\s]+/g, '-')
+    .replace(/[^\p{L}\p{N}-]/gu, '');
+};
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const [readingProgress, setReadingProgress] = useState<number>(0);
+  const [activeTocId, setActiveTocId] = useState<string>('');
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>(
+    'idle'
+  );
+
+  const { posts, isLoading } = useBlogPosts();
 
   const post = useMemo(() => {
     if (!slug) return null;
-    return getBlogPostBySlug(slug);
-  }, [slug]);
+    return posts.find((p) => p.slug === slug) ?? null;
+  }, [slug, posts]);
 
   // Get related posts
   const relatedPosts = useMemo(() => {
     if (!post) return [];
-    return blogPosts
+    return posts
       .filter((p) => p.id !== post.id && p.category === post.category)
       .slice(0, 3);
+  }, [post, posts]);
+
+  // Parse TOC (## headings only) from raw content
+  const tocItems = useMemo<TocItem[]>(() => {
+    if (!post) return [];
+    const items: TocItem[] = [];
+    const used = new Set<string>();
+    const regex = /^## (.+)$/gm;
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(post.content)) !== null) {
+      const text = match[1].trim();
+      let id = slugify(text);
+      if (!id) {
+        id = `heading-${items.length}`;
+      }
+      // Ensure uniqueness
+      let uniqueId = id;
+      let suffix = 1;
+      while (used.has(uniqueId)) {
+        uniqueId = `${id}-${suffix}`;
+        suffix += 1;
+      }
+      used.add(uniqueId);
+      items.push({ id: uniqueId, text });
+    }
+    return items;
   }, [post]);
 
   useEffect(() => {
-    if (!post) {
+    // 等文章載入完成才判斷 404，不然會在 Firestore 回傳前就被踢回列表
+    if (!isLoading && !post) {
       navigate('/blog', { replace: true });
     }
-  }, [post, navigate]);
+  }, [post, isLoading, navigate]);
 
   useEffect(() => {
     // Scroll to top when post changes
     window.scrollTo(0, 0);
   }, [slug]);
+
+  // Reading progress bar
+  useEffect(() => {
+    const handleScroll = (): void => {
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setReadingProgress(Math.min(100, Math.max(0, progress)));
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Active TOC tracking via IntersectionObserver
+  useEffect(() => {
+    if (tocItems.length === 0) return;
+
+    const headings = tocItems
+      .map((item) => document.getElementById(item.id))
+      .filter((element): element is HTMLElement => element !== null);
+
+    if (headings.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) {
+          setActiveTocId(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-100px 0px -60% 0px',
+        threshold: 0,
+      }
+    );
+
+    headings.forEach((heading) => observer.observe(heading));
+    return () => observer.disconnect();
+  }, [tocItems, post]);
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -40,48 +131,159 @@ const BlogPost = () => {
     });
   };
 
-  // Parse markdown-like content to HTML
-  const parseContent = (content: string): string => {
-    return content
-      // Headers
-      .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold text-white mt-8 mb-4">$1</h2>')
-      .replace(/^### (.+)$/gm, '<h3 class="text-xl font-bold text-white mt-6 mb-3">$1</h3>')
-      // Bold text
-      .replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
-      // Inline code
-      .replace(/`([^`]+)`/g, '<code class="bg-slate-700 px-2 py-1 rounded text-primary-300">$1</code>')
-      // Code blocks
-      .replace(/```[\s\S]*?```/g, (match) => {
-        const code = match.replace(/```\w*\n?/g, '').replace(/```/g, '');
-        return `<pre class="bg-slate-800 p-4 rounded-lg overflow-x-auto my-4"><code class="text-gray-300 text-sm">${code}</code></pre>`;
-      })
-      // Blockquotes
-      .replace(/^> (.+)$/gm, '<blockquote class="border-l-4 border-primary-500 pl-4 my-4 text-gray-300 italic">$1</blockquote>')
-      // Unordered lists
-      .replace(/^- (.+)$/gm, '<li class="text-gray-300 ml-4 mb-2">$1</li>')
-      // Ordered lists
-      .replace(/^\d+\. (.+)$/gm, '<li class="text-gray-300 ml-4 mb-2 list-decimal">$1</li>')
-      // Tables
-      .replace(/\|(.+)\|/g, (match) => {
-        const cells = match.split('|').filter(cell => cell.trim());
-        if (cells.every(cell => cell.trim().match(/^-+$/))) {
-          return '';
+  // Parse markdown-like content to HTML with heading ids
+  const parseContent = useCallback(
+    (content: string): string => {
+      const usedIds = new Set<string>();
+      const resolveId = (text: string): string => {
+        let baseId = slugify(text);
+        if (!baseId) {
+          baseId = `heading-${usedIds.size}`;
         }
-        const isHeader = match.includes('---|');
-        if (isHeader) return '';
-        const cellHtml = cells.map(cell =>
-          `<td class="border border-slate-600 px-4 py-2 text-gray-300">${cell.trim()}</td>`
-        ).join('');
-        return `<tr>${cellHtml}</tr>`;
-      })
-      // Paragraphs (double newline)
-      .replace(/\n\n/g, '</p><p class="text-gray-300 mb-4 leading-relaxed">')
-      // Single newlines within paragraphs
-      .replace(/\n/g, '<br/>')
-      // Wrap in paragraph
-      .replace(/^(.+)/, '<p class="text-gray-300 mb-4 leading-relaxed">$1')
-      .replace(/(.+)$/, '$1</p>');
-  };
+        let uniqueId = baseId;
+        let suffix = 1;
+        while (usedIds.has(uniqueId)) {
+          uniqueId = `${baseId}-${suffix}`;
+          suffix += 1;
+        }
+        usedIds.add(uniqueId);
+        return uniqueId;
+      };
+
+      return (
+        content
+          // H2 headings with anchor id
+          .replace(/^## (.+)$/gm, (_match, title: string) => {
+            const id = resolveId(title.trim());
+            return `<h2 id="${id}" class="text-2xl font-bold text-white mt-8 mb-4 scroll-mt-28">${title}</h2>`;
+          })
+          // H3 headings
+          .replace(
+            /^### (.+)$/gm,
+            '<h3 class="text-xl font-bold text-white mt-6 mb-3">$1</h3>'
+          )
+          // Bold text
+          .replace(
+            /\*\*(.+?)\*\*/g,
+            '<strong class="text-white font-semibold">$1</strong>'
+          )
+          // Inline code
+          .replace(
+            /`([^`]+)`/g,
+            '<code class="bg-slate-700 px-2 py-1 rounded text-primary-300">$1</code>'
+          )
+          // Code blocks
+          .replace(/```[\s\S]*?```/g, (match) => {
+            const code = match.replace(/```\w*\n?/g, '').replace(/```/g, '');
+            return `<pre class="bg-slate-800 p-4 rounded-lg overflow-x-auto my-4"><code class="text-gray-300 text-sm">${code}</code></pre>`;
+          })
+          // Blockquotes
+          .replace(
+            /^> (.+)$/gm,
+            '<blockquote class="border-l-4 border-primary-500 pl-4 my-4 text-gray-300 italic">$1</blockquote>'
+          )
+          // Unordered lists
+          .replace(/^- (.+)$/gm, '<li class="text-gray-300 ml-4 mb-2">$1</li>')
+          // Ordered lists
+          .replace(
+            /^\d+\. (.+)$/gm,
+            '<li class="text-gray-300 ml-4 mb-2 list-decimal">$1</li>'
+          )
+          // Tables
+          .replace(/\|(.+)\|/g, (match) => {
+            const cells = match.split('|').filter((cell) => cell.trim());
+            if (cells.every((cell) => cell.trim().match(/^-+$/))) {
+              return '';
+            }
+            const isHeader = match.includes('---|');
+            if (isHeader) return '';
+            const cellHtml = cells
+              .map(
+                (cell) =>
+                  `<td class="border border-slate-600 px-4 py-2 text-gray-300">${cell.trim()}</td>`
+              )
+              .join('');
+            return `<tr>${cellHtml}</tr>`;
+          })
+          // Paragraphs (double newline)
+          .replace(
+            /\n\n/g,
+            '</p><p class="text-gray-300 mb-4 leading-relaxed">'
+          )
+          // Single newlines within paragraphs
+          .replace(/\n/g, '<br/>')
+          // Wrap in paragraph
+          .replace(/^(.+)/, '<p class="text-gray-300 mb-4 leading-relaxed">$1')
+          .replace(/(.+)$/, '$1</p>')
+      );
+    },
+    []
+  );
+
+  const parsedContent = useMemo(() => {
+    return post ? parseContent(post.content) : '';
+  }, [post, parseContent]);
+
+  const shareUrl =
+    typeof window !== 'undefined' ? window.location.href : '';
+  const shareTitle = post?.title ?? '';
+
+  const twitterShareUrl = useMemo(() => {
+    const url = encodeURIComponent(shareUrl);
+    const text = encodeURIComponent(shareTitle);
+    return `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+  }, [shareUrl, shareTitle]);
+
+  const handleCopyLink = useCallback(async (): Promise<void> => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        // Fallback for non-secure contexts
+        const textarea = document.createElement('textarea');
+        textarea.value = shareUrl;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setCopyStatus('success');
+    } catch {
+      setCopyStatus('error');
+    }
+  }, [shareUrl]);
+
+  useEffect(() => {
+    if (copyStatus === 'idle') return;
+    const timer = window.setTimeout(() => setCopyStatus('idle'), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copyStatus]);
+
+  const handleTocClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>, id: string): void => {
+      event.preventDefault();
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update hash without jumping
+        window.history.replaceState(null, '', `#${id}`);
+      }
+    },
+    []
+  );
+
+  if (isLoading) {
+    return (
+      <div className="gradient-bg min-h-screen text-white pt-24">
+        <div className="max-w-4xl mx-auto px-4 py-16 text-center text-gray-400">
+          載入文章中...
+        </div>
+      </div>
+    );
+  }
 
   if (!post) {
     return null;
@@ -89,90 +291,319 @@ const BlogPost = () => {
 
   return (
     <div className="gradient-bg min-h-screen text-white pt-24">
+      {/* Reading Progress Bar */}
+      <div
+        className="fixed top-0 left-0 right-0 z-50 h-1 bg-white/5"
+        role="progressbar"
+        aria-label="閱讀進度"
+        aria-valuenow={Math.round(readingProgress)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      >
+        <div
+          className="h-full bg-gradient-to-r from-primary-500 via-accent-500 to-primary-400 transition-[width] duration-150 ease-out"
+          style={{ width: `${readingProgress}%` }}
+        />
+      </div>
+
       {/* Breadcrumb */}
       <nav className="max-w-4xl mx-auto px-4 py-4" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-2 text-sm">
           <li>
-            <Link to="/" className="text-gray-400 hover:text-primary-400 transition-colors">
+            <Link
+              to="/"
+              className="text-gray-400 hover:text-primary-400 transition-colors"
+            >
               首頁
             </Link>
           </li>
           <li className="text-gray-500">/</li>
           <li>
-            <Link to="/blog" className="text-gray-400 hover:text-primary-400 transition-colors">
+            <Link
+              to="/blog"
+              className="text-gray-400 hover:text-primary-400 transition-colors"
+            >
               部落格
             </Link>
           </li>
           <li className="text-gray-500">/</li>
-          <li className="text-primary-400 truncate max-w-[200px]">{post.title}</li>
+          <li className="text-primary-400 truncate max-w-[200px]">
+            {post.title}
+          </li>
         </ol>
       </nav>
 
-      {/* Article Header */}
-      <header className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-4">
-          <span className="px-4 py-1 bg-primary-500/20 text-primary-300 rounded-full text-sm">
-            {post.category}
-          </span>
-        </div>
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-          {post.title}
-        </h1>
-        <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-6">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">陳</span>
-            </div>
-            <span>{post.author}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <time dateTime={post.publishDate}>{formatDate(post.publishDate)}</time>
-          </div>
-          <div className="flex items-center space-x-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span>{post.readingTime} 分鐘閱讀</span>
-          </div>
-        </div>
-        <p className="text-lg text-gray-300 leading-relaxed">{post.excerpt}</p>
-      </header>
-
-      {/* Article Content */}
-      <article className="max-w-4xl mx-auto px-4 pb-16">
-        <div
-          className="prose prose-invert prose-lg max-w-none"
-          dangerouslySetInnerHTML={{ __html: parseContent(post.content) }}
-        />
-
-        {/* Tags */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-4">標籤</h3>
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-4 py-2 bg-white/10 text-gray-300 rounded-full text-sm hover:bg-white/20 transition-colors"
-              >
-                #{tag}
+      {/* Main 2-column layout: Article + TOC sidebar */}
+      <div className="max-w-7xl mx-auto px-4 lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-10">
+        <div className="min-w-0">
+          {/* Article Header */}
+          <header className="py-8">
+            <div className="mb-4">
+              <span className="px-4 py-1 bg-primary-500/20 text-primary-300 rounded-full text-sm">
+                {post.category}
               </span>
-            ))}
-          </div>
+            </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              {post.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-6">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">陳</span>
+                </div>
+                <span>{post.author}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                <time dateTime={post.publishDate}>
+                  {formatDate(post.publishDate)}
+                </time>
+              </div>
+              <div className="flex items-center space-x-2">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{post.readingTime} 分鐘閱讀</span>
+              </div>
+            </div>
+            <p className="text-lg text-gray-300 leading-relaxed">
+              {post.excerpt}
+            </p>
+
+            {/* Social Share Buttons */}
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <span className="text-sm text-gray-400 mr-1">分享：</span>
+              <button
+                type="button"
+                onClick={handleCopyLink}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 text-gray-200 text-sm rounded-full hover:bg-white/20 transition-all duration-300"
+                aria-label="複製連結"
+              >
+                {copyStatus === 'success' ? (
+                  <>
+                    <svg
+                      className="w-4 h-4 text-green-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span className="text-green-400">已複製</span>
+                  </>
+                ) : copyStatus === 'error' ? (
+                  <>
+                    <svg
+                      className="w-4 h-4 text-red-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                    <span className="text-red-400">複製失敗</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                      />
+                    </svg>
+                    <span>複製連結</span>
+                  </>
+                )}
+              </button>
+              <a
+                href={twitterShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 text-gray-200 text-sm rounded-full hover:bg-white/20 transition-all duration-300"
+                aria-label="分享到 X (Twitter)"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
+                </svg>
+                <span>分享到 X</span>
+              </a>
+            </div>
+          </header>
+
+          {/* Mobile TOC (collapsible) */}
+          {tocItems.length > 0 && (
+            <details className="lg:hidden mb-6 glass-card">
+              <summary className="cursor-pointer list-none p-4 flex items-center justify-between text-white font-semibold">
+                <span className="flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5 text-primary-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h7"
+                    />
+                  </svg>
+                  文章目錄（{tocItems.length}）
+                </span>
+                <svg
+                  className="w-4 h-4 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </summary>
+              <nav className="px-4 pb-4" aria-label="文章目錄">
+                <ul className="space-y-2 text-sm">
+                  {tocItems.map((item) => (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        onClick={(event) => handleTocClick(event, item.id)}
+                        className="block text-gray-400 hover:text-primary-300 transition-colors py-1"
+                      >
+                        {item.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </details>
+          )}
+
+          {/* Article Content */}
+          <article className="pb-16">
+            <div
+              className="prose prose-invert prose-lg max-w-none"
+              dangerouslySetInnerHTML={{ __html: parsedContent }}
+            />
+
+            {/* Tags */}
+            <div className="mt-12 pt-8 border-t border-white/10">
+              <h3 className="text-lg font-semibold text-white mb-4">標籤</h3>
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    to={`/blog?tag=${encodeURIComponent(tag)}`}
+                    className="px-4 py-2 bg-white/10 text-gray-300 rounded-full text-sm hover:bg-white/20 transition-colors"
+                  >
+                    #{tag}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </article>
         </div>
-      </article>
+
+        {/* Desktop TOC Sidebar */}
+        {tocItems.length > 0 && (
+          <aside
+            className="hidden lg:block"
+            aria-label="文章目錄"
+          >
+            <div className="sticky top-28">
+              <div className="glass-card p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <svg
+                    className="w-5 h-5 text-primary-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h7"
+                    />
+                  </svg>
+                  <h2 className="text-sm font-semibold text-white tracking-wide uppercase">
+                    文章目錄
+                  </h2>
+                </div>
+                <nav>
+                  <ul className="space-y-1 text-sm">
+                    {tocItems.map((item) => {
+                      const isActive = activeTocId === item.id;
+                      return (
+                        <li key={item.id}>
+                          <a
+                            href={`#${item.id}`}
+                            onClick={(event) => handleTocClick(event, item.id)}
+                            className={`block border-l-2 pl-3 py-1.5 transition-all ${
+                              isActive
+                                ? 'border-primary-400 text-primary-300 bg-primary-500/5'
+                                : 'border-white/10 text-gray-400 hover:text-gray-200 hover:border-white/30'
+                            }`}
+                          >
+                            {item.text}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </aside>
+        )}
+      </div>
 
       {/* Author Info */}
       <section className="max-w-4xl mx-auto px-4 pb-8">
@@ -184,7 +615,9 @@ const BlogPost = () => {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <h4 className="text-lg font-bold text-white">陳彥彤</h4>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-primary-500/20 text-primary-300">程式講師</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-primary-500/20 text-primary-300">
+                  程式講師
+                </span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
                 資深後端工程師，5-6 年電商核心系統開發經驗。專精 Spring Boot、React、MySQL、Redis，
@@ -195,8 +628,18 @@ const BlogPost = () => {
                   to="/"
                   className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-sm font-medium rounded-full hover:shadow-lg hover:shadow-primary-500/25 hover:scale-105 transition-all duration-300"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                   查看課程
                 </Link>
@@ -206,8 +649,16 @@ const BlogPost = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 text-gray-300 text-sm rounded-full hover:bg-white/20 transition-all duration-300"
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   GitHub
                 </a>
@@ -227,7 +678,9 @@ const BlogPost = () => {
 
           <div className="relative z-10">
             <div className="text-4xl mb-3">☕</div>
-            <h3 className="text-xl font-bold text-white mb-2">覺得這篇文章有幫助？</h3>
+            <h3 className="text-xl font-bold text-white mb-2">
+              覺得這篇文章有幫助？
+            </h3>
             <p className="text-gray-400 text-sm mb-6 max-w-md mx-auto">
               如果這篇文章幫你解決了問題或學到了新知識，歡迎請我喝杯咖啡支持繼續創作！
             </p>
@@ -244,7 +697,9 @@ const BlogPost = () => {
                   className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-400"
                 >
                   <span>{option.label}</span>
-                  <span className="ml-2 text-white font-medium">{option.amount}</span>
+                  <span className="ml-2 text-white font-medium">
+                    {option.amount}
+                  </span>
                 </div>
               ))}
             </div>
@@ -258,7 +713,9 @@ const BlogPost = () => {
               <span>☕</span>
               <span>請我喝咖啡</span>
             </a>
-            <p className="text-gray-600 text-xs mt-4">金額隨意，你的支持是最大的鼓勵</p>
+            <p className="text-gray-600 text-xs mt-4">
+              金額隨意，你的支持是最大的鼓勵
+            </p>
           </div>
         </div>
       </section>
@@ -274,15 +731,24 @@ const BlogPost = () => {
                 className="glass-card p-6 group hover:scale-[1.02] transition-all duration-300"
               >
                 <h4 className="text-lg font-bold text-white mb-3 group-hover:text-primary-300 transition-colors line-clamp-2">
-                  <Link to={`/blog/${relatedPost.slug}`}>{relatedPost.title}</Link>
+                  <Link to={`/blog/${relatedPost.slug}`}>
+                    {relatedPost.title}
+                  </Link>
                 </h4>
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">{relatedPost.excerpt}</p>
+                <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                  {relatedPost.excerpt}
+                </p>
                 <Link
                   to={`/blog/${relatedPost.slug}`}
                   className="text-primary-400 hover:text-primary-300 text-sm inline-flex items-center"
                 >
                   閱讀更多
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -303,7 +769,12 @@ const BlogPost = () => {
           to="/blog"
           className="inline-flex items-center px-8 py-4 bg-white/10 text-white font-medium rounded-full hover:bg-white/20 transition-all duration-300"
         >
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

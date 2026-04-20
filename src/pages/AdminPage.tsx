@@ -6,6 +6,7 @@ import {
 } from '../firebase'
 import type { VisitorStats, GuestMessage } from '../firebase'
 import { Timestamp } from 'firebase/firestore'
+import AdminBlogEditor from '../components/admin/AdminBlogEditor'
 
 interface Visitor {
   id: string
@@ -24,7 +25,7 @@ const AdminPage = () => {
   const [stats, setStats] = useState<VisitorStats>({ totalVisits: 0, lastVisit: null })
   const [visitors, setVisitors] = useState<Visitor[]>([])
   const [messages, setMessages] = useState<GuestMessage[]>([])
-  const [activeTab, setActiveTab] = useState<'overview' | 'visitors' | 'messages'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'visitors' | 'messages' | 'posts'>('overview')
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -83,6 +84,7 @@ const AdminPage = () => {
     { id: 'overview' as const, label: '總覽' },
     { id: 'visitors' as const, label: '訪客' },
     { id: 'messages' as const, label: '留言' },
+    { id: 'posts' as const, label: '文章管理' },
   ]
 
   return (
@@ -115,7 +117,8 @@ const AdminPage = () => {
       </div>
 
       <main className="max-w-6xl mx-auto px-4 py-6">
-        {isLoading ? (
+        {/* posts tab 有自己的 loading，不受訪客統計載入狀態影響 */}
+        {isLoading && activeTab !== 'posts' ? (
           <div className="text-center py-16 text-gray-400">載入中...</div>
         ) : (
           <>
@@ -236,6 +239,9 @@ const AdminPage = () => {
                 </div>
               </div>
             )}
+
+            {/* 文章管理 */}
+            {activeTab === 'posts' && <AdminBlogEditor />}
 
             {/* 留言 */}
             {activeTab === 'messages' && (

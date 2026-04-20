@@ -14,7 +14,10 @@ import {
   limit,
   onSnapshot,
   Timestamp,
-  getDocs
+  getDocs,
+  deleteDoc,
+  where,
+  type Unsubscribe
 } from 'firebase/firestore'
 
 // 使用 forbidden-beauty 同一個 Firebase 專案
@@ -178,4 +181,139 @@ export const subscribeToRecentVisitors = (callback: (visitors: Visitor[]) => voi
 export const getAllVisitorCount = async () => {
   const snapshot = await getDocs(collection(db, 'bob_visitors'))
   return snapshot.size
+}
+
+// ============ 部落格文章 CMS ============
+
+/**
+ * Firestore 部落格文章資料結構
+ * 和 src/data/blogPosts.ts 的 BlogPost 欄位對齊，另外新增 published 狀態與時間戳記。
+ */
+export interface FirestorePost {
+  id?: string
+  slug: string
+  title: string
+  excerpt: string
+  content: string
+  author: string
+  publishDate: string
+  updateDate?: string
+  category: string
+  tags: string[]
+  readingTime: number
+  featured: boolean
+  published: boolean
+  createdAt?: Timestamp | null
+  updatedAt?: Timestamp | null
+}
+
+const POSTS_COLLECTION = 'bob_blog_posts'
+
+/**
+ * 將 Firestore document 轉為 FirestorePost
+ * 集中處理欄位 fallback，避免各處散落。
+ */
+const mapDocToPost = (
+  id: string,
+  data: Record<string, unknown>
+): FirestorePost => ({
+  id,
+  slug: (data.slug as string) || '',
+  title: (data.title as string) || '',
+  excerpt: (data.excerpt as string) || '',
+  content: (data.content as string) || '',
+  author: (data.author as string) || '',
+  publishDate: (data.publishDate as string) || '',
+  updateDate: (data.updateDate as string) || undefined,
+  category: (data.category as string) || '',
+  tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
+  readingTime: typeof data.readingTime === 'number' ? data.readingTime : 0,
+  featured: Boolean(data.featured),
+  published: data.published !== false, // 預設視為已發布，避免舊資料被隱藏
+  createdAt: (data.createdAt as Timestamp) ?? null,
+  updatedAt: (data.updatedAt as Timestamp) ?? null,
+})
+
+/**
+ * 建立新文章
+ * @returns 新文章的 Firestore document id
+ */
+export const createPost = async (
+  post: Omit<FirestorePost, 'id' | 'createdAt' | 'updatedAt'>
+): Promise<string> => {
+  const ref = await addDoc(collection(db, POSTS_COLLECTION), {
+    ...post,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  })
+  return ref.id
+}
+
+/**
+ * 更新文章
+ * 刻意剔除 id / createdAt 欄位，避免覆寫原始值。
+ */
+export const updatePost = async (
+  id: string,
+  post: Partial<Omit<FirestorePost, 'id' | 'createdAt'>>
+): Promise<void> => {
+  const { ...rest } = post
+  await updateDoc(doc(db, POSTS_COLLECTION, id), {
+    ...rest,
+    updatedAt: serverTimestamp(),
+  })
+}
+
+/** 刪除文章 */
+export const deletePost = async (id: string): Promise<void> => {
+  await deleteDoc(doc(db, POSTS_COLLECTION, id))
+}
+
+/** 取得單篇文章 */
+export const getPost = async (id: string): Promise<FirestorePost | null> => {
+  const snapshot = await getDoc(doc(db, POSTS_COLLECTION, id))
+  if (!snapshot.exists()) return null
+  return mapDocToPost(snapshot.id, snapshot.data())
+}
+
+/**
+ * 訂閱文章列表
+ * @param callback 變更時的回呼
+ * @param publishedOnly 若為 true，只訂閱 published=true 的文章（給一般讀者用）
+ * @returns Unsubscribe
+ */
+export const subscribeToPosts = (
+  callback: (posts: FirestorePost[]) => void,
+  publishedOnly: boolean = false,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const postsRef = collection(db, POSTS_COLLECTION)
+  // publishedOnly 模式下需要 composite index (published, publishDate) 時會報錯，
+  // 因此改為單欄位查詢再在 client 排序，不依賴 composite index。
+  const q = publishedOnly
+    ? query(postsRef, where('published', '==', true))
+    : query(postsRef, orderBy('createdAt', 'desc'))
+
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const posts = snapshot.docs.map((d) => mapDocToPost(d.id, d.data()))
+      if (publishedOnly) {
+        posts.sort((a, b) => (a.publishDate < b.publishDate ? 1 : -1))
+      }
+      callback(posts)
+    },
+    (error) => {
+      console.error('文章訂閱失敗:', error)
+      onError?.(error)
+    }
+  )
+}
+
+/** 一次抓取所有文章（不含即時訂閱） */
+export const getAllPosts = async (): Promise<FirestorePost[]> => {
+  const snapshot = await getDocs(
+    query(collection(db, POSTS_COLLECTION), orderBy('createdAt', 'desc'))
+  )
+  return snapshot.docs.map((d) => mapDocToPost(d.id, d.data()))
 }

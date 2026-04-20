@@ -1,18 +1,54 @@
 import { Link } from 'react-router-dom';
-import { blogPosts, getAllCategories } from '../data/blogPosts';
 import type { BlogPost } from '../data/blogPosts';
 import { useState, useMemo } from 'react';
+import { useBlogPosts } from '../hooks/useBlogPosts';
 
 const BlogList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const categories = useMemo(() => getAllCategories(), []);
+  const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const { posts, isLoading } = useBlogPosts();
+
+  const categories = useMemo(
+    () => [...new Set(posts.map((post) => post.category))],
+    [posts]
+  );
+  const tags = useMemo(
+    () => [...new Set(posts.flatMap((post) => post.tags))],
+    [posts]
+  );
+
+  const featuredPosts = useMemo(
+    () => posts.filter((post) => post.featured),
+    [posts]
+  );
 
   const filteredPosts = useMemo(() => {
-    if (selectedCategory === 'all') {
-      return blogPosts;
-    }
-    return blogPosts.filter((post) => post.category === selectedCategory);
-  }, [selectedCategory]);
+    const query = searchQuery.trim().toLowerCase();
+
+    return posts.filter((post) => {
+      const matchesCategory =
+        selectedCategory === 'all' || post.category === selectedCategory;
+      const matchesTag =
+        selectedTag === 'all' || post.tags.includes(selectedTag);
+      const matchesSearch =
+        query === '' ||
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query);
+
+      return matchesCategory && matchesTag && matchesSearch;
+    });
+  }, [posts, selectedCategory, selectedTag, searchQuery]);
+
+  const hasActiveFilter =
+    selectedCategory !== 'all' || selectedTag !== 'all' || searchQuery !== '';
+
+  const resetFilters = (): void => {
+    setSelectedCategory('all');
+    setSelectedTag('all');
+    setSearchQuery('');
+  };
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -38,10 +74,69 @@ const BlogList = () => {
         </div>
       </section>
 
+      {/* Search Box */}
+      <section className="px-4 pb-6">
+        <div className="max-w-3xl mx-auto">
+          <label htmlFor="blog-search" className="sr-only">
+            搜尋文章
+          </label>
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+                />
+              </svg>
+            </span>
+            <input
+              id="blog-search"
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="搜尋文章標題或摘要..."
+              className="w-full pl-12 pr-10 py-3 rounded-full bg-white/10 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary-400 focus:bg-white/15 transition-all"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                aria-label="清除搜尋"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Category Filter */}
-      <section className="px-4 pb-8">
+      <section className="px-4 pb-4">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="text-sm text-gray-400 mb-3 text-center md:text-left">
+            分類
+          </div>
+          <div className="flex flex-wrap justify-center md:justify-start gap-3">
             <button
               onClick={() => setSelectedCategory('all')}
               className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
@@ -69,14 +164,133 @@ const BlogList = () => {
         </div>
       </section>
 
+      {/* Tag Filter */}
+      <section className="px-4 pb-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-sm text-gray-400 mb-3 text-center md:text-left">
+            標籤
+          </div>
+          <div className="flex flex-wrap justify-center md:justify-start gap-2">
+            <button
+              onClick={() => setSelectedTag('all')}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                selectedTag === 'all'
+                  ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
+                  : 'bg-white/5 text-gray-400 hover:bg-white/15 hover:text-gray-200'
+              }`}
+            >
+              全部標籤
+            </button>
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setSelectedTag(tag)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                  selectedTag === tag
+                    ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
+                    : 'bg-white/5 text-gray-400 hover:bg-white/15 hover:text-gray-200'
+                }`}
+              >
+                #{tag}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Posts */}
+      {featuredPosts.length > 0 && !hasActiveFilter && (
+        <section className="px-4 pb-12">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-2xl" aria-hidden="true">
+                ⭐
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">
+                精選文章
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {featuredPosts.map((post: BlogPost) => (
+                <article
+                  key={post.id}
+                  className="glass-card overflow-hidden group hover:scale-[1.01] transition-all duration-300 relative"
+                >
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className="px-3 py-1 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-xs font-bold rounded-full shadow-lg">
+                      精選
+                    </span>
+                  </div>
+                  <div className="p-6 md:p-8 flex flex-col h-full">
+                    <div className="mb-3">
+                      <span className="px-3 py-1 bg-primary-500/20 text-primary-300 text-sm rounded-full">
+                        {post.category}
+                      </span>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors line-clamp-2">
+                      <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+                    </h3>
+                    <p className="text-gray-300 text-base mb-5 line-clamp-3 flex-1">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-white/10">
+                      <span>{formatDate(post.publishDate)}</span>
+                      <span>{post.readingTime} 分鐘閱讀</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Blog Posts Grid */}
       <section className="px-4 pb-20">
         <div className="max-w-6xl mx-auto">
+          {/* Result Count */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <p className="text-gray-400 text-sm">
+              {hasActiveFilter ? '篩選結果：' : '所有文章：'}
+              <span className="text-white font-semibold">
+                顯示 {filteredPosts.length} 篇文章
+              </span>
+            </p>
+            {hasActiveFilter && (
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="text-sm text-primary-400 hover:text-primary-300 transition-colors inline-flex items-center gap-1"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                重置篩選
+              </button>
+            )}
+          </div>
+
+          {isLoading && (
+            <div className="text-center py-8 text-gray-400 text-sm">
+              載入文章中...
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post: BlogPost) => (
               <article
                 key={post.id}
-                className="glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-300"
+                className="glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-300 relative"
               >
                 {/* Featured Badge */}
                 {post.featured && (
@@ -170,9 +384,20 @@ const BlogList = () => {
           {/* Empty State */}
           {filteredPosts.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-gray-400 text-lg">
-                目前沒有此分類的文章
+              <div className="text-5xl mb-4" aria-hidden="true">
+                🔍
+              </div>
+              <p className="text-gray-300 text-lg mb-2">找不到符合條件的文章</p>
+              <p className="text-gray-500 text-sm mb-6">
+                試試調整搜尋關鍵字或選擇其他分類 / 標籤
               </p>
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="px-6 py-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium hover:shadow-lg hover:shadow-primary-500/25 transition-all"
+              >
+                重置篩選
+              </button>
             </div>
           )}
         </div>
