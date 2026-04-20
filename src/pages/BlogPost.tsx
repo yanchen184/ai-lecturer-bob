@@ -175,34 +175,90 @@ const BlogPost = () => {
       </article>
 
       {/* Author Info */}
-      <section className="max-w-4xl mx-auto px-4 pb-16">
+      <section className="max-w-4xl mx-auto px-4 pb-8">
         <div className="glass-card p-8">
-          <h3 className="text-xl font-bold text-white mb-4">關於作者</h3>
           <div className="flex items-start space-x-4">
             <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center flex-shrink-0">
               <span className="text-white font-bold text-2xl">陳</span>
             </div>
-            <div>
-              <h4 className="text-lg font-bold text-white">AI講師陳彥彤</h4>
-              <p className="text-gray-400 mt-2">
-                專業人工智慧教育講師，專精於 ChatGPT 應用、Prompt Engineering、
-                機器學習、深度學習教學。超過 500+ 場企業授課經驗，學員累積 10,000+ 人。
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <h4 className="text-lg font-bold text-white">陳彥彤</h4>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-primary-500/20 text-primary-300">程式講師</span>
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                資深後端工程師，5-6 年電商核心系統開發經驗。專精 Spring Boot、React、MySQL、Redis，
+                提供企業培訓與個人課程。把工作中累積的實戰經驗，轉化成你學得會的教學內容。
               </p>
-              <Link
-                to="/#contact"
-                className="inline-flex items-center mt-4 text-primary-400 hover:text-primary-300 transition-colors"
-              >
-                <span>預約課程諮詢</span>
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </Link>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-sm font-medium rounded-full hover:shadow-lg hover:shadow-primary-500/25 hover:scale-105 transition-all duration-300"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  查看課程
+                </Link>
+                <a
+                  href="https://github.com/yanchen184"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 text-gray-300 text-sm rounded-full hover:bg-white/20 transition-all duration-300"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Donate Card */}
+      <section className="max-w-4xl mx-auto px-4 pb-16">
+        <div className="glass-card p-8 text-center relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500" />
+          <div className="absolute -top-12 -right-12 w-40 h-40 bg-primary-500/10 rounded-full blur-2xl" />
+          <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-accent-500/10 rounded-full blur-2xl" />
+
+          <div className="relative z-10">
+            <div className="text-4xl mb-3">☕</div>
+            <h3 className="text-xl font-bold text-white mb-2">覺得這篇文章有幫助？</h3>
+            <p className="text-gray-400 text-sm mb-6 max-w-md mx-auto">
+              如果這篇文章幫你解決了問題或學到了新知識，歡迎請我喝杯咖啡支持繼續創作！
+            </p>
+
+            {/* Amount options */}
+            <div className="flex justify-center gap-3 mb-6 flex-wrap">
+              {[
+                { label: '☕ 一杯咖啡', amount: 'NT$50' },
+                { label: '🍱 一個便當', amount: 'NT$100' },
+                { label: '🎉 大力支持', amount: 'NT$300' },
+              ].map((option) => (
+                <div
+                  key={option.amount}
+                  className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-400"
+                >
+                  <span>{option.label}</span>
+                  <span className="ml-2 text-white font-medium">{option.amount}</span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="https://ko-fi.com/TODO_填入你的Ko-fi帳號"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-bold rounded-full hover:shadow-lg hover:shadow-primary-500/25 hover:scale-105 transition-all duration-300"
+            >
+              <span>☕</span>
+              <span>請我喝咖啡</span>
+            </a>
+            <p className="text-gray-600 text-xs mt-4">金額隨意，你的支持是最大的鼓勵</p>
           </div>
         </div>
       </section>
