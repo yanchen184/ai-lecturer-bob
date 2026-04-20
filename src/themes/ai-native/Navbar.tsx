@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === '/' || location.pathname.startsWith('/style/');
 
   useEffect(() => {
     const handleScroll = () => { setIsScrolled(window.scrollY > 50); };
@@ -67,7 +67,7 @@ const Navbar = () => {
                 </a>
               ))}
               <Link to="/blog" className={`px-3 py-1.5 text-sm rounded-lg transition-all duration-200 font-mono ${location.pathname.startsWith('/blog') ? 'text-[#00FFFF]' : 'text-gray-500 hover:text-gray-200'}`} style={location.pathname.startsWith('/blog') ? { background: 'rgba(0,255,255,0.08)' } : undefined}>部落格</Link>
-              <Link to="/#contact" className="ml-3 px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 font-mono" style={{ background: 'linear-gradient(135deg, #00FFFF, #FF006E)', color: '#1A1A2E', boxShadow: '0 0 15px rgba(0,255,255,0.25)' }}>預約諮詢</Link>
+              <a href="#contact" onClick={(e) => handleHomeNavClick(e, '#contact')} className="ml-3 px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 font-mono" style={{ background: 'linear-gradient(135deg, #00FFFF, #FF006E)', color: '#1A1A2E', boxShadow: '0 0 15px rgba(0,255,255,0.25)' }}>預約諮詢</a>
             </div>
             <button className="lg:hidden relative w-10 h-10 flex items-center justify-center text-gray-300 hover:text-[#00FFFF] rounded-lg transition-all" style={{ background: 'rgba(0,255,255,0.05)' }} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="切換選單" aria-expanded={isMobileMenuOpen}>
               <div className="w-5 h-4 flex flex-col justify-between">
@@ -93,7 +93,7 @@ const Navbar = () => {
               <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center px-4 py-3 rounded-xl text-base transition-all duration-200 font-mono ${location.pathname.startsWith('/blog') ? 'text-[#00FFFF] font-medium' : 'text-gray-500 hover:text-gray-200'}`} style={location.pathname.startsWith('/blog') ? { background: 'rgba(0,255,255,0.08)' } : undefined}>部落格</Link>
             </div>
             <div className="pt-4" style={{ borderTop: '1px solid rgba(0,255,255,0.1)' }}>
-              <Link to="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="block w-full py-3 font-medium rounded-xl text-center transition-all duration-300 font-mono" style={{ background: 'linear-gradient(135deg, #00FFFF, #FF006E)', color: '#1A1A2E', boxShadow: '0 0 20px rgba(0,255,255,0.3)' }}>預約諮詢</Link>
+              <a href="#contact" onClick={(e) => handleHomeNavClick(e, '#contact')} className="block w-full py-3 font-medium rounded-xl text-center transition-all duration-300 font-mono" style={{ background: 'linear-gradient(135deg, #00FFFF, #FF006E)', color: '#1A1A2E', boxShadow: '0 0 20px rgba(0,255,255,0.3)' }}>預約諮詢</a>
             </div>
           </div>
         </div>

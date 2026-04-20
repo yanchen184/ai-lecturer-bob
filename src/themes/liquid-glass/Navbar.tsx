@@ -17,7 +17,7 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
 
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === '/' || location.pathname.startsWith('/style/');
 
   // Scroll detection
   useEffect(() => {
@@ -175,8 +175,9 @@ const Navbar = () => {
               >
                 部落格
               </Link>
-              <Link
-                to="/#contact"
+              <a
+                href="#contact"
+                onClick={(e) => handleHomeNavClick(e, '#contact')}
                 className="ml-3 px-5 py-2 text-sm font-bold"
                 style={{
                   border: '1px dashed var(--marker-black)',
@@ -187,7 +188,7 @@ const Navbar = () => {
                 }}
               >
                 預約諮詢
-              </Link>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -290,9 +291,9 @@ const Navbar = () => {
             </div>
 
             <div className="pt-4" style={{ borderTop: '1px dashed var(--kraft-brown)' }}>
-              <Link
-                to="/#contact"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <a
+                href="#contact"
+                onClick={(e) => handleHomeNavClick(e, '#contact')}
                 className="block w-full py-3 font-bold text-center"
                 style={{
                   border: '1px dashed var(--marker-black)',
@@ -303,7 +304,7 @@ const Navbar = () => {
                 }}
               >
                 預約諮詢
-              </Link>
+              </a>
             </div>
           </div>
         </div>

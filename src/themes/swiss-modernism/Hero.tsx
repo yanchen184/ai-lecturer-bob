@@ -1,3 +1,8 @@
+const scrollTo = (id: string) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
 const Hero = () => {
   return (
     <section
@@ -56,6 +61,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-6 items-start">
             <a
               href="#contact"
+              onClick={scrollTo('contact')}
               className="inline-flex items-center gap-2 px-8 py-4 font-black text-lg text-black uppercase tracking-wider transition-transform duration-100 hover:-translate-y-0.5 active:translate-y-0"
               style={{
                 backgroundColor: '#FFEB3B',
@@ -70,6 +76,7 @@ const Hero = () => {
             </a>
             <a
               href="#courses"
+              onClick={scrollTo('courses')}
               className="inline-flex items-center gap-2 px-8 py-4 font-black text-lg text-black uppercase tracking-wider transition-transform duration-100 hover:-translate-y-0.5 active:translate-y-0"
               style={{
                 backgroundColor: '#FFFFFF',
@@ -108,7 +115,7 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <a href="#about" aria-label="向下滾動">
+        <a href="#about" onClick={scrollTo('about')} aria-label="向下滾動">
           <svg className="w-6 h-6 text-black hover:text-bold-muted transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>

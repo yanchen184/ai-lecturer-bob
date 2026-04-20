@@ -7,6 +7,11 @@ const STATS = [
   { number: '98%', label: '學員滿意度' },
 ] as const;
 
+const scrollTo = (id: string) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -110,14 +115,14 @@ const Hero = () => {
 
         {/* CTA Buttons */}
         <div className="scroll-reveal stagger-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+          <a href="#contact" onClick={scrollTo('contact')} className="btn-primary inline-flex items-center gap-2">
             <span>預約課程諮詢</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
           <a
-            href="#courses"
+            href="#courses" onClick={scrollTo('courses')}
             className="px-8 py-4 font-medium rounded-xl transition-all duration-300"
             style={{
               border: '1px solid #1F1F1F',
@@ -160,7 +165,7 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#about" aria-label="向下滾動">
+        <a href="#about" onClick={scrollTo('about')} aria-label="向下滾動">
           <svg
             className="w-6 h-6"
             style={{ color: '#374151' }}

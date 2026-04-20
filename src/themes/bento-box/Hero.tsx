@@ -1,3 +1,8 @@
+const scrollTo = (id: string) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
 const Hero = () => {
   return (
     <section
@@ -71,7 +76,7 @@ const Hero = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="#contact"
+              href="#contact" onClick={scrollTo('contact')}
               className="btn-primary inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium text-base"
             >
               <span>預約課程諮詢</span>
@@ -80,7 +85,7 @@ const Hero = () => {
               </svg>
             </a>
             <a
-              href="#courses"
+              href="#courses" onClick={scrollTo('courses')}
               className="px-8 py-4 font-medium rounded-full transition-all duration-500"
               style={{
                 backgroundColor: 'transparent',
@@ -133,7 +138,7 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#about" aria-label="向下滾動">
+        <a href="#about" onClick={scrollTo('about')} aria-label="向下滾動">
           <svg className="w-6 h-6" style={{ color: '#B5651D' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>

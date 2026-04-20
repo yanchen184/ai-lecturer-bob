@@ -1,3 +1,8 @@
+const scrollTo = (id: string) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
 const Hero = () => {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20" aria-label="首頁橫幅">
@@ -37,11 +42,11 @@ const Hero = () => {
             <span className="text-[#00FFFF]">{'//'}</span> 工程師不是寫 code 的人，是解決問題的人。
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+            <a href="#contact" onClick={scrollTo('contact')} className="btn-primary inline-flex items-center gap-2">
               <span>預約課程諮詢</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </a>
-            <a href="#courses" className="px-8 py-4 border border-[#00FFFF]/30 text-[#00FFFF] font-medium rounded-full hover:bg-[#00FFFF]/10 hover:border-[#00FFFF]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,255,0.15)]">瀏覽課程內容</a>
+            <a href="#courses" onClick={scrollTo('courses')} className="px-8 py-4 border border-[#00FFFF]/30 text-[#00FFFF] font-medium rounded-full hover:bg-[#00FFFF]/10 hover:border-[#00FFFF]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,255,0.15)]">瀏覽課程內容</a>
           </div>
         </div>
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
@@ -54,7 +59,7 @@ const Hero = () => {
         </div>
       </div>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#about" aria-label="向下滾動"><svg className="w-6 h-6 text-[#00FFFF]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg></a>
+        <a href="#about" onClick={scrollTo('about')} aria-label="向下滾動"><svg className="w-6 h-6 text-[#00FFFF]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg></a>
       </div>
     </section>
   );

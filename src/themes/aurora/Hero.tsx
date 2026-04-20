@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
 
+const scrollTo = (id: string) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
 const Hero = () => {
   const revealRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -80,7 +85,7 @@ const Hero = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="#contact"
+              href="#contact" onClick={scrollTo('contact')}
               className="btn-primary inline-flex items-center gap-2"
             >
               <span>預約課程諮詢</span>
@@ -89,7 +94,7 @@ const Hero = () => {
               </svg>
             </a>
             <a
-              href="#courses"
+              href="#courses" onClick={scrollTo('courses')}
               className="px-8 py-4 border font-medium rounded-full transition-all duration-600"
               style={{ borderColor: 'rgba(15,52,96,0.8)', color: '#8892b0' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#e94560'; e.currentTarget.style.color = '#fff'; }}
@@ -124,7 +129,7 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#about" aria-label="向下滾動">
+        <a href="#about" onClick={scrollTo('about')} aria-label="向下滾動">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'rgba(233,69,96,0.6)' }}>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
