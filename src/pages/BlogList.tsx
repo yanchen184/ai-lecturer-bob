@@ -59,25 +59,18 @@ const BlogList = () => {
       className="min-h-screen pt-24 font-mono"
       style={{ background: '#fafaf7', color: '#0a0a0a' }}
     >
-      {/* Hero Section */}
-      <section className="px-4 py-12 border-b-2 border-black">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-xs uppercase tracking-widest mb-4 opacity-60">
-            // blog / notes / raw-thoughts
-          </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
+      {/* Hero — one-line compact */}
+      <section className="px-4 py-5 border-b-2 border-black">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <h1 className="text-2xl md:text-3xl font-black tracking-tight">
             BLOG.
           </h1>
-          <p className="text-base md:text-lg max-w-2xl leading-relaxed">
-            後端工程師的技術筆記。Spring Boot、React、MySQL、Redis。
-            <br />
-            不包裝、不美化，寫給實戰派看的。
+          <p className="text-xs md:text-sm opacity-80">
+            後端實戰筆記 · 不包裝
           </p>
-          <div className="mt-6 text-xs opacity-60">
-            {posts.length.toString().padStart(3, '0')} posts
-            &nbsp;·&nbsp;
-            {categories.length.toString().padStart(2, '0')} categories
-            &nbsp;·&nbsp;
+          <div className="ml-auto text-[11px] uppercase tracking-widest opacity-60">
+            {posts.length.toString().padStart(3, '0')} posts ·{' '}
+            {categories.length.toString().padStart(2, '0')} cat ·{' '}
             {tags.length.toString().padStart(2, '0')} tags
           </div>
         </div>
