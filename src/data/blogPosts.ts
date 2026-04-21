@@ -16,6 +16,9 @@ export interface BlogPost {
   tags: string[];
   readingTime: number;
   featured: boolean;
+  /** Author-recommended default blog style for this post.
+   *  Reader's explicit choice (localStorage) still wins when present. */
+  defaultStyle?: 'neub' | 'anti';
 }
 
 export const blogPosts: BlogPost[] = [

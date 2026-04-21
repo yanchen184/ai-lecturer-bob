@@ -1,8 +1,11 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { BlogPost as BlogPostType } from '../data/blogPosts';
 import { useBlogPosts } from '../hooks/useBlogPosts';
+import NotFoundPage from './NotFoundPage';
+import { useBlogStyle } from '../contexts/BlogStyleContext';
+import { getBlogPostTokens } from './blogPostTokens';
 
 const SITE_URL = 'https://yanchen184.github.io/ai-lecturer-bob';
 
@@ -21,7 +24,6 @@ const slugify = (text: string): string => {
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
   const [readingProgress, setReadingProgress] = useState<number>(0);
   const [activeTocId, setActiveTocId] = useState<string>('');
   const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>(
@@ -29,11 +31,18 @@ const BlogPost = () => {
   );
 
   const { posts, isLoading } = useBlogPosts();
+  const { style, applyPostDefault } = useBlogStyle();
+  const tokens = useMemo(() => getBlogPostTokens(style), [style]);
 
   const post = useMemo(() => {
     if (!slug) return null;
     return posts.find((p) => p.slug === slug) ?? null;
   }, [slug, posts]);
+
+  // Author-defined default style — only takes effect if reader hasn't picked one.
+  useEffect(() => {
+    if (post?.defaultStyle) applyPostDefault(post.defaultStyle);
+  }, [post, applyPostDefault]);
 
   // Get related posts — prefer posts sharing the most tags.
   // Fallback to same category when no tag overlap is found.
@@ -115,11 +124,7 @@ const BlogPost = () => {
     return items;
   }, [post]);
 
-  useEffect(() => {
-    if (!isLoading && !post) {
-      navigate('/blog', { replace: true });
-    }
-  }, [post, isLoading, navigate]);
+  // 文章不存在時不再 auto-redirect，改顯示 404 畫面（見下方渲染邏輯），讓使用者知道發生什麼事。
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -247,10 +252,20 @@ const BlogPost = () => {
           /^### (.+)$/gm,
           '<h3 class="text-xl font-black mt-8 mb-3">→ $1</h3>'
         )
-        // Images: ![alt](url) — must come before links
+        // Images: ![alt](url) — must come before links.
+        // 若是本地 png/jpg，輸出 <picture> 讓瀏覽器優先載對應的 .webp，fallback 回原圖。
         .replace(
           /!\[([^\]]*)\]\(([^)]+)\)/g,
-          '<img src="$2" alt="$1" class="my-6 border-2 border-black max-w-full h-auto" style="box-shadow: 4px 4px 0 #0a0a0a;" loading="lazy" />'
+          (_m, alt: string, url: string) => {
+            const isLocalRaster = /^\/?[^:]+\.(png|jpe?g)$/i.test(url);
+            const safeAlt = alt.replace(/"/g, '&quot;');
+            const imgAttrs = `alt="${safeAlt}" class="my-6 border-2 border-black max-w-full h-auto" style="box-shadow: 4px 4px 0 #0a0a0a;" loading="lazy" decoding="async"`;
+            if (!isLocalRaster) {
+              return `<img src="${url}" ${imgAttrs} />`;
+            }
+            const webpUrl = url.replace(/\.(png|jpe?g)$/i, '.webp');
+            return `<picture><source srcset="${webpUrl}" type="image/webp" /><img src="${url}" ${imgAttrs} /></picture>`;
+          }
         )
         // Links: [text](url)
         .replace(
@@ -310,6 +325,16 @@ const BlogPost = () => {
     return `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
   }, [shareUrl, shareTitle]);
 
+  const lineShareUrl = useMemo(() => {
+    const url = encodeURIComponent(shareUrl);
+    return `https://social-plugins.line.me/lineit/share?url=${url}`;
+  }, [shareUrl]);
+
+  const facebookShareUrl = useMemo(() => {
+    const url = encodeURIComponent(shareUrl);
+    return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  }, [shareUrl]);
+
   const handleCopyLink = useCallback(async (): Promise<void> => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
@@ -351,10 +376,7 @@ const BlogPost = () => {
 
   if (isLoading) {
     return (
-      <div
-        className="font-mono"
-        style={{ color: '#0a0a0a' }}
-      >
+      <div className={tokens.rootClassName} style={tokens.rootStyle}>
         <div className="max-w-4xl mx-auto px-4 py-16 text-xs opacity-60 tracking-widest">
           loading post...
         </div>
@@ -363,7 +385,7 @@ const BlogPost = () => {
   }
 
   if (!post) {
-    return null;
+    return <NotFoundPage variant="inline" message={`找不到這篇文章：${slug ?? ''}`} />;
   }
 
   const postUrl = `${SITE_URL}/#/blog/${post.slug}`;
@@ -371,10 +393,7 @@ const BlogPost = () => {
   const keywords = post.tags.join(', ');
 
   return (
-    <div
-      className="font-mono"
-      style={{ color: '#0a0a0a' }}
-    >
+    <div className={tokens.rootClassName} style={tokens.rootStyle}>
       <Helmet>
         <title>{metaTitle}</title>
         <meta name="description" content={post.excerpt} />
@@ -428,7 +447,7 @@ const BlogPost = () => {
       >
         <div
           className="h-full transition-[width] duration-150 ease-out"
-          style={{ width: `${readingProgress}%`, background: '#0a0a0a' }}
+          style={{ width: `${readingProgress}%`, background: tokens.progressColor }}
         />
       </div>
 
@@ -439,18 +458,29 @@ const BlogPost = () => {
       >
         <ol className="flex items-center flex-wrap gap-x-2">
           <li>
-            <Link to="/" className="hover:bg-[#ffff00] transition-colors">
+            <Link
+              to="/"
+              className="transition-colors px-1"
+              style={{ transitionProperty: 'background-color' }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = tokens.breadcrumbHover)}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+            >
               ~/
             </Link>
           </li>
           <li>/</li>
           <li>
-            <Link to="/blog" className="hover:bg-[#ffff00] transition-colors">
+            <Link
+              to="/blog"
+              className="transition-colors px-1"
+              onMouseEnter={(e) => (e.currentTarget.style.background = tokens.breadcrumbHover)}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+            >
               blog
             </Link>
           </li>
           <li>/</li>
-          <li className="truncate max-w-[300px] font-black">{post.title}</li>
+          <li className="truncate max-w-[300px]" style={{ fontWeight: style === 'anti' ? 600 : 900 }}>{post.title}</li>
         </ol>
       </nav>
 
@@ -458,8 +488,8 @@ const BlogPost = () => {
       <div className="max-w-7xl mx-auto px-4 lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-10">
         <div className="min-w-0">
           {/* Article Header */}
-          <header className="py-8 border-b-2 border-black mb-8">
-            <div className="text-xs uppercase tracking-widest mb-4 opacity-70 flex flex-wrap items-center gap-2">
+          <header className="py-8 mb-8" style={tokens.headerDividerStyle}>
+            <div className={tokens.metaClassName} style={tokens.metaStyle}>
               <span>[{post.category}]</span>
               <span>·</span>
               <time dateTime={post.publishDate}>
@@ -470,59 +500,85 @@ const BlogPost = () => {
               <span>·</span>
               <span>by {post.author}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.05] mb-6 tracking-tight">
+            <h1 className={tokens.titleClassName} style={tokens.titleStyle}>
               {post.title}
             </h1>
-            <p className="text-base md:text-lg leading-relaxed opacity-80">
+            <p className={tokens.excerptClassName} style={tokens.excerptStyle}>
               {post.excerpt}
             </p>
 
             {/* Share Buttons */}
             <div className="mt-6 flex flex-wrap items-center gap-2">
-              <span className="text-xs uppercase tracking-widest opacity-60">
+              <span className="text-xs tracking-widest" style={tokens.shareLabelStyle}>
                 share:
               </span>
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="px-3 py-1 text-xs uppercase tracking-widest border-2 border-black bg-white hover:bg-[#ffff00] transition-colors"
+                className={tokens.shareChipBase}
+                style={tokens.shareChipStyle}
                 aria-label="複製連結"
               >
                 {copyStatus === 'success'
                   ? '[✓ copied]'
                   : copyStatus === 'error'
                   ? '[× failed]'
-                  : '[copy link]'}
+                  : style === 'anti' ? 'copy link' : '[copy link]'}
               </button>
               <a
                 href={twitterShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1 text-xs uppercase tracking-widest border-2 border-black bg-white hover:bg-[#ffff00] transition-colors"
+                className={tokens.shareChipBase}
+                style={tokens.shareChipStyle}
                 aria-label="分享到 X"
               >
-                [x / twitter]
+                {style === 'anti' ? 'x / twitter' : '[x / twitter]'}
+              </a>
+              <a
+                href={lineShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={tokens.shareChipBase}
+                style={tokens.shareChipStyle}
+                aria-label="分享到 LINE"
+              >
+                {style === 'anti' ? 'line' : '[line]'}
+              </a>
+              <a
+                href={facebookShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={tokens.shareChipBase}
+                style={tokens.shareChipStyle}
+                aria-label="分享到 Facebook"
+              >
+                {style === 'anti' ? 'facebook' : '[facebook]'}
               </a>
             </div>
           </header>
 
           {/* Mobile TOC */}
           {tocItems.length > 0 && (
-            <details className="lg:hidden mb-8 border-2 border-black">
-              <summary className="cursor-pointer list-none p-4 flex items-center justify-between font-black uppercase tracking-widest text-xs hover:bg-[#ffff00]">
+            <details className="lg:hidden mb-8" style={tokens.tocBoxStyle}>
+              <summary
+                className="cursor-pointer list-none p-4 flex items-center justify-between tracking-widest text-xs"
+                style={{ fontFamily: style === 'anti' ? "'Courier Prime', monospace" : undefined, fontWeight: style === 'anti' ? 400 : 900 }}
+              >
                 <span>
-                  // toc ({tocItems.length.toString().padStart(2, '0')})
+                  {style === 'anti' ? '— toc' : '// toc'} ({tocItems.length.toString().padStart(2, '0')})
                 </span>
                 <span>▼</span>
               </summary>
-              <nav className="px-4 pb-4 border-t-2 border-black pt-3" aria-label="文章目錄">
+              <nav className="px-4 pb-4 pt-3" style={tokens.tocDividerStyle} aria-label="文章目錄">
                 <ul className="space-y-1 text-sm">
                   {tocItems.map((item, index) => (
                     <li key={item.id}>
                       <a
                         href={`#${item.id}`}
                         onClick={(event) => handleTocClick(event, item.id)}
-                        className="block py-1 hover:bg-[#ffff00] transition-colors"
+                        className="block py-1 px-2 transition-colors"
+                        style={tokens.tocItemIdle}
                       >
                         <span className="opacity-50 mr-2">
                           {(index + 1).toString().padStart(2, '0')}
@@ -539,21 +595,23 @@ const BlogPost = () => {
           {/* Article Content */}
           <article className="pb-16 min-h-[60vh]">
             <div
-              className="max-w-none text-base leading-loose"
+              className={`${tokens.proseClassName} ${tokens.proseThemeWrapperClass}`}
+              style={tokens.proseStyle}
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
 
             {/* Tags */}
-            <div className="mt-12 pt-6 border-t-2 border-black">
-              <div className="text-xs uppercase tracking-widest mb-3 opacity-60">
-                // tags
+            <div className="mt-12 pt-6" style={tokens.tocDividerStyle}>
+              <div className="text-xs tracking-widest mb-3" style={tokens.shareLabelStyle}>
+                {style === 'anti' ? '— tags' : '// tags'}
               </div>
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
                   <Link
                     key={tag}
                     to={`/blog?tag=${encodeURIComponent(tag)}`}
-                    className="px-2 py-0.5 text-xs border border-black hover:bg-[#ffff00] transition-colors"
+                    className={tokens.tagPillClassName}
+                    style={tokens.tagPillStyle}
                   >
                     #{tag}
                   </Link>
@@ -567,9 +625,9 @@ const BlogPost = () => {
         {tocItems.length > 0 && (
           <aside className="hidden lg:block" aria-label="文章目錄">
             <div className="sticky top-28">
-              <div className="border-2 border-black p-4">
-                <div className="text-xs font-black uppercase tracking-widest mb-3 border-b-2 border-black pb-2">
-                  // toc
+              <div className={tokens.tocBoxClassName} style={tokens.tocBoxStyle}>
+                <div className="text-xs tracking-widest" style={tokens.tocLabelStyle}>
+                  {style === 'anti' ? '— toc' : '// toc'}
                 </div>
                 <nav>
                   <ul className="space-y-0 text-sm">
@@ -580,11 +638,8 @@ const BlogPost = () => {
                           <a
                             href={`#${item.id}`}
                             onClick={(event) => handleTocClick(event, item.id)}
-                            className={`block py-1.5 px-2 transition-colors ${
-                              isActive
-                                ? 'bg-black text-white font-black'
-                                : 'hover:bg-[#ffff00]'
-                            }`}
+                            className="block py-1.5 px-2 transition-colors"
+                            style={isActive ? tokens.tocItemActive : tokens.tocItemIdle}
                           >
                             <span className="opacity-60 mr-2 text-xs">
                               {(index + 1).toString().padStart(2, '0')}
@@ -602,22 +657,86 @@ const BlogPost = () => {
         )}
       </div>
 
+      {/* Bottom Share CTA — 讀完了，覺得有用就分享吧 */}
+      <section className="max-w-5xl mx-auto px-4 pb-8">
+        <div
+          className={`${tokens.cardClassName} flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4`}
+          style={tokens.cardStyle}
+        >
+          <div>
+            <div className="text-xs tracking-widest mb-1" style={tokens.shareLabelStyle}>
+              {style === 'anti' ? '— share this post' : '// share this post'}
+            </div>
+            <h3 className={tokens.cardTitleClassName} style={style === 'anti' ? { fontFamily: 'Georgia, serif' } : { fontWeight: 900 }}>
+              覺得有用？分享給需要的人
+            </h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              className={tokens.shareChipBase}
+              style={tokens.shareChipStyle}
+              aria-label="複製連結"
+            >
+              {copyStatus === 'success'
+                ? '[✓ copied]'
+                : copyStatus === 'error'
+                ? '[× failed]'
+                : style === 'anti' ? 'copy link' : '[copy link]'}
+            </button>
+            <a
+              href={twitterShareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={tokens.shareChipBase}
+              style={tokens.shareChipStyle}
+            >
+              {style === 'anti' ? 'x' : '[x]'}
+            </a>
+            <a
+              href={lineShareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={tokens.shareChipBase}
+              style={tokens.shareChipStyle}
+            >
+              {style === 'anti' ? 'line' : '[line]'}
+            </a>
+            <a
+              href={facebookShareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={tokens.shareChipBase}
+              style={tokens.shareChipStyle}
+            >
+              {style === 'anti' ? 'fb' : '[fb]'}
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Author Info */}
       <section className="max-w-5xl mx-auto px-4 pb-8">
-        <div className="border-2 border-black p-6 bg-white">
-          <div className="text-xs uppercase tracking-widest mb-4 opacity-60">
-            // author
+        <div className={tokens.cardClassName} style={tokens.cardStyle}>
+          <div className="text-xs tracking-widest mb-4" style={tokens.shareLabelStyle}>
+            {style === 'anti' ? '— author' : '// author'}
           </div>
           <div className="flex items-start gap-4">
             <div
-              className="w-14 h-14 border-2 border-black flex items-center justify-center flex-shrink-0"
-              style={{ background: '#ffff00' }}
+              className="w-14 h-14 flex items-center justify-center flex-shrink-0"
+              style={{
+                background: '#ffff00',
+                border: style === 'anti' ? '1px dashed #1A1A1A' : '2px solid #000',
+              }}
             >
-              <span className="font-black text-xl">陳</span>
+              <span className="text-xl" style={{ fontWeight: 900 }}>陳</span>
             </div>
             <div className="flex-1">
-              <h4 className="text-lg font-black mb-1">
-                陳彥彤 <span className="text-xs opacity-60 font-normal ml-1">// 程式講師</span>
+              <h4 className="text-lg mb-1" style={style === 'anti' ? { fontFamily: 'Georgia, serif', fontWeight: 600 } : { fontWeight: 900 }}>
+                陳彥彤 <span className="text-xs opacity-60 font-normal ml-1">
+                  {style === 'anti' ? '— 程式講師' : '// 程式講師'}
+                </span>
               </h4>
               <p className="text-sm leading-relaxed opacity-80">
                 資深後端工程師，5-6 年電商核心系統開發經驗。Spring Boot / React /
@@ -626,17 +745,19 @@ const BlogPost = () => {
               <div className="flex flex-wrap gap-2 mt-4">
                 <Link
                   to="/"
-                  className="px-3 py-1 text-xs uppercase tracking-widest border-2 border-black bg-black text-white hover:bg-[#ffff00] hover:text-black transition-colors"
+                  className={tokens.shareChipBase}
+                  style={tokens.shareChipStyle}
                 >
-                  [查看課程]
+                  {style === 'anti' ? '查看課程' : '[查看課程]'}
                 </Link>
                 <a
                   href="https://github.com/yanchen184"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1 text-xs uppercase tracking-widest border-2 border-black bg-white hover:bg-[#ffff00] transition-colors"
+                  className={tokens.shareChipBase}
+                  style={tokens.shareChipStyle}
                 >
-                  [github]
+                  {style === 'anti' ? 'github' : '[github]'}
                 </a>
               </div>
             </div>
@@ -646,14 +767,11 @@ const BlogPost = () => {
 
       {/* Donate */}
       <section className="max-w-5xl mx-auto px-4 pb-12">
-        <div
-          className="border-2 border-black p-6 bg-white"
-          style={{ boxShadow: '6px 6px 0 #0a0a0a' }}
-        >
-          <div className="text-xs uppercase tracking-widest mb-2 opacity-60">
-            // support
+        <div className={tokens.cardClassName} style={tokens.cardStyle}>
+          <div className="text-xs tracking-widest mb-2" style={tokens.shareLabelStyle}>
+            {style === 'anti' ? '— support' : '// support'}
           </div>
-          <h3 className="text-xl md:text-2xl font-black mb-2">
+          <h3 className="text-xl md:text-2xl mb-2" style={style === 'anti' ? { fontFamily: 'Georgia, serif', fontWeight: 600 } : { fontWeight: 900 }}>
             覺得有幫助？請我喝杯咖啡 ☕
           </h3>
           <p className="text-sm opacity-80 mb-4">
@@ -668,10 +786,14 @@ const BlogPost = () => {
             ].map((option) => (
               <div
                 key={option.amount}
-                className="border-2 border-black p-3 text-center text-xs"
+                className="p-3 text-center text-xs"
+                style={{
+                  border: style === 'anti' ? '1px dashed #C4A77D' : '2px solid #000',
+                  background: style === 'anti' ? 'transparent' : '#fff',
+                }}
               >
                 <div className="mb-1">{option.label}</div>
-                <div className="font-black">{option.amount}</div>
+                <div style={{ fontWeight: 900 }}>{option.amount}</div>
               </div>
             ))}
           </div>
@@ -680,31 +802,59 @@ const BlogPost = () => {
             href="https://ko-fi.com/TODO_填入你的Ko-fi帳號"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-6 py-2 text-sm uppercase tracking-widest font-black border-2 border-black bg-black text-white hover:bg-[#ffff00] hover:text-black transition-colors"
+            className="inline-block px-6 py-2 text-sm tracking-widest transition-colors"
+            style={
+              style === 'anti'
+                ? {
+                    border: '1px dashed #1A1A1A',
+                    background: '#FFE066',
+                    color: '#1A1A1A',
+                    fontFamily: "'Courier Prime', monospace",
+                  }
+                : {
+                    border: '2px solid #000',
+                    background: '#000',
+                    color: '#fff',
+                    fontWeight: 900,
+                    textTransform: 'uppercase',
+                  }
+            }
           >
-            [ ☕ 請我喝咖啡 → ]
+            {style === 'anti' ? '☕ 請我喝咖啡 →' : '[ ☕ 請我喝咖啡 → ]'}
           </a>
         </div>
       </section>
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 pb-16 border-t-2 border-black pt-10">
-          <h3 className="text-2xl font-black uppercase tracking-tight mb-6">
-            /// RELATED
+        <section
+          className="max-w-6xl mx-auto px-4 pb-16 pt-10"
+          style={{ borderTop: tokens.relatedGridBorder }}
+        >
+          <h3 className={tokens.relatedHeadingClassName} style={tokens.relatedHeadingStyle}>
+            {style === 'anti' ? '— Related' : '/// RELATED'}
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t-2 border-black">
+          <div
+            className="grid grid-cols-1 md:grid-cols-3 gap-0"
+            style={{ borderTop: tokens.relatedGridBorder }}
+          >
             {relatedPosts.map((relatedPost: BlogPostType, index: number) => (
               <article
                 key={relatedPost.id}
-                className={`p-5 border-b-2 border-black hover:bg-[#ffff00] transition-colors ${
-                  index < relatedPosts.length - 1 ? 'md:border-r-2' : ''
-                }`}
+                className={tokens.relatedCardClassName}
+                style={{
+                  borderBottom: tokens.relatedCardBorder,
+                  borderRight:
+                    index < relatedPosts.length - 1 ? tokens.relatedCardBorder : undefined,
+                }}
               >
-                <div className="text-xs uppercase tracking-widest mb-2 opacity-60">
+                <div className="text-xs tracking-widest mb-2" style={tokens.shareLabelStyle}>
                   [{relatedPost.category}] · {formatDate(relatedPost.publishDate)}
                 </div>
-                <h4 className="text-base md:text-lg font-black leading-tight mb-2">
+                <h4
+                  className="text-base md:text-lg leading-tight mb-2"
+                  style={style === 'anti' ? { fontFamily: 'Georgia, serif', fontWeight: 600 } : { fontWeight: 900 }}
+                >
                   <Link to={`/blog/${relatedPost.slug}`}>
                     {relatedPost.title}
                   </Link>
@@ -714,7 +864,11 @@ const BlogPost = () => {
                 </p>
                 <Link
                   to={`/blog/${relatedPost.slug}`}
-                  className="text-xs uppercase tracking-widest font-black hover:underline"
+                  className="text-xs tracking-widest"
+                  style={{
+                    ...tokens.shareLabelStyle,
+                    fontWeight: style === 'anti' ? 600 : 900,
+                  }}
                 >
                   read →
                 </Link>
@@ -728,9 +882,10 @@ const BlogPost = () => {
       <section className="max-w-5xl mx-auto px-4 pb-16 pt-4">
         <Link
           to="/blog"
-          className="inline-block px-4 py-2 text-xs uppercase tracking-widest border-2 border-black bg-white hover:bg-[#ffff00] transition-colors"
+          className={tokens.backChipClassName}
+          style={tokens.backChipStyle}
         >
-          [← back to blog]
+          {style === 'anti' ? '← back to blog' : '[← back to blog]'}
         </Link>
       </section>
     </div>

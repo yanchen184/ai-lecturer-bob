@@ -15,6 +15,8 @@ import {
 
 type EditorTab = 'list' | 'edit'
 
+type DefaultStyleChoice = 'auto' | 'neub' | 'anti'
+
 interface FormState {
   id?: string
   slug: string
@@ -29,6 +31,8 @@ interface FormState {
   readingTime: number
   featured: boolean
   published: boolean
+  /** 'auto' 代表不指定（讓讀者選擇或系統預設），儲存時轉為 undefined */
+  defaultStyle: DefaultStyleChoice
   slugEdited: boolean // 記住 slug 是否被手動改過，改過就不再自動覆蓋
 }
 
@@ -45,6 +49,7 @@ const EMPTY_FORM: FormState = {
   readingTime: 1,
   featured: false,
   published: false,
+  defaultStyle: 'auto',
   slugEdited: false,
 }
 
@@ -65,6 +70,7 @@ const postToForm = (post: FirestorePost): FormState => ({
   readingTime: post.readingTime || 1,
   featured: post.featured,
   published: post.published,
+  defaultStyle: post.defaultStyle ?? 'auto',
   slugEdited: true, // 編輯既有文章不自動覆寫 slug
 })
 
@@ -86,6 +92,7 @@ const formToPayload = (
   readingTime: Number(form.readingTime) || 1,
   featured: form.featured,
   published: form.published,
+  defaultStyle: form.defaultStyle === 'auto' ? undefined : form.defaultStyle,
 })
 
 /**
@@ -553,6 +560,36 @@ const PostForm = ({
           </label>
         </FormField>
       </div>
+
+      <FormField
+        label="預設風格"
+        hint="作者建議的預設風格；讀者若在前台切換過（localStorage），仍以讀者選擇為準。"
+      >
+        <div className="flex flex-wrap gap-4 h-10 items-center">
+          {(['auto', 'neub', 'anti'] as const).map((choice) => (
+            <label
+              key={choice}
+              className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="defaultStyle"
+                value={choice}
+                checked={form.defaultStyle === choice}
+                onChange={() => onUpdate('defaultStyle', choice)}
+                className="w-4 h-4"
+              />
+              <span>
+                {choice === 'auto'
+                  ? '自動（不指定）'
+                  : choice === 'neub'
+                  ? 'Neub（黃黑粗框）'
+                  : 'Anti（紙張手寫）'}
+              </span>
+            </label>
+          ))}
+        </div>
+      </FormField>
 
       <div className="flex items-center justify-end gap-2 pt-4 border-t">
         <button

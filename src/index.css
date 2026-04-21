@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -129,6 +127,99 @@ body {
   .neu-shadow { box-shadow: 5px 5px 0 #000; }
   .neu-shadow-sm { box-shadow: 3px 3px 0 #000; }
   .neu-border { border: 3px solid #000; }
+
+  /* --- Blog prose: Anti (liquid-glass) variant ---
+     parseContent 產生的 HTML 內含 Neub 風格 class（bg-[#ffff00]、黑邊、font-mono）。
+     當文章包在 .blog-prose-anti 底下時，我們用較高優先序覆寫它們為紙感風格。*/
+  .blog-prose-anti h2 {
+    font-family: Georgia, 'Noto Sans TC', serif !important;
+    font-weight: 400 !important;
+    font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
+    letter-spacing: -0.01em !important;
+    text-transform: none !important;
+    border-bottom: 1px dashed #C4A77D !important;
+    padding-bottom: 0.5rem !important;
+    margin-top: 3rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .blog-prose-anti h3 {
+    font-family: Georgia, 'Noto Sans TC', serif !important;
+    font-weight: 600 !important;
+    font-size: 1.25rem !important;
+    margin-top: 2rem !important;
+    margin-bottom: 0.75rem !important;
+    color: #1A1A1A !important;
+  }
+  .blog-prose-anti strong {
+    background: #FFE066 !important;
+    color: #1A1A1A !important;
+    padding: 0 4px !important;
+    font-weight: 700 !important;
+  }
+  .blog-prose-anti code {
+    background: #FFF8DC !important;
+    color: #1A1A1A !important;
+    border: 1px dashed #C4A77D !important;
+    padding: 0 4px !important;
+    font-family: 'Courier Prime', 'Courier New', monospace !important;
+    font-size: 0.875em !important;
+  }
+  .blog-prose-anti pre {
+    background: #1A1A1A !important;
+    color: #FAFAF8 !important;
+    border: 1px dashed #C4A77D !important;
+    box-shadow: none !important;
+    font-family: 'Courier Prime', 'Courier New', monospace !important;
+  }
+  .blog-prose-anti pre code {
+    background: transparent !important;
+    border: none !important;
+    color: inherit !important;
+    padding: 0 !important;
+  }
+  .blog-prose-anti [data-code-block] > div:first-child {
+    background: #FFE066 !important;
+    border: 1px dashed #C4A77D !important;
+    border-bottom: none !important;
+    font-family: 'Courier Prime', monospace !important;
+    text-transform: lowercase !important;
+    letter-spacing: 0.05em !important;
+  }
+  .blog-prose-anti [data-code-block] button[data-copy] {
+    background: transparent !important;
+    border: 1px dashed #1A1A1A !important;
+    color: #1A1A1A !important;
+    font-family: 'Courier Prime', monospace !important;
+  }
+  .blog-prose-anti [data-code-block] button[data-copy]:hover {
+    background: #1A1A1A !important;
+    color: #FFE066 !important;
+  }
+  .blog-prose-anti blockquote {
+    border-left: 3px solid #C4A77D !important;
+    background: #FFF8DC !important;
+    padding: 1rem 1.25rem !important;
+    font-style: italic !important;
+    color: #4A4A4A !important;
+    margin: 1.5rem 0 !important;
+  }
+  .blog-prose-anti a {
+    color: #1A1A1A !important;
+    text-decoration: none !important;
+    border-bottom: 1px dashed #C4A77D !important;
+    font-weight: 600 !important;
+  }
+  .blog-prose-anti a:hover {
+    background: #FFE066 !important;
+  }
+  .blog-prose-anti img {
+    border: 1px dashed #C4A77D !important;
+    box-shadow: none !important;
+  }
+  .blog-prose-anti td {
+    border: 1px dashed #C4A77D !important;
+    padding: 0.75rem !important;
+  }
 
   /* --- Aurora specific --- */
   .aurora-blob {

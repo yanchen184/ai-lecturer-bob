@@ -4,11 +4,16 @@ import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BlogLayout from './components/BlogLayout';
+import BlogLayoutAnti from './components/BlogLayoutAnti';
+import BlogStyleSwitcher from './components/BlogStyleSwitcher';
+import { BlogStyleProvider, useBlogStyle } from './contexts/BlogStyleContext';
 import HomePage from './pages/HomePage';
 import BlogList from './pages/BlogList';
+import BlogListAnti from './pages/BlogListAnti';
 import BlogPost from './pages/BlogPost';
 import AdminPage from './pages/AdminPage';
 import StyleShowcase from './pages/StyleShowcase';
+import NotFoundPage from './pages/NotFoundPage';
 import StyleSwitcher from './components/StyleSwitcher';
 import { themes } from './themes/registry';
 import { trackVisitor } from './firebase';
@@ -98,31 +103,58 @@ function App() {
     );
   }
 
-  // Blog routes — Neubrutalism layout (paper bg + thick borders)
+  // Blog routes — dual-style (Neub + Anti), reader-switchable
   if (location.pathname.startsWith('/blog')) {
     return (
       <HelmetProvider>
-        <BlogLayout>
-          <Routes>
-            <Route path="/blog" element={<BlogList />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-          </Routes>
-        </BlogLayout>
+        <BlogStyleProvider>
+          <BlogStyledRoutes />
+        </BlogStyleProvider>
       </HelmetProvider>
     );
   }
 
-  // Default layout (any leftover routes like /home)
+  // /home — legacy default layout
+  if (location.pathname === '/home') {
+    return (
+      <HelmetProvider>
+        <div className="gradient-bg min-h-screen text-white">
+          <Navbar />
+          <Routes>
+            <Route path="/home" element={<HomePage />} />
+          </Routes>
+          <Footer />
+        </div>
+      </HelmetProvider>
+    );
+  }
+
+  // Fallback — 全站未匹配路由，顯示完整 404 頁
   return (
     <HelmetProvider>
-      <div className="gradient-bg min-h-screen text-white">
-        <Navbar />
-        <Routes>
-          <Route path="/home" element={<HomePage />} />
-        </Routes>
-        <Footer />
-      </div>
+      <NotFoundPage />
     </HelmetProvider>
+  );
+}
+
+/** Renders blog routes wrapped in the chosen layout. Must live inside BlogStyleProvider. */
+function BlogStyledRoutes() {
+  const { style } = useBlogStyle();
+  const Layout = style === 'anti' ? BlogLayoutAnti : BlogLayout;
+  const ListView = style === 'anti' ? BlogListAnti : BlogList;
+
+  return (
+    <>
+      <BlogStyleSwitcher />
+      <Layout>
+        <Routes>
+          <Route path="/blog" element={<ListView />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          {/* 部落格底下的未知路徑 — inline 版保留 BlogLayout navbar/footer */}
+          <Route path="*" element={<NotFoundPage variant="inline" />} />
+        </Routes>
+      </Layout>
+    </>
   );
 }
 

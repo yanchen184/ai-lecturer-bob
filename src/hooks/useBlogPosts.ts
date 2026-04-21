@@ -25,6 +25,7 @@ const toBlogPost = (post: FirestorePost): BlogPostView => ({
   tags: post.tags,
   readingTime: post.readingTime,
   featured: post.featured,
+  defaultStyle: post.defaultStyle,
 })
 
 /**

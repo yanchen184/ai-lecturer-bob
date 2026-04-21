@@ -269,6 +269,8 @@ export interface FirestorePost {
   readingTime: number
   featured: boolean
   published: boolean
+  /** 作者指定的預設風格。讀者若已在 BlogStyleSwitcher 選過風格，仍以讀者選擇為準。 */
+  defaultStyle?: 'neub' | 'anti'
   createdAt?: Timestamp | null
   updatedAt?: Timestamp | null
 }
@@ -296,6 +298,10 @@ const mapDocToPost = (
   readingTime: typeof data.readingTime === 'number' ? data.readingTime : 0,
   featured: Boolean(data.featured),
   published: data.published !== false, // 預設視為已發布，避免舊資料被隱藏
+  defaultStyle:
+    data.defaultStyle === 'anti' || data.defaultStyle === 'neub'
+      ? (data.defaultStyle as 'anti' | 'neub')
+      : undefined,
   createdAt: (data.createdAt as Timestamp) ?? null,
   updatedAt: (data.updatedAt as Timestamp) ?? null,
 })
