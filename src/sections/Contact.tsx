@@ -1,4 +1,5 @@
 import { useState, useRef, type FormEvent } from 'react';
+import { addContactInquiry } from '../firebase';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,23 +20,21 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // Build mailto link as primary method
-      const mailtoLink = `mailto:bobchen184@gmail.com?subject=${encodeURIComponent(
-        `[網站諮詢] ${formData.subject}`
-      )}&body=${encodeURIComponent(
-        `姓名：${formData.name}\n公司：${formData.company || '(未填寫)'}\nEmail：${formData.email}\n\n訊息內容：\n${formData.message}`
-      )}`;
-
-      // Open in new window so we don't navigate away
-      window.open(mailtoLink, '_blank');
-
+      await addContactInquiry({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        subject: formData.subject,
+        message: formData.message,
+      });
       setSubmitStatus('success');
       setFormData({ name: '', email: '', company: '', subject: '', message: '' });
-    } catch {
+    } catch (err) {
+      console.error('送出聯絡訊息失敗:', err);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus('idle'), 5000);
+      setTimeout(() => setSubmitStatus('idle'), 6000);
     }
   };
 
@@ -193,7 +192,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">填寫諮詢表單</h3>
-                  <p className="text-gray-500 text-xs">會開啟您的郵件客戶端發送</p>
+                  <p className="text-gray-500 text-xs">我會在 24 小時內透過 Email 回覆</p>
                 </div>
               </div>
 
@@ -309,7 +308,7 @@ const Contact = () => {
                     <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-emerald-400 text-sm">郵件客戶端已開啟，請在郵件中確認送出！</span>
+                    <span className="text-emerald-400 text-sm">訊息已送出！我會盡快透過 Email 與您聯繫。</span>
                   </div>
                 )}
                 {submitStatus === 'error' && (
@@ -328,7 +327,7 @@ const Contact = () => {
 
                 {/* Helper text */}
                 <p className="text-gray-600 text-xs text-center">
-                  點擊送出後會開啟您的郵件客戶端，表單內容會自動填入信件中
+                  送出後訊息會直接進入我的信箱，我會回覆到您填寫的 Email
                 </p>
               </form>
             </div>

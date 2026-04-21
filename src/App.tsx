@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import BlogLayout from './components/BlogLayout';
 import HomePage from './pages/HomePage';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
@@ -97,15 +98,27 @@ function App() {
     );
   }
 
-  // Default layout (blog, etc.)
+  // Blog routes — Neubrutalism layout (paper bg + thick borders)
+  if (location.pathname.startsWith('/blog')) {
+    return (
+      <HelmetProvider>
+        <BlogLayout>
+          <Routes>
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+          </Routes>
+        </BlogLayout>
+      </HelmetProvider>
+    );
+  }
+
+  // Default layout (any leftover routes like /home)
   return (
     <HelmetProvider>
       <div className="gradient-bg min-h-screen text-white">
         <Navbar />
         <Routes>
           <Route path="/home" element={<HomePage />} />
-          <Route path="/blog" element={<BlogList />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>
         <Footer />
       </div>

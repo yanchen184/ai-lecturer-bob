@@ -12,7 +12,7 @@
     <copyright>© 2026 陳彥彤</copyright>
     <managingEditor>bobchen184@gmail.com (陳彥彤)</managingEditor>
     <webMaster>bobchen184@gmail.com (陳彥彤)</webMaster>
-    <lastBuildDate>Tue, 21 Apr 2026 03:02:31 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 04:02:34 GMT</lastBuildDate>
     <item>
       <title>事件驅動架構：我們為什麼從 RabbitMQ 換到 Kafka，又換回來</title>
       <link>https://yanchen184.github.io/ai-lecturer-bob/#/blog/event-driven-architecture</link>

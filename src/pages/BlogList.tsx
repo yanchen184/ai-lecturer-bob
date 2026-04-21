@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import type { BlogPost } from '../data/blogPosts';
 import { useState, useMemo } from 'react';
 import { useBlogPosts } from '../hooks/useBlogPosts';
+
+const SITE_URL = 'https://yanchen184.github.io/ai-lecturer-bob';
 
 const BlogList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -56,9 +59,31 @@ const BlogList = () => {
 
   return (
     <div
-      className="min-h-screen pt-24 font-mono"
-      style={{ background: '#fafaf7', color: '#0a0a0a' }}
+      className="font-mono"
+      style={{ color: '#0a0a0a' }}
     >
+      <Helmet>
+        <title>部落格 — AI 講師陳彥彤YC</title>
+        <meta
+          name="description"
+          content="後端工程師的技術筆記。Spring Boot、React、MySQL、Redis 實戰踩坑紀錄，不包裝、不美化，寫給實戰派看的。"
+        />
+        <link rel="canonical" href={`${SITE_URL}/#/blog`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="部落格 — AI 講師陳彥彤YC" />
+        <meta
+          property="og:description"
+          content="後端工程師的技術實戰筆記 · Spring Boot / React / MySQL / Redis"
+        />
+        <meta property="og:url" content={`${SITE_URL}/#/blog`} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="部落格 — AI 講師陳彥彤YC" />
+        <meta
+          name="twitter:description"
+          content="後端工程師的技術實戰筆記"
+        />
+      </Helmet>
+
       {/* Hero — one-line compact */}
       <section className="px-4 py-5 border-b-2 border-black">
         <div className="max-w-6xl mx-auto flex flex-wrap items-baseline gap-x-4 gap-y-1">

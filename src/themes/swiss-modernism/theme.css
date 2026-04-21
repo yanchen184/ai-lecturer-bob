@@ -20,3 +20,123 @@
 .theme-swiss-modernism-wrapper {
   min-height: 100vh;
 }
+
+/* ===== Shared section overrides (MessageBoard / Contact) =====
+   共用 section 是為深色主題寫的（bg-white/5 + text-white），在紙色背景下會白底白字。
+   這裡把文字顏色、輸入框、卡片強制套成 Neub 風格，避免可讀性災難。 */
+.theme-swiss-modernism #messages,
+.theme-swiss-modernism #contact {
+  background-color: #FAFAFA;
+  color: #000000;
+}
+
+.theme-swiss-modernism #messages .gradient-text,
+.theme-swiss-modernism #contact .gradient-text {
+  background: #FFEB3B;
+  -webkit-text-fill-color: #000000;
+  color: #000000;
+  padding: 0 0.25em;
+  display: inline-block;
+  transform: rotate(-1deg);
+}
+
+.theme-swiss-modernism #messages .glass-card,
+.theme-swiss-modernism #contact .glass-card {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000000;
+}
+
+.theme-swiss-modernism #messages input,
+.theme-swiss-modernism #messages textarea,
+.theme-swiss-modernism #contact input,
+.theme-swiss-modernism #contact textarea,
+.theme-swiss-modernism #contact select {
+  background: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  border-radius: 0 !important;
+  color: #000000 !important;
+  font-family: 'Space Grotesk', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+.theme-swiss-modernism #messages input::placeholder,
+.theme-swiss-modernism #messages textarea::placeholder,
+.theme-swiss-modernism #contact input::placeholder,
+.theme-swiss-modernism #contact textarea::placeholder {
+  color: #888888 !important;
+}
+
+.theme-swiss-modernism #messages label,
+.theme-swiss-modernism #contact label {
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.theme-swiss-modernism #messages h2,
+.theme-swiss-modernism #messages h3,
+.theme-swiss-modernism #contact h2,
+.theme-swiss-modernism #contact h3 {
+  color: #000000 !important;
+}
+
+.theme-swiss-modernism #messages p,
+.theme-swiss-modernism #contact p {
+  color: #333333 !important;
+}
+
+/* 留言列表卡片 */
+.theme-swiss-modernism #messages [class*="bg-white/"] {
+  background: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 #000000;
+}
+
+/* 送出按鈕 — 黃底黑字 + 硬陰影 */
+.theme-swiss-modernism #messages button[type="submit"],
+.theme-swiss-modernism #contact button[type="submit"] {
+  background: #FFEB3B !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  border-radius: 0 !important;
+  box-shadow: 5px 5px 0 #000000;
+  font-weight: 700;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.theme-swiss-modernism #messages button[type="submit"]:hover:not(:disabled),
+.theme-swiss-modernism #contact button[type="submit"]:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.theme-swiss-modernism #messages [class*="text-white"] {
+  color: #000000 !important;
+}
+
+.theme-swiss-modernism #messages [class*="text-gray-"] {
+  color: #333333 !important;
+}
+
+.theme-swiss-modernism #contact [class*="text-white"],
+.theme-swiss-modernism #contact [class*="text-gray-"] {
+  color: #000000 !important;
+}
+
+/* Status message 配色 */
+.theme-swiss-modernism #messages [class*="bg-emerald-500"],
+.theme-swiss-modernism #contact [class*="bg-emerald-500"] {
+  background: #C8E6C9 !important;
+  border: 2px solid #000000 !important;
+  border-radius: 0 !important;
+  color: #000000 !important;
+}
+
+.theme-swiss-modernism #messages [class*="bg-red-500"],
+.theme-swiss-modernism #contact [class*="bg-red-500"] {
+  background: #FFCDD2 !important;
+  border: 2px solid #000000 !important;
+  border-radius: 0 !important;
+  color: #000000 !important;
+}

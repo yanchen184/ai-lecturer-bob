@@ -1,7 +1,10 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import type { BlogPost as BlogPostType } from '../data/blogPosts';
 import { useBlogPosts } from '../hooks/useBlogPosts';
+
+const SITE_URL = 'https://yanchen184.github.io/ai-lecturer-bob';
 
 interface TocItem {
   id: string;
@@ -164,6 +167,43 @@ const BlogPost = () => {
     return () => observer.disconnect();
   }, [tocItems, post]);
 
+  // Event delegation for code-block copy buttons. parseContent outputs buttons
+  // with data-copy=<uri-encoded source>, so we don't need React refs per block.
+  useEffect(() => {
+    if (!post) return;
+
+    const handleClick = (event: MouseEvent): void => {
+      const target = event.target as HTMLElement | null;
+      const button = target?.closest<HTMLButtonElement>('button[data-copy]');
+      if (!button) return;
+
+      const encoded = button.getAttribute('data-copy');
+      if (!encoded) return;
+
+      const originalText = button.textContent;
+      const source = decodeURIComponent(encoded);
+      navigator.clipboard
+        .writeText(source)
+        .then(() => {
+          button.textContent = '[copied!]';
+          button.style.background = '#ffff00';
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.style.background = '';
+          }, 1500);
+        })
+        .catch(() => {
+          button.textContent = '[failed]';
+          setTimeout(() => {
+            button.textContent = originalText;
+          }, 1500);
+        });
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [post]);
+
   const formatDate = (dateString: string): string => {
     return dateString.replaceAll('-', '/');
   };
@@ -189,9 +229,15 @@ const BlogPost = () => {
     return (
       content
         // Code blocks first — protect their content from further parsing
-        .replace(/```[\s\S]*?```/g, (match) => {
-          const code = match.replace(/```\w*\n?/g, '').replace(/```/g, '');
-          return `<pre class="bg-black text-white p-4 overflow-x-auto my-6 text-sm font-mono border-2 border-black" style="box-shadow: 4px 4px 0 #0a0a0a;"><code>${code}</code></pre>`;
+        .replace(/```(\w*)\n?([\s\S]*?)```/g, (_match, lang: string, code: string) => {
+          const trimmed = code.replace(/\n$/, '');
+          const escaped = trimmed
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+          const langLabel = (lang || 'code').toLowerCase();
+          const encoded = encodeURIComponent(trimmed);
+          return `<div class="relative my-6 group" data-code-block><div class="flex items-center justify-between px-3 py-1.5 bg-[#ffff00] border-2 border-black border-b-0 text-[11px] font-black uppercase tracking-widest"><span>${langLabel}</span><button type="button" data-copy="${encoded}" class="px-2 py-0.5 border-2 border-black bg-white hover:bg-black hover:text-white transition-colors text-[10px]" aria-label="複製程式碼">[copy]</button></div><pre class="bg-black text-white p-4 overflow-x-auto text-sm font-mono border-2 border-black" style="box-shadow: 4px 4px 0 #0a0a0a;"><code>${escaped}</code></pre></div>`;
         })
         .replace(/^## (.+)$/gm, (_match, title: string) => {
           const id = resolveId(title.trim());
@@ -306,8 +352,8 @@ const BlogPost = () => {
   if (isLoading) {
     return (
       <div
-        className="min-h-screen pt-24 font-mono"
-        style={{ background: '#fafaf7', color: '#0a0a0a' }}
+        className="font-mono"
+        style={{ color: '#0a0a0a' }}
       >
         <div className="max-w-4xl mx-auto px-4 py-16 text-xs opacity-60 tracking-widest">
           loading post...
@@ -320,11 +366,57 @@ const BlogPost = () => {
     return null;
   }
 
+  const postUrl = `${SITE_URL}/#/blog/${post.slug}`;
+  const metaTitle = `${post.title} — AI 講師陳彥彤YC`;
+  const keywords = post.tags.join(', ');
+
   return (
     <div
-      className="min-h-screen pt-24 font-mono"
-      style={{ background: '#fafaf7', color: '#0a0a0a' }}
+      className="font-mono"
+      style={{ color: '#0a0a0a' }}
     >
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={post.excerpt} />
+        <meta name="keywords" content={keywords} />
+        <meta name="author" content={post.author} />
+        <link rel="canonical" href={postUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:url" content={postUrl} />
+        <meta property="article:published_time" content={post.publishDate} />
+        <meta property="article:author" content={post.author} />
+        {post.tags.map((tag) => (
+          <meta key={tag} property="article:tag" content={tag} />
+        ))}
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.excerpt} />
+
+        {/* JSON-LD Article schema for richer Google results */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.title,
+            description: post.excerpt,
+            author: {
+              '@type': 'Person',
+              name: post.author,
+            },
+            datePublished: post.publishDate,
+            dateModified: post.updateDate || post.publishDate,
+            keywords,
+            url: postUrl,
+          })}
+        </script>
+      </Helmet>
+
       {/* Reading Progress Bar */}
       <div
         className="fixed top-0 left-0 right-0 z-50 h-1 bg-transparent"

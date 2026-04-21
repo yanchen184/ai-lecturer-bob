@@ -87,6 +87,72 @@ export const trackVisitor = async () => {
   }
 }
 
+// ============ 聯絡表單 ============
+
+export interface ContactInquiry {
+  name: string
+  email: string
+  company?: string
+  subject: string
+  message: string
+}
+
+export const addContactInquiry = async (inquiry: ContactInquiry) => {
+  await addDoc(collection(db, 'bob_contacts'), {
+    name: inquiry.name.trim(),
+    email: inquiry.email.trim(),
+    company: (inquiry.company || '').trim(),
+    subject: inquiry.subject.trim(),
+    message: inquiry.message.trim(),
+    handled: false,
+    createdAt: serverTimestamp(),
+    userAgent: navigator.userAgent,
+    referrerPath: window.location.pathname + window.location.hash,
+  })
+}
+
+export interface ContactRecord extends ContactInquiry {
+  id: string
+  handled: boolean
+  createdAt: Timestamp | null
+  referrerPath?: string
+}
+
+export const subscribeToContacts = (
+  callback: (contacts: ContactRecord[]) => void,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(collection(db, 'bob_contacts'), orderBy('createdAt', 'desc'))
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const contacts: ContactRecord[] = snapshot.docs.map((d) => {
+        const data = d.data()
+        return {
+          id: d.id,
+          name: data.name || '',
+          email: data.email || '',
+          company: data.company || '',
+          subject: data.subject || '',
+          message: data.message || '',
+          handled: Boolean(data.handled),
+          createdAt: (data.createdAt as Timestamp) ?? null,
+          referrerPath: data.referrerPath || undefined,
+        }
+      })
+      callback(contacts)
+    },
+    (error) => {
+      console.error('聯絡訊息訂閱失敗:', error)
+      onError?.(error)
+    }
+  )
+}
+
+export const markContactHandled = async (id: string, handled: boolean) => {
+  await updateDoc(doc(db, 'bob_contacts', id), { handled })
+}
+
 // ============ 留言功能 ============
 
 export interface GuestMessage {

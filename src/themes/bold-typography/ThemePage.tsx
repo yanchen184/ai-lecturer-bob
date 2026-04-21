@@ -11,6 +11,7 @@ import Portfolio from '../../sections/Portfolio';
 import Testimonials from '../../sections/Testimonials';
 import MessageBoard from '../../sections/MessageBoard';
 import LatestPosts from '../../components/LatestPosts';
+import ThemeShowcase from '../../components/ThemeShowcase';
 import Footer from './Footer';
 import './theme.css';
 
@@ -43,6 +44,7 @@ const ThemePage = () => {
         <Testimonials />
         <Contact />
         <MessageBoard />
+        <ThemeShowcase />
         <Footer />
       </div>
     </>
