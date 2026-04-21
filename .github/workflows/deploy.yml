@@ -3,6 +3,8 @@ on:
   push:
     branches: [main, master]
   workflow_dispatch:
+  repository_dispatch:
+    types: [firestore-updated]
 
 permissions:
   contents: read
@@ -16,17 +18,24 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: astro-site
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
-      - run: npm ci --legacy-peer-deps
+          cache-dependency-path: astro-site/package-lock.json
+      - run: npm ci
       - run: npm run build
+        env:
+          PUBLIC_SITE_URL: https://yanchen184.github.io
+          PUBLIC_BASE: /ai-lecturer-bob
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./astro-site/dist
 
   deploy:
     runs-on: ubuntu-latest
