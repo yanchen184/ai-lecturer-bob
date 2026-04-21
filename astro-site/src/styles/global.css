@@ -19,8 +19,8 @@
   --font-serif: Georgia, 'Noto Sans TC', serif;
 }
 
-/* === Reset === */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* === Reset（Tailwind v4 preflight 已含 box-sizing/margin/padding reset，
+   這裡只補站點專屬的 body 設定，不可加 `*` unlayered 規則，會蓋掉 utility） === */
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-sans);
