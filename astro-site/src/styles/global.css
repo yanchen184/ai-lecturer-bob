@@ -55,12 +55,15 @@ body {
 }
 
 /* === Blog prose: Neub 預設 === */
+.blog-prose {
+  font-size: 1.0625rem;
+  color: #1a1a1a;
+}
 .blog-prose h2 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-size: clamp(1.625rem, 2.6vw, 2rem);
   letter-spacing: -0.01em;
-  text-transform: uppercase;
   border-bottom: 3px solid #000;
   padding-bottom: 0.5rem;
   margin-top: 3rem;
@@ -74,8 +77,8 @@ body {
   margin-bottom: 0.75rem;
 }
 .blog-prose p {
-  line-height: 1.8;
-  margin: 1rem 0;
+  line-height: 1.85;
+  margin: 1.1rem 0;
   color: #1a1a1a;
 }
 .blog-prose strong {

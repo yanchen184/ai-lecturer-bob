@@ -1,8 +1,8 @@
 ---
 /**
- * Neub 風格 Navbar（靜態，給 blog 頁面用）。
- * - 無 JS、純靜態 HTML，SSR 友善
- * - currentPath 用於高亮 active link（以去掉 base 的乾淨 path 比對）
+ * Neub 風格 Navbar（靜態，SSR 友善、無 JS）。
+ * - Logo 左、導覽連結右（ml-auto 明確推到最右）
+ * - currentPath 用於高亮 active link
  */
 import { withBase, base } from '../lib/url';
 
@@ -16,37 +16,43 @@ const currentPath = rawPath.startsWith(base)
 
 const navItems = [
   { label: '首頁', href: '/' },
+  { label: '關於', href: '/#about' },
+  { label: '服務', href: '/#courses' },
   { label: '部落格', href: '/blog' },
+  { label: '聯繫', href: '/#contact' },
 ] as const;
 
-const isActive = (href: string) =>
-  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+const isActive = (href: string) => {
+  if (href.includes('#')) return false;
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+};
 ---
 
 <nav
-  class="sticky top-0 z-40 bg-white border-b-[3px] border-black"
+  class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b-[3px] border-black"
   aria-label="主要導覽"
 >
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 py-3 flex items-center">
     <a
       href={withBase('/')}
-      class="flex items-center gap-2 font-black uppercase tracking-tight hover:bg-[var(--color-neub-yellow)] px-2 py-1 transition-colors"
+      class="flex items-center gap-2 font-black tracking-tight hover:bg-[var(--color-neub-yellow)] px-2 py-1 transition-colors"
       aria-label="回到首頁"
     >
       <span
-        class="w-8 h-8 inline-flex items-center justify-center bg-[var(--color-neub-yellow)] border-2 border-black font-black"
+        class="w-9 h-9 inline-flex items-center justify-center bg-[var(--color-neub-yellow)] border-2 border-black font-black"
         >陳</span
       >
       <span class="hidden sm:inline text-sm">AI 講師陳彥彤YC</span>
     </a>
 
-    <div class="flex items-center gap-1 text-sm font-mono">
+    <div class="ml-auto flex items-center gap-1 text-sm font-mono">
       {
         navItems.map((item) => (
           <a
-            href={withBase(item.href)}
+            href={item.href.startsWith('/#') ? withBase('/') + item.href.slice(1) : withBase(item.href)}
             class:list={[
-              'px-3 py-1.5 uppercase tracking-widest border-2 transition-colors',
+              'px-3 py-1.5 uppercase tracking-widest border-2 transition-colors hidden md:inline-block',
               isActive(item.href)
                 ? 'bg-black text-white border-black'
                 : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
@@ -56,6 +62,19 @@ const isActive = (href: string) =>
           </a>
         ))
       }
+
+      <!-- Mobile: 只顯示主要兩個 -->
+      <a
+        href={withBase('/blog')}
+        class:list={[
+          'md:hidden px-3 py-1.5 uppercase tracking-widest border-2 transition-colors',
+          isActive('/blog')
+            ? 'bg-black text-white border-black'
+            : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
+        ]}
+      >
+        部落格
+      </a>
     </div>
   </div>
 </nav>
