@@ -92,14 +92,14 @@ const BlogListAnti = () => {
           name="description"
           content="後端工程師的技術筆記。Spring Boot、React、MySQL、Redis 實戰踩坑紀錄。"
         />
-        <link rel="canonical" href={`${SITE_URL}/#/blog`} />
+        <link rel="canonical" href={`${SITE_URL}/blog`} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="部落格 — AI 講師陳彥彤YC" />
         <meta
           property="og:description"
           content="後端工程師的技術實戰筆記 · Spring Boot / React / MySQL / Redis"
         />
-        <meta property="og:url" content={`${SITE_URL}/#/blog`} />
+        <meta property="og:url" content={`${SITE_URL}/blog`} />
       </Helmet>
 
       {/* Hero */}

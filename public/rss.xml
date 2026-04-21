@@ -5,18 +5,18 @@
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>陳彥彤的技術部落格</title>
-    <link>https://yanchen184.github.io/ai-lecturer-bob/#/blog</link>
+    <link>https://yanchen184.github.io/ai-lecturer-bob//blog</link>
     <atom:link href="https://yanchen184.github.io/ai-lecturer-bob/rss.xml" rel="self" type="application/rss+xml" />
     <description>程式講師陳彥彤分享後端開發技術、Spring Boot 實戰、React 開發心得、系統架構設計經驗</description>
     <language>zh-TW</language>
     <copyright>© 2026 陳彥彤</copyright>
     <managingEditor>bobchen184@gmail.com (陳彥彤)</managingEditor>
     <webMaster>bobchen184@gmail.com (陳彥彤)</webMaster>
-    <lastBuildDate>Tue, 21 Apr 2026 04:02:34 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 06:30:21 GMT</lastBuildDate>
     <item>
       <title>事件驅動架構：我們為什麼從 RabbitMQ 換到 Kafka，又換回來</title>
-      <link>https://yanchen184.github.io/ai-lecturer-bob/#/blog/event-driven-architecture</link>
-      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob/#/blog/event-driven-architecture</guid>
+      <link>https://yanchen184.github.io/ai-lecturer-bob//blog/event-driven-architecture</link>
+      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob//blog/event-driven-architecture</guid>
       <description><![CDATA[電商核心系統用過 RabbitMQ、換到 Kafka、再換回 RabbitMQ。每次都有好理由。這篇寫三次選擇背後的真實原因，以及「訊息佇列」這個詞掩蓋了多少不同的使用情境。]]></description>
       <content:encoded><![CDATA[
 ## 前情提要
@@ -159,8 +159,8 @@ public void onOrderCreated(OrderCreatedEvent event) {
     </item>
     <item>
       <title>Redis 分布式鎖：為什麼我不再推薦 Redlock</title>
-      <link>https://yanchen184.github.io/ai-lecturer-bob/#/blog/redis-distributed-lock-cache</link>
-      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob/#/blog/redis-distributed-lock-cache</guid>
+      <link>https://yanchen184.github.io/ai-lecturer-bob//blog/redis-distributed-lock-cache</link>
+      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob//blog/redis-distributed-lock-cache</guid>
       <description><![CDATA[分布式鎖用 Redis 實作是常見選擇，但 Redlock 在生產環境有我親身踩過的問題。這篇寫為什麼多數場景 SETNX + fencing token 就夠用，以及什麼時候該換工具。]]></description>
       <content:encoded><![CDATA[
 ## 從一次超賣事故說起
@@ -290,8 +290,8 @@ public Product getProduct(String id) {
     </item>
     <item>
       <title>MySQL 效能優化：我把一個慢查詢從 8 秒調到 40ms 的過程</title>
-      <link>https://yanchen184.github.io/ai-lecturer-bob/#/blog/mysql-performance-optimization</link>
-      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob/#/blog/mysql-performance-optimization</guid>
+      <link>https://yanchen184.github.io/ai-lecturer-bob//blog/mysql-performance-optimization</link>
+      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob//blog/mysql-performance-optimization</guid>
       <description><![CDATA[一個訂單歷史查詢上線一年後慢到無法使用。這篇紀錄我如何用 EXPLAIN 一步步定位、為什麼「加索引」不總是有效、以及最後真正解決問題的方法。]]></description>
       <content:encoded><![CDATA[
 ## 背景
@@ -428,8 +428,8 @@ public void archiveOldPartitions() {
     </item>
     <item>
       <title>React + Spring Boot 全端專案：為什麼我最後把 service 層砍掉一半</title>
-      <link>https://yanchen184.github.io/ai-lecturer-bob/#/blog/fullstack-architecture-guide</link>
-      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob/#/blog/fullstack-architecture-guide</guid>
+      <link>https://yanchen184.github.io/ai-lecturer-bob//blog/fullstack-architecture-guide</link>
+      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob//blog/fullstack-architecture-guide</guid>
       <description><![CDATA[帶學生做全端專案時，我最常被問「業務邏輯該放哪層」。教了兩年後，我自己的 service 層反而越寫越薄。這篇寫我對分層的實際判斷。]]></description>
       <content:encoded><![CDATA[
 ## 標準分層是起點，不是終點
@@ -555,8 +555,8 @@ POST /orders/{id}/resend-invoice
     </item>
     <item>
       <title>Spring Boot 高併發：電商系統踩過的三個雷</title>
-      <link>https://yanchen184.github.io/ai-lecturer-bob/#/blog/springboot-high-concurrency</link>
-      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob/#/blog/springboot-high-concurrency</guid>
+      <link>https://yanchen184.github.io/ai-lecturer-bob//blog/springboot-high-concurrency</link>
+      <guid isPermaLink="true">https://yanchen184.github.io/ai-lecturer-bob//blog/springboot-high-concurrency</guid>
       <description><![CDATA[電商核心系統每日處理上萬筆 API 請求時，我把 Redis 快取、分布式鎖、資料庫優化該踩的雷都踩過一輪。這篇寫三個讓我花最多時間救回來的問題，以及最後的解法。]]></description>
       <content:encoded><![CDATA[
 ## 寫在前面

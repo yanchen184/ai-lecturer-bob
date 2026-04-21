@@ -388,7 +388,7 @@ const BlogPost = () => {
     return <NotFoundPage variant="inline" message={`找不到這篇文章：${slug ?? ''}`} />;
   }
 
-  const postUrl = `${SITE_URL}/#/blog/${post.slug}`;
+  const postUrl = `${SITE_URL}/blog/${post.slug}`;
   const metaTitle = `${post.title} — AI 講師陳彥彤YC`;
   const keywords = post.tags.join(', ');
 

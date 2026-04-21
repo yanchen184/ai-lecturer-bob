@@ -10,9 +10,8 @@
  * 執行方式（由 package.json prebuild 自動呼叫）：
  *   node --experimental-strip-types scripts/generate-sitemap.mjs
  *
- * 注意：本站使用 HashRouter，URL 為 https://.../#/blog/slug。
- * Google 對 hash fragment 索引支援有限，但保留 hash 版本仍比什麼都不給好；
- * 同時另外列出不含 hash 的 `#/blog` 主路徑，方便爬蟲跟著點。
+ * 本站改用 BrowserRouter，URL 為 https://.../blog/slug（真正 path）。
+ * Google / Bing / 各家爬蟲都能正常索引，搭配 public/404.html SPA hack。
  */
 
 import { writeFileSync, mkdirSync } from 'node:fs'
@@ -72,13 +71,13 @@ const main = async () => {
       priority: '1.0',
     },
     {
-      loc: `${SITE_URL}/#/blog`,
+      loc: `${SITE_URL}/blog`,
       lastmod: latestPostDate,
       changefreq: 'weekly',
       priority: '0.9',
     },
     ...posts.map((post) => ({
-      loc: `${SITE_URL}/#/blog/${post.slug}`,
+      loc: `${SITE_URL}/blog/${post.slug}`,
       lastmod: normalizeLastmod(post.updateDate || post.publishDate),
       changefreq: 'weekly',
       priority: '0.8',

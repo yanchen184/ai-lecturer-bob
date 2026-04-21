@@ -4,6 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- GitHub Pages SPA 404 還原：把 /?/blog/xxx 還原成 /blog/xxx
+         必須放在 main.tsx 之前，確保 BrowserRouter 讀到正確 path -->
+    <script>
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&');
+            })
+            .join('?');
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      })(window.location);
+    </script>
+
     <!-- Primary Meta Tags - SEO 核心標籤 -->
     <title>程式講師陳彥彤</title>
     <meta name="title" content="程式講師陳彥彤 | 資深後端工程師 | Spring Boot、React、全端開發教學" />
@@ -44,6 +65,20 @@
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Critical fonts for home page (swiss-modernism default theme) — render-blocking but small -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" />
+
+    <!-- Non-critical fonts (other themes, blog, admin) — async load, no render block -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;500&family=Courier+Prime:wght@400;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Courier+Prime:wght@400;700&display=swap" />
+    </noscript>
 
     <!-- JSON-LD Structured Data: Person -->
     <script type="application/ld+json">
@@ -193,7 +228,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "部落格",
-          "item": "https://yanchen184.github.io/ai-lecturer-bob/#/blog"
+          "item": "https://yanchen184.github.io/ai-lecturer-bob/blog"
         }
       ]
     }
@@ -206,7 +241,7 @@
       "@type": "Blog",
       "name": "程式講師陳彥彤的技術部落格",
       "description": "程式講師陳彥彤分享後端開發技術、Spring Boot 實戰、React 開發心得、系統架構設計經驗",
-      "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog",
+      "url": "https://yanchen184.github.io/ai-lecturer-bob/blog",
       "author": {
         "@type": "Person",
         "name": "陳彥彤",
@@ -227,7 +262,7 @@
           },
           "datePublished": "2024-01-15",
           "dateModified": "2024-03-01",
-          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/springboot-high-concurrency",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/blog/springboot-high-concurrency",
           "keywords": ["程式講師", "Spring Boot", "高併發", "Redis", "後端開發"]
         },
         {
@@ -239,7 +274,7 @@
             "name": "陳彥彤"
           },
           "datePublished": "2024-02-20",
-          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/fullstack-architecture-guide",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/blog/fullstack-architecture-guide",
           "keywords": ["程式講師", "React", "Spring Boot", "全端開發"]
         },
         {
@@ -251,7 +286,7 @@
             "name": "陳彥彤"
           },
           "datePublished": "2024-03-10",
-          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/mysql-performance-optimization",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/blog/mysql-performance-optimization",
           "keywords": ["程式講師", "MySQL", "效能優化", "資料庫"]
         },
         {
@@ -263,7 +298,7 @@
             "name": "陳彥彤"
           },
           "datePublished": "2024-04-05",
-          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/redis-distributed-lock-cache",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/blog/redis-distributed-lock-cache",
           "keywords": ["程式講師", "Redis", "分布式鎖", "快取", "高併發"]
         },
         {
@@ -275,7 +310,7 @@
             "name": "陳彥彤"
           },
           "datePublished": "2024-05-12",
-          "url": "https://yanchen184.github.io/ai-lecturer-bob/#/blog/event-driven-architecture",
+          "url": "https://yanchen184.github.io/ai-lecturer-bob/blog/event-driven-architecture",
           "keywords": ["程式講師", "事件驅動", "RabbitMQ", "系統架構"]
         }
       ]

@@ -1,15 +1,41 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import type { BlogPost } from '../data/blogPosts';
-import { useState, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useBlogPosts } from '../hooks/useBlogPosts';
 
 const SITE_URL = 'https://yanchen184.github.io/ai-lecturer-bob';
 
 const BlogList = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedTag, setSelectedTag] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  // 篩選狀態以 URL query 為 single source of truth，支援 /blog?cat=xxx&tag=yyy&q=zzz 深連結。
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get('cat') || 'all';
+  const selectedTag = searchParams.get('tag') || 'all';
+  const searchQuery = searchParams.get('q') || '';
+
+  /** 不可變地更新單一 query 參數，'all' 或空字串則移除。*/
+  const updateParam = useCallback(
+    (key: 'cat' | 'tag' | 'q', value: string) => {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          const isDefault = value === '' || value === 'all';
+          if (isDefault) next.delete(key);
+          else next.set(key, value);
+          return next;
+        },
+        { replace: true }
+      );
+    },
+    [setSearchParams]
+  );
+
+  const setSelectedCategory = useCallback(
+    (v: string) => updateParam('cat', v),
+    [updateParam]
+  );
+  const setSelectedTag = useCallback((v: string) => updateParam('tag', v), [updateParam]);
+  const setSearchQuery = useCallback((v: string) => updateParam('q', v), [updateParam]);
 
   const { posts, isLoading } = useBlogPosts();
 
@@ -47,11 +73,9 @@ const BlogList = () => {
   const hasActiveFilter =
     selectedCategory !== 'all' || selectedTag !== 'all' || searchQuery !== '';
 
-  const resetFilters = (): void => {
-    setSelectedCategory('all');
-    setSelectedTag('all');
-    setSearchQuery('');
-  };
+  const resetFilters = useCallback((): void => {
+    setSearchParams(new URLSearchParams(), { replace: true });
+  }, [setSearchParams]);
 
   const formatDate = (dateString: string): string => {
     return dateString.replaceAll('-', '/');
@@ -68,14 +92,14 @@ const BlogList = () => {
           name="description"
           content="後端工程師的技術筆記。Spring Boot、React、MySQL、Redis 實戰踩坑紀錄，不包裝、不美化，寫給實戰派看的。"
         />
-        <link rel="canonical" href={`${SITE_URL}/#/blog`} />
+        <link rel="canonical" href={`${SITE_URL}/blog`} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="部落格 — AI 講師陳彥彤YC" />
         <meta
           property="og:description"
           content="後端工程師的技術實戰筆記 · Spring Boot / React / MySQL / Redis"
         />
-        <meta property="og:url" content={`${SITE_URL}/#/blog`} />
+        <meta property="og:url" content={`${SITE_URL}/blog`} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="部落格 — AI 講師陳彥彤YC" />
         <meta

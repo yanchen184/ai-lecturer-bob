@@ -21,7 +21,7 @@ const __dirname = dirname(__filename)
 const projectRoot = resolve(__dirname, '..')
 
 const SITE_URL = 'https://yanchen184.github.io/ai-lecturer-bob'
-const BLOG_PATH = '#/blog'
+const BLOG_PATH = '/blog'
 const FEED_TITLE = '陳彥彤的技術部落格'
 const FEED_DESCRIPTION =
   '程式講師陳彥彤分享後端開發技術、Spring Boot 實戰、React 開發心得、系統架構設計經驗'

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA 404 轉址 hack（Rafrex 方案變體）
+      // 把 /ai-lecturer-bob/blog/xxx 壓成 query string /?/blog/xxx
+      // 然後由 index.html 裡的小段 script 還原回 history.replaceState
+      //
+      // segmentCount = 1 代表子路徑深度 1（yanchen184.github.io/ai-lecturer-bob/）
+      // 之後遷 Vercel 綁自己的網域，root 部署時把 404.html 刪掉即可
+      (function (l) {
+        var segmentCount = 1;
+        var l1 = l.pathname
+          .split('/')
+          .slice(0, 1 + segmentCount)
+          .join('/');
+        var rest = l.pathname.slice(l1.length);
+        l.replace(
+          l.protocol +
+            '//' +
+            l.hostname +
+            (l.port ? ':' + l.port : '') +
+            l1 +
+            '/?/' +
+            rest.slice(1).replace(/&/g, '~and~') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+        );
+      })(window.location);
+    </script>
+  </head>
+  <body></body>
+</html>
