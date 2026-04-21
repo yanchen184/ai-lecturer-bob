@@ -1,6 +1,6 @@
 /**
  * 部落格文章資料
- * 程式講師陳彥彤的專業文章 - SEO 優化內容
+ * 陳彥彤的技術筆記 — 實戰內容為主
  */
 
 export interface BlogPost {
@@ -22,345 +22,562 @@ export const blogPosts: BlogPost[] = [
   {
     id: '1',
     slug: 'springboot-high-concurrency',
-    title: 'Spring Boot 高併發系統設計實戰：程式講師的電商經驗分享',
-    excerpt: '分享在電商核心系統中處理高併發的實戰經驗，包含 Redis 快取策略、分布式鎖、資料庫優化等技術，系統每日處理上萬筆 API 請求。',
+    title: 'Spring Boot 高併發：電商系統踩過的三個雷',
+    excerpt: '電商核心系統每日處理上萬筆 API 請求時，我把 Redis 快取、分布式鎖、資料庫優化該踩的雷都踩過一輪。這篇寫三個讓我花最多時間救回來的問題，以及最後的解法。',
     content: `
-## 程式講師的實戰經驗
+## 寫在前面
 
-作為一名程式講師，我經常被問到：「如何設計一個能處理高併發的系統？」這篇文章將分享我在電商核心系統的實戰經驗。
+這篇不是教科書，是我在電商 WMS/MOX 線上救火的流水帳。以下三個問題都是 staging 過測試、上 production 才炸的。
 
-## 系統背景
+## 雷 #1：@Cacheable 在冷啟動瞬間把 DB 打爆
 
-在電商核心系統團隊工作期間，我負責智能倉儲系統(WMS)、訂單管理系統(MOX)的開發與維護。系統每日處理上萬筆 API 請求，平均延遲需維持在 200ms 以下。
+**情境**：促銷開始的那一秒，首頁商品頁 QPS 從 50 衝到 1500。我們的快取用 \`@Cacheable\`，TTL 設 10 分鐘。
 
-## 高併發解決方案
+**問題**：TTL 到期的那一瞬間，1500 個請求同時 miss cache，全部打進 DB。DB 直接 CPU 100%、連線池耗盡。
 
-### 1. Redis 快取策略
+**一開始的錯誤修法**：把 TTL 拉長到 1 小時。問題根本沒解，只是把爆炸時間往後延。
 
-作為程式講師，我在課程中特別強調快取設計的重要性：
+**最後的解法**：
 
 \`\`\`java
 @Service
 public class InventoryService {
-    @Cacheable(value = "inventory", key = "#skuId")
+    @Cacheable(
+        value = "inventory",
+        key = "#skuId",
+        // sync=true 讓同一個 key 的並發請求只有一個打 DB
+        sync = true
+    )
     public Inventory getInventory(String skuId) {
         return inventoryRepository.findBySkuId(skuId);
-    }
-
-    @CacheEvict(value = "inventory", key = "#skuId")
-    public void updateInventory(String skuId, int quantity) {
-        // 更新庫存邏輯
     }
 }
 \`\`\`
 
-透過這個策略，我們成功降低資料庫讀取壓力約 20%。
+\`sync = true\` 是關鍵。Spring Cache 會用 ConcurrentHashMap 鎖住同一個 key 的重複查詢，只讓第一個請求打 DB，其他等結果。這一行字，DB CPU 從 100% 降回 30%。
 
-### 2. 分布式鎖實作
+**但要注意**：\`sync = true\` 只對單一節點有效。多節點部署時，每個節點都會各打一次 DB。真的要跨節點去重，得上 Redis 的 \`SET NX\` 做分布式互斥，成本更高，一般不需要。
 
-在處理庫存扣減時，必須確保不會發生超賣問題：
+## 雷 #2：tryLock 後忘記檢查就直接扣庫存
+
+**情境**：庫存扣減用 Redisson 分布式鎖。上線一週後，對帳發現有 3 筆超賣。
+
+**問題**：第一版的程式碼長這樣：
 
 \`\`\`java
+// WRONG
 public boolean deductInventory(String skuId, int quantity) {
-    String lockKey = "lock:inventory:" + skuId;
-    RLock lock = redissonClient.getLock(lockKey);
-
+    RLock lock = redissonClient.getLock("lock:inventory:" + skuId);
     try {
         if (lock.tryLock(5, 10, TimeUnit.SECONDS)) {
-            // 執行庫存扣減
+            inventoryRepository.deduct(skuId, quantity);
             return true;
         }
     } finally {
-        lock.unlock();
+        lock.unlock(); // ← 這裡會噴 IllegalMonitorStateException
     }
     return false;
 }
 \`\`\`
 
-### 3. 資料庫優化
+兩個 bug：
+1. \`tryLock\` 失敗時（回傳 false），\`finally\` 還是會執行 \`unlock\`，噴 \`IllegalMonitorStateException\`
+2. 例外被吞掉，呼叫端收到 false 以為「沒鎖到」，**但其實庫存已經被另一個成功拿到鎖的請求扣走了**，結果又去走補償扣款邏輯 → 超賣
 
-程式講師在教學中必須強調的 MySQL 優化要點：
-- 合理設計 Index，避免全表掃描
-- 大表使用 Partition 策略
-- 定期執行 Housekeeping 清理歷史資料
+**修好的版本**：
 
-## 總結
+\`\`\`java
+public boolean deductInventory(String skuId, int quantity) {
+    RLock lock = redissonClient.getLock("lock:inventory:" + skuId);
+    boolean locked = false;
+    try {
+        locked = lock.tryLock(5, 10, TimeUnit.SECONDS);
+        if (!locked) {
+            throw new InventoryLockTimeoutException(skuId);
+        }
+        // 先檢查庫存，再扣 — 鎖的意義在這兩步之間
+        Inventory current = inventoryRepository.findBySkuId(skuId);
+        if (current.getQuantity() < quantity) {
+            throw new InsufficientStockException(skuId);
+        }
+        inventoryRepository.deduct(skuId, quantity);
+        return true;
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new InventoryLockTimeoutException(skuId);
+    } finally {
+        if (locked && lock.isHeldByCurrentThread()) {
+            lock.unlock();
+        }
+    }
+}
+\`\`\`
 
-身為程式講師，我深知理論與實戰的差距。這些經驗都來自真實的電商系統，希望能幫助正在學習後端開發的你。
+兩個重點：
+- **\`isHeldByCurrentThread()\` 一定要檢查**。leaseTime (10s) 到了但任務還沒跑完時，鎖已經被 Redisson 釋放，你這時候再 unlock 會噴例外
+- **鎖裡面一定要包「讀+寫」兩個動作**。只包 write 等於沒鎖
+
+## 雷 #3：MySQL index 加了卻沒被用到
+
+**情境**：訂單查詢頁慢查詢從 200ms 飆到 3 秒。
+
+一開始我加了索引：
+
+\`\`\`sql
+CREATE INDEX idx_orders_status ON orders(status);
+CREATE INDEX idx_orders_created_at ON orders(created_at);
+\`\`\`
+
+\`EXPLAIN\` 顯示：**還是 full table scan**。
+
+**原因**：我們的查詢是 \`WHERE status = 'PENDING' AND created_at > '2024-01-01'\`。MySQL 只會挑一個索引用，而且兩個單欄索引對這種組合查詢幫助很小。
+
+**改成複合索引後**：
+
+\`\`\`sql
+DROP INDEX idx_orders_status ON orders;
+DROP INDEX idx_orders_created_at ON orders;
+
+CREATE INDEX idx_orders_status_created
+  ON orders(status, created_at);
+\`\`\`
+
+查詢時間從 3 秒降到 80ms。
+
+**踩坑點**：複合索引的欄位順序很重要。\`(status, created_at)\` 和 \`(created_at, status)\` 效果完全不同。規則是**等值查詢在前，範圍查詢在後**。
+
+## 結語
+
+這三個雷的共通點：都是在**高併發實際發生**時才炸出來，本機和 staging 測試都過。救火完會發現，解法本身都不難，難的是在爆炸當下找得出根因。
+
+下次遇到類似情境可以先看：
+- 快取雪崩 → 先確認 \`sync = true\` 或加 mutex
+- 鎖詭異行為 → 確認 \`isHeldByCurrentThread\` 與 leaseTime
+- index 沒生效 → \`EXPLAIN\` 看走的是哪個 key，再調複合索引順序
     `,
     author: '陳彥彤',
     publishDate: '2024-01-15',
     updateDate: '2024-03-01',
     category: '後端開發',
-    tags: ['程式講師', 'Spring Boot', '高併發', 'Redis', '後端開發'],
+    tags: ['Spring Boot', '高併發', 'Redis', 'MySQL', '踩坑筆記'],
     readingTime: 8,
     featured: true,
   },
   {
     id: '2',
     slug: 'fullstack-architecture-guide',
-    title: 'React + Spring Boot 全端專案架構指南：程式講師的最佳實踐',
-    excerpt: '從系統設計到實作部署，完整的全端專案開發流程與最佳實踐。程式講師陳彥彤分享前後端分離架構的設計心得。',
+    title: 'React + Spring Boot 全端專案：為什麼我最後把 service 層砍掉一半',
+    excerpt: '帶學生做全端專案時，我最常被問「業務邏輯該放哪層」。教了兩年後，我自己的 service 層反而越寫越薄。這篇寫我對分層的實際判斷。',
     content: `
-## 為什麼選擇 React + Spring Boot？
+## 標準分層是起點，不是終點
 
-作為程式講師，我經常需要評估各種技術組合。React + Spring Boot 是目前最受企業歡迎的全端組合之一，原因如下：
-
-1. **Spring Boot** 提供完善的後端生態系統
-2. **React** 擁有最活躍的前端社群
-3. 前後端分離架構便於團隊協作
-
-## 專案架構設計
-
-### 後端架構（Spring Boot）
-
-程式講師推薦的標準專案結構：
+多數教學會告訴你 Spring Boot 專案要這樣分：
 
 \`\`\`
-src/
-├── controller/     # API 入口
-├── service/        # 業務邏輯
-├── repository/     # 資料存取
-├── entity/         # 資料實體
-├── dto/            # 資料傳輸物件
-└── config/         # 配置類別
+controller → service → repository → entity
 \`\`\`
 
-### 前端架構（React）
+這個結構對 90% 的 CRUD 沒問題。但實際做完幾個專案後，我發現**有些 service 方法根本不該存在**。
+
+## 什麼樣的 service 方法該砍
+
+看這個常見寫法：
+
+\`\`\`java
+// Controller
+@GetMapping("/users/{id}")
+public UserDto getUser(@PathVariable Long id) {
+    return userService.getUser(id);
+}
+
+// Service
+public UserDto getUser(Long id) {
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException());
+    return userMapper.toDto(user);
+}
+\`\`\`
+
+\`UserService.getUser\` 做了什麼？查 DB + 轉 DTO。**沒有任何業務邏輯**。這個 service 方法純粹是為了「分層要完整」而存在。
+
+我現在會這樣寫：
+
+\`\`\`java
+@GetMapping("/users/{id}")
+public UserDto getUser(@PathVariable Long id) {
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException());
+    return userMapper.toDto(user);
+}
+\`\`\`
+
+少一層、少一個 mock、少一堆 boilerplate。
+
+## 什麼時候 service 層真的有價值
+
+當你有**跨 repository 的 transaction** 或 **非 CRUD 的業務規則**：
+
+\`\`\`java
+@Service
+@Transactional
+public class OrderService {
+    // 這個方法值得存在：涉及三個 repository + 業務規則
+    public Order placeOrder(PlaceOrderCommand cmd) {
+        Inventory inv = inventoryRepository.lockAndGet(cmd.skuId());
+        if (inv.getQuantity() < cmd.quantity()) {
+            throw new InsufficientStockException();
+        }
+        inventoryRepository.deduct(cmd.skuId(), cmd.quantity());
+        Order order = orderRepository.save(Order.from(cmd));
+        paymentEventPublisher.publish(PaymentRequested.of(order));
+        return order;
+    }
+}
+\`\`\`
+
+## 前端那側我也砍了類似的東西
+
+React 這邊最常被硬湊出來的是**每個頁面都包一個 custom hook**：
+
+\`\`\`tsx
+// 砍掉這種
+function useUserPage() {
+    const [user, setUser] = useState();
+    useEffect(() => { fetchUser().then(setUser); }, []);
+    return { user };
+}
+\`\`\`
+
+如果這個 hook 只被一個頁面用、只做一次 fetch，直接寫在 component 裡更清楚。React Query / SWR 已經把 cache/dedup 處理好，custom hook 多半只是在重複包裝。
+
+## 判斷原則
+
+我現在的判斷很簡單：**這一層如果刪掉，會不會讓程式變難懂或重複？**
+- 會 → 保留
+- 不會 → 刪掉
+
+企業專案常見的過度分層（controller → facade → service → manager → repository → dao）大部分是歷史包袱，不是設計。新專案不需要複製這個結構。
+
+## API 設計：從「資源」還是「動作」開始
+
+RESTful 教科書說要以「資源」為核心：\`POST /orders\`、\`DELETE /orders/{id}\`。
+
+實際上有很多東西不是 CRUD：
+- 「確認訂單」是 PATCH 還是 POST？
+- 「重新寄送發票」放哪個 endpoint？
+
+我的做法：**不是 CRUD 的，老實用動詞**。
 
 \`\`\`
-src/
-├── components/     # 可重用元件
-├── pages/          # 頁面元件
-├── hooks/          # 自訂 Hooks
-├── services/       # API 呼叫
-└── utils/          # 工具函數
+POST /orders/{id}/confirm
+POST /orders/{id}/resend-invoice
 \`\`\`
 
-## API 設計規範
-
-程式講師在授課時強調的 RESTful 設計原則：
-
-- 使用正確的 HTTP 方法（GET, POST, PUT, DELETE）
-- 統一的錯誤處理格式
-- JWT 認證與授權機制
-
-## 部署策略
-
-使用 Docker + CI/CD 實現自動化部署：
-
-\`\`\`yaml
-# docker-compose.yml
-version: '3'
-services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "80:80"
-  backend:
-    build: ./backend
-    ports:
-      - "8080:8080"
-\`\`\`
+這樣比硬湊成 \`PATCH /orders/{id} { action: "confirm" }\` 清楚 100 倍。不 RESTful？那又怎樣。
 
 ## 結語
 
-全端開發需要同時掌握前後端技術，這正是程式講師課程設計的核心理念。歡迎參加我的全端專案實作班！
+分層和架構的價值在「讓複雜度可控」，不在「看起來很完整」。如果你的 service 層只是在做 \`return repository.find()\`，那它什麼都沒保護到。
+
+下次寫新方法前，先問自己：拿掉這一層會少掉什麼？少不掉就別加。
     `,
     author: '陳彥彤',
     publishDate: '2024-02-20',
     category: '全端開發',
-    tags: ['程式講師', 'React', 'Spring Boot', '全端開發', '系統架構'],
+    tags: ['React', 'Spring Boot', '架構設計', '分層', 'REST API'],
     readingTime: 10,
     featured: true,
   },
   {
     id: '3',
     slug: 'mysql-performance-optimization',
-    title: 'MySQL 效能優化實戰：Index、Partition 與 Housekeeping 經驗分享',
-    excerpt: '從電商系統實戰經驗分享 MySQL 效能優化技巧，包含索引設計、分區策略、查詢優化，讓資料庫效能提升 10 倍。',
+    title: 'MySQL 效能優化：我把一個慢查詢從 8 秒調到 40ms 的過程',
+    excerpt: '一個訂單歷史查詢上線一年後慢到無法使用。這篇紀錄我如何用 EXPLAIN 一步步定位、為什麼「加索引」不總是有效、以及最後真正解決問題的方法。',
     content: `
-## 程式講師的資料庫優化心得
+## 背景
 
-在多年的後端開發經驗中，我發現資料庫效能往往是系統瓶頸的主要來源。這篇文章分享我在電商系統中的實戰優化經驗。
+一張 \`order_logs\` 表，累積到 4200 萬筆。後台「查某個客戶過去一年的訂單紀錄」這個查詢，從原本 200ms 飆到 8 秒，客服抱怨到我們必須處理。
 
-## Index 設計原則
+## 第一步：EXPLAIN 看當下走的是什麼
 
-### 1. 選擇正確的欄位建立索引
-
-程式講師在教學中常強調的 Index 設計原則：
+原始查詢：
 
 \`\`\`sql
--- 良好的複合索引設計
-CREATE INDEX idx_order_status_date
-ON orders (status, created_at);
-
--- 查詢時充分利用索引
-SELECT * FROM orders
-WHERE status = 'PENDING'
-AND created_at > '2024-01-01';
+SELECT * FROM order_logs
+WHERE user_id = 12345
+  AND created_at > '2023-04-01'
+ORDER BY created_at DESC
+LIMIT 50;
 \`\`\`
 
-### 2. 避免 Index 失效的情況
+\`EXPLAIN\` 結果：
 
-- 對索引欄位使用函數
-- 使用 OR 連接非索引欄位
-- LIKE 以 % 開頭
+\`\`\`
+type: ALL
+rows: 42000000
+Extra: Using where; Using filesort
+\`\`\`
 
-## Partition 策略
+**全表掃 + filesort**。4200 萬筆資料過濾 + 排序，8 秒還算客氣。
 
-當單表資料量超過 1000 萬筆時，建議使用分區：
+## 第二步：加索引，但加錯了
+
+第一版修法（失敗）：
 
 \`\`\`sql
-CREATE TABLE orders (
-    id BIGINT,
-    created_at DATE,
-    ...
-) PARTITION BY RANGE (YEAR(created_at)) (
-    PARTITION p2023 VALUES LESS THAN (2024),
-    PARTITION p2024 VALUES LESS THAN (2025)
+CREATE INDEX idx_user_id ON order_logs(user_id);
+\`\`\`
+
+查詢時間：**3 秒**。
+
+看起來有進步，但還是不能接受。\`EXPLAIN\`：
+
+\`\`\`
+type: ref
+rows: 180000
+Extra: Using where; Using filesort
+\`\`\`
+
+索引用了、rows 從 4200 萬降到 18 萬，但還在 filesort。因為 ORDER BY \`created_at\` 沒被索引覆蓋，MySQL 撈 18 萬筆後還得全部排一次。
+
+## 第三步：複合索引 + 排序方向
+
+第二版修法：
+
+\`\`\`sql
+DROP INDEX idx_user_id ON order_logs;
+
+CREATE INDEX idx_user_created
+  ON order_logs(user_id, created_at DESC);
+\`\`\`
+
+查詢時間：**40ms**。
+
+\`EXPLAIN\`：
+
+\`\`\`
+type: ref
+rows: 50
+Extra: Using where
+\`\`\`
+
+filesort 消失了。關鍵是：
+- \`(user_id, created_at)\` 讓 MySQL 走到某個 user 後，\`created_at\` 已經是有序的
+- \`DESC\` 讓 ORDER BY 可以直接 backward scan，連反轉都不用
+
+**MySQL 8.0 才支援 descending index**。8.0 以前這招沒用，你只能改用「先 inner query 拿 50 筆 id，再 join 回原表」的寫法。
+
+## 第四步：不是每個慢查詢都該靠索引解
+
+一年後，同一張表又變慢了（60 億筆）。這次我沒加索引。
+
+看實際需求：**客服只查過去一年**。那就分區：
+
+\`\`\`sql
+ALTER TABLE order_logs
+PARTITION BY RANGE (TO_DAYS(created_at)) (
+    PARTITION p202301 VALUES LESS THAN (TO_DAYS('2023-02-01')),
+    PARTITION p202302 VALUES LESS THAN (TO_DAYS('2023-03-01')),
+    -- ...
+    PARTITION p_future VALUES LESS THAN MAXVALUE
 );
 \`\`\`
 
-## Housekeeping 策略
+分區後配合 partition pruning，查詢只掃特定月份的分區。加上前面那個複合索引，3 年舊資料的效能也維持在 50ms 內。
 
-定期清理歷史資料是維持效能的關鍵：
+再加上每月把 3 年以上的分區搬去冷儲存：
 
 \`\`\`java
-@Scheduled(cron = "0 0 2 * * ?")
-public void cleanupOldLogs() {
-    int deleted = logRepository.deleteByCreatedAtBefore(
-        LocalDateTime.now().minusMonths(3)
-    );
-    log.info("Cleaned up {} old logs", deleted);
+@Scheduled(cron = "0 0 3 1 * ?")
+public void archiveOldPartitions() {
+    LocalDate cutoff = LocalDate.now().minusYears(3);
+    List<String> partitions = getPartitionsOlderThan(cutoff);
+    for (String p : partitions) {
+        exportToColdStorage(p);
+        dropPartition(p);
+    }
 }
 \`\`\`
 
+## 踩過的雷
+
+- **\`LIKE '%keyword%'\` 永遠用不到索引**。這類需求改用全文索引或 ElasticSearch
+- **對索引欄位用函數**（\`WHERE DATE(created_at) = '2024-01-01'\`）會讓索引失效。改成 \`created_at >= '2024-01-01' AND created_at < '2024-01-02'\`
+- **OR 連接兩個不同欄位**往往索引失效。拆成 UNION 反而更快
+- **太多單欄索引**會拖慢寫入。每寫一筆要更新 N 個索引樹
+
 ## 結語
 
-資料庫優化是後端工程師的必備技能。作為程式講師，我會在課程中深入講解這些實戰技巧。
+慢查詢不是都靠「加索引」解決。我的判斷順序：
+1. \`EXPLAIN\` 看當下走什麼、rows 多少、有沒有 filesort
+2. 先確認 WHERE 能不能用到索引
+3. 再確認 ORDER BY 能不能被索引覆蓋
+4. 資料量超過 1000 萬考慮分區
+5. 超過 5000 萬考慮冷熱分離
+
+遇到看起來無解的慢查詢，通常是跳過了第 1 步就想直接修。
     `,
     author: '陳彥彤',
     publishDate: '2024-03-10',
     category: '資料庫',
-    tags: ['程式講師', 'MySQL', '效能優化', '資料庫', 'Index'],
-    readingTime: 7,
+    tags: ['MySQL', '效能優化', 'Index', 'Partition', '踩坑筆記'],
+    readingTime: 9,
     featured: false,
   },
   {
     id: '4',
     slug: 'redis-distributed-lock-cache',
-    title: 'Redis 分布式鎖與快取策略設計：避免超賣問題的實戰指南',
-    excerpt: '深入解析 Redis 在高併發系統中的應用，包含分布式鎖實作、快取穿透防護、樂觀鎖機制。程式講師的電商系統實戰經驗。',
+    title: 'Redis 分布式鎖：為什麼我不再推薦 Redlock',
+    excerpt: '分布式鎖用 Redis 實作是常見選擇，但 Redlock 在生產環境有我親身踩過的問題。這篇寫為什麼多數場景 SETNX + fencing token 就夠用，以及什麼時候該換工具。',
     content: `
-## 為什麼需要分布式鎖？
+## 從一次超賣事故說起
 
-在分散式系統中，多個服務實例可能同時操作相同資源。作為程式講師，我以電商庫存系統為例說明：
+電商庫存系統用 Redisson 的 \`RLock\`（底層是 Redlock 變體）。某次 Redis 主從切換的 5 秒空窗期，同一個 SKU 被扣了兩次庫存。
 
-當兩個使用者同時購買最後一件商品，如果沒有適當的鎖機制，就會發生超賣。
+事後復盤：Redlock 在網路分區或主從延遲時**本質上無法保證互斥**。Martin Kleppmann 2016 的那篇批評不是空談。
 
-## Redis 分布式鎖實作
+這篇寫我現在的實際做法。
 
-### 基本實作
+## 多數場景 SETNX 就夠
 
-\`\`\`java
-public boolean acquireLock(String key, String value, long expireTime) {
-    Boolean result = redisTemplate.opsForValue()
-        .setIfAbsent(key, value, expireTime, TimeUnit.SECONDS);
-    return Boolean.TRUE.equals(result);
-}
+**先問一個問題**：你真的需要分布式鎖嗎？
+
+很多「分布式鎖問題」其實是「並發更新問題」。如果資料庫支援，用 \`UPDATE ... WHERE version = ?\` 的樂觀鎖更可靠：
+
+\`\`\`sql
+UPDATE inventory
+SET quantity = quantity - 1, version = version + 1
+WHERE sku_id = ? AND version = ? AND quantity >= 1;
 \`\`\`
 
-### 使用 Redisson 實作
+影響筆數為 0 → 被別人搶先 → 重試或回傳錯誤。沒有鎖、沒有超時、沒有主從切換風險。
 
-程式講師推薦使用 Redisson 處理複雜場景：
+## 真的需要鎖時的最小實作
 
 \`\`\`java
-@Service
-public class InventoryService {
-    @Autowired
-    private RedissonClient redissonClient;
+public class SimpleRedisLock {
+    private final StringRedisTemplate redis;
 
-    public boolean deductStock(String skuId, int quantity) {
-        RLock lock = redissonClient.getLock("lock:stock:" + skuId);
-        try {
-            if (lock.tryLock(3, 10, TimeUnit.SECONDS)) {
-                // 檢查庫存 -> 扣減庫存
-                return doDeduct(skuId, quantity);
-            }
-        } finally {
-            if (lock.isHeldByCurrentThread()) {
-                lock.unlock();
-            }
-        }
-        return false;
+    public String acquire(String key, Duration ttl) {
+        String token = UUID.randomUUID().toString();
+        Boolean ok = redis.opsForValue()
+            .setIfAbsent("lock:" + key, token, ttl);
+        return Boolean.TRUE.equals(ok) ? token : null;
+    }
+
+    public boolean release(String key, String token) {
+        // Lua script: 只有持有者能釋放
+        String script =
+            "if redis.call('get', KEYS[1]) == ARGV[1] then " +
+            "  return redis.call('del', KEYS[1]) " +
+            "else return 0 end";
+        Long result = redis.execute(
+            new DefaultRedisScript<>(script, Long.class),
+            List.of("lock:" + key),
+            token
+        );
+        return Long.valueOf(1).equals(result);
     }
 }
 \`\`\`
 
-## 快取策略設計
+三個重點：
+1. **token 隨機**，避免誤釋放別人的鎖
+2. **釋放用 Lua script**，保證「比對 + 刪除」原子性
+3. **必須設 TTL**，持有者掛了鎖會自動過期
 
-### 快取穿透防護
+## Fencing token：真正的保險
+
+即使 Redis 給你「你拿到鎖了」，你還是可能因為 GC pause、網路延遲，讓另一個請求也認為自己拿到鎖。真正的保護是 **fencing token**：
+
+\`\`\`java
+// 每次拿鎖附帶一個單調遞增的 token
+long fenceToken = redis.opsForValue()
+    .increment("fence:" + key);
+
+// 寫入目標系統時帶上 token
+inventoryRepository.deductWithFence(skuId, quantity, fenceToken);
+
+// 目標系統檢查：如果收到比已處理更小的 token，拒絕
+// UPDATE inventory SET ..., last_fence = ?
+// WHERE sku_id = ? AND last_fence < ?
+\`\`\`
+
+這樣即使兩個請求「都以為自己有鎖」，只有 token 較大的那一個會成功寫入。
+
+## 什麼時候該換工具
+
+如果你的互斥需求需要**強一致**（金融、庫存、訂位），Redis 不是正確選擇。改用：
+- **ZooKeeper / etcd**：基於共識演算法，主從切換時仍保證互斥
+- **資料庫行鎖**：\`SELECT ... FOR UPDATE\`，強一致但吞吐較差
+- **樂觀鎖**：如上面那個 UPDATE WHERE version
+
+## 快取穿透防護
+
+順帶提一下，很多「快取+鎖」的寫法其實是在解快取穿透：
 
 \`\`\`java
 public Product getProduct(String id) {
-    // 先查快取
     Product cached = cacheService.get("product:" + id);
-    if (cached != null) return cached;
+    if (cached != null) {
+        return cached == NULL_MARKER ? null : cached;
+    }
 
-    // 查資料庫
     Product product = productRepository.findById(id);
-
-    // 空值也快取（防穿透）
-    cacheService.set("product:" + id,
-        product != null ? product : EMPTY_PRODUCT,
-        product != null ? 3600 : 60);
-
+    // 空值用短 TTL 快取，防止惡意查不存在 ID 打爆 DB
+    cacheService.set(
+        "product:" + id,
+        product != null ? product : NULL_MARKER,
+        product != null ? Duration.ofHours(1) : Duration.ofMinutes(1)
+    );
     return product;
 }
 \`\`\`
 
+更嚴重的情境（知名商品被搶光瞬間）還要加 \`@Cacheable(sync = true)\` 或 BloomFilter。
+
 ## 結語
 
-Redis 是後端開發必備的技能之一。作為程式講師，我會在課程中詳細講解這些進階應用。
+分布式鎖是最容易誤用的工具之一。我現在的順序是：
+1. 能用樂觀鎖（DB UPDATE WHERE version）就用
+2. 真需要鎖，先用 SETNX + Lua release
+3. 強一致場景直接換 ZooKeeper 或 DB 行鎖
+4. Redlock / RLock 我現在只用在「沒那麼致命、只是想省 DB 壓力」的場景
+
+下次看到「Redis 分布式鎖」教學，先問：這個情境真的需要鎖嗎？
     `,
     author: '陳彥彤',
     publishDate: '2024-04-05',
     category: '後端開發',
-    tags: ['程式講師', 'Redis', '分布式鎖', '快取', '高併發'],
-    readingTime: 9,
+    tags: ['Redis', '分布式鎖', '樂觀鎖', '高併發', '踩坑筆記'],
+    readingTime: 11,
     featured: false,
   },
   {
     id: '5',
     slug: 'event-driven-architecture',
-    title: '從電商系統學習事件驅動架構：RabbitMQ 實戰經驗分享',
-    excerpt: '以電商核心系統為例，分享事件驅動架構的設計原則與 RabbitMQ 實戰經驗。程式講師帶你理解現代微服務架構。',
+    title: '事件驅動架構：我們為什麼從 RabbitMQ 換到 Kafka，又換回來',
+    excerpt: '電商核心系統用過 RabbitMQ、換到 Kafka、再換回 RabbitMQ。每次都有好理由。這篇寫三次選擇背後的真實原因，以及「訊息佇列」這個詞掩蓋了多少不同的使用情境。',
     content: `
-## 什麼是事件驅動架構？
+## 前情提要
 
-作為程式講師，我經常用電商系統來解釋事件驅動架構的概念。
+2022 年底：我們用 RabbitMQ 處理訂單事件。
+2023 年中：換成 Kafka。
+2023 年底：部分流量又搬回 RabbitMQ。
 
-當使用者完成訂單後，系統需要：
-1. 更新庫存
-2. 發送確認郵件
-3. 通知物流系統
-4. 更新數據報表
+每次決策當下都有充分理由。這篇寫為什麼會這樣繞。
 
-傳統同步呼叫會造成效能瓶頸，而事件驅動架構可以完美解決這個問題。
+## 第一次：為什麼用 RabbitMQ
 
-## RabbitMQ 基礎
-
-### 生產者
+典型訂單流程：
 
 \`\`\`java
 @Service
 public class OrderEventPublisher {
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     public void publishOrderCreated(Order order) {
-        OrderCreatedEvent event = new OrderCreatedEvent(order);
+        OrderCreatedEvent event = OrderCreatedEvent.from(order);
         rabbitTemplate.convertAndSend(
             "order.exchange",
             "order.created",
@@ -368,47 +585,114 @@ public class OrderEventPublisher {
         );
     }
 }
-\`\`\`
 
-### 消費者
-
-\`\`\`java
 @Component
 public class InventoryEventHandler {
     @RabbitListener(queues = "inventory.queue")
-    public void handleOrderCreated(OrderCreatedEvent event) {
-        // 扣減庫存邏輯
+    public void onOrderCreated(OrderCreatedEvent event) {
         inventoryService.deduct(event.getSkuId(), event.getQuantity());
     }
 }
 \`\`\`
 
-## 設計原則
+選它的理由很實際：
+- 團隊有人熟、上線快
+- Spring AMQP 整合成熟
+- 每秒幾百筆訊息完全夠用
 
-程式講師在教學中強調的事件驅動設計原則：
+這個階段一切都好。
 
-1. **事件不可變** - 一旦發布就不應修改
-2. **冪等處理** - 消費者需能處理重複事件
-3. **事件版本控制** - 方便向後相容
-4. **監控與追蹤** - 完善的日誌記錄
+## 第二次：為什麼改 Kafka
 
-## 實際應用場景
+2023 年中公司決定要做**即時推薦**和**行為分析**。新需求：
 
-在電商系統中，我們使用事件驅動處理：
-- 訂單狀態變更
-- 庫存同步
-- 價格更新通知
-- 使用者行為追蹤
+- 所有使用者行為（點擊、瀏覽、加購物車）都要寫成事件
+- QPS 從 500 跳到 15000
+- 資料分析團隊要能 replay 過去 30 天的事件
+
+這三點中：
+- **高吞吐**：RabbitMQ 單機幾萬 QPS 勉強夠，但擴展靠複雜的 federation / shovel
+- **事件重播**：RabbitMQ 訊息消費完就沒了，要另外存 snapshot
+- **消費者獨立進度**：推薦系統和庫存系統要能獨立 offset，RabbitMQ 得開多個 queue 各 bind
+
+Kafka 這三個是天生支援的。於是整個訂單流程搬過去。
+
+## 第三次：為什麼搬回來
+
+半年後發現幾個問題只在 Kafka 會遇到：
+
+### 問題 1：低頻訊息的延遲很痛
+
+對帳任務每天晚上跑一次、發一個訊息。Kafka consumer poll 的間隔讓這個訊息**平均延遲 2 分鐘**才被處理。RabbitMQ 是推模式，延遲不到 100ms。
+
+### 問題 2：單一訊息優先處理做不到
+
+「VIP 客戶下單要優先處理」這類需求，RabbitMQ 用 priority queue 兩行設定搞定。Kafka 沒有原生 priority，得自己分 topic + consumer 輪詢，複雜很多。
+
+### 問題 3：訊息 schema 變更痛苦
+
+Kafka 一個 topic 的訊息結構一旦上線就很難改。要加欄位得上 Schema Registry（Confluent/Apicurio）。RabbitMQ 因為訊息不持久、消費完就沒了，schema 變更影響只在「當下還沒處理完的訊息」。
+
+## 最後的選擇：兩個都用
+
+看使用情境分：
+
+| 場景 | 用哪個 | 理由 |
+|---|---|---|
+| 訂單/支付/庫存事件 | RabbitMQ | 低延遲、可優先、量不大 |
+| 使用者行為追蹤 | Kafka | 高吞吐、需 replay |
+| 資料湖 ETL | Kafka | 持久化 + 多消費者獨立 offset |
+| 跨服務命令 | RabbitMQ | RPC-like 場景延遲敏感 |
+
+## 事件驅動要注意的四件事
+
+不管用哪個工具：
+
+**1. 事件設計不是 DTO 搬家**
+
+錯誤：\`OrderUpdatedEvent { fullOrderObject }\`
+正確：\`OrderShipped { orderId, shippedAt, trackingNo }\`
+
+事件應該描述「發生什麼」，不是「訂單當前完整狀態」。
+
+**2. 冪等性必須在消費者實作**
+
+\`\`\`java
+@RabbitListener(queues = "inventory.queue")
+public void onOrderCreated(OrderCreatedEvent event) {
+    // 先檢查這個 event 是否處理過
+    if (processedEventRepository.exists(event.getEventId())) {
+        return;
+    }
+    inventoryService.deduct(event.getSkuId(), event.getQuantity());
+    processedEventRepository.save(event.getEventId());
+}
+\`\`\`
+
+訊息重送（broker 重啟、consumer 重連）是常態。沒做冪等等於埋地雷。
+
+**3. 死信佇列一定要配**
+
+處理失敗的訊息不能無限重試。設定 DLX (dead letter exchange)，失敗 N 次後送到 DLQ 人工處理。
+
+**4. 追蹤 ID 要貫穿**
+
+每個事件帶一個 \`traceId\`，消費端 log 時也帶上。出事時才查得到事件從哪裡發、被誰消費。
 
 ## 結語
 
-事件驅動架構是現代分散式系統的核心概念。作為程式講師，我會在進階課程中深入講解這些架構設計。
+「要不要上訊息佇列？」是很多團隊問錯的問題。真正該問的是：
+- 我需要的是**解耦**還是**非同步**？
+- 量是 QPS 還是 events/day？
+- 訊息失敗能容忍延遲多久？
+
+答完這三題再選工具。我們繞一圈換回來不是壞事——踩過才會知道自己的場景實際長什麼樣。
     `,
     author: '陳彥彤',
     publishDate: '2024-05-12',
     category: '系統架構',
-    tags: ['程式講師', '事件驅動', 'RabbitMQ', '系統架構', '微服務'],
-    readingTime: 8,
+    tags: ['事件驅動', 'RabbitMQ', 'Kafka', '架構決策', '微服務'],
+    readingTime: 11,
     featured: true,
   },
 ];

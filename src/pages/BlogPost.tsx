@@ -69,7 +69,22 @@ const BlogPost = () => {
       )
       .map((s) => s.post);
 
-    return [...tagMatched, ...fillers].slice(0, 3);
+    const combined = [...tagMatched, ...fillers];
+    if (combined.length >= 3) {
+      return combined.slice(0, 3);
+    }
+
+    // Final fallback: fill up to 3 with latest posts that aren't already listed.
+    const latestFillers = scored
+      .filter((s) => !combined.some((p) => p.id === s.post.id))
+      .map((s) => s.post)
+      .sort(
+        (a, b) =>
+          new Date(b.publishDate).getTime() -
+          new Date(a.publishDate).getTime()
+      );
+
+    return [...combined, ...latestFillers].slice(0, 3);
   }, [post, posts]);
 
   // Parse TOC (## headings only) from raw content
@@ -430,7 +445,7 @@ const BlogPost = () => {
           )}
 
           {/* Article Content */}
-          <article className="pb-16">
+          <article className="pb-16 min-h-[60vh]">
             <div
               className="max-w-none text-base leading-loose"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
