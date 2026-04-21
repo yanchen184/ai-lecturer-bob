@@ -1,3 +1,6 @@
+# AI 講師陳彥彤YC 官方網站
+# https://yanchen184.github.io/ai-lecturer-bob/
+
 User-agent: *
 Allow: /
 Disallow: /ai-lecturer-bob/admin

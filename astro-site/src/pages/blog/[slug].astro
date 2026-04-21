@@ -6,6 +6,7 @@
 import RootLayout from '../../layouts/RootLayout.astro';
 import NavbarNeub from '../../components/NavbarNeub.astro';
 import FooterNeub from '../../components/FooterNeub.astro';
+import BlogStyleSwitcher from '../../components/BlogStyleSwitcher.tsx';
 import { getAllPublishedPosts, type BlogPost } from '../../lib/firestore';
 import { renderMarkdown } from '../../lib/markdown';
 import { withBase } from '../../lib/url';
@@ -114,17 +115,22 @@ const breadcrumbSchema = {
   <NavbarNeub />
 
   <main class="font-sans text-[#0a0a0a]">
-    <!-- Breadcrumb -->
+    <!-- Breadcrumb + Style Switcher -->
     <nav
       class="px-6 md:px-10 py-3 border-b-2 border-black text-xs uppercase tracking-widest font-mono"
       aria-label="breadcrumb"
     >
-      <div class="max-w-5xl mx-auto flex items-center gap-2 opacity-70">
-        <a href={withBase('/')} class="hover:bg-[#ffff00] px-1">home</a>
-        <span>/</span>
-        <a href={withBase('/blog')} class="hover:bg-[#ffff00] px-1">blog</a>
-        <span>/</span>
-        <span class="font-black opacity-100">{post.title}</span>
+      <div class="max-w-5xl mx-auto flex items-center gap-3 flex-wrap">
+        <div class="flex items-center gap-2 opacity-70 min-w-0">
+          <a href={withBase('/')} class="hover:bg-[#ffff00] px-1">home</a>
+          <span>/</span>
+          <a href={withBase('/blog')} class="hover:bg-[#ffff00] px-1">blog</a>
+          <span>/</span>
+          <span class="font-black opacity-100 truncate max-w-[45vw]">{post.title}</span>
+        </div>
+        <div class="ml-auto">
+          <BlogStyleSwitcher client:load defaultStyle={post.defaultStyle ?? 'neub'} />
+        </div>
       </div>
     </nav>
 
@@ -200,7 +206,7 @@ const breadcrumbSchema = {
           )
         }
 
-        <article class="blog-prose" set:html={html} />
+        <article data-blog-prose class="blog-prose" set:html={html} />
       </div>
     </div>
 
