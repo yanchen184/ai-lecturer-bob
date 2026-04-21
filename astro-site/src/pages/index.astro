@@ -8,6 +8,7 @@ import RootLayout from '../layouts/RootLayout.astro';
 import NavbarNeub from '../components/NavbarNeub.astro';
 import FooterNeub from '../components/FooterNeub.astro';
 import { getAllPublishedPosts } from '../lib/firestore';
+import { withBase } from '../lib/url';
 
 const posts = await getAllPublishedPosts();
 const latest = posts.slice(0, 3);
@@ -41,7 +42,7 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
 
         <div class="mt-8 flex flex-wrap gap-3">
           <a
-            href="/blog"
+            href={withBase('/blog')}
             class="px-5 py-2.5 bg-black text-white text-sm uppercase tracking-widest hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors"
             >部落格 →</a
           >
@@ -64,7 +65,7 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
                 /// LATEST
               </h2>
               <a
-                href="/blog"
+                href={withBase('/blog')}
                 class="text-xs uppercase tracking-widest underline hover:bg-[var(--color-neub-yellow)]"
                 >all posts →</a
               >
@@ -72,7 +73,7 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
             <div class="grid gap-0 md:grid-cols-3 border-t-2 border-black">
               {latest.map((p, i) => (
                 <a
-                  href={`/blog/${p.slug}`}
+                  href={withBase(`/blog/${p.slug}`)}
                   class:list={[
                     'block p-6 border-b-2 border-black hover:bg-[var(--color-neub-yellow)] transition-colors',
                     i < 2 ? 'md:border-r-2' : '',

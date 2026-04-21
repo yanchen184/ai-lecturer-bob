@@ -36,9 +36,16 @@ const {
 } = Astro.props;
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
-const path = canonical ?? Astro.url.pathname;
-const canonicalUrl = `${siteUrl}${path}`;
-const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+// base 會是 `/ai-lecturer-bob`（project page）或 ''（user page / 自訂網域）
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// 把相對路徑 prepend base；絕對 URL（http/https）不動
+const withBase = (p: string): string =>
+  /^https?:\/\//.test(p) ? p : `${base}${p.startsWith('/') ? '' : '/'}${p}`;
+
+const pathInput = canonical ?? (Astro.url.pathname.replace(base, '') || '/');
+const canonicalUrl = `${siteUrl}${withBase(pathInput)}`;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${withBase(ogImage)}`;
+const rssUrl = `${siteUrl}${withBase('/rss.xml')}`;
 
 const personSchema = {
   '@context': 'https://schema.org',
@@ -46,7 +53,7 @@ const personSchema = {
   name: '陳彥彤 Bob Chen',
   alternateName: '陳彥彤YC',
   jobTitle: 'AI 講師 · 資深後端工程師',
-  url: siteUrl,
+  url: `${siteUrl}${withBase('/')}`,
   sameAs: ['https://github.com/yanchen184'],
   knowsAbout: ['Spring Boot', 'React', 'MySQL', 'Redis', 'AI'],
 };
@@ -82,8 +89,8 @@ const allJsonLd = Array.isArray(jsonLd)
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="icon" href={withBase('/favicon.ico')} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -96,7 +103,7 @@ const allJsonLd = Array.isArray(jsonLd)
       rel="alternate"
       type="application/rss+xml"
       title="AI 講師陳彥彤YC — 部落格"
-      href={`${siteUrl}/rss.xml`}
+      href={rssUrl}
     />
 
     {

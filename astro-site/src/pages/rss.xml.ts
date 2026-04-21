@@ -5,6 +5,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getAllPublishedPosts } from '../lib/firestore';
+import { withBase } from '../lib/url';
 
 export async function GET(context: APIContext): Promise<Response> {
   const posts = await getAllPublishedPosts();
@@ -18,7 +19,7 @@ export async function GET(context: APIContext): Promise<Response> {
     items: posts.map((post) => ({
       title: post.title,
       description: post.excerpt,
-      link: `/blog/${post.slug}`,
+      link: withBase(`/blog/${post.slug}`),
       pubDate: new Date(post.publishDate),
       categories: [post.category, ...post.tags],
       author: post.author,

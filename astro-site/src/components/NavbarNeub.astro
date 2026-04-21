@@ -2,12 +2,17 @@
 /**
  * Neub 風格 Navbar（靜態，給 blog 頁面用）。
  * - 無 JS、純靜態 HTML，SSR 友善
- * - currentPath 用於高亮 active link
+ * - currentPath 用於高亮 active link（以去掉 base 的乾淨 path 比對）
  */
+import { withBase, base } from '../lib/url';
+
 interface Props {
   currentPath?: string;
 }
-const { currentPath = Astro.url.pathname } = Astro.props;
+const rawPath = Astro.props.currentPath ?? Astro.url.pathname;
+const currentPath = rawPath.startsWith(base)
+  ? rawPath.slice(base.length) || '/'
+  : rawPath;
 
 const navItems = [
   { label: '首頁', href: '/' },
@@ -24,7 +29,7 @@ const isActive = (href: string) =>
 >
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
     <a
-      href="/"
+      href={withBase('/')}
       class="flex items-center gap-2 font-black uppercase tracking-tight hover:bg-[var(--color-neub-yellow)] px-2 py-1 transition-colors"
       aria-label="回到首頁"
     >
@@ -39,7 +44,7 @@ const isActive = (href: string) =>
       {
         navItems.map((item) => (
           <a
-            href={item.href}
+            href={withBase(item.href)}
             class:list={[
               'px-3 py-1.5 uppercase tracking-widest border-2 transition-colors',
               isActive(item.href)

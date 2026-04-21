@@ -1,5 +1,6 @@
 ---
 /** Neub 風格 Footer（靜態）。 */
+import { withBase } from '../lib/url';
 const year = new Date().getFullYear();
 ---
 
@@ -16,10 +17,10 @@ const year = new Date().getFullYear();
     <div>
       <div class="text-xs uppercase tracking-widest opacity-60 mb-3">// navigate</div>
       <ul class="space-y-1.5 text-sm">
-        <li><a href="/" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ 首頁</a></li>
-        <li><a href="/blog" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ 部落格</a></li>
-        <li><a href="/rss.xml" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ RSS</a></li>
-        <li><a href="/sitemap-index.xml" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ Sitemap</a></li>
+        <li><a href={withBase('/')} class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ 首頁</a></li>
+        <li><a href={withBase('/blog')} class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ 部落格</a></li>
+        <li><a href={withBase('/rss.xml')} class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ RSS</a></li>
+        <li><a href={withBase('/sitemap-index.xml')} class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ Sitemap</a></li>
       </ul>
     </div>
 

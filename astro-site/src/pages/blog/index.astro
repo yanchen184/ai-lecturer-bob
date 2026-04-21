@@ -10,6 +10,7 @@ import NavbarNeub from '../../components/NavbarNeub.astro';
 import FooterNeub from '../../components/FooterNeub.astro';
 import BlogFilters from '../../components/BlogFilters.tsx';
 import { getAllPublishedPosts } from '../../lib/firestore';
+import { withBase } from '../../lib/url';
 
 const posts = await getAllPublishedPosts();
 
@@ -19,16 +20,19 @@ const featured = posts.filter((p) => p.featured);
 
 const formatDate = (d: string) => d.replaceAll('-', '/');
 
+const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const absoluteUrl = (p: string) => `${siteOrigin}${withBase(p)}`;
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
   name: 'AI 講師陳彥彤YC — 部落格',
   description: '後端工程師的技術實戰筆記',
-  url: `${Astro.site}blog`,
+  url: absoluteUrl('/blog'),
   blogPost: posts.slice(0, 10).map((p) => ({
     '@type': 'BlogPosting',
     headline: p.title,
-    url: `${Astro.site}blog/${p.slug}`,
+    url: absoluteUrl(`/blog/${p.slug}`),
     datePublished: p.publishDate,
     author: { '@type': 'Person', name: p.author },
   })),
@@ -101,7 +105,7 @@ const jsonLd = {
                   </div>
                   <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
                     <a
-                      href={`/blog/${post.slug}`}
+                      href={withBase(`/blog/${post.slug}`)}
                       class="hover:bg-[#ffff00] transition-colors"
                     >
                       {post.title}
@@ -167,7 +171,7 @@ const jsonLd = {
                 </div>
 
                 <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
-                  <a href={`/blog/${post.slug}`}>{post.title}</a>
+                  <a href={withBase(`/blog/${post.slug}`)}>{post.title}</a>
                 </h3>
 
                 <p class="text-sm leading-relaxed line-clamp-2 mb-4 opacity-80">
@@ -183,7 +187,7 @@ const jsonLd = {
                     <span>{post.readingTime}min read</span>
                   </div>
                   <a
-                    href={`/blog/${post.slug}`}
+                    href={withBase(`/blog/${post.slug}`)}
                     class="uppercase tracking-widest font-black hover:underline"
                   >
                     read →

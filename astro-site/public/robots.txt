@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /admin
+Disallow: /ai-lecturer-bob/admin
 
-Sitemap: https://ai-lecturer-bob.vercel.app/sitemap-index.xml
+Sitemap: https://yanchen184.github.io/ai-lecturer-bob/sitemap-index.xml
