@@ -1,84 +1,56 @@
-# Task Plan — 部落格 + 個人形象網站結合體優化
+# 遷移 Astro + SEO 完整化計畫
 
 ## 目標
-將 ai-lecturer-bob 從「多主題展示網站（附帶部落格）」進化為「以部落格為內容核心的個人形象網站」，讓每篇文章都能有效引流、展現專業、帶動課程諮詢。
+把現有 Vite+React SPA 遷移到 Astro SSG，每篇部落格文章 build 時產生真實 HTML，
+部署到 Vercel，讓 Google / Bing / LINE 都能正確索引和抓 OG。
 
-## 核心策略
-- **一個網站** — 不拆分，blog SEO 流量直接導到課程頁
-- **內容驅動** — 部落格是主要入口，個人形象是轉換頁
-- **低維護成本** — 發文要簡單，不需要懂程式
+## 階段
 
----
+### Phase 1 — 治標（GitHub Pages 版先修好）
+- [x] HashRouter → BrowserRouter（保留 /ai-lecturer-bob/ basename）
+- [x] public/404.html SPA redirect hack
+- [x] index.html 加回還原 script
+- [x] sitemap.xml / rss.xml / JSON-LD 移除所有 #/
 
-## 現況問題清單
+### Phase 2 — 治本（Astro 遷移，平行開發）
+- [x] 新建 Astro 專案（astro-site/）
+- [x] Tailwind v4 + 字型 + global CSS 搬過去
+- [x] Layout：RootLayout（含 SEO meta / OG / Person JSON-LD）
+- [x] React 島嶼：BlogFilters（搜尋 / 分類 / 標籤篩選）
+- [x] Firestore Client SDK build-time fetch + staticPosts fallback
+- [x] pages/index.astro（極簡首頁，LATEST 3 篇）
+- [x] pages/blog/index.astro（列表頁，SSR HTML + 客戶端篩選島嶼）
+- [x] pages/blog/[slug].astro（單篇 SSG，TOC + 相關文章）
+- [x] @astrojs/sitemap 自動產生
+- [x] @astrojs/rss 自動產生（/rss.xml）
+- [x] 每篇 JSON-LD BlogPosting + BreadcrumbList
+- [ ] 五個主題頁（/style/ai-native 等）— 後續 commit
+- [ ] Admin 頁（client:only 島嶼）— 後續 commit
+- [ ] BlogStyleSwitcher Anti 風格切換 — 後續 commit
+- [ ] 每篇文章動態 OG image（@vercel/og）— Phase 3 後做
 
-| 問題 | 影響 | 優先級 |
-|------|------|--------|
-| 文章寫死在 blogPosts.ts，每次發文要改 code | 維護困難 | 🔴 高 |
-| Blog 頁面樣式和主網站風格不一致（用 default layout） | 品牌割裂 | 🟡 中 |
-| 沒有文章搜尋功能 | 讀者找不到內容 | 🟡 中 |
-| 標籤點了沒反應 | UX 差 | 🟡 中 |
-| Ko-fi 連結未填入 | 樂捐功能空殼 | 🟡 中 |
-| 沒有 RSS Feed | SEO 弱 | 🟡 中 |
-| Admin 無密碼保護 | 安全疑慮 | 🟠 低 |
-| Contact 表單無後端 | 白填 | 🟠 低 |
+### Phase 3 — 部署（等使用者執行）
+- [x] vercel.json（monorepo build config）
+- [ ] 使用者 `npm i -g vercel && vercel login`
+- [ ] 使用者 `vercel` 在 repo 根目錄跑起來 → 第一次部署
+- [ ] 設環境變數：PUBLIC_SITE_URL（日後綁自訂網域才填）
+- [ ] 部署到 xxx.vercel.app 先跑起來
+- [ ] Lighthouse SEO 驗證
+- [ ] 舊 GitHub Pages 301 redirect
 
----
+### Phase 4 — SEO 收尾
+- [ ] Google Search Console 驗證 + sitemap 提交
+- [ ] Bing Webmaster 提交
+- [ ] Rich Results Test 跑 JSON-LD
 
-## 規劃階段
+### Phase 5 — 網域（等使用者買完）
+- [ ] 使用者買網域
+- [ ] Cloudflare DNS 設 CNAME / A record
+- [ ] Vercel 綁定網域
+- [ ] HTTPS 自動申請
+- [ ] 更新所有 SITE_URL 常數
 
-### Phase 1 — 部落格核心體驗升級 🔴
-**目標**：讓 blog 成為真正好用的閱讀平台
-
-- [ ] 1.1 BlogList 頁面改版：加入搜尋 + 標籤篩選頁 + 精選文章區
-- [ ] 1.2 BlogPost 樣式升級：目錄（TOC）、閱讀進度條、分享按鈕
-- [ ] 1.3 標籤系統：點標籤 → 跳到 /blog?tag=xxx 篩選
-- [ ] 1.4 Ko-fi 連結補全流程說明（讓用戶自己填）
-
-### Phase 2 — 內容管理簡化 🟡
-**目標**：發文不需要改 code
-
-選項 A（推薦）：**Firebase Firestore CMS**
-- 文章存 Firestore，Admin 後台可新增/編輯/刪除
-- 需要加 Firebase Auth 保護 Admin
-
-選項 B：**Markdown 檔案 + GitHub 編輯**
-- 每篇文章一個 .md 檔案，改檔案自動 deploy
-- 最輕量，但還是要碰 code
-
-選項 C：**整合 ig-create 自動建立文章**
-- 用 /ig-create 生成 IG 貼文時，同步在 Firestore 建立 blog 文章
-- 需要 Phase 2A 先完成
-
-- [ ] 2.1 Firebase Firestore 文章 CRUD
-- [ ] 2.2 Admin 後台新增文章編輯器（Markdown）
-- [ ] 2.3 Firebase Auth 保護 Admin
-
-### Phase 3 — 個人形象強化 🟡
-**目標**：讓訪客更快了解你是誰、想找你
-
-- [ ] 3.1 首頁加入「最新文章」區塊（顯示最新 3 篇）
-- [ ] 3.2 統一 Blog 和主題頁的視覺語言
-- [ ] 3.3 課程頁面加入「相關文章」連結
-
-### Phase 4 — SEO & 分發 🟠
-- [ ] 4.1 RSS Feed 生成
-- [ ] 4.2 Sitemap 更新
-- [ ] 4.3 OG Image 自動生成（每篇文章獨立）
-
----
-
-## 決策記錄
-
-| 日期 | 決策 | 原因 |
-|------|------|------|
-| 2026-04-20 | 一個網站不拆分 | SEO 集中、維護簡單 |
-| 2026-04-20 | 優先改 blog UX，再做 CMS | 先讓現有讀者體驗好 |
-
----
-
-## 當前狀態
-- Phase 1：⏳ 待開始
-- Phase 2：⏳ 待開始
-- Phase 3：⏳ 待開始
-- Phase 4：⏳ 待開始
+## 筆記
+- 網域未定，所有 URL 先用環境變數 PUBLIC_SITE_URL
+- Firestore 真文章：Astro 從 Firestore + blogPosts.ts fallback build
+- 動態 OG：@vercel/og + 兩種風格模板
