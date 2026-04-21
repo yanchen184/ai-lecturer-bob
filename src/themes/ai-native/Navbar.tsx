@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const homeNavItems = [
   { label: '關於我', href: '#about' }, { label: '文章', href: '#latest-posts' },
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/' || location.pathname.startsWith('/style/');
 
   useEffect(() => {
@@ -45,7 +46,11 @@ const Navbar = () => {
   const handleHomeNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const sectionId = href.replace('#', '');
-    if (isHomePage) { document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }); } else { window.location.assign(`/#${sectionId}`); }
+    if (isHomePage) {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/', { state: { scrollTo: sectionId } });
+    }
     setIsMobileMenuOpen(false);
   };
 
@@ -62,7 +67,7 @@ const Navbar = () => {
             </Link>
             <div className="hidden lg:flex items-center space-x-0.5">
               {homeNavItems.map((item) => (
-                <a key={item.href} href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`} onClick={(e) => handleHomeNavClick(e, item.href)} className={`relative px-3 py-1.5 text-sm rounded-lg transition-all duration-200 font-mono ${isActive(item.href) ? 'text-[#00FFFF]' : 'text-gray-500 hover:text-gray-200'}`} style={isActive(item.href) ? { background: 'rgba(0,255,255,0.08)' } : undefined}>
+                <a key={item.href} href={isHomePage ? item.href : '/'} onClick={(e) => handleHomeNavClick(e, item.href)} className={`relative px-3 py-1.5 text-sm rounded-lg transition-all duration-200 font-mono ${isActive(item.href) ? 'text-[#00FFFF]' : 'text-gray-500 hover:text-gray-200'}`} style={isActive(item.href) ? { background: 'rgba(0,255,255,0.08)' } : undefined}>
                   {item.label}
                   {isActive(item.href) && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #00FFFF, #FF006E)' }} />}
                 </a>
@@ -86,7 +91,7 @@ const Navbar = () => {
           <div className="flex flex-col h-full pt-20 pb-8 px-6">
             <div className="flex-1 space-y-1">
               {homeNavItems.map((item, index) => (
-                <a key={item.href} href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`} onClick={(e) => handleHomeNavClick(e, item.href)} className={`flex items-center px-4 py-3 rounded-xl text-base transition-all duration-200 font-mono ${isActive(item.href) ? 'text-[#00FFFF] font-medium' : 'text-gray-500 hover:text-gray-200'}`} style={{ transitionDelay: isMobileMenuOpen ? `${index * 30}ms` : '0ms', opacity: isMobileMenuOpen ? 1 : 0, transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(20px)', background: isActive(item.href) ? 'rgba(0,255,255,0.08)' : 'transparent' }}>
+                <a key={item.href} href={isHomePage ? item.href : '/'} onClick={(e) => handleHomeNavClick(e, item.href)} className={`flex items-center px-4 py-3 rounded-xl text-base transition-all duration-200 font-mono ${isActive(item.href) ? 'text-[#00FFFF] font-medium' : 'text-gray-500 hover:text-gray-200'}`} style={{ transitionDelay: isMobileMenuOpen ? `${index * 30}ms` : '0ms', opacity: isMobileMenuOpen ? 1 : 0, transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(20px)', background: isActive(item.href) ? 'rgba(0,255,255,0.08)' : 'transparent' }}>
                   {isActive(item.href) && <span className="w-1 h-5 rounded-full mr-3" style={{ background: 'linear-gradient(180deg, #00FFFF, #FF006E)' }} />}
                   {item.label}
                 </a>

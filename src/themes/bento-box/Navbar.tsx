@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const homeNavItems = [
   { label: '關於我', href: '#about' },
@@ -16,6 +16,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isHomePage = location.pathname === '/' || location.pathname.startsWith('/style/');
 
@@ -64,7 +65,7 @@ const Navbar = () => {
     if (isHomePage) {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
     } else {
-      window.location.assign(`/#${sectionId}`);
+      navigate('/', { state: { scrollTo: sectionId } });
     }
     setIsMobileMenuOpen(false);
   };
@@ -102,7 +103,7 @@ const Navbar = () => {
               {homeNavItems.map((item) => (
                 <a
                   key={item.href}
-                  href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
+                  href={isHomePage ? item.href : '/'}
                   onClick={(e) => handleHomeNavClick(e, item.href)}
                   className="relative px-3 py-1.5 text-sm rounded-full transition-all duration-300"
                   style={{
@@ -190,7 +191,7 @@ const Navbar = () => {
               {homeNavItems.map((item, index) => (
                 <a
                   key={item.href}
-                  href={isHomePage ? item.href : `/#${item.href.replace('#', '')}`}
+                  href={isHomePage ? item.href : '/'}
                   onClick={(e) => handleHomeNavClick(e, item.href)}
                   className="flex items-center px-4 py-3 rounded-bento text-base transition-all duration-300"
                   style={{

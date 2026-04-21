@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useScrollToSection } from '../../hooks/useScrollToSection';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import About from './About';
@@ -14,6 +15,8 @@ import Footer from './Footer';
 import './theme.css';
 
 const ThemePage = () => {
+  useScrollToSection();
+
   useEffect(() => {
     document.body.className = 'theme-bold-typography';
     return () => {
