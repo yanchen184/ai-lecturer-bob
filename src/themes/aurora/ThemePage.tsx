@@ -30,12 +30,12 @@ const ThemePage = () => {
       <div className="theme-aurora-wrapper">
         <Navbar />
         <Hero />
-        <Courses />
         <About />
+        <LatestPosts />
+        <Courses />
         <Skills />
         <Portfolio />
         <Testimonials />
-        <LatestPosts />
         <Contact />
         <MessageBoard />
         <Footer />

@@ -30,12 +30,12 @@ const ThemePage = () => {
       <div className="theme-liquid-glass-wrapper">
         <Navbar />
         <Hero />
+        <About />
+        <LatestPosts />
         <Skills />
         <Courses />
-        <About />
         <Portfolio />
         <Testimonials />
-        <LatestPosts />
         <Contact />
         <MessageBoard />
         <Footer />

@@ -2,9 +2,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const homeNavItems = [
-  { label: '關於我', href: '#about' }, { label: '技能', href: '#skills' }, { label: '課程', href: '#courses' },
+  { label: '關於我', href: '#about' }, { label: '文章', href: '#latest-posts' },
+  { label: '技能', href: '#skills' }, { label: '課程', href: '#courses' },
   { label: '作品集', href: '#portfolio' }, { label: '學員回饋', href: '#testimonials' },
-  { label: '留言板', href: '#messages' }, { label: '聯繫我', href: '#contact' },
+  { label: '聯繫我', href: '#contact' },
 ] as const;
 
 const Navbar = () => {

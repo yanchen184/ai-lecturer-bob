@@ -30,12 +30,12 @@ const ThemePage = () => {
       <div className="theme-ai-native-wrapper crt-overlay">
         <Navbar />
         <Hero />
-        <Skills />
         <About />
+        <LatestPosts />
+        <Skills />
         <Courses />
         <Portfolio />
         <Testimonials />
-        <LatestPosts />
         <Contact />
         <MessageBoard />
         <Footer />

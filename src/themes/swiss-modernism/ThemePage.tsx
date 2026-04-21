@@ -31,11 +31,11 @@ const ThemePage = () => {
         <Navbar />
         <Hero />
         <About />
+        <LatestPosts />
         <Skills />
         <Courses />
         <Portfolio />
         <Testimonials />
-        <LatestPosts />
         <Contact />
         <MessageBoard />
         <Footer />

@@ -30,12 +30,12 @@ const ThemePage = () => {
       <div className="theme-bento-box-wrapper">
         <Navbar />
         <Hero />
+        <About />
+        <LatestPosts />
         <Courses />
         <Skills />
-        <About />
         <Portfolio />
         <Testimonials />
-        <LatestPosts />
         <Contact />
         <MessageBoard />
         <Footer />

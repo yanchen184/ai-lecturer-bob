@@ -4,12 +4,11 @@ import { useBlogPosts } from '../hooks/useBlogPosts';
 import type { BlogPostView } from '../hooks/useBlogPosts';
 
 /**
- * 共用「最新文章」區塊
+ * 「最新文章」區塊 — Anti-polish raw 風格
  *
  * - 顯示 3 篇最新已發佈文章（依 publishDate 降冪）
- * - 使用獨立中性白底 section，讓 6 個主題（深/淺色背景）都能一致呈現
+ * - 純黑白紙質色，硬邊、hard shadow、mono 字體
  * - 使用 HashRouter Link 導到 /blog/:slug 與 /blog
- * - 載入中顯示 skeleton
  */
 const LatestPosts = () => {
   const { posts, isLoading } = useBlogPosts();
@@ -23,97 +22,129 @@ const LatestPosts = () => {
       .slice(0, 3);
   }, [posts]);
 
+  const stats = useMemo(() => {
+    const categories = new Set(posts.map((post) => post.category));
+    const tags = new Set(posts.flatMap((post) => post.tags));
+    return {
+      total: posts.length,
+      categories: categories.size,
+      tags: tags.size,
+    };
+  }, [posts]);
+
   const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('zh-TW', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    return dateString.replaceAll('-', '/');
   };
 
   return (
     <section
       id="latest-posts"
-      className="py-20 px-4 bg-white text-slate-900"
+      className="py-20 px-4 font-mono border-y-2 border-black"
+      style={{ background: '#fafaf7', color: '#0a0a0a' }}
       aria-labelledby="latest-posts-heading"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <p className="text-sm font-semibold tracking-widest uppercase text-slate-500 mb-3">
-            Latest Posts
-          </p>
-          <h2
-            id="latest-posts-heading"
-            className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
-          >
-            最新文章
-          </h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">
-            實戰開發經驗與教學心得，定期更新技術文章
-          </p>
+        <div className="mb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <div className="text-xs uppercase tracking-widest mb-3 opacity-60">
+              // blog — 寫給實戰派的技術筆記
+            </div>
+            <h2
+              id="latest-posts-heading"
+              className="text-4xl md:text-5xl font-black tracking-tight"
+            >
+              最新文章 <span className="opacity-30">//</span> BLOG.
+            </h2>
+            <p className="text-sm md:text-base opacity-80 mt-3 max-w-xl leading-relaxed">
+              踩過的坑、解過的題、帶過的企業內訓心得。
+              <br className="hidden md:block" />
+              不包裝、不美化，看得懂的人會自己留下來。
+            </p>
+          </div>
+
+          {/* Stat strip */}
+          <div className="flex items-center gap-4 text-xs">
+            <div className="flex flex-col items-start">
+              <span className="text-2xl font-black leading-none">
+                {stats.total.toString().padStart(2, '0')}
+              </span>
+              <span className="uppercase tracking-widest opacity-60 mt-1">posts</span>
+            </div>
+            <div className="w-px h-10 bg-black/20" />
+            <div className="flex flex-col items-start">
+              <span className="text-2xl font-black leading-none">
+                {stats.categories.toString().padStart(2, '0')}
+              </span>
+              <span className="uppercase tracking-widest opacity-60 mt-1">categories</span>
+            </div>
+            <div className="w-px h-10 bg-black/20" />
+            <div className="flex flex-col items-start">
+              <span className="text-2xl font-black leading-none">
+                {stats.tags.toString().padStart(2, '0')}
+              </span>
+              <span className="uppercase tracking-widest opacity-60 mt-1">tags</span>
+            </div>
+          </div>
         </div>
 
         {/* Content */}
         {isLoading ? (
           <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t-2 border-black"
             aria-label="載入文章中"
           >
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className="border border-slate-200 rounded-2xl p-6 bg-slate-50 animate-pulse"
+                className={`border-b-2 border-black p-5 animate-pulse ${
+                  i < 2 ? 'md:border-r-2' : ''
+                }`}
               >
-                <div className="h-4 w-24 bg-slate-200 rounded mb-4" />
-                <div className="h-6 w-3/4 bg-slate-200 rounded mb-3" />
-                <div className="h-6 w-1/2 bg-slate-200 rounded mb-5" />
-                <div className="h-3 w-full bg-slate-200 rounded mb-2" />
-                <div className="h-3 w-5/6 bg-slate-200 rounded mb-6" />
-                <div className="h-4 w-20 bg-slate-200 rounded" />
+                <div className="h-3 w-24 bg-black/20 mb-3" />
+                <div className="h-6 w-3/4 bg-black/20 mb-3" />
+                <div className="h-3 w-full bg-black/10 mb-2" />
+                <div className="h-3 w-5/6 bg-black/10 mb-4" />
+                <div className="h-3 w-16 bg-black/20" />
               </div>
             ))}
           </div>
         ) : latest.length === 0 ? (
-          <div className="text-center text-slate-500 py-12">
-            尚無文章，敬請期待。
+          <div className="text-center text-xs opacity-60 py-12 border-2 border-black border-dashed">
+            // no posts yet
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {latest.map((post) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t-2 border-black">
+              {latest.map((post, index) => (
                 <article
                   key={post.id}
-                  className="group flex flex-col border border-slate-200 rounded-2xl p-6 bg-white hover:border-slate-400 hover:shadow-lg transition-all duration-300"
+                  className={`flex flex-col p-5 border-b-2 border-black hover:bg-[#ffff00] transition-colors group ${
+                    index < latest.length - 1 ? 'md:border-r-2' : ''
+                  }`}
                 >
-                  {/* Category + Date */}
-                  <div className="flex items-center gap-3 text-xs text-slate-500 mb-3">
-                    <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">
-                      {post.category}
+                  <div className="text-xs uppercase tracking-widest mb-3 opacity-70 flex items-center gap-2">
+                    <span className="font-black">
+                      #{(index + 1).toString().padStart(2, '0')}
                     </span>
-                    <time dateTime={post.publishDate}>
-                      {formatDate(post.publishDate)}
-                    </time>
+                    <span>·</span>
+                    <span>[{post.category}]</span>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-lg font-bold text-slate-900 mb-3 leading-snug line-clamp-2 group-hover:text-slate-700 transition-colors">
+                  <h3 className="text-lg md:text-xl font-black leading-tight mb-3 line-clamp-2">
                     <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                   </h3>
 
-                  {/* Excerpt */}
-                  <p className="text-sm text-slate-600 leading-relaxed line-clamp-3 mb-5 flex-1">
+                  <p className="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80 flex-1">
                     {post.excerpt}
                   </p>
 
-                  {/* Tags */}
                   {post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-5">
+                    <div className="flex flex-wrap gap-1 mb-4">
                       {post.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs text-slate-500 bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200"
+                          className="text-[10px] uppercase tracking-wider border border-black px-1.5 py-0.5 opacity-70"
                         >
                           #{tag}
                         </span>
@@ -121,27 +152,33 @@ const LatestPosts = () => {
                     </div>
                   )}
 
-                  {/* Read more */}
-                  <Link
-                    to={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 group-hover:gap-2 transition-all"
-                    aria-label={`閱讀文章：${post.title}`}
-                  >
-                    閱讀更多
-                    <span aria-hidden="true">→</span>
-                  </Link>
+                  <div className="flex items-baseline justify-between text-xs opacity-70 mt-auto pt-2 border-t border-black/10">
+                    <time dateTime={post.publishDate}>
+                      {formatDate(post.publishDate)}
+                      {post.readingTime ? ` · ${post.readingTime}min` : ''}
+                    </time>
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      className="uppercase tracking-widest font-black hover:underline"
+                    >
+                      read →
+                    </Link>
+                  </div>
                 </article>
               ))}
             </div>
 
             {/* View all button */}
-            <div className="text-center mt-12">
+            <div className="mt-8 flex items-center justify-between flex-wrap gap-4">
+              <div className="text-xs uppercase tracking-widest opacity-60">
+                // {posts.length.toString().padStart(3, '0')} posts total · 持續更新中
+              </div>
               <Link
                 to="/blog"
-                className="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-700 transition-colors"
+                className="inline-block px-5 py-2 text-xs uppercase tracking-widest font-black border-2 border-black bg-white hover:bg-[#ffff00] transition-colors"
+                style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
               >
-                查看全部文章
-                <span aria-hidden="true">→</span>
+                [ view all posts → ]
               </Link>
             </div>
           </>

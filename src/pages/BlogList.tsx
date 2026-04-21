@@ -51,192 +51,186 @@ const BlogList = () => {
   };
 
   const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('zh-TW', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    return dateString.replaceAll('-', '/');
   };
 
   return (
-    <div className="gradient-bg min-h-screen text-white pt-24">
+    <div
+      className="min-h-screen pt-24 font-mono"
+      style={{ background: '#fafaf7', color: '#0a0a0a' }}
+    >
       {/* Hero Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="gradient-text">AI講師</span>部落格
+      <section className="px-4 py-12 border-b-2 border-black">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-xs uppercase tracking-widest mb-4 opacity-60">
+            // blog / notes / raw-thoughts
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
+            BLOG.
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            AI講師陳彥彤分享人工智慧教學心得、ChatGPT 實戰技巧、企業培訓經驗，
-            幫助你掌握 AI 時代的核心競爭力。
+          <p className="text-base md:text-lg max-w-2xl leading-relaxed">
+            後端工程師的技術筆記。Spring Boot、React、MySQL、Redis。
+            <br />
+            不包裝、不美化，寫給實戰派看的。
           </p>
+          <div className="mt-6 text-xs opacity-60">
+            {posts.length.toString().padStart(3, '0')} posts
+            &nbsp;·&nbsp;
+            {categories.length.toString().padStart(2, '0')} categories
+            &nbsp;·&nbsp;
+            {tags.length.toString().padStart(2, '0')} tags
+          </div>
         </div>
       </section>
 
-      {/* Search Box */}
-      <section className="px-4 pb-6">
-        <div className="max-w-3xl mx-auto">
-          <label htmlFor="blog-search" className="sr-only">
-            搜尋文章
-          </label>
-          <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
-                />
-              </svg>
-            </span>
-            <input
-              id="blog-search"
-              type="search"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="搜尋文章標題或摘要..."
-              className="w-full pl-12 pr-10 py-3 rounded-full bg-white/10 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary-400 focus:bg-white/15 transition-all"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                aria-label="清除搜尋"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+      {/* Search + Filters */}
+      <section className="px-4 py-8 border-b-2 border-black">
+        <div className="max-w-6xl mx-auto space-y-6">
+          {/* Search */}
+          <div>
+            <label
+              htmlFor="blog-search"
+              className="block text-xs uppercase tracking-widest mb-2"
+            >
+              &gt; search
+            </label>
+            <div className="relative">
+              <input
+                id="blog-search"
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="grep 標題或摘要..."
+                className="w-full px-4 py-3 bg-white border-2 border-black font-mono text-sm focus:outline-none focus:bg-[#ffff00] placeholder:opacity-50"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs px-2 py-1 hover:bg-black hover:text-white transition-colors"
+                  aria-label="清除搜尋"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            )}
+                  [×]
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Category Filter */}
-      <section className="px-4 pb-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-sm text-gray-400 mb-3 text-center md:text-left">
-            分類
-          </div>
-          <div className="flex flex-wrap justify-center md:justify-start gap-3">
-            <button
-              onClick={() => setSelectedCategory('all')}
-              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                selectedCategory === 'all'
-                  ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
-                  : 'bg-white/10 text-gray-300 hover:bg-white/20'
-              }`}
-            >
-              全部文章
-            </button>
-            {categories.map((category) => (
+          {/* Categories */}
+          <div>
+            <div className="text-xs uppercase tracking-widest mb-2">
+              &gt; category
+            </div>
+            <div className="flex flex-wrap gap-2">
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === category
-                    ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                onClick={() => setSelectedCategory('all')}
+                className={`px-3 py-1 text-xs uppercase tracking-wider border-2 border-black transition-colors ${
+                  selectedCategory === 'all'
+                    ? 'bg-black text-white'
+                    : 'bg-white hover:bg-[#ffff00]'
                 }`}
               >
-                {category}
+                [all]
               </button>
-            ))}
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-3 py-1 text-xs uppercase tracking-wider border-2 border-black transition-colors ${
+                    selectedCategory === category
+                      ? 'bg-black text-white'
+                      : 'bg-white hover:bg-[#ffff00]'
+                  }`}
+                >
+                  [{category}]
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Tag Filter */}
-      <section className="px-4 pb-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-sm text-gray-400 mb-3 text-center md:text-left">
-            標籤
-          </div>
-          <div className="flex flex-wrap justify-center md:justify-start gap-2">
-            <button
-              onClick={() => setSelectedTag('all')}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                selectedTag === 'all'
-                  ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
-                  : 'bg-white/5 text-gray-400 hover:bg-white/15 hover:text-gray-200'
-              }`}
-            >
-              全部標籤
-            </button>
-            {tags.map((tag) => (
+          {/* Tags */}
+          <div>
+            <div className="text-xs uppercase tracking-widest mb-2">
+              &gt; tag
+            </div>
+            <div className="flex flex-wrap gap-1.5">
               <button
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedTag === tag
-                    ? 'bg-gradient-to-r from-primary-500 to-accent-500 text-white'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/15 hover:text-gray-200'
+                onClick={() => setSelectedTag('all')}
+                className={`px-2 py-0.5 text-xs border border-black transition-colors ${
+                  selectedTag === 'all'
+                    ? 'bg-black text-white'
+                    : 'bg-white hover:bg-[#ffff00]'
                 }`}
               >
-                #{tag}
+                *
               </button>
-            ))}
+              {tags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(tag)}
+                  className={`px-2 py-0.5 text-xs border border-black transition-colors ${
+                    selectedTag === tag
+                      ? 'bg-black text-white'
+                      : 'bg-white hover:bg-[#ffff00]'
+                  }`}
+                >
+                  #{tag}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Posts */}
       {featuredPosts.length > 0 && !hasActiveFilter && (
-        <section className="px-4 pb-12">
+        <section className="px-4 py-10 border-b-2 border-black">
           <div className="max-w-6xl mx-auto">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-2xl" aria-hidden="true">
-                ⭐
-              </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">
-                精選文章
+            <div className="flex items-baseline gap-3 mb-6">
+              <h2 className="text-2xl font-black uppercase tracking-tight">
+                /// FEATURED
               </h2>
+              <span className="text-xs opacity-60">
+                精選 {featuredPosts.length.toString().padStart(2, '0')} 篇
+              </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {featuredPosts.map((post: BlogPost) => (
                 <article
                   key={post.id}
-                  className="glass-card overflow-hidden group hover:scale-[1.01] transition-all duration-300 relative"
+                  className="relative border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
+                  style={{ boxShadow: '6px 6px 0 #0a0a0a' }}
                 >
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="px-3 py-1 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-xs font-bold rounded-full shadow-lg">
-                      精選
-                    </span>
+                  <div
+                    className="absolute -top-3 -right-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black"
+                    style={{ background: '#ffff00' }}
+                  >
+                    ★ FEATURED
                   </div>
-                  <div className="p-6 md:p-8 flex flex-col h-full">
-                    <div className="mb-3">
-                      <span className="px-3 py-1 bg-primary-500/20 text-primary-300 text-sm rounded-full">
-                        {post.category}
+                  <div className="text-xs uppercase tracking-widest mb-3 opacity-70">
+                    [{post.category}] · {formatDate(post.publishDate)} ·{' '}
+                    {post.readingTime}min
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-black leading-tight mb-3">
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      className="hover:bg-[#ffff00] transition-colors"
+                    >
+                      {post.title}
+                    </Link>
+                  </h3>
+                  <p className="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    {post.tags.slice(0, 4).map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs opacity-60 border border-black px-1.5"
+                      >
+                        #{tag}
                       </span>
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors line-clamp-2">
-                      <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h3>
-                    <p className="text-gray-300 text-base mb-5 line-clamp-3 flex-1">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-white/10">
-                      <span>{formatDate(post.publishDate)}</span>
-                      <span>{post.readingTime} 分鐘閱讀</span>
-                    </div>
+                    ))}
                   </div>
                 </article>
               ))}
@@ -246,135 +240,78 @@ const BlogList = () => {
       )}
 
       {/* Blog Posts Grid */}
-      <section className="px-4 pb-20">
+      <section className="px-4 py-10">
         <div className="max-w-6xl mx-auto">
           {/* Result Count */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-            <p className="text-gray-400 text-sm">
-              {hasActiveFilter ? '篩選結果：' : '所有文章：'}
-              <span className="text-white font-semibold">
-                顯示 {filteredPosts.length} 篇文章
+          <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-8">
+            <h2 className="text-2xl font-black uppercase tracking-tight">
+              /// {hasActiveFilter ? 'RESULTS' : 'ALL POSTS'}
+            </h2>
+            <div className="flex items-baseline gap-3 text-xs">
+              <span className="opacity-60">
+                [{filteredPosts.length.toString().padStart(3, '0')} found]
               </span>
-            </p>
-            {hasActiveFilter && (
-              <button
-                type="button"
-                onClick={resetFilters}
-                className="text-sm text-primary-400 hover:text-primary-300 transition-colors inline-flex items-center gap-1"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {hasActiveFilter && (
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="uppercase tracking-widest underline hover:bg-[#ffff00] transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
-                重置篩選
-              </button>
-            )}
+                  reset →
+                </button>
+              )}
+            </div>
           </div>
 
           {isLoading && (
-            <div className="text-center py-8 text-gray-400 text-sm">
-              載入文章中...
+            <div className="text-center py-8 text-xs opacity-60 tracking-widest">
+              loading posts...
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post: BlogPost) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-t-2 border-black">
+            {filteredPosts.map((post: BlogPost, index: number) => (
               <article
                 key={post.id}
-                className="glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-300 relative"
+                className={`p-6 border-b-2 border-black group hover:bg-[#ffff00] transition-colors ${
+                  index % 2 === 0 ? 'md:border-r-2' : ''
+                }`}
               >
-                {/* Featured Badge */}
-                {post.featured && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="px-3 py-1 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-xs font-bold rounded-full">
-                      精選
-                    </span>
+                <div className="text-xs uppercase tracking-widest mb-3 opacity-70 flex items-center gap-2">
+                  <span className="font-black">
+                    #{(index + 1).toString().padStart(3, '0')}
+                  </span>
+                  <span>·</span>
+                  <span>[{post.category}]</span>
+                  {post.featured && (
+                    <>
+                      <span>·</span>
+                      <span className="font-black">★</span>
+                    </>
+                  )}
+                </div>
+
+                <h3 className="text-xl md:text-2xl font-black leading-tight mb-3">
+                  <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+                </h3>
+
+                <p className="text-sm leading-relaxed line-clamp-2 mb-4 opacity-80">
+                  {post.excerpt}
+                </p>
+
+                <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs opacity-70">
+                  <div className="flex items-baseline gap-2">
+                    <time dateTime={post.publishDate}>
+                      {formatDate(post.publishDate)}
+                    </time>
+                    <span>·</span>
+                    <span>{post.readingTime}min read</span>
                   </div>
-                )}
-
-                {/* Card Content */}
-                <div className="p-6 relative">
-                  {/* Category */}
-                  <div className="mb-4">
-                    <span className="px-3 py-1 bg-primary-500/20 text-primary-300 text-sm rounded-full">
-                      {post.category}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h2 className="text-xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors line-clamp-2">
-                    <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-                  </h2>
-
-                  {/* Excerpt */}
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-
-                  {/* Meta Info */}
-                  <div className="flex items-center justify-between text-sm text-gray-500">
-                    <div className="flex items-center space-x-2">
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                      <span>{formatDate(post.publishDate)}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      <span>{post.readingTime} 分鐘閱讀</span>
-                    </div>
-                  </div>
-
-                  {/* Read More Link */}
                   <Link
                     to={`/blog/${post.slug}`}
-                    className="mt-4 inline-flex items-center text-primary-400 hover:text-primary-300 transition-colors"
+                    className="uppercase tracking-widest font-black hover:underline"
                   >
-                    <span>閱讀全文</span>
-                    <svg
-                      className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
+                    read →
                   </Link>
                 </div>
               </article>
@@ -382,42 +319,43 @@ const BlogList = () => {
           </div>
 
           {/* Empty State */}
-          {filteredPosts.length === 0 && (
-            <div className="text-center py-16">
-              <div className="text-5xl mb-4" aria-hidden="true">
-                🔍
+          {filteredPosts.length === 0 && !isLoading && (
+            <div className="text-center py-20 border-2 border-black border-dashed">
+              <div className="text-xs uppercase tracking-widest opacity-60 mb-4">
+                // no matching posts found
               </div>
-              <p className="text-gray-300 text-lg mb-2">找不到符合條件的文章</p>
-              <p className="text-gray-500 text-sm mb-6">
-                試試調整搜尋關鍵字或選擇其他分類 / 標籤
-              </p>
+              <pre className="text-xs opacity-60 mb-6">
+{`$ grep "${searchQuery || '...'}"
+→ 0 results`}
+              </pre>
               <button
                 type="button"
                 onClick={resetFilters}
-                className="px-6 py-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium hover:shadow-lg hover:shadow-primary-500/25 transition-all"
+                className="px-4 py-2 text-xs uppercase tracking-widest border-2 border-black bg-white hover:bg-[#ffff00] transition-colors"
               >
-                重置篩選
+                [reset filters]
               </button>
             </div>
           )}
         </div>
       </section>
 
-      {/* SEO Content Section */}
-      <section className="px-4 pb-20">
-        <div className="max-w-4xl mx-auto glass-card p-8">
-          <h2 className="text-2xl font-bold text-white mb-4">
-            關於 AI講師陳彥彤的部落格
-          </h2>
-          <p className="text-gray-300 mb-4">
-            歡迎來到 AI講師陳彥彤的專業部落格。這裡分享人工智慧教學的第一手經驗，
-            包含 ChatGPT 應用技巧、Prompt Engineering 實戰、機器學習入門教學、
-            企業 AI 培訓規劃等豐富內容。
+      {/* Footer note */}
+      <section className="px-4 py-10 border-t-2 border-black">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-xs uppercase tracking-widest mb-2 opacity-60">
+            // about this blog
+          </div>
+          <p className="text-sm leading-relaxed max-w-2xl">
+            沒有行銷話術、沒有 SEO 關鍵字堆疊。只寫我實際踩過的坑、解過的題、
+            帶過的企業內訓心得。看得懂的人會自己留下來。
           </p>
-          <p className="text-gray-300">
-            作為專業的 AI 講師，陳彥彤致力於讓複雜的人工智慧技術變得平易近人，
-            無論你是想學習 AI 的初學者，還是尋求企業培訓的主管，都能在這裡找到實用的知識。
-          </p>
+          <div className="mt-6 text-xs opacity-60 flex flex-wrap gap-4">
+            <span>→ Spring Boot</span>
+            <span>→ React</span>
+            <span>→ MySQL / Redis</span>
+            <span>→ 教學現場</span>
+          </div>
         </div>
       </section>
     </div>
