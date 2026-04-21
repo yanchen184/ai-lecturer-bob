@@ -1,0 +1,56 @@
+---
+/**
+ * Neub 風格 Navbar（靜態，給 blog 頁面用）。
+ * - 無 JS、純靜態 HTML，SSR 友善
+ * - currentPath 用於高亮 active link
+ */
+interface Props {
+  currentPath?: string;
+}
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+const navItems = [
+  { label: '首頁', href: '/' },
+  { label: '部落格', href: '/blog' },
+] as const;
+
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<nav
+  class="sticky top-0 z-40 bg-white border-b-[3px] border-black"
+  aria-label="主要導覽"
+>
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a
+      href="/"
+      class="flex items-center gap-2 font-black uppercase tracking-tight hover:bg-[var(--color-neub-yellow)] px-2 py-1 transition-colors"
+      aria-label="回到首頁"
+    >
+      <span
+        class="w-8 h-8 inline-flex items-center justify-center bg-[var(--color-neub-yellow)] border-2 border-black font-black"
+        >陳</span
+      >
+      <span class="hidden sm:inline text-sm">AI 講師陳彥彤YC</span>
+    </a>
+
+    <div class="flex items-center gap-1 text-sm font-mono">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'px-3 py-1.5 uppercase tracking-widest border-2 transition-colors',
+              isActive(item.href)
+                ? 'bg-black text-white border-black'
+                : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>

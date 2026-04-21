@@ -1,0 +1,41 @@
+---
+/** Neub 風格 Footer（靜態）。 */
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-black text-white mt-20">
+  <div class="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
+    <div>
+      <div class="text-2xl font-black uppercase tracking-tight">AI 講師陳彥彤YC</div>
+      <p class="mt-2 text-sm opacity-70 leading-relaxed">
+        後端工程師 · Spring Boot / React / MySQL / Redis。<br />
+        企業內訓與技術內容寫給實戰派看。
+      </p>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-widest opacity-60 mb-3">// navigate</div>
+      <ul class="space-y-1.5 text-sm">
+        <li><a href="/" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ 首頁</a></li>
+        <li><a href="/blog" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ 部落格</a></li>
+        <li><a href="/rss.xml" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ RSS</a></li>
+        <li><a href="/sitemap-index.xml" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">/ Sitemap</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-widest opacity-60 mb-3">// contact</div>
+      <ul class="space-y-1.5 text-sm">
+        <li><a href="mailto:bobchen184@gmail.com" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">bobchen184@gmail.com</a></li>
+        <li><a href="https://github.com/yanchen184" target="_blank" rel="noopener" class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-4 text-xs opacity-60 flex flex-wrap justify-between gap-2">
+      <span>© {year} 陳彥彤 Bob Chen. All rights reserved.</span>
+      <span class="font-mono">build: astro-ssg</span>
+    </div>
+  </div>
+</footer>

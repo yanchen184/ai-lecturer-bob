@@ -1,0 +1,292 @@
+---
+/**
+ * /blog/[slug] — 單篇文章頁。
+ * SSG：build 時從 Firestore 生成所有文章靜態頁。
+ */
+import RootLayout from '../../layouts/RootLayout.astro';
+import NavbarNeub from '../../components/NavbarNeub.astro';
+import FooterNeub from '../../components/FooterNeub.astro';
+import { getAllPublishedPosts, type BlogPost } from '../../lib/firestore';
+import { renderMarkdown } from '../../lib/markdown';
+
+export async function getStaticPaths() {
+  const posts = await getAllPublishedPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post, allPosts: posts },
+  }));
+}
+
+interface Props {
+  post: BlogPost;
+  allPosts: BlogPost[];
+}
+
+const { post, allPosts } = Astro.props;
+
+const { html, toc } = renderMarkdown(post.content);
+
+// 相關文章：先依 tag 重疊度排序，同類別補齊，最後最新文章填滿到 3 篇
+const related = (() => {
+  const currentTags = new Set(post.tags);
+  const scored = allPosts
+    .filter((p) => p.id !== post.id)
+    .map((p) => ({
+      post: p,
+      tagMatches: p.tags.filter((t) => currentTags.has(t)).length,
+      sameCategory: p.category === post.category,
+    }));
+
+  const byTag = scored
+    .filter((s) => s.tagMatches > 0)
+    .sort((a, b) => {
+      if (b.tagMatches !== a.tagMatches) return b.tagMatches - a.tagMatches;
+      return b.post.publishDate.localeCompare(a.post.publishDate);
+    })
+    .map((s) => s.post);
+
+  const byCat = scored
+    .filter((s) => s.sameCategory && !byTag.some((p) => p.id === s.post.id))
+    .map((s) => s.post);
+
+  const combined = [...byTag, ...byCat];
+  if (combined.length >= 3) return combined.slice(0, 3);
+
+  const latest = scored
+    .filter((s) => !combined.some((p) => p.id === s.post.id))
+    .map((s) => s.post)
+    .sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+
+  return [...combined, ...latest].slice(0, 3);
+})();
+
+const formatDate = (d: string) => d.replaceAll('-', '/');
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const postUrl = `${siteUrl}/blog/${post.slug}`;
+
+const blogPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description: post.excerpt,
+  url: postUrl,
+  datePublished: post.publishDate,
+  dateModified: post.updateDate ?? post.publishDate,
+  author: {
+    '@type': 'Person',
+    name: post.author,
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'AI 講師陳彥彤YC',
+    url: siteUrl,
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+  keywords: post.tags.join(', '),
+  articleSection: post.category,
+  wordCount: post.content.length,
+  inLanguage: 'zh-Hant',
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首頁', item: siteUrl },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: '部落格',
+      item: `${siteUrl}/blog`,
+    },
+    { '@type': 'ListItem', position: 3, name: post.title, item: postUrl },
+  ],
+};
+---
+
+<RootLayout
+  title={`${post.title} | AI 講師陳彥彤YC`}
+  description={post.excerpt}
+  canonical={`/blog/${post.slug}`}
+  jsonLd={[blogPostingSchema, breadcrumbSchema]}
+>
+  <NavbarNeub />
+
+  <main class="font-mono text-[#0a0a0a]">
+    <!-- Breadcrumb -->
+    <nav
+      class="px-4 py-3 border-b-2 border-black text-xs uppercase tracking-widest"
+      aria-label="breadcrumb"
+    >
+      <div class="max-w-4xl mx-auto flex items-center gap-2 opacity-70">
+        <a href="/" class="hover:bg-[#ffff00] px-1">home</a>
+        <span>/</span>
+        <a href="/blog" class="hover:bg-[#ffff00] px-1">blog</a>
+        <span>/</span>
+        <span class="font-black opacity-100">{post.title}</span>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="px-4 py-10 border-b-2 border-black">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-xs uppercase tracking-widest mb-4 opacity-70 flex flex-wrap items-center gap-2">
+          <span class="font-black">[{post.category}]</span>
+          <span>·</span>
+          <time datetime={post.publishDate}>{formatDate(post.publishDate)}</time>
+          <span>·</span>
+          <span>{post.readingTime}min read</span>
+          {post.featured && (
+            <>
+              <span>·</span>
+              <span class="font-black bg-[#ffff00] px-1">★ FEATURED</span>
+            </>
+          )}
+        </div>
+
+        <h1
+          class="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-6"
+        >
+          {post.title}
+        </h1>
+
+        <p class="text-base md:text-lg leading-relaxed opacity-80 max-w-3xl">
+          {post.excerpt}
+        </p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-2">
+          <span class="text-xs uppercase tracking-widest opacity-60">by</span>
+          <span class="font-black">{post.author}</span>
+          <span class="text-xs opacity-50">·</span>
+          <div class="flex flex-wrap gap-1">
+            {post.tags.map((tag) => (
+              <a
+                href={`/blog?tag=${encodeURIComponent(tag)}`}
+                class="text-xs border border-black px-1.5 hover:bg-[#ffff00]"
+              >
+                #{tag}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- TOC + Content -->
+    <div class="px-4 py-12">
+      <div class="max-w-4xl mx-auto grid gap-12 lg:grid-cols-[200px_1fr]">
+        {
+          toc.length > 0 && (
+            <aside class="hidden lg:block">
+              <div class="sticky top-24 text-xs">
+                <div class="uppercase tracking-widest font-black mb-3 opacity-60">
+                  // toc
+                </div>
+                <ul class="space-y-2">
+                  {toc.map((item) => (
+                    <li>
+                      <a
+                        href={`#${item.id}`}
+                        class="block opacity-70 hover:opacity-100 hover:bg-[#ffff00] px-1 leading-snug"
+                      >
+                        {item.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </aside>
+          )
+        }
+
+        <article class="blog-prose" set:html={html} />
+      </div>
+    </div>
+
+    <!-- Author + Share -->
+    <section class="px-4 py-10 border-t-2 border-black bg-white">
+      <div class="max-w-4xl mx-auto grid gap-6 md:grid-cols-2">
+        <div>
+          <div class="text-xs uppercase tracking-widest mb-2 opacity-60">
+            // author
+          </div>
+          <div class="flex items-start gap-3">
+            <div
+              class="w-12 h-12 bg-[var(--color-neub-yellow)] border-2 border-black flex items-center justify-center font-black"
+            >
+              陳
+            </div>
+            <div>
+              <div class="font-black">{post.author}</div>
+              <p class="text-sm opacity-70 leading-relaxed">
+                後端工程師 · AI 講師。Spring Boot / React / MySQL / Redis 實戰派。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-widest mb-2 opacity-60">
+            // support
+          </div>
+          <p class="text-sm opacity-80 leading-relaxed">
+            覺得文章有用可以到 GitHub 給個 star，或是透過信箱聊聊企業內訓、技術諮詢。
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <a
+              href="mailto:bobchen184@gmail.com"
+              class="px-3 py-1.5 text-xs uppercase tracking-widest border-2 border-black hover:bg-[#ffff00]"
+              >email</a
+            >
+            <a
+              href="https://github.com/yanchen184"
+              target="_blank"
+              rel="noopener"
+              class="px-3 py-1.5 text-xs uppercase tracking-widest border-2 border-black hover:bg-[#ffff00]"
+              >github</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Posts -->
+    {
+      related.length > 0 && (
+        <section class="px-4 py-12 border-t-2 border-black">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-black uppercase tracking-tight mb-6">
+              /// RELATED
+            </h2>
+            <div class="grid gap-0 md:grid-cols-3 border-t-2 border-black">
+              {related.map((r, i) => (
+                <a
+                  href={`/blog/${r.slug}`}
+                  class:list={[
+                    'block p-4 border-b-2 border-black hover:bg-[#ffff00] transition-colors',
+                    i < 2 ? 'md:border-r-2' : '',
+                  ]}
+                >
+                  <div class="text-xs uppercase tracking-widest opacity-60 mb-2">
+                    [{r.category}] · {r.readingTime}min
+                  </div>
+                  <div class="font-black leading-tight mb-2">{r.title}</div>
+                  <div class="text-xs opacity-70 line-clamp-2">{r.excerpt}</div>
+                </a>
+              ))}
+            </div>
+            <div class="mt-6 text-center">
+              <a
+                href="/blog"
+                class="inline-block px-4 py-2 text-xs uppercase tracking-widest border-2 border-black hover:bg-[#ffff00]"
+                >← all posts</a
+              >
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </main>
+
+  <FooterNeub />
+</RootLayout>

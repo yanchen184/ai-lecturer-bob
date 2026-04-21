@@ -1,0 +1,114 @@
+---
+/**
+ * 站點最外層 HTML 外殼。
+ * - SEO meta / OG / Twitter Card
+ * - Google Fonts
+ * - 全域 CSS
+ * - JSON-LD（Person schema）
+ *
+ * 使用方式：
+ *   <RootLayout title="..." description="..." canonical="/blog">
+ *     ...content
+ *   </RootLayout>
+ */
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** 頁面相對路徑，如 `/blog`；不傳則用 Astro.url.pathname */
+  canonical?: string;
+  /** OG image 相對或絕對網址 */
+  ogImage?: string;
+  /** 額外 JSON-LD（會與預設 Person schema 並存） */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** true = 禁止索引（如 /admin） */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = '/og-default.png',
+  jsonLd,
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const path = canonical ?? Astro.url.pathname;
+const canonicalUrl = `${siteUrl}${path}`;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: '陳彥彤 Bob Chen',
+  alternateName: '陳彥彤YC',
+  jobTitle: 'AI 講師 · 資深後端工程師',
+  url: siteUrl,
+  sameAs: ['https://github.com/yanchen184'],
+  knowsAbout: ['Spring Boot', 'React', 'MySQL', 'Redis', 'AI'],
+};
+
+const allJsonLd = Array.isArray(jsonLd)
+  ? [personSchema, ...jsonLd]
+  : jsonLd
+  ? [personSchema, jsonLd]
+  : [personSchema];
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AI 講師陳彥彤YC" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="zh_TW" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+    />
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="AI 講師陳彥彤YC — 部落格"
+      href={`${siteUrl}/rss.xml`}
+    />
+
+    {
+      allJsonLd.map((schema) => (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(schema)}
+        />
+      ))
+    }
+  </head>
+  <body class="bg-[var(--color-neub-bg)]">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+/* === Theme tokens（Tailwind v4 @theme 替代 tailwind.config）=== */
+@theme {
+  --color-neub-yellow: #FFEB3B;
+  --color-neub-black: #000000;
+  --color-neub-bg: #FAFAFA;
+
+  --color-anti-paper: #FAFAF8;
+  --color-anti-kraft: #C4A77D;
+  --color-anti-marker-black: #1A1A1A;
+  --color-anti-pencil: #4A4A4A;
+  --color-anti-marker-yellow: #FFE066;
+  --color-anti-cream: #FFF8DC;
+
+  --font-sans: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier Prime', 'Courier New', monospace;
+  --font-display: 'Space Grotesk', 'Noto Sans TC', system-ui, sans-serif;
+  --font-serif: Georgia, 'Noto Sans TC', serif;
+}
+
+/* === Reset === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* === Neub 共用 utility === */
+.neu-border { border: 3px solid #000; }
+.neu-shadow { box-shadow: 5px 5px 0 #000; }
+.neu-shadow-sm { box-shadow: 3px 3px 0 #000; }
+.neu-card {
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  border-radius: 4px;
+  background: #FFF;
+}
+
+/* === Blog prose: Neub 預設 === */
+.blog-prose h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  border-bottom: 3px solid #000;
+  padding-bottom: 0.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+.blog-prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.blog-prose p {
+  line-height: 1.8;
+  margin: 1rem 0;
+  color: #1a1a1a;
+}
+.blog-prose strong {
+  background: var(--color-neub-yellow);
+  color: #000;
+  padding: 0 4px;
+  font-weight: 700;
+}
+.blog-prose code {
+  background: #FFEB3B;
+  color: #000;
+  border: 2px solid #000;
+  padding: 0 6px;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  border-radius: 2px;
+}
+.blog-prose pre {
+  background: #1A1A1A;
+  color: #FAFAF8;
+  border: 3px solid #000;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  box-shadow: 5px 5px 0 #000;
+}
+.blog-prose pre code {
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 0;
+}
+.blog-prose blockquote {
+  border-left: 5px solid var(--color-neub-yellow);
+  background: #FFFDEA;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  color: #333;
+}
+.blog-prose a {
+  color: #000;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+.blog-prose a:hover { background: var(--color-neub-yellow); }
+.blog-prose ul, .blog-prose ol {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+  line-height: 1.8;
+}
+.blog-prose li { margin: 0.5rem 0; }
+.blog-prose img {
+  max-width: 100%;
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  margin: 1.5rem 0;
+}
+.blog-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border: 3px solid #000;
+}
+.blog-prose th, .blog-prose td {
+  border: 2px solid #000;
+  padding: 0.75rem;
+  text-align: left;
+}
+.blog-prose th {
+  background: var(--color-neub-yellow);
+  font-weight: 800;
+}
+
+/* === Anti 覆寫 === */
+.blog-prose-anti h2 {
+  font-family: var(--font-serif) !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  border-bottom: 1px dashed var(--color-anti-kraft) !important;
+}
+.blog-prose-anti h3 {
+  font-family: var(--font-serif) !important;
+  color: var(--color-anti-marker-black) !important;
+}
+.blog-prose-anti p {
+  font-family: var(--font-serif) !important;
+  color: var(--color-anti-marker-black) !important;
+}
+.blog-prose-anti strong {
+  background: var(--color-anti-marker-yellow) !important;
+  color: var(--color-anti-marker-black) !important;
+}
+.blog-prose-anti code {
+  background: var(--color-anti-cream) !important;
+  border: 1px dashed var(--color-anti-kraft) !important;
+  font-family: 'Courier Prime', var(--font-mono) !important;
+}
+.blog-prose-anti pre {
+  border: 1px dashed var(--color-anti-kraft) !important;
+  box-shadow: none !important;
+  font-family: 'Courier Prime', var(--font-mono) !important;
+}
+.blog-prose-anti blockquote {
+  border-left: 3px solid var(--color-anti-kraft) !important;
+  background: var(--color-anti-cream) !important;
+  font-style: italic !important;
+  color: var(--color-anti-pencil) !important;
+}
+.blog-prose-anti a {
+  border-bottom: 1px dashed var(--color-anti-kraft) !important;
+  text-decoration: none !important;
+}
+.blog-prose-anti a:hover {
+  background: var(--color-anti-marker-yellow) !important;
+}
+.blog-prose-anti img {
+  border: 1px dashed var(--color-anti-kraft) !important;
+  box-shadow: none !important;
+}
+.blog-prose-anti th, .blog-prose-anti td {
+  border: 1px dashed var(--color-anti-kraft) !important;
+}
+.blog-prose-anti th {
+  background: var(--color-anti-cream) !important;
+  font-family: var(--font-serif) !important;
+}

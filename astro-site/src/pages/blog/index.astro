@@ -1,0 +1,231 @@
+---
+/**
+ * /blog — 部落格列表。
+ * - SSR 出完整文章列表 HTML（SEO 吃得到）
+ * - 搜尋 / 篩選為 client island（`BlogFilters`）
+ * - Featured 區塊在無篩選時顯示
+ */
+import RootLayout from '../../layouts/RootLayout.astro';
+import NavbarNeub from '../../components/NavbarNeub.astro';
+import FooterNeub from '../../components/FooterNeub.astro';
+import BlogFilters from '../../components/BlogFilters.tsx';
+import { getAllPublishedPosts } from '../../lib/firestore';
+
+const posts = await getAllPublishedPosts();
+
+const categories = [...new Set(posts.map((p) => p.category))];
+const tags = [...new Set(posts.flatMap((p) => p.tags))];
+const featured = posts.filter((p) => p.featured);
+
+const formatDate = (d: string) => d.replaceAll('-', '/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'AI 講師陳彥彤YC — 部落格',
+  description: '後端工程師的技術實戰筆記',
+  url: `${Astro.site}blog`,
+  blogPost: posts.slice(0, 10).map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.title,
+    url: `${Astro.site}blog/${p.slug}`,
+    datePublished: p.publishDate,
+    author: { '@type': 'Person', name: p.author },
+  })),
+};
+---
+
+<RootLayout
+  title="部落格 — AI 講師陳彥彤YC"
+  description="後端工程師的技術筆記。Spring Boot、React、MySQL、Redis 實戰踩坑紀錄，不包裝、不美化，寫給實戰派看的。"
+  canonical="/blog"
+  jsonLd={jsonLd}
+>
+  <NavbarNeub />
+
+  <main class="font-mono text-[#0a0a0a]">
+    <!-- Hero -->
+    <section class="px-4 py-5 border-b-2 border-black">
+      <div class="max-w-6xl mx-auto flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h1 class="text-2xl md:text-3xl font-black tracking-tight">BLOG.</h1>
+        <p class="text-xs md:text-sm opacity-80">後端實戰筆記 · 不包裝</p>
+        <div class="ml-auto text-[11px] uppercase tracking-widest opacity-60">
+          {posts.length.toString().padStart(3, '0')} posts ·{' '}
+          {categories.length.toString().padStart(2, '0')} cat ·{' '}
+          {tags.length.toString().padStart(2, '0')} tags
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters (client island) -->
+    <section class="px-4 py-5 border-b-2 border-black">
+      <BlogFilters
+        client:load
+        categories={categories}
+        tags={tags}
+        totalPosts={posts.length}
+      />
+    </section>
+
+    <!-- Featured -->
+    {
+      featured.length > 0 && (
+        <section
+          class="px-4 py-10 border-b-2 border-black"
+          data-blog-featured
+        >
+          <div class="max-w-6xl mx-auto">
+            <div class="flex items-baseline gap-3 mb-6">
+              <h2 class="text-2xl font-black uppercase tracking-tight">
+                /// FEATURED
+              </h2>
+              <span class="text-xs opacity-60">
+                精選 {featured.length.toString().padStart(2, '0')} 篇
+              </span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {featured.map((post) => (
+                <article
+                  class="relative border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
+                  style="box-shadow: 6px 6px 0 #0a0a0a;"
+                >
+                  <div
+                    class="absolute -top-3 -right-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black"
+                    style="background: #ffff00;"
+                  >
+                    ★ FEATURED
+                  </div>
+                  <div class="text-xs uppercase tracking-widest mb-3 opacity-70">
+                    [{post.category}] · {formatDate(post.publishDate)} ·{' '}
+                    {post.readingTime}min
+                  </div>
+                  <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
+                    <a
+                      href={`/blog/${post.slug}`}
+                      class="hover:bg-[#ffff00] transition-colors"
+                    >
+                      {post.title}
+                    </a>
+                  </h3>
+                  <p class="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80">
+                    {post.excerpt}
+                  </p>
+                  <div class="flex flex-wrap gap-1">
+                    {post.tags.slice(0, 4).map((t) => (
+                      <span class="text-xs opacity-60 border border-black px-1.5">
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- All Posts -->
+    <section class="px-4 py-10">
+      <div class="max-w-6xl mx-auto">
+        <div
+          class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-8"
+        >
+          <h2 class="text-2xl font-black uppercase tracking-tight">
+            /// ALL POSTS
+          </h2>
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t-2 border-black"
+        >
+          {
+            posts.map((post, index) => (
+              <article
+                data-blog-card
+                data-category={post.category}
+                data-tags={post.tags.join('|')}
+                data-title={post.title}
+                data-excerpt={post.excerpt}
+                class:list={[
+                  'p-6 border-b-2 border-black group hover:bg-[#ffff00] transition-colors',
+                  index % 2 === 0 ? 'md:border-r-2' : '',
+                ]}
+              >
+                <div class="text-xs uppercase tracking-widest mb-3 opacity-70 flex items-center gap-2">
+                  <span class="font-black">
+                    #{(index + 1).toString().padStart(3, '0')}
+                  </span>
+                  <span>·</span>
+                  <span>[{post.category}]</span>
+                  {post.featured && (
+                    <>
+                      <span>·</span>
+                      <span class="font-black">★</span>
+                    </>
+                  )}
+                </div>
+
+                <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
+                  <a href={`/blog/${post.slug}`}>{post.title}</a>
+                </h3>
+
+                <p class="text-sm leading-relaxed line-clamp-2 mb-4 opacity-80">
+                  {post.excerpt}
+                </p>
+
+                <div class="flex flex-wrap items-baseline justify-between gap-2 text-xs opacity-70">
+                  <div class="flex items-baseline gap-2">
+                    <time datetime={post.publishDate}>
+                      {formatDate(post.publishDate)}
+                    </time>
+                    <span>·</span>
+                    <span>{post.readingTime}min read</span>
+                  </div>
+                  <a
+                    href={`/blog/${post.slug}`}
+                    class="uppercase tracking-widest font-black hover:underline"
+                  >
+                    read →
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+
+        <!-- Empty state（篩選後沒結果才顯示） -->
+        <div
+          data-blog-empty
+          hidden
+          class="text-center py-20 border-2 border-black border-dashed mt-8"
+        >
+          <div class="text-xs uppercase tracking-widest opacity-60 mb-4">
+            // no matching posts found
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer note -->
+    <section class="px-4 py-10 border-t-2 border-black">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-xs uppercase tracking-widest mb-2 opacity-60">
+          // about this blog
+        </div>
+        <p class="text-sm leading-relaxed max-w-2xl">
+          沒有行銷話術、沒有 SEO 關鍵字堆疊。只寫我實際踩過的坑、解過的題、
+          帶過的企業內訓心得。看得懂的人會自己留下來。
+        </p>
+        <div class="mt-6 text-xs opacity-60 flex flex-wrap gap-4">
+          <span>→ Spring Boot</span>
+          <span>→ React</span>
+          <span>→ MySQL / Redis</span>
+          <span>→ 教學現場</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <FooterNeub />
+</RootLayout>

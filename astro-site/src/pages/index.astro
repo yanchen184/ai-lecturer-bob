@@ -1,0 +1,142 @@
+---
+/**
+ * / — 暫時極簡首頁。
+ * 原專案的 HomePage（swiss-modernism 主題）之後另外遷移。
+ * 這版先提供基本 landing + 導流到 /blog。
+ */
+import RootLayout from '../layouts/RootLayout.astro';
+import NavbarNeub from '../components/NavbarNeub.astro';
+import FooterNeub from '../components/FooterNeub.astro';
+import { getAllPublishedPosts } from '../lib/firestore';
+
+const posts = await getAllPublishedPosts();
+const latest = posts.slice(0, 3);
+const formatDate = (d: string) => d.replaceAll('-', '/');
+---
+
+<RootLayout
+  title="AI 講師陳彥彤YC — 後端工程師 · Spring Boot / React"
+  description="陳彥彤 Bob Chen — AI 講師 · 資深後端工程師。Spring Boot、React、MySQL、Redis 企業內訓與技術內容。"
+  canonical="/"
+>
+  <NavbarNeub />
+
+  <main class="font-mono text-[#0a0a0a]">
+    <!-- Hero -->
+    <section class="px-4 py-20 border-b-[3px] border-black">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-4">
+          // ai-lecturer · senior backend engineer
+        </div>
+        <h1
+          class="text-4xl md:text-7xl font-black leading-[0.95] tracking-tight"
+        >
+          AI 講師<br />
+          <span class="bg-[var(--color-neub-yellow)] px-2">陳彥彤YC</span>
+        </h1>
+        <p class="mt-6 text-base md:text-lg max-w-2xl leading-relaxed opacity-80">
+          Spring Boot / React / MySQL / Redis 實戰派。 企業內訓講師 ·
+          技術寫作 · 系統架構諮詢。
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href="/blog"
+            class="px-5 py-2.5 bg-black text-white text-sm uppercase tracking-widest hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors"
+            >部落格 →</a
+          >
+          <a
+            href="mailto:bobchen184@gmail.com"
+            class="px-5 py-2.5 border-2 border-black text-sm uppercase tracking-widest hover:bg-[var(--color-neub-yellow)] transition-colors"
+            >聯繫合作</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Posts -->
+    {
+      latest.length > 0 && (
+        <section class="px-4 py-16 border-b-[3px] border-black">
+          <div class="max-w-6xl mx-auto">
+            <div class="flex items-baseline justify-between mb-8">
+              <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight">
+                /// LATEST
+              </h2>
+              <a
+                href="/blog"
+                class="text-xs uppercase tracking-widest underline hover:bg-[var(--color-neub-yellow)]"
+                >all posts →</a
+              >
+            </div>
+            <div class="grid gap-0 md:grid-cols-3 border-t-2 border-black">
+              {latest.map((p, i) => (
+                <a
+                  href={`/blog/${p.slug}`}
+                  class:list={[
+                    'block p-6 border-b-2 border-black hover:bg-[var(--color-neub-yellow)] transition-colors',
+                    i < 2 ? 'md:border-r-2' : '',
+                  ]}
+                >
+                  <div class="text-xs uppercase tracking-widest opacity-60 mb-3">
+                    [{p.category}] · {formatDate(p.publishDate)}
+                  </div>
+                  <h3 class="text-lg font-black leading-tight mb-2">
+                    {p.title}
+                  </h3>
+                  <p class="text-sm opacity-70 line-clamp-2">{p.excerpt}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- About -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto grid gap-8 md:grid-cols-2">
+        <div>
+          <h2 class="text-2xl font-black uppercase tracking-tight mb-4">
+            /// ABOUT
+          </h2>
+          <p class="text-sm leading-relaxed opacity-80">
+            十年後端開發經驗，從 Grails 2 遷移到 Spring Boot 4、從 jQuery 搬到
+            React 19。不是紙上談兵，是我實際在生產環境踩過的坑、解過的題、
+            帶過的企業內訓心得。
+          </p>
+          <p class="text-sm leading-relaxed opacity-80 mt-3">
+            沒有行銷話術、沒有 SEO 關鍵字堆疊。寫給實戰派看的技術筆記。
+          </p>
+        </div>
+        <div>
+          <h2 class="text-2xl font-black uppercase tracking-tight mb-4">
+            /// STACK
+          </h2>
+          <div class="flex flex-wrap gap-2 text-xs">
+            {
+              [
+                'Spring Boot 4',
+                'Java 21',
+                'React 19',
+                'TypeScript',
+                'MySQL / MSSQL',
+                'Redis',
+                'Vite',
+                'Tailwind v4',
+                'Firebase',
+                'Docker',
+              ].map((s) => (
+                <span class="border-2 border-black px-2 py-1 uppercase tracking-widest">
+                  {s}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <FooterNeub />
+</RootLayout>
