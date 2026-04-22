@@ -1,0 +1,80 @@
+---
+/**
+ * 閱讀進度條 —— 偵測 [data-blog-prose] 的滑動百分比。
+ * 純客製化 inline script，< 1 KB，無需 React 島。
+ */
+---
+
+<div
+  class="reading-progress"
+  aria-hidden="true"
+>
+  <div class="reading-progress-bar"></div>
+</div>
+
+<style>
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    z-index: 100;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .reading-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #ffeb3b;
+    border-bottom: 1px solid #0a0a0a;
+    transition: width 75ms linear;
+    will-change: width;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function init() {
+      const bar = document.querySelector('.reading-progress-bar');
+      const article = document.querySelector('[data-blog-prose]');
+      if (!bar || !article) return;
+
+      let ticking = false;
+      function update() {
+        const rect = article.getBoundingClientRect();
+        const scrollTop = window.scrollY;
+        const articleTop = rect.top + scrollTop;
+        const articleHeight = article.offsetHeight;
+        const viewportBottom = scrollTop + window.innerHeight;
+        const ratio = articleHeight > 0
+          ? Math.min(
+              Math.max((viewportBottom - articleTop) / articleHeight, 0),
+              1,
+            )
+          : 0;
+        bar.style.width = (ratio * 100).toFixed(2) + '%';
+        ticking = false;
+      }
+
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+          }
+        },
+        { passive: true },
+      );
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

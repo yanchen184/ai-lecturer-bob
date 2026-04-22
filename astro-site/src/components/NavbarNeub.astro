@@ -1,7 +1,9 @@
 ---
 /**
- * Neub 風格 Navbar（靜態，SSR 友善、無 JS）。
- * - Logo 左、導覽連結右（ml-auto 明確推到最右）
+ * Neub 風格 Navbar（SSR 友善、純 CSS 可展開手機選單）。
+ * - md+ : Logo 左、5 個連結排右
+ * - < md: Logo 左、hamburger 按鈕右，點開後以 <details> 展開全部連結
+ *         用 <details>/<summary> 無需 JS、鍵盤可存取、有語義。
  * - currentPath 用於高亮 active link
  */
 import { withBase, base } from '../lib/url';
@@ -27,6 +29,9 @@ const isActive = (href: string) => {
   if (href === '/') return currentPath === '/';
   return currentPath.startsWith(href);
 };
+
+const resolveHref = (href: string) =>
+  href.startsWith('/#') ? withBase('/') + href.slice(1) : withBase(href);
 ---
 
 <nav
@@ -46,13 +51,14 @@ const isActive = (href: string) => {
       <span class="hidden sm:inline text-sm">AI 講師陳彥彤YC</span>
     </a>
 
-    <div class="ml-auto flex items-center gap-1 text-sm font-mono">
+    <!-- md+ : 桌機排成一列 -->
+    <div class="ml-auto hidden md:flex items-center gap-1 text-sm font-mono">
       {
         navItems.map((item) => (
           <a
-            href={item.href.startsWith('/#') ? withBase('/') + item.href.slice(1) : withBase(item.href)}
+            href={resolveHref(item.href)}
             class:list={[
-              'px-3 py-1.5 uppercase tracking-widest border-2 transition-colors hidden md:inline-block',
+              'px-3 py-1.5 uppercase tracking-widest border-2 transition-colors',
               isActive(item.href)
                 ? 'bg-black text-white border-black'
                 : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
@@ -62,19 +68,88 @@ const isActive = (href: string) => {
           </a>
         ))
       }
-
-      <!-- Mobile: 只顯示主要兩個 -->
-      <a
-        href={withBase('/blog')}
-        class:list={[
-          'md:hidden px-3 py-1.5 uppercase tracking-widest border-2 transition-colors',
-          isActive('/blog')
-            ? 'bg-black text-white border-black'
-            : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
-        ]}
-      >
-        部落格
-      </a>
     </div>
+
+    <!-- <md : 手機 hamburger（純 CSS、無 JS） -->
+    <details class="md:hidden ml-auto mobile-menu" aria-label="開啟選單">
+      <summary
+        class="list-none cursor-pointer select-none w-10 h-10 inline-flex items-center justify-center border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] relative z-50"
+        aria-label="切換導覽選單"
+      >
+        <span class="hamburger-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </summary>
+
+      <div class="mobile-menu-panel fixed left-0 right-0 bg-white border-t-2 border-black z-40 overflow-y-auto" style="top: 65px; height: calc(100vh - 65px);">
+        <ul class="flex flex-col font-mono">
+          {
+            navItems.map((item) => (
+              <li class="border-b-2 border-black">
+                <a
+                  href={resolveHref(item.href)}
+                  class:list={[
+                    'flex items-center justify-between px-6 py-5 text-base uppercase tracking-widest font-black transition-colors',
+                    isActive(item.href)
+                      ? 'bg-black text-white'
+                      : 'hover:bg-[var(--color-neub-yellow)]',
+                  ]}
+                >
+                  <span>{item.label}</span>
+                  <span aria-hidden="true" class="text-xl opacity-60">→</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="px-6 py-8 text-xs uppercase tracking-widest font-mono opacity-60">
+          © 陳彥彤 · ai lecturer
+        </div>
+      </div>
+    </details>
   </div>
 </nav>
+
+<style>
+  /* 隱藏 summary 預設三角形 */
+  summary::-webkit-details-marker { display: none; }
+  summary::marker { display: none; content: ''; }
+
+  /* Hamburger → X 動畫 */
+  .hamburger-icon {
+    position: relative;
+    width: 20px;
+    height: 14px;
+    display: inline-block;
+  }
+  .hamburger-icon span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #000;
+    transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease;
+  }
+  .hamburger-icon span:nth-child(1) { top: 0; }
+  .hamburger-icon span:nth-child(2) { top: 6px; }
+  .hamburger-icon span:nth-child(3) { top: 12px; }
+
+  .mobile-menu[open] .hamburger-icon span:nth-child(1) {
+    top: 6px;
+    transform: rotate(45deg);
+  }
+  .mobile-menu[open] .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-menu[open] .hamburger-icon span:nth-child(3) {
+    top: 6px;
+    transform: rotate(-45deg);
+  }
+
+  /* 展開時防止背景捲動 */
+  .mobile-menu[open] ~ * {
+    /* no-op, left here for future */
+  }
+</style>

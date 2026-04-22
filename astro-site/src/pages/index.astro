@@ -21,10 +21,10 @@ const stats = [
 ];
 
 const skills = [
-  { group: '後端', items: ['Spring Boot 4', 'Java 21', 'Maven', 'JPA / Hibernate'] },
-  { group: '資料', items: ['MySQL', 'MSSQL', 'Redis', 'RabbitMQ'] },
-  { group: '前端', items: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS'] },
-  { group: 'DevOps', items: ['Docker', 'GitHub Actions', 'Firebase', 'Azure AZ-900'] },
+  { group: '後端', label: 'backend', color: 'var(--color-neub-yellow)', items: ['Spring Boot 4', 'Java 21', 'Maven', 'JPA / Hibernate'] },
+  { group: '資料', label: 'data', color: '#00ffd1', items: ['MySQL', 'MSSQL', 'Redis', 'RabbitMQ'] },
+  { group: '前端', label: 'frontend', color: '#ff6ec7', items: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS'] },
+  { group: 'DevOps', label: 'devops', color: '#7cc0ff', items: ['Docker', 'GitHub Actions', 'Firebase', 'Azure AZ-900'] },
 ];
 
 const courses = [
@@ -60,9 +60,12 @@ const courses = [
         <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
           ai lecturer · senior backend engineer
         </div>
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight">
-          你好，我是<br />
-          <span class="bg-[var(--color-neub-yellow)] px-3 inline-block mt-2">程式講師陳彥彤</span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight">
+          <span>你好，我是</span>
+          <br />
+          <span class="inline-block mt-2 bg-[var(--color-neub-yellow)] px-3 box-decoration-clone">
+            程式講師陳彥彤
+          </span>
         </h1>
         <p class="mt-8 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
           資深後端工程師 · AI 講師。<br />
@@ -87,10 +90,20 @@ const courses = [
         <!-- Stats -->
         <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
           {
-            stats.map((s) => (
-              <div class="border-2 border-black bg-white p-5">
-                <div class="text-2xl md:text-3xl font-black tracking-tight">{s.number}</div>
-                <div class="text-xs opacity-70 mt-1">{s.label}</div>
+            stats.map((s, i) => (
+              <div
+                class:list={[
+                  'border-2 border-black p-5 md:p-6 transition-transform hover:-translate-y-0.5',
+                  i === 0 ? 'bg-[var(--color-neub-yellow)]' : 'bg-white',
+                ]}
+                style="box-shadow: 4px 4px 0 #0a0a0a;"
+              >
+                <div class="text-3xl md:text-4xl font-black tracking-tight leading-none">
+                  {s.number}
+                </div>
+                <div class="text-xs md:text-sm opacity-70 mt-2 font-mono uppercase tracking-wider">
+                  {s.label}
+                </div>
               </div>
             ))
           }
@@ -159,13 +172,25 @@ const courses = [
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {
             skills.map((s) => (
-              <div class="border-2 border-black bg-white p-6">
-                <div class="text-xs uppercase tracking-widest opacity-70 font-mono mb-3">
-                  {s.group}
+              <div
+                class="border-2 border-black bg-white overflow-hidden"
+                style="box-shadow: 4px 4px 0 #0a0a0a;"
+              >
+                <div
+                  class="px-5 py-3 border-b-2 border-black flex items-center justify-between font-mono"
+                  style={`background: ${s.color};`}
+                >
+                  <span class="text-lg font-black">{s.group}</span>
+                  <span class="text-[10px] uppercase tracking-widest opacity-70">
+                    {s.label}
+                  </span>
                 </div>
-                <ul class="space-y-2 text-sm font-bold">
+                <ul class="p-5 space-y-2 text-sm font-bold">
                   {s.items.map((it) => (
-                    <li>· {it}</li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-black/40 select-none">▸</span>
+                      <span>{it}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -236,13 +261,18 @@ const courses = [
               </a>
             </div>
 
-            <div class="grid gap-0 md:grid-cols-3 border-t-2 border-black">
+            <div
+              class:list={[
+                'grid gap-0 border-t-2 border-black',
+                latest.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2',
+              ]}
+            >
               {latest.map((p, i) => (
                 <a
                   href={withBase(`/blog/${p.slug}`)}
                   class:list={[
                     'block p-6 border-b-2 border-black hover:bg-[var(--color-neub-yellow)] transition-colors',
-                    i < 2 ? 'md:border-r-2' : '',
+                    i < latest.length - 1 ? 'md:border-r-2' : '',
                   ]}
                 >
                   <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
@@ -268,10 +298,19 @@ const courses = [
           <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-6">
             開始合作
           </h2>
-          <p class="text-base leading-relaxed opacity-80">
+          <p class="text-base leading-relaxed opacity-80 mb-6">
             企業內訓、技術諮詢、系統架構顧問 —— 歡迎透過 Email 或 GitHub 聯繫。
             一對一諮詢與團隊培訓皆可客製化內容，先聊需求再報價。
           </p>
+
+          <a
+            href="mailto:bobchen184@gmail.com?subject=%5B%E5%90%88%E4%BD%9C%E9%9C%80%E6%B1%82%5D%20&body=%E5%97%A8%E5%BD%A5%E5%BD%A4%EF%BC%8C%0A%0A%E6%88%91%E6%83%B3%E8%81%8A%E8%81%8A%EF%BC%9A%0A%0A%E2%80%A2%20%E9%9C%80%E6%B1%82%E7%B1%BB%E5%9E%8B%EF%BC%88%E4%BC%81%E6%A5%AD%E5%85%A7%E8%A8%93%20%2F%20%E6%8A%80%E8%A1%93%E8%AB%AE%E8%A9%A2%20%2F%20%E7%B3%BB%E7%B5%B1%E9%A1%A7%E5%95%8F%EF%BC%89%EF%BC%9A%0A%E2%80%A2%20%E7%B0%A1%E8%BF%B0%E7%8B%80%E6%B3%81%EF%BC%9A%0A%E2%80%A2%20%E5%B8%8C%E6%9C%9B%E8%99%95%E7%90%86%E7%9A%84%E6%99%82%E7%A8%8B%EF%BC%9A%0A%0A%E8%AC%9D%E8%AC%9D%EF%BC%81"
+            class="inline-flex items-center gap-3 px-6 py-4 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest font-black border-2 border-black font-mono hover:bg-black hover:text-[var(--color-neub-yellow)] transition-colors"
+            style="box-shadow: 5px 5px 0 #0a0a0a;"
+          >
+            寄信談合作
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
 
         <div class="space-y-4">
