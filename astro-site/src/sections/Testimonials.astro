@@ -1,0 +1,144 @@
+---
+/**
+ * Testimonials — 學員回饋 6 卡
+ * Neub 預設：粗黑邊 + hard shadow + hover 黃底
+ * Anti 覆寫：dashed 邊、kraft 紙色、serif 字（見 global.css [data-theme="anti"]）
+ */
+
+const testimonials = [
+  {
+    name: '王經理',
+    role: '科技公司 · 技術部門主管',
+    content:
+      '陳老師的 Spring Boot 課程非常實用！從專案架構到效能優化都講得很清楚，讓我們團隊快速提升後端開發能力。',
+    tint: '#FFEB3B',
+  },
+  {
+    name: '林小姐',
+    role: '電商平台 · 後端工程師',
+    content:
+      '課程內容很有深度，特別是 MySQL 效能優化和 Redis 快取策略的部分，直接解決了我們系統的瓶頸問題。',
+    tint: '#ff6ec7',
+  },
+  {
+    name: '張先生',
+    role: '軟體公司 · 技術總監',
+    content:
+      '陳彥彤老師有實際的電商系統開發經驗，講解高併發處理時特別有說服力，案例都是來自真實場景。',
+    tint: '#00ffd1',
+  },
+  {
+    name: '卓設計總監',
+    role: '設計公司 · 創意總監',
+    content:
+      '身為設計背景出身，一直覺得程式是另一個世界。陳老師用淺顯易懂的方式講解，現在跟工程師溝通更順暢，協作效率大幅提升。',
+    tint: '#ffb347',
+  },
+  {
+    name: '李工程師',
+    role: '新創公司 · 全端工程師',
+    content:
+      '之前自學後端總覺得少了些什麼，上完課才知道企業級開發要考慮的面向這麼多。老師教的架構設計讓我受益良多。',
+    tint: '#a78bfa',
+  },
+  {
+    name: '黃經理',
+    role: '政府單位 · 資訊處主管',
+    content:
+      '邀請陳老師來進行 AI 輔助開發工作坊，同仁們都覺得很實用。用 ChatGPT 輔助寫程式的效率真的提升很多。',
+    tint: '#7dd3fc',
+  },
+];
+
+const stats = [
+  { value: '98%', label: '學員滿意度' },
+  { value: '4.9/5', label: '平均課程評分' },
+  { value: '95%', label: '課程完成率' },
+  { value: '88%', label: '推薦給朋友' },
+];
+---
+
+<section
+  id="testimonials"
+  class="testimonials-section px-6 md:px-10 py-20 border-b-[3px] border-black bg-white"
+  aria-labelledby="testimonials-title"
+>
+  <div class="max-w-7xl mx-auto">
+    <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+      student voices
+    </div>
+    <h2 id="testimonials-title" class="text-3xl md:text-4xl font-black tracking-tight mb-3">
+      學員回饋
+    </h2>
+    <p class="text-sm md:text-base opacity-70 mb-10 max-w-2xl">
+      來自不同產業的學員與企業客戶，分享他們與程式講師陳彥彤的學習經驗。
+    </p>
+
+    <!-- Testimonials Grid -->
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        testimonials.map((t) => (
+          <article
+            class="testimonial-card border-2 border-black bg-white p-6 transition-transform hover:-translate-y-1"
+            style={`box-shadow: 5px 5px 0 #0a0a0a;`}
+          >
+            {/* Rating stars */}
+            <div class="flex gap-1 mb-4" aria-label="五星評分">
+              {Array.from({ length: 5 }).map(() => (
+                <svg
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+
+            {/* Content */}
+            <blockquote class="text-sm md:text-[15px] leading-relaxed mb-6 min-h-[6rem]">
+              「{t.content}」
+            </blockquote>
+
+            {/* Author */}
+            <div class="flex items-center gap-3 pt-4 border-t-2 border-black">
+              <div
+                class="avatar w-10 h-10 flex items-center justify-center border-2 border-black font-black text-sm"
+                style={`background: ${t.tint};`}
+                aria-hidden="true"
+              >
+                {t.name.charAt(0)}
+              </div>
+              <div class="min-w-0">
+                <div class="font-black text-sm truncate">{t.name}</div>
+                <div class="text-xs opacity-60 font-mono truncate">{t.role}</div>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    {/* Stats */}
+    <div
+      class="stats-card mt-12 border-2 border-black bg-[var(--color-neub-yellow)] p-8 md:p-10"
+      style="box-shadow: 5px 5px 0 #0a0a0a;"
+    >
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {
+          stats.map((s) => (
+            <div>
+              <div class="text-3xl md:text-4xl font-black tracking-tight leading-none mb-2">
+                {s.value}
+              </div>
+              <div class="text-xs md:text-sm font-mono uppercase tracking-wider opacity-80">
+                {s.label}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -70,6 +70,17 @@ const allJsonLd = Array.isArray(jsonLd)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Theme init (FOUC prevention) — 必須在 CSS / body 之前執行 -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('site-theme');
+          if (t === 'anti') {
+            document.documentElement.setAttribute('data-theme', 'anti');
+          }
+        } catch (_) {}
+      })();
+    </script>
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -96,7 +107,7 @@ const allJsonLd = Array.isArray(jsonLd)
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=Courier+Prime:wght@400;700&display=swap"
     />
 
     <link

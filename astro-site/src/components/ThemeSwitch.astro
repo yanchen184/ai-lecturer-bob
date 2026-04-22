@@ -1,0 +1,96 @@
+---
+/**
+ * 全站 Neub / Anti 主題切換器（Navbar 用）
+ * - localStorage key: site-theme
+ * - 作用：切換 <html data-theme="anti"> or 移除 data-theme
+ * - 純 vanilla JS，無 React island，不增加 hydration cost
+ * - 初始值由 RootLayout 的 head inline script 設定（防 FOUC）
+ */
+---
+
+<div class="theme-switch inline-flex items-center gap-2 text-xs font-mono" data-theme-switch>
+  <span class="uppercase tracking-widest opacity-60 hidden sm:inline">style:</span>
+  <div class="inline-flex border-2 border-black" role="group" aria-label="主題切換">
+    <button
+      type="button"
+      data-theme-value="neub"
+      class="theme-btn px-2.5 py-1 uppercase tracking-widest transition-colors"
+      aria-label="切換至 Neub 風格"
+    >
+      neub
+    </button>
+    <button
+      type="button"
+      data-theme-value="anti"
+      class="theme-btn px-2.5 py-1 uppercase tracking-widest transition-colors border-l-2 border-black"
+      aria-label="切換至 Anti 風格"
+    >
+      anti
+    </button>
+  </div>
+</div>
+
+<style>
+  .theme-btn {
+    background: #fff;
+    color: #0a0a0a;
+  }
+  .theme-btn:hover {
+    background: var(--color-neub-yellow);
+  }
+  .theme-btn[aria-pressed="true"] {
+    background: #0a0a0a;
+    color: #fff;
+  }
+  [data-theme="anti"] .theme-btn {
+    background: var(--color-anti-paper);
+    border-color: var(--color-anti-kraft) !important;
+  }
+  [data-theme="anti"] .theme-btn[aria-pressed="true"] {
+    background: var(--color-anti-marker-black);
+    color: var(--color-anti-paper);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var STORAGE_KEY = 'site-theme';
+    var root = document.documentElement;
+
+    function currentTheme() {
+      return root.getAttribute('data-theme') === 'anti' ? 'anti' : 'neub';
+    }
+
+    function apply(theme) {
+      if (theme === 'anti') {
+        root.setAttribute('data-theme', 'anti');
+      } else {
+        root.removeAttribute('data-theme');
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY, theme);
+      } catch (_) {}
+      // 更新所有切換器的 aria-pressed
+      document.querySelectorAll('[data-theme-switch] .theme-btn').forEach(function (btn) {
+        var isActive = btn.getAttribute('data-theme-value') === theme;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    function init() {
+      apply(currentTheme());
+      document.querySelectorAll('[data-theme-switch] .theme-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var next = btn.getAttribute('data-theme-value') || 'neub';
+          apply(next);
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

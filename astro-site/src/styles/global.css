@@ -208,3 +208,146 @@ body {
   background: var(--color-anti-cream) !important;
   font-family: var(--font-serif) !important;
 }
+
+/* ============================================================
+ * 全站 Anti 主題 — 作用在 [data-theme="anti"]（根元素）
+ * 只覆寫首頁、靜態 section、Navbar、Footer 的視覺特徵。
+ * 刻意不動 .blog-prose-anti（文章內頁自有切換器）。
+ * ============================================================ */
+
+/* --- body 底色換成紙色 --- */
+[data-theme="anti"] body {
+  background: var(--color-anti-paper) !important;
+  font-family: var(--font-serif) !important;
+  color: var(--color-anti-marker-black) !important;
+}
+
+/* --- 全域黃色高亮 → kraft-yellow --- */
+[data-theme="anti"] {
+  --color-neub-yellow: var(--color-anti-marker-yellow);
+  --color-neub-bg: var(--color-anti-paper);
+}
+
+/* --- 粗黑邊 → dashed kraft --- */
+[data-theme="anti"] .border-black,
+[data-theme="anti"] [class*="border-b-[3px]"],
+[data-theme="anti"] [class*="border-t-[3px]"],
+[data-theme="anti"] [class*="border-2"].border-black {
+  border-color: var(--color-anti-kraft) !important;
+  border-style: dashed !important;
+}
+
+/* --- 所有 hard shadow 關掉 --- */
+[data-theme="anti"] [style*="box-shadow: 4px 4px 0"],
+[data-theme="anti"] [style*="box-shadow: 5px 5px 0"],
+[data-theme="anti"] [style*="box-shadow: 6px 6px 0"] {
+  box-shadow: none !important;
+}
+
+/* --- Hero title / section title：Serif 取代粗黑 sans --- */
+[data-theme="anti"] h1,
+[data-theme="anti"] h2,
+[data-theme="anti"] h3 {
+  font-family: var(--font-serif) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+/* --- 保留一個「加粗強調」變體供 Hero 用 --- */
+[data-theme="anti"] h1 {
+  font-weight: 600 !important;
+}
+
+/* --- 白底區塊改 cream --- */
+[data-theme="anti"] .bg-white {
+  background: var(--color-anti-paper) !important;
+}
+
+/* --- 黃底區塊改 kraft-yellow + dashed 邊 --- */
+[data-theme="anti"] .bg-\[var\(--color-neub-yellow\)\] {
+  background: var(--color-anti-marker-yellow) !important;
+}
+
+/* --- mono 字體改 Courier Prime（手感） --- */
+[data-theme="anti"] .font-mono {
+  font-family: 'Courier Prime', var(--font-mono) !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* --- sans 預設字也換 serif（非 mono / 非 code） --- */
+[data-theme="anti"] .font-sans,
+[data-theme="anti"] main {
+  font-family: var(--font-serif) !important;
+}
+
+/* --- 黑色按鈕在 Anti 下變成 pencil grey + dashed 邊 --- */
+[data-theme="anti"] .bg-black {
+  background: var(--color-anti-marker-black) !important;
+}
+[data-theme="anti"] .text-white {
+  color: var(--color-anti-paper) !important;
+}
+
+/* --- Footer 黑底改 kraft 深色 --- */
+[data-theme="anti"] footer.bg-black {
+  background: #2a2420 !important;
+}
+
+/* --- 字級大的 .font-black 減輕到 600（serif 不適合 900） --- */
+[data-theme="anti"] .font-black {
+  font-weight: 600 !important;
+}
+
+/* --- Testimonials / MessageBoard 卡片：dashed 邊、無陰影 --- */
+[data-theme="anti"] .testimonial-card,
+[data-theme="anti"] .stats-card,
+[data-theme="anti"] .message-form,
+[data-theme="anti"] .message-item {
+  border-style: dashed !important;
+  border-color: var(--color-anti-kraft) !important;
+  box-shadow: none !important;
+}
+[data-theme="anti"] .testimonial-card,
+[data-theme="anti"] .message-form,
+[data-theme="anti"] .message-item {
+  background: var(--color-anti-paper) !important;
+}
+[data-theme="anti"] .stats-card {
+  background: var(--color-anti-marker-yellow) !important;
+}
+
+/* --- Avatar 保留色彩但邊改 dashed kraft --- */
+[data-theme="anti"] .avatar {
+  border-style: dashed !important;
+  border-color: var(--color-anti-kraft) !important;
+}
+
+/* --- Neub scrollbar 在 Anti 下用 kraft 色 --- */
+[data-theme="anti"] .neub-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-anti-paper) !important;
+  border-left-color: var(--color-anti-kraft) !important;
+  border-left-style: dashed !important;
+}
+[data-theme="anti"] .neub-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-anti-kraft) !important;
+}
+
+/* --- Navbar：sticky 半透明白改 cream --- */
+[data-theme="anti"] nav.bg-white\/95 {
+  background: rgba(250, 250, 248, 0.95) !important;
+}
+
+/* --- 輸入框：底色換 cream、邊換 dashed --- */
+[data-theme="anti"] input[type="text"],
+[data-theme="anti"] textarea {
+  background: var(--color-anti-cream) !important;
+  border-style: dashed !important;
+  border-color: var(--color-anti-kraft) !important;
+  font-family: var(--font-serif) !important;
+}
+
+/* --- 隱藏 Neub 裝飾括號（如果有 box-decoration-clone 黃底 h1）--- */
+[data-theme="anti"] .box-decoration-clone {
+  background: var(--color-anti-marker-yellow) !important;
+}
+

@@ -6,6 +6,8 @@
 import RootLayout from '../layouts/RootLayout.astro';
 import NavbarNeub from '../components/NavbarNeub.astro';
 import FooterNeub from '../components/FooterNeub.astro';
+import Testimonials from '../sections/Testimonials.astro';
+import MessageBoard from '../components/MessageBoard.tsx';
 import { getAllPublishedPosts } from '../lib/firestore';
 import { withBase } from '../lib/url';
 
@@ -239,6 +241,9 @@ const courses = [
       </div>
     </section>
 
+    <!-- Testimonials -->
+    <Testimonials />
+
     <!-- Latest Posts -->
     {
       latest.length > 0 && (
@@ -287,6 +292,9 @@ const courses = [
         </section>
       )
     }
+
+    <!-- Message Board (Firebase island, lazy) -->
+    <MessageBoard client:visible />
 
     <!-- Contact -->
     <section id="contact" class="px-6 md:px-10 py-20 bg-white">

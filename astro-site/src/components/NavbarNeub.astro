@@ -7,6 +7,7 @@
  * - currentPath 用於高亮 active link
  */
 import { withBase, base } from '../lib/url';
+import ThemeSwitch from './ThemeSwitch.astro';
 
 interface Props {
   currentPath?: string;
@@ -68,10 +69,18 @@ const resolveHref = (href: string) =>
           </a>
         ))
       }
+      <div class="ml-2 pl-2 border-l-2 border-black">
+        <ThemeSwitch />
+      </div>
+    </div>
+
+    <!-- <md : 手機上 ThemeSwitch 放在 hamburger 左側 -->
+    <div class="md:hidden ml-auto mr-2">
+      <ThemeSwitch />
     </div>
 
     <!-- <md : 手機 hamburger（純 CSS、無 JS） -->
-    <details class="md:hidden ml-auto mobile-menu" aria-label="開啟選單">
+    <details class="md:hidden mobile-menu" aria-label="開啟選單">
       <summary
         class="list-none cursor-pointer select-none w-10 h-10 inline-flex items-center justify-center border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] relative z-50"
         aria-label="切換導覽選單"
