@@ -69,9 +69,18 @@ const courses = [
             程式講師陳彥彤
           </span>
         </h1>
-        <p class="mt-8 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
+
+        <!-- 座右銘印章 -->
+        <div class="mt-6 inline-flex items-center gap-2 text-xs md:text-sm font-mono">
+          <span class="uppercase tracking-widest opacity-60">motto</span>
+          <span class="inline-block bg-black text-white px-3 py-1 tracking-wider">
+            不怕死，只怕不過癮。
+          </span>
+        </div>
+
+        <p class="mt-6 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
           資深後端工程師 · AI 講師。<br />
-          Spring Boot / React / MySQL / Redis 實戰派。企業內訓、技術寫作、系統架構諮詢。
+          Spring Boot / React / MySQL / Redis。企業內訓、技術寫作、系統架構諮詢。
         </p>
 
         <div class="mt-10 flex flex-wrap gap-3">
@@ -139,15 +148,15 @@ const courses = [
           </p>
           <p>
             技術專長包含 Spring Boot、MySQL、Redis、RabbitMQ 等後端技術，同時具備 React 前端開發能力。
-            現在將這些年累積的實戰經驗轉化為系統化的教學內容，幫助想成為後端工程師或提升技術能力的學員，用最有效率的方式掌握程式開發技能。
+            現在把這些年累積下來的工作經驗整理成系統化的教學內容，帶想學後端的人一起走一遍我走過的路。
           </p>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4">
             {
               [
                 { title: '後端專精', desc: 'Spring Boot 企業級' },
-                { title: '電商經驗', desc: '核心系統實戰' },
-                { title: '實戰導向', desc: '即學即用' },
+                { title: '電商經驗', desc: 'WMS / MOX / MIX' },
+                { title: '教學現場', desc: '企業內訓 10-50 場' },
                 { title: '全端能力', desc: '前後端整合' },
               ].map((i) => (
                 <div class="border-2 border-black p-3">
