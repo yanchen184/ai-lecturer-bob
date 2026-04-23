@@ -121,6 +121,83 @@ const courses = [
       </div>
     </section>
 
+    <!-- Signature Work — 讓讀者記住「這個人實際做過的事」 -->
+    <section class="relative overflow-hidden border-b-[3px] border-black bg-black text-white">
+      <!-- 背景網格（印刷感） -->
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 opacity-[0.08]"
+        style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 40px 40px;"
+      ></div>
+
+      <div class="relative max-w-7xl mx-auto px-6 md:px-10 py-20">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+          <div>
+            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+              [ what i've actually shipped ]
+            </div>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
+              不是講師的履歷，<br />是<span class="bg-[var(--color-neub-yellow)] text-black px-2">工程師的成績單</span>。
+            </h2>
+          </div>
+          <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70 font-mono">
+            在開始教書之前，我先是一個在產線上解 bug 的後端工程師。這些是我實際 ship 過的東西。
+          </p>
+        </div>
+
+        <div class="grid gap-0 md:grid-cols-3 border-y-2 border-white/30">
+          <div class="p-6 md:p-8 border-b-2 md:border-b-0 md:border-r-2 border-white/30">
+            <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
+              production system
+            </div>
+            <div class="text-2xl md:text-3xl font-black leading-tight mb-2">
+              WMS / MOX / MIX
+            </div>
+            <p class="text-sm opacity-70 leading-relaxed">
+              電商核心的智能倉儲、訂單、貨品三套系統。每日處理 <strong class="text-[var(--color-neub-yellow)]">10,000+ API requests</strong>，p95 延遲壓在 200ms 以下。
+            </p>
+          </div>
+
+          <div class="p-6 md:p-8 border-b-2 md:border-b-0 md:border-r-2 border-white/30">
+            <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
+              stack i actually ship with
+            </div>
+            <div class="text-2xl md:text-3xl font-black leading-tight mb-2">
+              Spring Boot 4
+            </div>
+            <p class="text-sm opacity-70 leading-relaxed">
+              Java 21 · JPA · Redis · RabbitMQ · MySQL。不是看書學的，是跟著 Spring Boot 從 2 到 4 一起踩出來的。
+            </p>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
+              from dev to teacher
+            </div>
+            <div class="text-2xl md:text-3xl font-black leading-tight mb-2">
+              10-50 場企業內訓
+            </div>
+            <p class="text-sm opacity-70 leading-relaxed">
+              把產線上踩過的坑，變成能帶人少走彎路的教材。<strong class="text-[var(--color-neub-yellow)]">98% 學員滿意度</strong>不是設計出來的數字。
+            </p>
+          </div>
+        </div>
+
+        <!-- 一句差異化 tagline -->
+        <div class="mt-10 flex flex-wrap items-center gap-3 text-xs md:text-sm font-mono">
+          <span class="inline-block border border-white/40 px-3 py-1 uppercase tracking-wider opacity-80">
+            others
+          </span>
+          <span class="opacity-50">教你寫 Hello World</span>
+          <span class="opacity-40">/</span>
+          <span class="inline-block bg-[var(--color-neub-yellow)] text-black px-3 py-1 uppercase tracking-wider font-bold">
+            me
+          </span>
+          <span class="opacity-90">帶你跑一遍電商核心系統</span>
+        </div>
+      </div>
+    </section>
+
     <!-- About -->
     <section id="about" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1fr_2fr] items-start">
