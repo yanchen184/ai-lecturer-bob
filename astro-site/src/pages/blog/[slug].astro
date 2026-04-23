@@ -188,7 +188,7 @@ const breadcrumbSchema = {
           toc.length > 0 && (
             <>
               {/* Mobile: collapsible TOC（預設展開讓讀者一眼看到整篇結構） */}
-              <details open class="lg:hidden border-2 border-black bg-white">
+              <details open class="lg:hidden border-2 border-black bg-white min-w-0">
                 <summary class="cursor-pointer list-none px-4 py-3 flex items-center justify-between font-mono text-xs uppercase tracking-widest font-black bg-[var(--color-neub-yellow)] border-b-2 border-black">
                   <span>章節目錄 · {toc.length}</span>
                   <span aria-hidden="true" class="toc-caret">▾</span>
@@ -233,7 +233,7 @@ const breadcrumbSchema = {
           )
         }
 
-        <article data-blog-prose class="blog-prose" set:html={html} />
+        <article data-blog-prose class="blog-prose min-w-0" set:html={html} />
       </div>
     </div>
 
