@@ -13,10 +13,13 @@
   --color-anti-marker-yellow: #FFE066;
   --color-anti-cream: #FFF8DC;
 
-  --font-sans: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Courier Prime', 'Courier New', monospace;
-  --font-display: 'Space Grotesk', 'Noto Sans TC', system-ui, sans-serif;
-  --font-serif: Georgia, 'Noto Sans TC', serif;
+  /* 用系統內建繁中字型（PingFang / Microsoft JhengHei / Noto Sans TC），
+     避免下載 Google Fonts 的 Noto Sans TC（數百 KB，延遲 LCP）。
+     英文保留 Space Grotesk / JetBrains Mono（體積小、視覺差異大才值得下載）。 */
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', system-ui, sans-serif;
+  --font-serif: Georgia, 'PingFang TC', 'Noto Serif TC', serif;
 }
 
 /* === Reset（Tailwind v4 preflight 已含 box-sizing/margin/padding reset，
