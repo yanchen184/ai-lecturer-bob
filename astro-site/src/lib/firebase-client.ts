@@ -18,6 +18,7 @@ import {
   setDoc,
   updateDoc,
   increment,
+  limit as fsLimit,
   type Firestore,
   type Timestamp,
   type Unsubscribe,
@@ -267,4 +268,188 @@ export function subscribeToMessages(
       onError?.(error);
     }
   );
+}
+
+// ============ Admin 讀取用 ============
+
+export interface VisitorRecord {
+  id: string;
+  timestamp: Timestamp | null;
+  userAgent: string;
+  referrer: string;
+  path: string;
+  language: string;
+  searchEngine?: string;
+  isFromSearch?: boolean;
+}
+
+export interface PostStat {
+  slug: string;
+  title: string;
+  totalViews: number;
+  lastViewAt: Timestamp | null;
+  firstViewAt: Timestamp | null;
+}
+
+export interface PostView {
+  id: string;
+  slug: string;
+  title: string;
+  timestamp: Timestamp | null;
+  referrer: string;
+  searchEngine?: string;
+}
+
+export interface OutboundStat {
+  target: string;
+  totalClicks: number;
+  lastClickAt: Timestamp | null;
+  firstClickAt: Timestamp | null;
+}
+
+export interface OutboundClick {
+  id: string;
+  url: string;
+  target: string;
+  label: string;
+  fromPath: string;
+  timestamp: Timestamp | null;
+}
+
+export interface VisitorStatsDoc {
+  totalVisits: number;
+  lastVisit: Timestamp | null;
+}
+
+export function subscribeToVisitorStats(
+  callback: (stats: VisitorStatsDoc) => void
+): Unsubscribe {
+  const db = getDb();
+  const ref = doc(db, 'bob_stats', 'visitors');
+  return onSnapshot(ref, (snap) => {
+    const data = snap.data();
+    callback({
+      totalVisits: (data?.totalVisits as number) ?? 0,
+      lastVisit: (data?.lastVisit as Timestamp) ?? null,
+    });
+  });
+}
+
+export function subscribeToRecentVisitors(
+  max = 500,
+  callback: (visitors: VisitorRecord[]) => void
+): Unsubscribe {
+  const db = getDb();
+  const q = query(
+    collection(db, 'bob_visitors'),
+    orderBy('timestamp', 'desc'),
+    fsLimit(max)
+  );
+  return onSnapshot(q, (snap) => {
+    const rows: VisitorRecord[] = snap.docs.map((d) => {
+      const data = d.data();
+      return {
+        id: d.id,
+        timestamp: (data.timestamp as Timestamp) ?? null,
+        userAgent: (data.userAgent as string) || '',
+        referrer: (data.referrer as string) || '',
+        path: (data.path as string) || '',
+        language: (data.language as string) || '',
+        searchEngine: data.searchEngine as string | undefined,
+        isFromSearch: data.isFromSearch as boolean | undefined,
+      };
+    });
+    callback(rows);
+  });
+}
+
+export function subscribeToPostStats(
+  callback: (stats: PostStat[]) => void
+): Unsubscribe {
+  const db = getDb();
+  const q = query(collection(db, 'bob_post_stats'), orderBy('totalViews', 'desc'));
+  return onSnapshot(q, (snap) => {
+    const rows: PostStat[] = snap.docs.map((d) => {
+      const data = d.data();
+      return {
+        slug: (data.slug as string) || d.id,
+        title: (data.title as string) || d.id,
+        totalViews: (data.totalViews as number) ?? 0,
+        lastViewAt: (data.lastViewAt as Timestamp) ?? null,
+        firstViewAt: (data.firstViewAt as Timestamp) ?? null,
+      };
+    });
+    callback(rows);
+  });
+}
+
+export function subscribeToPostViews(
+  max = 500,
+  callback: (views: PostView[]) => void
+): Unsubscribe {
+  const db = getDb();
+  const q = query(
+    collection(db, 'bob_post_views'),
+    orderBy('timestamp', 'desc'),
+    fsLimit(max)
+  );
+  return onSnapshot(q, (snap) => {
+    const rows: PostView[] = snap.docs.map((d) => {
+      const data = d.data();
+      return {
+        id: d.id,
+        slug: (data.slug as string) || '',
+        title: (data.title as string) || (data.slug as string) || '',
+        timestamp: (data.timestamp as Timestamp) ?? null,
+        referrer: (data.referrer as string) || '',
+        searchEngine: data.searchEngine as string | undefined,
+      };
+    });
+    callback(rows);
+  });
+}
+
+export function subscribeToOutboundStats(
+  callback: (stats: OutboundStat[]) => void
+): Unsubscribe {
+  const db = getDb();
+  const q = query(collection(db, 'bob_outbound_stats'), orderBy('totalClicks', 'desc'));
+  return onSnapshot(q, (snap) => {
+    const rows: OutboundStat[] = snap.docs.map((d) => {
+      const data = d.data();
+      return {
+        target: (data.target as string) || d.id,
+        totalClicks: (data.totalClicks as number) ?? 0,
+        lastClickAt: (data.lastClickAt as Timestamp) ?? null,
+        firstClickAt: (data.firstClickAt as Timestamp) ?? null,
+      };
+    });
+    callback(rows);
+  });
+}
+
+export function subscribeToOutboundClicks(
+  max = 200,
+  callback: (clicks: OutboundClick[]) => void
+): Unsubscribe {
+  const db = getDb();
+  const q = query(
+    collection(db, 'bob_outbound_clicks'),
+    orderBy('timestamp', 'desc'),
+    fsLimit(max)
+  );
+  return onSnapshot(q, (snap) => {
+    const rows: OutboundClick[] = snap.docs.map((d) => {
+      const data = d.data();
+      return {
+        id: d.id,
+        url: (data.url as string) || '',
+        target: (data.target as string) || 'other',
+        label: (data.label as string) || '',
+        fromPath: (data.fromPath as string) || '',
+        timestamp: (data.timestamp as Timestamp) ?? null,
+      };
+    });
+    callback(rows);
+  });
 }
