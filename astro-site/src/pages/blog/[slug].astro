@@ -287,6 +287,72 @@ const breadcrumbSchema = {
       })();
     </script>
 
+    <!-- Prism.js syntax highlighting (CDN, 不進 bundle) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <script is:inline src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script is:inline>
+      /* 程式碼區塊：filename header + copy 按鈕 */
+      (function () {
+        function init() {
+          const pres = document.querySelectorAll('article.blog-prose pre[data-lang]');
+          pres.forEach((pre) => {
+            if (pre.dataset.codeEnhanced) return;
+            pre.dataset.codeEnhanced = '1';
+
+            const lang = pre.dataset.lang || 'code';
+            const filename = pre.dataset.filename || '';
+            const label = filename || lang;
+
+            // wrap pre in .code-block
+            const wrap = document.createElement('div');
+            wrap.className = 'code-block';
+            pre.parentNode.insertBefore(wrap, pre);
+            wrap.appendChild(pre);
+
+            // header: label + copy btn
+            const header = document.createElement('div');
+            header.className = 'code-block-header';
+            const labelEl = document.createElement('span');
+            labelEl.className = 'code-block-label';
+            labelEl.textContent = label;
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'code-block-copy';
+            btn.setAttribute('aria-label', '複製程式碼');
+            btn.textContent = 'copy';
+            btn.addEventListener('click', async () => {
+              const code = pre.querySelector('code')?.innerText ?? '';
+              try {
+                await navigator.clipboard.writeText(code);
+                btn.textContent = 'copied ✓';
+                btn.classList.add('is-copied');
+                setTimeout(() => {
+                  btn.textContent = 'copy';
+                  btn.classList.remove('is-copied');
+                }, 1600);
+              } catch {
+                btn.textContent = 'failed';
+                setTimeout(() => (btn.textContent = 'copy'), 1600);
+              }
+            });
+            header.appendChild(labelEl);
+            header.appendChild(btn);
+            wrap.insertBefore(header, pre);
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+
     <script is:inline>
       /* 幫會橫向 overflow 的 table / pre 加提示，依元素類型用不同文案 */
       (function () {
@@ -305,7 +371,9 @@ const breadcrumbSchema = {
             hint.className = 'scroll-hint';
             hint.setAttribute('aria-hidden', 'true');
             hint.textContent = labels.idle;
-            el.parentNode.insertBefore(hint, el);
+            // 若 pre 被 .code-block 包起來，把 hint 插在 wrapper 前面；否則插在 el 前
+            const anchor = el.closest('.code-block') || el;
+            anchor.parentNode.insertBefore(hint, anchor);
             el.dataset.scrollHinted = '1';
 
             const update = () => {

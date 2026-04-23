@@ -69,11 +69,14 @@ export function renderMarkdown(content: string): RenderedMarkdown {
 
   let html = content
     // Code blocks first — protect their content
-    .replace(/```(\w*)\n?([\s\S]*?)```/g, (_m, lang: string, code: string) => {
+    // 支援 ```lang 或 ```lang:filename.ext 格式
+    .replace(/```([\w-]*)(?::([^\n]+))?\n?([\s\S]*?)```/g, (_m, lang: string, filename: string, code: string) => {
       const trimmed = code.replace(/\n$/, '');
       const escaped = escapeHtml(trimmed);
       const langLabel = (lang || 'code').toLowerCase();
-      return `<pre data-lang="${langLabel}"><code>${escaped}</code></pre>`;
+      const prismClass = langLabel === 'code' ? '' : ` class="language-${langLabel}"`;
+      const fileAttr = filename ? ` data-filename="${escapeHtml(filename.trim())}"` : '';
+      return `<pre data-lang="${langLabel}"${fileAttr}><code${prismClass}>${escaped}</code></pre>`;
     });
 
   // GFM tables — must run BEFORE other block-level regexes so `|` pipes aren't
