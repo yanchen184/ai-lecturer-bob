@@ -258,7 +258,7 @@ const courses = [
       latest.length > 0 && (
         <section class="px-6 md:px-10 py-20 border-b-[3px] border-black">
           <div class="max-w-7xl mx-auto">
-            <div class="flex items-baseline justify-between mb-10">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-10">
               <div>
                 <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
                   latest posts
@@ -269,7 +269,7 @@ const courses = [
               </div>
               <a
                 href={withBase('/blog')}
-                class="text-xs uppercase tracking-widest underline font-mono hover:bg-[var(--color-neub-yellow)] px-1"
+                class="self-start sm:self-auto text-xs uppercase tracking-widest underline font-mono hover:bg-[var(--color-neub-yellow)] px-1"
               >
                 all posts →
               </a>
