@@ -168,16 +168,16 @@ body {
 /* Scroll hint：JS 動態加在會 overflow 的 table / pre 前 */
 .blog-prose .scroll-hint {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-align: right;
-  opacity: 0.55;
+  color: #525252;
   margin: 0.75rem 0 -0.25rem;
   user-select: none;
-  transition: opacity 120ms ease;
+  transition: color 120ms ease;
 }
 .blog-prose .scroll-hint.at-end {
-  opacity: 0.3;
+  color: #a3a3a3;
 }
 
 /* Table：小表貼齊容器、大表橫向捲動 */
