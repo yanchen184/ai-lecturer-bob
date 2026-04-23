@@ -91,9 +91,9 @@ const courses = [
           </a>
           <a
             href={withBase('/blog')}
-            class="px-6 py-3 border-2 border-black text-sm uppercase tracking-widest hover:bg-[var(--color-neub-yellow)] transition-colors font-mono"
+            class="inline-flex items-center gap-1 px-2 py-3 text-sm uppercase tracking-widest hover:text-black hover:bg-[var(--color-neub-yellow)] transition-colors font-mono underline decoration-black/20 decoration-2 underline-offset-4 hover:decoration-transparent"
           >
-            瀏覽部落格
+            瀏覽部落格 →
           </a>
         </div>
 
@@ -103,12 +103,12 @@ const courses = [
             stats.map((s, i) => (
               <div
                 class:list={[
-                  'border-2 border-black p-5 md:p-6 transition-transform hover:-translate-y-0.5',
+                  'border-2 border-black px-4 py-5 md:p-6 transition-transform hover:-translate-y-0.5',
                   i === 0 ? 'bg-[var(--color-neub-yellow)]' : 'bg-white',
                 ]}
                 style="box-shadow: 4px 4px 0 #0a0a0a;"
               >
-                <div class="text-3xl md:text-4xl font-black tracking-tight leading-none">
+                <div class="text-2xl md:text-4xl font-black tracking-tight leading-none">
                   {s.number}
                 </div>
                 <div class="text-xs md:text-sm opacity-70 mt-2 font-mono uppercase tracking-wider">

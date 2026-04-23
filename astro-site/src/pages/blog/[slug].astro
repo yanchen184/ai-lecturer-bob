@@ -167,11 +167,11 @@ const breadcrumbSchema = {
           <span class="text-xs uppercase tracking-widest opacity-60">by</span>
           <span class="font-black">{post.author}</span>
           <span class="text-xs opacity-50">·</span>
-          <div class="flex flex-wrap gap-1">
+          <div class="flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <a
                 href={withBase(`/blog?tag=${encodeURIComponent(tag)}`)}
-                class="text-xs border border-black px-1.5 hover:bg-[#ffff00]"
+                class="text-xs border-2 border-black px-2.5 py-1 hover:bg-[#ffff00] leading-none"
               >
                 #{tag}
               </a>
@@ -284,6 +284,39 @@ const breadcrumbSchema = {
         } else {
           init();
         }
+      })();
+    </script>
+
+    <script is:inline>
+      /* 幫會橫向 overflow 的 table / pre 加「左右滑動」提示 */
+      (function () {
+        function decorate() {
+          const targets = document.querySelectorAll('article.blog-prose table, article.blog-prose pre');
+          targets.forEach((el) => {
+            if (el.dataset.scrollHinted) return;
+            if (el.scrollWidth <= el.clientWidth + 1) return;
+            const hint = document.createElement('div');
+            hint.className = 'scroll-hint';
+            hint.setAttribute('aria-hidden', 'true');
+            hint.textContent = '← 左右滑動 →';
+            el.parentNode.insertBefore(hint, el);
+            el.dataset.scrollHinted = '1';
+
+            const update = () => {
+              const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 2;
+              hint.classList.toggle('at-end', atEnd);
+              hint.textContent = atEnd ? '← 滑回開頭' : '← 左右滑動 →';
+            };
+            update();
+            el.addEventListener('scroll', update, { passive: true });
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', decorate);
+        } else {
+          decorate();
+        }
+        window.addEventListener('resize', decorate, { passive: true });
       })();
     </script>
 
