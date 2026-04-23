@@ -168,6 +168,9 @@ body {
   border-collapse: collapse;
   margin: 1.5rem 0;
   border: 3px solid #000;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .blog-prose th, .blog-prose td {
   border: 2px solid #000;
@@ -177,6 +180,17 @@ body {
 .blog-prose th {
   background: var(--color-neub-yellow);
   font-weight: 800;
+}
+@media (max-width: 640px) {
+  .blog-prose table {
+    font-size: 0.875rem;
+    border-width: 2px;
+  }
+  .blog-prose th, .blog-prose td {
+    padding: 0.5rem 0.625rem;
+    border-width: 1px;
+    white-space: normal;
+  }
 }
 
 /* === Anti 覆寫 === */

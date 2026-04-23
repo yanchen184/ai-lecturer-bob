@@ -74,7 +74,62 @@ export function renderMarkdown(content: string): RenderedMarkdown {
       const escaped = escapeHtml(trimmed);
       const langLabel = (lang || 'code').toLowerCase();
       return `<pre data-lang="${langLabel}"><code>${escaped}</code></pre>`;
-    })
+    });
+
+  // GFM tables — must run BEFORE other block-level regexes so `|` pipes aren't
+  // mistaken for inline syntax. Matches header + separator + 1+ body rows.
+  // Alignment hints in the separator (`:--`, `:-:`, `--:`) map to th/td align.
+  const tableRe =
+    /^(\|.+\|)\n(\|[-: |]+\|)\n((?:\|.*\|(?:\n|$))+)/gm;
+  html = html.replace(tableRe, (_m, header: string, sep: string, body: string) => {
+    const parseRow = (row: string): string[] =>
+      row
+        .trim()
+        .replace(/^\|/, '')
+        .replace(/\|$/, '')
+        .split('|')
+        .map((c) => c.trim());
+
+    const alignFromSep = (cell: string): string => {
+      const l = cell.startsWith(':');
+      const r = cell.endsWith(':');
+      if (l && r) return 'center';
+      if (r) return 'right';
+      if (l) return 'left';
+      return '';
+    };
+
+    const heads = parseRow(header);
+    const aligns = parseRow(sep).map(alignFromSep);
+    const rows = body
+      .trim()
+      .split('\n')
+      .map(parseRow);
+
+    const headHtml = heads
+      .map((h, i) => {
+        const a = aligns[i] ? ` style="text-align:${aligns[i]}"` : '';
+        return `<th${a}>${h}</th>`;
+      })
+      .join('');
+    const bodyHtml = rows
+      .map(
+        (r) =>
+          '<tr>' +
+          r
+            .map((c, i) => {
+              const a = aligns[i] ? ` style="text-align:${aligns[i]}"` : '';
+              return `<td${a}>${c}</td>`;
+            })
+            .join('') +
+          '</tr>',
+      )
+      .join('');
+
+    return `<table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table>`;
+  });
+
+  html = html
     .replace(/^## (.+)$/gm, (_m, title: string) => {
       const id = resolveId(title.trim());
       return `<h2 id="${id}">${title}</h2>`;
