@@ -176,13 +176,21 @@ body {
 }
 .blog-prose-anti code {
   background: var(--color-anti-cream) !important;
+  color: var(--color-anti-marker-black) !important;
   border: 1px dashed var(--color-anti-kraft) !important;
   font-family: 'Courier Prime', var(--font-mono) !important;
 }
 .blog-prose-anti pre {
+  background: var(--color-anti-cream) !important;
+  color: var(--color-anti-marker-black) !important;
   border: 1px dashed var(--color-anti-kraft) !important;
   box-shadow: none !important;
   font-family: 'Courier Prime', var(--font-mono) !important;
+}
+.blog-prose-anti pre code {
+  background: transparent !important;
+  border: none !important;
+  color: inherit !important;
 }
 .blog-prose-anti blockquote {
   border-left: 3px solid var(--color-anti-kraft) !important;
