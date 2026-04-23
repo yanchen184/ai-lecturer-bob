@@ -375,4 +375,15 @@ const breadcrumbSchema = {
   </main>
 
   <FooterNeub />
+
+  <script define:vars={{ slug: post.slug, title: post.title }}>
+    import('../../lib/firebase-client').then(({ trackPostView }) => {
+      const fire = () => trackPostView(slug, title);
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(fire, { timeout: 2000 });
+      } else {
+        setTimeout(fire, 1200);
+      }
+    });
+  </script>
 </RootLayout>

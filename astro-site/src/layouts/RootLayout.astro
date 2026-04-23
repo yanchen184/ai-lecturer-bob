@@ -128,5 +128,44 @@ const allJsonLd = Array.isArray(jsonLd)
   </head>
   <body class="bg-[var(--color-neub-bg)]">
     <slot />
+    {!noindex && (
+      <script>
+        import { trackVisitor, trackOutboundClick } from '../lib/firebase-client';
+
+        // 1) 訪客追蹤（requestIdleCallback 避免卡首屏）
+        const fire = () => trackVisitor();
+        if ('requestIdleCallback' in window) {
+          (window as any).requestIdleCallback(fire, { timeout: 2000 });
+        } else {
+          setTimeout(fire, 1000);
+        }
+
+        // 2) 外連點擊追蹤（事件委派，全站 <a> 都攔得到）
+        document.addEventListener(
+          'click',
+          (e) => {
+            const a = (e.target as HTMLElement | null)?.closest('a');
+            if (!a) return;
+            const href = a.getAttribute('href') || '';
+            if (!href) return;
+
+            const isMail = href.startsWith('mailto:');
+            const isTel = href.startsWith('tel:');
+            const isExternal =
+              /^https?:\/\//i.test(href) &&
+              !href.includes(window.location.hostname);
+
+            if (!isMail && !isTel && !isExternal) return;
+
+            trackOutboundClick({
+              url: href,
+              label: (a.textContent || '').trim().slice(0, 50),
+              fromPath: window.location.pathname,
+            });
+          },
+          { capture: true }
+        );
+      </script>
+    )}
   </body>
 </html>

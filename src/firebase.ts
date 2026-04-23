@@ -389,3 +389,163 @@ export const getAllPosts = async (): Promise<FirestorePost[]> => {
   )
   return snapshot.docs.map((d) => mapDocToPost(d.id, d.data()))
 }
+
+// ============ 部落格文章流量統計 ============
+
+export interface PostStat {
+  slug: string
+  title: string
+  totalViews: number
+  lastViewAt: Timestamp | null
+  firstViewAt: Timestamp | null
+}
+
+export interface PostView {
+  id: string
+  slug: string
+  title?: string
+  timestamp: Timestamp | null
+  referrer: string
+  userAgent: string
+  isFromSearch?: boolean
+  searchEngine?: string
+}
+
+/** 訂閱所有文章累計統計（bob_post_stats） */
+export const subscribeToPostStats = (
+  callback: (stats: PostStat[]) => void,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(collection(db, 'bob_post_stats'))
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const stats: PostStat[] = snapshot.docs.map((d) => {
+        const data = d.data()
+        return {
+          slug: (data.slug as string) || d.id,
+          title: (data.title as string) || d.id,
+          totalViews: typeof data.totalViews === 'number' ? data.totalViews : 0,
+          lastViewAt: (data.lastViewAt as Timestamp) ?? null,
+          firstViewAt: (data.firstViewAt as Timestamp) ?? null,
+        }
+      })
+      stats.sort((a, b) => b.totalViews - a.totalViews)
+      callback(stats)
+    },
+    (error) => {
+      console.error('文章統計訂閱失敗:', error)
+      onError?.(error)
+    }
+  )
+}
+
+/** 訂閱最近 N 筆文章瀏覽紀錄（可算「這 7 天 / 30 天」）。預設 500 筆夠算月度。 */
+export const subscribeToPostViews = (
+  callback: (views: PostView[]) => void,
+  max = 500,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(collection(db, 'bob_post_views'), orderBy('timestamp', 'desc'), limit(max))
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const views: PostView[] = snapshot.docs.map((d) => {
+        const data = d.data()
+        return {
+          id: d.id,
+          slug: (data.slug as string) || '',
+          title: (data.title as string) || undefined,
+          timestamp: (data.timestamp as Timestamp) ?? null,
+          referrer: (data.referrer as string) || 'direct',
+          userAgent: (data.userAgent as string) || '',
+          isFromSearch: Boolean(data.isFromSearch),
+          searchEngine: data.searchEngine as string | undefined,
+        }
+      })
+      callback(views)
+    },
+    (error) => {
+      console.error('文章瀏覽訂閱失敗:', error)
+      onError?.(error)
+    }
+  )
+}
+
+// ============ 外連點擊統計 ============
+
+export interface OutboundStat {
+  target: string
+  totalClicks: number
+  lastClickAt: Timestamp | null
+  firstClickAt: Timestamp | null
+}
+
+export interface OutboundClick {
+  id: string
+  url: string
+  target: string
+  label: string
+  fromPath: string
+  timestamp: Timestamp | null
+  userAgent: string
+}
+
+/** 訂閱外連點擊累計統計（bob_outbound_stats） */
+export const subscribeToOutboundStats = (
+  callback: (stats: OutboundStat[]) => void,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(collection(db, 'bob_outbound_stats'))
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const stats: OutboundStat[] = snapshot.docs.map((d) => {
+        const data = d.data()
+        return {
+          target: (data.target as string) || d.id,
+          totalClicks: typeof data.totalClicks === 'number' ? data.totalClicks : 0,
+          lastClickAt: (data.lastClickAt as Timestamp) ?? null,
+          firstClickAt: (data.firstClickAt as Timestamp) ?? null,
+        }
+      })
+      stats.sort((a, b) => b.totalClicks - a.totalClicks)
+      callback(stats)
+    },
+    (error) => {
+      console.error('外連統計訂閱失敗:', error)
+      onError?.(error)
+    }
+  )
+}
+
+/** 訂閱最近 N 筆外連點擊明細 */
+export const subscribeToOutboundClicks = (
+  callback: (clicks: OutboundClick[]) => void,
+  max = 200,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(collection(db, 'bob_outbound_clicks'), orderBy('timestamp', 'desc'), limit(max))
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const clicks: OutboundClick[] = snapshot.docs.map((d) => {
+        const data = d.data()
+        return {
+          id: d.id,
+          url: (data.url as string) || '',
+          target: (data.target as string) || 'other',
+          label: (data.label as string) || '',
+          fromPath: (data.fromPath as string) || '',
+          timestamp: (data.timestamp as Timestamp) ?? null,
+          userAgent: (data.userAgent as string) || '',
+        }
+      })
+      callback(clicks)
+    },
+    (error) => {
+      console.error('外連點擊訂閱失敗:', error)
+      onError?.(error)
+    }
+  )
+}
