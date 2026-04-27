@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [firestore-updated]
+  schedule:
+    # 每天台北時間 09:00 自動 build（UTC 01:00），讓當天 publishDate 的 K8s 文章上線
+    - cron: '0 1 * * *'
 
 permissions:
   contents: read
