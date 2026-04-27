@@ -1,4 +1,20 @@
-# Logs
+# dependencies
+node_modules/
+
+# build output
+dist/
+dist-ssr/
+
+# Astro
+.astro/
+
+# env files
+.env
+.env.local
+.env.production
+*.local
+
+# logs
 logs
 *.log
 npm-debug.log*
@@ -7,15 +23,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# editor / OS
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
