@@ -17,6 +17,7 @@ const posts = await getAllPublishedPosts();
 
 const categories = [...new Set(posts.map((p) => p.category))];
 const tags = [...new Set(posts.flatMap((p) => p.tags))];
+const featured = posts.filter((p) => p.featured);
 
 // K8s 系列：依 group 分組顯示
 const k8sLessons = getAllK8sLessons();
@@ -96,6 +97,64 @@ const jsonLd = {
         />
       </div>
     </section>
+
+    <!-- Featured -->
+    {
+      featured.length > 0 && (
+        <section
+          class="px-6 md:px-10 py-14 border-b-2 border-black bg-white"
+          data-blog-featured
+        >
+          <div class="max-w-7xl mx-auto">
+            <div class="mb-8">
+              <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono">
+                featured · 精選 {featured.length.toString().padStart(2, '0')} 篇
+              </div>
+              <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+                精選文章
+              </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {featured.map((post) => (
+                <article
+                  class="relative border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
+                  style="box-shadow: 6px 6px 0 #0a0a0a;"
+                >
+                  <div
+                    class="absolute -top-3 -right-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black font-mono"
+                    style="background: #ffff00;"
+                  >
+                    ★ FEATURED
+                  </div>
+                  <div class="text-xs uppercase tracking-widest mb-3 opacity-70 font-mono">
+                    [{post.category}] · {formatDate(post.publishDate)} ·{' '}
+                    {post.readingTime}min
+                  </div>
+                  <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
+                    <a
+                      href={withBase(`/blog/${post.slug}`)}
+                      class="hover:bg-[#ffff00] transition-colors"
+                    >
+                      {post.title}
+                    </a>
+                  </h3>
+                  <p class="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80">
+                    {post.excerpt}
+                  </p>
+                  <div class="flex flex-wrap gap-1">
+                    {post.tags.slice(0, 4).map((t) => (
+                      <span class="text-xs opacity-60 border border-black px-1.5 font-mono">
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
 
     <!-- All Posts (featured marked with badge) -->
     <section class="px-6 md:px-10 py-14">
