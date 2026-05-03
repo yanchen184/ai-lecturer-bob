@@ -32,26 +32,50 @@ const skills = [
 
 const courses = [
   {
-    title: '企業 AI 內訓 · 從 LLM 到落地',
-    desc: '給工程團隊的 AI 培訓。從 LLM 基礎、RAG、Agent，到怎麼把 AI 整進現有系統。內容會根據貴司技術棧客製，不是統一講義。',
-    tags: ['AI 內訓', 'RAG', 'LLM 應用'],
+    persona: 'HR / L&D / 學習發展窗口',
+    badge: '01',
+    title: 'AI 培訓菜單 · 工程師教工程師',
+    problem: '老闆說要做 AI 培訓，但你怕找錯講師被工程同事嫌。',
+    deliver: [
+      '半天 / 一天 / 兩天三種規格，內容客製不是統一講義',
+      '給你一份大綱、上課流程、Q&A 預演，可以直接上呈簽核',
+      '結訓後給學員一份能帶回工位繼續用的 cheat sheet + 範例 repo',
+    ],
+    duration: '半天 ～ 兩天',
+    tags: ['AI 內訓', 'LLM', 'RAG', '客製大綱'],
   },
   {
-    title: 'AI 顧問 · 架構與導入',
-    desc: '給正在想「AI 怎麼導入」的團隊。先聊現況、聊資料、聊預算，再給一份能落地的計畫。也接系統架構與後端效能的長期顧問。',
-    tags: ['AI 導入', '架構顧問', '技術選型'],
+    persona: 'CTO / 技術主管 / 工程經理',
+    badge: '02',
+    title: 'AI 導入顧問 + 內訓套餐',
+    problem: '你想推團隊用 AI，但團隊抗拒、不知從哪下手、怕做白工。',
+    deliver: [
+      '先做場景盤點：哪些痛點適合 AI、哪些不適合，講白話',
+      '給可落地的技術選型 + 預算範圍 + 風險清單',
+      '內訓 + 雙週 review，讓團隊邊做邊學、不是一場性消費',
+    ],
+    duration: '單次顧問 ／ 季度合作',
+    tags: ['AI 導入', '架構顧問', '場景盤點', 'Workshop'],
   },
   {
-    title: '前後端與雲端內訓',
-    desc: 'Java + Spring Boot 後端、React + TypeScript 前端、Azure 雲端基礎。內容從電商核心系統真實場景延伸，不走 Hello World。',
-    tags: ['Spring Boot', 'React', 'Azure'],
+    persona: '業務 / PM / 產品主管',
+    badge: '03',
+    title: '半天 AI 場景 Workshop',
+    problem: '你想搞清楚「AI 對我們業務能做什麼、不能做什麼」，又怕被技術名詞繞暈。',
+    deliver: [
+      '半天 workshop，講白話、不丟英文縮寫',
+      '帶著你跟團隊一起列 10-20 個業務場景，現場篩可行性',
+      '結束後給一份「下一步該做什麼」的優先級清單',
+    ],
+    duration: '半天 workshop',
+    tags: ['AI 場景盤點', 'PM 友善', '優先級清單'],
   },
 ];
 ---
 
 <RootLayout
-  title="陳彥彤 YC — AI 顧問 · AI 企業培訓 · Java 後端 8 年"
-  description="陳彥彤 Bob Chen — AI 工程師 · AI 顧問。Java 後端 8 年、AI 工程師 2 年。提供 AI 內訓、AI 導入顧問，以及前後端、雲端的企業培訓。"
+  title="陳彥彤 YC — 把 AI 真的接到公司系統的 AI 企業內訓講師"
+  description="工程師教工程師的 AI 企業內訓與導入顧問。Java 後端 8 年、AI 工程師 2 年。專做 LLM / RAG / Agent 的 production 落地——不是 demo prompt，是要過資安、要長期維運的東西。HR、技術主管、PM 三種對應方案。"
   canonical="/"
 >
   <NavbarNeub />
@@ -61,41 +85,48 @@ const courses = [
     <section class="px-6 md:px-10 py-20 md:py-28 border-b-[3px] border-black">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
-          ai engineer · backend · consultant
+          ai engineer · backend · enterprise training
         </div>
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] md:leading-[1.05] tracking-tight">
-          <span class="block">你好，我是</span>
+          <span class="block">把 AI 真的接到</span>
           <span class="inline-block mt-2 bg-[var(--color-neub-yellow)] px-2 md:px-3 box-decoration-clone">
-            陳彥彤 YC
+            公司系統的人
           </span>
+          <span class="block mt-2">現在帶你的團隊也接得上。</span>
         </h1>
 
-        <!-- 座右銘印章 -->
-        <div class="mt-6 inline-flex items-center gap-2 text-xs md:text-sm font-mono">
-          <span class="uppercase tracking-widest opacity-60">motto</span>
-          <span class="inline-block bg-black text-white px-3 py-1 tracking-wider">
-            不怕死，只怕不過癮。
-          </span>
-        </div>
-
-        <p class="mt-6 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
-          Java 後端 8 年、AI 工程師 2 年。<br />
-          做 AI 項目，也做 AI / 前後端 / 雲端的企業培訓與顧問。
+        <p class="mt-8 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
+          我是<strong>陳彥彤 YC</strong>，Java 後端 8 年、AI 工程師 2 年。<br />
+          專做工程師教工程師的 AI 企業內訓與導入顧問——不是 demo prompt，是會被資安檢查、要長期維運的東西。
         </p>
 
         <div class="mt-10 flex flex-wrap gap-3">
           <a
             href="#courses"
             class="px-6 py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors font-mono"
+            style="box-shadow: 4px 4px 0 var(--color-neub-yellow);"
           >
-            預約課程諮詢 →
+            看內訓方案 →
+          </a>
+          <a
+            href="#contact"
+            class="px-6 py-3 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest border-2 border-black hover:bg-black hover:text-[var(--color-neub-yellow)] transition-colors font-mono font-black"
+          >
+            直接聊需求 →
           </a>
           <a
             href={withBase('/blog')}
             class="inline-flex items-center gap-1 px-2 py-3 text-sm uppercase tracking-widest hover:text-black hover:bg-[var(--color-neub-yellow)] transition-colors font-mono underline decoration-black/20 decoration-2 underline-offset-4 hover:decoration-transparent"
           >
-            瀏覽部落格 →
+            先看技術筆記 →
           </a>
+        </div>
+
+        <!-- 信任 strip：一行字打掉「他到底適不適合」的猶豫 -->
+        <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm md:text-base font-mono opacity-80">
+          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 10-50 場企業內訓累積</span>
+          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> Production AI 落地經驗</span>
+          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 工程師看得懂的內容</span>
         </div>
 
         <!-- Stats -->
@@ -135,51 +166,56 @@ const courses = [
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div>
             <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-              [ what i've actually shipped ]
+              [ why me, not another ai trainer ]
             </div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              不是講師的履歷，<br />是<span class="bg-[var(--color-neub-yellow)] text-black px-2">工程師的成績單</span>。
+              為什麼找我，<br />而不是<span class="bg-[var(--color-neub-yellow)] text-black px-2">其他 AI 講師</span>？
             </h2>
           </div>
           <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70 font-mono">
-            在開始教書之前，我先是一個在產線上解 bug 的後端工程師。這些是我實際 ship 過的東西。
+            市場上 AI 講師很多。但會寫 production code、又會教書、還在做 AI 落地專案的，沒幾個。
           </p>
         </div>
 
         <div class="grid gap-0 md:grid-cols-3 border-y-2 border-white/30">
           <div class="p-6 md:p-8 border-b-2 md:border-b-0 md:border-r-2 border-white/30">
             <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
-              production system
+              01 · production code
             </div>
-            <div class="text-2xl md:text-3xl font-black leading-tight mb-2">
-              WMS / MOX / MIX
+            <div class="text-2xl md:text-3xl font-black leading-tight mb-3">
+              我寫過真的<br />會被罵的程式碼
             </div>
             <p class="text-sm opacity-70 leading-relaxed">
-              電商核心的智能倉儲、訂單、貨品三套系統。從 0 開始參與架構設計、跨團隊整合、線上事故處理。
+              8 年 Java 後端，主責電商核心的 WMS / MOX / MIX 三套系統。
+              從架構設計、跨團隊整合到線上事故處理一路走過來。
+              <strong class="text-[var(--color-neub-yellow)]">不是只在 sandbox 寫過 demo</strong>，是真的會被 PM 追進度、被 SRE 抓 alert、被資安抓 audit 的那種。
             </p>
           </div>
 
           <div class="p-6 md:p-8 border-b-2 md:border-b-0 md:border-r-2 border-white/30">
             <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
-              stack i actually ship with
+              02 · ai in production
             </div>
-            <div class="text-2xl md:text-3xl font-black leading-tight mb-2">
-              Spring Boot 4
+            <div class="text-2xl md:text-3xl font-black leading-tight mb-3">
+              我做過真的<br />要長期維運的 AI
             </div>
             <p class="text-sm opacity-70 leading-relaxed">
-              Java 21 · JPA · Redis · RabbitMQ · MySQL。不是看書學的，是跟著 Spring Boot 從 2 到 4 一起踩出來的。
+              近 2 年把 LLM、RAG、Agent 真的接到既有系統的工程實踐。
+              <strong class="text-[var(--color-neub-yellow)]">不是 demo prompt</strong>——是要過資安、要接 SSO、要評估成本、要監控品質、要長期維運的東西。教學內容直接用這些經驗當教材。
             </p>
           </div>
 
           <div class="p-6 md:p-8">
             <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
-              from dev to teacher
+              03 · engineers teaching engineers
             </div>
-            <div class="text-2xl md:text-3xl font-black leading-tight mb-2">
-              AI / 前後端 / 雲端內訓
+            <div class="text-2xl md:text-3xl font-black leading-tight mb-3">
+              我教書，<br />但教法是工程師
             </div>
             <p class="text-sm opacity-70 leading-relaxed">
-              把產線上踩過的坑變成能帶人少走彎路的教材。10-50 場企業內訓累積出來的，不是滑面投影片，是工程師看得懂的內容。
+              10-50 場企業內訓累積出來，內容直接打開 IDE / 終端機，
+              不走滑面投影片、不發雞湯。
+              <strong class="text-[var(--color-neub-yellow)]">工程師會嫌的講師我自己也嫌</strong>——所以這場對得起你工程團隊的時間。
             </p>
           </div>
         </div>
@@ -189,12 +225,12 @@ const courses = [
           <span class="inline-block border border-white/40 px-3 py-1 uppercase tracking-wider opacity-80">
             others
           </span>
-          <span class="opacity-50">教你 prompt 工程</span>
+          <span class="opacity-50">教 prompt、講概念、發投影片</span>
           <span class="opacity-40">/</span>
           <span class="inline-block bg-[var(--color-neub-yellow)] text-black px-3 py-1 uppercase tracking-wider font-bold">
             me
           </span>
-          <span class="opacity-90">帶你把 AI 整進公司系統</span>
+          <span class="opacity-90">帶你把 AI 整進公司系統，留下能維運的程式碼</span>
         </div>
       </div>
     </section>
@@ -216,14 +252,17 @@ const courses = [
 
         <div class="space-y-5 text-base md:text-lg leading-relaxed">
           <p>
-            我是<strong>陳彥彤</strong>，<strong>Java 後端工程師</strong>做了 8 年，近 2 年轉做<strong>AI 工程師</strong>，現在同時帶 <strong>AI 導入顧問</strong>與<strong>企業內訓</strong>。
+            <strong>Java 後端 8 年、AI 工程師 2 年。</strong>
+            出身電商核心系統團隊（WMS / MOX / MIX），主責架構設計、跨團隊整合、線上事故處理。
           </p>
           <p>
-            後端那邊是電商核心系統的長期經歷：智能倉儲系統（WMS）、訂單管理系統（MOX）、貨品管理系統（MIX），從架構設計、跨團隊整合、線上事故處理一路走過來。
+            近兩年把 LLM、RAG、Agent 真的接到既有系統裡——
+            <strong>要過資安、要接 SSO、要評估成本、要監控品質、要長期維運。</strong>
+            這些落地經驗整理成教材，帶 AI / 前後端 / 雲端三條線的企業內訓，也接 AI 導入的顧問案。
           </p>
-          <p>
-            AI 那邊是把 LLM、RAG、Agent 真的接到公司既有系統裡的工程實踐——不是 demo prompt，是會被 PM 追進度、會被資安檢查、要長期維運的東西。
-            這些經驗整理成系統化教材，帶 AI / 前後端 / 雲端三條線的企業內訓，也接 AI 導入的顧問案。
+          <p class="text-base opacity-75 italic border-l-4 border-black pl-4">
+            我不是「以前是工程師現在轉講師」——我是<strong>邊做專案邊教書的工程師</strong>，
+            這也是為什麼我的教材永遠跟得上工程現場。
           </p>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4">
@@ -290,37 +329,78 @@ const courses = [
     <section id="courses" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-          services
+          who are you · 對應方案
         </div>
-        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-10">
-          課程與服務
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-3">
+          告訴我你是誰，<br class="md:hidden" />我給你對應方案
         </h2>
+        <p class="text-sm md:text-base opacity-70 max-w-3xl leading-relaxed mb-10">
+          下面三種角色找我的需求最常見。挑一張像你的卡片，直接點下方 CTA 寄信，<strong>主旨已經幫你寫好</strong>。
+        </p>
 
         <div class="grid gap-6 md:grid-cols-3">
           {
             courses.map((c) => (
-              <div class="border-2 border-black p-6 hover:bg-[var(--color-neub-yellow)] transition-colors">
-                <h3 class="text-lg font-black leading-tight mb-3">{c.title}</h3>
-                <p class="text-sm leading-relaxed opacity-80 mb-4">{c.desc}</p>
-                <div class="flex flex-wrap gap-1.5">
-                  {c.tags.map((t) => (
-                    <span class="text-xs border border-black px-1.5 py-0.5 font-mono">
-                      #{t}
-                    </span>
+              <div
+                class="relative border-2 border-black bg-white p-6 flex flex-col"
+                style="box-shadow: 6px 6px 0 #0a0a0a;"
+              >
+                <div
+                  class="absolute -top-3 -left-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black font-mono bg-[var(--color-neub-yellow)]"
+                >
+                  {c.badge}
+                </div>
+                <div class="text-[11px] uppercase tracking-widest opacity-70 mb-2 font-mono">
+                  if you are
+                </div>
+                <div class="text-base font-black mb-4 leading-tight">
+                  {c.persona}
+                </div>
+                <h3 class="text-xl font-black leading-tight mb-3 border-t-2 border-black pt-4">
+                  {c.title}
+                </h3>
+                <p class="text-sm leading-relaxed opacity-80 mb-4">
+                  <strong>你的痛：</strong>{c.problem}
+                </p>
+                <div class="text-[11px] uppercase tracking-widest opacity-60 mb-2 font-mono">
+                  我給你
+                </div>
+                <ul class="space-y-2 text-sm mb-5 flex-1">
+                  {c.deliver.map((d) => (
+                    <li class="flex items-start gap-2 leading-relaxed">
+                      <span class="text-black/40 select-none">▸</span>
+                      <span>{d}</span>
+                    </li>
                   ))}
+                </ul>
+                <div class="border-t-2 border-black pt-3 mt-auto flex items-center justify-between text-xs font-mono">
+                  <span class="opacity-70">時長：<strong>{c.duration}</strong></span>
+                  <a
+                    href={`mailto:bobchen184@gmail.com?subject=${encodeURIComponent(`[${c.persona}] 想聊聊 ${c.title}`)}&body=${encodeURIComponent(`嗨 YC，\n\n我是 ___（公司／團隊）___ 的 ${c.persona}。\n\n• 目前情境：\n• 想解決的問題：\n• 預期時程：\n• 大概人數 / 預算範圍：\n\n謝謝！`)}`}
+                    class="font-black uppercase tracking-widest hover:underline"
+                  >
+                    寄信聊 →
+                  </a>
                 </div>
               </div>
             ))
           }
         </div>
 
-        <div class="mt-10 text-center">
-          <a
-            href="#contact"
-            class="inline-block px-6 py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors font-mono"
-          >
-            立即聯繫 →
-          </a>
+        <!-- Anti-pitch：什麼案子我不接 -->
+        <div class="mt-12 border-2 border-dashed border-black p-6 bg-[#fafaf6]">
+          <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+            transparency · 我不接什麼案
+          </div>
+          <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
+            為了不浪費你的時間 — 這幾種案我會婉拒
+          </h3>
+          <ul class="grid gap-2 md:grid-cols-2 text-sm leading-relaxed">
+            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「明天就要上、預算先不談」的急件——做不出對得起你的東西</span></li>
+            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「想找講師講 AI 概論抵 ESG 學分」——我不擅長雞湯場</span></li>
+            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「保證讓我們做出 ChatGPT 級產品」——做不到的事我不接</span></li>
+            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「希望講師全程不寫程式」——我寫程式才是這場的價值</span></li>
+          </ul>
         </div>
       </div>
     </section>
@@ -382,70 +462,105 @@ const courses = [
 
     <!-- Contact -->
     <section id="contact" class="px-6 md:px-10 py-20 bg-white">
-      <div class="max-w-7xl mx-auto grid gap-10 md:grid-cols-2">
-        <div>
-          <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-            contact
-          </div>
-          <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-6">
-            開始合作
-          </h2>
-          <p class="text-base leading-relaxed opacity-80 mb-6">
-            AI 內訓、AI 導入顧問、前後端與雲端培訓 —— 歡迎透過 Email 或 GitHub 聯繫。
-            一對一諮詢與團隊培訓皆可客製化內容，先聊需求再報價。
-          </p>
+      <div class="max-w-7xl mx-auto">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+          next step · 下一步
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-3">
+          挑你最舒服的下一步
+        </h2>
+        <p class="text-base md:text-lg leading-relaxed opacity-80 mb-10 max-w-3xl">
+          不用先想清楚才能聯繫。挑一個對應你現在狀態的入口，
+          <strong>對應的信件主旨已經幫你寫好</strong>，回信節奏通常 1-2 個工作日。
+        </p>
 
+        <div class="grid gap-6 md:grid-cols-3">
+          <!-- Path 1: 想先聊聊 -->
           <a
-            href="mailto:bobchen184@gmail.com?subject=%5B%E5%90%88%E4%BD%9C%E9%9C%80%E6%B1%82%5D%20&body=%E5%97%A8%E5%BD%A5%E5%BD%A4%EF%BC%8C%0A%0A%E6%88%91%E6%83%B3%E8%81%8A%E8%81%8A%EF%BC%9A%0A%0A%E2%80%A2%20%E9%9C%80%E6%B1%82%E7%B1%BB%E5%9E%8B%EF%BC%88%E4%BC%81%E6%A5%AD%E5%85%A7%E8%A8%93%20%2F%20%E6%8A%80%E8%A1%93%E8%AB%AE%E8%A9%A2%20%2F%20%E7%B3%BB%E7%B5%B1%E9%A1%A7%E5%95%8F%EF%BC%89%EF%BC%9A%0A%E2%80%A2%20%E7%B0%A1%E8%BF%B0%E7%8B%80%E6%B3%81%EF%BC%9A%0A%E2%80%A2%20%E5%B8%8C%E6%9C%9B%E8%99%95%E7%90%86%E7%9A%84%E6%99%82%E7%A8%8B%EF%BC%9A%0A%0A%E8%AC%9D%E8%AC%9D%EF%BC%81"
-            class="inline-flex items-center gap-3 px-6 py-4 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest font-black border-2 border-black font-mono hover:bg-black hover:text-[var(--color-neub-yellow)] transition-colors"
-            style="box-shadow: 5px 5px 0 #0a0a0a;"
+            href={`mailto:bobchen184@gmail.com?subject=${encodeURIComponent('[30 分鐘聊聊] 想先了解你的內訓模式')}&body=${encodeURIComponent('嗨 YC，\n\n我是 ___（公司／團隊）___ 的 ___（職稱）___。\n\n我還在評估階段，想先約 30 分鐘聊聊：\n• 我們團隊狀況：\n• 在意的問題（不確定也沒關係）：\n• 方便的時段：\n\n謝謝！')}`}
+            class="block border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1 group"
+            style="box-shadow: 6px 6px 0 #0a0a0a;"
           >
-            寄信談合作
-            <span aria-hidden="true">→</span>
+            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+              path 01 · 探索期
+            </div>
+            <div class="text-2xl font-black mb-2 leading-tight group-hover:bg-[var(--color-neub-yellow)] inline-block px-1">
+              還在想要不要做？
+            </div>
+            <p class="text-sm opacity-80 leading-relaxed mb-4">
+              30 分鐘免費通話。先聊你們的痛點與現況，我直接告訴你<strong>需不需要找講師</strong>——
+              如果不需要，我會跟你說。
+            </p>
+            <div class="text-xs uppercase tracking-widest font-black font-mono">
+              寄信約聊 →
+            </div>
           </a>
+
+          <!-- Path 2: 已經有需求 -->
+          <a
+            href={`mailto:bobchen184@gmail.com?subject=${encodeURIComponent('[已有需求] AI 內訓 / 顧問 詢價')}&body=${encodeURIComponent('嗨 YC，\n\n我是 ___（公司）___ 的 ___（職稱）___。\n\n我們的需求：\n• 想做的類型（內訓 / 顧問 / 兩者）：\n• 對象（工程師 / PM / 主管）：\n• 大概人數：\n• 預期時程：\n• 預算範圍（讓我幫你規劃合適規格）：\n• 已知的場景或痛點：\n\n謝謝！')}`}
+            class="block border-2 border-black bg-[var(--color-neub-yellow)] p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1 group"
+            style="box-shadow: 6px 6px 0 #0a0a0a;"
+          >
+            <div class="text-xs uppercase tracking-widest opacity-70 mb-3 font-mono">
+              path 02 · 評估期 ★ 推薦
+            </div>
+            <div class="text-2xl font-black mb-2 leading-tight">
+              已經有需求了？
+            </div>
+            <p class="text-sm leading-relaxed mb-4 opacity-90">
+              直接寄信，<strong>主旨與問題清單都幫你寫好</strong>——填完五個欄位寄出，
+              我這邊 1-2 個工作日給你初步建議與報價區間。
+            </p>
+            <div class="text-xs uppercase tracking-widest font-black font-mono">
+              直接寄信 →
+            </div>
+          </a>
+
+          <!-- Path 3: 想看樣本 -->
+          <div
+            class="border-2 border-black bg-white p-6"
+            style="box-shadow: 6px 6px 0 #0a0a0a;"
+          >
+            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+              path 03 · 觀察期
+            </div>
+            <div class="text-2xl font-black mb-2 leading-tight">
+              想先看作品？
+            </div>
+            <p class="text-sm opacity-80 leading-relaxed mb-4">
+              不急著聊。
+              先看技術筆記與 GitHub 判斷我這個人合不合你們團隊的口味。
+            </p>
+            <div class="space-y-2">
+              <a
+                href={withBase('/blog')}
+                class="flex items-center justify-between border-2 border-black px-3 py-2 text-sm hover:bg-[var(--color-neub-yellow)] transition-colors"
+              >
+                <span class="font-black">技術部落格</span>
+                <span>→</span>
+              </a>
+              <a
+                href="https://github.com/yanchen184"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center justify-between border-2 border-black px-3 py-2 text-sm hover:bg-[var(--color-neub-yellow)] transition-colors"
+              >
+                <span class="font-black">GitHub @yanchen184</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div class="space-y-4">
-          <a
-            href="mailto:bobchen184@gmail.com"
-            class="flex items-center justify-between border-2 border-black p-5 hover:bg-[var(--color-neub-yellow)] transition-colors"
-          >
-            <div>
-              <div class="text-xs uppercase tracking-widest opacity-60 font-mono mb-1">
-                email
-              </div>
-              <div class="font-black">bobchen184@gmail.com</div>
-            </div>
-            <span class="text-xl">→</span>
-          </a>
-
-          <a
-            href="https://github.com/yanchen184"
-            target="_blank"
-            rel="noopener"
-            class="flex items-center justify-between border-2 border-black p-5 hover:bg-[var(--color-neub-yellow)] transition-colors"
-          >
-            <div>
-              <div class="text-xs uppercase tracking-widest opacity-60 font-mono mb-1">
-                github
-              </div>
-              <div class="font-black">yanchen184</div>
-            </div>
-            <span class="text-xl">→</span>
-          </a>
-
-          <a
-            href={withBase('/blog')}
-            class="flex items-center justify-between border-2 border-black p-5 hover:bg-[var(--color-neub-yellow)] transition-colors"
-          >
-            <div>
-              <div class="text-xs uppercase tracking-widest opacity-60 font-mono mb-1">
-                blog
-              </div>
-              <div class="font-black">技術文章與實戰筆記</div>
-            </div>
-            <span class="text-xl">→</span>
-          </a>
+        <!-- 直接資訊 -->
+        <div class="mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm font-mono opacity-80 border-t-2 border-black pt-6">
+          <span class="font-black uppercase tracking-widest">direct contact</span>
+          <a href="mailto:bobchen184@gmail.com" class="hover:bg-[var(--color-neub-yellow)] px-1">bobchen184@gmail.com</a>
+          <span class="opacity-40">·</span>
+          <a href="https://github.com/yanchen184" target="_blank" rel="noopener" class="hover:bg-[var(--color-neub-yellow)] px-1">github.com/yanchen184</a>
+          <span class="opacity-40">·</span>
+          <span>地點：台灣（線上 / 北中南實體皆可）</span>
         </div>
       </div>
     </section>
