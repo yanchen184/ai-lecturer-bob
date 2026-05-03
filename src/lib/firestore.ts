@@ -35,6 +35,11 @@ const POSTS_COLLECTION = 'bob_blog_posts';
  * 部落格文章（build-time 靜態資料結構）
  * 對齊舊專案的 BlogPost + FirestorePost 欄位。
  */
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -49,6 +54,7 @@ export interface BlogPost {
   readingTime: number;
   featured: boolean;
   defaultStyle?: 'neub' | 'anti';
+  faqItems?: FaqItem[];
 }
 
 let db: Firestore | null = null;
@@ -77,21 +83,50 @@ const mapDoc = (id: string, data: Record<string, unknown>): BlogPost => ({
     data.defaultStyle === 'anti' || data.defaultStyle === 'neub'
       ? (data.defaultStyle as 'anti' | 'neub')
       : undefined,
+  faqItems: Array.isArray(data.faqItems)
+    ? (data.faqItems as unknown[])
+        .filter(
+          (it): it is { q: string; a: string } =>
+            typeof it === 'object' &&
+            it !== null &&
+            typeof (it as { q?: unknown }).q === 'string' &&
+            typeof (it as { a?: unknown }).a === 'string',
+        )
+        .map((it) => ({ q: it.q, a: it.a }))
+    : undefined,
 });
+
+/**
+ * 今天日期（YYYY-MM-DD）。
+ *
+ * 環境變數 PUBLISH_OVERRIDE_DATE 可以強制改變「今天」是哪一天，
+ * 用於 preview 未來排程的文章（例：`PUBLISH_OVERRIDE_DATE=2026-05-30 npm run build`）。
+ * 與 src/lib/k8s.ts 的 getToday() 行為一致。
+ */
+function getToday(): string {
+  const override = process.env.PUBLISH_OVERRIDE_DATE;
+  if (override && /^\d{4}-\d{2}-\d{2}$/.test(override)) return override;
+  return new Date().toISOString().slice(0, 10);
+}
+
+let cache: BlogPost[] | null = null;
 
 /**
  * 取得所有已發布文章。
  * build 時呼叫一次，之後每次 `getStaticPaths()` 快取在模組作用域。
  *
- * 優先順序：
- *   1. Firestore（published=true）
- *   2. Firestore 為空 → 靜態 fallback
+ * 過濾條件：published=true AND publishDate <= today
+ * （未來日的文章不會出現在前台，靠 daily cron rebuild 自動上線）
+ *
+ * Fallback 順序：
+ *   1. Firestore 拉到合格文章
+ *   2. Firestore 為空 / 全為未來排程 → 靜態 fallback（同樣套 publishDate 過濾）
  *   3. Firestore 失敗 → 靜態 fallback（不讓 build 掛掉）
  */
-let cache: BlogPost[] | null = null;
-
 export async function getAllPublishedPosts(): Promise<BlogPost[]> {
   if (cache) return cache;
+
+  const today = getToday();
 
   try {
     const db = getDb();
@@ -100,22 +135,28 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
       where('published', '==', true)
     );
     const snap = await getDocs(q);
-    const posts = snap.docs.map((d) => mapDoc(d.id, d.data()));
+    const allPosts = snap.docs.map((d) => mapDoc(d.id, d.data()));
+    const posts = allPosts.filter((p) => p.publishDate && p.publishDate <= today);
+    const scheduled = allPosts.length - posts.length;
 
     if (posts.length === 0) {
-      console.warn('[firestore] bob_blog_posts 為空，使用靜態 fallback');
-      cache = staticPosts;
-      return staticPosts;
+      console.warn('[firestore] bob_blog_posts 為空（或全為未來排程），使用靜態 fallback');
+      cache = staticPosts.filter((p) => p.publishDate && p.publishDate <= today);
+      return cache;
     }
 
     posts.sort((a, b) => (a.publishDate < b.publishDate ? 1 : -1));
-    console.log(`[firestore] 載入 ${posts.length} 篇文章`);
+    if (scheduled > 0) {
+      console.log(`[firestore] 載入 ${posts.length} 篇文章（${scheduled} 篇排程未來日）`);
+    } else {
+      console.log(`[firestore] 載入 ${posts.length} 篇文章`);
+    }
     cache = posts;
     return posts;
   } catch (error) {
     console.error('[firestore] fetch 失敗，使用靜態 fallback:', error);
-    cache = staticPosts;
-    return staticPosts;
+    cache = staticPosts.filter((p) => p.publishDate && p.publishDate <= today);
+    return cache;
   }
 }
 
