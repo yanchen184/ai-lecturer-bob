@@ -6,7 +6,8 @@
 import RootLayout from '../layouts/RootLayout.astro';
 import NavbarNeub from '../components/NavbarNeub.astro';
 import FooterNeub from '../components/FooterNeub.astro';
-import Testimonials from '../sections/Testimonials.astro';
+// import Testimonials from '../sections/Testimonials.astro';
+// 暫時隱藏：等累積真實學員 / 客戶具名回饋再放回（避免樣板回饋反而傷信任）
 import MessageBoard from '../components/MessageBoard.tsx';
 import { getAllPublishedPosts } from '../lib/firestore';
 import { withBase } from '../lib/url';
@@ -27,57 +28,41 @@ const productionCases = [
     domain: '醫療領域',
     title: '決策輔助系統的反饋學習機制',
     body: 'AI 模型隨臨床實際使用持續修正的閉環設計——讓模型不是上線就停在那，而是真的越用越準。',
-    tags: ['Feedback Loop', '模型迭代', 'Production AI'],
+    fitFor: '想做模型持續優化、避免 AI 上線後就靜止的團隊',
     color: '#ff6ec7',
   },
   {
     domain: '企業語音辨識',
     title: '用聯發科 Breeze-ASR-25 落地',
-    body: '協助企業導入繁體中文語音辨識（基於聯發科開源 ASR 模型），含部署、領域術語調教、品質監控。不只 OpenAI Whisper，本土模型也能落地。',
-    tags: ['Breeze-ASR-25', '繁中語音', '企業部署'],
+    body: '協助企業導入繁體中文語音辨識（基於聯發科開源 ASR 模型），含部署、領域術語調教、品質監控。本土模型也能用得上。',
+    fitFor: '客服中心、醫療逐字稿、會議記錄、客訴分析',
     color: '#ffaa00',
   },
   {
     domain: '企業內部',
     title: '會議記錄 RAG 檢索',
     body: '跨部門會議檔的向量檢索與語意問答，含 ACL 權限切割——不同角色看到不同會議，不靠 prompt 攔截，靠 retrieval 層先過濾。',
-    tags: ['RAG', '向量檢索', 'ACL 權限'],
+    fitFor: '知識管理、企業內部問答、跨部門資料檢索',
     color: '#7cc0ff',
   },
 ];
 
 const faqs: { q: string; a: string }[] = [
   {
-    q: '收費怎麼算？我能先知道大概價格嗎？',
-    a: '我不公開固定報價。原因是內訓 / 顧問差異很大——半天 PM workshop 跟兩天工程師深度班、全客製大綱跟既有教材微調，價格會差好幾倍。先聊 30 分鐘了解你的規模、對象、客製程度，我這邊一兩天內給你準確報價區間，不會有「先聊聊再追加」的狀況。',
+    q: '收費怎麼算？網站上為什麼看不到報價？',
+    a: '我選擇「先聊需求再報價」，不放固定價格表。原因很直接：我想用「你們的需求對不對」來篩第一輪，不是用「價格能不能負擔」來篩——這兩件事篩出的客戶很不一樣。聊 30 分鐘了解你們團隊規模、對象、想做到什麼程度，價格我會直接告訴你，不繞圈子、不會有「先聊聊再追加」的情況。',
   },
   {
     q: '客製化流程是怎麼運作的？',
-    a: '收到你的需求後我會回一份「課前訪談題庫」（你們團隊現在用什麼、痛點是什麼、想學完做什麼），約一次 30-60 分鐘對焦會議，之後產出客製大綱給你內部簽核。簽核通過後我才開始備課、寫範例 repo。',
+    a: '收到你的需求後我會回一份「課前訪談題庫」（你們團隊現在用什麼工具、卡在哪、想學完做到什麼），約一次 30-60 分鐘對焦會議，之後產出客製大綱給你內部簽核。簽核通過後我才開始備課、寫範例 repo——所以你拿到的東西會是針對你們團隊的，不是通用講義。',
   },
   {
-    q: '線上 / 實體都可以嗎？',
-    a: '都可以。實體：北中南都跑過。線上：用 Google Meet / Teams / Webex 都行。混合（部分人實體 + 部分人線上）也接，但我會建議你選一邊比較好——同時招呼兩邊體驗會打折。',
-  },
-  {
-    q: '可以開公司發票嗎？流程？',
-    a: '可以。我有公司行號，能開二聯 / 三聯發票。確認需求後我會發報價單，你內部簽核完回傳，課後 7 個工作日內開立發票。月結 30 / 60 也都接受。',
-  },
-  {
-    q: '臨時要取消怎麼辦？',
-    a: '7 天前取消無條件全額退；3-7 天取消收 50%；3 天內取消收全額（因為備課與檔期都已投入）。延期則完全沒問題，只要找得到雙方都 OK 的新檔期。',
-  },
-  {
-    q: '我們團隊很小（5 人以下），划得來嗎？',
-    a: '划得來。小團隊我反而能做更貼身的內容——直接看你們真實 codebase、真實痛點、真實工作流，不是發通用講義。報價我會用較合理的小團體價，不要因為人少就放棄這件事。',
-  },
-  {
-    q: '資料 / 程式碼隱私怎麼處理？',
-    a: '我簽 NDA。教學用例會匿名化（公司名替換、敏感欄位脫敏）。如果你們希望課後我這邊不留任何材料副本，課後我會清空相關檔案。',
+    q: '可以開公司發票嗎？月結可以嗎？',
+    a: '可以。我有公司行號，能開二聯 / 三聯發票，月結 30 / 60 也都接受。確認需求後我會發報價單，你內部簽核完回傳，課後 7 個工作日內開立發票。',
   },
   {
     q: '結訓後團隊還能繼續問問題嗎？',
-    a: '可以。基本款：結訓後一個月內 email / Slack 群組 Q&A 不額外收費。延伸方案：雙週 review 顧問合作，做完一場內訓後最常被選的後續方案。',
+    a: '可以。基本款：結訓後一個月內 email / Slack 群組 Q&A 不額外收費，避免學員回去卡住就放棄。延伸方案：雙週 review 顧問合作——做完一場內訓後最常被選的後續方案，把 AI 工具真的長到你們團隊的工作流裡。',
   },
 ];
 
@@ -158,20 +143,32 @@ const courses = [
     <section class="px-6 md:px-10 py-20 md:py-28 border-b-[3px] border-black">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
-          ai consultant · enterprise training · production-ready
+          ai enterprise training · ai consulting · taiwan
         </div>
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] md:leading-[1.05] tracking-tight">
-          <span class="block">把 AI 真的接到</span>
+          <span class="block">想讓你的團隊</span>
           <span class="inline-block mt-2 bg-[var(--color-neub-yellow)] px-2 md:px-3 box-decoration-clone">
-            公司系統的人
+            用 AI 把日常做得更快？
           </span>
-          <span class="block mt-2">現在帶你的團隊也接得上。</span>
         </h1>
 
         <p class="mt-8 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
-          我是<strong>陳彥彤 YC</strong>。專做<strong>會被資安檢查、要長期維運</strong>的 AI 企業內訓與導入顧問。<br class="hidden md:inline" />
-          醫療決策輔助、企業語音辨識、會議 RAG——三個 production 專案的工程實踐，直接帶到你的內訓現場。
+          我是<strong>陳彥彤 YC</strong>。教 <strong>Claude Code、AI Agent、AI 工作流</strong>——
+          課程內容就是我自己每天在 production 用的同一套工具。<br class="hidden md:inline" />
+          學員下課就能照著做，下週就能在自己工位繼續用。
         </p>
+
+        <!-- 兩條業務線一目了然 -->
+        <div class="mt-8 grid gap-2 max-w-2xl text-sm md:text-base font-mono">
+          <div class="flex items-baseline gap-3 leading-relaxed">
+            <span class="opacity-50 shrink-0">▎</span>
+            <span><strong class="bg-[var(--color-neub-yellow)] px-1">AI 企業內訓主力：</strong>Claude Code、AI Agent、工作效率提升</span>
+          </div>
+          <div class="flex items-baseline gap-3 leading-relaxed">
+            <span class="opacity-50 shrink-0">▎</span>
+            <span><strong class="bg-[var(--color-neub-yellow)] px-1">AI 顧問實作：</strong>醫療決策輔助、Breeze-ASR-25 語音辨識、會議 RAG</span>
+          </div>
+        </div>
 
         <div class="mt-10 flex flex-wrap items-center gap-3">
           <a
@@ -182,18 +179,11 @@ const courses = [
             聊聊你的需求 →
           </a>
           <a
-            href="#production"
+            href="#courses"
             class="text-sm uppercase tracking-widest font-mono underline decoration-black/30 decoration-2 underline-offset-4 hover:bg-[var(--color-neub-yellow)] px-1 transition-colors"
           >
-            先看落地經驗
+            看內訓方案
           </a>
-        </div>
-
-        <!-- 信任 strip：一行字打掉「他到底適不適合」的猶豫 -->
-        <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm md:text-base font-mono opacity-80">
-          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 醫療 / 語音 / RAG 三個 production AI 專案</span>
-          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 10-50 場企業內訓累積</span>
-          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 工程師教工程師的內容</span>
         </div>
 
         <!-- Stats -->
@@ -220,85 +210,48 @@ const courses = [
       </div>
     </section>
 
-    <!-- Signature Work — 讓讀者記住「這個人實際做過的事」 -->
+    <!-- 差異化 band：一個句子定位 -->
     <section class="relative overflow-hidden border-b-[3px] border-black bg-black text-white">
-      <!-- 背景網格（印刷感） -->
       <div
         aria-hidden="true"
         class="pointer-events-none absolute inset-0 opacity-[0.08]"
         style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 40px 40px;"
       ></div>
 
-      <div class="relative max-w-7xl mx-auto px-6 md:px-10 py-20">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <div>
-            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-              [ why me, not another ai trainer ]
-            </div>
-            <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              為什麼找我，<br />而不是<span class="bg-[var(--color-neub-yellow)] text-black px-2">其他 AI 講師</span>？
-            </h2>
-          </div>
-          <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70 font-mono">
-            市場上 AI 講師很多。但會寫 production code、又會教書、還在做 AI 落地專案的，沒幾個。
-          </p>
+      <div class="relative max-w-7xl mx-auto px-6 md:px-10 py-16">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
+          [ what makes me different ]
         </div>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1] max-w-4xl">
+          內訓現場的範例，<br />
+          <span class="bg-[var(--color-neub-yellow)] text-black px-2">就是我自己 production 系統的同一段 code。</span>
+        </h2>
 
-        <div class="grid gap-0 md:grid-cols-3 border-y-2 border-white/30">
-          <div class="p-6 md:p-8 border-b-2 md:border-b-0 md:border-r-2 border-white/30">
-            <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
-              01 · production code
+        <div class="mt-8 grid gap-4 md:grid-cols-3 max-w-5xl">
+          <div class="border-l-2 border-white/30 pl-4">
+            <div class="text-[10px] uppercase tracking-widest opacity-50 font-mono mb-1">
+              today
             </div>
-            <div class="text-2xl md:text-3xl font-black leading-tight mb-3">
-              我寫過真的<br />會被罵的程式碼
+            <div class="text-base font-black leading-tight">
+              我每天用 Claude Code、AI Agent 寫 production
             </div>
-            <p class="text-sm opacity-70 leading-relaxed">
-              8 年 Java 後端，主責電商核心的 WMS / MOX / MIX 三套系統。
-              從架構設計、跨團隊整合到線上事故處理一路走過來。
-              <strong class="text-[var(--color-neub-yellow)]">不是只在 sandbox 寫過 demo</strong>，是真的會被 PM 追進度、被 SRE 抓 alert、被資安抓 audit 的那種。
-            </p>
           </div>
-
-          <div class="p-6 md:p-8 border-b-2 md:border-b-0 md:border-r-2 border-white/30">
-            <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
-              02 · ai in production
+          <div class="border-l-2 border-white/30 pl-4">
+            <div class="text-[10px] uppercase tracking-widest opacity-50 font-mono mb-1">
+              this month
             </div>
-            <div class="text-2xl md:text-3xl font-black leading-tight mb-3">
-              我做過真的<br />要長期維運的 AI
+            <div class="text-base font-black leading-tight">
+              整理成你團隊一天可上手的內訓
             </div>
-            <p class="text-sm opacity-70 leading-relaxed">
-              近 2 年把 LLM、RAG、Agent 真的接到既有系統的工程實踐——
-              要過資安、要接 SSO、要評估成本、要監控品質、要<strong class="text-[var(--color-neub-yellow)]">長期維運</strong>。
-              教學內容直接用這些經驗當教材。
-            </p>
           </div>
-
-          <div class="p-6 md:p-8">
-            <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-3">
-              03 · engineers teaching engineers
+          <div class="border-l-2 border-[var(--color-neub-yellow)] pl-4">
+            <div class="text-[10px] uppercase tracking-widest opacity-70 font-mono mb-1 text-[var(--color-neub-yellow)]">
+              your team next week
             </div>
-            <div class="text-2xl md:text-3xl font-black leading-tight mb-3">
-              我教書，<br />但教法是工程師
+            <div class="text-base font-black leading-tight">
+              下課就能在自己工位繼續用
             </div>
-            <p class="text-sm opacity-70 leading-relaxed">
-              10-50 場企業內訓累積出來，內容直接打開 IDE / 終端機，
-              不走滑面投影片、不發雞湯。
-              <strong class="text-[var(--color-neub-yellow)]">工程師會嫌的講師我自己也嫌</strong>——所以這場對得起你工程團隊的時間。
-            </p>
           </div>
-        </div>
-
-        <!-- 一句差異化 tagline -->
-        <div class="mt-10 flex flex-wrap items-center gap-3 text-xs md:text-sm font-mono">
-          <span class="inline-block border border-white/40 px-3 py-1 uppercase tracking-wider opacity-80">
-            others
-          </span>
-          <span class="opacity-50">教 prompt、講概念、發投影片</span>
-          <span class="opacity-40">/</span>
-          <span class="inline-block bg-[var(--color-neub-yellow)] text-black px-3 py-1 uppercase tracking-wider font-bold">
-            me
-          </span>
-          <span class="opacity-90">帶你把 AI 整進公司系統，留下能維運的程式碼</span>
         </div>
       </div>
     </section>
@@ -309,10 +262,11 @@ const courses = [
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
             <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-              production ai cases · 落地經驗
+              production ai cases · 顧問實作經驗
             </div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              我做過的 AI 不是 demo——<br />是<span class="bg-[var(--color-neub-yellow)] px-2">真的上線在跑</span>的東西
+              三個<span class="bg-[var(--color-neub-yellow)] px-2">真的上線在跑</span>的<br />
+              AI 顧問實作
             </h2>
           </div>
           <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70">
@@ -340,12 +294,13 @@ const courses = [
                 <p class="text-sm leading-relaxed opacity-80 mb-5 flex-1">
                   {p.body}
                 </p>
-                <div class="flex flex-wrap gap-1.5 pt-4 border-t-2 border-black">
-                  {p.tags.map((t) => (
-                    <span class="text-[11px] font-mono px-2 py-0.5 border border-black/40 opacity-80">
-                      #{t}
-                    </span>
-                  ))}
+                <div class="pt-4 border-t-2 border-black">
+                  <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-1.5">
+                    fit for · 適合你們的場景
+                  </div>
+                  <div class="text-sm leading-snug font-bold">
+                    {p.fitFor}
+                  </div>
                 </div>
               </article>
             ))
@@ -353,7 +308,7 @@ const courses = [
         </div>
 
         <p class="mt-8 text-sm md:text-base font-mono opacity-70 max-w-3xl leading-relaxed">
-          ▸ 想知道某個案例怎麼操作的？我可以在內訓現場拆給你工程團隊看——包含當時的選型、踩到的坑、最後怎麼結。
+          ▸ 看到對應到你們的場景？這些案的選型、踩坑、最後怎麼結，可以在內訓 / 顧問現場直接拆給你工程團隊看。
         </p>
       </div>
     </section>
@@ -514,60 +469,7 @@ const courses = [
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <Testimonials />
-
-    <!-- Latest Posts -->
-    {
-      latest.length > 0 && (
-        <section class="px-6 md:px-10 py-20 border-b-[3px] border-black">
-          <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-10">
-              <div>
-                <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-                  latest posts
-                </div>
-                <h2 class="text-3xl md:text-4xl font-black tracking-tight">
-                  最新文章
-                </h2>
-              </div>
-              <a
-                href={withBase('/blog')}
-                class="self-start sm:self-auto text-xs uppercase tracking-widest underline font-mono hover:bg-[var(--color-neub-yellow)] px-1"
-              >
-                all posts →
-              </a>
-            </div>
-
-            <div
-              class:list={[
-                'grid gap-0 border-t-2 border-black',
-                latest.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2',
-              ]}
-            >
-              {latest.map((p, i) => (
-                <a
-                  href={withBase(`/blog/${p.slug}`)}
-                  class:list={[
-                    'block p-6 border-b-2 border-black hover:bg-[var(--color-neub-yellow)] transition-colors',
-                    i < latest.length - 1 ? 'md:border-r-2' : '',
-                  ]}
-                >
-                  <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-                    [{p.category}] · {formatDate(p.publishDate)}
-                  </div>
-                  <h3 class="text-lg font-black leading-tight mb-2">{p.title}</h3>
-                  <p class="text-sm opacity-70 line-clamp-2">{p.excerpt}</p>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-    }
-
-    <!-- Message Board (Firebase island, lazy) -->
-    <MessageBoard client:visible />
+    {/* Testimonials 暫時隱藏：等累積真實具名回饋再放回 */}
 
     <!-- FAQ -->
     <section id="faq" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
@@ -618,7 +520,7 @@ const courses = [
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="px-6 md:px-10 py-20 bg-white">
+    <section id="contact" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
           next step · 下一步
@@ -721,6 +623,58 @@ const courses = [
         </div>
       </div>
     </section>
+
+    <!-- Latest Posts — 給「Path 03 觀察期」讀者的探索區 -->
+    {
+      latest.length > 0 && (
+        <section class="px-6 md:px-10 py-16 border-b-[3px] border-black bg-[#fafaf6]">
+          <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-8">
+              <div>
+                <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono">
+                  latest posts · 還想多看一點？
+                </div>
+                <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+                  最新技術筆記
+                </h2>
+              </div>
+              <a
+                href={withBase('/blog')}
+                class="self-start sm:self-auto text-xs uppercase tracking-widest underline font-mono hover:bg-[var(--color-neub-yellow)] px-1"
+              >
+                all posts →
+              </a>
+            </div>
+
+            <div
+              class:list={[
+                'grid gap-0 border-t-2 border-black bg-white',
+                latest.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2',
+              ]}
+            >
+              {latest.map((p, i) => (
+                <a
+                  href={withBase(`/blog/${p.slug}`)}
+                  class:list={[
+                    'block p-5 border-b-2 border-black hover:bg-[var(--color-neub-yellow)] transition-colors',
+                    i < latest.length - 1 ? 'md:border-r-2' : '',
+                  ]}
+                >
+                  <div class="text-[11px] uppercase tracking-widest opacity-60 mb-2 font-mono">
+                    [{p.category}] · {formatDate(p.publishDate)}
+                  </div>
+                  <h3 class="text-base font-black leading-tight mb-2">{p.title}</h3>
+                  <p class="text-sm opacity-70 line-clamp-2">{p.excerpt}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Message Board (Firebase island, lazy) -->
+    <MessageBoard client:visible />
   </main>
 
   <FooterNeub />
