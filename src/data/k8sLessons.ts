@@ -161,6 +161,11 @@ StatefulSet← DB 這種有狀態的服務需要固定身份
 ## 下一步
 
 如果你還沒用過 Docker,先去學 Docker。如果 Docker 已經 OK 了,下一篇我們會用一張圖把 [Docker 跟 K8s 的差別](/blog/k8s/docker-vs-kubernetes) 講得更清楚,讓你**回家可以用 30 秒跟同事解釋**這兩個東西的關係。
+
+> 📅 **下一篇（2026-04-29 已上線）**：[Docker 和 Kubernetes 差在哪？一張圖看懂兩者關係](/blog/k8s/docker-vs-kubernetes)
+> 用最簡單的比喻：Docker 把應用裝箱、K8s 是貨運公司，兩個一起用才完整。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -289,6 +294,11 @@ Docker 在 K8s 世界的角色是「**製造 image 的工具 + 開發階段的�
 ## 下一步
 
 知道兩者關係後，下一篇我們把 [K8s 的 8 個核心概念一次搞懂](/blog/k8s/k8s-eight-concepts-overview)——Pod、Service、Ingress、ConfigMap、Secret、Volume、Deployment、StatefulSet 全部用因果鏈串起來，**看完一張表就記住**。
+
+> 📅 **下一篇（2026-04-30 已上線）**：[K8s 八大核心概念總覽](/blog/k8s/k8s-eight-concepts-overview)
+> 一次看懂 8 個 K8s 名詞，每個都是因為「上一個解決不了」才出現，用因果鏈串起來最好記。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -432,6 +442,11 @@ K8s 的概念不是隨機堆疊的，是「上一個解決不了的問題」催�
 ## 下一步
 
 知道有哪 8 個了，下一篇先看 [K8s 整體架構：Master 和 Worker 在做什麼](/blog/k8s/k8s-architecture-master-worker)——把這 8 個概念跑在「叢集裡」是怎麼一回事，**API Server / Scheduler / Controller / kubelet 各司其職**搞清楚。
+
+> 📅 **下一篇（2026-05-01 已上線）**：[Kubernetes 架構：Master Node 和 Worker Node 在做什麼？](/blog/k8s/k8s-architecture-master-worker)
+> 用「公司組織」比喻講清楚 API Server / Scheduler / Controller / kubelet 各自的職責。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -657,6 +672,11 @@ kubectl get pods -n kube-system
 ## 下一步
 
 架構懂了，但目前都是紙上談兵。下一篇我們**真的把 K8s 裝起來**：[k3d 跟 minikube 怎麼選？新手安裝指南](/blog/k8s/k3d-vs-minikube-local-setup) ——本機跑一個迷你 K8s 叢集，跟著做後面所有實戰。
+
+> 📅 **下一篇（2026-05-02 已上線）**：[本地裝 K8s：k3d 與 minikube 怎麼選？新手安裝指南](/blog/k8s/k3d-vs-minikube-local-setup)
+> k3d 輕量快、minikube 老牌穩，實測比較加完整安裝步驟（macOS / Windows / Linux）。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -884,6 +904,11 @@ kubectl delete pod test-nginx
 ## 下一步
 
 叢集裝起來了，下一篇我們**真的進去摸 K8s 肚子**：[\`kubectl get pods -n kube-system\` 在看什麼](/blog/k8s/kube-system-explore)——把架構圖上的組件，**一個一個在實際 Pod 列表裡找出來認**，看完你會對 K8s 有全新的認識。
+
+> 📅 **下一篇（2026-05-03 已上線）**：[kubectl get pods -n kube-system 在看什麼？K8s 自己也是用 Pod 跑](/blog/k8s/kube-system-explore)
+> 看 kube-system namespace 裡的 coredns / kube-proxy / traefik，等於看懂 K8s 自己怎麼運作。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
