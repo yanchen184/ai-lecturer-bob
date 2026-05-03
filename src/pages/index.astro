@@ -16,11 +16,83 @@ const latest = posts.slice(0, 3);
 const formatDate = (d: string) => d.replaceAll('-', '/');
 
 const stats = [
-  { number: '8 年', label: 'Java 後端' },
-  { number: '2 年', label: 'AI 工程師' },
-  { number: '10-50 場', label: '企業內訓' },
+  { number: '3+', label: 'Production AI 專案' },
+  { number: '10-50', label: '場企業內訓' },
+  { number: 'Java + AI', label: '雙棧背景' },
   { number: 'AZ-900', label: 'Azure 認證' },
 ];
+
+const productionCases = [
+  {
+    domain: '醫療領域',
+    title: '決策輔助系統的反饋學習機制',
+    body: 'AI 模型隨臨床實際使用持續修正的閉環設計——讓模型不是上線就停在那，而是真的越用越準。',
+    tags: ['Feedback Loop', '模型迭代', 'Production AI'],
+    color: '#ff6ec7',
+  },
+  {
+    domain: '企業語音辨識',
+    title: '用聯發科 Breeze-ASR-25 落地',
+    body: '協助企業導入繁體中文語音辨識（基於聯發科開源 ASR 模型），含部署、領域術語調教、品質監控。不只 OpenAI Whisper，本土模型也能落地。',
+    tags: ['Breeze-ASR-25', '繁中語音', '企業部署'],
+    color: '#ffaa00',
+  },
+  {
+    domain: '企業內部',
+    title: '會議記錄 RAG 檢索',
+    body: '跨部門會議檔的向量檢索與語意問答，含 ACL 權限切割——不同角色看到不同會議，不靠 prompt 攔截，靠 retrieval 層先過濾。',
+    tags: ['RAG', '向量檢索', 'ACL 權限'],
+    color: '#7cc0ff',
+  },
+];
+
+const faqs: { q: string; a: string }[] = [
+  {
+    q: '收費怎麼算？我能先知道大概價格嗎？',
+    a: '我不公開固定報價。原因是內訓 / 顧問差異很大——半天 PM workshop 跟兩天工程師深度班、全客製大綱跟既有教材微調，價格會差好幾倍。先聊 30 分鐘了解你的規模、對象、客製程度，我這邊一兩天內給你準確報價區間，不會有「先聊聊再追加」的狀況。',
+  },
+  {
+    q: '客製化流程是怎麼運作的？',
+    a: '收到你的需求後我會回一份「課前訪談題庫」（你們團隊現在用什麼、痛點是什麼、想學完做什麼），約一次 30-60 分鐘對焦會議，之後產出客製大綱給你內部簽核。簽核通過後我才開始備課、寫範例 repo。',
+  },
+  {
+    q: '線上 / 實體都可以嗎？',
+    a: '都可以。實體：北中南都跑過。線上：用 Google Meet / Teams / Webex 都行。混合（部分人實體 + 部分人線上）也接，但我會建議你選一邊比較好——同時招呼兩邊體驗會打折。',
+  },
+  {
+    q: '可以開公司發票嗎？流程？',
+    a: '可以。我有公司行號，能開二聯 / 三聯發票。確認需求後我會發報價單，你內部簽核完回傳，課後 7 個工作日內開立發票。月結 30 / 60 也都接受。',
+  },
+  {
+    q: '臨時要取消怎麼辦？',
+    a: '7 天前取消無條件全額退；3-7 天取消收 50%；3 天內取消收全額（因為備課與檔期都已投入）。延期則完全沒問題，只要找得到雙方都 OK 的新檔期。',
+  },
+  {
+    q: '我們團隊很小（5 人以下），划得來嗎？',
+    a: '划得來。小團隊我反而能做更貼身的內容——直接看你們真實 codebase、真實痛點、真實工作流，不是發通用講義。報價我會用較合理的小團體價，不要因為人少就放棄這件事。',
+  },
+  {
+    q: '資料 / 程式碼隱私怎麼處理？',
+    a: '我簽 NDA。教學用例會匿名化（公司名替換、敏感欄位脫敏）。如果你們希望課後我這邊不留任何材料副本，課後我會清空相關檔案。',
+  },
+  {
+    q: '結訓後團隊還能繼續問問題嗎？',
+    a: '可以。基本款：結訓後一個月內 email / Slack 群組 Q&A 不額外收費。延伸方案：雙週 review 顧問合作，做完一場內訓後最常被選的後續方案。',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.a,
+    },
+  })),
+};
 
 const skills = [
   { group: 'AI', label: 'ai', color: '#ffaa00', items: ['LLM 應用', 'RAG', 'Agent', '語音辨識', 'Prompt 設計'] },
@@ -75,8 +147,9 @@ const courses = [
 
 <RootLayout
   title="陳彥彤 YC — 把 AI 真的接到公司系統的 AI 企業內訓講師"
-  description="工程師教工程師的 AI 企業內訓與導入顧問。Java 後端 8 年、AI 工程師 2 年。專做 LLM / RAG / Agent 的 production 落地——不是 demo prompt，是要過資安、要長期維運的東西。HR、技術主管、PM 三種對應方案。"
+  description="工程師教工程師的 AI 企業內訓與導入顧問。Java 後端 8 年、AI 工程師 2 年。專做 LLM / RAG / Agent 的 production 落地——醫療決策輔助、企業語音辨識（Breeze-ASR-25）、會議 RAG 三個真實案例。HR、技術主管、PM 三種對應方案。"
   canonical="/"
+  jsonLd={faqJsonLd}
 >
   <NavbarNeub />
 
@@ -85,7 +158,7 @@ const courses = [
     <section class="px-6 md:px-10 py-20 md:py-28 border-b-[3px] border-black">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
-          ai engineer · backend · enterprise training
+          ai consultant · enterprise training · production-ready
         </div>
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] md:leading-[1.05] tracking-tight">
           <span class="block">把 AI 真的接到</span>
@@ -96,37 +169,31 @@ const courses = [
         </h1>
 
         <p class="mt-8 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
-          我是<strong>陳彥彤 YC</strong>，Java 後端 8 年、AI 工程師 2 年。<br />
-          專做工程師教工程師的 AI 企業內訓與導入顧問——不是 demo prompt，是會被資安檢查、要長期維運的東西。
+          我是<strong>陳彥彤 YC</strong>。專做<strong>會被資安檢查、要長期維運</strong>的 AI 企業內訓與導入顧問。<br class="hidden md:inline" />
+          醫療決策輔助、企業語音辨識、會議 RAG——三個 production 專案的工程實踐，直接帶到你的內訓現場。
         </p>
 
-        <div class="mt-10 flex flex-wrap gap-3">
-          <a
-            href="#courses"
-            class="px-6 py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors font-mono"
-            style="box-shadow: 4px 4px 0 var(--color-neub-yellow);"
-          >
-            看內訓方案 →
-          </a>
+        <div class="mt-10 flex flex-wrap items-center gap-3">
           <a
             href="#contact"
             class="px-6 py-3 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest border-2 border-black hover:bg-black hover:text-[var(--color-neub-yellow)] transition-colors font-mono font-black"
+            style="box-shadow: 4px 4px 0 #0a0a0a;"
           >
-            直接聊需求 →
+            聊聊你的需求 →
           </a>
           <a
-            href={withBase('/blog')}
-            class="inline-flex items-center gap-1 px-2 py-3 text-sm uppercase tracking-widest hover:text-black hover:bg-[var(--color-neub-yellow)] transition-colors font-mono underline decoration-black/20 decoration-2 underline-offset-4 hover:decoration-transparent"
+            href="#production"
+            class="text-sm uppercase tracking-widest font-mono underline decoration-black/30 decoration-2 underline-offset-4 hover:bg-[var(--color-neub-yellow)] px-1 transition-colors"
           >
-            先看技術筆記 →
+            先看落地經驗
           </a>
         </div>
 
         <!-- 信任 strip：一行字打掉「他到底適不適合」的猶豫 -->
         <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm md:text-base font-mono opacity-80">
+          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 醫療 / 語音 / RAG 三個 production AI 專案</span>
           <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 10-50 場企業內訓累積</span>
-          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> Production AI 落地經驗</span>
-          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 工程師看得懂的內容</span>
+          <span class="flex items-center gap-2"><span class="text-black/50">▸</span> 工程師教工程師的內容</span>
         </div>
 
         <!-- Stats -->
@@ -200,8 +267,9 @@ const courses = [
               我做過真的<br />要長期維運的 AI
             </div>
             <p class="text-sm opacity-70 leading-relaxed">
-              近 2 年把 LLM、RAG、Agent 真的接到既有系統的工程實踐。
-              <strong class="text-[var(--color-neub-yellow)]">不是 demo prompt</strong>——是要過資安、要接 SSO、要評估成本、要監控品質、要長期維運的東西。教學內容直接用這些經驗當教材。
+              近 2 年把 LLM、RAG、Agent 真的接到既有系統的工程實踐——
+              要過資安、要接 SSO、要評估成本、要監控品質、要<strong class="text-[var(--color-neub-yellow)]">長期維運</strong>。
+              教學內容直接用這些經驗當教材。
             </p>
           </div>
 
@@ -235,6 +303,61 @@ const courses = [
       </div>
     </section>
 
+    <!-- Production AI 落地經驗 — 真實案例 -->
+    <section id="production" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+          <div>
+            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+              production ai cases · 落地經驗
+            </div>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
+              我做過的 AI 不是 demo——<br />是<span class="bg-[var(--color-neub-yellow)] px-2">真的上線在跑</span>的東西
+            </h2>
+          </div>
+          <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70">
+            下面三個是我實際做過、教學現場可直接拆解的案例。
+            細節為配合 NDA 已抽象化，但工程實踐是真的。
+          </p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          {
+            productionCases.map((p) => (
+              <article
+                class="border-2 border-black bg-white p-6 flex flex-col"
+                style="box-shadow: 6px 6px 0 #0a0a0a;"
+              >
+                <div
+                  class="inline-block self-start px-2 py-0.5 text-[11px] uppercase tracking-widest font-mono font-black mb-4 border-2 border-black"
+                  style={`background: ${p.color};`}
+                >
+                  {p.domain}
+                </div>
+                <h3 class="text-xl md:text-2xl font-black leading-tight mb-4">
+                  {p.title}
+                </h3>
+                <p class="text-sm leading-relaxed opacity-80 mb-5 flex-1">
+                  {p.body}
+                </p>
+                <div class="flex flex-wrap gap-1.5 pt-4 border-t-2 border-black">
+                  {p.tags.map((t) => (
+                    <span class="text-[11px] font-mono px-2 py-0.5 border border-black/40 opacity-80">
+                      #{t}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+
+        <p class="mt-8 text-sm md:text-base font-mono opacity-70 max-w-3xl leading-relaxed">
+          ▸ 想知道某個案例怎麼操作的？我可以在內訓現場拆給你工程團隊看——包含當時的選型、踩到的坑、最後怎麼結。
+        </p>
+      </div>
+    </section>
+
     <!-- About -->
     <section id="about" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1fr_2fr] items-start">
@@ -256,7 +379,8 @@ const courses = [
             出身電商核心系統團隊（WMS / MOX / MIX），主責架構設計、跨團隊整合、線上事故處理。
           </p>
           <p>
-            近兩年把 LLM、RAG、Agent 真的接到既有系統裡——
+            近兩年把 LLM、RAG、Agent 真的接到既有系統裡——醫療決策輔助系統的反饋學習機制、
+            用聯發科 Breeze-ASR-25 做的繁中企業語音辨識、跨部門會議的 RAG 檢索（含 ACL 權限切割）。
             <strong>要過資安、要接 SSO、要評估成本、要監控品質、要長期維運。</strong>
             這些落地經驗整理成教材，帶 AI / 前後端 / 雲端三條線的企業內訓，也接 AI 導入的顧問案。
           </p>
@@ -387,21 +511,6 @@ const courses = [
           }
         </div>
 
-        <!-- Anti-pitch：什麼案子我不接 -->
-        <div class="mt-12 border-2 border-dashed border-black p-6 bg-[#fafaf6]">
-          <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-            transparency · 我不接什麼案
-          </div>
-          <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
-            為了不浪費你的時間 — 這幾種案我會婉拒
-          </h3>
-          <ul class="grid gap-2 md:grid-cols-2 text-sm leading-relaxed">
-            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「明天就要上、預算先不談」的急件——做不出對得起你的東西</span></li>
-            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「想找講師講 AI 概論抵 ESG 學分」——我不擅長雞湯場</span></li>
-            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「保證讓我們做出 ChatGPT 級產品」——做不到的事我不接</span></li>
-            <li class="flex items-start gap-2"><span class="text-black/40">✗</span><span>「希望講師全程不寫程式」——我寫程式才是這場的價值</span></li>
-          </ul>
-        </div>
       </div>
     </section>
 
@@ -460,6 +569,54 @@ const courses = [
     <!-- Message Board (Firebase island, lazy) -->
     <MessageBoard client:visible />
 
+    <!-- FAQ -->
+    <section id="faq" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+          frequently asked · 寄信前先看這裡
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-3">
+          常見問題
+        </h2>
+        <p class="text-sm md:text-base opacity-70 max-w-2xl leading-relaxed mb-10">
+          下面這些是 HR / 主管最常在第一封信前想知道的事——直接寫在這裡，省你多寄一輪。
+        </p>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          {
+            faqs.map((f, i) => (
+              <details
+                class="group border-2 border-black bg-white"
+                style="box-shadow: 4px 4px 0 #0a0a0a;"
+              >
+                <summary class="cursor-pointer list-none p-5 flex items-start gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors">
+                  <span class="text-xs font-mono font-black opacity-50 mt-0.5 shrink-0">
+                    Q{(i + 1).toString().padStart(2, '0')}
+                  </span>
+                  <span class="font-black text-base leading-snug flex-1">
+                    {f.q}
+                  </span>
+                  <span class="font-mono opacity-50 transition-transform group-open:rotate-90 shrink-0">
+                    ›
+                  </span>
+                </summary>
+                <div class="px-5 pb-5 pl-12 text-sm leading-relaxed opacity-85 border-t-2 border-black/10">
+                  <p class="pt-4">{f.a}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+
+        <p class="mt-8 text-sm font-mono opacity-70">
+          ▸ 還有其他疑問？直接寄信問就好——
+          <a href="mailto:bobchen184@gmail.com" class="underline font-black hover:bg-[var(--color-neub-yellow)] px-1">
+            bobchen184@gmail.com
+          </a>
+        </p>
+      </div>
+    </section>
+
     <!-- Contact -->
     <section id="contact" class="px-6 md:px-10 py-20 bg-white">
       <div class="max-w-7xl mx-auto">
@@ -498,7 +655,7 @@ const courses = [
 
           <!-- Path 2: 已經有需求 -->
           <a
-            href={`mailto:bobchen184@gmail.com?subject=${encodeURIComponent('[已有需求] AI 內訓 / 顧問 詢價')}&body=${encodeURIComponent('嗨 YC，\n\n我是 ___（公司）___ 的 ___（職稱）___。\n\n我們的需求：\n• 想做的類型（內訓 / 顧問 / 兩者）：\n• 對象（工程師 / PM / 主管）：\n• 大概人數：\n• 預期時程：\n• 預算範圍（讓我幫你規劃合適規格）：\n• 已知的場景或痛點：\n\n謝謝！')}`}
+            href={`mailto:bobchen184@gmail.com?subject=${encodeURIComponent('[已有需求] AI 內訓 / 顧問 詢價')}&body=${encodeURIComponent('嗨 YC，\n\n我是 ___（公司）___ 的 ___（職稱）___。\n\n我們的需求：\n• 想做的類型（內訓 / 顧問 / 兩者）：\n• 對象（工程師 / PM / 主管）：\n• 大概人數：\n• 預期時程：\n• 已知的場景或痛點：\n\n謝謝！')}`}
             class="block border-2 border-black bg-[var(--color-neub-yellow)] p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1 group"
             style="box-shadow: 6px 6px 0 #0a0a0a;"
           >
@@ -509,8 +666,8 @@ const courses = [
               已經有需求了？
             </div>
             <p class="text-sm leading-relaxed mb-4 opacity-90">
-              直接寄信，<strong>主旨與問題清單都幫你寫好</strong>——填完五個欄位寄出，
-              我這邊 1-2 個工作日給你初步建議與報價區間。
+              直接寄信，<strong>主旨與問題清單都幫你寫好</strong>——填完寄出，
+              我這邊 1-2 個工作日給你初步建議與報價。
             </p>
             <div class="text-xs uppercase tracking-widest font-black font-mono">
               直接寄信 →
