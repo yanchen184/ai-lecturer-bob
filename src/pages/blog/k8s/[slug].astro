@@ -395,4 +395,20 @@ const breadcrumbSchema = {
   </main>
 
   <FooterNeub />
+
+  <div id="__post_meta" data-slug={`k8s/${lesson.slug}`} data-title={lesson.title} hidden></div>
+  <script>
+    import { trackPostView } from '../../../lib/firebase-client';
+    const el = document.getElementById('__post_meta') as HTMLElement | null;
+    const slug = el?.dataset.slug ?? '';
+    const title = el?.dataset.title ?? '';
+    if (slug) {
+      const fire = () => { void trackPostView(slug, title); };
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(fire, { timeout: 2000 });
+      } else {
+        setTimeout(fire, 1200);
+      }
+    }
+  </script>
 </RootLayout>
