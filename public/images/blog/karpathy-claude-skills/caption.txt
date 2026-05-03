@@ -1,0 +1,34 @@
+卡巴西的 Claude Skill 紅到 108k stars，要不要抄？
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/karpathy-claude-skills/
+
+—
+
+Andrej Karpathy（卡巴西）2026 年初列了 LLM 寫 code 最常踩的五個坑，被 Forrest Chang 整理成 70 行的 CLAUDE.md，repo 一週衝到 43k、現在 108k stars。
+
+四條規則：
+1. Think Before Coding — 動手前先想清楚（不要默默挑解讀）
+2. Simplicity First — 最小可行 code（不要寫沒被要求的）
+3. Surgical Changes — 只動該動的（不要順手改鄰近）
+4. Goal-Driven Execution — 把任務轉成可驗證目標
+
+但這份規則跟 Claude Code 預設行為 + 常見社群 rule set 重疊度高達 80%。
+
+我自己的判斷：
+
+✅ 兩條真正空白、值得單獨抄：
+• 「多種解讀要列出來，不要默默挑一個」
+• 「每一行改動都能追溯到使用者需求」
+
+❌ 不建議無腦整份裝：
+• 你的 rules 比 70 行版本詳細很多倍
+• 規則會撞車（TDD vs Goal-Driven）
+• Plugin 載入吃 system prompt token
+
+裝法分三種，看場合選：
+- 新手沒寫過 rules → 整份裝當教練
+- 已有自己 rules → 只抄那兩條空白點
+- 公司 rules 不能改 → 當 review checklist
+
+#ClaudeCode #AIcoding #Karpathy #AI工具 #工程師
