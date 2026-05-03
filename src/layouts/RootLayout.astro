@@ -52,10 +52,10 @@ const personSchema = {
   '@type': 'Person',
   name: '陳彥彤 Bob Chen',
   alternateName: '陳彥彤YC',
-  jobTitle: 'AI 講師 · 資深後端工程師',
+  jobTitle: 'AI 顧問 · AI 工程師 · 資深 Java 後端工程師',
   url: `${siteUrl}${withBase('/')}`,
   sameAs: ['https://github.com/yanchen184'],
-  knowsAbout: ['Spring Boot', 'React', 'MySQL', 'Redis', 'AI'],
+  knowsAbout: ['AI 顧問', '企業內訓', 'LLM', 'RAG', 'Agent', 'Spring Boot', 'Java', 'React', 'Azure'],
 };
 
 const allJsonLd = Array.isArray(jsonLd)
@@ -88,7 +88,7 @@ const allJsonLd = Array.isArray(jsonLd)
     <link rel="canonical" href={canonicalUrl} />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="AI 講師陳彥彤YC" />
+    <meta property="og:site_name" content="陳彥彤 YC · AI 顧問" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
@@ -128,7 +128,7 @@ const allJsonLd = Array.isArray(jsonLd)
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="AI 講師陳彥彤YC — 部落格"
+      title="陳彥彤 YC · AI 顧問 — 部落格"
       href={rssUrl}
     />
 

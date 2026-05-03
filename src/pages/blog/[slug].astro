@@ -86,7 +86,7 @@ const blogPostingSchema = {
   },
   publisher: {
     '@type': 'Organization',
-    name: 'AI 講師陳彥彤YC',
+    name: '陳彥彤 YC · AI 顧問',
     url: homeUrl,
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
@@ -125,7 +125,7 @@ const jsonLdSchemas = faqSchema
 ---
 
 <RootLayout
-  title={`${post.title} | AI 講師陳彥彤YC`}
+  title={`${post.title} | 陳彥彤 YC · AI 顧問`}
   description={post.excerpt}
   canonical={`/blog/${post.slug}`}
   jsonLd={jsonLdSchemas}
@@ -427,7 +427,7 @@ const jsonLdSchemas = faqSchema
             <div>
               <div class="font-black">{post.author}</div>
               <p class="text-sm opacity-70 leading-relaxed">
-                後端工程師 · AI 講師。Spring Boot / React / MySQL / Redis。
+                AI 工程師 · AI 顧問。Java 後端 8 年、AI 工程師 2 年。AI 內訓 · AI 導入顧問 · 前後端與雲端培訓。
               </p>
             </div>
           </div>
@@ -437,7 +437,7 @@ const jsonLdSchemas = faqSchema
             support
           </div>
           <p class="text-sm opacity-80 leading-relaxed">
-            覺得文章有用可以到 GitHub 給個 star，或是透過信箱聊聊企業內訓、技術諮詢。
+            覺得文章有用可以到 GitHub 給個 star，或是透過信箱聊聊 AI 內訓、AI 導入顧問或前後端 / 雲端培訓。
           </p>
           <div class="mt-3 flex flex-wrap gap-2 font-mono">
             <a

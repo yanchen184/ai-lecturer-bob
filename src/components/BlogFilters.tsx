@@ -82,15 +82,6 @@ export default function BlogFilters({
     }
     const emptyEl = document.querySelector<HTMLElement>('[data-blog-empty]');
     if (emptyEl) emptyEl.hidden = visible !== 0;
-
-    const featuredSection = document.querySelector<HTMLElement>(
-      '[data-blog-featured]'
-    );
-    if (featuredSection) {
-      const hasFilter =
-        category !== ALL || tag !== ALL || normalizedQuery !== '';
-      featuredSection.hidden = hasFilter;
-    }
   }, [category, tag, query]);
 
   const hasFilter =

@@ -16,41 +16,42 @@ const latest = posts.slice(0, 3);
 const formatDate = (d: string) => d.replaceAll('-', '/');
 
 const stats = [
-  { number: '5-6 年', label: 'Java 後端開發經驗' },
-  { number: '10-50 場', label: '企業授課經歷' },
-  { number: 'AZ-900', label: 'Azure 雲端認證' },
-  { number: '98%', label: '學員滿意度' },
+  { number: '8 年', label: 'Java 後端' },
+  { number: '2 年', label: 'AI 工程師' },
+  { number: '10-50 場', label: '企業內訓' },
+  { number: 'AZ-900', label: 'Azure 認證' },
 ];
 
 const skills = [
+  { group: 'AI', label: 'ai', color: '#ffaa00', items: ['LLM 應用', 'RAG', 'Agent', '語音辨識', 'Prompt 設計'] },
   { group: '後端', label: 'backend', color: 'var(--color-neub-yellow)', items: ['Spring Boot 4', 'Java 21', 'Maven', 'JPA / Hibernate'] },
   { group: '資料', label: 'data', color: '#00ffd1', items: ['MySQL', 'MSSQL', 'Redis', 'RabbitMQ'] },
   { group: '前端', label: 'frontend', color: '#ff6ec7', items: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS'] },
-  { group: 'DevOps', label: 'devops', color: '#7cc0ff', items: ['Docker', 'GitHub Actions', 'Firebase', 'Azure AZ-900'] },
+  { group: '雲端', label: 'cloud', color: '#7cc0ff', items: ['Azure (AZ-900)', 'Docker', 'GitHub Actions', 'Firebase'] },
 ];
 
 const courses = [
   {
-    title: '企業內訓 · Spring Boot 全棧',
-    desc: '從專案結構、分層架構、Repository/Service 設計到 JPA、快取、Redis 整合。用實際電商案例帶學員跑一輪。',
-    tags: ['Spring Boot', 'JPA', 'Redis'],
+    title: '企業 AI 內訓 · 從 LLM 到落地',
+    desc: '給工程團隊的 AI 培訓。從 LLM 基礎、RAG、Agent，到怎麼把 AI 整進現有系統。內容會根據貴司技術棧客製，不是統一講義。',
+    tags: ['AI 內訓', 'RAG', 'LLM 應用'],
   },
   {
-    title: '一對一技術諮詢',
-    desc: '系統架構、效能調校、AI 導入、舊系統遷移（Grails → Spring Boot）。針對你實際的專案給出可落地的解法。',
-    tags: ['Architecture', 'Performance', 'AI 導入'],
+    title: 'AI 顧問 · 架構與導入',
+    desc: '給正在想「AI 怎麼導入」的團隊。先聊現況、聊資料、聊預算，再給一份能落地的計畫。也接系統架構與後端效能的長期顧問。',
+    tags: ['AI 導入', '架構顧問', '技術選型'],
   },
   {
-    title: 'React 前端實戰',
-    desc: '以電商、後台應用為例，從元件設計、狀態管理、API 整合到測試一次帶完，不走 Hello World 教材。',
-    tags: ['React 19', 'TypeScript', 'Testing'],
+    title: '前後端與雲端內訓',
+    desc: 'Java + Spring Boot 後端、React + TypeScript 前端、Azure 雲端基礎。內容從電商核心系統真實場景延伸，不走 Hello World。',
+    tags: ['Spring Boot', 'React', 'Azure'],
   },
 ];
 ---
 
 <RootLayout
-  title="AI 講師陳彥彤YC — 後端工程師 · Spring Boot / React 企業內訓"
-  description="陳彥彤 Bob Chen — 資深後端工程師 · AI 講師。5-6 年電商核心系統開發經驗，10-50 場企業授課經歷。提供 Spring Boot、React、MySQL、Redis 企業內訓與技術諮詢。"
+  title="陳彥彤 YC — AI 顧問 · AI 企業培訓 · Java 後端 8 年"
+  description="陳彥彤 Bob Chen — AI 工程師 · AI 顧問。Java 後端 8 年、AI 工程師 2 年。提供 AI 內訓、AI 導入顧問，以及前後端、雲端的企業培訓。"
   canonical="/"
 >
   <NavbarNeub />
@@ -60,12 +61,12 @@ const courses = [
     <section class="px-6 md:px-10 py-20 md:py-28 border-b-[3px] border-black">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
-          ai lecturer · senior backend engineer
+          ai engineer · backend · consultant
         </div>
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] md:leading-[1.05] tracking-tight">
           <span class="block">你好，我是</span>
           <span class="inline-block mt-2 bg-[var(--color-neub-yellow)] px-2 md:px-3 box-decoration-clone">
-            程式講師陳彥彤
+            陳彥彤 YC
           </span>
         </h1>
 
@@ -78,8 +79,8 @@ const courses = [
         </div>
 
         <p class="mt-6 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
-          資深後端工程師 · AI 講師。<br />
-          Spring Boot / React / MySQL / Redis。企業內訓、技術寫作、系統架構諮詢。
+          Java 後端 8 年、AI 工程師 2 年。<br />
+          做 AI 項目，也做 AI / 前後端 / 雲端的企業培訓與顧問。
         </p>
 
         <div class="mt-10 flex flex-wrap gap-3">
@@ -154,7 +155,7 @@ const courses = [
               WMS / MOX / MIX
             </div>
             <p class="text-sm opacity-70 leading-relaxed">
-              電商核心的智能倉儲、訂單、貨品三套系統。每日處理 <strong class="text-[var(--color-neub-yellow)]">10,000+ API requests</strong>，p95 延遲壓在 200ms 以下。
+              電商核心的智能倉儲、訂單、貨品三套系統。從 0 開始參與架構設計、跨團隊整合、線上事故處理。
             </p>
           </div>
 
@@ -175,10 +176,10 @@ const courses = [
               from dev to teacher
             </div>
             <div class="text-2xl md:text-3xl font-black leading-tight mb-2">
-              10-50 場企業內訓
+              AI / 前後端 / 雲端內訓
             </div>
             <p class="text-sm opacity-70 leading-relaxed">
-              把產線上踩過的坑，變成能帶人少走彎路的教材。<strong class="text-[var(--color-neub-yellow)]">98% 學員滿意度</strong>不是設計出來的數字。
+              把產線上踩過的坑變成能帶人少走彎路的教材。10-50 場企業內訓累積出來的，不是滑面投影片，是工程師看得懂的內容。
             </p>
           </div>
         </div>
@@ -188,12 +189,12 @@ const courses = [
           <span class="inline-block border border-white/40 px-3 py-1 uppercase tracking-wider opacity-80">
             others
           </span>
-          <span class="opacity-50">教你寫 Hello World</span>
+          <span class="opacity-50">教你 prompt 工程</span>
           <span class="opacity-40">/</span>
           <span class="inline-block bg-[var(--color-neub-yellow)] text-black px-3 py-1 uppercase tracking-wider font-bold">
             me
           </span>
-          <span class="opacity-90">帶你跑一遍電商核心系統</span>
+          <span class="opacity-90">帶你把 AI 整進公司系統</span>
         </div>
       </div>
     </section>
@@ -215,25 +216,23 @@ const courses = [
 
         <div class="space-y-5 text-base md:text-lg leading-relaxed">
           <p>
-            大家好，我是<strong>陳彥彤</strong>，一位<strong>資深後端工程師</strong>兼<strong>程式講師</strong>。
-            擁有 5-6 年 Java 後端開發經驗，專精於企業級系統架構與高併發解決方案。
+            我是<strong>陳彥彤</strong>，<strong>Java 後端工程師</strong>做了 8 年，近 2 年轉做<strong>AI 工程師</strong>，現在同時帶 <strong>AI 導入顧問</strong>與<strong>企業內訓</strong>。
           </p>
           <p>
-            曾任職於電商核心系統團隊，主責智能倉儲系統（WMS）、訂單管理系統（MOX）、貨品管理系統（MIX）的開發與維護。
-            系統每日處理上萬筆 API 請求，平均延遲維持低於 200ms。
+            後端那邊是電商核心系統的長期經歷：智能倉儲系統（WMS）、訂單管理系統（MOX）、貨品管理系統（MIX），從架構設計、跨團隊整合、線上事故處理一路走過來。
           </p>
           <p>
-            技術專長包含 Spring Boot、MySQL、Redis、RabbitMQ 等後端技術，同時具備 React 前端開發能力。
-            現在把這些年累積下來的工作經驗整理成系統化的教學內容，帶想學後端的人一起走一遍我走過的路。
+            AI 那邊是把 LLM、RAG、Agent 真的接到公司既有系統裡的工程實踐——不是 demo prompt，是會被 PM 追進度、會被資安檢查、要長期維運的東西。
+            這些經驗整理成系統化教材，帶 AI / 前後端 / 雲端三條線的企業內訓，也接 AI 導入的顧問案。
           </p>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4">
             {
               [
-                { title: '後端專精', desc: 'Spring Boot 企業級' },
-                { title: '電商經驗', desc: 'WMS / MOX / MIX' },
-                { title: '教學現場', desc: '企業內訓 10-50 場' },
-                { title: '全端能力', desc: '前後端整合' },
+                { title: 'AI 工程', desc: 'LLM · RAG · Agent' },
+                { title: '後端專精', desc: 'Spring Boot · Java 8 年' },
+                { title: '企業內訓', desc: '10-50 場累積' },
+                { title: 'AI 顧問', desc: 'AI 導入專案' },
               ].map((i) => (
                 <div class="border-2 border-black p-3">
                   <div class="font-black text-sm">{i.title}</div>
@@ -392,7 +391,7 @@ const courses = [
             開始合作
           </h2>
           <p class="text-base leading-relaxed opacity-80 mb-6">
-            企業內訓、技術諮詢、系統架構顧問 —— 歡迎透過 Email 或 GitHub 聯繫。
+            AI 內訓、AI 導入顧問、前後端與雲端培訓 —— 歡迎透過 Email 或 GitHub 聯繫。
             一對一諮詢與團隊培訓皆可客製化內容，先聊需求再報價。
           </p>
 

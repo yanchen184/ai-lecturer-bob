@@ -17,7 +17,6 @@ const posts = await getAllPublishedPosts();
 
 const categories = [...new Set(posts.map((p) => p.category))];
 const tags = [...new Set(posts.flatMap((p) => p.tags))];
-const featured = posts.filter((p) => p.featured);
 
 // K8s 系列：依 group 分組顯示
 const k8sLessons = getAllK8sLessons();
@@ -38,8 +37,8 @@ const absoluteUrl = (p: string) => `${siteOrigin}${withBase(p)}`;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
-  name: 'AI 講師陳彥彤YC — 部落格',
-  description: '後端工程師的技術實戰筆記',
+  name: '陳彥彤 YC · AI 顧問 — 部落格',
+  description: 'AI 工程師 + Java 後端的技術實戰筆記',
   url: absoluteUrl('/blog'),
   blogPost: posts.slice(0, 10).map((p) => ({
     '@type': 'BlogPosting',
@@ -52,8 +51,8 @@ const jsonLd = {
 ---
 
 <RootLayout
-  title="部落格 — AI 講師陳彥彤YC"
-  description="後端工程師的技術筆記。Spring Boot、React、MySQL、Redis 踩坑紀錄、解題過程、企業內訓現場心得。"
+  title="部落格 — 陳彥彤 YC · AI 顧問"
+  description="AI 工程師 + Java 後端的技術筆記。LLM、RAG、Agent 導入心得；Spring Boot、React、MySQL、Redis、雲端踩坑紀錄；企業內訓現場觀察。"
   canonical="/blog"
   jsonLd={jsonLd}
 >
@@ -98,65 +97,7 @@ const jsonLd = {
       </div>
     </section>
 
-    <!-- Featured -->
-    {
-      featured.length > 0 && (
-        <section
-          class="px-6 md:px-10 py-14 border-b-2 border-black bg-white"
-          data-blog-featured
-        >
-          <div class="max-w-7xl mx-auto">
-            <div class="mb-8">
-              <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono">
-                featured · 精選 {featured.length.toString().padStart(2, '0')} 篇
-              </div>
-              <h2 class="text-2xl md:text-3xl font-black tracking-tight">
-                精選文章
-              </h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {featured.map((post) => (
-                <article
-                  class="relative border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
-                  style="box-shadow: 6px 6px 0 #0a0a0a;"
-                >
-                  <div
-                    class="absolute -top-3 -right-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black font-mono"
-                    style="background: #ffff00;"
-                  >
-                    ★ FEATURED
-                  </div>
-                  <div class="text-xs uppercase tracking-widest mb-3 opacity-70 font-mono">
-                    [{post.category}] · {formatDate(post.publishDate)} ·{' '}
-                    {post.readingTime}min
-                  </div>
-                  <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
-                    <a
-                      href={withBase(`/blog/${post.slug}`)}
-                      class="hover:bg-[#ffff00] transition-colors"
-                    >
-                      {post.title}
-                    </a>
-                  </h3>
-                  <p class="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80">
-                    {post.excerpt}
-                  </p>
-                  <div class="flex flex-wrap gap-1">
-                    {post.tags.slice(0, 4).map((t) => (
-                      <span class="text-xs opacity-60 border border-black px-1.5 font-mono">
-                        #{t}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-    }
-
-    <!-- All Posts -->
+    <!-- All Posts (featured marked with badge) -->
     <section class="px-6 md:px-10 py-14">
       <div class="max-w-7xl mx-auto">
         <div
@@ -172,12 +113,7 @@ const jsonLd = {
           </div>
         </div>
 
-        <div
-          class:list={[
-            'grid grid-cols-1 gap-0 border-t-2 border-black',
-            posts.length >= 3 ? 'md:grid-cols-2' : '',
-          ]}
-        >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {
             posts.map((post, index) => (
               <article
@@ -186,44 +122,55 @@ const jsonLd = {
                 data-tags={post.tags.join('|')}
                 data-title={post.title}
                 data-excerpt={post.excerpt}
-                class:list={[
-                  'p-6 border-b-2 border-black group hover:bg-[#ffff00] transition-colors',
-                  posts.length >= 3 && index % 2 === 0 ? 'md:border-r-2' : '',
-                ]}
+                class="relative border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
+                style="box-shadow: 6px 6px 0 #0a0a0a;"
               >
+                {post.featured && (
+                  <div
+                    class="absolute -top-3 -right-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black font-mono"
+                    style="background: #ffff00;"
+                  >
+                    ★ FEATURED
+                  </div>
+                )}
                 <div class="text-xs uppercase tracking-widest mb-3 opacity-70 flex items-center gap-2 font-mono">
                   <span class="font-black">
                     #{(index + 1).toString().padStart(3, '0')}
                   </span>
                   <span>·</span>
                   <span>[{post.category}]</span>
-                  {post.featured && (
-                    <>
-                      <span>·</span>
-                      <span class="font-black">★</span>
-                    </>
-                  )}
+                  <span>·</span>
+                  <time datetime={post.publishDate}>
+                    {formatDate(post.publishDate)}
+                  </time>
+                  <span>·</span>
+                  <span>{post.readingTime}min</span>
                 </div>
 
                 <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
-                  <a href={withBase(`/blog/${post.slug}`)}>{post.title}</a>
+                  <a
+                    href={withBase(`/blog/${post.slug}`)}
+                    class="hover:bg-[#ffff00] transition-colors"
+                  >
+                    {post.title}
+                  </a>
                 </h3>
 
-                <p class="text-sm leading-relaxed line-clamp-2 mb-4 opacity-80">
+                <p class="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80">
                   {post.excerpt}
                 </p>
 
-                <div class="flex flex-wrap items-baseline justify-between gap-2 text-xs opacity-70 font-mono">
-                  <div class="flex items-baseline gap-2">
-                    <time datetime={post.publishDate}>
-                      {formatDate(post.publishDate)}
-                    </time>
-                    <span>·</span>
-                    <span>{post.readingTime}min read</span>
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex flex-wrap gap-1">
+                    {post.tags.slice(0, 4).map((t) => (
+                      <span class="text-xs opacity-60 border border-black px-1.5 font-mono">
+                        #{t}
+                      </span>
+                    ))}
                   </div>
                   <a
                     href={withBase(`/blog/${post.slug}`)}
-                    class="uppercase tracking-widest font-black hover:underline"
+                    class="text-xs uppercase tracking-widest font-black hover:underline font-mono shrink-0"
                   >
                     read →
                   </a>
@@ -345,10 +292,10 @@ const jsonLd = {
           <span class="inline-block bg-black text-white px-3 py-1">不怕死，只怕不過癮。</span>
         </p>
         <div class="mt-6 text-xs opacity-60 flex flex-wrap gap-4 font-mono">
+          <span>→ AI / LLM / RAG</span>
           <span>→ Spring Boot</span>
-          <span>→ React</span>
-          <span>→ MySQL / Redis</span>
-          <span>→ 教學現場</span>
+          <span>→ React / 雲端</span>
+          <span>→ 企業內訓現場</span>
         </div>
       </div>
     </section>
