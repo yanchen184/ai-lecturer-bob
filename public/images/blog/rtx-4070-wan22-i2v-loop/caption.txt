@@ -1,0 +1,13 @@
+RTX 4070 12GB 在家跑 Wan 2.2 I2V 影片，從 OOM 到無縫 Loop 的全紀錄
+
+12GB VRAM 跑得動 14B 影片模型嗎？跑得動。
+本地 LoRA 訓練撞牆三天後，我改用 ComfyUI + lightx2v 4-step LoRA，5 分鐘出一支 8 秒影片。
+
+關鍵發現：
+- WanFirstLastFrameToVideo 節點，start_image = end_image = 同一張 → 模型會自己繞回原點
+- 翻書 loop SSIM 0.89（順）、走路 loop SSIM 0.61（會跳）
+- 走路類動作不適合做 loop，原地擺動或局部肢體動作才會接得好
+
+完整踩坑紀錄、workflow 拆解、runner script 都在文章裡 ↓
+
+#AI影片 #Wan22 #ComfyUI #I2V #RTX4070 #lightx2v #LoRA #本地AI生成
