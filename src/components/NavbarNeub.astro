@@ -19,10 +19,9 @@ const currentPath = rawPath.startsWith(base)
 
 const navItems = [
   { label: '首頁', href: '/' },
-  { label: '關於', href: '/#about' },
-  { label: '服務', href: '/#courses' },
   { label: '部落格', href: '/blog' },
-  { label: '聯繫', href: '/#contact' },
+  { label: '關於', href: '/#about' },
+  { label: '找我', href: '/#find-me' },
 ] as const;
 
 const isActive = (href: string) => {
