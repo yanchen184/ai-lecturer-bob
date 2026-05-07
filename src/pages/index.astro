@@ -17,10 +17,50 @@ const latest = posts.slice(0, 3);
 const formatDate = (d: string) => d.replaceAll('-', '/');
 
 const stats = [
-  { number: '3+', label: 'Production AI 專案' },
+  { number: '6 repo', label: 'AMI 醫療平台微服務' },
   { number: '10-50', label: '場企業內訓' },
   { number: 'Java + AI', label: '雙棧背景' },
   { number: 'AZ-900', label: 'Azure 認證' },
+];
+
+// Portfolio — 真的寫過、上線過的東西，給「Path 03 觀察期」讀者直接看 GitHub
+const portfolio = [
+  {
+    label: 'flagship',
+    title: 'AMI 照護平台',
+    subtitle: '6-repo 微服務 · 醫療領域',
+    body: '醫師工作台 + 民眾端 + AI 服務（OCR + 去敏 + Hermes Multi-Agent + RAG）+ HIS 介接層。Spring Boot 4.0.3 + Python + React + LINE LIFF 全棧落地。',
+    techs: ['Spring Boot 4', 'Python', 'React + TS', 'Multi-Agent', 'RAG', 'LINE LIFF'],
+    link: 'https://github.com/yanchen184?tab=repositories&q=ami',
+    color: '#ff6ec7',
+  },
+  {
+    label: 'gov',
+    title: '自然人憑證模擬讀卡機',
+    subtitle: '政府案輔助工具',
+    body: '為自然人憑證身份驗證流程開發的模擬讀卡機，協助前後端在沒有實體讀卡機的情況下完成整合測試與 demo。',
+    techs: ['TypeScript', 'PKCS#11 模擬', '政府身份驗證'],
+    link: 'https://github.com/yanchen184/citizen-cert-mock-reader',
+    color: '#7cc0ff',
+  },
+  {
+    label: 'teaching',
+    title: 'AI 概論初級班 + Docker / K8s 教材',
+    subtitle: '職訓局 / 企業內訓教材',
+    body: '從 AI 概論入門簡報、Docker 14 小時完整講稿、Kubernetes 實作 lab 到 Java 高併發完全指南——所有教材都是上過課、debug 過、迭代過的版本。',
+    techs: ['AI 概論', 'Docker', 'Kubernetes', 'Java 高併發'],
+    link: 'https://github.com/yanchen184?tab=repositories&q=course+OR+slides+OR+guide',
+    color: '#ffaa00',
+  },
+  {
+    label: 'oss',
+    title: 'wez-spring-boot-starters',
+    subtitle: '公司共用工程基建',
+    body: '統一日誌、統一回應、JPA 通用模組、安全模組——把跨專案重複的 boilerplate 抽成 starter。團隊接新專案少寫一個禮拜。',
+    techs: ['Spring Boot starter', 'JPA', '統一日誌', '安全模組'],
+    link: 'https://github.com/yanchen184/wez-spring-boot-starters',
+    color: '#00ffd1',
+  },
 ];
 
 const productionCases = [
@@ -132,7 +172,7 @@ const courses = [
 
 <RootLayout
   title="陳彥彤 YC — 把 AI 真的接到公司系統的 AI 企業內訓講師"
-  description="工程師教工程師的 AI 企業內訓與導入顧問。Java 後端 8 年、AI 工程師 2 年。專做 LLM / RAG / Agent 的 production 落地——醫療決策輔助、企業語音辨識（Breeze-ASR-25）、會議 RAG 三個真實案例。HR、技術主管、PM 三種對應方案。"
+  description="工程師教工程師的 AI 企業內訓與導入顧問。Java 後端 8 年、AI 工程師 2 年。AMI 醫療平台 6-repo 全棧落地（Hermes Multi-Agent + RAG + OCR）、職訓局 / 企業內訓講師、政府案系統開發經驗。HR、技術主管、PM 三種對應方案。"
   canonical="/"
   jsonLd={faqJsonLd}
 >
@@ -313,6 +353,80 @@ const courses = [
       </div>
     </section>
 
+    <!-- Portfolio — 看得到的作品（直接連到 GitHub） -->
+    <section id="portfolio" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+          <div>
+            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+              portfolio · 看得到的作品
+            </div>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
+              code 都<span class="bg-[var(--color-neub-yellow)] px-2">公開在 GitHub</span>，<br />
+              不是 PPT 上的口頭專案
+            </h2>
+          </div>
+          <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70">
+            上面 Production 案是顧問實作（受 NDA 保密）。下面這些是公開可看、可 clone、可審視的——
+            判斷我這個人寫不寫 code，看這裡最快。
+          </p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          {
+            portfolio.map((p) => (
+              <a
+                href={p.link}
+                target="_blank"
+                rel="noopener"
+                class="group block border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
+                style="box-shadow: 6px 6px 0 #0a0a0a;"
+              >
+                <div class="flex items-start justify-between gap-4 mb-4">
+                  <div
+                    class="inline-block px-2 py-0.5 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black"
+                    style={`background: ${p.color};`}
+                  >
+                    {p.label}
+                  </div>
+                  <span class="text-xs font-mono opacity-50 group-hover:opacity-100 transition-opacity uppercase tracking-widest">
+                    github →
+                  </span>
+                </div>
+
+                <h3 class="text-xl md:text-2xl font-black leading-tight mb-1">
+                  {p.title}
+                </h3>
+                <div class="text-xs md:text-sm font-mono opacity-60 mb-4 uppercase tracking-wider">
+                  {p.subtitle}
+                </div>
+
+                <p class="text-sm leading-relaxed opacity-85 mb-5">
+                  {p.body}
+                </p>
+
+                <div class="pt-4 border-t-2 border-black/10 flex flex-wrap gap-2">
+                  {p.techs.map((t) => (
+                    <span class="text-[11px] font-mono px-2 py-0.5 border border-black/30">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </a>
+            ))
+          }
+        </div>
+
+        <p class="mt-8 text-sm md:text-base font-mono opacity-70 max-w-3xl leading-relaxed">
+          ▸ 完整作品清單在
+          <a href="https://github.com/yanchen184" target="_blank" rel="noopener" class="underline font-black hover:bg-[var(--color-neub-yellow)] px-1">
+            github.com/yanchen184
+          </a>
+          ——產品、教材、玩具專案、實驗 repo 都在。
+        </p>
+      </div>
+    </section>
+
     <!-- About -->
     <section id="about" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1fr_2fr] items-start">
@@ -334,23 +448,28 @@ const courses = [
             出身電商核心系統團隊（WMS / MOX / MIX），主責架構設計、跨團隊整合、線上事故處理。
           </p>
           <p>
-            近兩年把 LLM、RAG、Agent 真的接到既有系統裡——醫療決策輔助系統的反饋學習機制、
-            用聯發科 Breeze-ASR-25 做的繁中企業語音辨識、跨部門會議的 RAG 檢索（含 ACL 權限切割）。
+            近兩年主導 <strong>AMI 照護平台</strong>從零到上線——6 個 repo 的醫療微服務體系，
+            涵蓋醫師工作台、民眾端 LINE LIFF、HIS 介接、AI 服務（OCR + 去敏 + Hermes Multi-Agent + RAG）。
             <strong>要過資安、要接 SSO、要評估成本、要監控品質、要長期維運。</strong>
-            這些落地經驗整理成教材，帶 AI / 前後端 / 雲端三條線的企業內訓，也接 AI 導入的顧問案。
+            這些不是 demo——是真的在跑、真的要對 PM 解釋為什麼 token 預算超標的系統。
+          </p>
+          <p>
+            另一條線是<strong>教學</strong>：政府 <strong>職訓局 AI 概論初級班</strong>講師、
+            企業內訓 10-50 場（Claude Code、AI Agent、Docker、Kubernetes、Java 高併發），
+            教材全部公開在 GitHub，學員下課可以直接 clone 回家繼續看。
           </p>
           <p class="text-base opacity-75 italic border-l-4 border-black pl-4">
-            我不是「以前是工程師現在轉講師」——我是<strong>邊做專案邊教書的工程師</strong>，
-            這也是為什麼我的教材永遠跟得上工程現場。
+            我不是「以前是工程師現在轉講師」——我是<strong>邊做 production 邊教書的工程師</strong>。
+            今天卡的 bug，下個月變成內訓現場的真實 case。
           </p>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4">
             {
               [
-                { title: 'AI 工程', desc: 'LLM · RAG · Agent' },
+                { title: 'AI 落地', desc: 'Multi-Agent · RAG · OCR' },
                 { title: '後端專精', desc: 'Spring Boot · Java 8 年' },
+                { title: '職訓局講師', desc: 'AI 概論初級班' },
                 { title: '企業內訓', desc: '10-50 場累積' },
-                { title: 'AI 顧問', desc: 'AI 導入專案' },
               ].map((i) => (
                 <div class="border-2 border-black p-3">
                   <div class="font-black text-sm">{i.title}</div>
