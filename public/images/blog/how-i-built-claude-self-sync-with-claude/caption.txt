@@ -1,0 +1,18 @@
+🛠️ 開源歷程實錄：把 271 行 markdown 重寫成獨立 bash 工具
+
+預期 30 分鐘搞定，實際花 4 小時。Claude Code Opus 4.7 全程陪坐 pair programming。
+
+踩到 6 個雷：
+1️⃣ macOS 沒有 flock（改 mkdir-based 原子鎖）
+2️⃣ openrsync `unlinkat` 噪音（寫 noise filter wrapper）
+3️⃣ 中文全形 `）` 把 bash 變數名吃掉（一律改 ${VAR}）
+4️⃣ ls glob + set -o pipefail 自殺事件（改 find）
+5️⃣ rsync --delete 差點清掉今天的工作（加預掃）
+6️⃣ dest repo 殘留 __pycache__ 讓 rsync 卡死（push 前清）
+
+最關鍵的工作流：用 ralph-loop 讓 Claude 自循環跑到完成，6 輪自動推到 GitHub 開源。
+
+完整文：https://yanchen184.github.io/ai-lecturer-bob/blog/how-i-built-claude-self-sync-with-claude/
+Repo：https://github.com/yanchen184/claude-self-sync
+
+#ClaudeCode #開源 #bash #macOS #開發實錄 #AI協作

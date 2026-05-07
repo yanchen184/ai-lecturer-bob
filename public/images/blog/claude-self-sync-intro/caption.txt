@@ -1,0 +1,18 @@
+📢 開源新工具：claude-self-sync
+
+兩台以上電腦在跑 Claude Code 的人，~/.claude 同步是日常焦慮——skills 改了 A 機，B 機看不到；memory 在 B 機更新，A 機過幾天忘記改了什麼。
+
+我用過 Dropbox，踩到三個雷：
+1. 雙寫衝突沒救（一堆 conflict copy）
+2. mempalace HNSW 索引被同步炸掉
+3. 沒有「我反悔了」按鈕
+
+寫了一個 bash 腳本解決：
+✅ 拆兩個 GitHub repo（公開 config + 私密 secrets）
+✅ 三條指令：push / pull / status
+✅ 六道安全防線（push 前 fetch 檢查、pull 前 delete 預掃、自動 tar.gz 備份…）
+
+Repo：https://github.com/yanchen184/claude-self-sync
+完整介紹文：https://yanchen184.github.io/ai-lecturer-bob/blog/claude-self-sync-intro/
+
+#ClaudeCode #開源工具 #bash #Git #工程師工具 #AI工具
