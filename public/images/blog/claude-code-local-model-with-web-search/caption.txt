@@ -1,0 +1,34 @@
+Claude Code 接本地模型還能上網嗎？2026 完整接線圖
+
+朋友最近常問：「Claude Code 是不是可以接本地 Ollama？」
+答案是可以——但「上網研究」這部分會出事。
+
+本地模型 + Claude Code 的接線圖：
+1. Claude Code 只會講 Anthropic Messages API
+2. Ollama v0.14+ 原生支援這個 API → 三條 env var 直連
+3. 想接 LM Studio / vLLM → claude-code-router 代理
+
+最容易踩的雷：
+內建 WebSearch 工具是 Anthropic 伺服器端服務
+改接本地後直接消失
+模型會：道歉「我不能聯網」/ 編造答案 / 嘗試呼叫不存在的 tool
+
+三個解法：
+- Ollama Web Search API（免費 tier、設定簡單）
+- SearXNG 自架（隱私最高、要 Docker）
+- Brave Search MCP（Anthropic 官方推）
+
+文章把：
+- 兩條官方路徑（Ollama 直連 / claude-code-router）
+- 四種 backend 比較
+- 四顆主流本地模型選型（qwen3-coder / glm-5 / kimi-k2 / minimax-m2.7）
+- 6 個踩坑（attribution header、tool calling、num_ctx 預設 2K）
+- Prerequisites + 一鍵安裝 + 4 條驗證指令
+
+一次寫完。
+寫成 Claude Code 可讀格式——你把 URL 餵給 Claude Code 它能照著裝。
+
+完整文章：
+https://yanchen184.github.io/ai-lecturer-bob/blog/claude-code-local-model-with-web-search/
+
+#ClaudeCode #Ollama #本地模型 #AI工具 #開發實錄
