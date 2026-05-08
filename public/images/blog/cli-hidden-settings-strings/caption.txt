@@ -1,0 +1,28 @@
+文件沒寫的 CLI 設定怎麼挖
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/cli-hidden-settings-strings/
+
+—
+
+工程師日常踩坑：UI 裡看到 toggle，但官方文件就是沒寫對應的 settings.json key。
+
+最近用 strings + grep 從 Claude Code binary 挖出兩個 hidden key（`remoteControlAtStartup` 跟 `agentPushNotifEnabled`），分享通用 5 步驟方法論。
+
+```
+which <cli>                                   # 找 binary
+readlink -f <path>                            # 跟 symlink
+strings <bin> | grep -E "^[a-zA-Z]*<key>[a-zA-Z]*$" | sort -u
+strings <bin> | grep -B1 -A1 "<候選key>"      # 確認 UI label 對應
+寫進設定檔驗證
+```
+
+為什麼有效：CLI 工具大多用 string literal 存 config key，UI label 跟 storage key 字面距離很近，grep 上下文兩行就能比對。
+
+對 Claude Code、gh、VS Code、Docker Desktop 都驗證有效。Python / Bash 寫的 CLI 直接看原始碼比較快。
+
+不用 Ghidra、不用 radare2，5 分鐘搞定 95% 的場景。
+
+留言問我有沒有遇過更難挖的 case。
+
+#CLI #ReverseEngineering #工程師日常 #踩坑筆記 #ClaudeCode

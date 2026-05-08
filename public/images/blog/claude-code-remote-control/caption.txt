@@ -1,0 +1,26 @@
+用手機控制你的 Mac 寫程式
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/claude-code-remote-control/
+
+—
+
+我每天 Mac 開著跑長 task：影片上傳、Maven build、Spring Boot 起服。
+
+過去尷尬：上課中卡住不能切回 Mac、躺床想到主題懶得起床、出門才發現 build 沒跑完。
+
+Claude Code 在 2026/02 推的 Remote Control 把這個 gap 補起來——手機接管 Mac 上的 session，指令還是 Mac 跑（檔案、MCP、plugin、credentials 全部都在），手機只是另一個鍵盤。
+
+5 分鐘 setup：手機裝 Claude app（同帳號）→ Mac 打 `/rc` → 掃 QR。
+
+進階兩個 hidden key 一次設定永久自動：
+- `remoteControlAtStartup: true`
+- `agentPushNotifEnabled: true`
+
+長 task 寫一句「notify me when done」跑完手機自動推播。出門等於沒離開電腦。
+
+只要你在用 Pro / Max 訂閱，這功能就是免費的。今天花十分鐘設一次，未來的你會回來感謝你。
+
+留言問我細節。
+
+#ClaudeCode #RemoteControl #AI工具 #工程師日常 #自動化
