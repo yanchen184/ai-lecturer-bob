@@ -1,0 +1,18 @@
+自製 Claude Code Plugin 必踩的四個坑
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/yc-plugin-pitfalls/
+
+—
+
+剛把自己常用的 YouTube 上傳腳本包成 Claude Code Plugin 給朋友用。
+
+從「marketplace.json 噴錯」、「cache 不更新」、「朋友的 Mac 跑不起來」、「credentials 怎麼傳給朋友」——四個坑一個一個踩過去，每個都有技術細節文件不會跟你說。
+
+例如 source 欄位寫 `"."` 噴錯，要寫 `"./"`；同版本號不會清 cache，必須 bump version；macOS 沒 `python` alias 只有 `python3`，所有 commands 跟 hooks 都得改⋯
+
+如果你正打算把自己的工作流包成 Plugin，這篇可以幫你少走兩個小時。
+
+留言問我細節。
+
+#ClaudeCode #Plugin #工程師日常 #AI工具 #踩坑筆記

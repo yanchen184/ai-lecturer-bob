@@ -1,0 +1,24 @@
+用 yc-plugin 一行指令上傳 YouTube
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/yc-plugin-youtube-upload/
+
+—
+
+我每週固定上幾支影片，原本 YouTube Studio 點擊地獄一次 5-10 分鐘。
+
+把流程包成 Claude Code Plugin 之後：
+
+`/yc-plugin:youtube-upload ~/videos/ep1.mp4`
+
+剩下的 Claude 邊問邊填——標題、描述、tags、隱私、播放清單、字幕（自動偵測同名 .srt）、排程⋯⋯30 秒搞定。
+
+OAuth credential 設一次終身用，朋友也想用就加密 zip 傳一份，他用他的 Google 帳號授權，影片進他自己的頻道。
+
+這篇文章寫了完整安裝、第一次設定、每天怎麼用、怎麼分享給朋友——只要你會用 Claude Code，跟著做一定能跑起來。
+
+repo 在 yanchen184/yc-plugin，免費、MIT 授權。
+
+留言問我細節。
+
+#ClaudeCode #YouTube #自動化 #工程師日常 #AI工具
