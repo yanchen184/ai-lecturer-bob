@@ -1,0 +1,28 @@
+name: Daily watchdog
+
+on:
+  schedule:
+    # 06:30 Asia/Taipei = 22:30 UTC. Watchdog after the 05:03 routine.
+    - cron: '30 22 * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Resolve today's date (Asia/Taipei)
+        id: d
+        run: echo "date=$(TZ=Asia/Taipei date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+
+      - name: Verify both files exist, alert if missing
+        env:
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
+          LINE_USER:  ${{ secrets.LINE_USER }}
+          DATE:       ${{ steps.d.outputs.date }}
+          REPO:       ${{ github.repository }}
+        run: python3 scripts/watchdog.py

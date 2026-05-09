@@ -1,0 +1,46 @@
+name: Daily LINE push
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'daily/post/*.md'
+      - 'daily/stats/*.md'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date (YYYY-MM-DD), default = today Asia/Taipei'
+        required: false
+
+concurrency:
+  group: daily-line-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  push-line:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Resolve date
+        id: d
+        run: |
+          if [ -n "${{ inputs.date }}" ]; then
+            echo "date=${{ inputs.date }}" >> $GITHUB_OUTPUT
+          else
+            echo "date=$(TZ=Asia/Taipei date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send LINE
+        env:
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
+          LINE_USER:  ${{ secrets.LINE_USER }}
+          DATE:       ${{ steps.d.outputs.date }}
+        run: python3 scripts/send_line.py
