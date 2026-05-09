@@ -1,0 +1,20 @@
+最近社群瘋傳「RuFlow 把 Claude Code 變成 60 agent 群、省 75% API 費用」⋯⋯
+
+我去查了官方 GitHub repo，發現幾件事：
+
+🟢 **真的存在**：ruvnet/ruflo，47,093 stars / 5,224 forks / MIT 授權，超活躍
+🟡 **但數字對不上**：官方寫 100+ agents 不是 60、官方沒給省 75% 的 benchmark
+🔴 **「智慧路由」官方 README 沒寫三層** — 推銷文寫的 WASM/Haiku/Sonnet 三層在 README 找不到對應原文
+
+我把 IG 文案 / TikTok / dev.to 推銷文 / 官方 README 四個來源逐項比對，整理出哪些是真材實料、哪些被放大過。
+
+順便分享：
+✅ 什麼情境真的適合裝
+⚠️ 什麼情境別裝（多 agent token 反而燒更快）
+🔒 安全提醒：curl | bash 前先 less 看一遍腳本
+
+完整對照表 + 安裝三種方式 + 踩坑記錄看部落格 👇
+
+連結：lecturer-bob.app/blog/ruflo-multi-agent-claude
+
+#ClaudeCode #AI工程 #開源AI #AI自動化 #程式開發 #生產力工具 #AI應用 #開發工具 #yc工程師教工程師
