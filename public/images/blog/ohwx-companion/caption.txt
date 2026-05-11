@@ -1,0 +1,34 @@
+19 次訓練失敗、5 次 BSOD，把自己的卡通形象做成會動的網站吉祥物 🎬
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/ohwx-companion/
+
+—
+
+一個禮拜前 LoL 開不起來，跳 VAN-57。
+
+修系統修到清晨，發現除了 Riot Vanguard 還有 GIGABYTE 主機板工具在打架。
+
+清掉之後，反正 GPU 都閒著，那就拿來訓 LoRA 吧。
+
+19 次失敗找出 musubi-tuner 在 Windows + RTX 4070 12GB 上所有地雷：
+・cp950 編碼炸日文 print
+・DataLoader hang 死在 step 0（Windows 多 worker 死鎖）
+・bitsandbytes adamw8bit 跑到 step 375 access violation
+・dual-DiT swap 在 fp8 路徑炸 state_dict
+・lightx2v 4-step 加速 LoRA 蓋過 character LoRA
+
+第 20 次跑通，1.5 小時訓完。
+
+然後拿去 ComfyUI 出影片，臉跑掉。
+
+差點重訓，後來發現是 lightx2v 把我的 LoRA 蓋掉了。
+拿掉加速器、用 head 起始圖、改 480×832 直幅——臉終於對了。
+
+7 支不同動作的影片：揮手、看書、點頭、指向、思考、招手、攤手解釋。
+寫 30 行 IntersectionObserver，把角色掛到 Astro 站每個 section。
+Scroll 到不同段落，他演不同戲。
+
+「AI 工具失敗時，通常是配置不是模型。」
+
+#ClaudeCode #Wan22 #LoRA訓練 #musubiTuner #個人品牌
