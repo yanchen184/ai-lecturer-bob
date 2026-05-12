@@ -21,6 +21,19 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Kroki self-host：build 時用 localhost:8000 渲染所有 ```kroki:* code block
+    # 並把 SVG inline 進 HTML，部署後讀者不需要連 kroki.io（公服務常掛）。
+    # 注意：mermaid 引擎要拆成獨立 container 跑（headless browser），
+    # 透過 docker network alias 在 services 之間連線。
+    services:
+      kroki-mermaid:
+        image: yuzutech/kroki-mermaid
+      kroki:
+        image: yuzutech/kroki
+        ports:
+          - 8000:8000
+        env:
+          KROKI_MERMAID_HOST: kroki-mermaid
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,10 +41,20 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci
+      - name: Wait for Kroki
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8000/ -o /dev/null; then
+              echo "Kroki is ready"; exit 0
+            fi
+            sleep 2
+          done
+          echo "Kroki failed to start"; exit 1
       - run: npm run build
         env:
           PUBLIC_SITE_URL: https://yanchen184.github.io
           PUBLIC_BASE: /ai-lecturer-bob
+          KROKI_ENDPOINT: http://localhost:8000
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist

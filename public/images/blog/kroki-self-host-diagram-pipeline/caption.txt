@@ -1,0 +1,21 @@
+📊 把部落格架構圖從「開 Figma 拉 5 分鐘」改成「markdown 寫 5 行 Mermaid，build 時自動產 SVG」
+
+Kroki 是統一的圖表渲染 server，一個 API 包 23+ 種引擎（Mermaid、PlantUML、D2、DBML、Graphviz⋯）。
+
+但這篇不是介紹文，是改造記錄——我把 ai-lecturer-bob 部落格接上自架 Kroki 的完整過程：
+
+✅ 為什麼公服務（kroki.io）不能用（寫文時剛好掛了好幾小時）
+✅ Astro 純 regex markdown parser 怎麼攔截 ```kroki:* code block
+✅ docker-compose self-host 配置（含 mermaid sidecar 容器陷阱）
+✅ GitHub Actions service container 起 Kroki 完整 yaml
+✅ 4 個踩坑：52 秒冷啟動、ARM Mac amd64 timeout、Content-Type 困惑、SVG XML declaration 問題
+
+建置成本：兩小時。
+單篇省下時間：5-10 分鐘截圖工作流。
+回本點：發 12-24 篇後純賺。
+
+如果你的部落格也常需要架構圖、流程圖、序列圖——這個 stack 值得抄一份。
+
+完整文章：https://yanchen184.github.io/ai-lecturer-bob/blog/kroki-self-host-diagram-pipeline/
+
+#Kroki #Mermaid #PlantUML #DiagramAsCode #Docker #Astro #GitHubActions #DevOps #部落格自動化 #開發工具

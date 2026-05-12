@@ -15,7 +15,7 @@ import {
   groupMeta,
   type K8sLesson,
 } from '../../../lib/k8s';
-import { renderMarkdown } from '../../../lib/markdown';
+import { renderMarkdown, inlineKrokiImages } from '../../../lib/markdown';
 import { withBase } from '../../../lib/url';
 
 export async function getStaticPaths() {
@@ -31,7 +31,8 @@ interface Props {
 }
 
 const { lesson } = Astro.props;
-const { html, toc } = renderMarkdown(lesson.content);
+const { html: rawHtml, toc } = renderMarkdown(lesson.content);
+const html = await inlineKrokiImages(rawHtml);
 const { prev, next } = getAdjacentLessons(lesson.slug);
 const group = groupMeta[lesson.group];
 

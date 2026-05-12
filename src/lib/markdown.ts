@@ -7,6 +7,54 @@
  * - 純函式，可在 Astro frontmatter 呼叫
  */
 
+import pako from 'pako';
+
+/**
+ * Kroki 服務 endpoint。預設用環境變數，沒設就退到公服務。
+ * - 本機 / GHA build：請 docker compose -f docker-compose.kroki.yml up -d，
+ *   或設 KROKI_ENDPOINT=http://localhost:8000
+ * - 公服務：https://kroki.io（可能掛，僅作為 fallback）
+ */
+const KROKI_ENDPOINT =
+  (typeof process !== 'undefined' && process.env?.KROKI_ENDPOINT) ||
+  'https://kroki.io';
+
+const KROKI_SUPPORTED: ReadonlySet<string> = new Set([
+  'blockdiag', 'seqdiag', 'actdiag', 'nwdiag', 'packetdiag', 'rackdiag',
+  'bpmn', 'bytefield', 'c4plantuml', 'd2', 'dbml', 'ditaa', 'erd',
+  'excalidraw', 'graphviz', 'mermaid', 'nomnoml', 'pikchr', 'plantuml',
+  'structurizr', 'svgbob', 'symbolator', 'tikz', 'umlet', 'vega', 'vegalite',
+  'wavedrom', 'wireviz',
+]);
+
+/**
+ * 把圖表原始碼編碼成 Kroki GET URL。
+ * 流程：UTF-8 → deflate(level 9) → base64 → URL-safe (- _).
+ * Reference: https://docs.kroki.io/kroki/setup/encode-diagram/
+ */
+function encodeKrokiPath(source: string): string {
+  const utf8 = new TextEncoder().encode(source);
+  const compressed = pako.deflate(utf8, { level: 9 });
+  let binary = '';
+  for (let i = 0; i < compressed.length; i += 1) {
+    binary += String.fromCharCode(compressed[i]);
+  }
+  const b64 =
+    typeof btoa === 'function'
+      ? btoa(binary)
+      : Buffer.from(compressed).toString('base64');
+  return b64.replace(/\+/g, '-').replace(/\//g, '_');
+}
+
+export function buildKrokiUrl(
+  type: string,
+  source: string,
+  format: 'svg' | 'png' = 'svg',
+): string {
+  const path = encodeKrokiPath(source);
+  return `${KROKI_ENDPOINT}/${type}/${format}/${path}`;
+}
+
 const slugify = (text: string): string =>
   text
     .trim()
@@ -69,11 +117,31 @@ export function renderMarkdown(content: string): RenderedMarkdown {
 
   let html = content
     // Code blocks first — protect their content
-    // 支援 ```lang 或 ```lang:filename.ext 格式
+    // 支援：
+    //   ```lang             → 一般 highlight code block
+    //   ```lang:filename    → 帶檔名 hint
+    //   ```kroki:<type>     → 攔截，輸出 <figure data-kroki ...><img src="...kroki url..."/></figure>
+    //                         （可用 inlineKrokiImages() 後處理改寫成 inline SVG）
     .replace(/```([\w-]*)(?::([^\n]+))?\n?([\s\S]*?)```/g, (_m, lang: string, filename: string, code: string) => {
       const trimmed = code.replace(/\n$/, '');
-      const escaped = escapeHtml(trimmed);
       const langLabel = (lang || 'code').toLowerCase();
+
+      // Kroki diagram block
+      if (langLabel === 'kroki' && filename) {
+        const krokiType = filename.trim().toLowerCase();
+        if (KROKI_SUPPORTED.has(krokiType)) {
+          const src = buildKrokiUrl(krokiType, trimmed);
+          const alt = `${krokiType} diagram`;
+          // data-kroki-source 保留原始碼，方便後處理 / debug
+          const sourceB64 =
+            typeof btoa === 'function'
+              ? btoa(unescape(encodeURIComponent(trimmed)))
+              : Buffer.from(trimmed, 'utf-8').toString('base64');
+          return `<figure data-kroki="${krokiType}" data-kroki-source="${sourceB64}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" /></figure>`;
+        }
+      }
+
+      const escaped = escapeHtml(trimmed);
       const prismClass = langLabel === 'code' ? '' : ` class="language-${langLabel}"`;
       const fileAttr = filename ? ` data-filename="${escapeHtml(filename.trim())}"` : '';
       return `<pre data-lang="${langLabel}"${fileAttr}><code${prismClass}>${escaped}</code></pre>`;
@@ -174,7 +242,7 @@ export function renderMarkdown(content: string): RenderedMarkdown {
 
   // Paragraphs: split by blank line, skip lines that already look like block elements
   const isBlock = (line: string): boolean =>
-    /^<(h2|h3|pre|ul|ol|blockquote|img|picture|figure|div|table)\b/.test(
+    /^<(h2|h3|pre|ul|ol|blockquote|img|picture|figure|div|table|svg)\b/.test(
       line.trim()
     );
 
@@ -189,4 +257,79 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     .join('\n');
 
   return { html, toc };
+}
+
+/**
+ * 把 renderMarkdown 產出的 HTML 裡所有 Kroki <figure> 改寫成 inline SVG。
+ *
+ * 為什麼要 inline：
+ * - 部落格部署到 GitHub Pages 之後，讀者不需要連 kroki.io（公服務常掛）
+ * - HTML 寫死 SVG，build 一次就確定能顯示
+ * - 圖表搜尋可被 Google 索引（SVG 內容可搜）
+ *
+ * 何時呼叫：
+ * - Astro page frontmatter（top-level await）
+ * - 失敗時保留原本的 <img>，讓讀者瀏覽器自己 fallback 回 kroki.io（會破圖但不會 build 失敗）
+ *
+ * @param html renderMarkdown 產出的 html
+ * @param endpoint Kroki 服務位置；不傳就用 KROKI_ENDPOINT 環境變數，或公服務
+ */
+export async function inlineKrokiImages(
+  html: string,
+  endpoint: string = KROKI_ENDPOINT,
+): Promise<string> {
+  const figureRe =
+    /<figure data-kroki="([^"]+)" data-kroki-source="([^"]+)"><img [^>]*\/><\/figure>/g;
+
+  const matches: Array<{
+    full: string;
+    type: string;
+    source: string;
+  }> = [];
+
+  let m: RegExpExecArray | null;
+  while ((m = figureRe.exec(html)) !== null) {
+    const sourceB64 = m[2];
+    const source =
+      typeof atob === 'function'
+        ? decodeURIComponent(escape(atob(sourceB64)))
+        : Buffer.from(sourceB64, 'base64').toString('utf-8');
+    matches.push({ full: m[0], type: m[1], source });
+  }
+
+  if (matches.length === 0) return html;
+
+  // 並行抓所有 SVG
+  const results = await Promise.all(
+    matches.map(async ({ type, source }) => {
+      try {
+        const res = await fetch(`${endpoint}/${type}/svg`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: source,
+        });
+        if (!res.ok) {
+          return { ok: false as const, svg: '' };
+        }
+        const svg = await res.text();
+        return { ok: true as const, svg };
+      } catch {
+        return { ok: false as const, svg: '' };
+      }
+    }),
+  );
+
+  let result = html;
+  matches.forEach((entry, i) => {
+    const r = results[i];
+    if (!r.ok) return; // fall back to <img>
+    // 清掉 SVG 裡的 XML declaration / DOCTYPE，避免破壞 HTML
+    const cleanSvg = r.svg
+      .replace(/<\?xml[^>]*\?>\s*/g, '')
+      .replace(/<!DOCTYPE[^>]*>\s*/g, '');
+    const replacement = `<figure data-kroki="${entry.type}" data-kroki-inlined="true">${cleanSvg}</figure>`;
+    result = result.replace(entry.full, replacement);
+  });
+
+  return result;
 }
