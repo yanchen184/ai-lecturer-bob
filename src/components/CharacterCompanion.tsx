@@ -75,47 +75,16 @@ export default function CharacterCompanion() {
     return SECTION_VIDEOS[key];
   }, [isReacting, hoverSection, scrollSection]);
 
-  // Scroll observer
+  // Scroll observer + hover listeners (combined; retries until anchors exist).
+  // Some Astro hydration timings have the component mount before the
+  // [data-companion-section] elements are in the DOM (especially with client:idle).
+  // We poll up to ~3s for anchors to appear, then bind once.
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const anchors = document.querySelectorAll<HTMLElement>('[data-companion-section]');
-    if (anchors.length === 0) return;
 
+    let observer: IntersectionObserver | null = null;
+    let boundAnchors: HTMLElement[] = [];
     const visible = new Map<HTMLElement, number>();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            visible.set(e.target as HTMLElement, e.intersectionRatio);
-          } else {
-            visible.delete(e.target as HTMLElement);
-          }
-        }
-        let best: HTMLElement | null = null;
-        let bestRatio = 0;
-        visible.forEach((ratio, el) => {
-          if (ratio > bestRatio) {
-            bestRatio = ratio;
-            best = el;
-          }
-        });
-        if (best) {
-          const key = (best as HTMLElement).dataset.companionSection as SectionKey | undefined;
-          if (key && SECTION_VIDEOS[key]) setScrollSection(key);
-        }
-      },
-      { threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-
-    anchors.forEach((a) => observer.observe(a));
-    return () => observer.disconnect();
-  }, []);
-
-  // Hover listeners (attached once, delegated)
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const anchors = document.querySelectorAll<HTMLElement>('[data-companion-section]');
 
     const onEnter = (e: Event) => {
       const el = e.currentTarget as HTMLElement;
@@ -124,12 +93,62 @@ export default function CharacterCompanion() {
     };
     const onLeave = () => setHoverSection(null);
 
-    anchors.forEach((a) => {
-      a.addEventListener('mouseenter', onEnter);
-      a.addEventListener('mouseleave', onLeave);
-    });
-    return () => {
+    const bind = (anchors: NodeListOf<HTMLElement>) => {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              visible.set(e.target as HTMLElement, e.intersectionRatio);
+            } else {
+              visible.delete(e.target as HTMLElement);
+            }
+          }
+          let best: HTMLElement | null = null;
+          let bestRatio = 0;
+          visible.forEach((ratio, el) => {
+            if (ratio > bestRatio) {
+              bestRatio = ratio;
+              best = el;
+            }
+          });
+          if (best) {
+            const key = (best as HTMLElement).dataset.companionSection as SectionKey | undefined;
+            if (key && SECTION_VIDEOS[key]) setScrollSection(key);
+          }
+        },
+        { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+
       anchors.forEach((a) => {
+        observer!.observe(a);
+        a.addEventListener('mouseenter', onEnter);
+        a.addEventListener('mouseleave', onLeave);
+        boundAnchors.push(a);
+      });
+    };
+
+    let tries = 0;
+    const tryBind = () => {
+      const anchors = document.querySelectorAll<HTMLElement>('[data-companion-section]');
+      if (anchors.length > 0) {
+        bind(anchors);
+        return true;
+      }
+      return false;
+    };
+
+    if (!tryBind()) {
+      const interval = window.setInterval(() => {
+        tries += 1;
+        if (tryBind() || tries > 30) {
+          window.clearInterval(interval);
+        }
+      }, 100);
+    }
+
+    return () => {
+      observer?.disconnect();
+      boundAnchors.forEach((a) => {
         a.removeEventListener('mouseenter', onEnter);
         a.removeEventListener('mouseleave', onLeave);
       });
