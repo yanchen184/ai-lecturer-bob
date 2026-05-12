@@ -9,6 +9,7 @@ import FooterNeub from '../components/FooterNeub.astro';
 // import Testimonials from '../sections/Testimonials.astro';
 // 暫時隱藏：等累積真實學員 / 客戶具名回饋再放回（避免樣板回饋反而傷信任）
 import MessageBoard from '../components/MessageBoard.tsx';
+import CharacterCompanion from '../components/CharacterCompanion.tsx';
 import { getAllPublishedPosts } from '../lib/firestore';
 import { withBase } from '../lib/url';
 
@@ -180,7 +181,7 @@ const courses = [
 
   <main class="font-sans text-[#0a0a0a]">
     <!-- Hero -->
-    <section class="px-6 md:px-10 py-20 md:py-28 border-b-[3px] border-black">
+    <section data-companion-section="hero" class="px-6 md:px-10 py-20 md:py-28 border-b-[3px] border-black">
       <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1.6fr_1fr] lg:items-center">
         <div>
         <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
@@ -274,7 +275,7 @@ const courses = [
     </section>
 
     <!-- 差異化 band：一個句子定位 -->
-    <section class="relative overflow-hidden border-b-[3px] border-black bg-black text-white">
+    <section data-companion-section="band" class="relative overflow-hidden border-b-[3px] border-black bg-black text-white">
       <div
         aria-hidden="true"
         class="pointer-events-none absolute inset-0 opacity-[0.08]"
@@ -320,7 +321,7 @@ const courses = [
     </section>
 
     <!-- Production AI 落地經驗 — 真實案例 -->
-    <section id="production" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
+    <section id="production" data-companion-section="production" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
@@ -377,7 +378,7 @@ const courses = [
     </section>
 
     <!-- Portfolio — 看得到的作品（直接連到 GitHub） -->
-    <section id="portfolio" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
+    <section id="portfolio" data-companion-section="portfolio" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
@@ -451,7 +452,7 @@ const courses = [
     </section>
 
     <!-- About -->
-    <section id="about" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
+    <section id="about" data-companion-section="about" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1fr_2fr] items-start">
         <div>
           <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
@@ -521,7 +522,7 @@ const courses = [
     </section>
 
     <!-- Skills -->
-    <section id="skills" class="px-6 md:px-10 py-20 border-b-[3px] border-black">
+    <section id="skills" data-companion-section="skills" class="px-6 md:px-10 py-20 border-b-[3px] border-black">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
           tech stack
@@ -562,7 +563,7 @@ const courses = [
     </section>
 
     <!-- Courses -->
-    <section id="courses" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
+    <section id="courses" data-companion-section="courses" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
           who are you · 對應方案
@@ -629,7 +630,7 @@ const courses = [
     {/* Testimonials 暫時隱藏：等累積真實具名回饋再放回 */}
 
     <!-- FAQ -->
-    <section id="faq" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
+    <section id="faq" data-companion-section="faq" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
           frequently asked · 寄信前先看這裡
@@ -677,7 +678,7 @@ const courses = [
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
+    <section id="contact" data-companion-section="contact" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
       <div class="max-w-7xl mx-auto">
         <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
           next step · 下一步
@@ -784,7 +785,7 @@ const courses = [
     <!-- Latest Posts — 給「Path 03 觀察期」讀者的探索區 -->
     {
       latest.length > 0 && (
-        <section class="px-6 md:px-10 py-16 border-b-[3px] border-black bg-[#fafaf6]">
+        <section data-companion-section="latest" class="px-6 md:px-10 py-16 border-b-[3px] border-black bg-[#fafaf6]">
           <div class="max-w-7xl mx-auto">
             <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-8">
               <div>
@@ -835,4 +836,7 @@ const courses = [
   </main>
 
   <FooterNeub />
+
+  <!-- Character video companion (floating bottom-right, scroll-aware) -->
+  <CharacterCompanion client:idle />
 </RootLayout>
