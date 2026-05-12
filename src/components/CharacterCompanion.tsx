@@ -49,6 +49,17 @@ const DEFAULT_SECTION: SectionKey = 'hero';
 // the character. After it ends, return to scroll-driven section.
 const REACTION = { src: v('hero_wave.mp4'), label: 'YO!' };
 
+// QWER skill slots — press a key to play a one-shot move (League-style).
+// Each falls back to an existing clip until the v2 standing-pose clips finish rendering.
+type SkillKey = 'Q' | 'W' | 'E' | 'R';
+type Skill = { src: string; label: string };
+const SKILLS: Record<SkillKey, Skill> = {
+  Q: { src: v('hero_wave.mp4'),     label: 'Q · 揮手' },
+  W: { src: v('findme_invite.mp4'), label: 'W · 招手' },
+  E: { src: v('skills_think.mp4'),  label: 'E · 思考' },
+  R: { src: v('hero_wave.mp4'),     label: 'R · 必殺' },  // will swap to v2_r_ultimate.mp4 once it renders
+};
+
 export default function CharacterCompanion() {
   // The section currently driven by scroll (IntersectionObserver result)
   const [scrollSection, setScrollSection] = useState<SectionKey>(DEFAULT_SECTION);
@@ -59,6 +70,9 @@ export default function CharacterCompanion() {
   // Click-triggered one-shot reaction (overrides everything while true)
   const [isReacting, setIsReacting] = useState(false);
 
+  // QWER skill currently casting (null = none). Overrides scroll/hover/click-reaction.
+  const [castingSkill, setCastingSkill] = useState<SkillKey | null>(null);
+
   const [collapsed, setCollapsed] = useState(false);
 
   // Two stacked video refs for crossfade
@@ -67,13 +81,16 @@ export default function CharacterCompanion() {
   const [frontIsA, setFrontIsA] = useState(true);
   const [aSrc, setASrc] = useState(SECTION_VIDEOS[DEFAULT_SECTION].src);
   const [bSrc, setBSrc] = useState<string>('');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Compute the effective video that should be playing
+  // Compute the effective video that should be playing.
+  // Priority: QWER skill > click reaction > hover > scroll.
   const effective = useMemo(() => {
+    if (castingSkill) return SKILLS[castingSkill];
     if (isReacting) return REACTION;
     const key = hoverSection ?? scrollSection;
     return SECTION_VIDEOS[key];
-  }, [isReacting, hoverSection, scrollSection]);
+  }, [castingSkill, isReacting, hoverSection, scrollSection]);
 
   // Scroll observer + hover listeners (combined; retries until anchors exist).
   // Some Astro hydration timings have the component mount before the
@@ -161,6 +178,10 @@ export default function CharacterCompanion() {
     const front = frontIsA ? videoARef.current : videoBRef.current;
     if (front && front.src.endsWith(targetSrc)) return; // already showing
 
+    // Flash yellow at the start of transition to mask abrupt content jumps
+    // (especially when going from standing → sitting clip where blocks appear).
+    setIsTransitioning(true);
+
     // Push the new src to the back video element, then flip front/back
     if (frontIsA) {
       setBSrc(targetSrc);
@@ -179,37 +200,58 @@ export default function CharacterCompanion() {
     const onCanPlay = () => {
       back.play().catch(() => {/* autoplay blocked */});
       setFrontIsA((prev) => !prev);
+      // Release the flash slightly after the flip so the yellow fades back out
+      window.setTimeout(() => setIsTransitioning(false), 250);
     };
     back.addEventListener('canplay', onCanPlay, { once: true });
     back.load();
     return () => back.removeEventListener('canplay', onCanPlay);
   }, [aSrc, bSrc, effective.src, frontIsA]);
 
-  // When reaction video ends, return to scroll/hover state
-  const onReactionEnded = useCallback(() => {
+  // When reaction or skill video ends, return to scroll/hover state
+  const onOneShotEnded = useCallback(() => {
     setIsReacting(false);
+    setCastingSkill(null);
   }, []);
 
   useEffect(() => {
     const front = frontIsA ? videoARef.current : videoBRef.current;
     if (!front) return;
-    front.removeEventListener('ended', onReactionEnded);
-    if (isReacting && front.src.endsWith(REACTION.src)) {
-      // Reaction plays once (no loop), listen for ended
+    front.removeEventListener('ended', onOneShotEnded);
+    const isOneShot = castingSkill !== null || isReacting;
+    if (isOneShot && front.src.endsWith(effective.src)) {
+      // One-shot mode: play once, listen for ended
       front.loop = false;
-      front.addEventListener('ended', onReactionEnded);
+      front.addEventListener('ended', onOneShotEnded);
     } else {
       // Normal mode: loop
       front.loop = true;
     }
-    return () => front.removeEventListener('ended', onReactionEnded);
-  }, [frontIsA, isReacting, onReactionEnded]);
+    return () => front.removeEventListener('ended', onOneShotEnded);
+  }, [frontIsA, isReacting, castingSkill, effective.src, onOneShotEnded]);
 
   // Click on character widget → trigger reaction
   const triggerReaction = useCallback(() => {
-    if (isReacting) return;
+    if (isReacting || castingSkill) return;
     setIsReacting(true);
-  }, [isReacting]);
+  }, [isReacting, castingSkill]);
+
+  // QWER keyboard listener — cast skills like a MOBA
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat) return;
+      const tag = (e.target as HTMLElement | null)?.tagName?.toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || (e.target as HTMLElement)?.isContentEditable) return;
+      const key = e.key.toUpperCase();
+      if (key === 'Q' || key === 'W' || key === 'E' || key === 'R') {
+        e.preventDefault();
+        setCastingSkill(key as SkillKey);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   if (collapsed) {
     return (
@@ -236,7 +278,7 @@ export default function CharacterCompanion() {
         onClick={triggerReaction}
         title="點我"
       >
-        {/* Two stacked video elements for crossfade */}
+        {/* Two stacked video elements with crossfade + scale + blur */}
         <video
           ref={videoARef}
           autoPlay
@@ -244,8 +286,12 @@ export default function CharacterCompanion() {
           muted
           playsInline
           src={aSrc}
-          className="absolute inset-0 block w-full h-full object-cover transition-opacity duration-500"
-          style={{ opacity: frontIsA ? 1 : 0 }}
+          className="absolute inset-0 block w-full h-full object-cover transition-all duration-700 ease-in-out"
+          style={{
+            opacity: frontIsA ? 1 : 0,
+            transform: frontIsA ? 'scale(1)' : 'scale(0.92)',
+            filter: frontIsA ? 'blur(0px)' : 'blur(3px)',
+          }}
         />
         {bSrc && (
           <video
@@ -255,13 +301,27 @@ export default function CharacterCompanion() {
             muted
             playsInline
             src={bSrc}
-            className="absolute inset-0 block w-full h-full object-cover transition-opacity duration-500"
-            style={{ opacity: frontIsA ? 0 : 1 }}
+            className="absolute inset-0 block w-full h-full object-cover transition-all duration-700 ease-in-out"
+            style={{
+              opacity: frontIsA ? 0 : 1,
+              transform: frontIsA ? 'scale(0.92)' : 'scale(1)',
+              filter: frontIsA ? 'blur(3px)' : 'blur(0px)',
+            }}
           />
         )}
 
+        {/* Yellow flash overlay during transition — hides "block appearing from nowhere" for sitting clips */}
+        <div
+          className="absolute inset-0 bg-[var(--color-neub-yellow)] pointer-events-none transition-opacity ease-out"
+          style={{
+            opacity: isTransitioning ? 0.55 : 0,
+            transitionDuration: isTransitioning ? '120ms' : '600ms',
+            mixBlendMode: 'multiply',
+          }}
+        />
+
         {/* Label chip */}
-        <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-[var(--color-neub-yellow)] text-[10px] uppercase tracking-widest font-mono font-black border border-black pointer-events-none">
+        <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-[var(--color-neub-yellow)] text-[10px] uppercase tracking-widest font-mono font-black border border-black pointer-events-none transition-opacity duration-300" style={{ opacity: isTransitioning ? 0 : 1 }}>
           {effective.label}
         </div>
 
@@ -278,13 +338,48 @@ export default function CharacterCompanion() {
           ×
         </button>
 
-        {/* Subtle click hint when not reacting */}
-        {!isReacting && (
+        {/* Click hint (hides while reacting / casting) */}
+        {!isReacting && !castingSkill && (
           <div className="absolute bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-white/80 backdrop-blur-sm text-[9px] uppercase tracking-widest font-mono font-black border border-black pointer-events-none opacity-60">
             click me
           </div>
         )}
       </div>
+
+      {/* QWER skill bar — League-of-Legends style */}
+      <div
+        className="mt-2 grid grid-cols-4 gap-1 select-none"
+        style={{ filter: 'drop-shadow(2px 2px 0 rgba(0,0,0,0.2))' }}
+      >
+        {(['Q', 'W', 'E', 'R'] as SkillKey[]).map((k) => {
+          const isActive = castingSkill === k;
+          return (
+            <button
+              key={k}
+              type="button"
+              onClick={() => {
+                if (!castingSkill && !isReacting) setCastingSkill(k);
+              }}
+              className={`relative h-9 grid place-items-center border-2 border-black font-mono font-black text-sm transition-transform ${
+                isActive
+                  ? 'bg-black text-[var(--color-neub-yellow)] scale-95'
+                  : 'bg-white hover:bg-[var(--color-neub-yellow)] hover:-translate-y-0.5'
+              }`}
+              style={{ boxShadow: isActive ? '1px 1px 0 #0a0a0a' : '2px 2px 0 #0a0a0a' }}
+              aria-label={`cast skill ${k}`}
+            >
+              {k}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Skill name strip (only when casting) */}
+      {castingSkill && (
+        <div className="mt-1 text-center text-[10px] uppercase tracking-widest font-mono font-black bg-black text-[var(--color-neub-yellow)] border-2 border-black px-2 py-1">
+          {SKILLS[castingSkill].label}
+        </div>
+      )}
     </div>
   );
 }
