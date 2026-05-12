@@ -57,7 +57,7 @@ const SKILLS: Record<SkillKey, Skill> = {
   Q: { src: v('hero_wave.mp4'),     label: 'Q · 揮手' },
   W: { src: v('findme_invite.mp4'), label: 'W · 招手' },
   E: { src: v('skills_think.mp4'),  label: 'E · 思考' },
-  R: { src: v('hero_wave.mp4'),     label: 'R · 必殺' },  // will swap to v2_r_ultimate.mp4 once it renders
+  R: { src: v('r_ultimate.mp4'),    label: 'R · 必殺' },  // 雙拳上舉開嘴大叫慶祝
 };
 
 export default function CharacterCompanion() {
