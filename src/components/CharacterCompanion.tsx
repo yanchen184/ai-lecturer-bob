@@ -60,6 +60,26 @@ const SKILLS: Record<SkillKey, Skill> = {
   R: { src: v('r_ultimate.mp4'),    label: 'R · 必殺' },  // 雙拳上舉開嘴大叫慶祝
 };
 
+// Gaze grid — 9 clips for mouse 3x3 position. Played in idle state (no scroll/hover/click/skill).
+type GazeKey = 'TL' | 'TC' | 'TR' | 'ML' | 'MC' | 'MR' | 'BL' | 'BC' | 'BR';
+const GAZE: Record<GazeKey, { src: string; label: string }> = {
+  TL: { src: v('gaze/TL.mp4'), label: '↖' },
+  TC: { src: v('gaze/TC.mp4'), label: '↑' },
+  TR: { src: v('gaze/TR.mp4'), label: '↗' },
+  ML: { src: v('gaze/ML.mp4'), label: '←' },
+  MC: { src: v('gaze/MC.mp4'), label: '·' },
+  MR: { src: v('gaze/MR.mp4'), label: '→' },
+  BL: { src: v('gaze/BL.mp4'), label: '↙' },
+  BC: { src: v('gaze/BC.mp4'), label: '↓' },
+  BR: { src: v('gaze/BR.mp4'), label: '↘' },
+};
+
+function mouseToGaze(x: number, y: number): GazeKey {
+  const col = x < window.innerWidth / 3 ? 'L' : x < window.innerWidth * 2 / 3 ? 'C' : 'R';
+  const row = y < window.innerHeight / 3 ? 'T' : y < window.innerHeight * 2 / 3 ? 'M' : 'B';
+  return (row + col) as GazeKey;
+}
+
 export default function CharacterCompanion() {
   // The section currently driven by scroll (IntersectionObserver result)
   const [scrollSection, setScrollSection] = useState<SectionKey>(DEFAULT_SECTION);
@@ -73,6 +93,13 @@ export default function CharacterCompanion() {
   // QWER skill currently casting (null = none). Overrides scroll/hover/click-reaction.
   const [castingSkill, setCastingSkill] = useState<SkillKey | null>(null);
 
+  // Idle gaze direction (driven by mouse position; only used when nothing else is active)
+  const [gazeKey, setGazeKey] = useState<GazeKey>('MC');
+
+  // True while user is interacting with a section (scroll into it or hovering it).
+  // When false → use idle gaze. Initially false so visitors see gaze right away.
+  const [isInteracting, setIsInteracting] = useState(false);
+
   const [collapsed, setCollapsed] = useState(false);
 
   // Two stacked video refs for crossfade
@@ -84,13 +111,14 @@ export default function CharacterCompanion() {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Compute the effective video that should be playing.
-  // Priority: QWER skill > click reaction > hover > scroll.
+  // Priority: QWER skill > click reaction > hover > section-scroll (interacting) > idle gaze.
   const effective = useMemo(() => {
     if (castingSkill) return SKILLS[castingSkill];
     if (isReacting) return REACTION;
-    const key = hoverSection ?? scrollSection;
-    return SECTION_VIDEOS[key];
-  }, [castingSkill, isReacting, hoverSection, scrollSection]);
+    if (hoverSection) return SECTION_VIDEOS[hoverSection];
+    if (isInteracting) return SECTION_VIDEOS[scrollSection];
+    return GAZE[gazeKey];
+  }, [castingSkill, isReacting, hoverSection, scrollSection, isInteracting, gazeKey]);
 
   // Scroll observer + hover listeners (combined; retries until anchors exist).
   // Some Astro hydration timings have the component mount before the
@@ -253,29 +281,58 @@ export default function CharacterCompanion() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // Mouse tracking — character frame tilts + pupil dots follow cursor (E1)
+  // Mouse tracking — drives both frame tilt (E1) and idle gaze direction (E2)
   const widgetRef = useRef<HTMLDivElement | null>(null);
   const [mouse, setMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const onMove = (e: MouseEvent) => {
+      // Tilt math
       const el = widgetRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / (window.innerWidth / 2);
-      const dy = (e.clientY - cy) / (window.innerHeight / 2);
-      setMouse({ x: Math.max(-1, Math.min(1, dx)), y: Math.max(-1, Math.min(1, dy)) });
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (window.innerWidth / 2);
+        const dy = (e.clientY - cy) / (window.innerHeight / 2);
+        setMouse({ x: Math.max(-1, Math.min(1, dx)), y: Math.max(-1, Math.min(1, dy)) });
+      }
+      // Gaze grid math (independent — based on absolute screen position)
+      const newKey = mouseToGaze(e.clientX, e.clientY);
+      setGazeKey((prev) => (prev === newKey ? prev : newKey));
     };
     window.addEventListener('mousemove', onMove);
     return () => window.removeEventListener('mousemove', onMove);
   }, []);
 
+  // Detect "interaction" state — if the user is hovering anywhere over a section's content,
+  // we play the action clip; otherwise idle-gaze takes over.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const anchors = document.querySelectorAll<HTMLElement>('[data-companion-section]');
+    const onEnterAny = () => setIsInteracting(true);
+    const onLeaveAny = (e: Event) => {
+      // Only deactivate if cursor truly leaves all anchors. We use a delayed flag.
+      // Simple heuristic: re-check after small delay; if nothing else is hovered, set false.
+      window.setTimeout(() => {
+        const stillIn = document.querySelector('[data-companion-section]:hover');
+        if (!stillIn) setIsInteracting(false);
+      }, 50);
+    };
+    anchors.forEach((a) => {
+      a.addEventListener('mouseenter', onEnterAny);
+      a.addEventListener('mouseleave', onLeaveAny);
+    });
+    return () => {
+      anchors.forEach((a) => {
+        a.removeEventListener('mouseenter', onEnterAny);
+        a.removeEventListener('mouseleave', onLeaveAny);
+      });
+    };
+  }, []);
+
   const tiltY = mouse.x * 8;
   const tiltX = -mouse.y * 6;
-  const pupilDX = mouse.x * 3;
-  const pupilDY = mouse.y * 2.5;
 
   if (collapsed) {
     return (
@@ -371,42 +428,6 @@ export default function CharacterCompanion() {
         >
           ×
         </button>
-
-        {/* Eye-tracking pupil dots — overlay on top of video at face/eye area.
-            Approx vertical position: 14% from top for 480x832 portrait of full-body character.
-            The two dots move slightly with cursor, giving "他在看你" feeling without re-rendering video. */}
-        <div
-          aria-hidden="true"
-          className="absolute pointer-events-none"
-          style={{
-            top: '13.5%',
-            left: '40%',
-            width: '4px',
-            height: '4px',
-            borderRadius: '50%',
-            background: '#0a0a0a',
-            transform: `translate(${pupilDX}px, ${pupilDY}px)`,
-            transition: 'transform 120ms ease-out',
-            mixBlendMode: 'multiply',
-            opacity: 0.55,
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="absolute pointer-events-none"
-          style={{
-            top: '13.5%',
-            left: '54%',
-            width: '4px',
-            height: '4px',
-            borderRadius: '50%',
-            background: '#0a0a0a',
-            transform: `translate(${pupilDX}px, ${pupilDY}px)`,
-            transition: 'transform 120ms ease-out',
-            mixBlendMode: 'multiply',
-            opacity: 0.55,
-          }}
-        />
 
         {/* Click hint (hides while reacting / casting) */}
         {!isReacting && !castingSkill && (
