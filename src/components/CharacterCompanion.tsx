@@ -253,6 +253,30 @@ export default function CharacterCompanion() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  // Mouse tracking — character frame tilts + pupil dots follow cursor (E1)
+  const widgetRef = useRef<HTMLDivElement | null>(null);
+  const [mouse, setMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onMove = (e: MouseEvent) => {
+      const el = widgetRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (window.innerWidth / 2);
+      const dy = (e.clientY - cy) / (window.innerHeight / 2);
+      setMouse({ x: Math.max(-1, Math.min(1, dx)), y: Math.max(-1, Math.min(1, dy)) });
+    };
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
+
+  const tiltY = mouse.x * 8;
+  const tiltX = -mouse.y * 6;
+  const pupilDX = mouse.x * 3;
+  const pupilDY = mouse.y * 2.5;
+
   if (collapsed) {
     return (
       <button
@@ -269,12 +293,22 @@ export default function CharacterCompanion() {
 
   return (
     <div
+      ref={widgetRef}
       className="fixed bottom-4 right-4 z-50 select-none"
-      style={{ width: 'clamp(140px, 18vw, 220px)' }}
+      style={{
+        width: 'clamp(140px, 18vw, 220px)',
+        perspective: '600px',
+      }}
     >
       <div
-        className="relative bg-white border-2 border-black overflow-hidden cursor-pointer"
-        style={{ boxShadow: '4px 4px 0 #0a0a0a', aspectRatio: '480 / 832' }}
+        className="relative bg-white border-2 border-black overflow-hidden cursor-pointer transition-transform duration-200 ease-out hover:scale-105"
+        style={{
+          boxShadow: '4px 4px 0 #0a0a0a',
+          aspectRatio: '480 / 832',
+          transform: `rotateY(${tiltY}deg) rotateX(${tiltX}deg)`,
+          transformStyle: 'preserve-3d',
+          willChange: 'transform',
+        }}
         onClick={triggerReaction}
         title="點我"
       >
@@ -337,6 +371,42 @@ export default function CharacterCompanion() {
         >
           ×
         </button>
+
+        {/* Eye-tracking pupil dots — overlay on top of video at face/eye area.
+            Approx vertical position: 14% from top for 480x832 portrait of full-body character.
+            The two dots move slightly with cursor, giving "他在看你" feeling without re-rendering video. */}
+        <div
+          aria-hidden="true"
+          className="absolute pointer-events-none"
+          style={{
+            top: '13.5%',
+            left: '40%',
+            width: '4px',
+            height: '4px',
+            borderRadius: '50%',
+            background: '#0a0a0a',
+            transform: `translate(${pupilDX}px, ${pupilDY}px)`,
+            transition: 'transform 120ms ease-out',
+            mixBlendMode: 'multiply',
+            opacity: 0.55,
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="absolute pointer-events-none"
+          style={{
+            top: '13.5%',
+            left: '54%',
+            width: '4px',
+            height: '4px',
+            borderRadius: '50%',
+            background: '#0a0a0a',
+            transform: `translate(${pupilDX}px, ${pupilDY}px)`,
+            transition: 'transform 120ms ease-out',
+            mixBlendMode: 'multiply',
+            opacity: 0.55,
+          }}
+        />
 
         {/* Click hint (hides while reacting / casting) */}
         {!isReacting && !castingSkill && (
