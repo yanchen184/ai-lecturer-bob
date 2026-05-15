@@ -1,9 +1,10 @@
 ---
 /**
- * Neub 風格列表卡片。
- * - 有 cover：左 200px 圖 + 右文字（手機改上下）
- * - 沒 cover：純文字單欄，標題撐視覺
- * - Hover：整卡轉黃；cover 區固定白底避免黃打黃
+ * Neub 風格列表卡片 — magazine grid。
+ *
+ * - 有 cover：上圖下文,16:10 比例
+ * - 沒 cover：純文字,大標題撐視覺
+ * - 熱門文(views >= threshold):右上角 fire badge
  *
  * 保留 data-blog-card / data-category / data-tags / data-title / data-excerpt
  * 給 BlogFilters 篩選用。
@@ -13,11 +14,17 @@ import { withBase } from '../lib/url';
 
 interface Props {
   post: BlogPost;
+  views?: number;
 }
 
-const { post } = Astro.props;
+const { post, views } = Astro.props;
 const cover = post.coverImage;
 const formatDate = (d: string) => d.replaceAll('-', '/');
+const formatViews = (n: number): string => {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return n.toString();
+};
+const isHot = (views ?? 0) >= 100;
 ---
 
 <article
@@ -26,31 +33,31 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
   data-tags={post.tags.join('|')}
   data-title={post.title}
   data-excerpt={post.excerpt}
-  class="group border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] transition-colors"
+  class="group border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] transition-colors relative flex flex-col h-full"
 >
-  <a
-    href={withBase(`/blog/${post.slug}`)}
-    class:list={[
-      'block',
-      cover && 'md:grid md:grid-cols-[200px_1fr] md:gap-5',
-    ]}
-  >
+  {isHot && views && (
+    <div class="absolute -top-2 -right-2 bg-black text-[var(--color-neub-yellow)] px-2 py-1 text-[10px] font-mono font-black border-2 border-black z-10 uppercase tracking-widest">
+      🔥 {formatViews(views)}
+    </div>
+  )}
+
+  <a href={withBase(`/blog/${post.slug}`)} class="block flex-1 flex flex-col">
     {cover && (
-      <div class="aspect-[4/3] md:aspect-auto md:h-full border-b-2 md:border-b-0 md:border-r-2 border-black bg-white overflow-hidden">
+      <div class="relative aspect-[16/9] border-b-2 border-black bg-white overflow-hidden">
         <img
           src={withBase(cover)}
           alt={post.title}
           width="400"
-          height="300"
+          height="225"
           loading="lazy"
           decoding="async"
-          class="w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </div>
     )}
 
-    <div class="p-4 md:p-5 flex flex-col justify-center">
-      <div class="text-[11px] uppercase tracking-widest font-mono opacity-60 mb-2 flex flex-wrap items-center gap-x-2">
+    <div class="p-4 md:p-5 flex-1 flex flex-col">
+      <div class="text-[10px] uppercase tracking-widest font-mono opacity-60 mb-2 flex flex-wrap items-center gap-x-2">
         <span>{formatDate(post.publishDate)}</span>
         <span class="opacity-40">·</span>
         <span class="font-black">{post.category}</span>
@@ -58,17 +65,23 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
         <span>{post.readingTime} min</span>
       </div>
 
-      <h3 class="text-lg md:text-xl font-black leading-snug tracking-tight mb-2">
+      <h3 class:list={[
+        'font-black leading-snug tracking-tight mb-2',
+        cover ? 'text-base md:text-lg line-clamp-2' : 'text-lg md:text-xl line-clamp-3',
+      ]}>
         {post.title}
       </h3>
 
-      <p class="text-sm leading-relaxed opacity-80 mb-3 line-clamp-2">
+      <p class:list={[
+        'text-xs md:text-sm leading-relaxed opacity-75 mb-3 flex-1',
+        cover ? 'line-clamp-2' : 'line-clamp-3',
+      ]}>
         {post.excerpt}
       </p>
 
-      <div class="flex flex-wrap gap-1.5">
-        {post.tags.slice(0, 4).map((t) => (
-          <span class="px-1.5 py-0.5 text-[10px] uppercase tracking-widest font-mono border border-black/50 bg-white/60">
+      <div class="flex flex-wrap gap-1 mt-auto">
+        {post.tags.slice(0, 3).map((t) => (
+          <span class="px-1.5 py-0.5 text-[10px] uppercase tracking-widest font-mono border border-black/40 bg-white/60">
             {t}
           </span>
         ))}

@@ -1,73 +1,99 @@
 ---
 /**
  * Neub 風格 featured hero — 黃底 + 黑邊 + 厚陰影。
- * 有 cover：grid 左圖右文；沒 cover：單欄全寬，靠標題撐視覺。
- * 必須保留 data-blog-featured 給 BlogFilters 用（搜尋時要隱藏）。
+ *
+ * 三種狀態:
+ * - 有 cover：grid 左圖右文,圖左上角放 ★ MOST READ 角標
+ * - 沒 cover：單欄全寬,靠標題撐視覺
+ * - 有 view 數時加 "👁 1.2k reads" 社會證明
+ *
+ * 必須保留 data-blog-featured 給 BlogFilters 用(搜尋時要隱藏)。
  */
 import type { BlogPost } from '../lib/firestore';
 import { withBase } from '../lib/url';
 
 interface Props {
   post: BlogPost;
+  views?: number;
 }
 
-const { post } = Astro.props;
+const { post, views } = Astro.props;
 const cover = post.coverImage;
 const formatDate = (d: string) => d.replaceAll('-', '/');
+const formatViews = (n: number): string => {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return n.toString();
+};
 ---
 
 <section
   data-blog-featured
-  class="relative border-2 border-black bg-[var(--color-neub-yellow)] mb-10"
-  style="box-shadow: 8px 8px 0 #0a0a0a;"
+  class="relative border-[3px] border-black bg-[var(--color-neub-yellow)] mb-12"
+  style="box-shadow: 10px 10px 0 #0a0a0a;"
 >
-  <div class="absolute -top-3 left-4 bg-black text-[var(--color-neub-yellow)] px-3 py-1 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black">
-    ★ Most Read · 最多人讀
-  </div>
-
   <a
     href={withBase(`/blog/${post.slug}`)}
     class:list={[
       'block group',
-      cover && 'md:grid md:grid-cols-2 md:gap-0',
+      cover && 'md:grid md:grid-cols-[1.1fr_1fr] md:gap-0',
     ]}
   >
     {cover && (
-      <div class="aspect-[4/3] md:aspect-auto border-b-2 md:border-b-0 md:border-r-2 border-black bg-white overflow-hidden">
+      <div class="relative aspect-[4/3] md:aspect-[5/4] border-b-[3px] md:border-b-0 md:border-r-[3px] border-black bg-white overflow-hidden">
         <img
           src={withBase(cover)}
           alt={post.title}
           loading="eager"
           decoding="async"
-          class="w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
         />
+        <div class="absolute top-3 left-3 bg-black text-[var(--color-neub-yellow)] px-3 py-1.5 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black z-10">
+          ★ Most Read
+        </div>
+        {views && views > 0 && (
+          <div class="absolute bottom-3 right-3 bg-[var(--color-neub-yellow)] text-black px-2.5 py-1 text-[11px] font-mono font-black border-2 border-black z-10">
+            👁 {formatViews(views)} reads
+          </div>
+        )}
       </div>
     )}
 
-    <div class:list={['flex flex-col justify-center', cover ? 'p-6 md:p-8' : 'p-8 md:p-12']}>
+    <div class:list={['flex flex-col justify-center relative', cover ? 'p-6 md:p-8 lg:p-10' : 'p-8 md:p-12']}>
+      {!cover && (
+        <div class="absolute -top-3 left-4 bg-black text-[var(--color-neub-yellow)] px-3 py-1.5 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black">
+          ★ Most Read · 最多人讀
+        </div>
+      )}
+
       <div class="text-[11px] uppercase tracking-widest font-mono mb-3 flex flex-wrap items-center gap-x-2">
         <span class="font-black">{formatDate(post.publishDate)}</span>
         <span class="opacity-40">·</span>
         <span>{post.category}</span>
         <span class="opacity-40">·</span>
         <span>{post.readingTime} min read</span>
+        {!cover && views && views > 0 && (
+          <>
+            <span class="opacity-40">·</span>
+            <span class="font-black">👁 {formatViews(views)}</span>
+          </>
+        )}
       </div>
 
       <h2 class:list={[
-        'font-black leading-tight tracking-tight mb-4',
-        cover ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-3xl md:text-5xl lg:text-6xl',
+        'font-black leading-[1.05] tracking-tight mb-4',
+        cover ? 'text-3xl md:text-4xl lg:text-5xl' : 'text-3xl md:text-5xl lg:text-6xl',
       ]}>
         {post.title}
       </h2>
 
       <p class:list={[
-        'leading-relaxed mb-5 opacity-90',
-        cover ? 'text-sm md:text-base' : 'text-base md:text-lg max-w-3xl',
+        'leading-relaxed mb-6 opacity-90',
+        cover ? 'text-sm md:text-base line-clamp-3' : 'text-base md:text-lg max-w-3xl',
       ]}>
         {post.excerpt}
       </p>
 
-      <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black font-mono bg-black text-[var(--color-neub-yellow)] border-2 border-black px-3 py-1.5 self-start group-hover:bg-white group-hover:text-black transition-colors">
+      <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black font-mono bg-black text-[var(--color-neub-yellow)] border-2 border-black px-4 py-2 self-start group-hover:bg-white group-hover:text-black transition-colors">
         Read the essay →
       </div>
     </div>

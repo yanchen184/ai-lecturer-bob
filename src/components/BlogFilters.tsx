@@ -103,6 +103,14 @@ export default function BlogFilters({
     window.history.replaceState({}, '', url.toString());
   }, []);
 
+  // 暴露給 empty state 按鈕呼叫(SSR 出的元素無法直接綁 React event)
+  useEffect(() => {
+    (window as unknown as { __resetBlogFilters?: () => void }).__resetBlogFilters = reset;
+    return () => {
+      delete (window as unknown as { __resetBlogFilters?: () => void }).__resetBlogFilters;
+    };
+  }, [reset]);
+
   const onCat = useCallback(
     (v: string) => {
       setCategory(v);

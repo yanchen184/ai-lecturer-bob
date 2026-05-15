@@ -2,6 +2,14 @@
 /**
  * /blog — 部落格列表（Neub 風格，跟首頁一致）
  *
+ * 結構（從上到下）:
+ *   1. Header
+ *   2. Featured Hero（最多人讀）
+ *   3. Filters
+ *   4. All posts（magazine grid，2-3 欄）
+ *   5. 閱讀系列（Hermes、Claude Code 初階班、K8s...）
+ *   6. Motto
+ *
  * SSR 出完整列表（SEO），搜尋 / 篩選由 BlogFilters island 控 DOM。
  */
 import RootLayout from '../../layouts/RootLayout.astro';
@@ -10,11 +18,18 @@ import FooterNeub from '../../components/FooterNeub.astro';
 import BlogFilters from '../../components/BlogFilters.tsx';
 import BlogCardListItem from '../../components/BlogCardListItem.astro';
 import BlogFeaturedHero from '../../components/BlogFeaturedHero.astro';
-import { getAllPublishedPosts, getTopViewedSlugs } from '../../lib/firestore';
+import BlogSeriesBlock from '../../components/BlogSeriesBlock.astro';
+import {
+  getAllPublishedPosts,
+  getTopViewedSlugs,
+  getViewsMap,
+} from '../../lib/firestore';
+import { buildSeriesGroups } from '../../lib/series';
 import { getAllK8sLessons, groupMeta, type K8sLesson } from '../../lib/k8s';
 import { withBase } from '../../lib/url';
 
 const posts = await getAllPublishedPosts();
+const viewsMap = await getViewsMap();
 
 const categories = [...new Set(posts.map((p) => p.category))];
 const tags = [...new Set(posts.flatMap((p) => p.tags))];
@@ -25,6 +40,8 @@ const heroPost =
   posts.find((p) => p.featured);
 
 const listPosts = heroPost ? posts.filter((p) => p.slug !== heroPost.slug) : posts;
+
+const seriesGroups = buildSeriesGroups(posts);
 
 const k8sLessons = getAllK8sLessons();
 const k8sByGroup = (Object.keys(groupMeta) as Array<K8sLesson['group']>)
@@ -80,10 +97,10 @@ const jsonLd = {
       </header>
 
       <!-- Featured hero -->
-      {heroPost && <BlogFeaturedHero post={heroPost} />}
+      {heroPost && <BlogFeaturedHero post={heroPost} views={viewsMap.get(heroPost.slug)} />}
 
       <!-- Filters -->
-      <div class="mb-8">
+      <div class="mb-10">
         <BlogFilters
           client:load
           categories={categories}
@@ -92,28 +109,66 @@ const jsonLd = {
         />
       </div>
 
-      <!-- All posts -->
+      <!-- All posts (magazine grid) -->
       <section class="mb-16">
-        <div class="flex items-baseline justify-between mb-4">
+        <div class="flex items-baseline justify-between mb-5">
           <div class="text-xs uppercase tracking-widest font-mono font-black">
             全部文章
           </div>
+          <div class="text-[11px] uppercase tracking-widest font-mono opacity-60">
+            {listPosts.length} posts
+          </div>
         </div>
 
-        <div class="grid gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {listPosts.map((post) => (
-            <BlogCardListItem post={post} />
+            <BlogCardListItem post={post} views={viewsMap.get(post.slug)} />
           ))}
         </div>
 
         <div
           data-blog-empty
           hidden
-          class="border-2 border-dashed border-black p-12 text-center font-mono uppercase tracking-widest text-sm mt-4"
+          class="border-2 border-dashed border-black p-10 md:p-14 text-center mt-6"
         >
-          沒有符合條件的文章
+          <div class="text-5xl md:text-6xl font-black mb-3 opacity-30">?</div>
+          <div class="font-mono uppercase tracking-widest text-sm mb-2 opacity-70">
+            沒有符合條件的文章
+          </div>
+          <div class="text-xs opacity-60 mb-5">
+            可能是關鍵字太特殊,或者這個分類還沒寫到
+          </div>
+          <button
+            type="button"
+            onclick="window.__resetBlogFilters?.()"
+            class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black font-mono bg-black text-[var(--color-neub-yellow)] border-2 border-black px-4 py-2 hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors"
+          >
+            ← 清除篩選看全部
+          </button>
         </div>
       </section>
+
+      <!-- 閱讀系列 -->
+      {seriesGroups.length > 0 && (
+        <section class="mb-12" data-blog-section="series">
+          <div class="flex items-baseline justify-between mb-5">
+            <div>
+              <div class="text-xs uppercase tracking-widest font-mono font-black">
+                閱讀系列
+              </div>
+              <p class="text-xs md:text-sm opacity-60 mt-1">
+                按照閱讀順序集中露出 — 從第一篇開始讀更順
+              </p>
+            </div>
+            <div class="text-[11px] uppercase tracking-widest font-mono opacity-60">
+              {seriesGroups.length} series
+            </div>
+          </div>
+          {seriesGroups.map((g, i) => (
+            <BlogSeriesBlock group={g} defaultOpen={i === 0} />
+          ))}
+        </section>
+      )}
 
       <!-- K8s 系列：折疊 -->
       {

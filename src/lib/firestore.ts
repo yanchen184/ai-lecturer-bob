@@ -181,7 +181,7 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
   }
 }
 
-/** 為每篇文章補上 build-time 偵測到的 cover.png 路徑 */
+/** 為每篇文章補上 build-time 偵測到的 cover 圖路徑 */
 function withCoverImages(posts: BlogPost[]): BlogPost[] {
   return posts.map((p) => ({
     ...p,
@@ -195,12 +195,17 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 }
 
 /**
- * 依 bob_post_stats.totalViews 由高到低排序，回傳 slug 陣列。
+ * 依 bob_post_stats.totalViews 由高到低排序的點閱紀錄。
  * build 時呼叫一次，失敗回 []（caller 用 featured fallback）。
  */
-let topSlugsCache: string[] | null = null;
-export async function getTopViewedSlugs(): Promise<string[]> {
-  if (topSlugsCache) return topSlugsCache;
+export interface PostStat {
+  slug: string;
+  views: number;
+}
+
+let topStatsCache: PostStat[] | null = null;
+async function getTopViewedStats(): Promise<PostStat[]> {
+  if (topStatsCache) return topStatsCache;
   try {
     const db = getDb();
     const snap = await getDocs(collection(db, 'bob_post_stats'));
@@ -213,12 +218,24 @@ export async function getTopViewedSlugs(): Promise<string[]> {
       })
       .filter((r) => r.slug && r.views > 0)
       .sort((a, b) => b.views - a.views);
-    topSlugsCache = rows.map((r) => r.slug);
-    console.log(`[firestore] bob_post_stats 載入 ${topSlugsCache.length} 篇有點閱紀錄`);
-    return topSlugsCache;
+    topStatsCache = rows;
+    console.log(`[firestore] bob_post_stats 載入 ${rows.length} 篇有點閱紀錄`);
+    return topStatsCache;
   } catch (error) {
     console.error('[firestore] bob_post_stats 抓取失敗:', error);
-    topSlugsCache = [];
-    return topSlugsCache;
+    topStatsCache = [];
+    return topStatsCache;
   }
+}
+
+/** 取得依點閱排序的 slug 陣列（保留給既有 caller） */
+export async function getTopViewedSlugs(): Promise<string[]> {
+  const stats = await getTopViewedStats();
+  return stats.map((s) => s.slug);
+}
+
+/** slug → views 的查詢表（用於卡片/Hero 顯示熱度） */
+export async function getViewsMap(): Promise<Map<string, number>> {
+  const stats = await getTopViewedStats();
+  return new Map(stats.map((s) => [s.slug, s.views]));
 }
