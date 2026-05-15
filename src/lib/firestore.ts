@@ -154,12 +154,23 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
     }
 
     posts.sort((a, b) => (a.publishDate < b.publishDate ? 1 : -1));
-    if (scheduled > 0) {
-      console.log(`[firestore] 載入 ${posts.length} 篇文章（${scheduled} 篇排程未來日）`);
+
+    // dedup by slug：Firestore 偶爾有重複寫入,排序後同 slug 只留第一筆
+    // (排序 desc → 同日期下保留 docId 字典序最小那筆,行為穩定可預期)
+    const seen = new Set<string>();
+    const unique = posts.filter((p) => {
+      if (seen.has(p.slug)) return false;
+      seen.add(p.slug);
+      return true;
+    });
+    const dupes = posts.length - unique.length;
+
+    if (scheduled > 0 || dupes > 0) {
+      console.log(`[firestore] 載入 ${unique.length} 篇文章（${scheduled} 排程 / ${dupes} 重複已去重）`);
     } else {
-      console.log(`[firestore] 載入 ${posts.length} 篇文章`);
+      console.log(`[firestore] 載入 ${unique.length} 篇文章`);
     }
-    cache = withCoverImages(posts);
+    cache = withCoverImages(unique);
     return cache;
   } catch (error) {
     console.error('[firestore] fetch 失敗，使用靜態 fallback:', error);

@@ -1,6 +1,7 @@
 ---
 /**
- * Neub 風格 featured hero（黃底 + 黑邊 + 厚陰影 + Most Read badge）。
+ * Neub 風格 featured hero — 黃底 + 黑邊 + 厚陰影。
+ * 有 cover：grid 左圖右文；沒 cover：單欄全寬，靠標題撐視覺。
  * 必須保留 data-blog-featured 給 BlogFilters 用（搜尋時要隱藏）。
  */
 import type { BlogPost } from '../lib/firestore';
@@ -26,7 +27,10 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
 
   <a
     href={withBase(`/blog/${post.slug}`)}
-    class="grid grid-cols-1 md:grid-cols-2 gap-0 group"
+    class:list={[
+      'block group',
+      cover && 'md:grid md:grid-cols-2 md:gap-0',
+    ]}
   >
     {cover && (
       <div class="aspect-[4/3] md:aspect-auto border-b-2 md:border-b-0 md:border-r-2 border-black bg-white overflow-hidden">
@@ -40,7 +44,7 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
       </div>
     )}
 
-    <div class={cover ? 'p-6 md:p-8 flex flex-col justify-center' : 'p-8 md:p-12'}>
+    <div class:list={['flex flex-col justify-center', cover ? 'p-6 md:p-8' : 'p-8 md:p-12']}>
       <div class="text-[11px] uppercase tracking-widest font-mono mb-3 flex flex-wrap items-center gap-x-2">
         <span class="font-black">{formatDate(post.publishDate)}</span>
         <span class="opacity-40">·</span>
@@ -49,15 +53,21 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
         <span>{post.readingTime} min read</span>
       </div>
 
-      <h2 class="text-3xl md:text-4xl font-black leading-tight tracking-tight mb-4">
+      <h2 class:list={[
+        'font-black leading-tight tracking-tight mb-4',
+        cover ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-3xl md:text-5xl lg:text-6xl',
+      ]}>
         {post.title}
       </h2>
 
-      <p class="text-sm md:text-base leading-relaxed mb-5 opacity-90">
+      <p class:list={[
+        'leading-relaxed mb-5 opacity-90',
+        cover ? 'text-sm md:text-base' : 'text-base md:text-lg max-w-3xl',
+      ]}>
         {post.excerpt}
       </p>
 
-      <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black font-mono border-b-2 border-black self-start">
+      <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black font-mono bg-black text-[var(--color-neub-yellow)] border-2 border-black px-3 py-1.5 self-start group-hover:bg-white group-hover:text-black transition-colors">
         Read the essay →
       </div>
     </div>

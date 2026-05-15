@@ -1,9 +1,12 @@
 ---
 /**
- * Neub 風格列表卡片（黑邊 + 黃色高亮 + 厚陰影）。
+ * Neub 風格列表卡片。
+ * - 有 cover：左 200px 圖 + 右文字（手機改上下）
+ * - 沒 cover：純文字單欄，標題撐視覺
+ * - Hover：整卡轉黃；cover 區固定白底避免黃打黃
  *
- * 保留 data-blog-card / data-category / data-tags / data-title / data-excerpt，
- * 否則 BlogFilters 的篩選會掛。
+ * 保留 data-blog-card / data-category / data-tags / data-title / data-excerpt
+ * 給 BlogFilters 篩選用。
  */
 import type { BlogPost } from '../lib/firestore';
 import { withBase } from '../lib/url';
@@ -25,9 +28,15 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
   data-excerpt={post.excerpt}
   class="group border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] transition-colors"
 >
-  <a href={withBase(`/blog/${post.slug}`)} class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-0 md:gap-6">
-    <div class="aspect-[4/3] md:aspect-auto md:h-full border-b-2 md:border-b-0 md:border-r-2 border-black bg-[var(--color-neub-yellow)] overflow-hidden">
-      {cover ? (
+  <a
+    href={withBase(`/blog/${post.slug}`)}
+    class:list={[
+      'block',
+      cover && 'md:grid md:grid-cols-[200px_1fr] md:gap-5',
+    ]}
+  >
+    {cover && (
+      <div class="aspect-[4/3] md:aspect-auto md:h-full border-b-2 md:border-b-0 md:border-r-2 border-black bg-white overflow-hidden">
         <img
           src={withBase(cover)}
           alt={post.title}
@@ -37,14 +46,10 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
           decoding="async"
           class="w-full h-full object-cover"
         />
-      ) : (
-        <div class="w-full h-full flex items-center justify-center text-5xl font-black opacity-50">
-          ❦
-        </div>
-      )}
-    </div>
+      </div>
+    )}
 
-    <div class="p-5 flex flex-col justify-center">
+    <div class="p-4 md:p-5 flex flex-col justify-center">
       <div class="text-[11px] uppercase tracking-widest font-mono opacity-60 mb-2 flex flex-wrap items-center gap-x-2">
         <span>{formatDate(post.publishDate)}</span>
         <span class="opacity-40">·</span>
@@ -53,7 +58,7 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
         <span>{post.readingTime} min</span>
       </div>
 
-      <h3 class="text-xl md:text-2xl font-black leading-tight mb-2 tracking-tight">
+      <h3 class="text-lg md:text-xl font-black leading-snug tracking-tight mb-2">
         {post.title}
       </h3>
 
@@ -63,7 +68,7 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
 
       <div class="flex flex-wrap gap-1.5">
         {post.tags.slice(0, 4).map((t) => (
-          <span class="px-2 py-0.5 text-[10px] uppercase tracking-widest font-mono font-black border-2 border-black bg-white">
+          <span class="px-1.5 py-0.5 text-[10px] uppercase tracking-widest font-mono border border-black/50 bg-white/60">
             {t}
           </span>
         ))}

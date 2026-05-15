@@ -181,9 +181,9 @@ export default function BlogFilters({
       </div>
 
       {tags.length > 0 && (
-        <details open={tagOpen} className="border-t-2 border-black pt-3 -mx-4 md:-mx-5 px-4 md:px-5">
-          <summary className="cursor-pointer list-none flex items-center gap-2 text-xs uppercase tracking-widest font-mono font-black select-none">
-            <span aria-hidden="true">+</span>
+        <details open={tagOpen} className="border-t border-dashed border-black/30 pt-3">
+          <summary className="cursor-pointer list-none flex items-center gap-2 text-xs uppercase tracking-widest font-mono font-black select-none hover:text-black/60 transition-colors">
+            <span aria-hidden="true" className="inline-block w-4 text-center">+</span>
             <span>展開標籤</span>
             {tag !== ALL && (
               <span className="ml-auto bg-[var(--color-neub-yellow)] px-2 py-0.5 border-2 border-black">
@@ -191,7 +191,7 @@ export default function BlogFilters({
               </span>
             )}
           </summary>
-          <div className="flex flex-wrap gap-1.5 mt-3">
+          <div className="flex flex-wrap gap-1.5 mt-3 pl-6">
             <button onClick={() => onTag(ALL)} className={tagChipClass(tag === ALL)}>
               all
             </button>
@@ -205,10 +205,10 @@ export default function BlogFilters({
       )}
 
       {hasFilter && (
-        <div className="flex items-baseline justify-between gap-3 border-t-2 border-black pt-3 -mx-4 md:-mx-5 px-4 md:px-5 text-xs font-mono uppercase tracking-widest">
+        <div className="flex items-baseline justify-between gap-3 border-t border-dashed border-black/30 pt-3 text-xs font-mono uppercase tracking-widest">
           <span>
-            <span data-blog-count className="font-black">{totalPosts}</span>
-            <span className="ml-1.5 opacity-70">篇符合</span>
+            <span data-blog-count className="font-black text-base">{totalPosts}</span>
+            <span className="ml-1.5 opacity-70">篇符合條件</span>
           </span>
           <button
             type="button"
