@@ -1,19 +1,12 @@
 ---
 /**
- * Garden 風格列表卡片（Maggie Appleton 式）
+ * Neub 風格列表卡片（黑邊 + 黃色高亮 + 厚陰影）。
  *
- * 設計取向：
- * - serif 標題 + 暖色系（cream / crimson）+ 細線分隔
- * - 左封面 4:3 + 右標題/excerpt/tags；手機改上下
- * - 無厚陰影、無粗黑邊；hover 用 gold highlight 描底
- * - 無封面時 fallback：cream 色塊 + italic 引號
- *
- * 注意：保留 data-blog-card / data-category / data-tags / data-title / data-excerpt，
+ * 保留 data-blog-card / data-category / data-tags / data-title / data-excerpt，
  * 否則 BlogFilters 的篩選會掛。
  */
 import type { BlogPost } from '../lib/firestore';
 import { withBase } from '../lib/url';
-import { formatDate } from '../lib/format';
 
 interface Props {
   post: BlogPost;
@@ -21,6 +14,7 @@ interface Props {
 
 const { post } = Astro.props;
 const cover = post.coverImage;
+const formatDate = (d: string) => d.replaceAll('-', '/');
 ---
 
 <article
@@ -29,48 +23,51 @@ const cover = post.coverImage;
   data-tags={post.tags.join('|')}
   data-title={post.title}
   data-excerpt={post.excerpt}
-  class="garden-card"
+  class="group border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] transition-colors"
 >
-  <a
-    href={withBase(`/blog/${post.slug}`)}
-    class="garden-card__cover"
-    aria-label={post.title}
-  >
-    {cover ? (
-      <img
-        src={withBase(cover)}
-        alt={post.title}
-        width="400"
-        height="300"
-        loading="lazy"
-        decoding="async"
-      />
-    ) : (
-      <div class="garden-card__cover--empty" aria-hidden="true">
-        <span class="garden-card__ornament">❦</span>
+  <a href={withBase(`/blog/${post.slug}`)} class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-0 md:gap-6">
+    <div class="aspect-[4/3] md:aspect-auto md:h-full border-b-2 md:border-b-0 md:border-r-2 border-black bg-[var(--color-neub-yellow)] overflow-hidden">
+      {cover ? (
+        <img
+          src={withBase(cover)}
+          alt={post.title}
+          width="400"
+          height="300"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-full object-cover"
+        />
+      ) : (
+        <div class="w-full h-full flex items-center justify-center text-5xl font-black opacity-50">
+          ❦
+        </div>
+      )}
+    </div>
+
+    <div class="p-5 flex flex-col justify-center">
+      <div class="text-[11px] uppercase tracking-widest font-mono opacity-60 mb-2 flex flex-wrap items-center gap-x-2">
+        <span>{formatDate(post.publishDate)}</span>
+        <span class="opacity-40">·</span>
+        <span class="font-black">{post.category}</span>
+        <span class="opacity-40">·</span>
+        <span>{post.readingTime} min</span>
       </div>
-    )}
+
+      <h3 class="text-xl md:text-2xl font-black leading-tight mb-2 tracking-tight">
+        {post.title}
+      </h3>
+
+      <p class="text-sm leading-relaxed opacity-80 mb-3 line-clamp-2">
+        {post.excerpt}
+      </p>
+
+      <div class="flex flex-wrap gap-1.5">
+        {post.tags.slice(0, 4).map((t) => (
+          <span class="px-2 py-0.5 text-[10px] uppercase tracking-widest font-mono font-black border-2 border-black bg-white">
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
   </a>
-
-  <div>
-    <div class="garden-meta" style="margin-bottom: 0.4rem;">
-      <span>{formatDate(post.publishDate)}</span>
-      <span class="garden-meta__sep">·</span>
-      <span>{post.category}</span>
-      <span class="garden-meta__sep">·</span>
-      <span>{post.readingTime} min read</span>
-    </div>
-
-    <h3 class="garden-card__title">
-      <a href={withBase(`/blog/${post.slug}`)}>{post.title}</a>
-    </h3>
-
-    <p class="garden-card__excerpt">{post.excerpt}</p>
-
-    <div class="garden-card__tags">
-      {post.tags.slice(0, 4).map((t) => (
-        <span class="garden-card__tag">{t}</span>
-      ))}
-    </div>
-  </div>
 </article>

@@ -1,12 +1,6 @@
 ---
 /**
- * /blog — 部落格列表（Maggie Appleton Garden 風格）
- *
- * 設計取向：
- * - 暖米色 cream 背景 + Crimson Pro serif + 莓紅 accent
- * - Featured hero（最多人讀）+ 細線分隔列表
- * - K8s 系列折疊到底部，與主列表視覺區隔
- * - 無厚陰影、無粗黑邊、無黃色高亮
+ * /blog — 部落格列表（Neub 風格，跟首頁一致）
  *
  * SSR 出完整列表（SEO），搜尋 / 篩選由 BlogFilters island 控 DOM。
  */
@@ -25,16 +19,13 @@ const posts = await getAllPublishedPosts();
 const categories = [...new Set(posts.map((p) => p.category))];
 const tags = [...new Set(posts.flatMap((p) => p.tags))];
 
-// Hero 取點閱最高，沒資料退回 featured
 const topSlugs = await getTopViewedSlugs();
 const heroPost =
   topSlugs.map((slug) => posts.find((p) => p.slug === slug)).find(Boolean) ??
   posts.find((p) => p.featured);
 
-// 列表排除 hero post（避免重複顯示）
 const listPosts = heroPost ? posts.filter((p) => p.slug !== heroPost.slug) : posts;
 
-// K8s 系列分組
 const k8sLessons = getAllK8sLessons();
 const k8sByGroup = (Object.keys(groupMeta) as Array<K8sLesson['group']>)
   .sort((a, b) => groupMeta[a].order - groupMeta[b].order)
@@ -72,17 +63,19 @@ const jsonLd = {
 >
   <NavbarNeub />
 
-  <main class="garden-page">
-    <div class="max-w-4xl mx-auto px-6 md:px-8 py-16 md:py-20">
+  <main>
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-12 md:py-16">
       <!-- Header -->
-      <header class="mb-2">
-        <div class="garden-eyebrow" style="margin-bottom: 0.75rem;">
+      <header class="mb-10">
+        <div class="text-xs uppercase tracking-widest font-mono opacity-60 mb-3">
           The Bob Post · 後端踩坑筆記 + 教學現場
         </div>
-        <h1 class="garden-page-title">部落格</h1>
-        <p class="garden-intro">
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-none">
+          <span class="bg-[var(--color-neub-yellow)] px-2 box-decoration-clone">部落格</span>
+        </h1>
+        <p class="mt-6 text-base md:text-lg leading-relaxed opacity-80 max-w-3xl">
           AI 工程師 + Java 後端的技術筆記。LLM / RAG / Agent 導入、Spring Boot、雲端踩坑、教學現場觀察。共
-          <span class="garden-intro__count">{posts.length}</span> 篇。
+          <strong class="bg-[var(--color-neub-yellow)] px-1">{posts.length}</strong> 篇。
         </p>
       </header>
 
@@ -90,7 +83,7 @@ const jsonLd = {
       {heroPost && <BlogFeaturedHero post={heroPost} />}
 
       <!-- Filters -->
-      <div class="garden-filter">
+      <div class="mb-8">
         <BlogFilters
           client:load
           categories={categories}
@@ -100,15 +93,24 @@ const jsonLd = {
       </div>
 
       <!-- All posts -->
-      <section>
-        <div class="garden-eyebrow" style="margin-bottom: 0.5rem;">全部文章</div>
-        <div class="garden-list">
+      <section class="mb-16">
+        <div class="flex items-baseline justify-between mb-4">
+          <div class="text-xs uppercase tracking-widest font-mono font-black">
+            全部文章
+          </div>
+        </div>
+
+        <div class="grid gap-4">
           {listPosts.map((post) => (
             <BlogCardListItem post={post} />
           ))}
         </div>
 
-        <div data-blog-empty hidden class="garden-empty">
+        <div
+          data-blog-empty
+          hidden
+          class="border-2 border-dashed border-black p-12 text-center font-mono uppercase tracking-widest text-sm mt-4"
+        >
           沒有符合條件的文章
         </div>
       </section>
@@ -116,30 +118,41 @@ const jsonLd = {
       <!-- K8s 系列：折疊 -->
       {
         k8sLessons.length > 0 && (
-          <details class="garden-collapse" id="k8s">
-            <summary>
-              Kubernetes 教學系列 · {k8sLessons.length.toString().padStart(2, '0')} 課
+          <details class="border-2 border-black bg-white mb-12" id="k8s">
+            <summary class="cursor-pointer list-none p-5 flex items-center justify-between gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors border-b-2 border-black">
+              <div>
+                <div class="text-xs uppercase tracking-widest font-mono opacity-60 mb-1">
+                  series · 教學專題
+                </div>
+                <div class="text-xl md:text-2xl font-black tracking-tight">
+                  Kubernetes 教學系列 · {k8sLessons.length.toString().padStart(2, '0')} 課
+                </div>
+              </div>
+              <span class="text-2xl font-black" aria-hidden="true">+</span>
             </summary>
-            <div class="garden-k8s__body">
-              <p class="garden-k8s__intro">
+            <div class="p-5 md:p-6">
+              <p class="mb-6 opacity-80 leading-relaxed">
                 完全沒碰過 K8s 的新手向。每一課對應一個搜尋意圖，從「為什麼需要 K8s」一路講到上線、Probe、HPA。
               </p>
               {k8sByGroup.map((g) => (
-                <div class="garden-k8s__group">
-                  <div class="garden-eyebrow garden-k8s__group-label">
+                <div class="mb-8 last:mb-0">
+                  <div class="text-[11px] uppercase tracking-widest font-mono font-black mb-2 bg-[var(--color-neub-yellow)] inline-block px-2 py-0.5 border-2 border-black">
                     {g.meta.label} · {g.lessons.length.toString().padStart(2, '0')} lessons
                   </div>
-                  <ol class="garden-k8s__list">
+                  <ol class="list-none p-0 m-0 border-2 border-black bg-white mt-2">
                     {g.lessons.map((lesson, idx) => (
-                      <li class="garden-k8s__item">
-                        <a href={withBase(`/blog/k8s/${lesson.slug}`)} class="garden-k8s__link">
-                          <span class="garden-k8s__num">
+                      <li class="border-b-2 border-black last:border-b-0">
+                        <a
+                          href={withBase(`/blog/k8s/${lesson.slug}`)}
+                          class="flex items-baseline gap-3 p-3 hover:bg-[var(--color-neub-yellow)] transition-colors"
+                        >
+                          <span class="text-xs font-mono opacity-50 w-6 flex-shrink-0 font-black">
                             {(idx + 1).toString().padStart(2, '0')}
                           </span>
-                          <span class="garden-k8s__title">
+                          <span class="flex-1 font-black">
                             {lesson.title}
                           </span>
-                          <span class="garden-k8s__time">
+                          <span class="text-xs font-mono opacity-60 flex-shrink-0">
                             {lesson.readingTime} min
                           </span>
                         </a>
@@ -148,7 +161,7 @@ const jsonLd = {
                   </ol>
                 </div>
               ))}
-              <p class="garden-k8s__footer">
+              <p class="text-sm italic opacity-70 mt-6">
                 更多主題（HPA、Probe、Helm、RBAC、StatefulSet…）持續補上中。
               </p>
             </div>
@@ -157,16 +170,18 @@ const jsonLd = {
       }
 
       <!-- Motto -->
-      <section class="garden-motto">
-        <div class="garden-eyebrow" style="margin-bottom: 1rem;">Motto</div>
-        <blockquote class="garden-motto__quote">
+      <section class="mt-16 pt-10 border-t-[3px] border-black">
+        <div class="text-xs uppercase tracking-widest font-mono opacity-60 mb-3">
+          Motto
+        </div>
+        <blockquote class="text-xl md:text-2xl font-black leading-snug max-w-2xl mb-4">
           我輩修行之人，以
-          <span class="garden-motto__highlight">聖</span>
+          <span class="bg-[var(--color-neub-yellow)] px-1">聖</span>
           的標準要求自己，以
-          <span class="garden-motto__highlight">凡</span>
+          <span class="bg-[var(--color-neub-yellow)] px-1">凡</span>
           的眼光理解別人。
         </blockquote>
-        <p class="garden-motto__tagline">
+        <p class="font-mono font-black uppercase tracking-widest text-sm">
           不怕死，只怕不過癮。
         </p>
       </section>

@@ -1,9 +1,9 @@
 /**
- * Blog 列表的客戶端互動（搜尋、分類、標籤篩選）。
+ * Blog 列表的客戶端互動（搜尋、分類、標籤篩選）— Neub 風格。
  *
- * 策略：SSR 輸出完整列表（SEO 有料），client island 在瀏覽器用 CSS
- * 控制哪些卡片顯示。列表 DOM 透過 `data-category` / `data-tags`
- * / `data-title` attribute 標記，本元件只負責根據 query 隱藏不符合的。
+ * SSR 出完整列表（SEO 有料），client island 在瀏覽器用 CSS
+ * 控制哪些卡片顯示。列表 DOM 透過 data-* attribute 標記，本元件
+ * 只負責根據 query 隱藏不符合的。
  *
  * URL query 為 single source of truth：?cat=xxx&tag=yyy&q=zzz
  */
@@ -75,11 +75,9 @@ export default function BlogFilters({
       if (show) visible += 1;
     });
 
-    // 更新計數 & featured 區塊顯示
     const countEl = document.querySelector<HTMLElement>('[data-blog-count]');
-    if (countEl) {
-      countEl.textContent = visible.toString();
-    }
+    if (countEl) countEl.textContent = visible.toString();
+
     const emptyEl = document.querySelector<HTMLElement>('[data-blog-empty]');
     if (emptyEl) emptyEl.hidden = visible !== 0;
 
@@ -129,8 +127,24 @@ export default function BlogFilters({
 
   const tagOpen = useMemo(() => tag !== ALL, [tag]);
 
+  const chipClass = (active: boolean): string =>
+    [
+      'px-3 py-1 text-xs uppercase tracking-widest font-mono font-black border-2 border-black transition-colors',
+      active
+        ? 'bg-black text-[var(--color-neub-yellow)]'
+        : 'bg-white hover:bg-[var(--color-neub-yellow)]',
+    ].join(' ');
+
+  const tagChipClass = (active: boolean): string =>
+    [
+      'px-2 py-0.5 text-[11px] uppercase tracking-widest font-mono border-2 border-black transition-colors',
+      active
+        ? 'bg-black text-[var(--color-neub-yellow)] font-black'
+        : 'bg-white hover:bg-[var(--color-neub-yellow)]',
+    ].join(' ');
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="border-2 border-black bg-white p-4 md:p-5 flex flex-col gap-4">
       <div className="relative w-full">
         <label htmlFor="blog-search" className="sr-only">
           搜尋文章
@@ -141,13 +155,13 @@ export default function BlogFilters({
           value={query}
           onChange={(e) => onQuery(e.target.value)}
           placeholder="搜尋標題或摘要…"
-          className="garden-filter__search"
+          className="w-full border-2 border-black bg-white px-4 py-2.5 text-sm font-mono focus:outline-none focus:bg-[var(--color-neub-yellow)] placeholder:opacity-50"
         />
         {query && (
           <button
             type="button"
             onClick={() => onQuery('')}
-            className="garden-filter__clear"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] px-2 py-0.5"
             aria-label="清除搜尋"
           >
             clear
@@ -156,49 +170,33 @@ export default function BlogFilters({
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button
-          onClick={() => onCat(ALL)}
-          className="garden-filter__chip"
-          data-active={category === ALL}
-        >
+        <button onClick={() => onCat(ALL)} className={chipClass(category === ALL)}>
           All
         </button>
         {categories.map((c) => (
-          <button
-            key={c}
-            onClick={() => onCat(c)}
-            className="garden-filter__chip"
-            data-active={category === c}
-          >
+          <button key={c} onClick={() => onCat(c)} className={chipClass(category === c)}>
             {c}
           </button>
         ))}
       </div>
 
       {tags.length > 0 && (
-        <details open={tagOpen} className="garden-filter__tags">
-          <summary>
-            <span className="garden-filter__tags-marker" aria-hidden="true">+</span>
+        <details open={tagOpen} className="border-t-2 border-black pt-3 -mx-4 md:-mx-5 px-4 md:px-5">
+          <summary className="cursor-pointer list-none flex items-center gap-2 text-xs uppercase tracking-widest font-mono font-black select-none">
+            <span aria-hidden="true">+</span>
             <span>展開標籤</span>
             {tag !== ALL && (
-              <span className="garden-filter__tag-active">· #{tag}</span>
+              <span className="ml-auto bg-[var(--color-neub-yellow)] px-2 py-0.5 border-2 border-black">
+                #{tag}
+              </span>
             )}
           </summary>
           <div className="flex flex-wrap gap-1.5 mt-3">
-            <button
-              onClick={() => onTag(ALL)}
-              className="garden-filter__chip garden-filter__chip--sm"
-              data-active={tag === ALL}
-            >
+            <button onClick={() => onTag(ALL)} className={tagChipClass(tag === ALL)}>
               all
             </button>
             {tags.map((t) => (
-              <button
-                key={t}
-                onClick={() => onTag(t)}
-                className="garden-filter__chip garden-filter__chip--sm"
-                data-active={tag === t}
-              >
+              <button key={t} onClick={() => onTag(t)} className={tagChipClass(tag === t)}>
                 #{t}
               </button>
             ))}
@@ -207,14 +205,15 @@ export default function BlogFilters({
       )}
 
       {hasFilter && (
-        <div className="garden-filter__status">
+        <div className="flex items-baseline justify-between gap-3 border-t-2 border-black pt-3 -mx-4 md:-mx-5 px-4 md:px-5 text-xs font-mono uppercase tracking-widest">
           <span>
-            <span data-blog-count>{totalPosts}</span> 篇符合條件
+            <span data-blog-count className="font-black">{totalPosts}</span>
+            <span className="ml-1.5 opacity-70">篇符合</span>
           </span>
           <button
             type="button"
             onClick={reset}
-            className="garden-filter__reset"
+            className="font-black border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] px-2 py-1"
           >
             reset →
           </button>

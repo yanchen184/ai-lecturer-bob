@@ -1,17 +1,10 @@
 ---
 /**
- * Garden 風格 featured hero（Maggie Appleton 式）
- *
- * 設計取向：
- * - 有 cover：左圖（4:3）右文
- * - 沒 cover：單欄全寬文字，加引言式裝飾框（避免大塊空白色塊）
- * - serif 標題、無厚陰影、無黑邊、"Most Read" eyebrow
- *
+ * Neub 風格 featured hero（黃底 + 黑邊 + 厚陰影 + Most Read badge）。
  * 必須保留 data-blog-featured 給 BlogFilters 用（搜尋時要隱藏）。
  */
 import type { BlogPost } from '../lib/firestore';
 import { withBase } from '../lib/url';
-import { formatDate } from '../lib/format';
 
 interface Props {
   post: BlogPost;
@@ -19,50 +12,54 @@ interface Props {
 
 const { post } = Astro.props;
 const cover = post.coverImage;
+const formatDate = (d: string) => d.replaceAll('-', '/');
 ---
 
 <section
   data-blog-featured
-  class:list={['garden-hero', !cover && 'garden-hero--text-only']}
+  class="relative border-2 border-black bg-[var(--color-neub-yellow)] mb-10"
+  style="box-shadow: 8px 8px 0 #0a0a0a;"
 >
-  {cover && (
-    <a
-      href={withBase(`/blog/${post.slug}`)}
-      class="garden-hero__cover"
-      aria-label={post.title}
-    >
-      <img
-        src={withBase(cover)}
-        alt={post.title}
-        loading="eager"
-        decoding="async"
-      />
-    </a>
-  )}
-
-  <div>
-    <div class="garden-eyebrow" style="margin-bottom: 0.5rem; color: var(--color-garden-crimson);">
-      ★ Most Read · 最多人讀
-    </div>
-
-    <div class="garden-meta" style="margin-bottom: 0.875rem;">
-      <span>{formatDate(post.publishDate)}</span>
-      <span class="garden-meta__sep">·</span>
-      <span>{post.category}</span>
-      <span class="garden-meta__sep">·</span>
-      <span>{post.readingTime} min read</span>
-    </div>
-
-    <h2 class="garden-hero__title">
-      <a href={withBase(`/blog/${post.slug}`)} style="color: inherit; text-decoration: none;">
-        {post.title}
-      </a>
-    </h2>
-
-    <p class="garden-hero__excerpt">{post.excerpt}</p>
-
-    <a href={withBase(`/blog/${post.slug}`)} class="garden-hero__cta">
-      Read the essay →
-    </a>
+  <div class="absolute -top-3 left-4 bg-black text-[var(--color-neub-yellow)] px-3 py-1 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black">
+    ★ Most Read · 最多人讀
   </div>
+
+  <a
+    href={withBase(`/blog/${post.slug}`)}
+    class="grid grid-cols-1 md:grid-cols-2 gap-0 group"
+  >
+    {cover && (
+      <div class="aspect-[4/3] md:aspect-auto border-b-2 md:border-b-0 md:border-r-2 border-black bg-white overflow-hidden">
+        <img
+          src={withBase(cover)}
+          alt={post.title}
+          loading="eager"
+          decoding="async"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    )}
+
+    <div class={cover ? 'p-6 md:p-8 flex flex-col justify-center' : 'p-8 md:p-12'}>
+      <div class="text-[11px] uppercase tracking-widest font-mono mb-3 flex flex-wrap items-center gap-x-2">
+        <span class="font-black">{formatDate(post.publishDate)}</span>
+        <span class="opacity-40">·</span>
+        <span>{post.category}</span>
+        <span class="opacity-40">·</span>
+        <span>{post.readingTime} min read</span>
+      </div>
+
+      <h2 class="text-3xl md:text-4xl font-black leading-tight tracking-tight mb-4">
+        {post.title}
+      </h2>
+
+      <p class="text-sm md:text-base leading-relaxed mb-5 opacity-90">
+        {post.excerpt}
+      </p>
+
+      <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black font-mono border-b-2 border-black self-start">
+        Read the essay →
+      </div>
+    </div>
+  </a>
 </section>
