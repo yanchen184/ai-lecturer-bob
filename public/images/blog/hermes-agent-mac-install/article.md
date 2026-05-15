@@ -3,6 +3,19 @@
 > - 推薦給：手上有內網 LLM wrapper、想跑離線 CLI agent、不想再被雲端 API key 卡住的工程師
 > - 讀完你會知道：Hermes Agent 是什麼、Mac 從 0 安裝完整步驟、為什麼不能直接接 wrapper、要補哪 4 件事才會通
 
+---
+
+> **📚 Hermes Agent 系列 — 這是第 4 篇 / 共 5 篇**
+>
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?(新手)
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘公開 API 版(新手)
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. **👉 Mac 安裝實戰(你在這)— 接公司內網 LLM(工程師硬版)**
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+>
+> **這篇給誰看**:已經會用 CLI / 看得懂 Python / 手上有內網 OpenAI-compatible wrapper 想接的工程師
+> **完全新手**:先看[入門篇](/blog/hermes-agent-intro/) + [最簡安裝](/blog/hermes-agent-quickstart/),那兩篇 15 分鐘讓你跑起來 / 不需要寫 proxy
+
 我手上有一台跑著 **MediaTek-Research/Llama-Breeze2-8B-Instruct** 的內網機器（`http://<INTERNAL_LLM_HOST>:<PORT>`），公司另一個同事寫了 OpenAI-compatible wrapper 暴露 `/v1/chat/completions`。理論上，**任何吃 OpenAI API 的 client 都能直接接**。
 
 我選了 [Hermes Agent](https://github.com/NousResearch/hermes-agent)——NousResearch 在 2026 年初開源的 CLI agent，可以把它想成「**provider-agnostic 的 Claude Code**」。

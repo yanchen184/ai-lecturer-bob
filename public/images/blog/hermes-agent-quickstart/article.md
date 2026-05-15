@@ -5,6 +5,19 @@
 > - 不會碰你內網、不會碰你公司憑證，純粹拿來試水溫看 Hermes 長怎樣
 > - 想接公司內網 LLM（像我接 Breeze2）→ 看 [Mac 安裝實戰篇](/blog/hermes-agent-mac-install/)，這篇先學會「能跑」
 
+---
+
+> **📚 Hermes Agent 系列 — 這是第 2 篇 / 共 5 篇**
+>
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
+> 2. **👉 最簡安裝(你在這)— 5 分鐘把它跑起來**
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+>
+> **建議順序**:[入門篇](/blog/hermes-agent-intro/)(知道它是什麼)→ 這篇(動手跑)→ [沙盒篇](/blog/hermes-agent-sandbox/)(玩瘋之前先學保護)
+> **跳過這篇的情境**:你電腦已經有 Python 環境、會自己 pip install,或是直接要接內網 LLM → 跳[實戰篇](/blog/hermes-agent-mac-install/)
+
 ## 📌 這篇要回答的問題
 
 1. [安裝前要準備什麼](#安裝前要準備什麼)

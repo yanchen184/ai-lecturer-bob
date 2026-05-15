@@ -4,6 +4,19 @@
 > - **Hermes Agent 提供 7 種「執行環境」**：從直接動你電腦（local），到完全雲端拋棄式（Vercel Sandbox），按風險選
 > - **新手最實用的選擇**：Docker（你電腦上的小盒子，免費、安全、不依賴雲端）
 
+---
+
+> **📚 Hermes Agent 系列 — 這是第 3 篇 / 共 5 篇**
+>
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
+> 3. **👉 沙盒篇(你在這)— 怎麼讓它不弄壞電腦**
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+>
+> **建議順序**:[入門](/blog/hermes-agent-intro/)→ [最簡安裝](/blog/hermes-agent-quickstart/)(先跑起來)→ 這篇(學會保護)→ 開始實戰
+> **這篇何時看**:你已經能跑 `hermes -z`、開始想讓它做「動真格的事」(刪檔、改 git、跑網路爬蟲)的那一刻
+
 ## 📌 這篇要回答的問題
 
 1. [為什麼 AI Agent 需要沙盒](#為什麼-ai-agent-需要沙盒)

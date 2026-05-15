@@ -4,6 +4,19 @@
 > - **跟 Claude Code 差在哪**：基本上同類產品，但 Hermes Agent 是免費開源、可以用任何家的 AI（包括你公司內網的）
 > - **安不安全**：預設會直接動你電腦的檔案，**但可以叫它關進「沙盒」**——一個隔離的小房間，弄壞了砍掉重來，你的電腦完全沒事
 
+---
+
+> **📚 Hermes Agent 系列 — 這是第 1 篇 / 共 5 篇**
+>
+> 1. **👉 入門篇（你在這）— 這 AI 工具到底在幹嘛?**
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+>
+> **建議順序**:這篇 → 最簡安裝(動手玩) → 沙盒(玩出感覺後再學保護自己)
+> **只想看一篇**:就是這篇,看完知道這工具在幹嘛、要不要繼續
+
 ## 📌 這篇要回答的問題
 
 1. [我有 ChatGPT 了，為什麼還需要 Hermes Agent](#我有-chatgpt-了為什麼還需要-hermes-agent)

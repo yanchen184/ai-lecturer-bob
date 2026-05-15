@@ -3,6 +3,19 @@
 > - 推薦給：在意 AI Agent 生態的工程師、思考為什麼開源 CLI 在 2026 還能跟雲端閉源 app 拼流量的觀察者
 > - 讀完你會知道：Hermes Agent 是什麼、OpenRouter 為什麼變成模型市佔的事實量尺、open-source provider-agnostic 在 LLM 路由經濟下的結構優勢
 
+---
+
+> **📚 Hermes Agent 系列 — 這是第 5 篇 / 共 5 篇**
+>
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 5. **👉 結構分析(你在這)— 為什麼它擠進 OpenRouter #2**
+>
+> **這篇給誰看**:想看「為什麼這工具紅起來」的結構性分析、AI 工具生態觀察者、創投/PM 視角的讀者
+> **不關心生態 / 只想用工具**:跳過這篇,看[入門](/blog/hermes-agent-intro/) → [最簡安裝](/blog/hermes-agent-quickstart/)就夠
+
 2026 上半年，OpenRouter 公布最新 [App & Agent Rankings](https://openrouter.ai/rankings)。第一名是 OpenAI 自家的 ChatGPT 客戶端（廢話，他們本來就是最大用戶）。第二名讓我看了一愣：**Hermes Agent**——一個 NousResearch 維護的開源 CLI agent，連付費 GUI 都沒有。
 
 它把 Kilo Code、Claude Code、Cline 全壓在身後。
