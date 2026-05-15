@@ -7,14 +7,14 @@
 
 > **📚 Hermes Agent 系列 — 這是第 5 篇 / 共 5 篇**
 >
-> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
-> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
-> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
-> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 1. [入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
+> 2. [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
+> 3. [沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. [Mac 安裝實戰](/ai-lecturer-bob/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
 > 5. **👉 結構分析(你在這)— 為什麼它擠進 OpenRouter #2**
 >
 > **這篇給誰看**:想看「為什麼這工具紅起來」的結構性分析、AI 工具生態觀察者、創投/PM 視角的讀者
-> **不關心生態 / 只想用工具**:跳過這篇,看[入門](/blog/hermes-agent-intro/) → [最簡安裝](/blog/hermes-agent-quickstart/)就夠
+> **不關心生態 / 只想用工具**:跳過這篇,看[入門](/ai-lecturer-bob/blog/hermes-agent-intro/) → [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/)就夠
 
 2026 上半年，OpenRouter 公布最新 [App & Agent Rankings](https://openrouter.ai/rankings)。第一名是 OpenAI 自家的 ChatGPT 客戶端（廢話，他們本來就是最大用戶）。第二名讓我看了一愣：**Hermes Agent**——一個 NousResearch 維護的開源 CLI agent，連付費 GUI 都沒有。
 
@@ -22,7 +22,9 @@
 
 <img src="/ai-lecturer-bob/images/blog/hermes-agent-academic/openrouter-apps-ranking.png" alt="OpenRouter App & Agent Rankings 截圖,顯示 Hermes Agent 在 Most Popular 區塊排名 #2,僅次於 OpenAI;同時佔據 Top Productivity 與 Top Creative 雙榜首" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
-這篇是觀察筆記，不是教學。如果你想知道「**為什麼一個沒有 sales、沒有 GUI、沒有訂閱方案的開源 CLI，能在 2026 的 agent 生態擠進 OpenRouter 前段班**」，這篇給你結構性答案。想動手裝起來的請看姊妹文：[從 0 在 Mac 上裝 Hermes Agent 接內網 LLM](/ai-lecturer-bob/blog/hermes-agent-mac-install/)。
+這篇是觀察筆記，不是教學。如果你想知道「**為什麼一個沒有 sales、沒有 GUI、沒有訂閱方案的開源 CLI，能在 2026 的 agent 生態擠進 OpenRouter 前段班**」，這篇給你結構性答案。
+
+**完全沒碰過 Hermes Agent?** 先看 [入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/)(知道它是什麼)再回來,這篇對「沒用過工具的人」有點抽象。**想動手裝?** 走 [最簡安裝篇](/ai-lecturer-bob/blog/hermes-agent-quickstart/) 5 分鐘搞定。
 
 ## 📌 目錄
 
