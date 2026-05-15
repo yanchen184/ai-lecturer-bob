@@ -56,7 +56,7 @@ const posts = [
   {
     slug: 'hermes-agent-academic',
     title:
-      'Hermes Agent 為什麼擠進 OpenRouter App 排行榜第 2?開源 CLI 在 2026 agent 生態的結構性優勢',
+      'Hermes Agent 為什麼擠進 OpenRouter App 排行榜第 2?結構性原因解析',
     excerpt:
       '2026 上半年 OpenRouter App & Agent Rankings 公布,Hermes Agent (NousResearch 維護的開源 CLI agent) 排名第 2,僅次於 ChatGPT、把 Kilo Code / Claude Code / Cline 全壓在身後。本文拆解三個結構性原因:provider-agnostic 直接吃 OpenRouter 紅利、開源 CLI 的 long-tail 採用、NousResearch 的開源信任資本。並提供 v0.13.0 release 訊號分析、跟主流 agent 的真實差異對照、反方論點。',
     category: 'AI 工具',
