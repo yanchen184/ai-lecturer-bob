@@ -1,0 +1,39 @@
+想在 Mac 上裝 Hermes Agent 接內網 LLM，結果 hermes -z 跑完完全空白、exit 0、沒任何錯誤?
+
+📝 完整實戰拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/hermes-agent-mac-install/
+
+—
+
+Hermes Agent (NousResearch 開源的 CLI agent，OpenRouter App 排行榜第 2) 號稱 provider-agnostic，理論上接任何 OpenAI-compatible 後端都能跑。
+
+實際接公司內網的 Breeze2 wrapper 時，撞牆兩天:
+
+❌ hermes -z 跑完 exit 0、stdout 空白
+❌ hermes logs errors 也空
+❌ session JSON 只記到 user message
+❌ wrapper 那層完全沒收到 chat 請求
+
+挖完 Hermes 源碼後發現:OpenAI SDK strict 模式對「半套 OpenAI-compatible」零容忍，缺一條都會 silent drop。
+
+Breeze2 wrapper 跟標準 OpenAI API 差了 4 件事:
+
+1. GET /v1/models 不存在 — 預檢失敗
+2. response 沒有 usage 欄位 — 被視為 malformed
+3. stream:true 仍回單一 JSON 不發 SSE — 拿到空 chunk
+4. system_fingerprint 沒給 — 警告 log
+
+解法不是改 wrapper (改不了)，是在 127.0.0.1:8910 起一支 FastAPI proxy 一次補齊 4 件事，Hermes 借 alibaba provider 接過來。
+
+最後掛 launchd 開機自啟動，重啟電腦也不用手動 uvicorn。
+
+完整內容包含:
+• Hermes Agent v0.13.0 從 0 安裝
+• 為什麼借 alibaba 而不是 openai / lmstudio
+• 80 行 proxy.py 完整可複製
+• launchd plist 完整範例
+• Silent fail 的排查心法
+
+如果你也想接「不是 OpenAI 也不是 Anthropic、但號稱 OpenAI-compatible」的後端，這篇省你兩天。
+
+#HermesAgent #AIagent #OpenAI #FastAPI #macOS #launchd #CLI #工程師

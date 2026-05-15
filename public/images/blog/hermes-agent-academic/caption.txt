@@ -1,0 +1,43 @@
+為什麼一個沒 GUI、沒訂閱方案、沒 sales 的開源 CLI agent，能在 OpenRouter App 排行榜衝到第 2、把 Claude Code / Kilo / Cline 全壓在身後?
+
+📝 完整結構性分析：
+https://yanchen184.github.io/ai-lecturer-bob/blog/hermes-agent-academic/
+
+—
+
+2026 上半年 OpenRouter App & Agent Rankings 公布:
+🥇 ChatGPT (OpenAI 自家客戶端)
+🥈 Hermes Agent (NousResearch 維護的開源 CLI)
+🥉 Kilo Code
+
+Hermes Agent 排第 2 不是運氣，是三個結構性原因疊加:
+
+1️⃣ Provider-agnostic 直接吃 OpenRouter 紅利
+改一行 OPENAI_BASE_URL 就能接 OpenRouter，零摩擦。Claude Code 強制連 Anthropic 反而吃不到這條流量。
+
+2️⃣ 開源 CLI 的 long-tail 採用
+工程師 / CI / agent-of-agents / 內網 LLM 場景:GUI 全部不友善。這群人總數不多，但每人燒的 token 是 C 端用戶的 100 倍。
+
+3️⃣ NousResearch 的開源信任資本
+不是「先開源後閉源」的創投暖場，是真開源。Hermes 系列 model 權重全公開、論文齊全、Discord 活躍。一發布就有現成擁護者社群會自願寫 plugin。
+
+v0.13.0「The Tenacity Release」訊號:
+• 128.5k 行新增
+• 282 個 contributors 一個月內提交 PR
+• Multi-agent delegation、Skills v2、Hermes Voice TTS……
+
+對工程師的三個 takeaway:
+
+💡 CLI agent 不會被 GUI 取代 — agent loop 本質是 pipe-able、可組合的
+💡 Provider lock-in 是 2026 最大技術債
+💡 OpenRouter 統計比 GitHub stars 有資訊量得多
+
+反方論點 (避免變業配):
+
+⚠️ Hermes silent fail 折磨人 (response 格式錯一欄就 exit 0、stdout 空白)
+⚠️ 文件落後 release 太多
+⚠️ Customization 極致 = 時間黑洞
+
+姊妹實作篇:從 0 在 Mac 上裝 Hermes Agent 接內網 LLM (proxy 補洞 + launchd) — 連結見部落格內文。
+
+#HermesAgent #NousResearch #OpenRouter #AIagent #OpenSource #LLM #工程師

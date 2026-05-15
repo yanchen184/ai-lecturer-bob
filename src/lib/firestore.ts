@@ -17,6 +17,7 @@ import {
   type Firestore,
 } from 'firebase/firestore';
 import { staticPosts } from '../data/staticPosts';
+import { detectCoverImage } from './blog-cover';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDrAsh4pLbCebHSogupG8daABhRYdI2prk',
@@ -55,6 +56,11 @@ export interface BlogPost {
   featured: boolean;
   defaultStyle?: 'neub' | 'anti';
   faqItems?: FaqItem[];
+  /**
+   * 封面圖（可選）。約定路徑：/images/blog/<slug>/cover.png
+   * 列表頁透過 fs 在 build 時偵測；Firestore 不需要寫此欄位。
+   */
+  coverImage?: string;
 }
 
 let db: Firestore | null = null;
@@ -141,7 +147,9 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
 
     if (posts.length === 0) {
       console.warn('[firestore] bob_blog_posts 為空（或全為未來排程），使用靜態 fallback');
-      cache = staticPosts.filter((p) => p.publishDate && p.publishDate <= today);
+      cache = withCoverImages(
+        staticPosts.filter((p) => p.publishDate && p.publishDate <= today),
+      );
       return cache;
     }
 
@@ -151,16 +159,55 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
     } else {
       console.log(`[firestore] 載入 ${posts.length} 篇文章`);
     }
-    cache = posts;
-    return posts;
+    cache = withCoverImages(posts);
+    return cache;
   } catch (error) {
     console.error('[firestore] fetch 失敗，使用靜態 fallback:', error);
-    cache = staticPosts.filter((p) => p.publishDate && p.publishDate <= today);
+    cache = withCoverImages(
+      staticPosts.filter((p) => p.publishDate && p.publishDate <= today),
+    );
     return cache;
   }
+}
+
+/** 為每篇文章補上 build-time 偵測到的 cover.png 路徑 */
+function withCoverImages(posts: BlogPost[]): BlogPost[] {
+  return posts.map((p) => ({
+    ...p,
+    coverImage: p.coverImage ?? detectCoverImage(p.slug),
+  }));
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const all = await getAllPublishedPosts();
   return all.find((p) => p.slug === slug) ?? null;
+}
+
+/**
+ * 依 bob_post_stats.totalViews 由高到低排序，回傳 slug 陣列。
+ * build 時呼叫一次，失敗回 []（caller 用 featured fallback）。
+ */
+let topSlugsCache: string[] | null = null;
+export async function getTopViewedSlugs(): Promise<string[]> {
+  if (topSlugsCache) return topSlugsCache;
+  try {
+    const db = getDb();
+    const snap = await getDocs(collection(db, 'bob_post_stats'));
+    const rows = snap.docs
+      .map((d) => {
+        const data = d.data() as Record<string, unknown>;
+        const slug = (data.slug as string) || d.id;
+        const views = typeof data.totalViews === 'number' ? data.totalViews : 0;
+        return { slug, views };
+      })
+      .filter((r) => r.slug && r.views > 0)
+      .sort((a, b) => b.views - a.views);
+    topSlugsCache = rows.map((r) => r.slug);
+    console.log(`[firestore] bob_post_stats 載入 ${topSlugsCache.length} 篇有點閱紀錄`);
+    return topSlugsCache;
+  } catch (error) {
+    console.error('[firestore] bob_post_stats 抓取失敗:', error);
+    topSlugsCache = [];
+    return topSlugsCache;
+  }
 }

@@ -78,7 +78,7 @@ export default function BlogFilters({
     // 更新計數 & featured 區塊顯示
     const countEl = document.querySelector<HTMLElement>('[data-blog-count]');
     if (countEl) {
-      countEl.textContent = visible.toString().padStart(3, '0');
+      countEl.textContent = visible.toString();
     }
     const emptyEl = document.querySelector<HTMLElement>('[data-blog-empty]');
     if (emptyEl) emptyEl.hidden = visible !== 0;
@@ -130,95 +130,90 @@ export default function BlogFilters({
   const tagOpen = useMemo(() => tag !== ALL, [tag]);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-3">
-      <div className="flex flex-col md:flex-row md:items-center gap-3">
-        <div className="relative flex-1">
-          <label htmlFor="blog-search" className="sr-only">
-            搜尋文章
-          </label>
-          <input
-            id="blog-search"
-            type="search"
-            value={query}
-            onChange={(e) => onQuery(e.target.value)}
-            placeholder="> grep 標題或摘要..."
-            className="w-full px-3 py-2 bg-white border-2 border-black font-mono text-sm focus:outline-none focus:bg-[#ffff00] placeholder:opacity-50"
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={() => onQuery('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs px-2 py-0.5 hover:bg-black hover:text-white transition-colors"
-              aria-label="清除搜尋"
-            >
-              [×]
-            </button>
-          )}
-        </div>
-
-        <div className="flex flex-wrap gap-1.5">
+    <div className="flex flex-col gap-4">
+      <div className="relative w-full">
+        <label htmlFor="blog-search" className="sr-only">
+          搜尋文章
+        </label>
+        <input
+          id="blog-search"
+          type="search"
+          value={query}
+          onChange={(e) => onQuery(e.target.value)}
+          placeholder="搜尋標題或摘要…"
+          className="garden-filter__search"
+        />
+        {query && (
           <button
-            onClick={() => onCat(ALL)}
-            className={`px-2.5 py-1 text-xs uppercase tracking-wider border-2 border-black transition-colors ${
-              category === ALL
-                ? 'bg-black text-white'
-                : 'bg-white hover:bg-[#ffff00]'
-            }`}
+            type="button"
+            onClick={() => onQuery('')}
+            style={{
+              position: 'absolute',
+              right: '0.5rem',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              fontFamily: 'var(--font-garden-sans)',
+              fontSize: '0.75rem',
+              color: 'var(--color-garden-ink-soft)',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '0.25rem 0.5rem',
+            }}
+            aria-label="清除搜尋"
           >
-            [all]
+            clear
           </button>
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => onCat(c)}
-              className={`px-2.5 py-1 text-xs uppercase tracking-wider border-2 border-black transition-colors ${
-                category === c
-                  ? 'bg-black text-white'
-                  : 'bg-white hover:bg-[#ffff00]'
-              }`}
-            >
-              [{c}]
-            </button>
-          ))}
-        </div>
+        )}
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => onCat(ALL)}
+          className="garden-filter__chip"
+          data-active={category === ALL}
+        >
+          All
+        </button>
+        {categories.map((c) => (
+          <button
+            key={c}
+            onClick={() => onCat(c)}
+            className="garden-filter__chip"
+            data-active={category === c}
+          >
+            {c}
+          </button>
+        ))}
       </div>
 
       {tags.length > 0 && (
-        <details className="group" open={tagOpen}>
-          <summary className="cursor-pointer text-xs uppercase tracking-widest opacity-60 hover:opacity-100 select-none inline-flex items-center gap-2 list-none">
-            <span className="transition-transform group-open:rotate-90">›</span>
-            <span>
-              tags
-              {tag !== ALL && (
-                <span className="ml-2 px-1.5 py-0.5 bg-black text-white text-[10px]">
-                  #{tag}
-                </span>
-              )}
-              <span className="ml-2 opacity-50">
-                ({tags.length.toString().padStart(2, '0')})
+        <details open={tagOpen} className="garden-filter__tags">
+          <summary>
+            <span className="garden-filter__tags-marker" aria-hidden="true">+</span>
+            <span>展開標籤</span>
+            {tag !== ALL && (
+              <span style={{ color: 'var(--color-garden-crimson)', fontWeight: 700 }}>
+                · #{tag}
               </span>
-            </span>
+            )}
           </summary>
-          <div className="flex flex-wrap gap-1.5 mt-2">
+          <div className="flex flex-wrap gap-1.5 mt-3">
             <button
               onClick={() => onTag(ALL)}
-              className={`px-2 py-0.5 text-xs border border-black transition-colors ${
-                tag === ALL
-                  ? 'bg-black text-white'
-                  : 'bg-white hover:bg-[#ffff00]'
-              }`}
+              className="garden-filter__chip"
+              data-active={tag === ALL}
+              style={{ fontSize: '0.75rem', padding: '0.25rem 0.625rem' }}
             >
-              *
+              all
             </button>
             {tags.map((t) => (
               <button
                 key={t}
                 onClick={() => onTag(t)}
-                className={`px-2 py-0.5 text-xs border border-black transition-colors ${
-                  tag === t
-                    ? 'bg-black text-white'
-                    : 'bg-white hover:bg-[#ffff00]'
-                }`}
+                className="garden-filter__chip"
+                data-active={tag === t}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.625rem' }}
               >
                 #{t}
               </button>
@@ -228,15 +223,33 @@ export default function BlogFilters({
       )}
 
       {hasFilter && (
-        <div className="flex items-baseline gap-3 text-xs">
-          <span className="opacity-60">
-            [{''}<span data-blog-count>{totalPosts.toString().padStart(3, '0')}</span>{' '}
-            found]
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '1rem',
+            fontFamily: 'var(--font-garden-sans)',
+            fontSize: '0.75rem',
+            color: 'var(--color-garden-ink-soft)',
+          }}
+        >
+          <span>
+            <span data-blog-count>{totalPosts}</span> 篇符合條件
           </span>
           <button
             type="button"
             onClick={reset}
-            className="uppercase tracking-widest underline hover:bg-[#ffff00] transition-colors"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--color-garden-crimson)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              cursor: 'pointer',
+              padding: 0,
+              fontWeight: 700,
+              borderBottom: '1px solid var(--color-garden-crimson)',
+            }}
           >
             reset →
           </button>

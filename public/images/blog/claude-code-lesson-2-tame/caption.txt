@@ -1,0 +1,29 @@
+Claude Code 用了一個禮拜還是覺得「也就那樣」？問題不在工具，在你還沒馴服它。
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/claude-code-lesson-2-tame/
+
+—
+
+我帶 AI 初階班的第二堂剛上完，主題就一個字：**馴服**。
+
+第一堂講「裝起來」，第二堂講怎麼讓 Claude Code 從「每天從零認識你的新進同事」，變成你的開發夥伴。
+
+四個層級，由淺到深：
+
+1️⃣ /compact、--resume → 單一對話的延續
+2️⃣ CLAUDE.md → 寫一份角色與規矩，Claude 每次啟動都讀
+3️⃣ Auto memory → 他在幕後默默觀察你，自動記下你的偏好
+4️⃣ Agent → 派出去的分身，獨立有自己的 context 不污染主對話
+
+我自己 CLAUDE.md 寫了 100 多行，常駐「請吐槽我的爛想法」「動手前先 30 秒給方向」這幾條，原本每次都要重打的話現在自動帶入。
+
+文章裡有：
+- CLAUDE.md 十大定義 checklist
+- 手把手建一個「會修投影機的 agent」
+- statusline / compact / session 三件套實戰
+- 6 題 FAQ + 完整延伸資源
+
+留言告訴我你 CLAUDE.md 裡寫了什麼，我來吐槽。
+
+#ClaudeCode #AI工具 #工程師日常 #AI教學 #開發者

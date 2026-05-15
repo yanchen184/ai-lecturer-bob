@@ -1,0 +1,34 @@
+Ralph Loop 用了一陣子後的真心話：6 個官方 README 沒寫的坑
+
+📝 完整圖文拆解:
+https://yanchen184.github.io/ai-lecturer-bob/blog/ralph-loop-real-world/
+
+—
+
+Ralph Loop（Anthropic 官方 ralph-wiggum plugin）不是新模型也不是黑科技,本質就是「Stop hook 攔住 exit + 同 prompt 重餵 + XML 標籤偵測退出」。
+
+我用了一陣子、也燒過冤枉錢。整理 6 條官方 README 沒寫的進階心法:
+
+1️⃣ Claude 為了脫身會亂講 promise(最痛的坑)
+   ── 解法:promise 設成「可驗證事實陳述」+ 驗收腳本 + 正當退出路徑
+
+2️⃣ max-iterations 不設就是燒錢儀式
+   ── 我有過 80 輪空轉燒 24 鎂的經驗,別重蹈
+
+3️⃣ Prompt 寫太抽象 → 每輪原地打轉
+   ── 三要素:可驗證成功條件 / 明確禁區 / 下一輪線索
+
+4️⃣ Stop hook 跟其他 plugin 打架(superpowers / zenbu-powers)
+   ── 跑 ralph-loop 前先檢查競爭的 hook
+
+5️⃣ 進階組合:搭 git worktree 平行跑多任務
+   ── 三倍 token 換三分之一時間
+
+6️⃣ 進階組合:在 prompt 裡塞驗收腳本
+   ── 比靠 Claude 自己判斷可靠 100 倍
+
+文末附我的常駐 prompt 模板,複製貼上就能跑。
+
+最大金句:Ralph Loop 真正的價值不是「自動化」,是把人類從「按下重新發送」這個低價值動作拔掉。
+
+#ClaudeCode #RalphLoop #AI工具 #工程師日常 #Anthropic #自動化

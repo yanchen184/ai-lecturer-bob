@@ -1,0 +1,82 @@
+---
+/**
+ * Garden 風格列表卡片（Maggie Appleton 式）
+ *
+ * 設計取向：
+ * - serif 標題 + 暖色系（cream / crimson）+ 細線分隔
+ * - 左封面 4:3 + 右標題/excerpt/tags；手機改上下
+ * - 無厚陰影、無粗黑邊；hover 用 gold highlight 描底
+ * - 無封面時 fallback：cream 色塊 + italic 引號
+ *
+ * 注意：保留 data-blog-card / data-category / data-tags / data-title / data-excerpt，
+ * 否則 BlogFilters 的篩選會掛。
+ */
+import type { BlogPost } from '../lib/firestore';
+import { withBase } from '../lib/url';
+
+interface Props {
+  post: BlogPost;
+  index?: number;
+}
+
+const { post } = Astro.props;
+const formatDate = (d: string) => {
+  const [y, m, day] = d.split('-');
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const idx = parseInt(m, 10) - 1;
+  return `${months[idx] ?? m} ${parseInt(day, 10)}, ${y}`;
+};
+const cover = post.coverImage;
+---
+
+<article
+  data-blog-card
+  data-category={post.category}
+  data-tags={post.tags.join('|')}
+  data-title={post.title}
+  data-excerpt={post.excerpt}
+  class="garden-card"
+>
+  <a
+    href={withBase(`/blog/${post.slug}`)}
+    class="garden-card__cover"
+    aria-label={post.title}
+  >
+    {cover ? (
+      <img
+        src={withBase(cover)}
+        alt={post.title}
+        width="400"
+        height="300"
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div class="garden-card__cover--empty" aria-hidden="true">
+        <span class="garden-card__ornament">❦</span>
+      </div>
+    )}
+  </a>
+
+  <div>
+    <div class="garden-meta" style="margin-bottom: 0.4rem;">
+      <span>{formatDate(post.publishDate)}</span>
+      <span style="margin: 0 0.5rem; opacity: 0.5;">·</span>
+      <span>{post.category}</span>
+      <span style="margin: 0 0.5rem; opacity: 0.5;">·</span>
+      <span>{post.readingTime} min read</span>
+    </div>
+
+    <h3 class="garden-card__title">
+      <a href={withBase(`/blog/${post.slug}`)}>{post.title}</a>
+    </h3>
+
+    <p class="garden-card__excerpt">{post.excerpt}</p>
+
+    <div class="garden-card__tags">
+      {post.tags.slice(0, 4).map((t) => (
+        <span class="garden-card__tag">{t}</span>
+      ))}
+    </div>
+  </div>
+</article>

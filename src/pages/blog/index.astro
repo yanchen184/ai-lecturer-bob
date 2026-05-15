@@ -1,15 +1,22 @@
 ---
 /**
- * /blog — 部落格列表。
- * - SSR 出完整文章列表 HTML（SEO 吃得到）
- * - 搜尋 / 篩選為 client island（`BlogFilters`）
- * - Featured 區塊在無篩選時顯示
+ * /blog — 部落格列表（Maggie Appleton Garden 風格）
+ *
+ * 設計取向：
+ * - 暖米色 cream 背景 + Crimson Pro serif + 莓紅 accent
+ * - Featured hero（最多人讀）+ 細線分隔列表
+ * - K8s 系列折疊到底部，與主列表視覺區隔
+ * - 無厚陰影、無粗黑邊、無黃色高亮
+ *
+ * SSR 出完整列表（SEO），搜尋 / 篩選由 BlogFilters island 控 DOM。
  */
 import RootLayout from '../../layouts/RootLayout.astro';
 import NavbarNeub from '../../components/NavbarNeub.astro';
 import FooterNeub from '../../components/FooterNeub.astro';
 import BlogFilters from '../../components/BlogFilters.tsx';
-import { getAllPublishedPosts } from '../../lib/firestore';
+import BlogCardListItem from '../../components/BlogCardListItem.astro';
+import BlogFeaturedHero from '../../components/BlogFeaturedHero.astro';
+import { getAllPublishedPosts, getTopViewedSlugs } from '../../lib/firestore';
 import { getAllK8sLessons, groupMeta, type K8sLesson } from '../../lib/k8s';
 import { withBase } from '../../lib/url';
 
@@ -17,9 +24,17 @@ const posts = await getAllPublishedPosts();
 
 const categories = [...new Set(posts.map((p) => p.category))];
 const tags = [...new Set(posts.flatMap((p) => p.tags))];
-const featured = posts.filter((p) => p.featured);
 
-// K8s 系列：依 group 分組顯示
+// Hero 取點閱最高，沒資料退回 featured
+const topSlugs = await getTopViewedSlugs();
+const heroPost =
+  topSlugs.map((slug) => posts.find((p) => p.slug === slug)).find(Boolean) ??
+  posts.find((p) => p.featured);
+
+// 列表排除 hero post（避免重複顯示）
+const listPosts = heroPost ? posts.filter((p) => p.slug !== heroPost.slug) : posts;
+
+// K8s 系列分組
 const k8sLessons = getAllK8sLessons();
 const k8sByGroup = (Object.keys(groupMeta) as Array<K8sLesson['group']>)
   .sort((a, b) => groupMeta[a].order - groupMeta[b].order)
@@ -29,8 +44,6 @@ const k8sByGroup = (Object.keys(groupMeta) as Array<K8sLesson['group']>)
     lessons: k8sLessons.filter((l) => l.group === g),
   }))
   .filter((g) => g.lessons.length > 0);
-
-const formatDate = (d: string) => d.replaceAll('-', '/');
 
 const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const absoluteUrl = (p: string) => `${siteOrigin}${withBase(p)}`;
@@ -59,36 +72,27 @@ const jsonLd = {
 >
   <NavbarNeub />
 
-  <main class="font-sans text-[#0a0a0a]">
-    <!-- Hero -->
-    <section class="px-6 md:px-10 py-8 border-b-2 border-black">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-          <h1 class="text-3xl md:text-4xl font-black tracking-tight">部落格</h1>
-          <p class="text-sm md:text-base opacity-70">後端踩坑筆記 · 教學現場</p>
+  <main class="garden-page">
+    <div class="max-w-4xl mx-auto px-6 md:px-8 py-16 md:py-20">
+      <!-- Header -->
+      <header class="mb-2">
+        <div class="garden-eyebrow" style="margin-bottom: 0.75rem;">
+          The Bob Post · 後端踩坑筆記 + 教學現場
         </div>
-        <div class="mt-2 text-xs uppercase tracking-widest opacity-60 font-mono">
-          {posts.length.toString().padStart(3, '0')} posts ·{' '}
-          {categories.length.toString().padStart(2, '0')} cat ·{' '}
-          {tags.length.toString().padStart(2, '0')} tags
-          {k8sLessons.length > 0 && (
-            <>
-              {' · '}
-              <a
-                href="#k8s"
-                class="font-black underline decoration-2 hover:bg-[#ffff00] px-1"
-              >
-                ↓ 跳到 K8s 完整教學（{k8sLessons.length.toString().padStart(2, '0')} 課）
-              </a>
-            </>
-          )}
-        </div>
-      </div>
-    </section>
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; margin: 0;">
+          部落格
+        </h1>
+        <p style="font-family: var(--font-garden-serif); font-size: 1.125rem; line-height: 1.6; color: var(--color-garden-ink-soft); margin: 1rem 0 0; max-width: 52ch;">
+          AI 工程師 + Java 後端的技術筆記。LLM / RAG / Agent 導入、Spring Boot、雲端踩坑、教學現場觀察。共
+          <span style="color: var(--color-garden-crimson); font-weight: 600;">{posts.length}</span> 篇。
+        </p>
+      </header>
 
-    <!-- Filters (client island) -->
-    <section class="px-6 md:px-10 py-5 border-b-2 border-black">
-      <div class="max-w-7xl mx-auto">
+      <!-- Featured hero -->
+      {heroPost && <BlogFeaturedHero post={heroPost} />}
+
+      <!-- Filters -->
+      <div class="garden-filter">
         <BlogFilters
           client:load
           categories={categories}
@@ -96,268 +100,86 @@ const jsonLd = {
           totalPosts={posts.length}
         />
       </div>
-    </section>
 
-    <!-- Featured -->
-    {
-      featured.length > 0 && (
-        <section
-          class="px-6 md:px-10 py-14 border-b-2 border-black bg-white"
-          data-blog-featured
-        >
-          <div class="max-w-7xl mx-auto">
-            <div class="mb-8">
-              <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono">
-                featured · 精選 {featured.length.toString().padStart(2, '0')} 篇
-              </div>
-              <h2 class="text-2xl md:text-3xl font-black tracking-tight">
-                精選文章
-              </h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {featured.map((post) => (
-                <article
-                  class="relative border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
-                  style="box-shadow: 6px 6px 0 #0a0a0a;"
-                >
-                  <div
-                    class="absolute -top-3 -right-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black font-mono"
-                    style="background: #ffff00;"
-                  >
-                    ★ FEATURED
-                  </div>
-                  <div class="text-xs uppercase tracking-widest mb-3 opacity-70 font-mono">
-                    [{post.category}] · {formatDate(post.publishDate)} ·{' '}
-                    {post.readingTime}min
-                  </div>
-                  <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
-                    <a
-                      href={withBase(`/blog/${post.slug}`)}
-                      class="hover:bg-[#ffff00] transition-colors"
-                    >
-                      {post.title}
-                    </a>
-                  </h3>
-                  <p class="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80">
-                    {post.excerpt}
-                  </p>
-                  <div class="flex flex-wrap gap-1">
-                    {post.tags.slice(0, 4).map((t) => (
-                      <span class="text-xs opacity-60 border border-black px-1.5 font-mono">
-                        #{t}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-    }
-
-    <!-- All Posts (featured marked with badge) -->
-    <section class="px-6 md:px-10 py-14">
-      <div class="max-w-7xl mx-auto">
-        <div
-          class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-8"
-        >
-          <div>
-            <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono">
-              all posts
-            </div>
-            <h2 class="text-2xl md:text-3xl font-black tracking-tight">
-              所有文章
-            </h2>
-          </div>
+      <!-- All posts -->
+      <section>
+        <div class="garden-eyebrow" style="margin-bottom: 0.5rem;">全部文章</div>
+        <div class="garden-list">
+          {listPosts.map((post, index) => (
+            <BlogCardListItem post={post} index={index} />
+          ))}
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {
-            posts.map((post, index) => (
-              <article
-                data-blog-card
-                data-category={post.category}
-                data-tags={post.tags.join('|')}
-                data-title={post.title}
-                data-excerpt={post.excerpt}
-                class="relative border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
-                style="box-shadow: 6px 6px 0 #0a0a0a;"
-              >
-                {post.featured && (
-                  <div
-                    class="absolute -top-3 -right-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black font-mono"
-                    style="background: #ffff00;"
-                  >
-                    ★ FEATURED
-                  </div>
-                )}
-                <div class="text-xs uppercase tracking-widest mb-3 opacity-70 flex items-center gap-2 font-mono">
-                  <span class="font-black">
-                    #{(index + 1).toString().padStart(3, '0')}
-                  </span>
-                  <span>·</span>
-                  <span>[{post.category}]</span>
-                  <span>·</span>
-                  <time datetime={post.publishDate}>
-                    {formatDate(post.publishDate)}
-                  </time>
-                  <span>·</span>
-                  <span>{post.readingTime}min</span>
-                </div>
-
-                <h3 class="text-xl md:text-2xl font-black leading-tight mb-3">
-                  <a
-                    href={withBase(`/blog/${post.slug}`)}
-                    class="hover:bg-[#ffff00] transition-colors"
-                  >
-                    {post.title}
-                  </a>
-                </h3>
-
-                <p class="text-sm leading-relaxed line-clamp-3 mb-4 opacity-80">
-                  {post.excerpt}
-                </p>
-
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <div class="flex flex-wrap gap-1">
-                    {post.tags.slice(0, 4).map((t) => (
-                      <span class="text-xs opacity-60 border border-black px-1.5 font-mono">
-                        #{t}
-                      </span>
-                    ))}
-                  </div>
-                  <a
-                    href={withBase(`/blog/${post.slug}`)}
-                    class="text-xs uppercase tracking-widest font-black hover:underline font-mono shrink-0"
-                  >
-                    read →
-                  </a>
-                </div>
-              </article>
-            ))
-          }
-        </div>
-
-        <!-- Empty state（篩選後沒結果才顯示） -->
         <div
           data-blog-empty
           hidden
-          class="text-center py-20 border-2 border-black border-dashed mt-8"
+          style="text-align: center; padding: 4rem 0; border-top: 1px dashed var(--color-garden-line-soft); border-bottom: 1px dashed var(--color-garden-line-soft); margin-top: 2rem; color: var(--color-garden-ink-soft); font-style: italic;"
         >
-          <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
-            no matching posts found
-          </div>
+          沒有符合條件的文章
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- K8s 完整教學系列 -->
-    {
-      k8sLessons.length > 0 && (
-        <section
-          id="k8s"
-          class="px-6 md:px-10 py-16 border-t-[6px] border-black bg-[#0a0a0a] text-white scroll-mt-20"
-        >
-          <div class="max-w-7xl mx-auto">
-            <div class="mb-10">
-              <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono">
-                series · kubernetes 完整教學
-              </div>
-              <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4">
-                <span class="inline-block bg-[var(--color-neub-yellow)] text-black px-2 md:px-3">
-                  Kubernetes
-                </span>{' '}
-                從零到實戰
-              </h2>
-              <p class="text-base md:text-lg opacity-80 max-w-3xl leading-relaxed">
-                完全沒碰過 K8s 的新手向。每一課對應一個 Google 搜尋意圖，
-                從「為什麼需要 K8s」一路講到上線、Probe、HPA。
-                所有範例可以在本機 k3s / minikube 跟著做。
+      <!-- K8s 系列：折疊 -->
+      {
+        k8sLessons.length > 0 && (
+          <details class="garden-collapse" id="k8s">
+            <summary>
+              Kubernetes 教學系列 · {k8sLessons.length.toString().padStart(2, '0')} 課
+            </summary>
+            <div style="padding-top: 1.5rem;">
+              <p style="font-family: var(--font-garden-serif); color: var(--color-garden-ink-soft); margin-bottom: 1.5rem; line-height: 1.65;">
+                完全沒碰過 K8s 的新手向。每一課對應一個搜尋意圖，從「為什麼需要 K8s」一路講到上線、Probe、HPA。
               </p>
-              <div class="mt-4 text-xs uppercase tracking-widest opacity-60 font-mono">
-                目前 {k8sLessons.length.toString().padStart(2, '0')} 課 · 持續更新中
-              </div>
-            </div>
-
-            <div class="space-y-10">
               {k8sByGroup.map((g) => (
-                <div>
-                  <div class="flex items-baseline gap-3 mb-4">
-                    <span
-                      class="text-xs font-black uppercase tracking-widest border-2 border-white px-2 py-0.5"
-                      style={`background: ${g.meta.color}; color: #0a0a0a;`}
-                    >
-                      {g.meta.label}
-                    </span>
-                    <span class="text-xs opacity-60 font-mono">
-                      {g.lessons.length.toString().padStart(2, '0')} lessons
-                    </span>
+                <div style="margin-bottom: 2rem;">
+                  <div class="garden-eyebrow" style="margin-bottom: 0.75rem; color: var(--color-garden-crimson);">
+                    {g.meta.label} · {g.lessons.length.toString().padStart(2, '0')} lessons
                   </div>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t-2 border-white/30">
-                    {g.lessons.map((lesson, i) => (
-                      <a
-                        href={withBase(`/blog/k8s/${lesson.slug}`)}
-                        class:list={[
-                          'block p-5 border-b-2 border-white/30 group hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors',
-                          i % 2 === 0 ? 'md:border-r-2 md:border-white/30' : '',
-                        ]}
-                      >
-                        <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono group-hover:opacity-100">
-                          第 {lesson.order.toString().padStart(2, '0')} 課 ·{' '}
-                          {lesson.readingTime}min read
-                        </div>
-                        <h3 class="text-lg md:text-xl font-black leading-tight mb-2">
-                          {lesson.title}
-                        </h3>
-                        <p class="text-sm opacity-70 line-clamp-2 group-hover:opacity-100">
-                          {lesson.excerpt}
-                        </p>
-                        <div class="mt-3 flex flex-wrap gap-1.5">
-                          {lesson.tags.slice(0, 3).map((t) => (
-                            <span class="text-xs opacity-60 border border-white/40 px-1.5 font-mono group-hover:border-black group-hover:opacity-100">
-                              #{t}
-                            </span>
-                          ))}
-                        </div>
-                      </a>
+                  <ol style="list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-garden-line);">
+                    {g.lessons.map((lesson, idx) => (
+                      <li style="border-bottom: 1px solid var(--color-garden-line);">
+                        <a
+                          href={withBase(`/blog/k8s/${lesson.slug}`)}
+                          style="display: flex; align-items: baseline; gap: 1rem; padding: 0.875rem 0; color: inherit; text-decoration: none;"
+                        >
+                          <span style="font-family: var(--font-garden-sans); font-size: 0.75rem; color: var(--color-garden-ink-soft); width: 1.5rem; flex-shrink: 0;">
+                            {(idx + 1).toString().padStart(2, '0')}
+                          </span>
+                          <span style="flex: 1; font-family: var(--font-garden-serif); font-size: 1.0625rem;">
+                            {lesson.title}
+                          </span>
+                          <span style="font-family: var(--font-garden-sans); font-size: 0.75rem; color: var(--color-garden-ink-soft); flex-shrink: 0;">
+                            {lesson.readingTime} min
+                          </span>
+                        </a>
+                      </li>
                     ))}
-                  </div>
+                  </ol>
                 </div>
               ))}
+              <p style="font-family: var(--font-garden-serif); font-style: italic; color: var(--color-garden-ink-soft); font-size: 0.9375rem; margin-top: 2rem;">
+                更多主題（HPA、Probe、Helm、RBAC、StatefulSet…）持續補上中。
+              </p>
             </div>
+          </details>
+        )
+      }
 
-            <div class="mt-10 p-5 border-2 border-dashed border-white/40 text-sm opacity-70 font-mono">
-              更多主題（HPA、Probe、Helm、RBAC、StatefulSet…）持續補上中。
-              想優先看哪一篇歡迎到下方留言告訴我。
-            </div>
-          </div>
-        </section>
-      )
-    }
-
-    <!-- Footer note -->
-    <section class="px-6 md:px-10 py-14 border-t-2 border-black bg-white">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-xs uppercase tracking-widest mb-2 opacity-60 font-mono">
-          motto
-        </div>
-        <blockquote class="text-lg md:text-xl leading-relaxed max-w-3xl font-bold tracking-tight mb-4">
-          我輩修行之人，<br />
-          <span class="inline-block bg-[var(--color-neub-yellow)] px-2">以聖的標準要求自己</span>，
-          <span class="inline-block bg-[var(--color-neub-yellow)] px-2">以凡的眼光理解別人</span>。
+      <!-- Motto -->
+      <section style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--color-garden-line);">
+        <div class="garden-eyebrow" style="margin-bottom: 1rem;">Motto</div>
+        <blockquote style="font-family: var(--font-garden-serif); font-style: italic; font-size: 1.375rem; line-height: 1.5; color: var(--color-garden-ink); margin: 0 0 1.5rem; max-width: 36ch;">
+          我輩修行之人，以
+          <span style="color: var(--color-garden-crimson); font-style: normal;">聖</span>
+          的標準要求自己，以
+          <span style="color: var(--color-garden-crimson); font-style: normal;">凡</span>
+          的眼光理解別人。
         </blockquote>
-        <p class="text-base md:text-lg font-black tracking-tight">
-          <span class="inline-block bg-black text-white px-3 py-1">不怕死，只怕不過癮。</span>
+        <p style="font-family: var(--font-garden-sans); font-weight: 700; letter-spacing: 0.08em; color: var(--color-garden-ink); font-size: 0.9375rem;">
+          不怕死，只怕不過癮。
         </p>
-        <div class="mt-6 text-xs opacity-60 flex flex-wrap gap-4 font-mono">
-          <span>→ AI / LLM / RAG</span>
-          <span>→ Spring Boot</span>
-          <span>→ React / 雲端</span>
-          <span>→ 企業內訓現場</span>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
   <FooterNeub />

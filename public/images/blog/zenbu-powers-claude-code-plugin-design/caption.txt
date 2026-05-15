@@ -1,0 +1,24 @@
+挖到一個 0 star 的 Claude Code Plugin,但設計成熟到我直接抄回家
+
+📝 完整圖文拆解:
+https://yanchen184.github.io/ai-lecturer-bob/blog/zenbu-powers-claude-code-plugin-design/
+
+—
+
+最近翻 Claude Code Plugin 生態,被一個叫 zenbu-powers 的 repo 吸住三小時。
+
+GitHub 上 0 stars、1 fork,完全不紅。但翻完整個專案後,我直接把兩個設計搬進自己的 ~/.claude/CLAUDE.md。
+
+寫了篇文章拆解值得偷的 5 個架構模式:
+
+1️⃣ SessionStart Hook 自動注入 Orchestrator 心法
+2️⃣ Stop Hook + 自動驗收 + round_count 防無限迴圈
+3️⃣ 自主決策授權 + 三類窄門(避免 Claude 一直丟選擇題給你)
+4️⃣ 任務分級(輕量自評 vs 重量必走驗收)
+5️⃣ Polyglot Hook Wrapper(cmd.exe / bash 共用)
+
+最有意思的是 Stop hook 那段 ── 每次 agent 結束自動跑 evaluator 做意圖對齊驗收,沒過就重派,3 輪沒過才升級給人。解決那個「agent 跟你說完成了結果根本沒滿足需求」的痛點。
+
+stars 反映多少人發現,不是設計品質。Popularity proxy ≠ quality proxy。
+
+#ClaudeCode #AI工具 #工程師日常 #Plugin #Anthropic
