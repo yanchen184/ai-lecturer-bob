@@ -147,19 +147,7 @@ export default function BlogFilters({
           <button
             type="button"
             onClick={() => onQuery('')}
-            style={{
-              position: 'absolute',
-              right: '0.5rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              fontFamily: 'var(--font-garden-sans)',
-              fontSize: '0.75rem',
-              color: 'var(--color-garden-ink-soft)',
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '0.25rem 0.5rem',
-            }}
+            className="garden-filter__clear"
             aria-label="清除搜尋"
           >
             clear
@@ -193,17 +181,14 @@ export default function BlogFilters({
             <span className="garden-filter__tags-marker" aria-hidden="true">+</span>
             <span>展開標籤</span>
             {tag !== ALL && (
-              <span style={{ color: 'var(--color-garden-crimson)', fontWeight: 700 }}>
-                · #{tag}
-              </span>
+              <span className="garden-filter__tag-active">· #{tag}</span>
             )}
           </summary>
           <div className="flex flex-wrap gap-1.5 mt-3">
             <button
               onClick={() => onTag(ALL)}
-              className="garden-filter__chip"
+              className="garden-filter__chip garden-filter__chip--sm"
               data-active={tag === ALL}
-              style={{ fontSize: '0.75rem', padding: '0.25rem 0.625rem' }}
             >
               all
             </button>
@@ -211,9 +196,8 @@ export default function BlogFilters({
               <button
                 key={t}
                 onClick={() => onTag(t)}
-                className="garden-filter__chip"
+                className="garden-filter__chip garden-filter__chip--sm"
                 data-active={tag === t}
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.625rem' }}
               >
                 #{t}
               </button>
@@ -223,33 +207,14 @@ export default function BlogFilters({
       )}
 
       {hasFilter && (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'baseline',
-            gap: '1rem',
-            fontFamily: 'var(--font-garden-sans)',
-            fontSize: '0.75rem',
-            color: 'var(--color-garden-ink-soft)',
-          }}
-        >
+        <div className="garden-filter__status">
           <span>
             <span data-blog-count>{totalPosts}</span> 篇符合條件
           </span>
           <button
             type="button"
             onClick={reset}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--color-garden-crimson)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              cursor: 'pointer',
-              padding: 0,
-              fontWeight: 700,
-              borderBottom: '1px solid var(--color-garden-crimson)',
-            }}
+            className="garden-filter__reset"
           >
             reset →
           </button>

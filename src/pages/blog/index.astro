@@ -79,12 +79,10 @@ const jsonLd = {
         <div class="garden-eyebrow" style="margin-bottom: 0.75rem;">
           The Bob Post · 後端踩坑筆記 + 教學現場
         </div>
-        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; margin: 0;">
-          部落格
-        </h1>
-        <p style="font-family: var(--font-garden-serif); font-size: 1.125rem; line-height: 1.6; color: var(--color-garden-ink-soft); margin: 1rem 0 0; max-width: 52ch;">
+        <h1 class="garden-page-title">部落格</h1>
+        <p class="garden-intro">
           AI 工程師 + Java 後端的技術筆記。LLM / RAG / Agent 導入、Spring Boot、雲端踩坑、教學現場觀察。共
-          <span style="color: var(--color-garden-crimson); font-weight: 600;">{posts.length}</span> 篇。
+          <span class="garden-intro__count">{posts.length}</span> 篇。
         </p>
       </header>
 
@@ -110,11 +108,7 @@ const jsonLd = {
           ))}
         </div>
 
-        <div
-          data-blog-empty
-          hidden
-          style="text-align: center; padding: 4rem 0; border-top: 1px dashed var(--color-garden-line-soft); border-bottom: 1px dashed var(--color-garden-line-soft); margin-top: 2rem; color: var(--color-garden-ink-soft); font-style: italic;"
-        >
+        <div data-blog-empty hidden class="garden-empty">
           沒有符合條件的文章
         </div>
       </section>
@@ -126,29 +120,26 @@ const jsonLd = {
             <summary>
               Kubernetes 教學系列 · {k8sLessons.length.toString().padStart(2, '0')} 課
             </summary>
-            <div style="padding-top: 1.5rem;">
-              <p style="font-family: var(--font-garden-serif); color: var(--color-garden-ink-soft); margin-bottom: 1.5rem; line-height: 1.65;">
+            <div class="garden-k8s__body">
+              <p class="garden-k8s__intro">
                 完全沒碰過 K8s 的新手向。每一課對應一個搜尋意圖，從「為什麼需要 K8s」一路講到上線、Probe、HPA。
               </p>
               {k8sByGroup.map((g) => (
-                <div style="margin-bottom: 2rem;">
-                  <div class="garden-eyebrow" style="margin-bottom: 0.75rem; color: var(--color-garden-crimson);">
+                <div class="garden-k8s__group">
+                  <div class="garden-eyebrow garden-k8s__group-label">
                     {g.meta.label} · {g.lessons.length.toString().padStart(2, '0')} lessons
                   </div>
-                  <ol style="list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-garden-line);">
+                  <ol class="garden-k8s__list">
                     {g.lessons.map((lesson, idx) => (
-                      <li style="border-bottom: 1px solid var(--color-garden-line);">
-                        <a
-                          href={withBase(`/blog/k8s/${lesson.slug}`)}
-                          style="display: flex; align-items: baseline; gap: 1rem; padding: 0.875rem 0; color: inherit; text-decoration: none;"
-                        >
-                          <span style="font-family: var(--font-garden-sans); font-size: 0.75rem; color: var(--color-garden-ink-soft); width: 1.5rem; flex-shrink: 0;">
+                      <li class="garden-k8s__item">
+                        <a href={withBase(`/blog/k8s/${lesson.slug}`)} class="garden-k8s__link">
+                          <span class="garden-k8s__num">
                             {(idx + 1).toString().padStart(2, '0')}
                           </span>
-                          <span style="flex: 1; font-family: var(--font-garden-serif); font-size: 1.0625rem;">
+                          <span class="garden-k8s__title">
                             {lesson.title}
                           </span>
-                          <span style="font-family: var(--font-garden-sans); font-size: 0.75rem; color: var(--color-garden-ink-soft); flex-shrink: 0;">
+                          <span class="garden-k8s__time">
                             {lesson.readingTime} min
                           </span>
                         </a>
@@ -157,7 +148,7 @@ const jsonLd = {
                   </ol>
                 </div>
               ))}
-              <p style="font-family: var(--font-garden-serif); font-style: italic; color: var(--color-garden-ink-soft); font-size: 0.9375rem; margin-top: 2rem;">
+              <p class="garden-k8s__footer">
                 更多主題（HPA、Probe、Helm、RBAC、StatefulSet…）持續補上中。
               </p>
             </div>
@@ -166,16 +157,16 @@ const jsonLd = {
       }
 
       <!-- Motto -->
-      <section style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--color-garden-line);">
+      <section class="garden-motto">
         <div class="garden-eyebrow" style="margin-bottom: 1rem;">Motto</div>
-        <blockquote style="font-family: var(--font-garden-serif); font-style: italic; font-size: 1.375rem; line-height: 1.5; color: var(--color-garden-ink); margin: 0 0 1.5rem; max-width: 36ch;">
+        <blockquote class="garden-motto__quote">
           我輩修行之人，以
-          <span style="color: var(--color-garden-crimson); font-style: normal;">聖</span>
+          <span class="garden-motto__highlight">聖</span>
           的標準要求自己，以
-          <span style="color: var(--color-garden-crimson); font-style: normal;">凡</span>
+          <span class="garden-motto__highlight">凡</span>
           的眼光理解別人。
         </blockquote>
-        <p style="font-family: var(--font-garden-sans); font-weight: 700; letter-spacing: 0.08em; color: var(--color-garden-ink); font-size: 0.9375rem;">
+        <p class="garden-motto__tagline">
           不怕死，只怕不過癮。
         </p>
       </section>
