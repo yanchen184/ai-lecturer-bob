@@ -105,8 +105,8 @@ const jsonLd = {
       <section>
         <div class="garden-eyebrow" style="margin-bottom: 0.5rem;">全部文章</div>
         <div class="garden-list">
-          {listPosts.map((post, index) => (
-            <BlogCardListItem post={post} index={index} />
+          {listPosts.map((post) => (
+            <BlogCardListItem post={post} />
           ))}
         </div>
 

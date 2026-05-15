@@ -11,34 +11,28 @@
  */
 import type { BlogPost } from '../lib/firestore';
 import { withBase } from '../lib/url';
+import { formatDate } from '../lib/format';
 
 interface Props {
   post: BlogPost;
 }
 
 const { post } = Astro.props;
-const formatDate = (d: string) => {
-  const [y, m, day] = d.split('-');
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const idx = parseInt(m, 10) - 1;
-  return `${months[idx] ?? m} ${parseInt(day, 10)}, ${y}`;
-};
 const cover = post.coverImage;
-const hasCover = Boolean(cover);
 ---
 
 <section
   data-blog-featured
-  class:list={['garden-hero', !hasCover && 'garden-hero--text-only']}
+  class:list={['garden-hero', !cover && 'garden-hero--text-only']}
 >
-  {hasCover && (
+  {cover && (
     <a
       href={withBase(`/blog/${post.slug}`)}
       class="garden-hero__cover"
       aria-label={post.title}
     >
       <img
-        src={withBase(cover!)}
+        src={withBase(cover)}
         alt={post.title}
         loading="eager"
         decoding="async"

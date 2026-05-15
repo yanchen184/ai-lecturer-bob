@@ -13,19 +13,13 @@
  */
 import type { BlogPost } from '../lib/firestore';
 import { withBase } from '../lib/url';
+import { formatDate } from '../lib/format';
 
 interface Props {
   post: BlogPost;
-  index?: number;
 }
 
 const { post } = Astro.props;
-const formatDate = (d: string) => {
-  const [y, m, day] = d.split('-');
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const idx = parseInt(m, 10) - 1;
-  return `${months[idx] ?? m} ${parseInt(day, 10)}, ${y}`;
-};
 const cover = post.coverImage;
 ---
 

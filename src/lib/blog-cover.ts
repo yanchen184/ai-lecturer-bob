@@ -28,20 +28,3 @@ export function detectCoverImage(slug: string): string | undefined {
   }
   return undefined;
 }
-
-/**
- * 依分類給出 fallback 色票（HEX）。
- * 不在表中的分類走預設黃。
- */
-const CATEGORY_COLORS: Record<string, string> = {
-  AI: '#FFD600',
-  後端: '#7CC0FF',
-  教學: '#FF6EC7',
-  K8s: '#00FFD1',
-  雲端: '#7CC0FF',
-  前端: '#FF6EC7',
-};
-
-export function getCategoryColor(category: string): string {
-  return CATEGORY_COLORS[category] ?? '#FFEB3B';
-}
