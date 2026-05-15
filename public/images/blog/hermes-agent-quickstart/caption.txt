@@ -1,0 +1,50 @@
+【5 分鐘把 Hermes Agent 裝起來】
+
+不用懂 Python
+不用買 GPU
+不用裝 Docker
+不用 ChatGPT Plus
+
+三步驟:
+
+1️⃣ 裝 uv(Python 套件管理器,比 pip 快 100 倍)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+2️⃣ 裝 hermes-cli
+uv tool install hermes-cli
+
+3️⃣ 給它一把 API key
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+驗證:
+hermes -z "你好,你是誰?用繁體中文回答"
+
+—
+
+Provider 三選一:
+
+🅰️ Anthropic Claude(推薦新手)
+新帳號送 5 美金試用,夠聊 100-500 輪。Claude 寫 code 第一名。
+
+🅱️ OpenAI GPT
+要先儲值,沒免費額度。
+
+🆎 Ollama(本機免費)
+不傳資料到外網,但要 16GB RAM 以上,中文偏弱。
+
+—
+
+寫了一篇給完全新手的安裝教學,15 分鐘從 0 跑起來。
+
+特別講:
+✅ macOS / Linux / WSL2 / Windows 各家裝法
+✅ 三家 provider 比較表
+✅ 第一句話 hermes -z 怎麼下
+✅ 不喜歡怎麼乾淨移除
+✅ 7 個常見問題
+
+裝完想接公司內網 LLM(像 Breeze2)→ 看實戰篇,那篇給工程師看的硬版本。
+
+🔗 最簡版 → https://yanchen184.github.io/ai-lecturer-bob/blog/hermes-agent-quickstart/
+
+#HermesAgent #AI工具 #uv #ClaudeAPI #Ollama #OpenAI #安裝教學 #CLI

@@ -1,0 +1,31 @@
+【Hermes Agent 是什麼?】
+
+我有 ChatGPT 了為什麼還需要這個?
+
+簡單講:
+ChatGPT 只會回字、要你自己動手
+Hermes Agent 會幫你動手——查檔、改檔、跑指令、上網,做完才回報
+
+你想知道「Downloads 哪些檔案超過一年沒用、可以刪?」
+
+ChatGPT 做法:
+教你打指令 → 你貼到終端機 → 跑 → 結果太多 → 再問 ChatGPT 怎麼篩 → 又是新指令 → 又複製貼上...重複 5 次才有答案。
+
+Hermes Agent 做法:
+打一句「幫我看 Downloads 哪些檔案超過一年沒動,列前 10 大」
+它自己跑 find、自己看結果、自己排序,回給你完整清單。
+
+差別不是速度,是「你不用再當人肉接線生」。
+
+ChatGPT = 顧問(嘴巴)
+Hermes Agent = 工讀生(手腳)
+
+—
+
+寫了一篇給完全新手的白話介紹,5 個日常用例 + 跟 Claude Code/Cursor 對照表 + 怎麼開始用三步驟。
+
+不會 coding 也看得懂。
+
+🔗 完整文章 → https://yanchen184.github.io/ai-lecturer-bob/blog/hermes-agent-intro/
+
+#HermesAgent #AIAgent #AI工具 #ChatGPT #ClaudeCode #AI入門 #NousResearch
