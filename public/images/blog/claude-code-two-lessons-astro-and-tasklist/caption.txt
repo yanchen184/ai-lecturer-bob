@@ -1,0 +1,29 @@
+剛被 Astro 跟自己的偷懶各坑了一次。兩個教訓記下來,給未來的我自己看。
+
+📝 完整圖文拆解:
+https://yanchen184.github.io/ai-lecturer-bob/blog/claude-code-two-lessons-astro-and-tasklist/
+
+—
+
+我把 5 篇 Hermes Agent 文章發到 GitHub Pages,本機測一切正常,push 上去——**每個內部連結都 404**。
+
+原因:我憑印象以為 Astro 的 `base: '/ai-lecturer-bob'` 會自動套到 markdown 連結。**錯了**。Astro issue #3626 從 2022 年開到現在,官方文件明文寫「developer responsibility 自己加前綴」。dev mode 看不出來,production 才爆炸。
+
+第二個坑:整個流程改 5 個檔、commit、republish、push,**我全程沒開 TaskList**,靠對話文字串記。中間 context 被壓縮一次,要從 summary 重建脈絡花了我十分鐘。系統都丟 reminder 出來給我了。
+
+兩個坑共通點刺眼:
+
+❌ **該查不查**(以為 Astro = Next.js 的 basePath 行為)
+❌ **該開不開**(以為「task 太簡單不必追蹤」)
+
+兩個都是**用「應該」「以為」當判斷依據**,不是用「我剛剛驗證了」當判斷依據。
+
+文章裡有:
+- Astro `base` 三種修法對照(手動、rehype plugin、元件版)
+- TaskCreate 該開的四條判準
+- 完整踩坑時間線(對話 + commit)
+- 6 題 FAQ:為什麼 Astro 不修、Next.js 怎麼處理、CLAUDE.md 寫了沒用怎麼辦
+
+留言告訴我你最近被哪個「應該」坑過。
+
+#ClaudeCode #Astro #靜態網站 #踩坑筆記 #工程師日常 #AI教學

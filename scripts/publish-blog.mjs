@@ -222,6 +222,50 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-two-lessons-astro-and-tasklist',
+    title:
+      '兩個教訓:Astro base path 不會自動套 markdown 連結、跨多檔案任務該開 TaskList',
+    excerpt:
+      '剛把 5 篇 Hermes Agent 系列發到 GitHub Pages,踩兩個坑被自己抓到。第一個技術:Astro 的 base path 設定不會自動套到 markdown 連結,本機 dev 看不出來、production 全 404,Astro issue #3626 從 2022 年開到現在,官方文件明文寫「developer responsibility」要自己加前綴。第二個流程:跨多檔案多步驟任務該開 TaskCreate 追進度,不是儀式是斷線保險。兩個共通點:該查不查、該開不開。',
+    category: '工程師日常',
+    tags: [
+      'Astro',
+      'Claude Code',
+      'GitHub Pages',
+      'Static Site Generator',
+      'TaskList',
+      'AI 工作流',
+      '踩坑筆記',
+    ],
+    faqItems: [
+      {
+        q: 'Astro 為什麼不直接修 base path 的 markdown 連結行為?',
+        a: 'Astro maintainer 在 issue #3626 的說法:markdown 連結到底是站內還是站外,Astro 沒辦法 100% 確定。[link](/foo) 可能是想跳到 base 下,也可能是 base 之外的 sibling page。自動加前綴反而會把後者搞壞。合理但礙事,實務上 99% 都是站內連結,所以社群普遍走 remark/rehype plugin 自動加。',
+      },
+      {
+        q: '為什麼不一開始就寫 plugin 自動加前綴?',
+        a: 'YAGNI。我場景文章 ~30 篇、改一次手動就定型。寫 plugin 至少 30 分鐘 + 後續維護成本,sed 一行十秒搞定。判斷依據是「這坑會再犯幾次」——文章每天新增就值得寫 plugin,一次性事件就 sed 過去。',
+      },
+      {
+        q: 'TaskList 不是給使用者看的嗎?開了會不會反而拖慢?',
+        a: '我以前的盲點。實際用幾次後發現:TaskList 的主用戶是 AI 自己,不是使用者。它是 AI 在 context 壓縮後找回脈絡的錨點。使用者看到的是副作用,真正的價值在斷線復原。開 task 的成本是 2 秒,壞處只有「task 數量會多」。複雜任務本來就該分解,task 多 ≠ 慢。',
+      },
+      {
+        q: 'CLAUDE.md 紀律寫了沒用怎麼辦?',
+        a: '我 CLAUDE.md 有「能查就查、不要問」這條,但這次還是憑印象寫了錯誤的 markdown link。寫紀律 != 執行紀律。解法不是再寫一條,是改變觸發機制:看到自己心裡冒出「應該」「以為」「我記得」,直接停下來查一次。把 trigger 從「規則記得」改成「字眼偵測」。',
+      },
+      {
+        q: '用 Next.js / Nuxt 會有這問題嗎?',
+        a: '不會。Next.js 的 basePath 設定後,Link 跟 markdown link 都會自動加前綴(@next/mdx 內建處理)。Nuxt 的 app.baseURL 同樣自動處理 NuxtLink 跟 content module。只有 Astro 是「自己加」。背後設計哲學差異,沒對錯,但會被類比經驗坑到。',
+      },
+      {
+        q: '這篇文章自己有 follow 教訓嗎?',
+        a: '有檢查。內部連結:這篇沒有指向別篇文章的內部連結(都是 GitHub issue / Astro docs 的外部 URL),所以 base path 問題不適用。任務追蹤:這次寫文章開了 6 個 task(查證 → outline → 寫長文 → 截圖 → caption → 發佈)。至少這次有遵守,下次會不會 regression 不知道,所以才寫下來。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
