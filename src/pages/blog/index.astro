@@ -99,8 +99,8 @@ const jsonLd = {
       <!-- Featured hero -->
       {heroPost && <BlogFeaturedHero post={heroPost} views={viewsMap.get(heroPost.slug)} />}
 
-      <!-- Filters -->
-      <div class="mb-10">
+      <!-- Filters (sticky 在 navbar 下,scroll 過 hero 後仍可用) -->
+      <div class="sticky top-[68px] z-30 mb-10">
         <BlogFilters
           client:load
           categories={categories}
@@ -148,9 +148,9 @@ const jsonLd = {
         </div>
       </section>
 
-      <!-- 閱讀系列 -->
-      {seriesGroups.length > 0 && (
-        <section class="mb-12" data-blog-section="series">
+      <!-- 閱讀系列（含 K8s 教學） -->
+      {(seriesGroups.length > 0 || k8sLessons.length > 0) && (
+        <section class="mb-16" data-blog-section="series">
           <div class="flex items-baseline justify-between mb-5">
             <div>
               <div class="text-xs uppercase tracking-widest font-mono font-black">
@@ -161,68 +161,77 @@ const jsonLd = {
               </p>
             </div>
             <div class="text-[11px] uppercase tracking-widest font-mono opacity-60">
-              {seriesGroups.length} series
+              {seriesGroups.length + (k8sLessons.length > 0 ? 1 : 0)} series
             </div>
           </div>
+
           {seriesGroups.map((g, i) => (
             <BlogSeriesBlock group={g} defaultOpen={i === 0} />
           ))}
+
+          {/* K8s 教學系列 — 結構不同(分組 lessons),沿用既有渲染但對齊新風格 */}
+          {k8sLessons.length > 0 && (
+            <details class="border-2 border-black bg-white mb-4 group/series" id="k8s">
+              <summary class="cursor-pointer list-none p-4 md:p-5 flex items-center justify-between gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors border-b-2 border-black">
+                <div class="min-w-0">
+                  <div class="text-[11px] uppercase tracking-widest font-mono opacity-60 mb-1 flex items-center gap-2">
+                    <span>series</span>
+                    <span class="opacity-40">·</span>
+                    <span class="font-black">{k8sLessons.length.toString().padStart(2, '0')} 課</span>
+                  </div>
+                  <div class="text-lg md:text-xl font-black tracking-tight truncate">
+                    Kubernetes 教學系列
+                  </div>
+                </div>
+                <span
+                  class="text-2xl font-black flex-shrink-0 transition-transform duration-200 group-open/series:rotate-45"
+                  aria-hidden="true"
+                >+</span>
+              </summary>
+
+              <div class="p-4 md:p-5">
+                <p class="text-sm md:text-base leading-relaxed opacity-80 mb-5">
+                  完全沒碰過 K8s 的新手向。每一課對應一個搜尋意圖，從「為什麼需要 K8s」一路講到上線、Probe、HPA。
+                </p>
+
+                {k8sByGroup.map((g) => (
+                  <div class="mb-6 last:mb-0">
+                    <div class="text-[11px] uppercase tracking-widest font-mono font-black mb-2 bg-[var(--color-neub-yellow)] inline-block px-2 py-0.5 border-2 border-black">
+                      {g.meta.label} · {g.lessons.length.toString().padStart(2, '0')} lessons
+                    </div>
+                    <ol class="list-none p-0 m-0 border-2 border-black bg-white mt-2">
+                      {g.lessons.map((lesson, idx) => (
+                        <li class="border-b-2 border-black last:border-b-0">
+                          <a
+                            href={withBase(`/blog/k8s/${lesson.slug}`)}
+                            class="flex items-baseline gap-3 p-3 hover:bg-[var(--color-neub-yellow)] transition-colors"
+                          >
+                            <span class="text-xs font-mono opacity-50 w-7 flex-shrink-0 font-black">
+                              {(idx + 1).toString().padStart(2, '0')}
+                            </span>
+                            <span class="flex-1 min-w-0">
+                              <span class="block font-black leading-snug truncate">
+                                {lesson.title}
+                              </span>
+                              <span class="block text-[11px] font-mono opacity-60 mt-0.5">
+                                {lesson.readingTime} min
+                              </span>
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+
+                <p class="text-xs italic opacity-60 mt-4">
+                  更多主題（HPA、Probe、Helm、RBAC、StatefulSet…）持續補上中。
+                </p>
+              </div>
+            </details>
+          )}
         </section>
       )}
-
-      <!-- K8s 系列：折疊 -->
-      {
-        k8sLessons.length > 0 && (
-          <details class="border-2 border-black bg-white mb-12" id="k8s">
-            <summary class="cursor-pointer list-none p-5 flex items-center justify-between gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors border-b-2 border-black">
-              <div>
-                <div class="text-xs uppercase tracking-widest font-mono opacity-60 mb-1">
-                  series · 教學專題
-                </div>
-                <div class="text-xl md:text-2xl font-black tracking-tight">
-                  Kubernetes 教學系列 · {k8sLessons.length.toString().padStart(2, '0')} 課
-                </div>
-              </div>
-              <span class="text-2xl font-black" aria-hidden="true">+</span>
-            </summary>
-            <div class="p-5 md:p-6">
-              <p class="mb-6 opacity-80 leading-relaxed">
-                完全沒碰過 K8s 的新手向。每一課對應一個搜尋意圖，從「為什麼需要 K8s」一路講到上線、Probe、HPA。
-              </p>
-              {k8sByGroup.map((g) => (
-                <div class="mb-8 last:mb-0">
-                  <div class="text-[11px] uppercase tracking-widest font-mono font-black mb-2 bg-[var(--color-neub-yellow)] inline-block px-2 py-0.5 border-2 border-black">
-                    {g.meta.label} · {g.lessons.length.toString().padStart(2, '0')} lessons
-                  </div>
-                  <ol class="list-none p-0 m-0 border-2 border-black bg-white mt-2">
-                    {g.lessons.map((lesson, idx) => (
-                      <li class="border-b-2 border-black last:border-b-0">
-                        <a
-                          href={withBase(`/blog/k8s/${lesson.slug}`)}
-                          class="flex items-baseline gap-3 p-3 hover:bg-[var(--color-neub-yellow)] transition-colors"
-                        >
-                          <span class="text-xs font-mono opacity-50 w-6 flex-shrink-0 font-black">
-                            {(idx + 1).toString().padStart(2, '0')}
-                          </span>
-                          <span class="flex-1 font-black">
-                            {lesson.title}
-                          </span>
-                          <span class="text-xs font-mono opacity-60 flex-shrink-0">
-                            {lesson.readingTime} min
-                          </span>
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              ))}
-              <p class="text-sm italic opacity-70 mt-6">
-                更多主題（HPA、Probe、Helm、RBAC、StatefulSet…）持續補上中。
-              </p>
-            </div>
-          </details>
-        )
-      }
 
       <!-- Motto -->
       <section class="mt-16 pt-10 border-t-[3px] border-black">

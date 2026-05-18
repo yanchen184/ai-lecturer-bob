@@ -26,14 +26,24 @@ export default function BlogFilters({
   const [category, setCategory] = useState<string>(ALL);
   const [tag, setTag] = useState<string>(ALL);
   const [query, setQuery] = useState<string>('');
+  // 跑 DOM filter 用,跟 input value 分開以做 debounce
+  const [debouncedQuery, setDebouncedQuery] = useState<string>('');
 
   // URL → state
   useEffect(() => {
     const url = new URL(window.location.href);
     setCategory(url.searchParams.get('cat') ?? ALL);
     setTag(url.searchParams.get('tag') ?? ALL);
-    setQuery(url.searchParams.get('q') ?? '');
+    const initQ = url.searchParams.get('q') ?? '';
+    setQuery(initQ);
+    setDebouncedQuery(initQ);
   }, []);
+
+  // 搜尋 debounce(180ms),避免每打一字就 querySelectorAll
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQuery(query), 180);
+    return () => clearTimeout(t);
+  }, [query]);
 
   // state → URL（replaceState，避免污染 history）
   const pushQuery = useCallback(
@@ -49,9 +59,9 @@ export default function BlogFilters({
     []
   );
 
-  // state → DOM hide/show
+  // state → DOM hide/show（用 debouncedQuery 跑,避免快速打字時 layout thrash）
   useEffect(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const normalizedQuery = debouncedQuery.trim().toLowerCase();
     const articles = document.querySelectorAll<HTMLElement>(
       '[data-blog-card]'
     );
@@ -89,7 +99,7 @@ export default function BlogFilters({
         category !== ALL || tag !== ALL || normalizedQuery !== '';
       featuredSection.hidden = hasFilter;
     }
-  }, [category, tag, query]);
+  }, [category, tag, debouncedQuery]);
 
   const hasFilter =
     category !== ALL || tag !== ALL || query.trim() !== '';
@@ -98,6 +108,7 @@ export default function BlogFilters({
     setCategory(ALL);
     setTag(ALL);
     setQuery('');
+    setDebouncedQuery('');
     const url = new URL(window.location.href);
     url.search = '';
     window.history.replaceState({}, '', url.toString());

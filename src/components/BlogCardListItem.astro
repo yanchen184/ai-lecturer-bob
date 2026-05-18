@@ -33,7 +33,7 @@ const isHot = (views ?? 0) >= 100;
   data-tags={post.tags.join('|')}
   data-title={post.title}
   data-excerpt={post.excerpt}
-  class="group border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] transition-colors relative flex flex-col h-full"
+  class="group border-2 border-black bg-white relative flex flex-col h-full transition-all duration-200 ease-out hover:bg-[var(--color-neub-yellow)] hover:-translate-x-1 hover:-translate-y-1 hover:[box-shadow:4px_4px_0_#0a0a0a]"
 >
   {isHot && views && (
     <div class="absolute -top-2 -right-2 bg-black text-[var(--color-neub-yellow)] px-2 py-1 text-[10px] font-mono font-black border-2 border-black z-10 uppercase tracking-widest">
