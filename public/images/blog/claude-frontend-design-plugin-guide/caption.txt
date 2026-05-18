@@ -1,0 +1,25 @@
+【AI 寫的前端為什麼九成都長一樣？官方終於出手了】
+
+紫色漸層、Inter 字體、三欄卡片、emoji icon、白底圓角。
+這套 AI slop 風格現在連業界都有名字：purple problem。
+
+Anthropic 上個月默默上線官方 frontend-design plugin（裝機 732K 起跳），用四個維度把 Claude Code 的預設審美鎖死：
+✅ typography 擋 Inter / Roboto
+✅ color 擋 indigo-500
+✅ motion 規定真實物理曲線
+✅ spatial composition 強制 8px grid
+
+兩行指令裝起來：
+／plugin marketplace add anthropics/claude-code
+／plugin install frontend-design@claude-code-plugins
+
+裝完同一句「做個 dashboard」，輸出從紫色 SaaS 變成有 brutalist 質感的 editorial 風。Cursor / Codex / ChatGPT 也能用 workaround 套同一份規則，文章內有完整指令跟 prompt。
+
+不用 Claude Code 也能讀，因為它是純文字 SKILL.md，公開在 GitHub anthropics/skills repo。
+
+完整教學含安裝指令、跑前跑後對比、6 個常見 FAQ：
+🔗 https://yanchen184.github.io/ai-lecturer-bob/blog/claude-frontend-design-plugin-guide/
+
+明天上 Part 2 講「為什麼會有 purple problem」的歷史考古，附完整可複製的 system prompt。
+
+#ClaudeCode #Anthropic #前端開發 #AIslop #vibeCoding

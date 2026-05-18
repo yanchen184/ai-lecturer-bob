@@ -1,0 +1,27 @@
+【AI 寫的前端為什麼都是紫色？歷史考古版】
+
+業界叫它 distributional convergence、purple problem、AI slop——
+名字很多，現象只有一個：你叫任何 LLM 寫前端，九成回你紫色漸層 + Inter + 三欄卡片。
+
+不是 Claude 跟 GPT 串通好，是訓練資料的歷史包袱：
+
+📅 2015 Instagram 改 logo 用紫橘漸層
+📅 2018-2020 Stripe / Linear / Notion 把紫色推成「現代 SaaS 標配」
+📅 2020 Tailwind UI 整套示範用 indigo-500
+📅 2020-2025 GitHub 上九成「modern landing page」都長這樣
+↓
+LLM 在這些資料上學會「現代 = 紫色 + Inter」
+↓
+你不指定它就預設紫
+
+Anthropic 的解法是四個維度約束（typography / color / motion / spatial），這篇把那段約 350 token 的 system prompt 全文公開——
+✂️ 直接複製貼進 .cursorrules / CLAUDE.md / ChatGPT custom instructions / Gemini Gem，三家 model 都能套同一套設計紀律。
+
+附 8 題自查清單：你寫出來的 UI 是「設計師會做的選擇」還是「training data 預設值」？
+
+完整考古 + system prompt + 跨工具移植：
+🔗 https://yanchen184.github.io/ai-lecturer-bob/blog/ai-frontend-purple-problem-explained/
+
+承接 Part 1（昨天那篇 Claude Code 安裝教學），這篇講原理跟其他工具怎麼用同一套規則。
+
+#前端設計 #ClaudeCode #Anthropic #designSystem #AI工具
