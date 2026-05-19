@@ -1,0 +1,28 @@
+📝 全文：
+https://yanchen184.github.io/ai-lecturer-bob/blog/popularize-slides-deck/
+
+🔗 Repo（歡迎 fork）：
+https://github.com/yanchen184/popularize-slides
+
+—
+
+我在職訓局教 4 堂 AI Claude Code 課，第一堂用 Keynote 翻車：
+
+code block 字體跑掉、空白被吃掉、學生抬頭看大螢幕，低頭看自己機器 —— 看到的東西不一樣 🫠
+
+下課就決定不再用簡報軟體。
+
+選項想過 Slidev、Reveal.js、Marp，全淘汰：
+要 build step、學生 clone 下來不能直接打開、`npm install` 卡很久
+
+最後選手寫 HTML。每堂課就一個 `lessonN/index.html` 單檔，沒 build、沒 npm，學生雙擊就能看。
+
+設計系統：深色底 #0E0E10 + 黃金 accent #D4A574 + 襯線體標題 + JetBrains Mono 給 code
+
+部署：GitHub Pages 一條 push 上線、`.nojekyll` 確保檔名含底線不被過濾、curl -I 拿 HTTP 200 才算數（不是看 Actions 綠燈）
+
+整套 4 堂課 + 12 commits + 51KB 全開源，可以 fork 改成你的教學內容。
+
+文章拆 6 大段：為什麼放棄 Keynote / Slidev 比較表 / 設計系統 / 部署流程 / 你能怎麼用 / 6 個 FAQ
+
+#ClaudeCode #GitHubPages #AI教學 #職訓局 #簡報設計

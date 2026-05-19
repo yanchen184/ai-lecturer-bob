@@ -266,6 +266,50 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'popularize-slides-deck',
+    title:
+      '我把 AI 課程簡報全做成 HTML 丟上 GitHub Pages：popularize-slides 開源拆解',
+    excerpt:
+      '我在職訓局教 4 堂 AI Claude Code 概論初級班，把簡報全寫成 HTML 而不是 Keynote / Slidev / Reveal.js，丟在 GitHub Pages 上跑。本文拆解：為什麼放棄 Keynote、為什麼不用 Slidev、設計系統（深色 + 黃金 accent + 襯線標題）、部署用一條 push 指令、學生 clone 下來雙擊就能看（沒有 npm install）。Repo 全開源，歡迎 fork 改成你的教學內容。',
+    category: 'AI 教學',
+    tags: [
+      'Claude Code',
+      'GitHub Pages',
+      'HTML',
+      '簡報設計',
+      '職訓局',
+      'AI 教學',
+      'Superpowers',
+    ],
+    faqItems: [
+      {
+        q: '為什麼不用 Notion / Slidev / Reveal.js / Marp 這些現成工具？',
+        a: '現場 demo + 學生 fork 的場景下，build step 是負擔。Notion 簡報模式不能改鍵盤導航；Slidev / Reveal.js 要 build step，學生 clone 下來不能直接看；Marp 不能寫自訂 JS。手寫 HTML 是「最不偷懶但最自由」的選擇。如果你只要做一份簡報、不在意 fork 友善度，請用 Slidev。',
+      },
+      {
+        q: '每堂課 60% 重複 CSS 不會痛嗎？',
+        a: '會痛，但沒抽出來是刻意的。教學素材的版本演進不是線性 refactor — 第三堂我加金色 accent、第四堂我改 progress bar 粗細。如果這些是 shared CSS，每改一次都要回頭驗證前面的課還能看。分開檔案 = 每堂課獨立可審查，YAGNI 原則：到第 8 堂課真的吵到我之前，不抽。',
+      },
+      {
+        q: '用 AI 寫教學簡報會不會有 AI 腔？',
+        a: '我自己寫文字內容、用 Claude Code 寫 HTML/CSS/JS。文字部分（標題、痛點、口號）我自己定，Claude 只是把 outline 變成 markup，prompt 裡明確說「不要顛覆性、革命性、超棒、神器」。實作部分（CSS 動畫、鍵盤事件、進度條）Claude 寫得比我親手寫快 5 倍。分工：我管教什麼、要什麼感覺；AI 管把 HTML/CSS 寫出來。',
+      },
+      {
+        q: 'GitHub Pages 不會收費嗎？流量大會掛嗎？',
+        a: 'public repo 完全免費，soft limit 每月 100GB 流量、100GB 倉庫大小，我這個 repo 才 51KB 完全用不到。一場職訓局 30 個學生連一次靜態 HTML，總流量約 1MB。流量永遠不會是問題。private repo 用 GitHub Pages 要 GitHub Pro 以上，教學素材建議 public，學生才能 fork。',
+      },
+      {
+        q: '學生用手機看會 OK 嗎？',
+        a: '不會 OK。我刻意沒做 responsive。簡報是給投影機（1920×1080）跟 17 吋筆電用的，手機螢幕字會炸出去。回家複習可以用筆電開或我會另發 PDF。為了手機去動 CSS 會犧牲大螢幕的視覺密度，不值得。',
+      },
+      {
+        q: '可以拿這個 repo 商用嗎？',
+        a: 'repo 目前沒附 LICENSE 預設是 All Rights Reserved。實務上歡迎 fork 改你自己的教學內容。要拿設計風格 / CSS / 結構去做付費課程，麻煩標一下來源（連結到 repo 或我的部落格）。不用問我、不用付錢，標個名字而已。商用細節歡迎私訊。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
@@ -314,8 +358,17 @@ function buildFields(post) {
 
 const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}?key=${API_KEY}`
 
+const onlySlugs = process.argv.slice(2)
+const targets = onlySlugs.length
+  ? posts.filter((p) => onlySlugs.includes(p.slug))
+  : posts
+if (onlySlugs.length && !targets.length) {
+  console.error('No matching slug:', onlySlugs)
+  process.exit(1)
+}
+
 let anyFail = false
-for (const post of posts) {
+for (const post of targets) {
   const { fields, wordCount, readingTime } = buildFields(post)
   const res = await fetch(url, {
     method: 'POST',
