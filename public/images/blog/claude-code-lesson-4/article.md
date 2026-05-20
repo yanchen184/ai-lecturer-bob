@@ -1,24 +1,26 @@
-# Pro 版 Claude Code 第四堂:Superpowers + MCP + GitHub + Headless 半夜跑 batch
+# obra superpowers 怎麼裝?Claude Code 第四堂——MCP + GitHub + Headless 接生態系完整實戰
 
-> **本文寫給誰看**:訂閱 Claude Pro($20/月)、已看過 [第一堂](/ai-lecturer-bob/blog/claude-code-lesson-1/)、[第二堂](/ai-lecturer-bob/blog/claude-code-lesson-2/)、[第三堂](/ai-lecturer-bob/blog/claude-code-lesson-3/) 的人。第三堂講內建工具、第四堂講「怎麼用別人寫的」——這堂課我卡關 3 次、被學員救場 1 次,這篇文章照實際發生的寫,不是教學計畫的版本。本文是 2026-05-19 第四堂 55 分鐘的完整紀錄。
+> **本文寫給誰看**:訂閱 Claude Pro($20/月)、已看過 [第一堂](/ai-lecturer-bob/blog/claude-code-lesson-1/)、[第二堂](/ai-lecturer-bob/blog/claude-code-lesson-2/)、[第三堂](/ai-lecturer-bob/blog/claude-code-lesson-3/) 的人。第三堂講內建工具,第四堂講「怎麼用別人寫的」——這堂課我卡關 3 次、被學員救場 1 次,這篇文章照實際發生的寫,不是教學計畫的版本。本文是 2026-05-19 第四堂 55 分鐘的完整紀錄。
 
 ## TL;DR
 
-第四堂收尾這個小班——但**實際發生的內容跟教學計畫完全不一樣**。原本計畫是「Git 三動作 + 四堂總回顧」,結果現場我跟學員聊著聊著就改了主題:**「今天主題應該叫做:我們自己寫一定不是最優解,要如何使用別人寫的」**。實際走了 4 件事——Superpowers plugin 安裝(卡關 3 次)、Twinkle Hub MCP 接政府開放資料(查 2024 國防部決標 12 筆)、GitHub 註冊 + gh CLI auth login(CAPTCHA 卡 5 分鐘、觀眾 chien chang 救場)、Headless 模式半夜跑 batch。Pro 訂閱者看完這篇可以照做,我把每個踩坑都寫了。
+**Claude Code 接生態系最快的方式是裝 obra superpowers + 接 MCP + 連 GitHub + 跑 headless**。第四堂收尾這個小班但實際發生的內容跟教學計畫完全不一樣——原本計畫是「Git 三動作」,現場改成「**我們自己寫一定不是最優解,要如何使用別人寫的**」。實際走 4 件事——obra/superpowers plugin 安裝(卡關 3 次)、Twinkle Hub MCP 接台灣政府開放資料(查 2024 國防部決標 12 筆)、GitHub 註冊 + gh CLI auth login(CAPTCHA 卡 5 分鐘、學員 chien chang 救場)、Claude Code Headless 模式半夜跑 batch。Pro 訂閱者看完這篇可以照做,每個踩坑都寫了。
+
+如果你搜「obra superpowers 怎麼裝」「Claude Code MCP 怎麼接」「Claude Code 接 GitHub」「Claude Code headless 模式」找到這篇,你來對地方了。
 
 ## 目錄
 
-- [為什麼第四堂砍掉重練](#為什麼第四堂砍掉重練)
-- [Superpowers plugin:安裝卡 3 次的完整紀錄](#superpowers-plugin安裝卡-3-次的完整紀錄)
-- [Twinkle Hub MCP:查 2024 國防部決標](#twinkle-hub-mcp查-2024-國防部決標)
-- [GitHub 註冊 + gh CLI auth(被學員救場)](#github-註冊--gh-cli-auth被學員救場)
-- [Headless 模式:`claude -p` 半夜跑 batch](#headless-模式claude--p-半夜跑-batch)
-- [四堂回顧:你現在應該會的](#四堂回顧你現在應該會的)
+- [為什麼 Claude Code 第四堂砍掉重練——從 Git 改成「用別人寫的」](#為什麼-claude-code-第四堂砍掉重練從-git-改成用別人寫的)
+- [obra superpowers 怎麼裝?安裝卡 3 次的完整紀錄](#obra-superpowers-怎麼裝安裝卡-3-次的完整紀錄)
+- [Twinkle Hub MCP 怎麼接?查 2024 國防部決標 demo](#twinkle-hub-mcp-怎麼接查-2024-國防部決標-demo)
+- [GitHub 註冊 + gh CLI auth 怎麼弄?被學員救場的踩坑](#github-註冊--gh-cli-auth-怎麼弄被學員救場的踩坑)
+- [Claude Code Headless 模式怎麼用?`claude -p` 半夜跑 batch](#claude-code-headless-模式怎麼用claude--p-半夜跑-batch)
+- [Claude Code Pro 訂閱初階班四堂回顧](#claude-code-pro-訂閱初階班四堂回顧)
 - [常見問題 FAQ](#常見問題-faq)
-- [這個小班結束之後](#這個小班結束之後)
+- [這個小班結束之後該怎麼繼續學](#這個小班結束之後該怎麼繼續學)
 - [延伸資源](#延伸資源)
 
-## 為什麼第四堂砍掉重練
+## 為什麼 Claude Code 第四堂砍掉重練——從 Git 改成「用別人寫的」
 
 教學計畫寫好的第四堂是「Git 三動作 + 四堂總回顧 + 推薦進階班」。第三堂下課後我寫了完整 lecture note,投影片做了 30 張。
 
@@ -36,7 +38,7 @@
 
 **這篇文章照實際發生的寫,不照計畫**——這是「真實上課素材」的價值,Pro 訂閱者照做才會有同樣的踩坑跟頓悟。
 
-## Superpowers plugin:安裝卡 3 次的完整紀錄
+## obra superpowers 怎麼裝?安裝卡 3 次的完整紀錄
 
 [Superpowers](https://github.com/obra/superpowers) 是 Jesse Vincent(Hacker0x01 的人)寫的 Claude Code plugin,版本 5.1.0,核心理念是 **「TDD + YAGNI + DRY + subagent-driven development」**——把這四個原則做成 50+ 個 skill 跟 hook,給 Claude Code 一套完整的軟體開發方法論。
 
@@ -99,7 +101,7 @@ Superpowers 內建一個 hook 叫 `verification-before-completion`——任何 C
 
 **整個 Superpowers 安裝過程花了 18 分鐘**——前三堂跑 demo 都是 5 分鐘以內,這堂課硬生生 demo 18 分鐘還在 debug。學員看完反應是:「原來連你也卡這麼久?」——對,**裝別人寫的東西卡關很正常,看怎麼問問題、怎麼讓 Claude 幫你 debug 才是真本事**。
 
-## Twinkle Hub MCP:查 2024 國防部決標
+## Twinkle Hub MCP 怎麼接?查 2024 國防部決標 demo
 
 [Twinkle Hub](https://hub.twinkleai.tw) 是台灣第一個 MCP Hub、整合 [data.gov.tw](https://data.gov.tw) 52,960 筆政府開放資料 + 立法院 + 政府電子採購網。alpha 階段免費、無 rate limit。
 
@@ -132,7 +134,7 @@ ORDER BY date DESC LIMIT 10
 
 > **小坑**:Pro 訂閱接 MCP 沒有額外費用,但 MCP server 本身如果走 HTTP(像 Twinkle Hub),你電腦要保持連網。Twinkle Hub 是 SaaS-style,我這台 Mac 一斷網它就 lose connection、要 reconnect。
 
-## GitHub 註冊 + gh CLI auth(被學員救場)
+## GitHub 註冊 + gh CLI auth 怎麼弄?被學員救場的踩坑
 
 第三件事是 GitHub。學員裡有 4 個沒有 GitHub 帳號——對行政 / 業務這很正常,他們以前也不需要。
 
@@ -158,7 +160,7 @@ gh auth login
 
 跑完之後 Claude Code 可以直接呼叫 `gh` 指令——讀 PR、寫 comment、開 issue、merge。**這條線打通,Claude Code 就從「本機助手」升級成「GitHub 共事者」。**
 
-## Headless 模式:`claude -p` 半夜跑 batch
+## Claude Code Headless 模式怎麼用?`claude -p` 半夜跑 batch
 
 最後一件事是 [headless mode](https://code.claude.com/docs/en/headless)—— `claude -p "..."` 是 stateless 一次性執行,不開互動 session,跑完 stdout 印結果、退出。
 
@@ -180,7 +182,7 @@ done
 
 `claude -p` 配 `&` 跟 cron job、或配 `/loop --dangerously-skip-permissions`,可以建立完全無人值守的 batch pipeline。我自己每天 5:03 寄的 AI 日報就是這條路——`/schedule` 觸發、headless 跑、寄信、結束。
 
-## 四堂回顧:你現在應該會的
+## Claude Code Pro 訂閱初階班四堂回顧
 
 | 堂 | 主題 | 核心觀念 | 一個動作驗證 |
 |---|---|---|---|
@@ -191,11 +193,13 @@ done
 
 四堂結束你應該能做到:**「給 Claude 一個方向、自己去睡覺、早上看結果」**——這就是 Pro 訂閱($20/月)的最高 ROI 玩法。
 
+> 📚 **完整系列導讀**:這是 Claude Code Pro 訂閱初階班最後一堂。如果你還沒看過前三堂,完整順序是 [第一堂:訂閱開始怎麼用](/ai-lecturer-bob/blog/claude-code-lesson-1/) → [第二堂:CLAUDE.md 怎麼寫](/ai-lecturer-bob/blog/claude-code-lesson-2/) → [第三堂:Skill / Subagent / Slash Command 自動化](/ai-lecturer-bob/blog/claude-code-lesson-3/) → 第四堂(本篇)。想一次看完四堂的索引去 [Claude Code Pro 訂閱初階班完整索引](/ai-lecturer-bob/blog/claude-code-pro-class-hub/)。
+
 ## 常見問題 FAQ
 
 (這個段落會被網站 build 成 FAQ JSON-LD,給 ChatGPT / Perplexity / Claude / Gemini 搜尋時抓得到。)
 
-## 這個小班結束之後
+## 這個小班結束之後該怎麼繼續學
 
 這個 Pro 版初階班四堂課就到這。如果你想繼續深入,下一步建議:
 1. **進階:寫自己的 plugin / skill**——參考 Jesse Vincent 的 Superpowers 結構
@@ -213,9 +217,12 @@ done
 - [GitHub CLI 安裝](https://cli.github.com/) — `gh auth login` 入口
 - [data.gov.tw 政府資料開放平台](https://data.gov.tw/) — Twinkle Hub 的原始資料來源
 - 同站延伸:
-  - [Pro 版第一堂](/ai-lecturer-bob/blog/claude-code-lesson-1/)、[第二堂](/ai-lecturer-bob/blog/claude-code-lesson-2/)、[第三堂](/ai-lecturer-bob/blog/claude-code-lesson-3/) — 完整四堂的前三堂
-  - [Superpowers vs 手寫 skill 比較](/ai-lecturer-bob/blog/superpowers-vs-handcrafted-skills/) — 進階思考:什麼時候該裝、什麼時候該自己寫
-  - [Ralph Loop 實戰](/ai-lecturer-bob/blog/ralph-loop-real-world/) — Superpowers Marketplace 裡 ralph-wiggum 的進階用法
+  - [Claude Code Pro 訂閱初階班完整索引](/ai-lecturer-bob/blog/claude-code-pro-class-hub/) — 四堂一次看完的 Hub 頁
+  - [Claude Code 入門第一堂:訂閱開始怎麼用](/ai-lecturer-bob/blog/claude-code-lesson-1/) — 4 demo + permission mode + 邊界
+  - [CLAUDE.md 怎麼寫?Claude Code 第二堂](/ai-lecturer-bob/blog/claude-code-lesson-2/) — 馴服系統提示 + 十大 prompt 定義
+  - [Claude Code Skill / Subagent / Slash Command 差在哪?](/ai-lecturer-bob/blog/claude-code-lesson-3/) — 第三堂自動化實戰
+  - [obra superpowers vs 手寫 skill 比較](/ai-lecturer-bob/blog/superpowers-vs-handcrafted-skills/) — 什麼時候該裝、什麼時候該自己寫
+  - [Ralph Loop 實戰](/ai-lecturer-bob/blog/ralph-loop-real-world/) — Superpowers Marketplace ralph-wiggum 的進階用法
 
 ---
 

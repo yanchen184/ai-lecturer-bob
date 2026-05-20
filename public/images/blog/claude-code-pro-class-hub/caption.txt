@@ -1,0 +1,18 @@
+Claude Code Pro 訂閱初階班 4 堂全收工🎓
+
+訂了 Claude Pro($20/月)但不知道怎麼把它用回本?
+
+2026/05/16-19 我開了四堂小班,全程錄影 + 整理成文章公開,完整看完約 2 小時、實作約 4-6 小時。
+
+四堂順序「看見 → 馴服 → 自動化 → 接生態」:
+1️⃣ 4 demo + permission mode 4 種 + 邊界
+2️⃣ CLAUDE.md 兩層 + 十大 prompt 定義 + Ultra Think
+3️⃣ Skill / Subagent / Slash Command + /loop + Hook + Remote
+4️⃣ obra superpowers + MCP + GitHub + Headless
+
+四堂完整索引:
+https://yanchen.app/blog/claude-code-pro-class-hub/
+
+看完你會做的事:給 Claude Code 一個方向、自己去睡覺、早上看結果。
+
+#ClaudeCode #ClaudePro #AI開發 #自動化 #職訓局 #BobChen

@@ -1,25 +1,26 @@
-# Pro 版 Claude Code 第一堂:從零到「看見」這把刀——4 個 demo + 權限 4 模式 + 邊界
+# Claude Code 入門第一堂:訂了 Claude Pro 之後怎麼開始——4 個 demo + permission mode 4 種 + 邊界
 
-> **本文寫給誰看**:你已經訂閱 Claude Pro($20/月),會用 ChatGPT,但還沒在電腦裝過 Claude Code。文章是我 2026-04-28 在小班開的「Pro 版初階班」第一堂的完整教學紀錄——不是計畫、是實際發生的 43 分鐘。
+> **本文寫給誰看**:你已經訂閱 Claude Pro($20/月),會用 ChatGPT,但還沒在電腦裝過 Claude Code、不知道 Claude Code 怎麼用、permission mode 是什麼。文章是我 2026-04-28 在小班開的「Pro 版初階班」第一堂的完整教學紀錄——不是計畫、是實際發生的 43 分鐘。
 
 ## TL;DR
 
-第一堂的目標只有一個:**讓你「看見」這把刀能幹什麼,然後立刻知道在哪裡停手**。我跑了 4 個 demo——讀 CSV、整理混亂資料夾、查 4 月營收、從零部署網站——每一個都 5 分鐘以內看到結果。然後講 4 種 permission mode、`.claudeignore`、以及「Claude 邊界」這個我自創的詞:**它不知道的事,它會極度自信地說錯,所以不要讓 AI 做你也不懂的事情**。這篇是 Pro 訂閱者(月繳 $20)的入門課,免費版 Claude 不在範圍內(API 額度跟 Code CLI 行為不同)。
+**Claude Code 入門最快的方法不是讀文件,是親手跑 4 個 demo**。我在第一堂跑了讀 CSV、整理 24 個亂檔案、SQLite 查 4 月營收、從零部署 Astro 網站到 GitHub Pages——每一個都 5 分鐘以內看到結果。然後拆 Claude Code 的 4 種 permission mode(default / acceptEdits / plan / bypassPermissions)、`.claudeignore` 防憑證外洩、以及「Claude 邊界」這個我自創的詞:**它不知道的事,它會極度自信地說錯,所以不要讓 AI 做你也不懂的事情**。這篇是 Claude Pro 訂閱者(月繳 $20)的入門課,免費版 Claude.ai 不在範圍內(API 額度跟 Claude Code CLI 行為不同)。
+
+如果你搜「Claude Code 是什麼」「Claude Code 怎麼用」「Claude Pro 值不值得訂」找到這篇,你來對地方了。
 
 ## 目錄
 
-- [為什麼這堂課是 Pro 訂閱者專屬](#為什麼這堂課是-pro-訂閱者專屬)
-- [Demo 1:用一句話讀 CSV](#demo-1用一句話讀-csv)
-- [Demo 2:整理 24 個亂七八糟的檔案](#demo-2整理-24-個亂七八糟的檔案)
-- [Demo 3:從 SQLite 撈 4 月營收](#demo-3從-sqlite-撈-4-月營收)
-- [Demo 4:從零部署一個個人網站](#demo-4從零部署一個個人網站)
-- [4 種 permission mode 怎麼選](#4-種-permission-mode-怎麼選)
-- [.claudeignore 跟 Claude 邊界](#claudeignore-跟-claude-邊界)
+- [Claude Code 是什麼?為什麼非 Pro 訂閱者不行](#claude-code-是什麼為什麼非-pro-訂閱者不行)
+- [Demo 1:用一句話讓 Claude Code 讀 CSV 撈 VIP](#demo-1用一句話讓-claude-code-讀-csv-撈-vip)
+- [Demo 2:Claude Code 怎麼整理 24 個亂七八糟的檔案](#demo-2claude-code-怎麼整理-24-個亂七八糟的檔案)
+- [Demo 3:從 SQLite 撈 4 月營收——不會寫 SQL 也能用](#demo-3從-sqlite-撈-4-月營收不會寫-sql-也能用)
+- [Demo 4:從零部署個人網站到 GitHub Pages](#demo-4從零部署個人網站到-github-pages)
+- [Claude Code permission mode 4 種怎麼選](#claude-code-permission-mode-4-種怎麼選)
+- [.claudeignore 怎麼寫 + Claude 邊界是什麼](#claudeignore-怎麼寫--claude-邊界是什麼)
 - [常見問題 FAQ](#常見問題-faq)
-- [明天預告:第二堂「馴服」](#明天預告第二堂馴服)
 - [延伸資源](#延伸資源)
 
-## 為什麼這堂課是 Pro 訂閱者專屬
+## Claude Code 是什麼?為什麼非 Pro 訂閱者不行
 
 Claude Pro 月繳 $20 美金、年繳 $200(等於 $17/月)。Anthropic 在 [pricing 頁面](https://claude.com/pricing) 把它定位成「個人重度使用者」方案——免費版 Claude.ai 每 5 小時給你 30-40 則訊息,Pro 拉高到 5 倍左右,Sonnet 4.6 / Opus 4.7 都能用,更重要的是 Claude Code CLI 從 Pro 開始才用得起來。
 
@@ -27,7 +28,7 @@ Claude Pro 月繳 $20 美金、年繳 $200(等於 $17/月)。Anthropic 在 [pric
 
 我跟學員約好:這四堂課每堂 1 小時、每週一次、連跑 4 週,你看完這四篇文章等於完整參加一次。
 
-## Demo 1:用一句話讀 CSV
+## Demo 1:用一句話讓 Claude Code 讀 CSV 撈 VIP
 
 電腦裡有一份 24 個欄位的客戶名單 CSV。傳統做法:打開 Excel、loading 30 秒、用 filter、用 vlookup、找 VIP 等級的人。
 
@@ -39,7 +40,7 @@ Claude Pro 月繳 $20 美金、年繳 $200(等於 $17/月)。Anthropic 在 [pric
 
 **重點**:你看到的不是「ChatGPT 回你一段 code 叫你自己跑」,是 Claude Code 直接動你的檔案系統、跑 Python、產生新檔。這個差距決定了它能不能取代「Excel 操作員」這個角色。
 
-## Demo 2:整理 24 個亂七八糟的檔案
+## Demo 2:Claude Code 怎麼整理 24 個亂七八糟的檔案
 
 我打開一個 Downloads 子資料夾,裡面 24 個檔案——投影片、PDF、隨手存的圖、半路下載到一半的影片、3 個亂命名的 `新建資料夾(2)`。
 
@@ -53,7 +54,7 @@ Claude Pro 月繳 $20 美金、年繳 $200(等於 $17/月)。Anthropic 在 [pric
 
 模式選擇就是「速度 vs 安全」的拉扯,後面詳述。
 
-## Demo 3:從 SQLite 撈 4 月營收
+## Demo 3:從 SQLite 撈 4 月營收——不會寫 SQL 也能用
 
 第三個 demo 我打開一個工作專案——一個用 SQLite 存交易紀錄的小工具。我打:
 
@@ -65,7 +66,7 @@ Claude Pro 月繳 $20 美金、年繳 $200(等於 $17/月)。Anthropic 在 [pric
 
 當然這也是邊界——下面會說的,**它如果寫錯 SQL 你看不出來,那你就慘了**。
 
-## Demo 4:從零部署一個個人網站
+## Demo 4:從零部署個人網站到 GitHub Pages
 
 第四個 demo 是「showcase」:從 0 開始,要它做一個個人形象網站、丟到 GitHub Pages 上、給我網址。
 
@@ -79,7 +80,7 @@ Claude Pro 月繳 $20 美金、年繳 $200(等於 $17/月)。Anthropic 在 [pric
 
 **這個 demo 不是為了教 Astro,是為了「製造看見」**——讓現場學員親眼看到「我不會寫前端也能有網站」這件事是真的。學完第一堂回家,你可以複製這個 prompt、丟給自己訂閱的 Claude Code 跑一次。
 
-## 4 種 permission mode 怎麼選
+## Claude Code permission mode 4 種怎麼選
 
 [官方文件](https://code.claude.com/docs/en/permission-modes) 列了 4 種主要 mode,Shift+Tab 可以在前 3 個之間切換:
 
@@ -102,7 +103,7 @@ Claude Pro 月繳 $20 美金、年繳 $200(等於 $17/月)。Anthropic 在 [pric
 
 > 補充:Anthropic 2026 年新出一個 **Auto Mode**——用 model-based classifier 自動判斷哪些動作要問、哪些可以放行,介於人工逐一審核跟 bypassPermissions 中間。但它[只給 Max / Team / Enterprise / API 用戶](https://www.anthropic.com/engineering/claude-code-auto-mode),Pro 訂閱目前用不到。我們這個小班暫時跳過,等它 GA 給 Pro 再講。
 
-## .claudeignore 跟 Claude 邊界
+## .claudeignore 怎麼寫 + Claude 邊界是什麼
 
 跟 `.gitignore` 同邏輯:你不想給 Claude Code 看見的檔案 / 資料夾,寫進這個檔。常見內容:
 
@@ -132,25 +133,24 @@ credentials.json
 
 這條規則不是要你「永遠別碰新東西」,是要你**碰新東西的時候多走一個查證步驟**——它說稅率是 5%,你去查國稅局官網確認;它說某 API 端點是 `/v2/users`,你去查那個服務的 docs 確認。Claude Code 內建的查 docs 動作不是「替代你的查證」,是「輔助你的查證」。
 
+> 📅 **明天(2026-05-21)會發**:[Claude Code 第二堂:馴服 CLAUDE.md + 十大 prompt 定義 + Ultra Think](/ai-lecturer-bob/blog/claude-code-lesson-2/)
+> 第一堂讓你「看見」這把刀;第二堂教你怎麼把 CLAUDE.md(全域 + 專案)寫好,讓 Claude Code 每次開啟都記得你是誰、用什麼框架、有什麼紀律——這是 prompt engineering 從「對話」變「OS」的關鍵差。
+
 ## 常見問題 FAQ
 
 (這個段落會被網站 build 成 FAQ JSON-LD,給 ChatGPT / Perplexity / Claude / Gemini 搜尋時抓得到。)
 
-## 明天預告:第二堂「馴服」
-
-第一堂讓你「看見」這把刀。第二堂我們開始**馴服它**——CLAUDE.md(全域 + 專案)怎麼寫、十大 prompt 定義、Plan Mode 怎麼用、Ultra Think 是什麼、`/compact` 跟 `/resume` 救 context 救命指令、為什麼我設一個「早上 7 點 Line 通知」的 schedule。
-
-> 第二堂連結:[Pro 版 Claude Code 第二堂:馴服 CLAUDE.md + 十大定義 + Plan Mode + 早 7 點 Line 通知](/ai-lecturer-bob/blog/claude-code-lesson-2/)(明天 2026-05-21 上線)
-
 ## 延伸資源
 
-- [Claude Pro 定價頁](https://claude.com/pricing) — 月繳 $20 / 年繳 $200,內含 Claude Code CLI 額度
-- [Permission Modes 官方文件](https://code.claude.com/docs/en/permission-modes) — 4 種模式詳細行為對照
-- [Claude Code Auto Mode 介紹](https://www.anthropic.com/engineering/claude-code-auto-mode) — 2026 新出、Pro 還用不到,先了解趨勢
-- [Astro Quick Start](https://docs.astro.build/en/getting-started/) — Demo 4 用的框架
+- [系列下一篇:Claude Code 第二堂——馴服 CLAUDE.md + 十大 prompt 定義](/ai-lecturer-bob/blog/claude-code-lesson-2/)(明天 2026-05-21 上線)
+- [完整系列總覽:Claude Code Pro 訂閱者初階班 4 堂路線](/ai-lecturer-bob/blog/claude-code-pro-class-hub/)
+- [Claude Pro 訂閱方案定價](https://claude.com/pricing) — 月繳 $20 / 年繳 $200,內含 Claude Code CLI 額度
+- [Claude Code permission mode 官方文件](https://code.claude.com/docs/en/permission-modes) — default / acceptEdits / plan / bypassPermissions 詳細行為對照
+- [Claude Code Auto Mode 介紹](https://www.anthropic.com/engineering/claude-code-auto-mode) — 2026 新出、Pro 訂閱還用不到,先了解趨勢
+- [Astro Quick Start 官方文件](https://docs.astro.build/en/getting-started/) — Demo 4 從零部署網站用的框架
 - 同站延伸:
-  - [一篇給完全新手看的 Hermes Agent 介紹](/ai-lecturer-bob/blog/hermes-agent-intro/) — 想試 Claude Code 以外的 AI agent 看這篇
-  - [兩個教訓:Astro base path + 跨檔案任務該開 TaskList](/ai-lecturer-bob/blog/claude-code-two-lessons-astro-and-tasklist/) — Demo 4 之後我自己踩的坑
+  - [Hermes Agent 給完全新手看的介紹](/ai-lecturer-bob/blog/hermes-agent-intro/) — 想試 Claude Code 以外的 AI agent 看這篇
+  - [Astro base path 跟 TaskList 兩個教訓](/ai-lecturer-bob/blog/claude-code-two-lessons-astro-and-tasklist/) — Demo 4 從零部署網站之後我自己踩的坑
 
 ---
 

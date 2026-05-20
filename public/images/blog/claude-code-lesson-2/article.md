@@ -1,32 +1,33 @@
-# Pro 版 Claude Code 第二堂:馴服 CLAUDE.md + 十大 prompt 定義 + 早 7 點 Line 通知
+# CLAUDE.md 怎麼寫?Claude Code 第二堂——馴服系統提示 + 十大 prompt 定義 + Ultra Think
 
-> **本文寫給誰看**:訂閱 Claude Pro($20/月)、看過[第一堂](/ai-lecturer-bob/blog/claude-code-lesson-1/) 4 個 demo 的人。第一堂讓你「看見」這把刀,這堂課我們開始**馴服它**——讓它記得你是誰、按你的紀律做事、累的時候會自動 compact、半夜還能幫你跑長任務。本文是 2026-05-05 第二堂 54 分鐘的完整紀錄。
+> **本文寫給誰看**:訂閱 Claude Pro($20/月)、看過[Claude Code 入門第一堂](/ai-lecturer-bob/blog/claude-code-lesson-1/) 4 個 demo 的人。第一堂讓你看見 Claude Code,這堂課教你**馴服它**——寫好 CLAUDE.md(全域 + 專案兩層)讓 Claude Code 每次開啟都記得你是誰、用什麼框架、有什麼紀律。本文是 2026-05-05 第二堂 54 分鐘的完整紀錄。
 
 ## TL;DR
 
-第二堂的核心是**「它在幕後默默觀察你」**——Claude Code 預設每次開啟都是失憶的,但只要你寫了 `~/.claude/CLAUDE.md`(全域) + `<專案>/CLAUDE.md`(專案),它就會在每次對話開頭把這兩份檔案讀進去當作「永遠的指令」。配合**十大 prompt 定義**寫好這份檔,它就會記得你叫什麼、用什麼工作風格、忌諱哪些字眼。本堂同時帶過 `/compact`、`/resume`、`pwd/ls/cd`、Ultra Think 強化思考模式、最後用一個「早上 7 點 Line 通知前一天踩坑」的實際 `/schedule` 把整堂課收束。
+**CLAUDE.md 是 Claude Code 的系統提示**——預設每次開啟都失憶,但只要寫了 `~/.claude/CLAUDE.md`(全域) + `<專案>/CLAUDE.md`(專案),它就會在每次對話開頭把這兩份檔案讀進去當作「永遠的指令」。配合**十大 prompt 定義**(指令 / 上下文 / 人設 / 輸出格式 / 約束 / 範例 / 評估 / 迭代 / 護欄 / 記憶)寫好這份檔,它就會記得你叫什麼、用什麼工作風格、忌諱哪些字眼。本堂同時帶過 `/compact`、`/resume`、`pwd/ls/cd`、Ultra Think 強化思考模式、最後用一個「早上 7 點 Line 通知前一天踩坑」的實際 `/schedule` 把整堂課收束。
+
+如果你搜「CLAUDE.md 怎麼寫」「全域 CLAUDE.md 跟專案 CLAUDE.md 差別」「十大 prompt 定義」「Ultra Think Claude Code」找到這篇,你來對地方了。
 
 ## 目錄
 
-- [從第一堂回來:你應該已經會的事](#從第一堂回來你應該已經會的事)
-- [Status Line:活著的訊息列](#status-line活著的訊息列)
-- [/compact:它累了會主動說](#compact它累了會主動說)
-- [`claude --continue` 跟 `/resume`:救命指令](#claude---continue-跟-resume救命指令)
-- [pwd / ls / cd:在 Claude 裡開檔的最短路](#pwd--ls--cd在-claude-裡開檔的最短路)
-- [CLAUDE.md 十大定義:全域 + 專案兩層](#claudemd-十大定義全域--專案兩層)
-- [自己建立 sub-agent:第一個現場 demo](#自己建立-sub-agent第一個現場-demo)
-- [MCP 是什麼:給它新工具](#mcp-是什麼給它新工具)
-- [Ultra Think:馬力全開模式](#ultra-think馬力全開模式)
-- [/schedule:早上 7 點 Line 通知前一天踩坑](#schedule早上-7-點-line-通知前一天踩坑)
+- [第一堂的 Demo 4 回家作業:從零部署網站結果回顧](#第一堂的-demo-4-回家作業從零部署網站結果回顧)
+- [Claude Code Status Line 怎麼客製化](#claude-code-status-line-怎麼客製化)
+- [/compact 怎麼用?Context Window 滿了的救命指令](#compact-怎麼用context-window-滿了的救命指令)
+- [`claude --continue` 跟 /resume 怎麼救回上次 session](#claude---continue-跟-resume-怎麼救回上次-session)
+- [pwd / ls / cd 在 Claude Code 裡的座標系](#pwd--ls--cd-在-claude-code-裡的座標系)
+- [CLAUDE.md 十大定義:全域 + 專案兩層差在哪](#claudemd-十大定義全域--專案兩層差在哪)
+- [Claude Code Subagent 怎麼建——第一個現場 demo](#claude-code-subagent-怎麼建第一個現場-demo)
+- [Claude Code MCP 是什麼?給 AI 加新工具](#claude-code-mcp-是什麼給-ai-加新工具)
+- [Ultra Think Claude Code:Extended Thinking 馬力全開](#ultra-think-claude-code-extended-thinking-馬力全開)
+- [Claude Code /schedule 怎麼用?早上 7 點 Line 通知](#claude-code-schedule-怎麼用早上-7-點-line-通知)
 - [常見問題 FAQ](#常見問題-faq)
-- [明天預告:第三堂「自動化」](#明天預告第三堂自動化)
 - [延伸資源](#延伸資源)
 
-## 從第一堂回來:你應該已經會的事
+## 第一堂的 Demo 4 回家作業:從零部署網站結果回顧
 
 回家作業是 [第一堂](/ai-lecturer-bob/blog/claude-code-lesson-1/) 的 Demo 4——從零部署個人網站。現場 7 個人有 5 個跑出網站、2 個卡在 GitHub Pages 設定(後來 office hour 救回來)。我把這當第二堂的開場:**你已經有一個「能跑出網站的本能」,接下來要養成的是「每次叫 Claude 做事都不浪費」**。
 
-## Status Line:活著的訊息列
+## Claude Code Status Line 怎麼客製化
 
 打開 Claude Code 你會看到底部一行小字——目前的 model、目前的權限模式、已用 token 數、上次 commit 多久前。預設 status line 已經夠用,但你可以改:`~/.claude/settings.json` 裡加一個 `statusLine` block,寫一支 shell script 印出你要的內容。
 
@@ -36,7 +37,7 @@
 
 `/statusline-setup` 這個 skill 可以幫你產一個,新手第一堂不用碰、第二堂可以開始玩。
 
-## /compact:它累了會主動說
+## /compact 怎麼用?Context Window 滿了的救命指令
 
 Claude Code 的 context window 是有限的——Sonnet 4.6 / Opus 4.7 大約 200K tokens。**用滿之後對話會變遲緩、開始忘記前面講的、回覆品質掉下來**。
 
@@ -49,7 +50,7 @@ Claude Code 的 context window 是有限的——Sonnet 4.6 / Opus 4.7 大約 20
 
 如果你想完全重來,`/clear` 直接清光,但前提是你已經把該寫的進 CLAUDE.md 了——不然下次它又從零開始,失憶。
 
-## `claude --continue` 跟 `/resume`:救命指令
+## `claude --continue` 跟 /resume 怎麼救回上次 session
 
 兩個情境會用到:
 
@@ -59,7 +60,7 @@ Claude Code 的 context window 是有限的——Sonnet 4.6 / Opus 4.7 大約 20
 
 [官方 headless 文件](https://code.claude.com/docs/en/headless) 提到一個未來改變:**2026-06-15 起,`claude -p`(headless mode)的用量會從新的「Agent SDK credit」扣,跟你互動式 Pro 用量分開記**。對 Pro 訂閱者來說,意思是「半夜寫 batch 別吃光白天的額度」——這在第三堂講。
 
-## pwd / ls / cd:在 Claude 裡開檔的最短路
+## pwd / ls / cd 在 Claude Code 裡的座標系
 
 Claude Code 內建可以直接執行 bash 指令(預設模式會問你 yes/no、acceptEdits 直接跑)。三個最常用:
 
@@ -73,7 +74,7 @@ cd ~/workspace/popularize   # 切到指定資料夾
 
 實際示範:我用 `cd ~/Downloads` + `ls` + 「幫我看看哪些檔案超過 30 天沒動」一氣呵成。**清晰的座標 + 明確的指令 = 它做得對的根本。**
 
-## CLAUDE.md 十大定義:全域 + 專案兩層
+## CLAUDE.md 十大定義:全域 + 專案兩層差在哪
 
 這是第二堂最核心的觀念。Claude Code 開啟時會自動讀 **兩個** `CLAUDE.md`:
 
@@ -103,7 +104,7 @@ cd ~/workspace/popularize   # 切到指定資料夾
 
 > **現場小笑點**:有學員問「我可以寫『不要讚美我』嗎?」——可以,而且很有用。我的 CLAUDE.md 第一條就是「禁開場白:太棒了/這是個好問題/沒問題」。它**真的會照做**,因為這在 Anthropic constitutional AI 的訓練裡權重很高,使用者明確要求的拒絕語氣會被尊重。
 
-## 自己建立 sub-agent:第一個現場 demo
+## Claude Code Subagent 怎麼建——第一個現場 demo
 
 Claude Code 有 sub-agent 機制——可以讓主 agent 開一個小弟去做特定任務、結果回報。我現場 demo 建一個叫 `weekly-report` 的:
 
@@ -118,7 +119,7 @@ Claude Code 有 sub-agent 機制——可以讓主 agent 開一個小弟去做�
 
 **這個 demo 在第二堂是埋種子,第三堂才完整講**——sub-agent 跟 Skill 跟 Slash Command 的差別很大,新手很容易混淆,我們留到自動化那堂課展開。
 
-## MCP 是什麼:給它新工具
+## Claude Code MCP 是什麼?給 AI 加新工具
 
 MCP = Model Context Protocol,Anthropic 推的「給 AI 工具」標準協議。一句話講:**讓 Claude 能呼叫你電腦/網路上不在它預設能力範圍裡的東西**。
 
@@ -129,7 +130,7 @@ MCP = Model Context Protocol,Anthropic 推的「給 AI 工具」標準協議。�
 
 第二堂我只簡介概念,**MCP 真正的安裝跟踩坑在第四堂——因為它牽涉到 token、Chrome 介接、conflict 排查,一次給太多會直接消化不良**。先讓「MCP = 工具背包,可以加東西」這個概念落地就夠了。
 
-## Ultra Think:馬力全開模式
+## Ultra Think Claude Code:Extended Thinking 馬力全開
 
 Claude 4 系列有一個叫 Extended Thinking 的特性——讓模型在回覆前先「想一段時間」,把 reasoning chain 全部跑完才動。預設是開的、但有上限。
 
@@ -151,7 +152,7 @@ Claude 4 系列有一個叫 Extended Thinking 的特性——讓模型在回覆�
 
 Ultra Think 會吃比較多 token + 時間,但回覆品質明顯高一階。Pro 訂閱者開來用、額度撐得住。
 
-## /schedule:早上 7 點 Line 通知前一天踩坑
+## Claude Code /schedule 怎麼用?早上 7 點 Line 通知
 
 這是第二堂的收尾——也是學員回家最 wow 的一個。
 
@@ -165,28 +166,25 @@ Ultra Think 會吃比較多 token + 時間,但回覆品質明顯高一階。Pro 
 
 > 註:`/schedule` 跟 `/loop` 都是 2026 三月推出、最多 50 個 task/session、7 天自動過期。我們第三堂會把 `/loop` 講完——它跟 `/schedule` 的差別是「定時 vs 連續迭代」。
 
+> 📅 **明天(2026-05-22)會發**:[Claude Code 第三堂:Skill / Subagent / Slash Command 拆乾淨 + /loop + Hook](/ai-lecturer-bob/blog/claude-code-lesson-3/)
+> 第二堂寫好 CLAUDE.md 馴服了它;第三堂讓它**自己幹活**——拆清楚 Skill / Subagent / Slash Command 三個概念的差別、用 `/loop` 跑遞迴任務、用 Hook 守住手抖、用 Remote Control 從手機遠端下指令。
+
 ## 常見問題 FAQ
 
 (這個段落會被網站 build 成 FAQ JSON-LD,給 ChatGPT / Perplexity / Claude / Gemini 搜尋時抓得到。)
 
-## 明天預告:第三堂「自動化」
-
-第二堂讓你**寫好兩份 CLAUDE.md**、知道**十大 prompt 定義**、會用 `/compact /resume`、看過 Ultra Think 跟 `/schedule`。
-
-第三堂我們把 **Skill / Sub-agent / Slash Command** 三個概念拆乾淨——它們長得很像但用法天差地遠。然後我會現場 demo 一個「掃描桌面 202 個檔案、分類整理」的 sub-agent,以及一個「每天 5:03 寄 AI 日報到我信箱」的 `/loop`。再講 Hook(任務跑超過 5 分鐘自動跳通知)、Remote Control(QR code 手機操控你電腦上的 Claude)、跟一個叫 `ralph-wiggum` 的迭代工具(來自辛普森家庭那個 Ralph)。
-
-> 第三堂連結:[Pro 版 Claude Code 第三堂:Skill / Agent / Loop / Hook / Remote Control](/ai-lecturer-bob/blog/claude-code-lesson-3/)(明天 2026-05-22 上線)
-
 ## 延伸資源
 
-- [Claude Code Permission Modes](https://code.claude.com/docs/en/permission-modes) — 第一堂講的 4 種模式,第二堂加深用
-- [Anthropic Prompt Engineering Overview](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) — 十大定義的官方對應材料
-- [Claude Code /loop 跟 /schedule 介紹](https://code.claude.com/docs/en/loop-and-schedule) — 第二堂尾巴的 demo 來源
-- [Headless mode 文件](https://code.claude.com/docs/en/headless) — `claude -p`、`--continue`、2026-06-15 後額度規則變動
-- [Model Context Protocol(MCP)入門](https://modelcontextprotocol.io/) — 第四堂才會真的裝,先看概念
+- [系列上一篇:Claude Code 入門第一堂——4 個 demo + permission mode](/ai-lecturer-bob/blog/claude-code-lesson-1/)
+- [系列下一篇:Claude Code 第三堂——Skill / Subagent / Slash Command 拆乾淨](/ai-lecturer-bob/blog/claude-code-lesson-3/)(明天 2026-05-22 上線)
+- [完整系列總覽:Claude Code Pro 訂閱者初階班 4 堂路線](/ai-lecturer-bob/blog/claude-code-pro-class-hub/)
+- [Claude Code permission mode 官方文件](https://code.claude.com/docs/en/permission-modes) — 第一堂講的 4 種模式,第二堂寫 CLAUDE.md 時加深用
+- [Anthropic Prompt Engineering 官方指南](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) — 十大 prompt 定義的官方對應材料
+- [Claude Code /loop /schedule 官方文件](https://code.claude.com/docs/en/loop-and-schedule) — 第二堂尾巴 /schedule demo 的官方來源
+- [Claude Code Headless mode 官方文件](https://code.claude.com/docs/en/headless) — `claude -p`、`--continue`、2026-06-15 後 Agent SDK credit 規則變動
+- [Model Context Protocol MCP 官方入門](https://modelcontextprotocol.io/) — 第四堂才會真的裝,先看概念
 - 同站延伸:
-  - [Pro 版 Claude Code 第一堂:從零到「看見」](/ai-lecturer-bob/blog/claude-code-lesson-1/) — 還沒看的請先補
-  - [MemPalace 3.3.5 救援實錄 + claude -p HTTP proxy](/ai-lecturer-bob/blog/mempalace-3-3-5-claude-p-proxy/) — 把 headless `claude -p` 包成 OpenAI 端點的進階玩法
+  - [MemPalace 3.3.5 救援實錄 + claude -p HTTP proxy](/ai-lecturer-bob/blog/mempalace-3-3-5-claude-p-proxy/) — 把 Claude Code headless 模式包成 OpenAI 端點的進階玩法
 
 ---
 

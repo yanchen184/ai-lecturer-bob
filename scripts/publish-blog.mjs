@@ -455,7 +455,7 @@ const posts = [
     slug: 'claude-code-lesson-1',
     publishDate: '2026-05-20',
     title:
-      'Pro 版 Claude Code 第一堂:從零到「看見」這把刀——4 個 demo + 權限 4 模式 + 邊界',
+      'Claude Code 入門第一堂:訂了 Claude Pro 之後怎麼開始——4 個 demo + permission mode 4 種 + 邊界',
     excerpt:
       '訂閱 Claude Pro($20/月)、想裝 Claude Code 但還沒動手?這是我 2026-04-28 第一堂 Pro 版小班的完整紀錄。4 個 demo:一句話讀 CSV、整理 24 個亂檔案、SQLite 查 4 月營收、從零部署網站——每個都 5 分鐘內看到結果。然後拆 4 種 permission mode(default/acceptEdits/plan/bypassPermissions)、`.claudeignore` 防憑證外洩、跟我自創的「Claude 邊界」觀念——不要讓 AI 做你也不懂的事情,它犯錯時會極度自信。',
     category: 'AI 教學',
@@ -500,7 +500,7 @@ const posts = [
     slug: 'claude-code-lesson-2',
     publishDate: '2026-05-21',
     title:
-      'Pro 版 Claude Code 第二堂:馴服 CLAUDE.md + 十大 prompt 定義 + 早 7 點 Line 通知',
+      'CLAUDE.md 怎麼寫?Claude Code 第二堂——馴服系統提示 + 十大 prompt 定義 + Ultra Think',
     excerpt:
       'Claude Code 預設每次開啟都是失憶的,但只要你寫好 `~/.claude/CLAUDE.md`(全域) + 專案 `CLAUDE.md`,它就會在每次對話開頭把這兩份檔讀進去當作永遠的指令。本文是 2026-05-05 Pro 版第二堂的完整紀錄——十大 prompt 定義對照表(指令/上下文/人設/輸出格式/約束/範例/評估/迭代/護欄/記憶)、`/compact /resume` 救命指令、pwd/ls/cd 在 Claude 內的座標系、Ultra Think 馬力全開、最後用一個「每天早上 7 點 Line 通知前一天踩坑」的 `/schedule` 收尾。',
     category: 'AI 教學',
@@ -545,7 +545,7 @@ const posts = [
     slug: 'claude-code-lesson-3',
     publishDate: '2026-05-22',
     title:
-      'Pro 版 Claude Code 第三堂:Skill / Agent / Slash Command 拆乾淨 + Loop 自動化 + Hook + Remote Control',
+      'Claude Code Skill / Subagent / Slash Command 差在哪?第三堂自動化實戰 + /loop + Hook + Remote Control',
     excerpt:
       'Skill、Sub-agent、Slash Command 三個東西長得像、其實完全不同:Skill 是觸發式的小教學文件(主 agent 自己決定要不要讀)、Sub-agent 是有獨立 context 的小弟(平行跑、回精簡結論)、Slash Command 是你定義的快捷指令。本文是 2026-05-12 Pro 版第三堂的完整紀錄——加上 `/loop` 連續迭代、Hook 任務跑超 5 分鐘自動 Line 通知、Remote Control 手機掃 QR 操控你電腦、跟 ralph-wiggum 死磕迴圈工具(來自辛普森家庭那個 Ralph)。',
     category: 'AI 教學',
@@ -592,7 +592,7 @@ const posts = [
     slug: 'claude-code-lesson-4',
     publishDate: '2026-05-23',
     title:
-      'Pro 版 Claude Code 第四堂:Superpowers + MCP + GitHub + Headless 半夜跑 batch',
+      'obra superpowers 怎麼裝?Claude Code 第四堂——MCP + GitHub + Headless 接生態系完整實戰',
     excerpt:
       '2026-05-19 Pro 版第四堂——但實際發生跟教學計畫完全不一樣。原本要教 Git 三動作,現場改成「我們自己寫一定不是最優解,要如何使用別人寫的」。實際走了 4 件事:Superpowers plugin 安裝(卡關 3 次:`/plugins` 沒搜到、Skill 沒生效、hook 把 build 卡死)、Twinkle Hub MCP 接政府開放資料(查 2024 國防部決標 12 筆)、GitHub 註冊 + gh CLI auth(CAPTCHA 卡 5 分鐘、學員 chien chang 救場)、headless `claude -p` 半夜跑 100 個檔案翻譯 batch。Pro 訂閱者照做完整路徑。',
     category: 'AI 教學',
@@ -631,6 +631,51 @@ const posts = [
       {
         q: '這個小班結束之後我該往哪走?',
         a: '三個方向:(1) 寫自己的 plugin / skill,參考 Jesse Vincent 的 Superpowers 結構;(2) 接公司內網 LLM,看我 [MemPalace + claude -p HTTP proxy](/blog/mempalace-3-3-5-claude-p-proxy/) 那篇是這個方向;(3) Cursor / Cline / Hermes Agent 並用,三家各有強項,看 [Hermes Agent 入門](/blog/hermes-agent-intro/) 做對照。我會繼續開中階班(自己寫 plugin、公司導入)、進階班(多 agent orchestration、production 部署),想接著上的留 email 我下期通知。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-code-pro-class-hub',
+    publishDate: '2026-05-24',
+    title:
+      'Claude Code Pro 訂閱初階班完整索引——4 堂 4 小時把 $20/月用回本',
+    excerpt:
+      '訂了 Claude Pro($20/月)但不知道怎麼把它用回本?2026/05/16-19 我開了四堂小班,全程錄影 + 整理成文章公開,完整看完約 2 小時、實作約 4-6 小時。四堂順序「看見 → 馴服 → 自動化 → 接生態」:1️⃣ 4 demo + permission mode 4 種 + 邊界、2️⃣ CLAUDE.md 兩層 + 十大 prompt 定義 + Ultra Think、3️⃣ Skill/Subagent/Slash Command + /loop + Hook + Remote、4️⃣ obra superpowers + MCP + GitHub + Headless。這頁是完整索引 + FAQ,適合一次看完或當回顧工具箱。',
+    category: 'AI 教學',
+    tags: [
+      'Claude Code',
+      'Claude Pro',
+      'AI 教學',
+      '初階班系列',
+      'Hub 索引',
+      'Pro 訂閱',
+      '自學路徑',
+    ],
+    faqItems: [
+      {
+        q: '四堂課完全沒寫程式經驗的人能跟嗎?',
+        a: '第一堂可以、第二堂可以、第三堂前半可以、第四堂後半(GitHub + Headless)會比較吃力。建議「行政 / 業務 / 內容創作」族群至少看完第一二堂,把 Claude Code 當「會做事的助理」用,先建立信心再接第三四堂。完全沒用過 ChatGPT 的人請先用 Claude.ai 兩週再來。',
+      },
+      {
+        q: '看完四堂需要多久?',
+        a: '文字版每堂約 25-35 分鐘讀完,四堂連續看約 2 小時。如果要照做、跑 demo、設 CLAUDE.md、裝 Superpowers,完整實作約 4-6 小時。建議分四個下午做,每天一堂、立刻上手最有效——不要一次塞完,認知會超載。',
+      },
+      {
+        q: '訂閱 Claude Pro 一定要訂嗎?有免費版能跟嗎?',
+        a: '不訂無法跟。Claude Code 是 Pro / Team / Enterprise 訂閱才能用,免費版只有對話框 Claude.ai。Pro 是 $20 美元/月——這個小班的核心就是「教你怎麼把這 $20 用回本」。年繳 $200($17/月)再省一點。',
+      },
+      {
+        q: 'Mac / Windows / Linux 都能跟嗎?',
+        a: 'Mac 跟 WSL2 Ubuntu 最順,Windows 原生 PowerShell 跟 Git Bash 都有坑(CRLF、path 翻譯、缺工具)。如果你是 Windows,建議裝 WSL2 + Ubuntu 跟,跟 Mac 體驗一樣。Linux 原生也順,沒問題。',
+      },
+      {
+        q: 'Claude Code 跟 Cursor / Cline / Aider 差在哪?',
+        a: 'Claude Code 是 Anthropic 官方 CLI,直接吃 Pro 訂閱、不需要另外買 API。Cursor / Cline 是 VS Code 插件,要自己接 API。Pro 訂閱者最划算的選擇就是 Claude Code——其他工具好但要另外付錢。如果你想跨工具並用,看 [Hermes Agent 入門](/blog/hermes-agent-intro/) 那篇比較。',
+      },
+      {
+        q: '這個小班的逐字稿/錄影有開放嗎?',
+        a: '錄影在學員社群內部,逐字稿整理成這四篇文章公開。所有公開版的內容都收錄在這 4+1 篇(四堂 + Hub)裡,你不會錯過。文章版反而比錄影更完整——多了 5 分鐘 SEO 自查、長尾關鍵字命中、FAQ JSON-LD 結構化,適合搜尋進來的讀者。',
       },
     ],
     featured: false,
