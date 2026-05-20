@@ -265,7 +265,7 @@ YAGNI。我的場景:**文章 ~30 篇、改一次手動就定型**。寫 plugin 
 - [Markdown in Astro](https://docs.astro.build/en/guides/markdown-content/) — markdown 處理 pipeline
 - [How to access static assets in Astro when using the base option](https://spuxx.dev/blog/2023/astro-assets-base/) — 一個社群 workaround 整理
 - [Claude Code Skills 簡介](https://docs.anthropic.com/en/docs/claude-code/sub-agents) — 我寫文章用的 `/blog-create` skill 怎麼來
-- 同站延伸:[馴服 Claude Code 的第二堂課](/ai-lecturer-bob/blog/claude-code-lesson-2-tame/)、[Hermes Agent 入門](/ai-lecturer-bob/blog/hermes-agent-intro/)
+- 同站延伸:[馴服 Claude Code 的第二堂課(Pro 版)](/ai-lecturer-bob/blog/claude-code-lesson-2/)、[Hermes Agent 入門](/ai-lecturer-bob/blog/hermes-agent-intro/)
 
 ---
 

@@ -60,14 +60,16 @@ export const seriesList: SeriesMeta[] = [
   },
   {
     key: 'claude-code-class',
-    label: 'Claude Code 初階班',
+    label: 'Claude Code 初階班(Pro 版)',
     description:
-      '寫給「想用 AI 寫 code 但又怕亂搞」的工程師。從零開始,先把界線、權限、控制感建立起來。',
+      '專為 Claude Pro 訂閱者($20/月)寫的四堂實戰課:Spec 思維與資安、CLAUDE.md 馴服、Skill/Agent/Loop 自動化、Plugin/MCP/GitHub 接生態系。',
     match: { type: 'byTag', tag: '初階班系列' },
     sort: 'order',
     slugOrder: [
-      'claude-code-lesson-1-zero-to-boundary',
-      'claude-code-lesson-2-tame',
+      'claude-code-lesson-1',
+      'claude-code-lesson-2',
+      'claude-code-lesson-3',
+      'claude-code-lesson-4',
     ],
   },
   {

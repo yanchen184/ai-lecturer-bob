@@ -1,0 +1,20 @@
+Pro 版 Claude Code 第四堂(完):Superpowers + MCP + GitHub 接生態系 🚀
+
+最後一堂課我老實承認——
+原本 plan 是教 git 三動作,但學員臨時想看 obra/superpowers,我就改 demo。
+然後當場卡關三次,還被 GitHub CAPTCHA 擋下,被學員陳薔薔救場(她筆電有 ssh key)。
+
+教學現場就是這樣,不丟臉。
+
+這篇講的:
+✦ 裝 obra/superpowers v5.1.0(Jesse Vincent 出品)的 3 個踩坑
+✦ Twinkle Hub MCP:Claude Code 接台灣政府開放資料(53k+ datasets)
+✦ Skill vs Superpowers 是同概念但生態系打法不同
+✦ GitHub CAPTCHA 卡住怎麼辦——救場的真相
+✦ Pro 版小班 4 堂全收工:從「看見刀」到「組裝刀工廠」
+
+不藏私的紀錄,看你能不能比我順。
+
+#ClaudeCode #ClaudePro #Superpowers #MCP #AI教學
+
+👉 全文:https://yanchen.app/blog/claude-code-lesson-4/

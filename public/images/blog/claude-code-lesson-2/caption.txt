@@ -1,0 +1,18 @@
+Pro 版 Claude Code 第二堂:馴服 CLAUDE.md 📝
+
+Claude Code 預設每次開啟都是「失憶」的。
+但只要寫好兩份 CLAUDE.md,它每次對話開頭就會把你的指令讀進去當系統提示。
+
+這篇講的:
+✦ 全域 vs 專案 CLAUDE.md 各寫什麼
+✦ 十大 prompt 定義對照表(指令/上下文/人設/輸出格式/約束/範例/評估/迭代/護欄/記憶)
+✦ `/compact` `/resume` 救命指令
+✦ pwd/ls/cd 在 Claude 內的座標系
+✦ Ultra Think 馬力全開
+✦ 早 7 點 Line 通知前一天踩坑(/schedule 收尾)
+
+對應到自己的 workflow,寫一份 CLAUDE.md = 自己的 Operating System。
+
+#ClaudeCode #ClaudePro #PromptEngineering #AI教學 #UltraThink
+
+👉 全文:https://yanchen.app/blog/claude-code-lesson-2/

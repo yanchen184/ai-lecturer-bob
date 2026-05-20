@@ -451,6 +451,190 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'claude-code-lesson-1',
+    publishDate: '2026-05-20',
+    title:
+      'Pro 版 Claude Code 第一堂:從零到「看見」這把刀——4 個 demo + 權限 4 模式 + 邊界',
+    excerpt:
+      '訂閱 Claude Pro($20/月)、想裝 Claude Code 但還沒動手?這是我 2026-04-28 第一堂 Pro 版小班的完整紀錄。4 個 demo:一句話讀 CSV、整理 24 個亂檔案、SQLite 查 4 月營收、從零部署網站——每個都 5 分鐘內看到結果。然後拆 4 種 permission mode(default/acceptEdits/plan/bypassPermissions)、`.claudeignore` 防憑證外洩、跟我自創的「Claude 邊界」觀念——不要讓 AI 做你也不懂的事情,它犯錯時會極度自信。',
+    category: 'AI 教學',
+    tags: [
+      'Claude Code',
+      'Claude Pro',
+      'AI 教學',
+      '初階班系列',
+      'Permission Mode',
+      'AI 入門',
+      'Pro 訂閱',
+    ],
+    faqItems: [
+      {
+        q: 'Claude Pro $20/月跟免費版 Claude.ai 差在哪?',
+        a: '免費版 Claude.ai 每 5 小時給你 30-40 則訊息,Pro 拉高到 5 倍左右、Sonnet 4.6 / Opus 4.7 都能用、最重要的是 Claude Code CLI 從 Pro 開始才用得起來(免費額度不夠跑互動式 coding)。年繳 $200($17/月)再省一些。我這個小班只收已經自掏腰包訂 Pro 的人——自己花錢才會認真學。',
+      },
+      {
+        q: '4 個 demo 我要全部跑過才算學會嗎?',
+        a: '不用,但 Demo 4「從零部署個人網站」是回家作業。前 3 個 demo 是「看見它能做什麼」,Demo 4 是「我也能做到」——這個體驗的落差是第一堂的關鍵。如果你 Demo 4 卡在 GitHub Pages 設定,留言問我,office hour 救你。',
+      },
+      {
+        q: 'acceptEdits 跟 bypassPermissions 差在哪?都不問了不是一樣?',
+        a: '差很多。acceptEdits 只自動接受「寫檔」類動作(編輯檔案、mkdir、touch、mv、cp),其他 Bash 指令還是會問你(curl、rm -rf、git push 都會跳對話框)。bypassPermissions 是全部不問,連 `rm -rf ~/Documents` 也直接跑——這就是為什麼它叫 `--dangerously-skip-permissions`,新手前兩週千萬別設這個 alias。',
+      },
+      {
+        q: '為什麼一直強調「Claude 邊界」?它不是很聰明嗎?',
+        a: '聰明跟「不會錯」不同。Claude 寫 Python 寫得比 80% 人類強——前提是你會看結果對不對。如果你不會 Rust、它寫一個會 deadlock 的 mutex,build 過了你以為對了,上線就爆。同樣道理:不懂稅法別讓它寫稅務計算邏輯。它的錯誤是「極度自信地說錯」,不是「猶豫地說錯」,你看不出差別。守住邊界 = 守住你的職業信用。',
+      },
+      {
+        q: '我電腦上要先裝什麼才能跑 Demo?',
+        a: '三樣:Claude Code CLI(走 `claude.com/code` 下載或 npm 裝)、登入你的 Pro 帳號(`claude` 第一次跑會跳瀏覽器 OAuth)、然後 cd 到一個你不介意它動的資料夾(別在桌面 root 跑、別在 Documents root 跑、開一個 `~/workspace/playground/` 之類的)。Demo 4 額外需要 GitHub 帳號跟 gh CLI,但這在第四堂才會 hands-on,第一堂跑不到也沒關係。',
+      },
+      {
+        q: '什麼樣的人不適合來上這個 Pro 版?',
+        a: '三種人不適合:(1) 完全沒用過 ChatGPT 的人——先用 Claude.ai 兩週再來;(2) 公司禁止程式碼上 SaaS 的人——你需要走 self-hosted 路線,看 [Hermes Agent 接內網 LLM](/blog/hermes-agent-mac-install/) 那篇;(3) 期待「我什麼都不用會、AI 全幫我」的人——這個小班的核心觀念是「會 AI 邊界」,要你思考的部分不會比寫 code 少。',
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: 'claude-code-lesson-2',
+    publishDate: '2026-05-21',
+    title:
+      'Pro 版 Claude Code 第二堂:馴服 CLAUDE.md + 十大 prompt 定義 + 早 7 點 Line 通知',
+    excerpt:
+      'Claude Code 預設每次開啟都是失憶的,但只要你寫好 `~/.claude/CLAUDE.md`(全域) + 專案 `CLAUDE.md`,它就會在每次對話開頭把這兩份檔讀進去當作永遠的指令。本文是 2026-05-05 Pro 版第二堂的完整紀錄——十大 prompt 定義對照表(指令/上下文/人設/輸出格式/約束/範例/評估/迭代/護欄/記憶)、`/compact /resume` 救命指令、pwd/ls/cd 在 Claude 內的座標系、Ultra Think 馬力全開、最後用一個「每天早上 7 點 Line 通知前一天踩坑」的 `/schedule` 收尾。',
+    category: 'AI 教學',
+    tags: [
+      'Claude Code',
+      'Claude Pro',
+      'AI 教學',
+      '初階班系列',
+      'CLAUDE.md',
+      'Prompt Engineering',
+      'Ultra Think',
+    ],
+    faqItems: [
+      {
+        q: '全域 CLAUDE.md 跟專案 CLAUDE.md 要寫什麼不同?',
+        a: '全域寫「你這個人不變的偏好」——人設(資深工程師)、輸出格式(繁體中文簡潔)、約束(不准 commit credentials)、護欄(不准 force push)、memory 索引在哪。專案寫「這個 repo 的技術細節」——用什麼框架版本、test 怎麼跑、business domain 術語對照、這個 repo 特殊紀律(像 popularize 專案我寫「Bob 是職訓局講師,教材路徑常含中文資料夾」)。兩份檔每次 session 開頭都會被讀,等於兩層 system prompt。',
+      },
+      {
+        q: '十大定義是 Anthropic 官方分類嗎?',
+        a: '不是,是我自己整理的、跟 [Anthropic Prompt Engineering 指南](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) 同源但更實用。10 個是:指令(Prompt)、上下文(Context)、人設(Persona)、輸出格式(Output Format)、約束(Constraint)、範例(Few-shot)、評估(Eval)、迭代(Iteration)、護欄(Guardrail)、記憶(Memory)。不要每條都寫,而是「卡住寫不下去時對照看漏了哪幾項」。我自己 CLAUDE.md 重點放在 3、4、5、9、10。',
+      },
+      {
+        q: 'Ultra Think 那個 Alt+Ctrl+Shift+H 跟官方 Option+T 哪個對?',
+        a: '兩個都試試看。Anthropic 官方文件記載是 macOS Option+T / Windows Alt+T,但我自己上課 demo 用的是 Alt+Ctrl+Shift+H(把 thinking token budget 拉到上限 31,999)。可能是不同版本的 Claude Code CLI 快捷鍵不同,也可能是 terminal(WezTerm / iTerm2)攔截了按鍵。新手兩個都按按看哪個會在 status line 看到 "thinking..." 提示,看到的那個就是有生效。',
+      },
+      {
+        q: '`/compact` 跟 `/clear` 跟新開 session 差在哪?',
+        a: '三個程度不同。`/compact` 是壓縮,保留摘要扔掉細節,它還記得「我們在做什麼」、但不記得「兩小時前那個 import 路徑」。`/clear` 是清光當前 session,完全重來。新開 session 是另外一個 session,但前一個用 `claude --continue` 還救得回來。我的習慣:長任務每 90 分鐘主動 `/compact`,不等它叫我。`/clear` 只在「真的要從零開始」用。',
+      },
+      {
+        q: '`/schedule` 跟 `/loop` 都是定時,差在哪?',
+        a: '`/schedule` 是「定時觸發一次 prompt」(像 cron),`/loop` 是「給目標、它自己連續迭代到滿意」。`/schedule` 適合每天 5:03 寄日報這種事;`/loop` 適合「幫我把 Hermes Agent 那篇文章改到 SEO score ≥100」這種需要多輪。兩個都是 2026 三月推出、最多 50 task/session、7 天過期。第三堂會把 `/loop` 完整 demo。',
+      },
+      {
+        q: '我寫了 CLAUDE.md 但 Claude 還是不照做怎麼辦?',
+        a: '三個常見原因:(1) 你寫得太抽象,改寫成具體規則+理由(「禁開場白:太棒了/這是個好問題」比「請簡潔」有效 5 倍);(2) Claude 4 在 constitutional AI 訓練下會優先尊重「使用者明確要求的拒絕語氣」,所以你要寫成「拒絕做 X」而不是「請做 Y」;(3) 你的 CLAUDE.md 太長(>500 行),被截斷或被忽略,壓到 200 行內。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-code-lesson-3',
+    publishDate: '2026-05-22',
+    title:
+      'Pro 版 Claude Code 第三堂:Skill / Agent / Slash Command 拆乾淨 + Loop 自動化 + Hook + Remote Control',
+    excerpt:
+      'Skill、Sub-agent、Slash Command 三個東西長得像、其實完全不同:Skill 是觸發式的小教學文件(主 agent 自己決定要不要讀)、Sub-agent 是有獨立 context 的小弟(平行跑、回精簡結論)、Slash Command 是你定義的快捷指令。本文是 2026-05-12 Pro 版第三堂的完整紀錄——加上 `/loop` 連續迭代、Hook 任務跑超 5 分鐘自動 Line 通知、Remote Control 手機掃 QR 操控你電腦、跟 ralph-wiggum 死磕迴圈工具(來自辛普森家庭那個 Ralph)。',
+    category: 'AI 教學',
+    tags: [
+      'Claude Code',
+      'Claude Pro',
+      'AI 教學',
+      '初階班系列',
+      'Sub-agent',
+      'Skill',
+      'Loop',
+      'Remote Control',
+      'Hook',
+    ],
+    faqItems: [
+      {
+        q: 'Skill / Sub-agent / Slash Command 我什麼時候該用哪個?',
+        a: '記三個比喻:Skill = SOP 手冊(你想加紀律、讓主 agent 看到觸發詞就會照 SOP 跑);Sub-agent = 派外包(任務很大、想 parallelize、不想吃主 context);Slash Command = 鍵盤快捷鍵(常用的長 prompt 一鍵跑、可以帶參數)。最常見誤解:「Skill = 函式」錯,它不能被 invoke,是主 agent 自己決定;「Sub-agent = 多視窗」錯,它是另一個獨立 session 沒有共享記憶。',
+      },
+      {
+        q: 'sub-agent 跟主 agent 怎麼分工?',
+        a: '主 agent 做「策略」(這個任務要拆成幾步、誰先做、誰後做),sub-agent 做「執行」(掃 202 個檔案分類、查 50 個 API endpoint 文件、平行寫 5 個 unit test)。設計訣竅:sub-agent 任務的「輸出」要 ≤ 主 agent 的可用 context,不然送回來主 agent 還是會 context 爆掉。經驗值:單個 sub-agent 報告 ≤ 5000 字。',
+      },
+      {
+        q: 'Hook 的 PreToolUse / PostToolUse / Stop 什麼時候各用哪個?',
+        a: 'PreToolUse 用在「攔截」——它要跑 `rm -rf` 之前我先 sanity check 一次。PostToolUse 用在「驗收 + 自動修」——它寫完 TypeScript 我自動跑 tsc + prettier 修格式。Stop 用在「總結 + 通知」——任務跑完丟 Line 通知、做 backup、寫 daily summary。新手第一個 hook 建議從 Stop 開始(風險最低、價值高)。',
+      },
+      {
+        q: 'Remote Control 安全嗎?手機掃 QR 不會被中間人攔截?',
+        a: '官方文件明寫:Remote Control 的 QR code 是「短時效 device pairing token」,只有同一個 LAN 或經 claude.ai relay 的會話有效、token 約 10 分鐘過期。但風險還是有:你手機如果有惡意 app 掃描你螢幕拍到 QR code、那 10 分鐘內可以接管你 session。建議:在外面用 Remote Control 的時候鎖螢幕、別在咖啡廳大剌剌秀出 QR。Team / Enterprise 預設關閉、admin 要開才能用,個人 Pro 預設開。',
+      },
+      {
+        q: 'Pro 額度跑 `/loop` 跟 `/schedule` 會不會爆?',
+        a: '看用法。我自己 `/schedule` 每天 5:03 寄 AI 日報(8K tokens/次)+ 偶爾 `/loop` 跑 SEO 文章迭代(50K tokens/次 × 5 次/週)= 一個月約 1.5M tokens,在 Pro 範圍內。會爆的情境:把 `/loop` 設成 max-iterate=20 跑很大專案、或一天設 10 個 `/schedule`——這時建議切到 Max($100/月)或開 API key 用 pay-as-you-go。2026-06-15 之後 headless `claude -p` 跟 Agent SDK 走獨立額度,情況會更寬鬆。',
+      },
+      {
+        q: 'ralph-wiggum 跟 `/loop` 我該用哪個?',
+        a: '`/loop` 是 Anthropic 官方、預設安全、有明確時間/次數上限。ralph-wiggum 是社群 plugin、更死磕、適合「我給你終點、你跑到對為止」的任務(像把 build error 修到全綠、寫 test 寫到覆蓋率 ≥80%)。新手用 `/loop`,進階(裝過 Superpowers 之後)用 ralph-wiggum。注意 v2.6 / v2.7 有 iterate count 重置 bug,看到它跑超過 max 手動 Ctrl+C 然後回報 issue。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-code-lesson-4',
+    publishDate: '2026-05-23',
+    title:
+      'Pro 版 Claude Code 第四堂:Superpowers + MCP + GitHub + Headless 半夜跑 batch',
+    excerpt:
+      '2026-05-19 Pro 版第四堂——但實際發生跟教學計畫完全不一樣。原本要教 Git 三動作,現場改成「我們自己寫一定不是最優解,要如何使用別人寫的」。實際走了 4 件事:Superpowers plugin 安裝(卡關 3 次:`/plugins` 沒搜到、Skill 沒生效、hook 把 build 卡死)、Twinkle Hub MCP 接政府開放資料(查 2024 國防部決標 12 筆)、GitHub 註冊 + gh CLI auth(CAPTCHA 卡 5 分鐘、學員 chien chang 救場)、headless `claude -p` 半夜跑 100 個檔案翻譯 batch。Pro 訂閱者照做完整路徑。',
+    category: 'AI 教學',
+    tags: [
+      'Claude Code',
+      'Claude Pro',
+      'AI 教學',
+      '初階班系列',
+      'Superpowers',
+      'MCP',
+      'Twinkle Hub',
+      'GitHub',
+      'Headless',
+    ],
+    faqItems: [
+      {
+        q: '為什麼第四堂砍掉教學計畫、現場改題?',
+        a: '前三堂的設計是「我教你怎麼指揮 AI 做你不會的事」,第四堂變成「來教你 Git add/commit/push」就是斷裂——學員一半是行政 / 業務,他們對 Git 沒感覺、會說「那我用 Dropbox」。早上 dry-run 的時候 Claude 自己提醒我這個落差,下午我直接改題成「站在巨人肩膀上:plugin / MCP / GitHub / headless 都是用別人的」,跟前三堂延長線完美對齊。文章照實際發生寫、不是計畫版本——這是真實上課素材的價值。',
+      },
+      {
+        q: 'Superpowers plugin 為什麼 `/plugins` 搜不到?',
+        a: 'Marketplace 沒 add。要先 `claude /plugin marketplace add obra/superpowers-marketplace`,再 `claude /plugin install superpowers`。少了 marketplace add 那一步就搜不到——這是 README 沒寫清楚的 user trap。解法:把網址 `https://github.com/obra/superpowers` 直接貼給 Claude、叫它「幫我裝這個 plugin」,它讀 GitHub 頁面、找正確 install 指令、跑完。比你自己摸文件快。',
+      },
+      {
+        q: 'Twinkle Hub MCP 怎麼裝?要收錢嗎?',
+        a: 'Alpha 階段免費、無 rate limit。裝法走「把 hub.twinkleai.tw 網址貼給 Claude、叫它幫你裝」——它讀 setup instructions、寫進 `~/.claude.json` 的 mcpServers 區塊、重啟 MCP server。裝完可以查 52,960 筆 data.gov.tw 資料 + 立法院議案 + 政府電子採購網。我現場 demo 查 2024 國防部決標 12 筆,10 秒拉出來——比官方 web.pcc.gov.tw 快 100 倍。',
+      },
+      {
+        q: 'GitHub 註冊卡 CAPTCHA 怎麼辦?',
+        a: '開無痕視窗 + 新 email 重註冊,通常一次過——這是我學員 chien chang 救我的招。GitHub 對某些 cookie / IP / 瀏覽器指紋有偏見,正常視窗連續挑戰你 5 次也很正常。這件事的教育意義是:AI 不是萬能、CAPTCHA 它幫不了你,身邊懂的人比你會 Claude 還重要。',
+      },
+      {
+        q: 'Headless `claude -p` 跟互動式比起來,Pro 額度怎麼算?',
+        a: '目前(2026-05)`claude -p` 跟互動式共用同一份 Pro 額度。我量過 100 個 markdown 翻譯 batch 耗約 400K input + 200K output tokens、等於 Pro 額度 8%。**2026-06-15 之後**,[官方文件](https://code.claude.com/docs/en/headless) 明寫 `claude -p` 跟 Agent SDK 使用會從新的「Agent SDK credit」扣、跟互動式 Pro 用量分開——對 Pro 訂閱者反而是利多,半夜跑 batch 不再吃光白天額度。',
+      },
+      {
+        q: '這個小班結束之後我該往哪走?',
+        a: '三個方向:(1) 寫自己的 plugin / skill,參考 Jesse Vincent 的 Superpowers 結構;(2) 接公司內網 LLM,看我 [MemPalace + claude -p HTTP proxy](/blog/mempalace-3-3-5-claude-p-proxy/) 那篇是這個方向;(3) Cursor / Cline / Hermes Agent 並用,三家各有強項,看 [Hermes Agent 入門](/blog/hermes-agent-intro/) 做對照。我會繼續開中階班(自己寫 plugin、公司導入)、進階班(多 agent orchestration、production 部署),想接著上的留 email 我下期通知。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
@@ -469,7 +653,10 @@ function buildFields(post) {
       excerpt: { stringValue: post.excerpt },
       content: { stringValue: content },
       author: { stringValue: '陳彥彤' },
-      publishDate: { stringValue: new Date().toISOString().slice(0, 10) },
+      publishDate: {
+        stringValue:
+          post.publishDate || new Date().toISOString().slice(0, 10),
+      },
       category: { stringValue: post.category },
       tags: {
         arrayValue: {

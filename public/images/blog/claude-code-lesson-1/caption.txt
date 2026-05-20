@@ -1,0 +1,16 @@
+Pro 版 Claude Code 第一堂收工 ☕
+
+訂閱 Claude Pro($20/月)但還沒裝 Claude Code 的人,這篇你會看得很爽。
+
+4 個 demo,每個 5 分鐘內看到結果:
+✦ 一句話讀 CSV
+✦ 整理 24 個亂檔案
+✦ SQLite 查 4 月營收
+✦ 從零部署網站(這個是回家作業)
+
+然後拆 permission mode 4 種、`.claudeignore` 防憑證外洩、最後我自創的「Claude 邊界」觀念——
+不要讓 AI 做「你也不懂」的事情,它犯錯時會極度自信。
+
+#ClaudeCode #ClaudePro #AI教學 #職訓局講師 #獨立開發者
+
+👉 全文:https://yanchen.app/blog/claude-code-lesson-1/

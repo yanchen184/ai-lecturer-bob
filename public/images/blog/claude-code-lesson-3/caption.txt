@@ -1,0 +1,17 @@
+Pro 版 Claude Code 第三堂:Skill / Agent / Slash 拆乾淨 ⚙️
+
+「我有個 X 想自動化,該寫 skill、subagent 還是 slash command?」
+這是 Pro 版 Claude Code 學員最常卡的點。
+
+這篇講的:
+✦ Skill / Sub-agent / Slash Command 三選一對照表(怎麼選不會錯)
+✦ /loop 跑爆 token 限制——用 ralph-wiggum pattern 拆解
+✦ Hook(PreToolUse / PostToolUse / Stop)守住手抖
+✦ Remote Control:手機 QR code 從外面遠端下指令
+✦ Headless 模式 `claude -p` 用 Pro 訂閱跑 0 額外成本批次任務(2.1.145+ 才不會壞)
+
+把 Claude Code 從「對話工具」變成「無人值守 worker」的關鍵一堂。
+
+#ClaudeCode #ClaudePro #Automation #AI教學 #Skill
+
+👉 全文:https://yanchen.app/blog/claude-code-lesson-3/
