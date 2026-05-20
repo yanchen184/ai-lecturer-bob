@@ -1,0 +1,33 @@
+【MemPalace 3.3.5 救活我 51,355 個記憶抽屜】
+
+chromadb 1.5.x 在 macOS 26 ARM64 必 SIGSEGV
+所有 mempalace CLI 指令全死,只剩 MCP server 苟活
+
+MemPalace 3.3.5 兩個救命機制:
+
+1️⃣ HNSW segment quarantine
+開 palace 時自動偵測壞掉的 HNSW segment
+比較 data_level0.bin vs chroma.sqlite3 的 mtime
+mtime 落差太大 → rename 隔離、繞過 crash
+
+2️⃣ repair --mode from-sqlite
+完全繞過 HNSW 索引狀態
+直接從 chroma.sqlite3 撈 (id, document, metadata)
+重灌進新 palace、索引從 0 重建
+
+順手寫了一支 180 行 Python:
+claude-p-openai-proxy.py
+
+把 claude -p CLI 包成 OpenAI 相容 HTTP 端點
+讓 mempalace compress 走 Max 訂閱 = 零 API 成本
+
+關鍵點:
+- 拆 CLAUDECODE env 才能巢狀 spawn
+- 需 claude-code CLI ≥ 2.1.145
+- 純標準庫、無 dependency
+- 只 bind 127.0.0.1(不要 0.0.0.0)
+
+延遲慢 ~10 倍(8-15s vs 1-3s)
+但批次壓縮跑一晚也搞定
+
+#MemPalace #ChromaDB #ClaudeCode #Anthropic #RAG

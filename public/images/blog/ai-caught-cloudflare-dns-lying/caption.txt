@@ -1,0 +1,62 @@
+─────────────────────────────
+📱 Threads / IG / FB 通用版（短）
+─────────────────────────────
+
+切完 DNS 之後我跑 `dig @1.1.1.1 yanchen.app NS`，整整 30 分鐘它都跟我說「還沒生效」。
+
+我準備回 Porkbun 重新檢查，AI 跟我說「先別動，1.1.1.1 可能在 cache，我打 8.8.8.8 跟 9.9.9.9 對驗一下」。
+
+三家都回新 NS。只有 1.1.1.1 自己 stale cache 騙人。
+
+教訓：DNS 不能只信一家 resolver。但更重要的是 — 多打幾家對驗這件事我自己不會做，AI 會。差別不是知識，是「願不願意多查一次」。
+
+完整覆盤 → https://yanchen.app/blog/ai-caught-cloudflare-dns-lying/
+
+#AI協作 #DNS #Cloudflare #ClaudeCode #網域
+
+─────────────────────────────
+📱 Threads / IG / FB 通用版（長）
+─────────────────────────────
+
+切 DNS 最大的坑不是設錯，是「設對了但驗證工具騙你」。
+
+時間軸：
+- 00:00 在 Porkbun 把 NS 改成 Cloudflare
+- 00:02 / 00:10 / 00:20 / 00:28 連跑四次 dig @1.1.1.1，都說還是 Porkbun
+- 我準備回 Porkbun 後台檢查是不是哪裡按錯
+
+這時 AI 說：「先別動。1.1.1.1 可能 stale cache，我同時打 8.8.8.8 / 9.9.9.9 / 208.67.222.222 對驗。」
+
+結果三家都回新 NS。
+
+只有 Cloudflare 自己的 1.1.1.1 還抱著舊紀錄。原因是 1.1.1.1 為了「全球最快 resolver」用激進 cache 策略 — 對一般使用者是優點，對在切 DNS 的工程師是惡夢。
+
+人類傾向「相信工具」，AI 傾向「工具是另一個變數」。這個思考方式的差異救了我至少 1 小時。
+
+完整覆盤 + 抄回家用的多 resolver 對驗 SOP → https://yanchen.app/blog/ai-caught-cloudflare-dns-lying/
+
+#AI協作 #DNS #Cloudflare #ClaudeCode #網域 #SRE
+
+─────────────────────────────
+🔗 LinkedIn 版（中性、跨產業）
+─────────────────────────────
+
+A small DNS debugging story that taught me what AI engineers actually do better than humans.
+
+I switched my nameservers from Porkbun to Cloudflare. Then I ran `dig @1.1.1.1 yanchen.app NS` and it kept returning the old NS for 30 minutes. I was about to revert.
+
+Claude Code (running my migration) suggested: "Try 8.8.8.8 and 9.9.9.9 simultaneously — 1.1.1.1 might have stale cache."
+
+Three resolvers agreed on the new NS. Only 1.1.1.1 was lying.
+
+The insight isn't about DNS. It's about a mindset:
+- Humans: trust the tool, doubt your own work
+- AI: treat the tool as another variable, cross-verify
+
+AI doesn't have the "I already did this, I don't want to verify again" emotion. It'll run the same dig four times in parallel without complaint. Humans won't.
+
+This is exactly the kind of infra task where AI shines: noisy systems with caching layers, propagation delays, and ambiguous failure modes.
+
+Full breakdown → https://yanchen.app/blog/ai-caught-cloudflare-dns-lying/
+
+#AI #DevOps #DNS #ClaudeCode #SRE

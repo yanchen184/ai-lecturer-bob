@@ -1,0 +1,18 @@
+Claude Code 內建 18 堂互動課，你知道嗎？
+
+📝 完整圖文拆解：
+https://yanchen184.github.io/ai-lecturer-bob/blog/claude-code-powerup-tutorial/
+
+—
+
+打 /powerup，Claude Code 會在你的 terminal 裡跑出一套 18 堂課的互動教學。
+動畫示範、進度追蹤，學到哪裡記到哪裡。
+
+初級 6 堂：Plan Mode、CLAUDE.md、撤銷、後台執行
+中級 7 堂：MCP、Hooks、Subagents、Skills
+進階 5 堂：Worktrees、Permission Scoping、Agent SDK
+
+不需要另開瀏覽器查文件，就在你工作的地方學。
+全部跑完約 30 分鐘，挑自己最需要的先學就好。
+
+#ClaudeCode #AI工具 #工程師日常 #Anthropic #開發效率

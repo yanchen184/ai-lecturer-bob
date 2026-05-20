@@ -1,0 +1,66 @@
+─────────────────────────────
+📱 Threads / IG / FB 通用版（短）
+─────────────────────────────
+
+我把「買網域 + 整站搬家 + SEO 不爆掉」整套流程交給 Claude Code 跑。
+
+人類負責的部分只有 15 分鐘：
+- 刷卡買網域
+- 登入 Porkbun 改 nameserver
+- 按 GSC verify 按鈕
+- 按 Bing 匯入按鈕
+
+AI 負責的部分 1.5 小時：
+- 比 4 個 TLD × 2 個註冊商價格
+- dig 多 resolver 對驗 DNS
+- 17 個檔案批次改 URL
+- 跑 CI/CD + 自我除錯（第一次發現 sitemap 沒改乾淨自己回頭修）
+- 寫 sitemap、canonical、JSON-LD、robots.txt
+- 設好 GSC sc-domain property
+- 監看 SSL 簽發狀態
+
+最大的坑：1.1.1.1 DNS resolver 有 30 分鐘 stale cache，差點誤判 NS 切換失敗。教訓是「DNS 不能只信一家 resolver」。
+
+整篇覆盤寫在新部落格 → https://yanchen.app/blog/ai-buy-domain-migration-yanchen-app/
+
+#AI協作 #ClaudeCode #網域註冊 #SEO #GitHubPages
+
+─────────────────────────────
+📱 Threads / IG / FB 通用版（長，含完整 8 步驟）
+─────────────────────────────
+
+被「DNS、SSL、redirect、SEO 不要爆掉」這四個關鍵字嚇到不敢搬網站的人，這篇給你。
+
+我把整個流程拆成 8 步驟：
+
+1. 選網域 + 比價（AI 主導，10 分）
+2. 刷卡買網域（你必做，5 分）
+3. DNS 接 Cloudflare（AI 跑、你按按鈕，20 分）
+4. GitHub Pages 綁網域（AI 全包，5 分）
+5. 17 個檔案批次改 URL（AI 全包，10 分）
+6. CI/CD 部署（AI 全包，5 分）
+7. SEO 工具設定（AI 全包 + 1 次點擊，15 分）
+8. 等 DNS / Google 收割（你等，24-48 小時）
+
+判斷哪些 AI 不能做的原則：「我的錢、我的帳號、我同意這個 OAuth scope」這三類動作 AI 不該也不能做。剩下全丟給 AI，效率高得驚人。
+
+5 個踩坑：1.1.1.1 stale cache、astro.config 預設值忘記翻、GSC Change of Address 按鈕灰掉、SSL 簽發前不能急著勾 HTTPS 強制、launchd cron 的 GSC URL 沒改。
+
+完整教學 + AI/人類工作分工表 → https://yanchen.app/blog/ai-buy-domain-migration-yanchen-app/
+
+#AI協作 #ClaudeCode #網域註冊 #自架站 #SEO #DNS #Cloudflare #GitHubPages
+
+─────────────────────────────
+🔗 LinkedIn 版（中性、跨產業）
+─────────────────────────────
+
+Just migrated my personal site to a custom domain with Claude Code doing 90% of the work.
+
+Human time: 15 minutes (payment + 2FA-locked logins).
+AI time: 1.5 hours (price research, DNS validation, batch URL replacement across 17 files, CI/CD orchestration, SEO setup).
+
+Key insight: AI excels at infrastructure tasks involving cross-source comparison, batch edits, and self-verifying CLI loops. The only things humans must do are tasks tied to identity (payment, 2FA, OAuth consent) — which is exactly the right division of labor for security.
+
+Full breakdown including the 5 pitfalls I hit (stale DNS cache, SSL signing race conditions, GSC Change of Address gotchas) → https://yanchen.app/blog/ai-buy-domain-migration-yanchen-app/
+
+#AI #DevOps #ClaudeCode #DomainMigration #SEO

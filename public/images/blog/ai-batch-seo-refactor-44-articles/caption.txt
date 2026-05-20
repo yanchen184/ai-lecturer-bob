@@ -1,0 +1,31 @@
+我請 AI 把 44 篇舊文重做 SEO，花了 1.5 小時
+
+📝 完整覆盤：
+https://yanchen.app/blog/ai-batch-seo-refactor-44-articles/
+
+—
+
+部落格寫到第 44 篇，每篇我都認真寫 title / excerpt / FAQ / JSON-LD。但 GSC 曝光成長停在某個水位，怎麼發新文都拉不上去。
+
+請 AI 盤點才發現：
+🔴 28/44 篇 category 都是「AI 工具」，64% 內容歸同一類，等於沒分類
+🔴 同概念 tags 用 3-4 種拼法（AI Agent / AI 代理人 / AI agent）互相分散權重
+🔴 Claude Code 17 篇散在站上、Hermes 5 篇沒 topic hub
+🔴 17 個 hermes duplicate doc 沒清
+
+於是請 Claude Code 跑一輪批次改造：
+✅ 收成 6 個 category 受控詞彙
+✅ tags 全站受控（禁掉「AI 工具」「工程師日常」這種垃圾 tag）
+✅ 重寫 30 篇 title + 30 篇 excerpt
+✅ 開 4 個 topic hub 串文章
+✅ 批次 PATCH Firestore（踩到 timestampValue schema 雷整站炸 build）
+
+人類投入 10 分鐘決策（拍板分類、驗收）
+AI 投入 1.5 小時
+比手動快 3.7 倍，但不是秒殺
+
+文章拆得很細：6 個 category 怎麼分、tags 受控詞彙表（可直接抄）、批次 PATCH 怎麼防誤殺、topic hub 怎麼開、AI 該做 vs 你該做對照表、為什麼這種任務會卡 1.5 小時。
+
+如果你部落格寫到 30 篇以上開始覺得「站內亂、SEO 不漲」，這篇是處方箋。
+
+#SEO #部落格寫作 #ClaudeCode #AI工作流 #Firestore

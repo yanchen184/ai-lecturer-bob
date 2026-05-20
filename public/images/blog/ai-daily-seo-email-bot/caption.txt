@@ -1,0 +1,72 @@
+─────────────────────────────
+📱 Threads / IG / FB 通用版（短）
+─────────────────────────────
+
+我跟 Claude Code 講了一句話：「每天早上 9 點寄一封 SEO 報告到我信箱，內容要昨天的 UV/PV + GSC 表現。」
+
+1 小時後我收到第一封信。
+
+pipeline：launchd → bash → GSC API + Firestore → Python 組信 → SMTP TLS → Gmail。
+
+我自己做的只有 3 件事：建 Gmail App Password、貼一行 launchctl 指令、第一次手動跑一次驗證。其他 60 分鐘 AI 全包，包括我從沒設過的 launchd plist、OAuth refresh token、SMTP TLS 設定。
+
+AI 寫程式碼之後，「自己 host」的成本大幅下降。
+
+完整 pipeline + 抄回家自己用 → https://yanchen.app/blog/ai-daily-seo-email-bot/
+
+#AI協作 #ClaudeCode #SEO #自動化 #launchd
+
+─────────────────────────────
+📱 Threads / IG / FB 通用版（長）
+─────────────────────────────
+
+搬完家之後我有個新需求：每天早上想看一眼昨天 SEO 狀況，但不想登入 GSC、不想開儀表板。
+
+我要的是「打開信箱就看到」。
+
+跟 Claude Code 講了這段話，1 小時後我收到第一封信，標題是「📊 SEO 日報 2026-05-19」，內容有：
+- 昨日 UV / PV（Firestore）
+- GSC 單日表現
+- 近 7 天 Top 5 查詢
+- 近 7 天 Top 5 頁面
+- 近 28 天 Top 10 查詢
+
+整個 pipeline：launchd cron（macOS 推薦，cron 是 deprecated）→ bash 腳本 → curl 打 GSC API + Firestore runQuery → Python heredoc 組信 → SMTP TLS 寄 Gmail。
+
+我自己做的事情：
+1. 建 Gmail App Password（5 分鐘）— 要 2FA 登入，AI 不能代做
+2. 複製 plist + 跑 launchctl bootstrap（30 秒）
+3. 第一次手動跑一次驗證（1 分鐘）
+
+其他 60 分鐘 AI 全包。包括我從沒設過的東西：launchd plist、GSC OAuth refresh token、SMTP TLS + certifi、timezone 處理（GSC 有 3-4 天延遲，要用 yesterday-4d）、Firestore timestamp filter。
+
+最讓我有感的不是 AI 寫了多少 code，是它「預設知道走推薦路徑」：用 launchd 不用 cron、用 465 SMTP_SSL 不用 587 STARTTLS、用 `launchctl bootstrap` 不用 `launchctl load`。每個小決策都是當代最佳實踐。
+
+完整 pipeline + 抄回家用 → https://yanchen.app/blog/ai-daily-seo-email-bot/
+
+#AI協作 #ClaudeCode #SEO #自動化 #launchd #GSC #SMTP
+
+─────────────────────────────
+🔗 LinkedIn 版（中性、跨產業）
+─────────────────────────────
+
+I told Claude Code one sentence: "Email me a daily SEO report every morning at 9am with yesterday's UV/PV plus GSC performance."
+
+One hour later I got the first email.
+
+The pipeline: launchd → bash → GSC API + Firestore queries → Python (inline heredoc) → SMTP TLS → Gmail.
+
+My contribution: 3 things, totaling ~7 minutes.
+1. Generate Gmail App Password (2FA-gated, AI can't do this)
+2. Paste the launchctl bootstrap command
+3. Run once manually to verify
+
+Everything else — 60 minutes — was AI: launchd plist (which I'd never written), OAuth refresh token flow, SMTP TLS with certifi (macOS gotcha), timezone-aware Firestore queries, GSC's 3-4 day data lag handling.
+
+What struck me: AI doesn't just write code, it picks the right path by default. launchd over cron. SMTP_SSL 465 over STARTTLS 587. `launchctl bootstrap` over deprecated `launchctl load`. Every micro-decision is current best practice without me asking.
+
+The "self-host vs SaaS" calculation has shifted. When AI writes the code + maintains it on demand, building your own narrow tool becomes cheaper than paying $20/mo for a SaaS that's 80% what you want.
+
+Full pipeline + adaptation guide → https://yanchen.app/blog/ai-daily-seo-email-bot/
+
+#AI #DevOps #SEO #ClaudeCode #Automation #launchd

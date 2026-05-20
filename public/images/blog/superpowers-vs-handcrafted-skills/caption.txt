@@ -1,0 +1,22 @@
+🔥 Superpowers vs 自己手寫 skill,該選哪個?
+
+obra/superpowers 7 個月衝 121k stars、Anthropic 1 月正式收編。
+14 個 skill、token -14%、品質 +40%。看起來無腦該裝。
+
+但我跑兩週發現:不是所有任務都該開。
+
+小任務反而 +20% token(skill 內文進 context 全是 overhead)。
+demo 前急著修 bug,被 brainstorming 流程拖住。
+Haiku / 免費 tier 跑不動(skill 太長,弱模型會 hallucinate 流程)。
+
+選法:
+✅ 中大型 feature / 跨檔案 refactor / 不熟領域 → 裝著
+✅ 個人化的重複工作流(我的 /blog-create / /discord-bot-setup) → 自己手寫
+❌ 一行修改 / 改 typo → 都別用
+
+兩者不衝突,可以共存。Superpowers 走 plugin 安裝、手寫 skill 放 ~/.claude/skills/,Claude Code 啟動兩邊都會掃。
+
+文章拆解 14 個 skill 各自解什麼問題、5 個踩坑、跟手寫 skill 的對照表、Jesse Vincent(RT 票務系統作者)的設計哲學。
+連結 ⬇️
+
+#ClaudeCode #Superpowers #AI工具 #工程師日常 #AIAgent #AI工作流
