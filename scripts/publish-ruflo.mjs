@@ -7,7 +7,7 @@ const COLLECTION = 'bob_blog_posts'
 
 const slug = 'ruflo-multi-agent-claude'
 const content = readFileSync(
-  'D:/ai-lecturer-bob/public/images/blog/ruflo-multi-agent-claude/article.md',
+  'D:/public/images/blog/ruflo-multi-agent-claude/article.md',
   'utf-8',
 )
 
@@ -97,6 +97,6 @@ if (!res.ok) {
 }
 const docId = data.name.split('/').pop()
 console.log('OK doc id:', docId)
-console.log('URL:', `https://yanchen184.github.io/ai-lecturer-bob/blog/${slug}/`)
+console.log('URL:', `https://yanchen.app/blog/${slug}/`)
 console.log('reading time:', readingTime, 'min')
 console.log('word count:', wordCount)

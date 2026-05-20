@@ -140,7 +140,7 @@
 2. **依賴版本飄移** —— 我半年後想改某一堂課，`pnpm install` 拉了不一樣的 Vue 版本，編譯炸了
 3. **GitHub Pages base path 問題** —— Slidev build 出來的路徑寫死，部署到 `/popularize-slides/` 底下會掉 asset，要改 `vite.config.ts`
 
-第 3 點我有寫過一篇相關的踩坑：[Astro base path 自動加前綴的設計坑](https://yanchen184.github.io/ai-lecturer-bob/blog/astro-base-path-markdown-link/)，Slidev 是同一類設計選擇。
+第 3 點我有寫過一篇相關的踩坑：[Astro base path 自動加前綴的設計坑](https://yanchen.app/blog/astro-base-path-markdown-link/)，Slidev 是同一類設計選擇。
 
 ### Reveal.js 的問題
 
@@ -259,7 +259,7 @@ curl -I https://yanchen184.github.io/popularize-slides/lesson4/ | head -2
 # server: GitHub.com
 ```
 
-[Round-trip 驗證](https://yanchen184.github.io/ai-lecturer-bob/blog/seo-content-score/)，不是 handshake。
+[Round-trip 驗證](https://yanchen.app/blog/seo-content-score/)，不是 handshake。
 
 ---
 
@@ -312,7 +312,7 @@ YAGNI 原則：當我有第 8 堂課、共用樣式真的吵到我之前，不�
 
 我自己寫文字內容、用 Claude Code 寫 HTML/CSS/JS。
 
-文字部分（標題、痛點、口語、口號）我自己定，Claude 只是把我的 outline 變成 markup。我會在 prompt 裡明確說「不要用 AI 腔、不要寫『顛覆性』『革命性』、不要寫『超棒』『神器』」—— 跟我[寫部落格的 SoT 規範](https://yanchen184.github.io/ai-lecturer-bob/blog/seo-content-score/)同一套。
+文字部分（標題、痛點、口語、口號）我自己定，Claude 只是把我的 outline 變成 markup。我會在 prompt 裡明確說「不要用 AI 腔、不要寫『顛覆性』『革命性』、不要寫『超棒』『神器』」—— 跟我[寫部落格的 SoT 規範](https://yanchen.app/blog/seo-content-score/)同一套。
 
 實作部分（CSS 動畫、鍵盤事件、進度條）Claude 寫得比我親手寫快 5 倍。**這就是分工**：我管「教什麼、要什麼感覺」，AI 管「把 HTML/CSS 寫出來」。
 
@@ -349,7 +349,7 @@ repo 目前沒附 LICENSE 檔，預設是 All Rights Reserved。
 - **Superpowers plugin（第四堂介紹的）**: [github.com/obra/superpowers](https://github.com/obra/superpowers)
 - **Claude Code 官方**: [claude.com/claude-code](https://claude.com/claude-code)
 - **GitHub Pages 文件**: [docs.github.com/pages](https://docs.github.com/en/pages)
-- **同系列文章**: [Astro base path 設計坑（同樣是 GitHub Pages 部署問題）](https://yanchen184.github.io/ai-lecturer-bob/blog/astro-base-path-markdown-link/)
+- **同系列文章**: [Astro base path 設計坑（同樣是 GitHub Pages 部署問題）](https://yanchen.app/blog/astro-base-path-markdown-link/)
 
 ---
 

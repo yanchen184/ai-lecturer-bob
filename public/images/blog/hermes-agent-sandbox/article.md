@@ -8,13 +8,13 @@
 
 > **📚 Hermes Agent 系列 — 這是第 3 篇 / 共 5 篇**
 >
-> 1. [入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
-> 2. [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
 > 3. **👉 沙盒篇(你在這)— 怎麼讓它不弄壞電腦**
-> 4. [Mac 安裝實戰](/ai-lecturer-bob/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
-> 5. [結構分析](/ai-lecturer-bob/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
 >
-> **建議順序**:[入門](/ai-lecturer-bob/blog/hermes-agent-intro/)→ [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/)(先跑起來)→ 這篇(學會保護)→ 開始實戰
+> **建議順序**:[入門](/blog/hermes-agent-intro/)→ [最簡安裝](/blog/hermes-agent-quickstart/)(先跑起來)→ 這篇(學會保護)→ 開始實戰
 > **這篇何時看**:你已經能跑 `hermes -z`、開始想讓它做「動真格的事」(刪檔、改 git、跑網路爬蟲)的那一刻
 
 ## 📌 這篇要回答的問題

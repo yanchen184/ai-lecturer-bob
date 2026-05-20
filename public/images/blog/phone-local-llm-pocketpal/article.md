@@ -30,7 +30,7 @@
 2. **開發者測試** on-device 部署可行性
 3. **嚐鮮黨**，裝兩天就回去用 ChatGPT / Claude
 
-<img src="/ai-lecturer-bob/images/blog/phone-local-llm-pocketpal/pocketpal-github.png" alt="PocketPal AI GitHub repo 首頁，本地手機 LLM 開源 app" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/phone-local-llm-pocketpal/pocketpal-github.png" alt="PocketPal AI GitHub repo 首頁，本地手機 LLM 開源 app" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 ## ⚖️ 三大主流 app 比較
 
@@ -66,7 +66,7 @@ flowchart TD
     C -->|系統級整合<br/>iPhone 15 Pro+| H[Apple Intelligence<br/>內建 3B 模型]
 ```
 
-<img src="/ai-lecturer-bob/images/blog/phone-local-llm-pocketpal/llmfarm-github.png" alt="LLMFarm GitHub repo，iOS macOS 本地 LLM 工程師選項" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/phone-local-llm-pocketpal/llmfarm-github.png" alt="LLMFarm GitHub repo，iOS macOS 本地 LLM 工程師選項" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 ## ⚡ iPhone 15 Plus 真實能跑什麼模型
 
@@ -83,7 +83,7 @@ flowchart TD
 
 PromptQuorum 明文寫「**RAM 8GB 以下手機跑本地 LLM 不實用**」。iPhone 15 Plus 是 6GB，剛好踩在門檻下方。
 
-<img src="/ai-lecturer-bob/images/blog/phone-local-llm-pocketpal/mlc-llm-github.png" alt="MLC LLM GitHub repo，Android Snapdragon NPU 加速本地 LLM 引擎" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/phone-local-llm-pocketpal/mlc-llm-github.png" alt="MLC LLM GitHub repo，Android Snapdragon NPU 加速本地 LLM 引擎" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 **結論：iPhone 15 Plus 的甜蜜點是 1B-2B 模型，不是 3B。** 推薦這幾個：
 
@@ -298,4 +298,4 @@ Model not loaded. Tap to reload.
 - [MLC LLM 官方](https://github.com/mlc-ai/mlc-llm) — Android NPU 優化引擎
 - [Apple Foundation Models 官方介紹](https://machinelearning.apple.com/research/introducing-apple-foundation-models) — 想了解 Apple Intelligence 背後 3B 模型的設計
 - [Hugging Face GGUF 模型搜尋](https://huggingface.co/models?library=gguf) — PocketPal / LLMFarm 模型來源
-- [本站相關文章：Karpathy LLM Wiki 跑兩週實測](https://yanchen184.github.io/ai-lecturer-bob/blog/karpathy-llm-wiki/) — 想理解 LLM 底層概念
+- [本站相關文章：Karpathy LLM Wiki 跑兩週實測](https://yanchen.app/blog/karpathy-llm-wiki/) — 想理解 LLM 底層概念

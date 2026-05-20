@@ -459,7 +459,7 @@ const AdminDashboard = () => {
                         <td className="px-4 py-2 font-mono">{i + 1}</td>
                         <td className="px-4 py-2">
                           <a
-                            href={`/ai-lecturer-bob/blog/${p.slug}/`}
+                            href={`/blog/${p.slug}/`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="underline"

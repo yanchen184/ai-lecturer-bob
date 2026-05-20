@@ -9,10 +9,10 @@
 > **📚 Hermes Agent 系列 — 這是第 1 篇 / 共 5 篇**
 >
 > 1. **👉 入門篇（你在這）— 這 AI 工具到底在幹嘛?**
-> 2. [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
-> 3. [沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
-> 4. [Mac 安裝實戰](/ai-lecturer-bob/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
-> 5. [結構分析](/ai-lecturer-bob/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
 >
 > **建議順序**:這篇 → 最簡安裝(動手玩) → 沙盒(玩出感覺後再學保護自己)
 > **只想看一篇**:就是這篇,看完知道這工具在幹嘛、要不要繼續
@@ -142,7 +142,7 @@ hermes -z "把這個資料夾裡用不到的檔案刪掉"
 
 Hermes Agent 提供 **7 種隔離環境**(從「直接動你電腦」到「跑在別人雲端」)讓你選,**新手最常用 Docker**——你電腦上的隔離盒子,免費、夠安全。
 
-**完整 7 種對照、Docker 怎麼設、Vercel Sandbox 是什麼,看[沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/)**——這篇先記得「Hermes 有沙盒可以開」就好。
+**完整 7 種對照、Docker 怎麼設、Vercel Sandbox 是什麼,看[沙盒篇](/blog/hermes-agent-sandbox/)**——這篇先記得「Hermes 有沙盒可以開」就好。
 
 ## ⚖️ 跟 Claude Code、Cursor 怎麼選
 
@@ -171,9 +171,9 @@ Hermes Agent 提供 **7 種隔離環境**(從「直接動你電腦」到「跑�
 2. **裝 hermes-cli**:一行 `uv tool install`
 3. **給它一把 API key**:去 Anthropic 申請,新帳號送 5 美金試用
 
-**完整步驟、複製貼上就能跑、含 Anthropic / OpenAI / Ollama 三家比較,看[最簡安裝篇](/ai-lecturer-bob/blog/hermes-agent-quickstart/)**——那篇是 5 分鐘新手版,跑完回來繼續看下面 FAQ。
+**完整步驟、複製貼上就能跑、含 Anthropic / OpenAI / Ollama 三家比較,看[最簡安裝篇](/blog/hermes-agent-quickstart/)**——那篇是 5 分鐘新手版,跑完回來繼續看下面 FAQ。
 
-**想接公司內網 LLM**(不用付錢給 OpenAI / Anthropic)?看[Mac 安裝實戰篇](/ai-lecturer-bob/blog/hermes-agent-mac-install/),工程師版,要寫 proxy。
+**想接公司內網 LLM**(不用付錢給 OpenAI / Anthropic)?看[Mac 安裝實戰篇](/blog/hermes-agent-mac-install/),工程師版,要寫 proxy。
 
 ## ❓ 常見疑問
 
@@ -212,7 +212,7 @@ Hermes Agent 提供 **7 種隔離環境**(從「直接動你電腦」到「跑�
 
 ## 📚 下一站
 
-讀完這篇你知道 Hermes Agent 是什麼了。**最自然的下一站是去動手玩一次** → [最簡安裝篇:5 分鐘把它跑起來](/ai-lecturer-bob/blog/hermes-agent-quickstart/)。
+讀完這篇你知道 Hermes Agent 是什麼了。**最自然的下一站是去動手玩一次** → [最簡安裝篇:5 分鐘把它跑起來](/blog/hermes-agent-quickstart/)。
 
 如果還想看別的:
 - 🌐 **官方 GitHub**:[NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent)

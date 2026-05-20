@@ -3,7 +3,7 @@
 > - 推薦給：被 LoRA 訓練搞到崩潰、想直接用社群現成 4-step 蒸餾 LoRA 出片的人
 > - 讀完你會知道：12GB 跑 14B 的關鍵設定、`WanFirstLastFrameToVideo` 怎麼接、用 SSIM 量化 loop 接合度、五個 Windows 踩坑實錄。
 
-<img src="/ai-lecturer-bob/images/blog/rtx-4070-wan22-i2v-loop/cover.png" alt="Wan 2.2 I2V loop 首末幀對照 — 翻書動作 SSIM 0.89 接合度高" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/rtx-4070-wan22-i2v-loop/cover.png" alt="Wan 2.2 I2V loop 首末幀對照 — 翻書動作 SSIM 0.89 接合度高" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 ## 📌 目錄
 
@@ -32,9 +32,9 @@
 
 最後成品兩支：
 
-<img src="/ai-lecturer-bob/images/blog/rtx-4070-wan22-i2v-loop/walking-loop.gif" alt="走路 loop 動畫預覽 — 8 秒 129 幀，但首末對位較差 SSIM 0.61" style="border-radius: 8px; margin: 1rem 0; width: 60%;" />
+<img src="/images/blog/rtx-4070-wan22-i2v-loop/walking-loop.gif" alt="走路 loop 動畫預覽 — 8 秒 129 幀，但首末對位較差 SSIM 0.61" style="border-radius: 8px; margin: 1rem 0; width: 60%;" />
 
-<img src="/ai-lecturer-bob/images/blog/rtx-4070-wan22-i2v-loop/reading-loop.gif" alt="翻書 loop 動畫預覽 — 8 秒 129 幀，首末對位漂亮 SSIM 0.89" style="border-radius: 8px; margin: 1rem 0; width: 60%;" />
+<img src="/images/blog/rtx-4070-wan22-i2v-loop/reading-loop.gif" alt="翻書 loop 動畫預覽 — 8 秒 129 幀，首末對位漂亮 SSIM 0.89" style="border-radius: 8px; margin: 1rem 0; width: 60%;" />
 
 ## 💻 硬體與軟體配置
 
@@ -140,9 +140,9 @@ ffmpeg -i first.png -i last.png -lavfi ssim -f null -
 
 首末幀並排對照（左：第一幀，右：最後一幀）：
 
-<img src="/ai-lecturer-bob/images/blog/rtx-4070-wan22-i2v-loop/reading-seam.png" alt="翻書 loop 首末幀對照 — 構圖、姿勢、書頁狀態幾乎一致" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/rtx-4070-wan22-i2v-loop/reading-seam.png" alt="翻書 loop 首末幀對照 — 構圖、姿勢、書頁狀態幾乎一致" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
-<img src="/ai-lecturer-bob/images/blog/rtx-4070-wan22-i2v-loop/walking-seam.png" alt="走路 loop 首末幀對照 — 角色位置和鏡頭視角明顯偏移" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/rtx-4070-wan22-i2v-loop/walking-seam.png" alt="走路 loop 首末幀對照 — 角色位置和鏡頭視角明顯偏移" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 走路為什麼接不好？合理推測：走路是線性位移，模型要在 8 秒內「往前走又自然走回」非常違反物理；翻書是局部肢體動作，回到原樣相對容易。
 

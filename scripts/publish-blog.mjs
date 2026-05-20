@@ -526,7 +526,7 @@ for (const post of targets) {
   console.log('OK doc id:', docId, '|', post.slug)
   console.log(
     '  URL:',
-    `https://yanchen184.github.io/ai-lecturer-bob/blog/${post.slug}/`
+    `https://yanchen.app/blog/${post.slug}/`
   )
   console.log('  reading time:', readingTime, 'min | word count:', wordCount)
 }

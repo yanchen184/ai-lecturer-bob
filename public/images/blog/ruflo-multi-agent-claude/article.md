@@ -29,7 +29,7 @@
 
 如果你只是想知道「值不值得試」，看完就有答案。
 
-![GitHub repo cover](/ai-lecturer-bob/images/blog/ruflo-multi-agent-claude/cover.png)
+![GitHub repo cover](/images/blog/ruflo-multi-agent-claude/cover.png)
 
 ---
 
@@ -139,7 +139,7 @@ claude mcp add ruflo -- npx ruflo@latest mcp start
 
 如果你已經在用 Claude Code，**這條最不破壞現狀** — 它變成你 Claude 的一個 MCP server，要用才呼叫，不用就放著。
 
-![v3 重寫 issue social card](/ai-lecturer-bob/images/blog/ruflo-multi-agent-claude/v3-rebuild.png)
+![v3 重寫 issue social card](/images/blog/ruflo-multi-agent-claude/v3-rebuild.png)
 
 ---
 

@@ -7,24 +7,24 @@
 
 > **📚 Hermes Agent 系列 — 這是第 5 篇 / 共 5 篇**
 >
-> 1. [入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
-> 2. [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
-> 3. [沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
-> 4. [Mac 安裝實戰](/ai-lecturer-bob/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘把它跑起來
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
 > 5. **👉 結構分析(你在這)— 為什麼它擠進 OpenRouter #2**
 >
 > **這篇給誰看**:想看「為什麼這工具紅起來」的結構性分析、AI 工具生態觀察者、創投/PM 視角的讀者
-> **不關心生態 / 只想用工具**:跳過這篇,看[入門](/ai-lecturer-bob/blog/hermes-agent-intro/) → [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/)就夠
+> **不關心生態 / 只想用工具**:跳過這篇,看[入門](/blog/hermes-agent-intro/) → [最簡安裝](/blog/hermes-agent-quickstart/)就夠
 
 2026 上半年，OpenRouter 公布最新 [App & Agent Rankings](https://openrouter.ai/rankings)。第一名是 OpenAI 自家的 ChatGPT 客戶端（廢話，他們本來就是最大用戶）。第二名讓我看了一愣：**Hermes Agent**——一個 NousResearch 維護的開源 CLI agent，連付費 GUI 都沒有。
 
 它把 Kilo Code、Claude Code、Cline 全壓在身後。
 
-<img src="/ai-lecturer-bob/images/blog/hermes-agent-academic/openrouter-apps-ranking.png" alt="OpenRouter App & Agent Rankings 截圖,顯示 Hermes Agent 在 Most Popular 區塊排名 #2,僅次於 OpenAI;同時佔據 Top Productivity 與 Top Creative 雙榜首" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/hermes-agent-academic/openrouter-apps-ranking.png" alt="OpenRouter App & Agent Rankings 截圖,顯示 Hermes Agent 在 Most Popular 區塊排名 #2,僅次於 OpenAI;同時佔據 Top Productivity 與 Top Creative 雙榜首" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 這篇是觀察筆記，不是教學。如果你想知道「**為什麼一個沒有 sales、沒有 GUI、沒有訂閱方案的開源 CLI，能在 2026 的 agent 生態擠進 OpenRouter 前段班**」，這篇給你結構性答案。
 
-**完全沒碰過 Hermes Agent?** 先看 [入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/)(知道它是什麼)再回來,這篇對「沒用過工具的人」有點抽象。**想動手裝?** 走 [最簡安裝篇](/ai-lecturer-bob/blog/hermes-agent-quickstart/) 5 分鐘搞定。
+**完全沒碰過 Hermes Agent?** 先看 [入門篇](/blog/hermes-agent-intro/)(知道它是什麼)再回來,這篇對「沒用過工具的人」有點抽象。**想動手裝?** 走 [最簡安裝篇](/blog/hermes-agent-quickstart/) 5 分鐘搞定。
 
 ## 📌 目錄
 
@@ -41,7 +41,7 @@
 
 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 是 **NousResearch**（以 Hermes 系列開源 LLM 聞名的研究機構）在 2025 末 / 2026 初推出的 CLI agent，現在 6k stars、24k forks、1.5k contributors。
 
-<img src="/ai-lecturer-bob/images/blog/hermes-agent-academic/hermes-github-repo.png" alt="NousResearch/hermes-agent GitHub repo 主頁,6k stars、24k forks、1.5k contributors、Python 為主" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/hermes-agent-academic/hermes-github-repo.png" alt="NousResearch/hermes-agent GitHub repo 主頁,6k stars、24k forks、1.5k contributors、Python 為主" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 它的設計哲學一句話：**provider-agnostic agent loop**。意思是：
 
@@ -57,7 +57,7 @@ OpenRouter 是什麼？簡單講：**LLM 的 stripe**。一個 API endpoint 後�
 
 它在 2025 中崛起、2026 上半年實質壟斷「**多 model 比較與切換**」這個 niche。Anthropic、Google、xAI 出新版本時，**先看 OpenRouter 排名變化**，因為這比官方 Twitter 更能反應真實採用度。
 
-<img src="/ai-lecturer-bob/images/blog/hermes-agent-academic/openrouter-model-rankings.png" alt="OpenRouter AI Model Rankings,顯示 Hy3 preview、Claude Opus 4.7、Claude Sonnet 4.6 等模型排名與市佔走勢" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/hermes-agent-academic/openrouter-model-rankings.png" alt="OpenRouter AI Model Rankings,顯示 Hy3 preview、Claude Opus 4.7、Claude Sonnet 4.6 等模型排名與市佔走勢" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 兩個榜要分清楚：
 
@@ -118,7 +118,7 @@ OpenRouter 統計反應的是「**我要自己組合**」這個族群的市佔�
 
 ## 🚀 v0.13.0「The Tenacity Release」的訊號
 
-<img src="/ai-lecturer-bob/images/blog/hermes-agent-academic/hermes-v013-release.png" alt="Hermes Agent v0.13.0 (2026.5.7) — The Tenacity Release 的 GitHub release 頁面,128.5k 行新增、282 個 contributors、滿滿一頁 Highlights" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/hermes-agent-academic/hermes-v013-release.png" alt="Hermes Agent v0.13.0 (2026.5.7) — The Tenacity Release 的 GitHub release 頁面,128.5k 行新增、282 個 contributors、滿滿一頁 Highlights" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 v0.13.0 (2026.5.7) 是個密度極高的 release——**128.5k 行新增、282 contributors**。隨便挑幾條 Highlights：
 
@@ -158,7 +158,7 @@ Hermes 的 architecture 直接示範了**怎麼把 provider 變插槽**。值得
 
 ### 1. Silent fail 折磨人
 
-Hermes 跑 OpenAI SDK strict 模式，response 格式錯一個小欄位（缺 `usage` / 缺 `/v1/models` / stream 格式不對）就 silent drop——**exit 0、stdout 空白、沒 log**。debug 極端痛苦。詳細踩坑見[實作篇](/ai-lecturer-bob/blog/hermes-agent-mac-install/)。
+Hermes 跑 OpenAI SDK strict 模式，response 格式錯一個小欄位（缺 `usage` / 缺 `/v1/models` / stream 格式不對）就 silent drop——**exit 0、stdout 空白、沒 log**。debug 極端痛苦。詳細踩坑見[實作篇](/blog/hermes-agent-mac-install/)。
 
 ### 2. 文件落後 release 太多
 
@@ -175,4 +175,4 @@ Hermes 把 customization 拉到極致——你可以寫 skill、寫 MCP server�
 - [OpenRouter App & Agent Rankings](https://openrouter.ai/rankings)
 - [OpenRouter Model Rankings](https://openrouter.ai/rankings/models)
 - [NousResearch 官方網站](https://nousresearch.com/)
-- 姊妹實作篇：[從 0 在 Mac 上裝 Hermes Agent 接內網 LLM](/ai-lecturer-bob/blog/hermes-agent-mac-install/)
+- 姊妹實作篇：[從 0 在 Mac 上裝 Hermes Agent 接內網 LLM](/blog/hermes-agent-mac-install/)

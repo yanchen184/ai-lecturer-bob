@@ -45,7 +45,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   </g>
 
   <!-- Bottom-right corner: site URL -->
-  <text x="1080" y="560" text-anchor="end" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="16" fill="#666">yanchen184.github.io/ai-lecturer-bob</text>
+  <text x="1080" y="560" text-anchor="end" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="16" fill="#666">yanchen.app</text>
 </svg>`;
 
 const resvg = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } });

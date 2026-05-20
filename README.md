@@ -4,7 +4,7 @@
 
 **把 AI 真的接到公司系統的講師 — 內訓現場的範例,就是我自己 production 系統的同一段 code。**
 
-[![Visit Site](https://img.shields.io/badge/🌐_yanchen184.github.io/ai--lecturer--bob-FACC15?style=for-the-badge&labelColor=000000)](https://yanchen184.github.io/ai-lecturer-bob/)
+[![Visit Site](https://img.shields.io/badge/🌐_yanchen184.github.io/ai--lecturer--bob-FACC15?style=for-the-badge&labelColor=000000)](https://yanchen.app/)
 [![Email](https://img.shields.io/badge/📧_bobchen184@gmail.com-000000?style=for-the-badge)](mailto:bobchen184@gmail.com)
 
 </div>
@@ -27,8 +27,8 @@
 
 | 主線 | 內容 | 對應頁面 |
 |---|---|---|
-| 🧠 **AI 工程實踐** | Claude Code、AI Agent、AI 工作流,我自己 production 在用的同一套 | [`/blog`](https://yanchen184.github.io/ai-lecturer-bob/blog) |
-| ☸️ **Kubernetes 教學系列** | 40 篇 SEO 系列文,每日自動上線一篇 | [`/blog/k8s`](https://yanchen184.github.io/ai-lecturer-bob/blog/k8s) |
+| 🧠 **AI 工程實踐** | Claude Code、AI Agent、AI 工作流,我自己 production 在用的同一套 | [`/blog`](https://yanchen.app/blog) |
+| ☸️ **Kubernetes 教學系列** | 40 篇 SEO 系列文,每日自動上線一篇 | [`/blog/k8s`](https://yanchen.app/blog/k8s) |
 
 加上 3 個**真的上線在跑的 AI 顧問實作**(NDA 抽象化):醫療決策輔助、Breeze-ASR-25 語音辨識、會議 RAG。
 

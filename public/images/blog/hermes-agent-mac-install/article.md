@@ -7,14 +7,14 @@
 
 > **📚 Hermes Agent 系列 — 這是第 4 篇 / 共 5 篇**
 >
-> 1. [入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?(新手)
-> 2. [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/) — 5 分鐘公開 API 版(新手)
-> 3. [沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?(新手)
+> 2. [最簡安裝](/blog/hermes-agent-quickstart/) — 5 分鐘公開 API 版(新手)
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
 > 4. **👉 Mac 安裝實戰(你在這)— 接公司內網 LLM(工程師硬版)**
-> 5. [結構分析](/ai-lecturer-bob/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
 >
 > **這篇給誰看**:已經會用 CLI / 看得懂 Python / 手上有內網 OpenAI-compatible wrapper 想接的工程師
-> **完全新手**:先看[入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/) + [最簡安裝](/ai-lecturer-bob/blog/hermes-agent-quickstart/),那兩篇 15 分鐘讓你跑起來 / 不需要寫 proxy
+> **完全新手**:先看[入門篇](/blog/hermes-agent-intro/) + [最簡安裝](/blog/hermes-agent-quickstart/),那兩篇 15 分鐘讓你跑起來 / 不需要寫 proxy
 
 我手上有一台跑著 **MediaTek-Research/Llama-Breeze2-8B-Instruct** 的內網機器（`http://<INTERNAL_LLM_HOST>:<PORT>`），公司另一個同事寫了 OpenAI-compatible wrapper 暴露 `/v1/chat/completions`。理論上，**任何吃 OpenAI API 的 client 都能直接接**。
 
@@ -26,7 +26,7 @@
 
 這篇是我從 0 把它裝起來、發現問題、寫 proxy 補洞、最後跑通的完整紀錄。如果你也想接「**不是 OpenAI 也不是 Anthropic、但號稱 OpenAI-compatible**」的後端，這篇省你兩天。
 
-<img src="/ai-lecturer-bob/images/blog/hermes-agent-mac-install/hermes-github-repo.png" alt="NousResearch/hermes-agent GitHub repo 主頁，6k stars、24k forks、1.5k contributors、Python 為主" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/hermes-agent-mac-install/hermes-github-repo.png" alt="NousResearch/hermes-agent GitHub repo 主頁，6k stars、24k forks、1.5k contributors、Python 為主" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 ## 📌 目錄
 
@@ -53,7 +53,7 @@
 - 內建工具：bash、edit、read、search、MCP、screenshot、TTS、agent fork
 - 結構化 session 存在 `~/.hermes/sessions/`，每一輪 message 都是 JSON
 
-<img src="/ai-lecturer-bob/images/blog/hermes-agent-mac-install/hermes-v013-release.png" alt="Hermes Agent v0.13.0 (2026.5.7) — The Tenacity Release 的 GitHub release 頁面，128.5k 行新增、282 個 contributors" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/hermes-agent-mac-install/hermes-v013-release.png" alt="Hermes Agent v0.13.0 (2026.5.7) — The Tenacity Release 的 GitHub release 頁面，128.5k 行新增、282 個 contributors" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 v0.13.0 一次塞進來的東西包括：multi-agent delegation、provider 自動切換、Hermes Voice TTS、affordance editing、Skills v2、Plankton 語意檢查……重點是它**還在加速演化**。
 
@@ -415,7 +415,7 @@ curl -s http://127.0.0.1:8910/health | jq .
 hermes -z "用一句話介紹自己,30 字以內"
 ```
 
-<img src="/ai-lecturer-bob/images/blog/hermes-agent-mac-install/terminal-hermes-running.png" alt="Mac 終端機畫面：先 curl proxy /health 回 Breeze2 model 資訊,接著 hermes -z 跑出 Hermes Agent 的繁中自我介紹" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/hermes-agent-mac-install/terminal-hermes-running.png" alt="Mac 終端機畫面：先 curl proxy /health 回 Breeze2 model 資訊,接著 hermes -z 跑出 Hermes Agent 的繁中自我介紹" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 Breeze2 回了一段繁中自介。**從 silent fail 到正常輸出，差距就是這支 80 行的 proxy。**
 
@@ -473,4 +473,4 @@ LiteLLM 是 Python library 加 server，**它自己也吃 OpenAI strict 協定**
 - [Hermes Agent v0.13.0 Release Notes](https://github.com/NousResearch/hermes-agent/releases/tag/v0.13.0)
 - [Apple Developer — Daemons and Services Programming Guide](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html)
 - [OpenAI API — Chat Completions Reference](https://platform.openai.com/docs/api-reference/chat)
-- 我的學術篇姊妹文：[Hermes Agent 為什麼擠進 OpenRouter 前段班](/ai-lecturer-bob/blog/hermes-agent-academic/)
+- 我的學術篇姊妹文：[Hermes Agent 為什麼擠進 OpenRouter 前段班](/blog/hermes-agent-academic/)

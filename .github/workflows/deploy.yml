@@ -52,8 +52,8 @@ jobs:
           echo "Kroki failed to start"; exit 1
       - run: npm run build
         env:
-          PUBLIC_SITE_URL: https://yanchen184.github.io
-          PUBLIC_BASE: /ai-lecturer-bob
+          PUBLIC_SITE_URL: https://yanchen.app
+          PUBLIC_BASE: /
           KROKI_ENDPOINT: http://localhost:8000
       - uses: actions/upload-pages-artifact@v3
         with:

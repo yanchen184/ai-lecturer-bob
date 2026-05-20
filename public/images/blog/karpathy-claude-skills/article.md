@@ -3,7 +3,7 @@
 > - 推薦給：已經在用 Claude Code、看到中文圈 KOL 推 Karpathy 規則、不確定要不要照搬的工程師
 > - 讀完你會知道：四條規則內容是什麼、跟你既有 rules 重疊多少、哪兩條真的值得抄、為什麼不建議整份裝。
 
-<img src="/ai-lecturer-bob/images/blog/karpathy-claude-skills/github-repo.png" alt="forrestchang/andrej-karpathy-skills GitHub repo 社群預覽 — Karpathy Claude Code skills 108k stars" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/karpathy-claude-skills/github-repo.png" alt="forrestchang/andrej-karpathy-skills GitHub repo 社群預覽 — Karpathy Claude Code skills 108k stars" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 ## 📌 目錄
 

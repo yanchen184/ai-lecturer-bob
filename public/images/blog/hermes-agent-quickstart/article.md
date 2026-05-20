@@ -3,20 +3,20 @@
 > - 三步驟：**裝 uv → 裝 hermes-cli → 給它一把 API key**
 > - 公開 API 三選一：**Anthropic Claude / OpenAI / 本機 Ollama 免費**（推薦 Anthropic，最穩）
 > - 不會碰你內網、不會碰你公司憑證，純粹拿來試水溫看 Hermes 長怎樣
-> - 想接公司內網 LLM（像我接 Breeze2）→ 看 [Mac 安裝實戰篇](/ai-lecturer-bob/blog/hermes-agent-mac-install/)，這篇先學會「能跑」
+> - 想接公司內網 LLM（像我接 Breeze2）→ 看 [Mac 安裝實戰篇](/blog/hermes-agent-mac-install/)，這篇先學會「能跑」
 
 ---
 
 > **📚 Hermes Agent 系列 — 這是第 2 篇 / 共 5 篇**
 >
-> 1. [入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
+> 1. [入門篇](/blog/hermes-agent-intro/) — 這 AI 工具到底在幹嘛?
 > 2. **👉 最簡安裝(你在這)— 5 分鐘把它跑起來**
-> 3. [沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
-> 4. [Mac 安裝實戰](/ai-lecturer-bob/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
-> 5. [結構分析](/ai-lecturer-bob/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
+> 3. [沙盒篇](/blog/hermes-agent-sandbox/) — 怎麼讓它不弄壞電腦
+> 4. [Mac 安裝實戰](/blog/hermes-agent-mac-install/) — 接公司內網 LLM(工程師硬版)
+> 5. [結構分析](/blog/hermes-agent-academic/) — 為什麼它擠進 OpenRouter #2
 >
-> **建議順序**:[入門篇](/ai-lecturer-bob/blog/hermes-agent-intro/)(知道它是什麼)→ 這篇(動手跑)→ [沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/)(玩瘋之前先學保護)
-> **跳過這篇的情境**:你電腦已經有 Python 環境、會自己 pip install,或是直接要接內網 LLM → 跳[實戰篇](/ai-lecturer-bob/blog/hermes-agent-mac-install/)
+> **建議順序**:[入門篇](/blog/hermes-agent-intro/)(知道它是什麼)→ 這篇(動手跑)→ [沙盒篇](/blog/hermes-agent-sandbox/)(玩瘋之前先學保護)
+> **跳過這篇的情境**:你電腦已經有 Python 環境、會自己 pip install,或是直接要接內網 LLM → 跳[實戰篇](/blog/hermes-agent-mac-install/)
 
 ## 📌 這篇要回答的問題
 
@@ -46,7 +46,7 @@
 
 - ❌ 不用懂 Python（uv 會處理）
 - ❌ 不用裝 Anaconda
-- ❌ 不用裝 Docker（這篇沒用沙盒,如果要用看[沙盒篇](/ai-lecturer-bob/blog/hermes-agent-sandbox/)）
+- ❌ 不用裝 Docker（這篇沒用沙盒,如果要用看[沙盒篇](/blog/hermes-agent-sandbox/)）
 - ❌ 不用會用 vim
 - ❌ 不用 GPU、不用付 ChatGPT Plus
 
@@ -247,7 +247,7 @@ hermes
 - 你只是想試試看 → **Anthropic Claude**,5 美金試用額度,玩到底
 - 你已經在用 ChatGPT Plus → 不夠,還是要另外開 API key,直接用 Anthropic
 - 你電腦很猛 + 不想付錢 + 不在乎慢 → **Ollama**
-- 你公司有內網 LLM(像 MediaTek Breeze2 / 自架 vLLM)→ 那是另一個故事,看[實戰篇](/ai-lecturer-bob/blog/hermes-agent-mac-install/)
+- 你公司有內網 LLM(像 MediaTek Breeze2 / 自架 vLLM)→ 那是另一個故事,看[實戰篇](/blog/hermes-agent-mac-install/)
 
 ---
 
@@ -284,10 +284,10 @@ rm -rf ~/.config/hermes ~/.cache/hermes
 
 **接下來可以看的**:
 
-1. **想了解 Hermes 跟一般 AI 對話差在哪、Agent 是什麼概念** → [入門篇:這 AI 工具到底在幹嘛?](/ai-lecturer-bob/blog/hermes-agent-intro/)
-2. **想讓它幫你做事但又怕它把電腦弄壞** → [沙盒篇:7 種隔離環境怎麼選](/ai-lecturer-bob/blog/hermes-agent-sandbox/)
-3. **想接公司內網 LLM(不用 OpenAI / Anthropic)** → [Mac 安裝實戰:接 Breeze2 內網 LLM](/ai-lecturer-bob/blog/hermes-agent-mac-install/)
-4. **想知道為什麼這工具突然紅起來** → [OpenRouter 第 2 名的結構性原因](/ai-lecturer-bob/blog/hermes-agent-academic/)
+1. **想了解 Hermes 跟一般 AI 對話差在哪、Agent 是什麼概念** → [入門篇:這 AI 工具到底在幹嘛?](/blog/hermes-agent-intro/)
+2. **想讓它幫你做事但又怕它把電腦弄壞** → [沙盒篇:7 種隔離環境怎麼選](/blog/hermes-agent-sandbox/)
+3. **想接公司內網 LLM(不用 OpenAI / Anthropic)** → [Mac 安裝實戰:接 Breeze2 內網 LLM](/blog/hermes-agent-mac-install/)
+4. **想知道為什麼這工具突然紅起來** → [OpenRouter 第 2 名的結構性原因](/blog/hermes-agent-academic/)
 
 ---
 
@@ -325,4 +325,4 @@ A:不會。uv 自己管環境,不會碰你系統 Python。`uv tool install` 把 
 
 **寫完了。把這篇放在書籤,下次要重裝、要教朋友、要在新機器上跑,直接照三步驟複製貼上,15 分鐘搞定。**
 
-如果你跑到第 3 步卡住、或想接公司內網不想用公開 API,看[Mac 安裝實戰篇](/ai-lecturer-bob/blog/hermes-agent-mac-install/)有完整的 Breeze2 內網 LLM 對接路徑(那篇給工程師看的、比較硬)。
+如果你跑到第 3 步卡住、或想接公司內網不想用公開 API,看[Mac 安裝實戰篇](/blog/hermes-agent-mac-install/)有完整的 Breeze2 內網 LLM 對接路徑(那篇給工程師看的、比較硬)。
