@@ -26,6 +26,8 @@ interface Props {
   noindex?: boolean;
 }
 
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || '';
+
 const {
   title,
   description,
@@ -85,6 +87,9 @@ const allJsonLd = Array.isArray(jsonLd)
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {googleSiteVerification && (
+      <meta name="google-site-verification" content={googleSiteVerification} />
+    )}
     <link rel="canonical" href={canonicalUrl} />
 
     <meta property="og:type" content="website" />

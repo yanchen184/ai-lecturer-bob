@@ -359,6 +359,98 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'mempalace-3-3-5-claude-p-proxy',
+    title:
+      'MemPalace 3.3.5 救援實錄:HNSW Quarantine、from-sqlite 重建,與一支 claude -p HTTP proxy',
+    excerpt:
+      'chromadb 1.5.x 在 macOS 26.4 ARM64 必 SIGSEGV,所有 mempalace CLI 指令全死、只剩 MCP server 苟活。MemPalace 3.3.5 用兩個機制救回來:HNSW segment quarantine 自動隔離壞索引,repair --mode from-sqlite 從 sqlite3 直接撈 (id, document, metadata) 重灌新 palace。本文記錄完整升級路徑、3.3.5 兩個救命機制原理、外加我寫的 180 行 Python claude-p-openai-proxy.py——把 claude -p CLI 包成 OpenAI 相容 HTTP 端點,讓 mempalace compress 走 Max 訂閱、零 API 成本。',
+    category: 'AI 工具',
+    tags: [
+      'MemPalace',
+      'ChromaDB',
+      'HNSW',
+      'Claude Code',
+      'Anthropic',
+      'RAG',
+      'vector-db',
+      'Python',
+    ],
+    faqItems: [
+      {
+        q: '我也想裝這支 proxy,但我沒 Max 訂閱怎麼辦?',
+        a: '不能用。claude -p 認本機 ~/.claude/ 的訂閱狀態,沒登入會拒跑。OpenAI API key 直連反而簡單,把 proxy 改成轉發給 https://api.openai.com/v1/chat/completions 就好——但這樣就跟直接用 OpenAI 一樣,proxy 沒意義。',
+      },
+      {
+        q: '為什麼不直接讓 mempalace 內建 claude -p 支援?',
+        a: 'mempalace 上游沒義務支援 Anthropic CLI 的怪招,而且這是個人 Max 訂閱情境,不通用。寫成獨立 proxy 反而更乾淨——任何 OpenAI 相容客戶端都能接,mempalace 端只要設 LLM_ENDPOINT 環境變數。',
+      },
+      {
+        q: 'proxy 安全嗎?要不要綁 auth?',
+        a: '我這支只 bind 127.0.0.1,不暴露公網。LAN 內如果其他人能 ssh 到這台,他能直接跑 claude -p,要 proxy 也只是方便他用 HTTP 而已。不要 bind 0.0.0.0——那等於把 Max 訂閱開放給整個 LAN,違反 Anthropic ToS。',
+      },
+      {
+        q: 'HNSW quarantine 會不會把好 segment 也誤判隔離?',
+        a: '看 data_level0.bin 跟 chroma.sqlite3 的 mtime 差距判斷。正常運作下 sqlite3 寫入後 HNSW segment 會接著刷新;差距大代表 segment 上次 flush 失敗。不會誤判正常 segment,但會誤判「palace 長期沒進新 drawer」的情境——這時 sqlite3 不動、segment 也不動,差距趨近 0,正常。問題情境是 sqlite3 動了 segment 沒跟上。',
+      },
+      {
+        q: '升 3.3.5 要做什麼準備?',
+        a: '備份 ~/.mempalace/ 到 .mempalace.bak.<date>/。然後 pip install -U mempalace。MCP server 重啟一次讓它載新版。如果原本卡在 apply_logs 才需要跑 repair --mode from-sqlite --archive-existing,正常的話 quarantine 自動跑、不用手動干預。',
+      },
+      {
+        q: 'claude -p 為什麼會比 OpenAI API 慢這麼多?',
+        a: '兩個原因。第一,claude -p 每次都是冷啟動,要載 Node.js runtime + CLI ~3-5 秒;第二,subprocess.run 走 stdout/stdin pipe,跟 HTTP API 的 keep-alive 沒得比。對批次壓縮無所謂,但要 chat 級互動延遲就不適合,該用 OpenAI / Anthropic API 直連。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'phone-local-llm-pocketpal',
+    title:
+      '手機跑本地 LLM 怎麼裝？iPhone 15 Plus / Android 完整教學（PocketPal AI 安裝、模型選擇、踩坑）',
+    excerpt:
+      '想用手機跑本地 LLM，但不知道要裝什麼 app、能跑多大的模型、能不能進開發工作流？本文拆解 2026 年 5 月最熱門的三個 on-device LLM app（PocketPal AI / LLMFarm / MLC Chat）怎麼選、iPhone 15 Plus 真實能跑哪些模型（1B-2B 是甜蜜點，3B 卡頓、4B+ 跑不動）、PocketPal AI 從 0 開始安裝、5 個踩坑（記憶體爆掉、發燙降頻、context window 太短、token/秒掉到不能用、Apple Intelligence 跟本地 LLM 的關係），最後解釋為什麼「手機算力幫電腦」是死路、什麼情境真的值得在手機跑 LLM。',
+    category: 'AI 工具',
+    tags: [
+      'PocketPal AI',
+      '本地 LLM',
+      'iPhone',
+      'Android',
+      'LLMFarm',
+      'MLC Chat',
+      'Apple Intelligence',
+      'on-device AI',
+      'GGUF',
+      'llama.cpp',
+    ],
+    faqItems: [
+      {
+        q: 'iPhone 15 Plus 真的可以跑 LLM 嗎？跟 iPhone 15 Pro 差多少？',
+        a: 'iPhone 15 Plus 用 A16 Bionic + 6GB RAM，可以跑 1B-2B 量級模型（Qwen2.5 1.5B、Gemma 2 2B、Llama 3.2 1B），3B 會卡頓、4B+ 直接跑不動。iPhone 15 Pro 用 A17 Pro + 8GB RAM，sweet spot 拉高到 3B-4B，而且額外解鎖 Apple Intelligence（內建 ~3B 模型）。差別主要在 RAM 不是 CPU——LLM 推理瓶頸是記憶體頻寬，6GB 跟 8GB 差距比想像中大。',
+      },
+      {
+        q: 'PocketPal / LLMFarm / MLC Chat 我該選哪個？',
+        a: 'iOS 新手 → PocketPal AI（介面最友善、HuggingFace 直接抓、內建 benchmark）。iOS 老玩家想搞 LoRA / 多模態 → LLMFarm（彈性高但介面陽春）。Android 用 Snapdragon 旗艦機（S24 Ultra、Pixel 9 Pro）→ MLC Chat（吃 Hexagon NPU，速度比 llama.cpp CPU 快 2-3 倍）。Android 中階機或非高通晶片 → PocketPal AI。Google AI Edge Gallery 還在測試版、模型選擇少，現階段別碰。',
+      },
+      {
+        q: '能不能讓我的 iPhone 餵算力給電腦用？',
+        a: '理論上可以、實務上沒意義。手機 token/秒（5-8）比電腦慢 10 倍，網路傳輸延遲再加 100-300ms，整體比電腦直接跑 Ollama 慢 15 倍以上，還會把手機電池燒到 60°C 觸發降頻。真要用閒置算力，買台二手 Mac mini M1（NT$15k）24/7 開著跑 Ollama，遠比手機方案實用。手機跑 LLM 的真正價值在「離線」「隱私」「便攜」，不是「算力共享」。',
+      },
+      {
+        q: 'Apple Intelligence 跟 PocketPal 衝突嗎？要選哪個？',
+        a: '不衝突，定位不同。Apple Intelligence 是「系統級隱形 AI」——摘要通知、改寫訊息、Siri 升級，使用者不需要主動「跟 AI 對話」。PocketPal 是「主動式 AI 助手」——你打開 app 跟它聊。Apple Intelligence 限 iPhone 15 Pro 以上（A17 Pro / M1+），iPhone 15 Plus 用不到。如果你是 15 Plus 用戶想要 on-device AI 體驗，PocketPal 是唯一選擇。',
+      },
+      {
+        q: '手機跑 LLM 會不會把電池搞壞？',
+        a: '短期不會、長期有風險。LLM 推理會吃滿 CPU + GPU，連續跑 10 分鐘手機溫度可以飆到 45-50°C 觸發降頻保護。鋰電池長期高溫運作確實會加速老化，但「老化」是 6-12 個月才看得出來的事，偶爾跑 30 分鐘做測試沒問題。日常使用建議：別連續超過 20 分鐘、別邊充電邊跑、夏天注意溫度。',
+      },
+      {
+        q: '什麼情境下手機跑 LLM 真的有用？',
+        a: '三個情境真的值得：(1) 隱私需求重——醫療筆記、敏感對話、客戶資料絕對不能上雲端；(2) 離線環境——出差到飛機上 / 偏遠地區 / 公司內網禁外連，但又需要 AI 幫忙整理筆記；(3) 開發者驗證 on-device 部署可行性——你要做 app 賣給上面兩種人，自己得先跑過。其他情境（日常聊天、寫 code、查資料）老老實實用 ChatGPT / Claude API 划算 10 倍。',
+      },
+    ],
+    featured: true,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length

@@ -1,0 +1,74 @@
+# caption.txt — phone-local-llm-pocketpal
+# 用途：未來貼 IG / Threads / Facebook 直接複製其中一段
+# 文章 URL：https://yanchen184.github.io/ai-lecturer-bob/blog/phone-local-llm-pocketpal/
+
+═══════════════════════════════════════════
+【版本 A · Threads / X 短版（180 字內）】
+═══════════════════════════════════════════
+
+聽說現在大家都用手機跑 LLM？
+
+實際拿 iPhone 15 Plus 試過給你聽：
+
+✓ 1B-2B 模型可以跑（Qwen2.5 1.5B / Gemma 2 2B）
+✗ 3B 開始卡頓
+✗ 4B+ 直接記憶體爆掉
+
+真實 token/秒：5-8。
+跟 ChatGPT API 比慢 10 倍。
+
+那為什麼還要跑？
+隱私、離線、開發者驗證 on-device 可行性。
+日常聊天還是乖乖用 ChatGPT。
+
+完整教學（PocketPal AI 安裝、模型選擇、5 個踩坑）👇
+https://yanchen184.github.io/ai-lecturer-bob/blog/phone-local-llm-pocketpal/
+
+═══════════════════════════════════════════
+【版本 B · IG / FB 中版（300-400 字）】
+═══════════════════════════════════════════
+
+【手機跑本地 LLM 完整實測】
+
+最近一直被問：「手機真的可以跑 AI 嗎？」
+
+實際拿 iPhone 15 Plus 試了兩週，講人話：
+
+📱 能跑的模型範圍
+- 1B-2B：流暢（Llama 3.2 1B、Qwen2.5 1.5B、Gemma 2 2B）
+- 3B：卡頓但可用
+- 4B+：直接跑不動
+
+⚡ 真實速度
+- Qwen2.5 1.5B：12-15 tok/s（讀得出來）
+- Gemma 2 2B：6-8 tok/s（聊天勉強）
+- Llama 3.2 3B：3-5 tok/s（不能用）
+
+🔥 5 個踩坑
+1. RAM 6GB 是硬天花板（15 Pro 才 8GB）
+2. 連續跑 10 分鐘手機 50°C 開始降頻
+3. context window 預設只有 2048 token
+4. 邊充電邊跑速度反而變慢
+5. Apple Intelligence ≠ PocketPal（不衝突）
+
+🎯 三個情境真的值得裝
+- 隱私需求重（醫療、敏感對話）
+- 離線環境（飛機、偏遠、公司內網）
+- 開發者驗證 on-device 部署可行性
+
+日常聊天？老實用 ChatGPT，便宜 10 倍 🤷
+
+完整教學、模型推薦、PocketPal AI 從 0 安裝 👇
+https://yanchen184.github.io/ai-lecturer-bob/blog/phone-local-llm-pocketpal/
+
+#本地LLM #PocketPalAI #onDeviceAI #iPhone #AI工具 #職訓局講師
+
+═══════════════════════════════════════════
+【版本 C · 部落格分享留言（80 字）】
+═══════════════════════════════════════════
+
+新文章：手機跑本地 LLM 完整教學。
+
+iPhone 15 Plus 真實能跑哪些模型、PocketPal AI 怎麼裝、5 個踩坑、為什麼「手機算力幫電腦」是死路。
+
+https://yanchen184.github.io/ai-lecturer-bob/blog/phone-local-llm-pocketpal/

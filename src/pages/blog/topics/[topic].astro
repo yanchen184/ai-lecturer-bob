@@ -1,0 +1,230 @@
+---
+/**
+ * /blog/topics/[topic] — SEO keyword landing page
+ *
+ * 針對長尾關鍵字（手機本地 LLM / LLM Wiki / MemPalace）建立的聚合頁。
+ * 結構：H1 + intro + 相關文章列表 + FAQ schema。
+ * 目的：給 Google 看到「這站有 X 主題的入口頁 + 多篇相關文章」判定主題權威。
+ */
+import RootLayout from '../../../layouts/RootLayout.astro';
+import NavbarNeub from '../../../components/NavbarNeub.astro';
+import FooterNeub from '../../../components/FooterNeub.astro';
+import BlogCardListItem from '../../../components/BlogCardListItem.astro';
+import { getAllPublishedPosts, getViewsMap, type BlogPost } from '../../../lib/firestore';
+import { topics, findTopic } from '../../../lib/topics';
+import { withBase } from '../../../lib/url';
+
+export async function getStaticPaths() {
+  return topics.map((t) => ({ params: { topic: t.slug } }));
+}
+
+const { topic: topicSlug } = Astro.params;
+const topic = findTopic(topicSlug!);
+
+if (!topic) {
+  return Astro.redirect(withBase('/blog'));
+}
+
+const allPosts = await getAllPublishedPosts();
+const viewsMap = await getViewsMap();
+
+const tagSet = new Set(topic.tagMatchers);
+const slugSet = new Set(topic.articleSlugs);
+
+const matched = allPosts
+  .filter((p) => slugSet.has(p.slug) || p.tags.some((t) => tagSet.has(t)))
+  .sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+
+const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const absoluteUrl = (p: string) => `${siteOrigin}${withBase(p)}`;
+const pageUrl = absoluteUrl(`/blog/topics/${topic.slug}`);
+const homeUrl = absoluteUrl('/');
+const blogUrl = absoluteUrl('/blog');
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: topic.title,
+  description: topic.metaDescription,
+  url: pageUrl,
+  inLanguage: 'zh-Hant',
+  about: topic.keywords,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: matched.slice(0, 10).map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: absoluteUrl(`/blog/${p.slug}`),
+      name: p.title,
+    })),
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首頁', item: homeUrl },
+    { '@type': 'ListItem', position: 2, name: '部落格', item: blogUrl },
+    { '@type': 'ListItem', position: 3, name: topic.title, item: pageUrl },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: topic.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+
+const jsonLdSchemas = [collectionSchema, breadcrumbSchema, faqSchema];
+
+const renderInline = (md: string): string =>
+  md
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="underline decoration-2 underline-offset-2 hover:bg-[#ffff00]">$1</a>')
+    .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 bg-black/5 border border-black/20 font-mono text-sm">$1</code>');
+---
+
+<RootLayout
+  title={topic.metaTitle}
+  description={topic.metaDescription}
+  canonical={`/blog/topics/${topic.slug}`}
+  jsonLd={jsonLdSchemas}
+>
+  <NavbarNeub />
+
+  <main class="font-sans text-[#0a0a0a]">
+    <!-- Breadcrumb -->
+    <nav
+      class="px-6 md:px-10 py-3 border-b-2 border-black text-xs uppercase tracking-widest font-mono"
+      aria-label="breadcrumb"
+    >
+      <div class="max-w-5xl mx-auto flex items-center gap-2 opacity-70">
+        <a href={withBase('/')} class="hover:bg-[#ffff00] px-1">home</a>
+        <span>/</span>
+        <a href={withBase('/blog')} class="hover:bg-[#ffff00] px-1">blog</a>
+        <span>/</span>
+        <a href={withBase('/blog/topics')} class="hover:bg-[#ffff00] px-1">topics</a>
+        <span>/</span>
+        <span class="font-black opacity-100">{topic.title}</span>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="px-6 md:px-10 py-12 border-b-2 border-black bg-white">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-xs uppercase tracking-widest font-mono opacity-60 mb-3">
+          Topic Hub · SEO Landing
+        </div>
+        <h1 class="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-6">
+          {topic.h1}
+        </h1>
+        <p
+          class="text-base md:text-lg leading-relaxed opacity-80 max-w-3xl"
+          set:html={renderInline(topic.heroParagraph)}
+        />
+
+        <div class="mt-6 flex flex-wrap gap-2 font-mono">
+          {topic.keywords.slice(0, 6).map((k) => (
+            <span class="text-xs border-2 border-black px-2.5 py-1 leading-none bg-[#ffff00]">
+              #{k}
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <!-- Intro -->
+    <section class="px-6 md:px-10 py-12 border-b-2 border-black bg-white">
+      <div class="max-w-3xl mx-auto space-y-5">
+        <h2 class="text-xs uppercase tracking-widest font-mono font-black opacity-60 mb-4">
+          📌 主題介紹
+        </h2>
+        {topic.intro.map((paragraph) => (
+          <p
+            class="text-base md:text-lg leading-relaxed"
+            set:html={renderInline(paragraph)}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Related articles -->
+    <section class="px-6 md:px-10 py-12 border-b-2 border-black">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex items-baseline justify-between mb-8">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            相關文章 · {matched.length} 篇
+          </h2>
+          <a
+            href={withBase('/blog')}
+            class="text-xs uppercase tracking-widest font-mono hover:bg-[#ffff00] px-2 py-1"
+          >
+            看全部 →
+          </a>
+        </div>
+
+        {matched.length > 0 ? (
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {matched.map((post: BlogPost) => (
+              <BlogCardListItem post={post} views={viewsMap[post.slug]} />
+            ))}
+          </div>
+        ) : (
+          <p class="opacity-60 italic">這個主題還在累積中，敬請期待。</p>
+        )}
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-6 md:px-10 py-12 border-b-2 border-black bg-white">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight mb-8">
+          ❓ 常見問題
+        </h2>
+        <div class="space-y-6">
+          {topic.faq.map((item) => (
+            <details class="border-2 border-black bg-white">
+              <summary class="cursor-pointer list-none px-4 py-3 font-black flex items-center justify-between hover:bg-[#ffff00]">
+                <span>{item.q}</span>
+                <span aria-hidden="true">▾</span>
+              </summary>
+              <div
+                class="px-4 py-4 border-t-2 border-black leading-relaxed"
+                set:html={renderInline(item.a)}
+              />
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Other topics -->
+    <section class="px-6 md:px-10 py-12 bg-white">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-xs uppercase tracking-widest font-mono font-black opacity-60 mb-6">
+          其他主題
+        </h2>
+        <div class="grid gap-4 md:grid-cols-3">
+          {topics
+            .filter((t) => t.slug !== topic.slug)
+            .map((t) => (
+              <a
+                href={withBase(`/blog/topics/${t.slug}`)}
+                class="block border-2 border-black p-5 hover:bg-[#ffff00] hover:-translate-x-1 hover:-translate-y-1 hover:[box-shadow:4px_4px_0_#0a0a0a] transition-all"
+              >
+                <div class="font-black text-lg mb-2">{t.title}</div>
+                <div class="text-xs opacity-70 line-clamp-2">{t.metaDescription}</div>
+              </a>
+            ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <FooterNeub />
+</RootLayout>
