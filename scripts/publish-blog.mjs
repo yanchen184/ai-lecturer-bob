@@ -310,6 +310,55 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'karpathy-llm-wiki',
+    title:
+      'Karpathy 的 LLM Wiki 到底在紅什麼?跑兩週實測+踩坑',
+    excerpt:
+      '2026 年 4 月 Karpathy 在 gist 丟了一份 200 行 markdown,一週後全網炸開、12 個社群 implementation。一句話講:讓 LLM 把你丟的所有資料「編譯」成一個結構化的 markdown 知識庫,以後問問題不查原始檔、查這個被整理過的 wiki。本文拆解 RAG vs LLM Wiki 的編譯式/解釋式之差、三層架構、30 分鐘上手路徑、我把 7 場教學逐字稿 + 200 則 Discord QA 丟進去跑兩週的實測(token 降 87%)、5 個踩坑、什麼情境裝了反而是負擔。',
+    category: 'AI 工具',
+    tags: [
+      'LLM Wiki',
+      'Karpathy',
+      'Claude Code',
+      'RAG',
+      '知識管理',
+      'AI 工作流',
+      'Obsidian',
+      'AI 工具',
+    ],
+    faqItems: [
+      {
+        q: '這跟 Notion AI / Mem.ai / Reflect 那種 AI 筆記工具有什麼不同?',
+        a: 'Notion AI 那批是「在你既有筆記裡加 AI 查詢入口」,本質還是 RAG——你寫的筆記是 source,AI 是 reader。LLM Wiki 是「AI 自己生成筆記、自己維護」,你的 source 跟 AI 的 wiki 是兩層。差別在 wiki 是 AI 為了 AI 自己以後查詢方便而寫的——結構是給 AI 看的(frontmatter、wikilink、confidence rating),不是給人看的(雖然人也看得懂)。',
+      },
+      {
+        q: '為什麼還要 markdown?直接存 SQL / vector DB 不就好了?',
+        a: 'Karpathy 原文有解釋:markdown 是 LLM 最熟的格式。LLM 看 markdown 像人看母語,寫也最自然。用結構化 schema(JSON / SQL)會花時間在 schema migration、欄位設計,不是知識本身。更實際的理由:markdown 可以丟 Obsidian / Logseq / grep,完全 tool-agnostic、永遠不會被綁定、git diff 看得懂。',
+      },
+      {
+        q: 'wiki 會不會被 LLM hallucination 污染?',
+        a: '會,這是這方案最大的風險。解法:第一,frontmatter 寫 sources 連回原始檔,人類抽查時順著查;第二,confidence rating LLM 對自己 hallucinate 出來的東西通常會給 low;第三,定期跑 lint-wiki 找 broken link、孤兒頁、矛盾;第四,重要 claim 你親眼讀過 source 再放心用。LLM Wiki 不是「自動產生可信知識庫」,是「自動產生一個你可以快速 audit 的草稿知識庫」,心態調對才不會出包。',
+      },
+      {
+        q: '可以多人共用嗎?',
+        a: '技術上可以(wiki/ 跟 sources/ 放 git repo),但實務上很痛。兩個人同時 ingest 會 race condition、schema 偏好不同會打架、commit conflict 在 markdown 上難 resolve。要團隊用,指定一個 wiki librarian 統一負責 ingest、其他人 read-only。或者每人各自一個 wiki,定期跨 wiki synthesis(這還是 alpha 階段)。',
+      },
+      {
+        q: 'token 真的會降 95% 嗎?哪些情境會降、哪些不會?',
+        a: 'MindStudio 案例降 95%(383 檔案 + 100 場逐字稿),我自己案例降 87%。會降的關鍵在 query 階段不再餵原始 chunk,只餵被編譯過的結論頁。會降很多的情境:資料量大(>50 份)、問題偏綜合 / 模糊;降幅小的情境:資料量小、問題偏字面查詢(因為 retrieval-based RAG 本來就準)。前期 ingest 階段反而比 RAG 燒 token,投資回收期看你用多兇。',
+      },
+      {
+        q: '什麼情境別裝 LLM Wiki?',
+        a: '資料量小於 20 份(沒到甜蜜點,Obsidian + 全文搜尋更快);資料常變(新聞、Twitter feed 每次 ingest 都要寫 contradiction block,維護成本爆炸);你只是要「問檔案內容」(NotebookLM / Cursor docs 直接餵原檔答得很好);你不打算動 schema(LLM Wiki 80% 價值在你願意調 CLAUDE.md);公司資料合規不能丟 Claude API(編譯階段要餵 LLM,合規問題要先解)。',
+      },
+      {
+        q: 'Karpathy 自己現在還在維護嗎?有 canonical implementation 嗎?',
+        a: '到 2026 年 5 月為止 gist 本體沒再更新。但社群 fork 持續迭代——sdyckjq-lab、vanillaflava、kfchou、6eanut 四家活躍度最高,各自有 schema 變種。Karpathy 在 Twitter 多次轉發實作版,但沒指定官方分支。目前社群驅動,沒有 canonical implementation。新手建議從 6eanut/llm-wiki 開始(最貼近原文)。',
+      },
+    ],
+    featured: true,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length

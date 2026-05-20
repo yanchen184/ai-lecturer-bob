@@ -1,0 +1,37 @@
+🧠 Karpathy 的 LLM Wiki 到底在紅什麼?跑兩週實測。
+
+2026 年 4 月,Karpathy 在 gist 丟了一份 200 行 markdown 叫 llm-wiki.md,沒 repo、沒 demo,一週後全網炸開。
+到 5 月已經 12 個以上社群 implementation,Claude Code 官方列進推薦 skill 範例。
+
+一句話:讓 LLM 把你丟的所有資料,增量編譯成一個結構化、互相連結的 markdown 知識庫。
+跟 RAG 的差別 = 編譯式 vs 解釋式語言。
+RAG 每次查詢從零拼湊,LLM Wiki 一次拼好、之後反覆查。
+
+我把 7 場 Claude Code / Hermes 課的逐字稿 + 200 則學員 Discord + 反省筆記丟進去跑兩週,token 用量降 87%(MindStudio 案例降 95%)。
+
+更重要的不是省 token:
+Claude 看到的是「已經被精煉過的結論」,不是「未經整理的 chunk」。
+我問「半年新手共同卡點是什麼」,3 分鐘吐結構化答案,連我哪堂改過教法都列出來。
+
+三層架構:
+sources/(你的原檔,你管)
+wiki/(LLM 編譯的 markdown,LLM 管)
+CLAUDE.md(schema,規則書)
+
+5 個踩坑:
+❌ 第一份 ingest 太貪心 → context 爆掉、頁全是 stub
+❌ schema 一開始定不下來 → 要叫 Claude 跑一次 migration
+❌ Claude 偷懶不開新頁 → schema 要寫死「2 個 source 引用 → 必開頁」
+❌ wiki 跟 sources 不同步 → 永遠別手改 wiki
+❌ 跨 harness 風格漂移 → 選一個當主 LLM、其他當 reader
+
+什麼情境別裝:
+🚫 資料 <20 份 → Obsidian + 全文搜尋就夠
+🚫 資料常變 → 維護成本爆炸
+🚫 你不打算動 schema → 用 NotebookLM
+
+文章拆解三層架構、30 分鐘上手路徑、跟 RAG / Obsidian 三方對照表、6 個常見問題、12 個社群實作 repo 對比。
+
+連結 ⬇️
+
+#ClaudeCode #LLMWiki #Karpathy #AI工具 #RAG #知識管理 #AIAgent #工程師日常
