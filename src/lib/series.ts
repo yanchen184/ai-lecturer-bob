@@ -9,7 +9,7 @@
  */
 import type { BlogPost } from './firestore';
 
-export interface SeriesMeta {
+interface SeriesMeta {
   /** 短代號，URL/anchor 用 */
   key: string;
   /** 顯示名稱 */
@@ -42,7 +42,7 @@ export interface SeriesMeta {
  *
  * 順序 = 列表頁顯示順序。新系列要露出就加在這。
  */
-export const seriesList: SeriesMeta[] = [
+const seriesList: SeriesMeta[] = [
   {
     key: 'hermes',
     label: 'Hermes Agent 入門',

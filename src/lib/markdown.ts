@@ -6,7 +6,6 @@
  * - 無互動（copy 按鈕等）改交給 client island
  * - 純函式，可在 Astro frontmatter 呼叫
  */
-
 import pako from 'pako';
 
 /**
@@ -46,7 +45,7 @@ function encodeKrokiPath(source: string): string {
   return b64.replace(/\+/g, '-').replace(/\//g, '_');
 }
 
-export function buildKrokiUrl(
+function buildKrokiUrl(
   type: string,
   source: string,
   format: 'svg' | 'png' = 'svg',
@@ -68,7 +67,7 @@ const escapeHtml = (s: string): string =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-export interface TocItem {
+interface TocItem {
   id: string;
   text: string;
 }
@@ -79,7 +78,7 @@ export interface RenderedMarkdown {
 }
 
 /** 從 content 解析出所有 `##` 標題的 TOC。 */
-export function extractToc(content: string): TocItem[] {
+function extractToc(content: string): TocItem[] {
   const items: TocItem[] = [];
   const used = new Set<string>();
   const regex = /^## (.+)$/gm;

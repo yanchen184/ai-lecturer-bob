@@ -36,7 +36,7 @@ const POSTS_COLLECTION = 'bob_blog_posts';
  * 部落格文章（build-time 靜態資料結構）
  * 對齊舊專案的 BlogPost + FirestorePost 欄位。
  */
-export interface FaqItem {
+interface FaqItem {
   q: string;
   a: string;
 }
@@ -187,11 +187,6 @@ function withCoverImages(posts: BlogPost[]): BlogPost[] {
     ...p,
     coverImage: p.coverImage ?? detectCoverImage(p.slug),
   }));
-}
-
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const all = await getAllPublishedPosts();
-  return all.find((p) => p.slug === slug) ?? null;
 }
 
 /**

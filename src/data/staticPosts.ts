@@ -683,24 +683,3 @@ public void onOrderCreated(OrderCreatedEvent event) {
     featured: true,
   },
 ];
-
-export const getBlogPostBySlug = (slug: string): BlogPost | undefined => {
-  return blogPosts.find((post) => post.slug === slug);
-};
-
-export const getFeaturedPosts = (): BlogPost[] => {
-  return blogPosts.filter((post) => post.featured);
-};
-
-export const getPostsByCategory = (category: string): BlogPost[] => {
-  return blogPosts.filter((post) => post.category === category);
-};
-
-export const getAllCategories = (): string[] => {
-  return [...new Set(blogPosts.map((post) => post.category))];
-};
-
-export const getAllTags = (): string[] => {
-  const allTags = blogPosts.flatMap((post) => post.tags);
-  return [...new Set(allTags)];
-};

@@ -73,22 +73,6 @@ export function getAllK8sLessons(): K8sLesson[] {
     .sort((a, b) => a.order - b.order);
 }
 
-/** 全部文章（含草稿、未來排程）。給管理工具用，不要在前台 SSR 用。 */
-export function getAllK8sLessonsIncludingDrafts(): K8sLesson[] {
-  return [...k8sLessons].sort((a, b) => a.order - b.order);
-}
-
-export function getK8sLessonBySlug(slug: string): K8sLesson | null {
-  const today = getToday();
-  const lesson = k8sLessons.find((l) => l.slug === slug);
-  if (!lesson || !isPublished(lesson, today)) return null;
-  return lesson;
-}
-
-export function getK8sLessonsByGroup(group: K8sLesson['group']): K8sLesson[] {
-  return getAllK8sLessons().filter((l) => l.group === group);
-}
-
 /** 取得上一篇 / 下一篇（按 order，僅限已發布） */
 export function getAdjacentLessons(slug: string): {
   prev: K8sLesson | null;
@@ -101,35 +85,4 @@ export function getAdjacentLessons(slug: string): {
     prev: idx > 0 ? all[idx - 1]! : null,
     next: idx < all.length - 1 ? all[idx + 1]! : null,
   };
-}
-
-/** 排程預覽：列出全部文章及狀態（已發布 / 排程中 / 草稿）。CLI 工具用。 */
-export interface ScheduleEntry {
-  slug: string;
-  title: string;
-  publishDate: string;
-  status: 'published' | 'scheduled' | 'draft';
-  daysFromToday: number;
-}
-
-export function getSchedule(): ScheduleEntry[] {
-  const today = getToday();
-  const todayMs = new Date(today).getTime();
-  return [...k8sLessons]
-    .sort((a, b) => a.publishDate.localeCompare(b.publishDate))
-    .map((l): ScheduleEntry => {
-      const dateMs = new Date(l.publishDate).getTime();
-      const daysFromToday = Math.round((dateMs - todayMs) / 86_400_000);
-      let status: ScheduleEntry['status'];
-      if (l.draft) status = 'draft';
-      else if (l.publishDate <= today) status = 'published';
-      else status = 'scheduled';
-      return {
-        slug: l.slug,
-        title: l.title,
-        publishDate: l.publishDate,
-        status,
-        daysFromToday,
-      };
-    });
 }
