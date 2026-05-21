@@ -33,3 +33,8 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# ad-hoc one-off publishing scripts (contain API key, not for repo)
+scripts/publish-powerup.mjs
+scripts/update-powerup.mjs
+tmp-blog-content.md
