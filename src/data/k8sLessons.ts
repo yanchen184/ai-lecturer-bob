@@ -6569,6 +6569,9 @@ readinessProbe:
 
 下一篇：[Resource Limits 與 OOMKilled — 怎麼防止單一 Pod 拖垮整個 Node](/blog/k8s/resource-limits-qos-oomkilled)
 
+> 📅 **下一篇**：[Resource Limits 與 OOMKilled:怎麼防止單一 Pod 拖垮整個 Node](/blog/k8s/resource-limits-qos-oomkilled)
+> requests / limits 兩個欄位設好,Pod 互不打架——順便看 K8s QoS 三層級。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -6762,6 +6765,9 @@ kubectl describe pod oom-demo-xxx
 雙 11 流量 10 倍，固定 3 個 Pod 撐不住——**該自動擴容了**。
 
 下一篇：[HPA 自動擴縮 — K8s 怎麼根據 CPU 自動加 Pod](/blog/k8s/hpa-autoscale-loadtest)
+
+> 📅 **下一篇**：[HPA 自動擴縮:K8s 怎麼根據 CPU 自動加 Pod](/blog/k8s/hpa-autoscale-loadtest)
+> 流量爆漲手動擴容來不及——HPA 看著 CPU/Memory 自動加 Pod,還配壓測實測。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -6979,6 +6985,9 @@ kubectl describe hpa api-hpa   # 看 events 區塊找原因
 實習生不小心 \\\`kubectl delete deployment\\\`，整個服務就沒了。**該管權限了**。
 
 下一篇：[RBAC — 讓只讀帳號真的只能讀](/blog/k8s/rbac-readonly-user)
+
+> 📅 **下一篇**：[RBAC:讓只讀帳號真的只能讀](/blog/k8s/rbac-readonly-user)
+> Role / RoleBinding / ServiceAccount 三件套——實作一個「只能 get/list,不能 delete」的帳號。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -7218,6 +7227,9 @@ kubectl create clusterrolebinding alice-view \\\\
 
 下一篇：[NetworkPolicy — 讓 Pod 之間有防火牆](/blog/k8s/networkpolicy-intro)
 
+> 📅 **下一篇**：[NetworkPolicy:讓 Pod 之間有防火牆](/blog/k8s/networkpolicy-intro)
+> 預設 Pod 全通——這篇教你怎麼把生產/開發切開,前端不能直連 DB。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -7414,6 +7426,9 @@ NetworkPolicy 是 **規範**，但實際執行靠 CNI 外掛：
 到目前為止，你學了 K8s 八大概念加上生產維運的 5 個技巧。但是**全部串起來呢？**
 
 下一篇開始 2 篇實戰：[從零部署一套完整服務（上）— 12 步流程的前 6 步](/blog/k8s/deploy-from-zero-12-steps-upper)
+
+> 📅 **下一篇**：[從零部署一套完整服務(上)— 12 步流程的前 6 步](/blog/k8s/deploy-from-zero-12-steps-upper)
+> 把這 40 篇學的全部串起來——前端 + 後端 + DB 完整微服務,12 步從零到生產級。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -7765,6 +7780,9 @@ kubectl get pods -n prod -l app=frontend
 
 下一篇：[從零部署完整系統（下）— 後 6 步：Service + Ingress + NetworkPolicy + HPA](/blog/k8s/deploy-from-zero-12-steps-lower)
 
+> 📅 **下一篇**：[從零部署完整系統(下)— 後 6 步:Service + Ingress + NetworkPolicy + HPA](/blog/k8s/deploy-from-zero-12-steps-lower)
+> 接著上一篇,把 Service/Ingress/NetworkPolicy/HPA/RBAC 補完——12 步真正跑完一輪。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -8110,6 +8128,9 @@ kubectl delete namespace prod
 
 下一篇：[壓測 + 故障模擬 — 你的系統真的撐得住嗎？](/blog/k8s/deploy-loadtest-failure-sim)
 
+> 📅 **下一篇**：[壓測 + 故障模擬:你的系統真的撐得住嗎？](/blog/k8s/deploy-loadtest-failure-sim)
+> hey 打壓測 + 模擬節點掛掉、Pod 被殺——驗證 HPA / probe / rolling update 真的工作。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -8341,6 +8362,9 @@ hey -z 30s -c 100 http://myapp.local/api/shorten -m POST -d '{"url":"https://x"}
 到這裡，你已經會做完整的生產級部署、會壓測、會故障演練——**這就是「生產就緒」的標準了**。
 
 接下來是 Group 6 的速查表，這 3 篇是隨手查的工具：[kubectl 速查表](/blog/k8s/kubectl-cheatsheet) → [YAML 範本速查表](/blog/k8s/k8s-yaml-cheatsheet) → [學習 Roadmap](/blog/k8s/k8s-learning-roadmap)
+
+> 📅 **下一篇**：[kubectl 指令速查表:50 個最常用指令](/blog/k8s/kubectl-cheatsheet)
+> 從這篇開始進速查表階段——50 個最常用指令一頁查完,工作上書籤頁等級的工具。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -8575,6 +8599,9 @@ source <(kubectl completion zsh)
 ## 下一步
 
 指令會了，但**寫 YAML 的時候還是會卡住**？下一篇給你 8 大資源的完整 YAML 模板：[K8s YAML 範例大全](/blog/k8s/k8s-yaml-cheatsheet)
+
+> 📅 **下一篇**：[K8s YAML 範例大全:8 大資源完整模板](/blog/k8s/k8s-yaml-cheatsheet)
+> 8 個常用資源每個一份完整範本——複製貼上即用,不用從零開始想欄位。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -9004,6 +9031,9 @@ spec:
 ## 下一步
 
 到這裡你已經有完整的 K8s 知識+查表能力了。最後一篇：[K8s 學習路線圖 — 從零到生產就緒](/blog/k8s/k8s-learning-roadmap)，告訴你接下來該往哪走。
+
+> 📅 **最後一篇**：[K8s 學習路線圖:從零到生產就緒](/blog/k8s/k8s-learning-roadmap)
+> 系列收尾——這 40 篇學完之後,該往 CKAD / 服務網格 / Operator 哪個方向走?
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
