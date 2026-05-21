@@ -1860,6 +1860,9 @@ kubectl logs crash-pod --previous
 
 排錯會了，但有些容器**故意要兩個一起跑** — 比如 nginx 寫日誌、旁邊放個小工具讀日誌轉發出去。下一篇講[多容器 Pod 與 Sidecar 模式](/blog/k8s/sidecar-pattern)：什麼時候要把容器塞同一個 Pod、什麼時候該拆開。
 
+> 📅 **下一篇**：[多容器 Pod 與 Sidecar 模式](/blog/k8s/sidecar-pattern)
+> 「一個 Pod 跑兩個容器」什麼時候對、什麼時候錯——Sidecar 是 K8s 最常被誤用的設計。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -2035,6 +2038,9 @@ kubectl logs sidecar-pod -c log-reader
 ## 下一步
 
 到這裡你會單一 Pod、會多容器 Pod、會排錯。但 \`kubectl\` 其實還有很多進階技巧 — 下一篇講[kubectl 進階：port-forward、dry-run、--watch](/blog/k8s/kubectl-advanced-tips)，三招會了就跟一般教學程度甩開。
+
+> 📅 **下一篇**：[kubectl 進階:port-forward、dry-run、--watch](/blog/k8s/kubectl-advanced-tips)
+> 三個指令把 kubectl 從「會用」升級到「順手」——debug 跟驗證 YAML 都靠它們。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -2250,6 +2256,9 @@ k get deploy,rs,po
 ## 下一步
 
 \`kubectl run\` 預設不能傳環境變數，但 MySQL 一定要 \`MYSQL_ROOT_PASSWORD\`。下一篇示範[在 K8s 上跑 MySQL：環境變數注入](/blog/k8s/pod-env-mysql)，學會 \`env\` 區塊的三種寫法。
+
+> 📅 **下一篇**：[在 K8s 上跑 MySQL:環境變數注入](/blog/k8s/pod-env-mysql)
+> \`env\` 區塊三種寫法,MySQL 跑起來——這篇學完真正能在 K8s 上跑「需要設定的服務」。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -2489,6 +2498,9 @@ kubectl exec mysql -- env | grep MYSQL
 
 到目前為止你的 Pod 都是「一個人做事」 — Pod 一掛就什麼都沒了。下一篇正式進入 [Deployment 入門](/blog/k8s/deployment-intro)：從一個人做事變成一個團隊做事，刪 Pod 自動補回。
 
+> 📅 **下一篇**：[Deployment 入門:從單一 Pod 升級到多副本+自我修復](/blog/k8s/deployment-intro)
+> Pod 一掛就死光的時代結束——Deployment 帶你進「多副本 + 自動補 Pod」的世界。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -2692,6 +2704,9 @@ Deployment = 一個團隊做事
 
 維持 3 個 Pod 會了，但實際工作中**會用更頻繁的是擴縮容跟更新**。下一篇講[Deployment 擴縮容：從 3 個到 100 個一行搞定](/blog/k8s/deployment-scale)，順便看 K8s 在多節點叢集怎麼自動分散 Pod。
 
+> 📅 **下一篇**：[Deployment 擴縮容:從 3 個到 100 個一行搞定](/blog/k8s/deployment-scale)
+> 流量大了一行擴 10 倍——也順便看 Scheduler 怎麼把 Pod 分散到不同 Node。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -2859,6 +2874,9 @@ kubectl describe deployment my-nginx | grep -A 20 Events
 ## 下一步
 
 副本數會調了，但**版本要更新時怎麼辦**？v1 換 v2 時不能停服務。下一篇講[滾動更新與回滾：零停機部署](/blog/k8s/rolling-update-rollback)，逐步替換的精髓。
+
+> 📅 **下一篇**：[滾動更新與回滾:零停機部署](/blog/k8s/rolling-update-rollback)
+> v1 換 v2 不能停服務——maxSurge / maxUnavailable 兩個參數,搭一鍵 rollback 完整教完。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -3059,6 +3077,9 @@ Docker Compose \`up -d\` 換 Image 就是直接砍舊建新，**有空窗期**�
 ## 下一步
 
 更新會了。但 Deployment 怎麼**找到**自己的 Pod？答案不是 Pod 名字，而是 **labels**。下一篇講[Labels 與自我修復：K8s 怎麼認自己的 Pod](/blog/k8s/self-healing-labels-selector)，把 Day 4-5 的 Deployment 故事收尾。
+
+> 📅 **下一篇**：[Labels 與自我修復:K8s 怎麼認自己的 Pod](/blog/k8s/self-healing-labels-selector)
+> labels + selector 是 K8s 「自我修復」的本體——這篇講完整個 Deployment 故事收尾。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -3276,6 +3297,9 @@ label = K8s 整個世界的關聯機制。掌握 label 就掌握 K8s。
 ## 下一步
 
 Deployment + Pod 的故事告一段落。但**外面怎麼連到 Pod**？Pod IP 隨時會變、Pod 還會被 K8s 搬到別的 Node。下一篇進入 Service 的世界：[ClusterIP：固定 IP 解決 Pod IP 飄忽問題](/blog/k8s/clusterip-service)。
+
+> 📅 **下一篇**：[ClusterIP Service 入門:Pod 之間怎麼互相找到？](/blog/k8s/clusterip-service)
+> Pod IP 會變、Pod 還會搬家——Service 給你一個永不變的虛擬 IP,正式進入 K8s 網路世界。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
