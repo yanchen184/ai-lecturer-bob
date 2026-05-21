@@ -3469,6 +3469,9 @@ kubectl get pods --show-labels
 
 ClusterIP 解決了**叢集內部**的連線。但**外面的使用者**怎麼連？這就要用 [NodePort、LoadBalancer 和三種 Service 的差異](/blog/k8s/nodeport-three-services)。
 
+> 📅 **下一篇**：[NodePort 是什麼？K8s 三種 Service 怎麼選？](/blog/k8s/nodeport-three-services)
+> 把這篇學到的 ClusterIP 升級到「外面也連得到」,順便講清楚 LoadBalancer 跟雲端的關係。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -3690,6 +3693,9 @@ K8s 內部是怎麼把 \`mysql-svc\` 解析成 IP 的？跨 namespace 又怎麼�
 
 下一篇：[K8s DNS 與 Namespace：用名字找服務](/blog/k8s/dns-namespace)。
 
+> 📅 **下一篇**：[K8s DNS 與 Namespace：用名字找服務](/blog/k8s/dns-namespace)
+> CoreDNS 怎麼把 Service 名字變成 IP、跨 namespace 怎麼連——把這篇的網路打通到「**名字**」這層。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -3887,6 +3893,9 @@ Docker Compose 也有用名字找服務的能力，但只在同一個 \`docker n
 到目前為止學的都是「我要 N 個 Pod」。但有些情境是「**每台 Node 都要一個**」（日誌收集 agent、監控 agent），有些是「**每天凌晨備份一次**」（定時任務）。
 
 這就要用 [DaemonSet 與 CronJob](/blog/k8s/daemonset-cronjob)。
+
+> 📅 **下一篇**：[DaemonSet 與 CronJob：每台 Node 跑一個、定時任務怎麼做](/blog/k8s/daemonset-cronjob)
+> Deployment 之外另外兩種 workload——一個解「每台 Node 一份」、一個解「定時跑」。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -4105,6 +4114,9 @@ hello-cron-...              Error       # ← 真的有問題
 到第五堂結尾，你已經能用 K8s 部署完整的微服務架構：Deployment + Service + DNS。
 
 但**從外面進來**還只能用 NodePort \`Node IP:30080\`。生產環境要乾淨的網域路徑（\`/api\` / \`/admin\`），就要用 [Ingress 把 Service 串起來](/blog/k8s/service-ingress-end-to-end)。
+
+> 📅 **下一篇**：[Service + Ingress 端到端串通](/blog/k8s/service-ingress-end-to-end)
+> 把 NodePort 升級成「網域 + 路徑」的入口,微服務正式長得像個生產系統。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -4347,9 +4359,10 @@ K8s 確實比 Compose 囉嗦，但**換來的是對外路由、副本管理、�
 
 ## 下一步
 
-你已經把整條 K8s 部署鏈路串起來了。但 [Ingress 篇](/blog/k8s/kubernetes-ingress-intro)只講了 path-based 路由 — 真實工作會用多個 host（\`api.example.com\` / \`admin.example.com\`）並走 HTTPS。
+你已經把整條 K8s 部署鏈路串起來了。Ingress 在這篇只是路由的「最外層配角」,下一篇單獨拆開講:[Kubernetes Ingress 是什麼？怎麼從 NodePort 升級到 Ingress](/blog/k8s/kubernetes-ingress-intro)——把 path-based 路由的細節、Ingress Controller 是什麼、為什麼比 NodePort 好,完整講清楚。
 
-下一篇：[Ingress Host-based 路由 + TLS](/blog/k8s/ingress-host-tls)。
+> 📅 **下一篇**：[Kubernetes Ingress 是什麼？怎麼從 NodePort 升級到 Ingress](/blog/k8s/kubernetes-ingress-intro)
+> 把這篇用過的 Ingress 拉出來單獨講——Controller 是什麼、path-based 路由完整原理、跟 NodePort 的差別。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -4679,6 +4692,9 @@ spec:
 但**設定值** 怎麼管？比如資料庫連線字串、API key、debug flag — 寫死在 image 裡不行（換環境就要重 build），寫進 YAML 也不對（密碼裸奔）。
 
 下一篇進入第 4 組：[ConfigMap：把設定從程式裡抽出來](/blog/k8s/configmap-intro)。
+
+> 📅 **下一篇**：[ConfigMap 教學：把設定從 Image 抽出來的正確姿勢](/blog/k8s/configmap-intro)
+> 從網路進到「設定」這層——資料庫連線、API endpoint、debug flag 該怎麼塞給 Pod。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
