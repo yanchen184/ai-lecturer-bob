@@ -4975,6 +4975,9 @@ ConfigMap 解決了一般設定。但**密碼、API Key、TLS 憑證**怎麼辦�
 
 \`kubectl get configmap app-config -o yaml\` 任何人都看光光，這顯然不行。下一篇：[Secret + RBAC：K8s 怎麼存密碼才不會洩漏](/blog/k8s/secret-rbac-mysql)。
 
+> 📅 **下一篇**：[Secret + RBAC：K8s 怎麼存密碼才不會洩漏](/blog/k8s/secret-rbac-mysql)
+> ConfigMap 不能放密碼,這篇用 Secret + RBAC 把「敏感資料」這層補齊。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -5239,6 +5242,9 @@ Docker 的密碼管理普遍是「想辦法不要 commit \`.env\`」。K8s 把�
 ConfigMap + Secret 都會了。但工作上常常**兩個一起用** — Ingress + ConfigMap 設置 nginx config + Secret 放憑證，整個串起來。
 
 下一篇實戰：[Ingress + ConfigMap + Secret 整合實作](/blog/k8s/ingress-configmap-secret-integration)。
+
+> 📅 **下一篇**：[Ingress + ConfigMap + Secret 整合實作](/blog/k8s/ingress-configmap-secret-integration)
+> 把這篇學的 Secret 跟 ConfigMap、Ingress 三者串起來——一條真實微服務的設定組合。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -5556,6 +5562,9 @@ Message: Hello from Staging           # ← 改了
 
 下一篇：[PV / PVC：K8s 怎麼讓 Pod 用磁碟](/blog/k8s/pv-pvc-intro)。
 
+> 📅 **下一篇**：[PV / PVC：K8s 怎麼讓 Pod 用磁碟](/blog/k8s/pv-pvc-intro)
+> Pod 重啟資料就不見?把 K8s 的「持久化儲存」三層架構講清楚——Pod 不死、資料不丟。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -5803,6 +5812,9 @@ Events:
 PV 是手動建的 — 但工作上資料庫要 5GB、API 服務要 10GB、Cache 要 2GB...每個都管理員手動建，太累了。
 
 下一篇：[StorageClass + StatefulSet 自動建 PV](/blog/k8s/storageclass-statefulset-mysql)。
+
+> 📅 **下一篇**：[StorageClass + StatefulSet 自動建 PV](/blog/k8s/storageclass-statefulset-mysql)
+> 手動建 PV 太累了——StorageClass 動態配置 + StatefulSet 跑 MySQL,一條龍做完。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -6096,6 +6108,9 @@ $ kubectl scale statefulset mysql --replicas=2
 
 下一篇：[Helm — K8s 的套件管理器](/blog/k8s/helm-intro)。
 
+> 📅 **下一篇**：[Helm — K8s 的套件管理器](/blog/k8s/helm-intro)
+> YAML 檔多到爆炸,Helm 把它們打包成「模板 + 變數」,dev/staging/prod 只差一個 values.yaml。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -6303,6 +6318,9 @@ helm rollback my-mysql 2
 - 不該動的人在亂動我的 Pod，怎麼擋？
 
 下一篇進入 **Group 5：生產就緒**。先從第一個問題開始：[Probe — K8s 怎麼判斷你的應用還活著？](/blog/k8s/probe-liveness-readiness-startup)
+
+> 📅 **下一篇**：[Probe — K8s 怎麼判斷你的應用還活著？](/blog/k8s/probe-liveness-readiness-startup)
+> Liveness / Readiness / Startup 三個 probe 一次講清楚——上線後第一個踩的坑。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
