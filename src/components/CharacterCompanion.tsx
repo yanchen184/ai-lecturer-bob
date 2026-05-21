@@ -34,7 +34,12 @@ function mouseToGaze(x: number, y: number): GazeKey {
   return (row + col) as GazeKey;
 }
 
-export default function CharacterCompanion() {
+interface CharacterCompanionProps {
+  /** true = 鑲嵌進版型(用 relative + 撐滿父容器);false / 預設 = 浮動右下角 */
+  embedded?: boolean;
+}
+
+export default function CharacterCompanion({ embedded = false }: CharacterCompanionProps) {
   const [gazeKey, setGazeKey] = useState<GazeKey>('MC');
   const [isReacting, setIsReacting] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -114,7 +119,8 @@ export default function CharacterCompanion() {
     video.play().catch(() => { /* autoplay blocked, user will click */ });
   }, [playing.src]);
 
-  if (collapsed) {
+  // 浮動模式才有「縮起來」按鈕;鑲嵌模式一直顯示
+  if (collapsed && !embedded) {
     return (
       <button
         type="button"
@@ -128,6 +134,37 @@ export default function CharacterCompanion() {
     );
   }
 
+  // 鑲嵌模式:撐滿父容器,沒有 z-index、沒有 fixed
+  if (embedded) {
+    return (
+      <div className="relative w-full h-full select-none">
+        <div
+          className="relative bg-white border-2 border-black overflow-hidden cursor-pointer w-full h-full"
+          style={{ boxShadow: '6px 6px 0 #0a0a0a' }}
+          onClick={triggerReaction}
+          title="點我打招呼"
+        >
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            playsInline
+            src={playing.src}
+            className="absolute inset-0 block w-full h-full object-cover"
+            aria-label="陳彥彤 YC 動態形象"
+          />
+          <div className="absolute top-2 left-2 px-2 py-0.5 bg-[var(--color-neub-yellow)] text-[10px] uppercase tracking-widest font-mono font-black border border-black pointer-events-none">
+            {playing.label}
+          </div>
+          <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black text-white text-[10px] uppercase tracking-widest font-mono pointer-events-none">
+            click me
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 浮動模式(舊行為,目前不用,留著備用)
   return (
     <div
       className="fixed bottom-4 right-4 z-50 select-none"

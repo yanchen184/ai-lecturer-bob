@@ -1,0 +1,97 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 IG / Threads / FB 三平台共用 caption
+文章:Memory 治理 EP1｜我的 Claude 記了一堆爛筆記
+URL: https://yanchen.app/blog/memory-governance-ep1-claude-bad-notes/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【IG 版(限 2200 字、放第一則留言或 bio link)】
+
+用 Claude Code 半年,memory 從 10 個檔長到 76 個。
+我以為自己在養 AI 大腦,直到用 Obsidian Graph View 一打開——
+全是花朵狀。
+
+所有檔只連中心的 MEMORY.md,檔跟檔之間幾乎沒連線。
+這不是「養大腦」,是「在資料夾裡堆履歷」。
+
+三個結構性根因:
+1️⃣ 同主題一直開新檔,不擴充既有 → 三胞胎重疊 70%
+2️⃣ 寫完不加 [[link]] → cross-link 趨近 0
+3️⃣ 全局 vs 專案級沒判準 → 9 個同名檔散兩處
+
+整理完做了三件事:合併同主題 / 重寫 MEMORY.md 變 cluster /
+CLAUDE.md 加程序性 SOP(不是描述性原則)。
+
+最後 graph 從花朵變星雲。連結數從 ~30 條長到 217 條。
+
+完整文章在 bio link / 第一則留言 👇
+EP2 明天聊「為什麼 AI 記不住你寫的規則」。
+
+#ClaudeCode #AI工具 #知識管理 #Obsidian
+#PromptEngineering #AI筆記 #LLM #ai講師bob
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【Threads 版(限 500 字、適合短打)】
+
+用 Claude Code 半年,memory 76 個檔。
+以為自己在養 AI 大腦。
+
+用 Obsidian Graph View 打開——花朵狀。
+
+所有檔只連中心,檔跟檔幾乎沒連線。
+這不是養大腦,是在資料夾堆履歷。
+
+整理三件事:合併同主題 / 重寫 cluster /
+CLAUDE.md 加程序性 SOP。
+
+Graph 從花朵變星雲。連結從 ~30 長到 217。
+
+全文:https://yanchen.app/blog/memory-governance-ep1-claude-bad-notes/
+
+EP2 明天聊「為什麼 AI 記不住你寫的規則」。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【FB 版(長一點、加 hashtag 結尾)】
+
+【Memory 治理 EP1|我的 Claude 記了一堆爛筆記】
+
+用 Claude Code 半年,memory 從 10 個檔長到 76 個。
+我以為自己在養 AI 大腦,結果用 Obsidian Graph View 打開——
+全是花朵狀。所有檔只連中心的 MEMORY.md,檔跟檔之間幾乎沒連線。
+
+這不是「養大腦」。這是「在資料夾裡堆履歷」。
+
+仔細看資料夾,還更難看:
+- 三胞胎 feedback 內容重疊 70%
+- 9 個全局/專案級同名檔散兩處,我自己都記不得哪個是真
+- cross-link 趨近 0
+
+三個結構性根因(本文拆開):
+1. 同主題一直開新檔,不擴充既有
+2. 寫完不加 [[link]],檔跟檔不互通
+3. 全局 vs 專案級沒判準,亂存
+
+整理之後做的三件事:
+1. 合併同主題(三胞胎 → 一份完整)
+2. 重寫 MEMORY.md,從清單變 9 個 cluster
+3. CLAUDE.md 加「程序性 SOP」(不是描述性原則)
+
+最後 graph 從花朵變星雲。連結數從 ~30 條長到 217 條。
+
+完整文章(含 before/after graph 截圖、5 個 FAQ、整理 SOP):
+👉 https://yanchen.app/blog/memory-governance-ep1-claude-bad-notes/
+
+明天 EP2 聊「為什麼 AI 記不住你寫的規則」——
+為什麼你 CLAUDE.md 寫了一堆原則,Claude 還是每次重蹈覆轍?
+
+#ClaudeCode #AI知識管理 #Obsidian #PromptEngineering #LLM #AI講師Bob
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【標籤池(自由抽取)】
+#ClaudeCode #CLAUDEmd #AI工具 #AI知識管理 #Obsidian
+#PromptEngineering #LLM #AI筆記 #知識管理 #ObsidianGraph
+#MemPalace #AutoMemory #職訓局講師 #AI講師Bob #ai-lecturer-bob
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

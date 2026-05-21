@@ -53,11 +53,30 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: '陳彥彤 Bob Chen',
-  alternateName: '陳彥彤YC',
-  jobTitle: 'AI 顧問 · AI 工程師 · 資深 Java 後端工程師',
+  alternateName: ['陳彥彤YC', 'YC', 'Bob Chen'],
+  jobTitle: 'AI 企業內訓講師 · AI 顧問 · 資深 Java 後端工程師',
+  description:
+    '工程師教工程師的 AI 企業內訓與導入顧問。電商核心系統 8 年高併發實戰、近年主導醫療 AI 看診輔助平台落地。Claude Code、AI Agent、Kubernetes、Java 高併發內訓主力。',
   url: `${siteUrl}${withBase('/')}`,
   sameAs: ['https://github.com/yanchen184'],
-  knowsAbout: ['AI 顧問', '企業內訓', 'LLM', 'RAG', 'Agent', 'Spring Boot', 'Java', 'React', 'Azure'],
+  knowsAbout: [
+    'AI 企業內訓',
+    'Claude Code',
+    'AI Agent',
+    'LLM 應用',
+    'RAG',
+    'Multi-Agent 系統',
+    'Spring Boot',
+    'Java 高併發',
+    'Kubernetes',
+    'Docker',
+    'React',
+    'TypeScript',
+    'Azure',
+    '電商系統架構',
+    '微服務',
+  ],
+  knowsLanguage: ['zh-Hant', 'en'],
 };
 
 const allJsonLd = Array.isArray(jsonLd)

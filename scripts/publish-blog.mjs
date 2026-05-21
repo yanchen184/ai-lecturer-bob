@@ -680,6 +680,86 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'memory-governance-ep1-claude-bad-notes',
+    title: 'Memory 治理 EP1｜我的 Claude 記了一堆爛筆記',
+    excerpt:
+      '用 Claude Code 半年,memory 從 10 個檔長到 76 個,以為自己在養 AI 大腦,結果用 Obsidian Graph View 一打開全是花朵狀:所有檔只連中心的 MEMORY.md,檔跟檔之間幾乎沒連線。三胞胎重疊 70% 的 feedback、9 個全局/專案級同名檔、cross-link 趨近 0。本文拆三個結構性根因:同主題開新檔不擴充既有、寫完不加 [[link]]、全局 vs 專案級沒判準,以及整理之後做的三件事(合併三胞胎、重寫 MEMORY.md 成 cluster、CLAUDE.md 加程序性 SOP)。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'CLAUDE.md',
+      'auto memory',
+      'Obsidian',
+      'AI 知識管理',
+      'Prompt Engineering',
+      'Memory 治理',
+    ],
+    publishDate: '2026-05-21',
+    faqItems: [
+      {
+        q: 'Claude Code memory 跟 CLAUDE.md 有什麼不一樣?',
+        a: 'CLAUDE.md 是你寫給 Claude 的家規,每次 session 全文載入(社群建議控制在 80-120 行)。auto memory 是 Claude 自己抄的筆記,放在 ~/.claude/memory/*.md,需要時 Claude 才會去讀對應檔。兩個搭配用:CLAUDE.md 放紀律跟總綱,memory 放細節跟踩坑。',
+      },
+      {
+        q: '我的 memory 也很亂,要全部砍掉重來嗎?',
+        a: '不用。先用 Obsidian 開 ~/.claude/memory/ 看 Graph View — 如果是花朵狀(所有檔只連中心),代表結構不好但內容可能還可救。先做兩件事:(1) 把同主題的合併,內容好的留下、重複的改 .archived.md 後綴 (2) 每個檔結尾加「## 相關」區塊。光做這兩件事 graph 就會大幅改善。',
+      },
+      {
+        q: '怎麼判斷該寫到全局 memory 還是專案級 memory?',
+        a: '跨專案行為規範(寫 code 風格、code review 標準、語氣偏好)→ 全局 ~/.claude/memory/。單一專案的細節(專案路徑、DB 連線、特定 bug 踩坑)→ 專案級 ~/.claude/projects/<cwd>/memory/。不確定的時候優先寫全局,以後可以從專案級補對應 link。',
+      },
+      {
+        q: '為什麼 Obsidian 比直接看資料夾更有用?',
+        a: '資料夾只能告訴你「有什麼檔」,Graph View 告訴你「檔跟檔之間有沒有關係」。memory 系統的價值來自關係(Claude 透過一個檔找到下一個檔),不是來自檔案數量。資料夾 50 個檔 = 看起來很多;Graph 50 個節點沒連線 = 馬上看出問題。',
+      },
+      {
+        q: '整理一次要花多久?',
+        a: '51 個全局檔 + 25 個專案級檔,從反思到 commit 完大約 3 小時。最花時間的不是合併,是寫 reflection 找根因。如果你 memory 不到 20 個檔,可能 1 小時內搞定。但整理只是治標,改 CLAUDE.md 加 SOP 才是治本,不然 3 個月後又會長回花朵。',
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: 'memory-governance-ep2-rules-ai-cant-remember',
+    title: 'Memory 治理 EP2｜為什麼 AI 記不住你寫的規則',
+    excerpt:
+      '你寫了一堆 CLAUDE.md 原則,Claude 還是每次重蹈覆轍 — 不是它記憶不好,是你寫的規則「沒辦法照著做」。大部分人寫的是「描述性原則」(該做什麼、不該做什麼),但 AI 真正會跟的是「程序性 SOP」(動手前必跑的步驟、自我糾正的條件)。本文拆兩種寫法的差異、給改寫公式 「描述狀態 → 觸發條件 + 強制動作 + 違規判斷」、附 CLAUDE.md before/after 實際 diff,以及解釋為什麼 LLM 對程序性指令反應特別好。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'CLAUDE.md',
+      'Prompt Engineering',
+      'AI 工具',
+      'AI 工作流',
+      'Memory 治理',
+      'LLM',
+    ],
+    publishDate: '2026-05-22',
+    faqItems: [
+      {
+        q: '我的 CLAUDE.md 才 50 行,真的需要改成程序性嗎?',
+        a: '50 行剛好。你現在改的成本最低 — 規則少、踩坑少、習慣還沒固化。等到 200 行才改,你會發現一半規則早就互相矛盾,得先做整理才能重寫。短:現在改最划算。',
+      },
+      {
+        q: '程序性 SOP 是不是會讓 CLAUDE.md 變超長?80-120 行的社群建議不就破了嗎?',
+        a: '會變長,我的 CLAUDE.md 從 180 行長到 330 行。但社群 80-120 行的建議基於「每個 session 全文載入」的 context cost — 這個 cost 真實存在,但比起 AI 反覆違規再來校正的 cost,長一點的 CLAUDE.md 划算。建議:核心規則 SOP 化(占 60-70%),補充原則描述性(30-40%),不要為了短而把所有規則都描述化。',
+      },
+      {
+        q: '描述性原則就一無是處嗎?',
+        a: '不是。對人寫的東西(README、設計文件、團隊 onboarding)描述性原則比較適合 — 人會用「sense」自己腦補執行流程。對 AI 寫的東西(CLAUDE.md、Skill、Agent prompt)才需要程序化。差別在讀者:人是「理解後執行」,AI 是「pattern match 後執行」。',
+      },
+      {
+        q: '我寫了 SOP,Claude 還是會違規,怎麼辦?',
+        a: '兩種可能:(1) 觸發條件寫不夠具體,Claude 沒抓到該動的時機 — 把觸發條件用「禁止短語」「禁止症狀」這種字串比對級的描述補強。(2) 違規判斷沒列「自我罵點」 — 加一條「看到自己 X 就立刻停下糾正」。我用這兩招過去三週違規率降到原本的 1/4。',
+      },
+      {
+        q: '那 memory 本身需要寫成程序性嗎?',
+        a: '不需要。memory 是「事實 + 過去踩坑」,本來就是描述性的。程序性適用於行為規範(CLAUDE.md / Skill),描述性適用於知識儲存(memory)。不要把兩者混在一起,memory 該是查得到的字典,不是該照著跑的程式。',
+      },
+    ],
+    featured: true,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length

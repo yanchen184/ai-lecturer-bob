@@ -18,7 +18,7 @@ const latest = posts.slice(0, 3);
 const formatDate = (d: string) => d.replaceAll('-', '/');
 
 const stats = [
-  { number: '6 repo', label: 'AMI 醫療平台微服務' },
+  { number: '8 年', label: '電商核心系統實戰' },
   { number: '10-50', label: '場企業內訓' },
   { number: 'Java + AI', label: '雙棧背景' },
   { number: 'AZ-900', label: 'Azure 認證' },
@@ -28,47 +28,54 @@ const stats = [
 const portfolio = [
   {
     label: 'flagship',
-    title: 'AMI 照護平台',
-    subtitle: '6-repo 微服務 · 醫療領域',
-    body: '醫師工作台 + 民眾端 + AI 服務（OCR + 去敏 + Hermes Multi-Agent + RAG）+ HIS 介接層。Spring Boot 4.0.3 + Python + React + LINE LIFF 全棧落地。',
-    techs: ['Spring Boot 4', 'Python', 'React + TS', 'Multi-Agent', 'RAG', 'LINE LIFF'],
-    link: 'https://github.com/yanchen184?tab=repositories&q=ami',
+    title: '醫療 AI 看診輔助平台',
+    subtitle: '6-repo 微服務 · 與醫院合作',
+    body: '臨床端工作台 + 民眾端 LIFF + AI 服務（OCR + 去敏 + 自研 Multi-Agent + RAG）+ 醫院系統介接層。Spring Boot 4 + Python + React 全棧落地，要過資安、要評估 token 成本、要長期維運。',
+    techs: ['Spring Boot 4', 'Python', 'React + TS', 'Multi-Agent', 'RAG', 'OCR'],
+    link: 'https://github.com/yanchen184',
     color: '#ff6ec7',
   },
   {
-    label: 'gov',
-    title: '自然人憑證模擬讀卡機',
-    subtitle: '政府案輔助工具',
-    body: '為自然人憑證身份驗證流程開發的模擬讀卡機，協助前後端在沒有實體讀卡機的情況下完成整合測試與 demo。',
-    techs: ['TypeScript', 'PKCS#11 模擬', '政府身份驗證'],
-    link: 'https://github.com/yanchen184/citizen-cert-mock-reader',
+    label: 'teaching',
+    title: 'Kubernetes 從零到上線 · 完整教材',
+    subtitle: '中文 K8s 教學系列 · 已開放閱讀',
+    body: '完全沒碰過 K8s 的工程師向。從「為什麼需要 K8s」、Pod / Deployment / Service、Probe、HPA 一路到上線。每一課對應一個搜尋意圖，邊讀邊跑得起來。',
+    techs: ['Kubernetes', 'Docker', '微服務部署', 'HPA / Probe'],
+    link: '/blog/#k8s',
     color: '#7cc0ff',
   },
   {
     label: 'teaching',
-    title: 'AI 概論初級班 + Docker / K8s 教材',
-    subtitle: '職訓局 / 企業內訓教材',
-    body: '從 AI 概論入門簡報、Docker 14 小時完整講稿、Kubernetes 實作 lab 到 Java 高併發完全指南——所有教材都是上過課、debug 過、迭代過的版本。',
-    techs: ['AI 概論', 'Docker', 'Kubernetes', 'Java 高併發'],
-    link: 'https://github.com/yanchen184?tab=repositories&q=course+OR+slides+OR+guide',
+    title: 'Claude Code 企業內訓系列',
+    subtitle: 'Memory 治理 + 初階班 + Skill 開發',
+    body: 'Claude Code 怎麼真正用在 production——auto memory 治理 SOP、Skill / Subagent 設計、Hook 整合。完全是我自己每天在用的工具,內訓現場跟 blog 同步迭代。',
+    techs: ['Claude Code', 'AI Agent', 'CLAUDE.md', 'MCP'],
+    link: '/blog/',
     color: '#ffaa00',
   },
   {
     label: 'oss',
-    title: 'wez-spring-boot-starters',
-    subtitle: '公司共用工程基建',
-    body: '統一日誌、統一回應、JPA 通用模組、安全模組——把跨專案重複的 boilerplate 抽成 starter。團隊接新專案少寫一個禮拜。',
-    techs: ['Spring Boot starter', 'JPA', '統一日誌', '安全模組'],
-    link: 'https://github.com/yanchen184/wez-spring-boot-starters',
+    title: 'Spring Boot Starters · 工程基建',
+    subtitle: '跨專案共用 starter',
+    body: '統一日誌、統一回應、JPA 通用模組、安全模組——把跨專案重複的 boilerplate 抽成 starter。團隊接新專案少寫一個禮拜。Java 高併發實戰經驗整理。',
+    techs: ['Spring Boot starter', 'JPA', 'Java 21', '高併發'],
+    link: 'https://github.com/yanchen184',
     color: '#00ffd1',
   },
 ];
 
 const productionCases = [
   {
-    domain: '醫療領域',
-    title: '決策輔助系統的反饋學習機制',
-    body: 'AI 模型隨臨床實際使用持續修正的閉環設計——讓模型不是上線就停在那，而是真的越用越準。',
+    domain: '電商 · 高併發',
+    title: '電商核心系統 8 年實戰',
+    body: '電商雙 11 級流量、跨境訂單、跨團隊整合、線上事故處理。倉儲 / 訂單 / 商品多系統協同的架構設計與穩定性工程——AI 上線最缺的不是模型，是把它接進真實系統的人。',
+    fitFor: '電商、金流、會員系統、需要扛流量與穩定性的團隊',
+    color: '#00ffd1',
+  },
+  {
+    domain: '醫療 AI',
+    title: '看診輔助系統的反饋學習機制',
+    body: '與醫院合作開發 AI 協助醫師看診的決策輔助系統。AI 模型隨臨床實際使用持續修正的閉環設計——讓模型不是上線就停在那，而是真的越用越準。',
     fitFor: '想做模型持續優化、避免 AI 上線後就靜止的團隊',
     color: '#ff6ec7',
   },
@@ -119,6 +126,83 @@ const faqJsonLd = {
     },
   })),
 };
+
+// Course schemas — 三條業務線各一張，讓 Google 抓到 Rich Result
+const courseJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'Claude Code 企業內訓',
+    description:
+      '工程師教工程師的 Claude Code 實戰課。從 CLAUDE.md 寫法、Skill 開發、Subagent 配置、Hook 整合到 production 用例。半天 / 一天 / 兩天客製化規格。',
+    provider: {
+      '@type': 'Person',
+      name: '陳彥彤 Bob Chen',
+      url: 'https://yanchen.app/',
+    },
+    inLanguage: 'zh-Hant',
+    courseMode: 'onsite',
+    audience: {
+      '@type': 'Audience',
+      audienceType: 'HR / L&D / 學習發展窗口',
+    },
+    about: ['Claude Code', 'AI Agent', 'AI 企業內訓', 'AI 工作流'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI 導入顧問 + 內訓套餐',
+    description:
+      'CTO / 技術主管專屬。場景盤點、技術選型、預算範圍、風險清單。內訓 + 雙週 review 讓團隊邊做邊學，不是一場性消費。',
+    provider: {
+      '@type': 'Person',
+      name: '陳彥彤 Bob Chen',
+      url: 'https://yanchen.app/',
+    },
+    inLanguage: 'zh-Hant',
+    courseMode: 'blended',
+    audience: {
+      '@type': 'Audience',
+      audienceType: 'CTO / 技術主管 / 工程經理',
+    },
+    about: ['AI 導入', '架構顧問', '場景盤點', 'Workshop'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI 場景 Workshop（半天）',
+    description:
+      '業務 / PM / 產品主管專屬。講白話、不丟英文縮寫。帶團隊一起列 10-20 個業務場景，現場篩可行性，結束給優先級清單。',
+    provider: {
+      '@type': 'Person',
+      name: '陳彥彤 Bob Chen',
+      url: 'https://yanchen.app/',
+    },
+    inLanguage: 'zh-Hant',
+    courseMode: 'onsite',
+    audience: {
+      '@type': 'Audience',
+      audienceType: '業務 / PM / 產品主管',
+    },
+    about: ['AI 場景盤點', 'PM 友善', '優先級清單'],
+  },
+];
+
+// WebSite + SearchAction — 幫 Google 知道站內搜尋
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: '陳彥彤 YC — AI 企業內訓講師',
+  url: 'https://yanchen.app/',
+  inLanguage: 'zh-Hant',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://yanchen.app/blog/?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const structuredDataJsonLd = [faqJsonLd, websiteJsonLd, ...courseJsonLd];
 
 const skills = [
   { group: 'AI', label: 'ai', color: '#ffaa00', items: ['LLM 應用', 'RAG', 'Agent', '語音辨識', 'Prompt 設計'] },
@@ -172,10 +256,10 @@ const courses = [
 ---
 
 <RootLayout
-  title="陳彥彤 YC — 把 AI 真的接到公司系統的 AI 企業內訓講師"
-  description="工程師教工程師的 AI 企業內訓與導入顧問。Java 後端 8 年、AI 工程師 2 年。AMI 醫療平台 6-repo 全棧落地（Hermes Multi-Agent + RAG + OCR）、職訓局 / 企業內訓講師、政府案系統開發經驗。HR、技術主管、PM 三種對應方案。"
+  title="陳彥彤 YC｜AI 企業內訓講師 · Claude Code / Kubernetes / AI Agent 教學"
+  description="工程師教工程師的 AI 企業內訓與導入顧問。電商核心系統 8 年高併發實戰、近年主導醫療 AI 看診輔助平台 6-repo 全棧落地。Claude Code、AI Agent、Kubernetes、Java 高併發內訓主力，課程內容就是 production 在跑的同一套工具。職訓局 AI 概論初級班講師。"
   canonical="/"
-  jsonLd={faqJsonLd}
+  jsonLd={structuredDataJsonLd}
 >
   <NavbarNeub />
 
@@ -251,22 +335,14 @@ const courses = [
         </div>
         </div>
 
-        <!-- Hero 形象圖 -->
+        <!-- Hero 形象區 — 鑲嵌式動態人物(取代原本浮動右下角) -->
         <div class="hidden lg:block">
           <div
-            class="relative border-2 border-black bg-[var(--color-neub-yellow)] p-3"
-            style="box-shadow: 8px 8px 0 #0a0a0a;"
+            class="relative bg-[var(--color-neub-yellow)] p-3 border-2 border-black"
+            style="box-shadow: 8px 8px 0 #0a0a0a; aspect-ratio: 480 / 832;"
           >
-            <img
-              src={withBase('/images/character/body_01.png')}
-              alt="陳彥彤 YC 形象插畫"
-              width="1024"
-              height="1536"
-              class="block w-full h-auto bg-white border border-black"
-              loading="eager"
-              decoding="async"
-            />
-            <div class="absolute -bottom-3 -right-3 bg-black text-white text-[10px] font-mono uppercase tracking-widest px-2 py-1 border-2 border-black">
+            <CharacterCompanion client:load embedded={true} />
+            <div class="absolute -bottom-3 -right-3 bg-black text-white text-[10px] font-mono uppercase tracking-widest px-2 py-1 border-2 border-black z-10">
               yc · 工程師教工程師
             </div>
           </div>
@@ -329,8 +405,8 @@ const courses = [
               production ai cases · 顧問實作經驗
             </div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              三個<span class="bg-[var(--color-neub-yellow)] px-2">真的上線在跑</span>的<br />
-              AI 顧問實作
+              四個<span class="bg-[var(--color-neub-yellow)] px-2">真的上線在跑</span>的<br />
+              落地實作 · 從電商到 AI
             </h2>
           </div>
           <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70">
@@ -339,7 +415,7 @@ const courses = [
           </p>
         </div>
 
-        <div class="grid gap-6 md:grid-cols-3">
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {
             productionCases.map((p) => (
               <article
@@ -484,18 +560,19 @@ const courses = [
         <div class="space-y-5 text-base md:text-lg leading-relaxed">
           <p>
             <strong>Java 後端 8 年、AI 工程師 2 年。</strong>
-            出身電商核心系統團隊（WMS / MOX / MIX），主責架構設計、跨團隊整合、線上事故處理。
+            出身<strong>電商核心系統</strong>——雙 11 級流量、跨境訂單、跨團隊整合、線上事故處理。
+            主責架構設計、穩定性工程、Java 高併發實戰。
           </p>
           <p>
-            近兩年主導 <strong>AMI 照護平台</strong>從零到上線——6 個 repo 的醫療微服務體系，
-            涵蓋醫師工作台、民眾端 LINE LIFF、HIS 介接、AI 服務（OCR + 去敏 + Hermes Multi-Agent + RAG）。
-            <strong>要過資安、要接 SSO、要評估成本、要監控品質、要長期維運。</strong>
-            這些不是 demo——是真的在跑、真的要對 PM 解釋為什麼 token 預算超標的系統。
+            近兩年主導<strong>跟醫院合作的 AI 看診輔助平台</strong>從零到上線——6 個 repo 的微服務體系，
+            涵蓋臨床端工作台、民眾端 LIFF、醫院系統介接、AI 服務（OCR + 去敏 + 自研 Multi-Agent + RAG）。
+            <strong>要過資安、要接 SSO、要評估 token 成本、要監控品質、要長期維運。</strong>
+            這些不是 demo——是真的在跑、真的要對 PM 解釋為什麼預算超標的系統。
           </p>
           <p>
             另一條線是<strong>教學</strong>：政府 <strong>職訓局 AI 概論初級班</strong>講師、
-            企業內訓 10-50 場（Claude Code、AI Agent、Docker、Kubernetes、Java 高併發），
-            教材全部公開在 GitHub，學員下課可以直接 clone 回家繼續看。
+            企業內訓 10-50 場（<strong>Claude Code、AI Agent、Docker、Kubernetes、Java 高併發</strong>），
+            教材全部公開在 Blog 跟 GitHub，學員下課可以直接 clone 回家繼續看。
           </p>
           <p class="text-base opacity-75 italic border-l-4 border-black pl-4">
             我不是「以前是工程師現在轉講師」——我是<strong>邊做 production 邊教書的工程師</strong>。
@@ -506,7 +583,7 @@ const courses = [
             {
               [
                 { title: 'AI 落地', desc: 'Multi-Agent · RAG · OCR' },
-                { title: '後端專精', desc: 'Spring Boot · Java 8 年' },
+                { title: '電商高併發', desc: 'Java · Spring Boot 8 年' },
                 { title: '職訓局講師', desc: 'AI 概論初級班' },
                 { title: '企業內訓', desc: '10-50 場累積' },
               ].map((i) => (
@@ -836,7 +913,4 @@ const courses = [
   </main>
 
   <FooterNeub />
-
-  <!-- Character video companion (floating bottom-right, scroll-aware) -->
-  <CharacterCompanion client:load />
 </RootLayout>
