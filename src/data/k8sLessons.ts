@@ -1152,6 +1152,8 @@ kubectl logs kube-apiserver-minikube -n kube-system | head -20
 ## 下一步
 
 組件都認完了，現在你需要學「怎麼跟 K8s 說話」——下一篇進入 [K8s YAML 完整教學：apiVersion / kind / metadata / spec 四大區塊](/blog/k8s/k8s-yaml-basics)，**這是 K8s 的「公文格式」**，看完所有 K8s YAML 都看得懂。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -1400,6 +1402,8 @@ kubectl expose deployment nginx --port=80 --dry-run=client -o yaml > svc.yaml
 ## 下一步
 
 YAML 文法看懂了，下一篇直接動手：[第一個 Pod 完整 CRUD](/blog/k8s/first-pod-crud)——\`apply\` / \`get\` / \`describe\` / \`logs\` / \`exec\` / \`delete\` 五招完整跑一遍，**做完你就有 K8s 基礎實戰能力**。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -1666,6 +1670,8 @@ kubectl describe pod my-nginx | grep -A 5 Events
 ## 下一步
 
 成功跑了第一個 Pod，下一篇你**故意搞壞 Pod 學排錯**：[Pod 生命週期與排錯：CrashLoopBackOff、ImagePullBackOff 怎麼解](/blog/k8s/pod-lifecycle-troubleshoot)——把 K8s 最常見的兩種錯誤搞清楚，**真實工作 80% 的 Pod 問題都是這兩種**。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
 
@@ -1844,6 +1850,8 @@ kubectl logs crash-pod --previous
 ## 下一步
 
 排錯會了，但有些容器**故意要兩個一起跑** — 比如 nginx 寫日誌、旁邊放個小工具讀日誌轉發出去。下一篇講[多容器 Pod 與 Sidecar 模式](/blog/k8s/sidecar-pattern)：什麼時候要把容器塞同一個 Pod、什麼時候該拆開。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -2018,6 +2026,8 @@ kubectl logs sidecar-pod -c log-reader
 ## 下一步
 
 到這裡你會單一 Pod、會多容器 Pod、會排錯。但 \`kubectl\` 其實還有很多進階技巧 — 下一篇講[kubectl 進階：port-forward、dry-run、--watch](/blog/k8s/kubectl-advanced-tips)，三招會了就跟一般教學程度甩開。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -2231,6 +2241,8 @@ k get deploy,rs,po
 ## 下一步
 
 \`kubectl run\` 預設不能傳環境變數，但 MySQL 一定要 \`MYSQL_ROOT_PASSWORD\`。下一篇示範[在 K8s 上跑 MySQL：環境變數注入](/blog/k8s/pod-env-mysql)，學會 \`env\` 區塊的三種寫法。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -2467,6 +2479,8 @@ kubectl exec mysql -- env | grep MYSQL
 ## 下一步
 
 到目前為止你的 Pod 都是「一個人做事」 — Pod 一掛就什麼都沒了。下一篇正式進入 [Deployment 入門](/blog/k8s/deployment-intro)：從一個人做事變成一個團隊做事，刪 Pod 自動補回。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -2668,6 +2682,8 @@ Deployment = 一個團隊做事
 ## 下一步
 
 維持 3 個 Pod 會了，但實際工作中**會用更頻繁的是擴縮容跟更新**。下一篇講[Deployment 擴縮容：從 3 個到 100 個一行搞定](/blog/k8s/deployment-scale)，順便看 K8s 在多節點叢集怎麼自動分散 Pod。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -2834,6 +2850,8 @@ kubectl describe deployment my-nginx | grep -A 20 Events
 ## 下一步
 
 副本數會調了，但**版本要更新時怎麼辦**？v1 換 v2 時不能停服務。下一篇講[滾動更新與回滾：零停機部署](/blog/k8s/rolling-update-rollback)，逐步替換的精髓。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -3032,6 +3050,8 @@ Docker Compose \`up -d\` 換 Image 就是直接砍舊建新，**有空窗期**�
 ## 下一步
 
 更新會了。但 Deployment 怎麼**找到**自己的 Pod？答案不是 Pod 名字，而是 **labels**。下一篇講[Labels 與自我修復：K8s 怎麼認自己的 Pod](/blog/k8s/self-healing-labels-selector)，把 Day 4-5 的 Deployment 故事收尾。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -3247,6 +3267,8 @@ label = K8s 整個世界的關聯機制。掌握 label 就掌握 K8s。
 ## 下一步
 
 Deployment + Pod 的故事告一段落。但**外面怎麼連到 Pod**？Pod IP 隨時會變、Pod 還會被 K8s 搬到別的 Node。下一篇進入 Service 的世界：[ClusterIP：固定 IP 解決 Pod IP 飄忽問題](/blog/k8s/clusterip-service)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
 
@@ -3437,6 +3459,8 @@ kubectl get pods --show-labels
 ## 下一步
 
 ClusterIP 解決了**叢集內部**的連線。但**外面的使用者**怎麼連？這就要用 [NodePort、LoadBalancer 和三種 Service 的差異](/blog/k8s/nodeport-three-services)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -3656,6 +3680,8 @@ NodePort 解決了「外面進來」的問題。但如果你有 10 個 Pod 跑�
 K8s 內部是怎麼把 \`mysql-svc\` 解析成 IP 的？跨 namespace 又怎麼連？
 
 下一篇：[K8s DNS 與 Namespace：用名字找服務](/blog/k8s/dns-namespace)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -3852,6 +3878,8 @@ Docker Compose 也有用名字找服務的能力，但只在同一個 \`docker n
 到目前為止學的都是「我要 N 個 Pod」。但有些情境是「**每台 Node 都要一個**」（日誌收集 agent、監控 agent），有些是「**每天凌晨備份一次**」（定時任務）。
 
 這就要用 [DaemonSet 與 CronJob](/blog/k8s/daemonset-cronjob)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -4068,6 +4096,8 @@ hello-cron-...              Error       # ← 真的有問題
 到第五堂結尾，你已經能用 K8s 部署完整的微服務架構：Deployment + Service + DNS。
 
 但**從外面進來**還只能用 NodePort \`Node IP:30080\`。生產環境要乾淨的網域路徑（\`/api\` / \`/admin\`），就要用 [Ingress 把 Service 串起來](/blog/k8s/service-ingress-end-to-end)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -4311,6 +4341,8 @@ K8s 確實比 Compose 囉嗦，但**換來的是對外路由、副本管理、�
 你已經把整條 K8s 部署鏈路串起來了。但 [Ingress 篇](/blog/k8s/kubernetes-ingress-intro)只講了 path-based 路由 — 真實工作會用多個 host（\`api.example.com\` / \`admin.example.com\`）並走 HTTPS。
 
 下一篇：[Ingress Host-based 路由 + TLS](/blog/k8s/ingress-host-tls)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   // ====== #22 Pilot：完整 Ingress 內文 ======
@@ -4379,7 +4411,14 @@ K8s 上的等價解法叫 **Ingress**。
 - **Path-based 適合前後端共域名**，Host-based 適合微服務各自有域名，**實務常混用**
 - **Ingress 後面的 Service 用 ClusterIP 就好**，不要再開 NodePort
 
-下一篇會接著講 **HTTPS / TLS 怎麼設**，以及 cert-manager 自動續憑證。
+## 下一步
+
+Path-based 路由跑通了，但實務上多數網站要走 HTTPS、要管多個 host（\`api.example.com\` / \`admin.example.com\`）。下一篇 [Ingress Host-based 路由 + TLS](/blog/k8s/ingress-host-tls)會教你怎麼把這篇的 Ingress 升級到生產可用，含 cert-manager 自動申請 Let's Encrypt 憑證。
+
+> 📅 **下一篇**：[Ingress Host-based 路由 + TLS：怎麼讓網站走 HTTPS？](/blog/k8s/ingress-host-tls)
+> 把這篇學到的 path-based 升級成 host-based + HTTPS，cert-manager 自動續憑證一次教完。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -4631,6 +4670,8 @@ spec:
 但**設定值** 怎麼管？比如資料庫連線字串、API key、debug flag — 寫死在 image 裡不行（換環境就要重 build），寫進 YAML 也不對（密碼裸奔）。
 
 下一篇進入第 4 組：[ConfigMap：把設定從程式裡抽出來](/blog/k8s/configmap-intro)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
 
@@ -4908,6 +4949,8 @@ K8s 結構化更多但邏輯一致：**設定獨立、Image 純粹、不同環�
 ConfigMap 解決了一般設定。但**密碼、API Key、TLS 憑證**怎麼辦？
 
 \`kubectl get configmap app-config -o yaml\` 任何人都看光光，這顯然不行。下一篇：[Secret + RBAC：K8s 怎麼存密碼才不會洩漏](/blog/k8s/secret-rbac-mysql)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -5171,6 +5214,8 @@ Docker 的密碼管理普遍是「想辦法不要 commit \`.env\`」。K8s 把�
 ConfigMap + Secret 都會了。但工作上常常**兩個一起用** — Ingress + ConfigMap 設置 nginx config + Secret 放憑證，整個串起來。
 
 下一篇實戰：[Ingress + ConfigMap + Secret 整合實作](/blog/k8s/ingress-configmap-secret-integration)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -5485,6 +5530,8 @@ Message: Hello from Staging           # ← 改了
 到這裡 MySQL Pod 重啟，**資料會全部不見**（容器是無狀態的）。要在 K8s 上跑資料庫，必須學持久化儲存。
 
 下一篇：[PV / PVC：K8s 怎麼讓 Pod 用磁碟](/blog/k8s/pv-pvc-intro)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -5731,6 +5778,8 @@ Events:
 PV 是手動建的 — 但工作上資料庫要 5GB、API 服務要 10GB、Cache 要 2GB...每個都管理員手動建，太累了。
 
 下一篇：[StorageClass + StatefulSet 自動建 PV](/blog/k8s/storageclass-statefulset-mysql)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -6021,6 +6070,8 @@ $ kubectl scale statefulset mysql --replicas=2
 而且 dev / staging / prod 三個環境，replicas / Image tag / 密碼都不同，你要維護三套？
 
 下一篇：[Helm — K8s 的套件管理器](/blog/k8s/helm-intro)。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -6227,6 +6278,8 @@ helm rollback my-mysql 2
 - 不該動的人在亂動我的 Pod，怎麼擋？
 
 下一篇進入 **Group 5：生產就緒**。先從第一個問題開始：[Probe — K8s 怎麼判斷你的應用還活著？](/blog/k8s/probe-liveness-readiness-startup)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
 
@@ -6448,6 +6501,8 @@ readinessProbe:
 健康檢查有了，**但程式還是會吃光記憶體 / CPU**。一個 Pod 失控吃掉 16GB 記憶體，會把整個 Node 拖垮，其他 Pod 全部跟著掛。
 
 下一篇：[Resource Limits 與 OOMKilled — 怎麼防止單一 Pod 拖垮整個 Node](/blog/k8s/resource-limits-qos-oomkilled)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -6640,6 +6695,8 @@ kubectl describe pod oom-demo-xxx
 雙 11 流量 10 倍，固定 3 個 Pod 撐不住——**該自動擴容了**。
 
 下一篇：[HPA 自動擴縮 — K8s 怎麼根據 CPU 自動加 Pod](/blog/k8s/hpa-autoscale-loadtest)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -6855,6 +6912,8 @@ kubectl describe hpa api-hpa   # 看 events 區塊找原因
 實習生不小心 \\\`kubectl delete deployment\\\`，整個服務就沒了。**該管權限了**。
 
 下一篇：[RBAC — 讓只讀帳號真的只能讀](/blog/k8s/rbac-readonly-user)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -7091,6 +7150,8 @@ kubectl create clusterrolebinding alice-view \\\\
 權限管好了——但 **K8s 預設 Pod 之間網路全通**。前端 Pod 可以直連資料庫 Pod、開發 namespace 可以打到生產 namespace。
 
 下一篇：[NetworkPolicy — 讓 Pod 之間有防火牆](/blog/k8s/networkpolicy-intro)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -7286,6 +7347,8 @@ NetworkPolicy 是 **規範**，但實際執行靠 CNI 外掛：
 到目前為止，你學了 K8s 八大概念加上生產維運的 5 個技巧。但是**全部串起來呢？**
 
 下一篇開始 2 篇實戰：[從零部署一套完整服務（上）— 12 步流程的前 6 步](/blog/k8s/deploy-from-zero-12-steps-upper)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -7634,6 +7697,8 @@ kubectl get pods -n prod -l app=frontend
 到這裡，6 個 Pod 都跑起來了——但**還沒 Service、沒 Ingress、沒 HPA、沒安全設定**，外面還連不到。
 
 下一篇：[從零部署完整系統（下）— 後 6 步：Service + Ingress + NetworkPolicy + HPA](/blog/k8s/deploy-from-zero-12-steps-lower)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -7977,6 +8042,8 @@ kubectl delete namespace prod
 - 流量翻 10 倍時，DB 連線池會不會爆？
 
 下一篇：[壓測 + 故障模擬 — 你的系統真的撐得住嗎？](/blog/k8s/deploy-loadtest-failure-sim)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -8207,6 +8274,8 @@ hey -z 30s -c 100 http://myapp.local/api/shorten -m POST -d '{"url":"https://x"}
 到這裡，你已經會做完整的生產級部署、會壓測、會故障演練——**這就是「生產就緒」的標準了**。
 
 接下來是 Group 6 的速查表，這 3 篇是隨手查的工具：[kubectl 速查表](/blog/k8s/kubectl-cheatsheet) → [YAML 範本速查表](/blog/k8s/k8s-yaml-cheatsheet) → [學習 Roadmap](/blog/k8s/k8s-learning-roadmap)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
 
@@ -8439,6 +8508,8 @@ source <(kubectl completion zsh)
 ## 下一步
 
 指令會了，但**寫 YAML 的時候還是會卡住**？下一篇給你 8 大資源的完整 YAML 模板：[K8s YAML 範例大全](/blog/k8s/k8s-yaml-cheatsheet)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -8866,6 +8937,8 @@ spec:
 ## 下一步
 
 到這裡你已經有完整的 K8s 知識+查表能力了。最後一篇：[K8s 學習路線圖 — 從零到生產就緒](/blog/k8s/k8s-learning-roadmap)，告訴你接下來該往哪走。
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
   {
@@ -9086,6 +9159,8 @@ K8s 預設能看的東西很少。生產環境必裝：
 —— 後續會持續更新文章，歡迎追蹤。
 
 **回到** [K8s 系列首頁](/blog/k8s)
+
+> 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
 ];
