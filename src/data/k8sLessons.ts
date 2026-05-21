@@ -1153,6 +1153,9 @@ kubectl logs kube-apiserver-minikube -n kube-system | head -20
 
 組件都認完了，現在你需要學「怎麼跟 K8s 說話」——下一篇進入 [K8s YAML 完整教學：apiVersion / kind / metadata / spec 四大區塊](/blog/k8s/k8s-yaml-basics)，**這是 K8s 的「公文格式」**，看完所有 K8s YAML 都看得懂。
 
+> 📅 **下一篇**：[K8s YAML 完整教學：apiVersion / kind / metadata / spec 四大區塊](/blog/k8s/k8s-yaml-basics)
+> 把這篇看到的所有 Pod，學會用 YAML 自己寫出來——四大區塊認完，K8s 的「公文格式」全打通。
+
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
   },
@@ -1402,6 +1405,9 @@ kubectl expose deployment nginx --port=80 --dry-run=client -o yaml > svc.yaml
 ## 下一步
 
 YAML 文法看懂了，下一篇直接動手：[第一個 Pod 完整 CRUD](/blog/k8s/first-pod-crud)——\`apply\` / \`get\` / \`describe\` / \`logs\` / \`exec\` / \`delete\` 五招完整跑一遍，**做完你就有 K8s 基礎實戰能力**。
+
+> 📅 **下一篇**：[第一個 Pod 完整 CRUD：建立、查看、修改、刪除一次教完](/blog/k8s/first-pod-crud)
+> 把剛寫的 YAML 真的 \`apply\` 進叢集,五個指令跑完就有基礎實戰能力。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -1670,6 +1676,9 @@ kubectl describe pod my-nginx | grep -A 5 Events
 ## 下一步
 
 成功跑了第一個 Pod，下一篇你**故意搞壞 Pod 學排錯**：[Pod 生命週期與排錯：CrashLoopBackOff、ImagePullBackOff 怎麼解](/blog/k8s/pod-lifecycle-troubleshoot)——把 K8s 最常見的兩種錯誤搞清楚，**真實工作 80% 的 Pod 問題都是這兩種**。
+
+> 📅 **下一篇**：[Pod 生命週期與排錯：CrashLoopBackOff、ImagePullBackOff 怎麼解](/blog/k8s/pod-lifecycle-troubleshoot)
+> 把這篇學到的 describe / logs 拉到實戰,把 K8s 最常見的兩種錯誤一次搞懂。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
