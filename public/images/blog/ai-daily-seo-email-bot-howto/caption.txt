@@ -1,0 +1,81 @@
+# caption — IG / Threads / FB
+
+## IG 版（短 + hashtag）
+
+🤖 讓 Claude 每天早上幫我寫 SEO 解讀信
+
+舊版：UV 17 / PV 4 / Top 5 query 一坨數字
+新版：「今日總評 / 需要注意 / 今天可以做」三段 Claude 解讀，數字放下面對照
+
+只多一步 — 在原 cron 腳本 Step 3（抓完數字）跟 Step 5（寄信）之間，插入 `claude -p` stateless 呼叫，35 行 bash。pipeline 從 10 秒變 32 秒，**信長 1 倍但讀信只要 30 秒**。
+
+成本？走 Max 訂閱、$0 元/月。
+
+→ 全文（含完整 bash + prompt + 5 個踩坑）：yanchen.app/blog/ai-daily-seo-email-bot-howto/
+
+#ClaudeCode #AI自動化 #SEO #cron #launchd #AI工具 #AI工作流 #BashScripting #AILecturerBob #ai-lecturer-bob #PromptEngineering #StatelessClaude
+
+---
+
+## Threads 版（中等長度）
+
+每天早上 7:07，我的信箱會收到一封 SEO 日報 — 過去版本是純數字（UV、PV、GSC 過去 7 天 Top 查詢），新版會多一段 Claude 寫的解讀：
+
+【一句總評】整週流量穩、`claude code skill` 點擊翻倍
+【需要注意】`hermes agent` 系列查詢量還在但點擊歸零，title 可能太硬
+【今天可以做】把 `hermes-agent-intro` 的 title 從「教學筆記」改成「2026 最新評測」
+
+整個改造 35 行 bash — `claude -p` stateless 模式餵 prompt、跑分析、塞進信內容上半部。pipeline 多 22 秒、信長 1 倍、但讀信時間從「掃完還要腦補 10 分鐘」變成「30 秒看完知道今天該動什麼」。
+
+關鍵 prompt 設計（決定 Claude 解讀有沒有用）：
+- 角色給死「你是 X 顧問」
+- 輸出格式限三段、≤250 字、無 markdown
+- 明寫「不要『太棒了』『整體表現良好』這種廢話」 ← 最重要
+
+成本？走 Max 訂閱、$0 額外。
+
+實作完整版：yanchen.app/blog/ai-daily-seo-email-bot-howto/
+
+---
+
+## FB 版（長 + 個人敘事）
+
+【讓 Claude 每天早上幫我寫一封 SEO 解讀信】
+
+之前 (5/19) 寫過一篇覆盤，講我跟 Claude Code 講一句「我想每天早上 9 點收到 SEO 報告」，1 小時後就有信了 — launchd cron + GSC OAuth + Firestore + Gmail SMTP，純 bash + Python heredoc，每天自動跑。
+
+但有個問題：**信內容是 raw 數字**。`UV 17 / PV 4 / 過去 7 天 Top 5 查詢 ⋯` — 看是看了，可是要解讀「這算多還是少」「為什麼這 query 掉了」「今天要不要動什麼」 還是要我自己腦補 10 分鐘。**動腦成本太高，後來就懶得看了**。
+
+於是這週做了第二階段：**把 Claude 插到 cron 跟信箱中間**。在腳本裡多一個 step，把 raw 數字組成 prompt 丟給 `claude -p`（Claude Code 的 stateless 模式，走 Max 訂閱、$0 額外成本），要它用繁體中文吐三段：
+
+▎一句總評
+▎需要注意
+▎今天可以做（5 分鐘以內可動手）
+
+寄到信箱時，Claude 分析在最上面、raw 數字在下面對照。**打開信先看到「今天可以做 X」，想驗證才往下看數字**。
+
+整個改造 35 行 bash、pipeline 從 10 秒變 32 秒、信長度從 800 字變 1000 字 — 但讀信體感差很多。
+
+----
+
+寫這個過程踩到幾個坑：
+
+1）`env -u CLAUDECODE` 一定要清，不然 `claude -p` 在 Claude Code session 內被 spawn 會卡死
+2）prompt 沒給格式約束 → Claude 自動進「客氣場面話」模式，回你「您的網站表現穩定，建議持續優化」
+3）寄純文字信時 prompt 要明寫「不要 markdown」，不然 `**粗體**` 會字面顯示
+4）給 90 秒 timeout 比較穩，60 秒偶爾超時
+5）Claude 分析失敗時要 fallback、但**不能擋寄信** — raw 數據才是底線
+
+----
+
+順手釐清一個常被混淆的東西：這個 pipeline **跟 claude.ai 接 Gmail connector 完全不同**。connector 是「讓 Claude 看到你信箱」（OAuth、讀信用），我這套是「自動寄信給你」（SMTP、cron 觸發）。兩條路、不同協議、不同方向。
+
+----
+
+完整實作（含完整 bash + 最終版 prompt + 5 個踩坑 + 抄回家自己用的 checklist）：
+👉 yanchen.app/blog/ai-daily-seo-email-bot-howto/
+
+前篇（基礎 pipeline 故事版）：
+👉 yanchen.app/blog/ai-daily-seo-email-bot/
+
+#ClaudeCode #AI自動化 #SEO #PromptEngineering #BashScripting #AILecturerBob #職訓局講師 #AI工具

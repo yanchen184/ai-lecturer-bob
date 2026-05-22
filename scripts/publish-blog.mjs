@@ -760,6 +760,56 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'ai-daily-seo-email-bot-howto',
+    title: '讓 Claude 每天早上幫你寫一封 SEO 解讀信：cron + claude -p stateless 走 Max 訂閱 0 元 pipeline',
+    excerpt:
+      '上週寫過「我請 AI 每天早上 9 點寄 SEO 報告給我」 — 但信內容是 raw 數字,我每天還是要花 10 分鐘自己腦補解讀。這篇是第二階段:在原本 cron 腳本裡加 35 行 bash,用 claude -p stateless 模式呼叫 Claude(走 Max 訂閱 0 額外成本),把昨天的 GSC + Firestore 數字翻成「總評 / 需要注意 / 今天可以做」三段繁體中文解讀,放在信最上面。完整實作 + prompt 設計關鍵點 + 5 個踩坑 + 抄回家自己用 + 順手澄清「這跟 claude.ai 接 Gmail connector 完全不同」常見誤會。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'claude -p',
+      'SEO',
+      'cron',
+      'launchd',
+      'AI 工作流',
+      'AI 自動化',
+      'Bash',
+      'Prompt Engineering',
+    ],
+    publishDate: '2026-05-22',
+    faqItems: [
+      {
+        q: '為什麼不直接讓 Claude Code 寄信?',
+        a: 'Claude Code 沒有「主動排程跑」的能力 — 它是 session-based、要有人開啟 CLI 才會跑。要每天 07:07 自動跑就得靠系統層的 cron / launchd / systemd-timer。所以這套設計是:系統排程觸發 bash → bash 呼叫 claude -p 跑一次性分析 → bash 寄信。Claude 在這套裡是「批次任務 worker」,不是「主控者」。',
+      },
+      {
+        q: 'claude -p 真的免費嗎?',
+        a: '對 Max / Pro 訂閱者來說 0 額外成本。claude -p 走的是你機器登入的訂閱 quota,跟你在 Claude Code 裡聊天用的是同一份額度。Max $200/月 給的額度幾乎用不完。Pro $20/月 也夠用,每天分析一次 250 字輸出月用量微不足道。如果走 Anthropic API 每次 ~$0.001-0.005,每月仍不到 $1。',
+      },
+      {
+        q: 'Claude 分析會不會給錯建議?',
+        a: '會。LLM 不會看真實情境,只看數字。它可能建議「為某 query 補文章」但那 query 已經有文章。所以定位成「方向參考」不是「執行命令」 — 每天看一眼,make sense 就做、不 make sense 就忽略。LLM 提案 + 人類過濾 = 平均 30% 有用、70% 不重要,因為「每天 5 分鐘的提案門檻太低」,30% 有用就賺了。',
+      },
+      {
+        q: '可以改成每週一次嗎?',
+        a: '可以但不推薦。launchd plist 把 StartCalendarInterval 改成 Weekday=1 就只有週一觸發。但每週一次的問題是「訊號太弱」 — 週一看完信,週二三四五都不會想起來。每天一次反而養成習慣:raw 數據五分鐘看完、Claude 分析 30 秒讀完、沒事就略過,這個節奏最舒服。',
+      },
+      {
+        q: 'prompt 怎麼進化?',
+        a: '跑一陣子會發現 Claude 重複講同樣的事(例如老是叫你「更新 sitemap」),那就在 prompt 加一條「不要重複建議過去 7 天提過的事」。或發現它太樂觀,加「只關注壞消息」。Prompt 是可演化的東西,不是寫一次就不動。',
+      },
+      {
+        q: '可以接到 Slack 不寄 Gmail 嗎?',
+        a: '可以。把 Step 6 寄信改成 Slack webhook:curl -X POST -H Content-Type:application/json -d {text:$BODY} https://hooks.slack.com/services/YOUR/WEBHOOK。Slack 有 markdown 渲染,可以把 prompt 「不要 markdown」改成「用 Slack mrkdwn 格式」。',
+      },
+      {
+        q: '為什麼不讓 Claude 直接 GSC OAuth 自己抓資料?',
+        a: '技術上可以 — claude -p 配 MCP server 接 GSC API,讓 Claude 自己查、自己分析、自己寫信。但複雜度爆炸。MCP server 要寫、要除錯、要管 OAuth state。90% 的場景 bash + Python 已經夠 — bash 抓資料、Claude 分析資料、bash 寄信,三件事各自簡單。過度設計是寫程式的最大原罪,YAGNI 優先。',
+      },
+    ],
+    featured: true,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
