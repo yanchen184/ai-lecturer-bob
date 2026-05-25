@@ -901,6 +901,47 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'claude-code-ultrawork-harness-engineering',
+    title:
+      'Claude Code Harness EP1｜ultrawork 到底在 work 什麼?社群兩派 + Anthropic 三方對照',
+    excerpt:
+      'Claude Code 沒有官方的「ultrawork」。它是社群造的詞,目前至少兩個派系做出兩種不同的東西 — TechDufus 的 oh-my-claude(142 ★)走「平行召喚 6 個 sub-agent」,zephyrpersonal 的 oh-my-claude-code 走「Sisyphus 模式 — 不解完不准停」。兩者底層其實是同一件事:Harness Engineering — 在 Claude Code 外面套一層持久化設定(hooks + skills + agents + prompts),讓 AI 每次都照你的方式工作。這篇是系列 EP1,先講清楚 ultrawork 到底是什麼、有幾派、能解什麼問題,並對照 Anthropic 官方 2025/11 那篇 Effective Harnesses for Long-Running Agents。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'ultrawork',
+      'Harness Engineering',
+      'oh-my-claude',
+      'Anthropic',
+      'Sub-agent',
+      'AI 工具',
+      'AI 開發工作流',
+    ],
+    faqItems: [
+      {
+        q: 'ultrawork 是 Anthropic 官方功能嗎?',
+        a: '不是。ultrawork / ulw / ultraresearch 都是社群 plugin 自己定義的 slash command,不是 Claude Code 內建。Anthropic 官方文件用的詞是「harness」(Effective Harnesses for Long-Running Agents,2025/11/26 Justin Young 發表),概念類似但實作不同。',
+      },
+      {
+        q: 'TechDufus 跟 zephyrpersonal 兩派的 ultrawork 哪個比較適合我?',
+        a: '看任務型態。需要平行多角度看(查資料 + 評估風險 + 寫 code + 驗收)→ TechDufus 版,6 個 sub-agent 同時跑。需要死磕到完成(全綠燈、無 type error、所有測試過)→ zephyrpersonal 版,Sisyphus 模式不解完不停。不確定就先裝 TechDufus 版,使用面比較廣。',
+      },
+      {
+        q: 'Workflow 跟 ultrawork 有什麼不同?',
+        a: 'Workflow(shinpr/claude-code-workflows)是 recipe-based slash commands,管「先做設計再寫 code」這類流程切分;ultrawork 是 multi-agent 模式,管「單一步驟內怎麼把火力開到最大」。兩者設計層級不同,可以同時用不會打架。',
+      },
+      {
+        q: '我已經有自己的 ~/.claude/ 配置,還要裝 ultrawork plugin 嗎?',
+        a: '建議先別。自架 harness 的價值是貼合你個人模式 — 直接裝 plugin 等於把別人的工作流貼到你的肌肉記憶上,容易打架。建議先看 plugin 的 source code,把你想要的 pattern 抄成你自己的 skill / agent。我自己 ~/.claude/ 有 69 個 skill / 49 個 agent,完全沒裝這些 plugin。',
+      },
+      {
+        q: 'Anthropic 官方 harness 跟 ultrawork 有什麼關係?',
+        a: 'Anthropic 2025/11/26 那篇 Effective Harnesses for Long-Running Agents 講的「harness」是更上層的概念 — initializer agent + coding agent + claude-progress.txt 進度檔 + Puppeteer MCP 自動測試。ultrawork 是社群把這個概念塞進 slash command 的具體實作。InfoQ 2026/04 後續報導 Anthropic 演化到三 agent harness。',
+      },
+    ],
+    featured: true,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
