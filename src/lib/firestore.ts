@@ -153,16 +153,19 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
       return cache;
     }
 
-    posts.sort((a, b) => (a.publishDate < b.publishDate ? 1 : -1));
-
-    // dedup by slug：Firestore 偶爾有重複寫入,排序後同 slug 只留第一筆
-    // (排序 desc → 同日期下保留 docId 字典序最小那筆,行為穩定可預期)
+    // dedup by slug：Firestore 偶爾有重複寫入 (publish-blog.mjs 早期版本用 addDoc
+    // 不是 setDoc(slug),造成同 slug 多 doc)。
+    // 策略:先按 docId asc 排,同 slug 只留第一筆 = 字典序最小的 docId。
+    // 行為穩定可預期、跟 Firestore 回傳順序無關,避免「兩筆 doc 隨機留到髒那筆」的 bug。
     const seen = new Set<string>();
-    const unique = posts.filter((p) => {
-      if (seen.has(p.slug)) return false;
-      seen.add(p.slug);
-      return true;
-    });
+    const unique = [...posts]
+      .sort((a, b) => (a.id < b.id ? -1 : 1))
+      .filter((p) => {
+        if (seen.has(p.slug)) return false;
+        seen.add(p.slug);
+        return true;
+      });
+    unique.sort((a, b) => (a.publishDate < b.publishDate ? 1 : -1));
     const dupes = posts.length - unique.length;
 
     if (scheduled > 0 || dupes > 0) {

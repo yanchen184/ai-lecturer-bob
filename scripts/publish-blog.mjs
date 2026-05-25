@@ -991,8 +991,6 @@ function buildFields(post) {
   }
 }
 
-const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}?key=${API_KEY}`
-
 const onlySlugs = process.argv.slice(2)
 const targets = onlySlugs.length
   ? posts.filter((p) => onlySlugs.includes(p.slug))
@@ -1002,11 +1000,16 @@ if (onlySlugs.length && !targets.length) {
   process.exit(1)
 }
 
+// docId = slug 做 upsert,避免雙胞胎 doc。
+// PATCH /documents/{COLLECTION}/{slug} 不帶 currentDocument 條件 = create-or-overwrite。
+// (注意:overwrite 是整個 doc 重寫,buildFields 必須產出完整欄位)
 let anyFail = false
 for (const post of targets) {
   const { fields, wordCount, readingTime } = buildFields(post)
+  const docPath = encodeURIComponent(post.slug)
+  const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/${docPath}?key=${API_KEY}`
   const res = await fetch(url, {
-    method: 'POST',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fields }),
   })
@@ -1016,8 +1019,7 @@ for (const post of targets) {
     anyFail = true
     continue
   }
-  const docId = data.name.split('/').pop()
-  console.log('OK doc id:', docId, '|', post.slug)
+  console.log('OK doc id:', post.slug, '(upsert)')
   console.log(
     '  URL:',
     `https://yanchen.app/blog/${post.slug}/`
