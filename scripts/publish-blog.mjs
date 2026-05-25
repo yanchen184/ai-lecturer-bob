@@ -810,6 +810,97 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'hermes-agent-medical-cdss',
+    title:
+      '如何用 Hermes Agent 把 AI 接到高風險醫療決策?血脂治療二級預防 CDSS 完整 round-trip 拆解',
+    excerpt:
+      'LLM 給的醫療建議怎麼讓醫師敢用?「ChatGPT 看一下」這種等級在臨床決策上不夠。本文拆我跟合作醫院做的血脂治療二級預防 CDSS 全套架構:Hermes Agent + skill 兩層 schema + 沙盒公式 + RAG MCP + JSONL trace,讓每個決策都有「skill 定義 → 公式回傳值 → RAG 引用 chunk → LLM 最終 JSON」四段證據鏈。從第一版 ChatGPT API 砍掉重做的教訓、為什麼選 Hermes、8-step pipeline、範例 round-trip 全紀錄、踩過的三個坑(LLM 漏列現用藥 / RAG cross-bleed / hermes timeout)、四大 agent 框架在醫療場景的比較。寫給做領域 AI(醫療 / 法務 / 金融 / 工控)的工程師。',
+    category: 'AI 工具',
+    tags: [
+      'Hermes Agent',
+      '醫療 AI',
+      'CDSS',
+      'LLM Agent',
+      'RAG',
+      'Sandbox',
+      'MCP',
+      '臨床決策支援系統',
+      'AI 落地',
+    ],
+    faqItems: [
+      {
+        q: 'Hermes Agent 適合做哪類領域 AI?',
+        a: '需要「LLM + 領域知識 + 結構化決策 + 可審計」的場景都適合:醫療 CDSS、法務文件審查、金融風控、工控故障診斷。共通點是「LLM 給的答案要有引用 + 公式 + 可被覆查」。如果你的場景只需要「跟使用者聊天」,Hermes 對你過殺。',
+      },
+      {
+        q: 'LLM 算數錯誤怎麼徹底解?',
+        a: '把 deterministic 算法全部寫成 module,LLM 只能呼叫不能自算。skill 內明寫「禁止自己算 X」,沙盒不執行算數 = 沒爭議。我做完這層之後算數錯誤率歸零。早期版本讓 LLM 自己算 LDL 達標,跑 100 個案有 4 個把「<」看成「≤」,差一條命。',
+      },
+      {
+        q: 'RAG 為什麼不直接塞 prompt?',
+        a: '塞 prompt 三個問題:(1) token 上限撐不住一整本指引(2) LLM 看 1 萬字會抓重點失誤(3) prompt 變大 latency 跟成本同步爆。讓 LLM 自己 query RAG 才拉相關段落,精準度跟成本同時好。我們用 bge-m3 1024d HNSW,單份 PDF retrieval 92% 命中。',
+      },
+      {
+        q: 'Hermes 跟 Claude Code 在這場景上的差別?',
+        a: 'Claude Code 偏開發者 CLI(寫 code、改 repo),Hermes 偏 production 級 agent runtime(可嵌服務、subprocess 調度、JSONL trace)。我這套醫療系統用 Hermes 是因為需要把它包在 FastAPI 後面當 production 服務跑,Claude Code 不是設計來做這件事的。兩者不是競爭,是不同 niche。',
+      },
+      {
+        q: '這套架構好複製嗎?',
+        a: 'skill 庫 + sandbox formula + RAG MCP 三件套要 40 小時左右半手工,但架構是通用的。你只要把領域指引換成你的、formula 換成你的算法、PDF 換成你的文獻就能套。我寫了 RECREATE_SOP 在 repo 裡。',
+      },
+      {
+        q: '醫師願意用嗎?',
+        a: '會用 + 會覆核才是目標。我們的設計是 reviewer-only,AI 給建議、醫師最後決定。覆核資料 → feedback → 累積到門檻自動 patch SKILL.md → 系統自演化。醫師會用是因為「我改的東西真的被學進去」,而不是「我每次都要從頭教 AI」。',
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: 'ollama-cloud-hermes-langchain',
+    title:
+      'Ollama Cloud 接到 hermes-agent 跟 LangChain:免費跑 Gemma4 31B 不用 GPU 完整指南',
+    excerpt:
+      '5 分鐘前在我 Mac 上 `ollama run gemma4:31b-cloud` 真的回我訊息——本機完全沒吃 GPU,模型在 Ollama 雲端跑、token 從終端機流出來。然後我發現 hermes-agent 的 .env 半年前就把 Ollama Cloud 預埋好了,去掉註解填 key 就能切過去。本文記錄整套 round-trip:Ollama Cloud Free 額度怎麼算、Gemma4 31b-cloud 實測、接到 hermes 三步驟、LangChain 兩種接法 (ChatOpenAI vs ChatOllama) 的差別、Embedding 走 cloud 還是本機、跟 Claude/OpenAI 怎麼選、5 個踩過的真實坑。',
+    category: 'AI 工具',
+    tags: [
+      'Ollama Cloud',
+      'Ollama',
+      'Gemma4',
+      'Hermes Agent',
+      'LangChain',
+      'AI 開源模型',
+      'AI API',
+      'AI 工具',
+    ],
+    faqItems: [
+      {
+        q: 'Ollama Cloud 是什麼?跟本機 Ollama 有什麼不一樣?',
+        a: 'Ollama Cloud 是 Ollama 官方的雲端推理服務,你用同一個 `ollama` CLI、同一個 API,但模型(像 `gemma4:31b-cloud`)在 Ollama 雲端跑、你本機完全不需要 GPU 或下載權重。本機版要自己備硬體、自己下載 model;cloud 版開帳號就用,還有 Free 額度。',
+      },
+      {
+        q: '用 Ollama Cloud 接 hermes-agent 要付錢嗎?',
+        a: '不用。hermes-agent 本身完全免費開源,Ollama Cloud Free 方案也是 0 元,只有 5 小時 session 額度跟每週上限。對個人 dev / agent 試驗綽綽有餘。要付費的是 Ollama Pro($20/月 50x 額度)或 Max($100/月),純粹看你跑的量。',
+      },
+      {
+        q: 'LangChain 接 Ollama Cloud 該用 ChatOpenAI 還是 ChatOllama?',
+        a: '既有專案用 `ChatOpenAI` 就改 `base_url` 跟 `api_key` 兩個欄位最快;新專案、要 tool calling 或 streaming 建議用 `langchain-ollama` 的 `ChatOllama`,介面跟 Ollama 原生概念對齊,踩坑少。',
+      },
+      {
+        q: '為什麼 `gemma4:31b-cloud` 不能拿來做 embedding?',
+        a: '它是 chat / completion 模型,內部架構不是雙塔 encoder,不能輸出 embedding 向量。Ollama Cloud 目前也沒提供 `-cloud` 後綴的 embedding 專用模型。要做 embedding 走本機 `nomic-embed-text` 或 `bge-m3`,模型都小、Mac 隨便跑。',
+      },
+      {
+        q: 'Ollama Cloud 適合做生產嗎?',
+        a: '看任務性質。latency 敏感 / 高並發 / SLA 要保證 → 還是 Claude / OpenAI;Internal tool / agent dev / 試新模型 / 試 RAG flow → Ollama Cloud Free 完全夠,還能用最新開源 model(Gemma4、DeepSeek V4)而不用自己架 GPU。',
+      },
+      {
+        q: '我已經有 Claude Max 訂閱還需要 Ollama Cloud 嗎?',
+        a: '主要看你想不想試開源 model。Claude Max 已經夠跑大部分任務,Ollama Cloud 的價值是:(1) 試 Gemma4 / Qwen / DeepSeek 等開源 model 不用自架,(2) hermes / langchain 多一個免費 fallback provider,(3) 隱私限制比較寬鬆的場景可以走 Ollama 而不是把資料丟 Anthropic。我自己兩個並用。',
+      },
+    ],
+    featured: true,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length

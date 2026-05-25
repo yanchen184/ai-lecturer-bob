@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" style="background:#0b1020;border-radius:8px;font-family:-apple-system,'Segoe UI',sans-serif">
+  <defs>
+    <marker id="arr2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#34d399"/></marker>
+  </defs>
+  <text x="400" y="28" text-anchor="middle" font-size="18" font-weight="700" fill="#fafafa">round-trip 證據鏈:4 段全要,缺一不可</text>
+  <text x="400" y="48" text-anchor="middle" font-size="11" fill="#94a3b8">LLM 自編排呼叫順序,每步寫進 JSONL trace</text>
+  <rect x="40" y="75" width="180" height="90" rx="8" fill="#1e293b" stroke="#7dd3fc" stroke-width="2"/>
+  <text x="55" y="98" font-size="12" font-weight="700" fill="#7dd3fc">STEP 1 · skill_view</text>
+  <text x="55" y="118" font-size="11" fill="#fafafa">LLM 主動拉決策 schema</text>
+  <text x="55" y="134" font-size="10" fill="#94a3b8">→ output schema</text>
+  <text x="55" y="148" font-size="10" fill="#94a3b8">→ formula 清單</text>
+  <text x="55" y="162" font-size="10" fill="#94a3b8">→ treatment ladder</text>
+  <line x1="220" y1="120" x2="245" y2="120" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="250" y="75" width="180" height="90" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="2"/>
+  <text x="265" y="98" font-size="12" font-weight="700" fill="#fbbf24">STEP 2 · execute_code</text>
+  <text x="265" y="118" font-size="11" fill="#fafafa">沙盒跑 deterministic 公式</text>
+  <text x="265" y="134" font-size="10" fill="#94a3b8">ldl_at_goal_extreme(75)</text>
+  <text x="265" y="148" font-size="10" fill="#94a3b8">→ False</text>
+  <text x="265" y="162" font-size="10" fill="#94a3b8">needs_pcsk9i → blocked</text>
+  <line x1="430" y1="120" x2="455" y2="120" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="460" y="75" width="300" height="90" rx="8" fill="#1e293b" stroke="#a78bfa" stroke-width="2"/>
+  <text x="475" y="98" font-size="12" font-weight="700" fill="#a78bfa">STEP 3 · mcp_rag_search</text>
+  <text x="475" y="118" font-size="11" fill="#fafafa">LLM 自主撈文獻 chunk(pgvector)</text>
+  <text x="475" y="134" font-size="10" fill="#94a3b8">query: "二級預防 高強度 statin 後加 ezetimibe"</text>
+  <text x="475" y="148" font-size="10" fill="#94a3b8">→ local_lipid_guideline_2025.pdf 第 4 節</text>
+  <text x="475" y="162" font-size="10" fill="#94a3b8">→ similarity 0.7432, chunk_id 15</text>
+  <line x1="400" y1="175" x2="400" y2="205" stroke="#34d399" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="120" y="215" width="560" height="180" rx="8" fill="#0f172a" stroke="#34d399" stroke-width="2"/>
+  <text x="400" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="#34d399">STEP 4 · LLM 最終決策 JSON(結構化、可審計)</text>
+  <rect x="140" y="255" width="520" height="130" rx="4" fill="#020617"/>
+  <text x="155" y="275" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#7dd3fc">{</text>
+  <text x="170" y="290" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#94a3b8">"action": <tspan fill="#fbbf24">"escalate"</tspan>,</text>
+  <text x="170" y="305" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#94a3b8">"prescriptions": [</text>
+  <text x="185" y="320" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#94a3b8">{drug: <tspan fill="#fbbf24">"Statin A"</tspan>, status: <tspan fill="#34d399">"continue"</tspan>},</text>
+  <text x="185" y="335" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#94a3b8">{drug: <tspan fill="#fbbf24">"Ezetimibe"</tspan>, status: <tspan fill="#34d399">"add"</tspan>}</text>
+  <text x="170" y="350" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#94a3b8">],</text>
+  <text x="170" y="365" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#94a3b8">"follow_up_weeks": <tspan fill="#fbbf24">6</tspan>, "confidence": <tspan fill="#fbbf24">0.88</tspan>,</text>
+  <text x="170" y="380" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#94a3b8">"citations": [{source: <tspan fill="#fbbf24">"local_lipid_guideline_2025"</tspan>, page: <tspan fill="#fbbf24">"4"</tspan>}]</text>
+  <text x="155" y="395" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#7dd3fc">}</text>
+  <rect x="120" y="415" width="560" height="65" rx="6" fill="#1e293b" stroke="#475569"/>
+  <text x="400" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="#fafafa">為什麼缺一不可</text>
+  <text x="135" y="456" font-size="10" fill="#94a3b8">沒 Step 1 → schema 亂飄 │ 沒 Step 2 → LLM 心算錯 │ 沒 Step 3 → 沒引用</text>
+  <text x="135" y="470" font-size="10" fill="#94a3b8">沒 Step 4 結構化 → 前端解析失敗、無法持久化、不能上 production</text>
+</svg>

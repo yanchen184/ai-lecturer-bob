@@ -1,0 +1,63 @@
+📌 IG / Threads / FB / X 共用 caption（複製貼上即用）
+
+──────────────────────────────────────────
+版本 A · 重點派(120 字內、適合 IG/Threads)
+──────────────────────────────────────────
+
+LLM 給的醫療建議怎麼讓醫師敢用?「ChatGPT 看一下」這種等級在臨床決策上不夠。
+
+寫了一篇我跟合作醫院做血脂治療二級預防 CDSS 的完整拆解 —
+Hermes Agent + skill 兩層 schema + 沙盒公式 + RAG MCP，
+每個決策都有「skill 定義 → 公式回傳值 → RAG 引用 → LLM JSON」四段證據。
+
+從第一版 ChatGPT API 砍掉重做的教訓開始，到 round-trip 真實 case 全紀錄。
+
+👉 yanchen.app/blog/hermes-agent-medical-cdss
+
+#HermesAgent #醫療AI #CDSS #LLMAgent #RAG #AI落地
+
+
+──────────────────────────────────────────
+版本 B · 故事派(適合 FB、Threads 長文、LinkedIn)
+──────────────────────────────────────────
+
+「這種東西出事誰負責?」
+
+第一版用 ChatGPT API 做血脂治療二級預防 CDSS，3 個月後砍掉重做。
+
+問題不是 LLM 不夠聰明，是它「算錯數還很有自信」「編一個聽起來合理的引用頁碼」「同樣的病人每次給不同答案」。醫師看完一句話就讓我清醒過來。
+
+那一刻我才搞清楚:領域 AI 跟「ChatGPT 包一層」是兩種東西。前者要的不是「夠聰明」，是「可被信任 + 可被審計 + 可被演化」。
+
+第二版改用 Hermes Agent 重寫，因為它預設了我需要的四件事:
+1. skill 機制 — LLM 不用每次都把整本指引塞 prompt，token 省 80%
+2. sandbox execute_code — 公式預先寫成 Python，LLM 不准自己算
+3. MCP server 接 RAG — LLM 自主查文獻，拿真實 chunk 不是編
+4. JSONL session trace — 出事可以 replay 整段推理
+
+把四件套接起來 = 每個決策有「skill 定義 → 公式回傳值 → RAG 引用 chunk → LLM 最終 JSON」四段證據鏈。醫師問哪一步，我都答得出來。
+
+寫成完整教學分享給做領域 AI(醫療 / 法務 / 金融 / 工控)的同行 ——
+含 8-step pipeline、real round-trip case、踩過的三個坑、Hermes vs LangChain vs AutoGPT vs Claude Code 對比。
+
+👉 yanchen.app/blog/hermes-agent-medical-cdss
+
+#HermesAgent #醫療AI #CDSS #LLMAgent #RAG #Sandbox #MCP #AI落地 #領域AI
+
+
+──────────────────────────────────────────
+版本 C · 工程哏派(適合 X / Threads 短文)
+──────────────────────────────────────────
+
+醫療 AI 上線前自己心算:
+LLM (心算 LDL 達標) ❌
+LLM + prompt (假裝有結構) ❌
+LLM + RAG (沒沙盒還是會算錯) ❌
+LLM + skill + sandbox + RAG + JSONL trace ✓
+
+四件套缺一不可。Demo 級只要 LLM；臨床級四段全要。
+
+寫完整拆解了，含真實 round-trip case 跟踩過的三個坑。
+👉 yanchen.app/blog/hermes-agent-medical-cdss
+
+#HermesAgent #醫療AI #LLMAgent
