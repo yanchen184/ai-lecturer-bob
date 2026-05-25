@@ -207,12 +207,16 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m, alt: string, url: string) => {
       const isLocalRaster = /^\/?[^:]+\.(png|jpe?g)$/i.test(url);
+      const isSvg = /\.svg(\?|$)/i.test(url);
       const safeAlt = alt.replace(/"/g, '&quot;');
+      const loadAttrs = isSvg
+        ? 'loading="eager" decoding="sync"'
+        : 'loading="lazy" decoding="async"';
       if (!isLocalRaster) {
-        return `<img src="${url}" alt="${safeAlt}" loading="lazy" decoding="async" />`;
+        return `<img src="${url}" alt="${safeAlt}" ${loadAttrs} />`;
       }
       const webp = url.replace(/\.(png|jpe?g)$/i, '.webp');
-      return `<picture><source srcset="${webp}" type="image/webp" /><img src="${url}" alt="${safeAlt}" loading="lazy" decoding="async" /></picture>`;
+      return `<picture><source srcset="${webp}" type="image/webp" /><img src="${url}" alt="${safeAlt}" ${loadAttrs} /></picture>`;
     })
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text: string, url: string) => {
       const external = /^https?:\/\//.test(url);
