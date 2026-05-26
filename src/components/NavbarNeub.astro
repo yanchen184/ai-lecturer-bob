@@ -47,9 +47,16 @@ const resolveHref = (href: string) =>
       aria-label="回到首頁"
     >
       <span
-        class="w-9 h-9 inline-flex items-center justify-center bg-[var(--color-neub-yellow)] border-2 border-black font-black"
-        >陳</span
+        class="w-9 h-9 inline-flex items-center justify-center overflow-hidden bg-[var(--color-neub-yellow)] border-2 border-black"
       >
+        <img
+          src={withBase('/images/logo-mark.png')}
+          alt="陳彥彤 YC 頭像"
+          width="36"
+          height="36"
+          class="w-full h-full object-cover"
+        />
+      </span>
       <span class="hidden sm:inline text-sm">陳彥彤 YC</span>
     </a>
 
