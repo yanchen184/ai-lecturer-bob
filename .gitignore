@@ -45,8 +45,9 @@ tmp-blog-content.md
 .claude/scheduled_tasks.lock
 
 # blog 文章中間素材：本體發布到 Firestore，本地只是產文草稿
+# (blog-create skill 每次產文都會留下這些，圖檔才該進 repo)
 public/images/blog/**/outline.md
 public/images/blog/**/article.md
 public/images/blog/**/evidence-brief.md
 public/images/blog/**/caption.txt
-public/images/blog/claude-code-ultrawork-harness-engineering/my-harness-tree.txt
+public/images/blog/**/*.txt
