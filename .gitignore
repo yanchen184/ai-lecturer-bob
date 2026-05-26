@@ -37,4 +37,16 @@ lerna-debug.log*
 # ad-hoc one-off publishing scripts (contain API key, not for repo)
 scripts/publish-powerup.mjs
 scripts/update-powerup.mjs
+scripts/patch-ollama-cloud-article.mjs
 tmp-blog-content.md
+
+# Claude Code 本機設定 / 執行期鎖檔（不進 repo）
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# blog 文章中間素材：本體發布到 Firestore，本地只是產文草稿
+public/images/blog/**/outline.md
+public/images/blog/**/article.md
+public/images/blog/**/evidence-brief.md
+public/images/blog/**/caption.txt
+public/images/blog/claude-code-ultrawork-harness-engineering/my-harness-tree.txt
