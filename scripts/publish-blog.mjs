@@ -90,6 +90,211 @@ const posts = [
     featured: true,
   },
   {
+    slug: 'langgraph-state-node-edge',
+    title:
+      'LangGraph 核心:State / Node / Edge 完整教學(第一個會跑的 graph)',
+    excerpt:
+      'LangGraph 的核心只有三個概念:State(跨步驟共用的狀態)、Node(收 state 回傳要改的欄位的函式)、Edge(把 node 串起來的線)。這篇用血脂決策 pipeline 的真實場景,帶你從 StateGraph 定義、add_node、add_edge 一路到 compile 與 invoke,給一個複製貼上就能跑的最小範例,並講三個新手最常踩的坑:回傳整份 state、忘記接 START/END、在 node 裡 mutate state。「用真實專案學 LangGraph」系列 EP2。',
+    category: 'AI 教學',
+    tags: [
+      'LangGraph',
+      'LangGraph 教學',
+      'StateGraph',
+      'LangGraph State',
+      'AI Agent',
+      'Python',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-05-28',
+    faqItems: [
+      {
+        q: 'LangGraph 的 State 一定要用 TypedDict 嗎?',
+        a: '不一定,但建議。LangGraph 支援 TypedDict、Pydantic model、dataclass。新手用 TypedDict 最直觀;要嚴格驗證欄位防打錯字就上 Pydantic。重點是 state 的欄位要當成合約寫清楚,用哪種型別是次要的。',
+      },
+      {
+        q: 'LangGraph 的 node 一定要是函式嗎?',
+        a: 'node 本質是可呼叫物件(callable),函式最常見,但任何 __call__ 接收 state、回傳 dict 的物件都行。複雜 node 要帶設定或依賴時,用 class 包起來會比較乾淨。',
+      },
+      {
+        q: '一個 LangGraph node 可以同時改多個 state 欄位嗎?',
+        a: '可以。回傳的 dict 想放幾個 key 都行,例如 return {"computed": ..., "advice": ...}。只要那些 key 是這個 node 的職責就好。',
+      },
+      {
+        q: 'LangGraph 的 node 為什麼只回傳 dict 而不是整份 state?',
+        a: 'node 只回傳要更新的欄位,LangGraph 會自動把這個 dict 合併進 state。回傳整份 state 在簡單情況下不會錯,但多個 node 並行或用到 reducer 時,回傳整份會把別人寫的東西洗掉。從第一天就養成只回傳 diff 的習慣。',
+      },
+      {
+        q: '怎麼看 LangGraph 實際跑了哪些 node?',
+        a: '用 app.stream(initial) 取代 invoke,它會 yield 每一步的中間結果,你能看到 state 一站一站怎麼變,debug 流程超好用。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'langgraph-conditional-edge-reducer',
+    title:
+      'LangGraph Conditional Edge + Reducer:讓 graph 會分流、會重試',
+    excerpt:
+      '線性 graph 不夠用時你需要兩個東西:Conditional Edge(跑完一個 node 看結果決定下一步去哪——過了往前、沒過退回重試、重試太多次直接退件)跟 Reducer(讓某個 state 欄位累加而不是覆蓋,最典型就是 retry 計數器)。這篇用 add_conditional_edges + router 函式 + Annotated[int, operator.add] 把這兩件事講透,並解釋一個關鍵設計決策:MAX_RETRY 該設多少、為什麼很多嚴肅場景答案是 0。「用真實專案學 LangGraph」系列 EP3。',
+    category: 'AI 教學',
+    tags: [
+      'LangGraph',
+      'LangGraph 教學',
+      'Conditional Edge',
+      'LangGraph Reducer',
+      'AI Agent',
+      'Python',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-05-29',
+    faqItems: [
+      {
+        q: 'LangGraph 的 conditional edge 跟 add_edge 可以混用嗎?',
+        a: '可以,而且通常會混。大部分的線用 add_edge 直連,只有真的需要分流的那幾個點用 add_conditional_edges。不要每條線都搞成 conditional,那會讓流程難讀。',
+      },
+      {
+        q: 'LangGraph 的 router 函式可以改 state 嗎?',
+        a: '不該。router 的職責是讀 state、決定路線,改 state 是 node 的事。如果你發現 router 裡想改東西,那段邏輯應該搬到前一個 node 去。',
+      },
+      {
+        q: 'LangGraph 的 reducer 只能用 operator.add 嗎?',
+        a: '不是。reducer 是任何拿舊值跟新值、回傳合併值的函式。operator.add 適合數字相加跟 list 串接;你也可以自己寫函式做更複雜的合併。LangGraph 對訊息列表還有專用的 add_messages reducer。',
+      },
+      {
+        q: '怎麼避免 LangGraph 重試迴圈跑成無限迴圈?',
+        a: '兩層保險。第一層是你自己的 MAX_RETRY 邏輯(router 判斷 retry_count 超過就走 reject)。第二層是 LangGraph 的 recursion_limit,跑超過步數上限會丟 GraphRecursionError。第一層是你該做的,第二層是兜底。',
+      },
+      {
+        q: 'LangGraph MAX_RETRY 設 0 為什麼還要保留 retry 那條邊?',
+        a: '因為 add_conditional_edges 的對照表必須涵蓋 router 可能回傳的所有值。即使 retry 實際不會被走到,對照表少了那個 key,萬一 router 真的回了它就 KeyError。保留是為了結構完整跟防禦。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'langgraph-llm-node-structured-output',
+    title:
+      'LangGraph LLM Node:結構化輸出 + Few-shot + 業務驗證',
+    excerpt:
+      '把真正的 LLM 接進 LangGraph node,三個關鍵:結構化輸出(用 Pydantic schema 強制 LLM 吐固定格式,不要 parse 自由文字)、few-shot(在 prompt 裡塞範例把輸出品質拉穩)、業務驗證(LLM 吐的東西不能照單全收,過一道規則檢查)。這篇示範怎麼用 with_structured_output 在決策 node 裡把這三件事兜起來,並講最容易出事的地方:LLM 的結構對了不代表內容對。「用真實專案學 LangGraph」系列 EP4。',
+    category: 'AI 教學',
+    tags: [
+      'LangGraph',
+      'LangChain',
+      '結構化輸出',
+      'Pydantic',
+      'Few-shot',
+      'AI Agent',
+      'Python',
+    ],
+    publishDate: '2026-05-30',
+    faqItems: [
+      {
+        q: 'with_structured_output 每個 model 都支援嗎?',
+        a: '主流的(OpenAI、Anthropic、Google 等)都支援,但底層機制不同(function calling vs JSON mode)。LangChain 幫你抽象掉差異,但冷門或本地小模型可能支援度差、parse 失敗率高。換 model 時務必實測結構化輸出的穩定度。',
+      },
+      {
+        q: 'LangChain 結構化輸出 parse 失敗會怎樣?',
+        a: '如果 LLM 吐的東西無法 parse 成你的 schema,LangChain 預設會丟錯。你可以在 node 裡 try/except 接住,當成驗證失敗走 retry 流程。不要讓 parse 錯誤直接炸掉整張 graph。',
+      },
+      {
+        q: 'few-shot 跟 fine-tune 差在哪,該用哪個?',
+        a: 'few-shot 是在 prompt 裡塞範例,零成本、即改即生效,適合範例少、需求常變的情況——大部分業務場景用 few-shot 就夠。fine-tune 成本高、週期長,只有 few-shot 怎麼調都救不動且量大到划算時才考慮。先用 few-shot,撞牆再說。',
+      },
+      {
+        q: '可以讓 LLM 自己驗證自己的輸出嗎(LLM-as-judge)?',
+        a: '可以當補充,不能當唯一防線。LLM 驗 LLM 一樣會幻覺。高風險場景的最後一道驗證一定要是確定性規則(你寫死的 if-else),LLM-as-judge 適合用在規則難明確表達的軟性品質檢查。',
+      },
+      {
+        q: '結構化輸出之後還需要業務驗證嗎?',
+        a: '絕對需要。with_structured_output 只保證格式合法(欄位型別、枚舉值),完全不保證內容正確。LLM 可能給出結構完美但臨床上自相矛盾的建議。結構化輸出解決格式可控,業務驗證解決內容可信,兩個都要。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'langgraph-full-pipeline-hitl',
+    title:
+      'LangGraph 完整 Pipeline + Human-in-the-loop:8 步決策管線全貌',
+    excerpt:
+      '前四篇的零件——state、node、edge、conditional edge、reducer、LLM 結構化輸出——這篇全部組起來,串成一條完整的醫療 AI 決策 pipeline:載入資料 → 補衍生指標 → 載入規則 → 組 few-shot → LLM 出建議 → 業務驗證 → 適配輸出 → 持久化,中間帶分流重試。然後加上 LangGraph 的殺手級功能 human-in-the-loop:用 interrupt() 在高風險決策點暫停整張 graph,等人點頭才繼續,靠 durable state 讓這件事變簡單。「用真實專案學 LangGraph」系列 EP5。',
+    category: 'AI 教學',
+    tags: [
+      'LangGraph',
+      'Human-in-the-loop',
+      'LangGraph Pipeline',
+      'durable state',
+      'AI Agent',
+      'Python',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-05-31',
+    faqItems: [
+      {
+        q: 'LangGraph interrupt() 之後 graph 真的停住嗎?會占資源嗎?',
+        a: '不會占 process。interrupt() 是把狀態存進 checkpointer 然後結束本次 invoke,process 就釋放了。等你之後用 Command(resume=...) 再次 invoke,它才從 checkpointer 把狀態載回來繼續。人等一小時,這段時間 server 沒有東西卡著。',
+      },
+      {
+        q: 'LangGraph HITL 一定要掛 checkpointer 嗎?',
+        a: '要。interrupt() 要能停下來再接回,靠的是 checkpointer 把狀態存起來。compile 時忘了傳 checkpointer,interrupt() 會行為異常或報錯。HITL 跟 checkpointer 是綁在一起的,要用前者必掛後者。',
+      },
+      {
+        q: 'LangGraph checkpointer 用記憶體還是 Postgres?',
+        a: '開發測試用記憶體版(MemorySaver)最快。Production 一定要用持久化的(Postgres / Redis),因為 server 重啟記憶體就沒了,HITL 等人那段時間若重啟就接不回。',
+      },
+      {
+        q: '為什麼確定性步驟不該丟給 LLM 算?',
+        a: '能用程式算的就不要叫 LLM 算。LLM 算數學不可靠、不可審計、慢又貴、不穩定。把 LLM 用在它真正擅長的綜合判斷,其他能寫成公式或規則的老實用 Python 算。LLM 是 pipeline 裡的一個 node,不是整個 pipeline。',
+      },
+      {
+        q: 'LangGraph human-in-the-loop 一定要在前端做嗎?',
+        a: '不一定。interrupt() 只是把要審核的內容吐出來,怎麼呈現給人、人怎麼回是你應用層的事——可以是前端按鈕、Slack 訊息按 approve、email 回覆。LangGraph 只管停/接回,UI 你自己決定。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'hermes-to-langgraph-migration',
+    title:
+      '我原本用 Hermes Agent CLI,後來為什麼換成 LangGraph(遷移覆盤)',
+    excerpt:
+      '系列番外。我這套醫療決策 pipeline 最早不是用 LangGraph,是用 Hermes Agent CLI(NousResearch 2026 年初開源的自主 agent 框架)。Hermes 很強,但強在通用對話助理、會自我學習、接 20+ 平台;而我要的是確定性步驟為主、流程可畫成圖、每步可審計、出錯能精準退件的決策管線。方向不對再強也是錯的工具。這篇覆盤這個選型決策:Hermes 哪裡好、為什麼對我的場景不對、換到 LangGraph 解決了什麼。「用真實專案學 LangGraph」系列 EP6(完結)。',
+    category: 'AI 工具',
+    tags: [
+      'LangGraph',
+      'Hermes Agent',
+      'AI Agent',
+      '技術選型',
+      'agent framework',
+      'AI 應用開發',
+      'Python',
+    ],
+    publishDate: '2026-06-01',
+    faqItems: [
+      {
+        q: 'Hermes Agent CLI 不值得用嗎?',
+        a: '完全不是。如果你要的是通用個人 agent、多平台助理、會自我學習的對話夥伴,Hermes 是很棒的選擇,它的 self-improving 跟 gateway 設計很有特色。我換掉它純粹因為我的場景要的是相反的東西——確定性、可控、可稽核。工具沒有好壞,只有合不合場景。',
+      },
+      {
+        q: '選 agent 框架怎麼一開始就避免選錯?',
+        a: '選型前先回答一個問題:你要自由還是控制?開放任務、要 agent 自己探索 → 自由 → 自主 agent 框架。固定流程、要可控可審計 → 控制 → LangGraph 這類能把流程畫死的。很多人就是沒先問這題,被「看起來什麼都能做」吸引。',
+      },
+      {
+        q: 'LangGraph 也能做自主 agent 嗎?還是只能做固定流程?',
+        a: '兩者都能。LangGraph 是底層 runtime,你可以畫固定流程,也可以用 conditional edge 做出讓 LLM 決定路線的自主行為,LangChain 的 create_agent 底層就是 LangGraph 的 agent loop。差別在控制粒度——LangGraph 讓你決定要給多少自由,而不是預設全自由。',
+      },
+      {
+        q: '從 Hermes 遷移到 LangGraph 花多久、值得嗎?',
+        a: '重寫比想像久,因為心智模型要轉(tool 是給 agent 選用的能力,node 是流程裡固定的一站)。但值得——換完之後流程可測、可稽核、行為穩定,這些在醫療場景是硬需求。如果你也在強大但不可控的 agent 上撞牆,早換早解脫。',
+      },
+      {
+        q: 'Hermes Agent 跟 LangGraph 差在哪,該選哪個?',
+        a: 'Hermes 給你自由(自主 agent、自我學習、多平台),LangGraph 給你控制(流程畫死、可審計、行為穩定)。通用助理選 Hermes;固定流程、確定性步驟為主、要精準錯誤處理跟人工審核的決策管線選 LangGraph。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'hermes-agent-intro',
     title:
       'Hermes Agent 是什麼?一篇給完全新手看的 AI 工具介紹(白話版)',
