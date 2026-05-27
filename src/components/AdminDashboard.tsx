@@ -8,6 +8,7 @@ import {
   subscribeToOutboundStats,
   subscribeToOutboundClicks,
   subscribeToMessages,
+  subscribeToGscDaily,
   type VisitorRecord,
   type PostStat,
   type PostView,
@@ -15,6 +16,7 @@ import {
   type OutboundClick,
   type GuestMessage,
   type VisitorStatsDoc,
+  type GscDailyRecord,
 } from '../lib/firebase-client';
 
 type TimeRange = 'today' | '7d' | '30d' | 'all';
@@ -156,6 +158,170 @@ const BarCard = ({ title, rows, emptyText = '暫無資料' }: BarCardProps) => {
   );
 };
 
+// ============ GSC / SEO 視覺元件（純 SVG，無圖表庫） ============
+
+/** 迷你折線 sparkline，畫在 trend card 裡 */
+const Sparkline = ({
+  values,
+  color = '#0a0a0a',
+  width = 120,
+  height = 32,
+}: {
+  values: number[];
+  color?: string;
+  width?: number;
+  height?: number;
+}) => {
+  if (values.length < 2) {
+    return <div style={{ width, height }} className="opacity-30 text-[10px] flex items-end">—</div>;
+  }
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const span = max - min || 1;
+  const pad = 2;
+  const stepX = (width - pad * 2) / (values.length - 1);
+  const pts = values.map((v, i) => {
+    const x = pad + i * stepX;
+    const y = pad + (height - pad * 2) * (1 - (v - min) / span);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  return (
+    <svg width={width} height={height} className="overflow-visible">
+      <polyline
+        points={pts.join(' ')}
+        fill="none"
+        stroke={color}
+        strokeWidth={2}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      <circle
+        cx={pad + (values.length - 1) * stepX}
+        cy={
+          pad +
+          (height - pad * 2) *
+            (1 - (values[values.length - 1] - min) / span)
+        }
+        r={2.5}
+        fill={color}
+      />
+    </svg>
+  );
+};
+
+interface TrendCardProps {
+  label: string;
+  value: number | string;
+  /** 與前一段相比的變化量（正/負/0）；undefined 表示無前期可比 */
+  delta?: number;
+  /** delta 單位後綴，例如 '' / '%' */
+  deltaSuffix?: string;
+  /** true 表示「值越低越好」（排名用），會反轉漲跌顏色 */
+  lowerIsBetter?: boolean;
+  spark: number[];
+  sparkColor?: string;
+}
+const TrendCard = ({
+  label,
+  value,
+  delta,
+  deltaSuffix = '',
+  lowerIsBetter = false,
+  spark,
+  sparkColor,
+}: TrendCardProps) => {
+  const hasDelta = delta !== undefined && Number.isFinite(delta) && delta !== 0;
+  const good = delta === undefined ? false : lowerIsBetter ? delta < 0 : delta > 0;
+  const deltaColor = !hasDelta ? '#6B7280' : good ? '#16A34A' : '#DC2626';
+  const arrow = !hasDelta ? '' : delta! > 0 ? '▲' : '▼';
+  return (
+    <div
+      className="border-2 border-black bg-white p-4"
+      style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
+    >
+      <div className="text-xs uppercase tracking-widest opacity-60 mb-1 font-mono">
+        {label}
+      </div>
+      <div className="flex items-end justify-between gap-2">
+        <div className="text-3xl font-black tracking-tight">{value}</div>
+        <Sparkline values={spark} color={sparkColor} />
+      </div>
+      <div className="text-xs mt-1 font-mono" style={{ color: deltaColor }}>
+        {hasDelta
+          ? `${arrow} ${Math.abs(delta!).toLocaleString(undefined, {
+              maximumFractionDigits: 1,
+            })}${deltaSuffix} vs 前期`
+          : '— 無前期可比'}
+      </div>
+    </div>
+  );
+};
+
+/** 曝光 vs 點擊雙軸折線圖（純 SVG）。曝光值通常遠大於點擊，各自正規化到自己的最大值。 */
+const ImpClickChart = ({
+  data,
+}: {
+  data: Array<{ date: string; impressions: number; clicks: number }>;
+}) => {
+  const W = 720;
+  const H = 240;
+  const padL = 8;
+  const padR = 8;
+  const padT = 16;
+  const padB = 28;
+  if (data.length < 2) {
+    return <div className="text-sm opacity-60 p-4">資料天數不足，至少需要 2 天才能畫趨勢圖。</div>;
+  }
+  const maxImp = Math.max(1, ...data.map((d) => d.impressions));
+  const maxClk = Math.max(1, ...data.map((d) => d.clicks));
+  const stepX = (W - padL - padR) / (data.length - 1);
+  const yImp = (v: number) => padT + (H - padT - padB) * (1 - v / maxImp);
+  const yClk = (v: number) => padT + (H - padT - padB) * (1 - v / maxClk);
+  const impPts = data.map((d, i) => `${padL + i * stepX},${yImp(d.impressions)}`).join(' ');
+  const clkPts = data.map((d, i) => `${padL + i * stepX},${yClk(d.clicks)}`).join(' ');
+  // x 軸只標頭、中、尾，避免擠
+  const tickIdx = [0, Math.floor((data.length - 1) / 2), data.length - 1];
+  return (
+    <div className="overflow-x-auto">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ minWidth: 480 }}>
+        {/* baseline */}
+        <line x1={padL} y1={H - padB} x2={W - padR} y2={H - padB} stroke="#e5e7eb" strokeWidth={1} />
+        {/* impressions area-ish line */}
+        <polyline points={impPts} fill="none" stroke="#2563EB" strokeWidth={2.5} strokeLinejoin="round" />
+        {/* clicks line */}
+        <polyline points={clkPts} fill="none" stroke="#DC2626" strokeWidth={2.5} strokeLinejoin="round" />
+        {data.map((d, i) => (
+          <g key={d.date}>
+            <circle cx={padL + i * stepX} cy={yImp(d.impressions)} r={2} fill="#2563EB" />
+            <circle cx={padL + i * stepX} cy={yClk(d.clicks)} r={2} fill="#DC2626" />
+          </g>
+        ))}
+        {tickIdx.map((i) => (
+          <text
+            key={i}
+            x={padL + i * stepX}
+            y={H - 8}
+            fontSize={11}
+            fontFamily="monospace"
+            fill="#6B7280"
+            textAnchor={i === 0 ? 'start' : i === data.length - 1 ? 'end' : 'middle'}
+          >
+            {data[i].date.slice(5)}
+          </text>
+        ))}
+      </svg>
+      <div className="flex gap-4 text-xs font-mono mt-1 px-2">
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-0.5" style={{ background: '#2563EB' }} />曝光（左尺度，max {maxImp}）
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-0.5" style={{ background: '#DC2626' }} />點擊（右尺度，max {maxClk}）
+        </span>
+      </div>
+    </div>
+  );
+};
+
 const AdminDashboard = () => {
   const [stats, setStats] = useState<VisitorStatsDoc>({ totalVisits: 0, lastVisit: null });
   const [visitors, setVisitors] = useState<VisitorRecord[]>([]);
@@ -164,10 +330,12 @@ const AdminDashboard = () => {
   const [outboundStats, setOutboundStats] = useState<OutboundStat[]>([]);
   const [outboundClicks, setOutboundClicks] = useState<OutboundClick[]>([]);
   const [messages, setMessages] = useState<GuestMessage[]>([]);
+  const [gscDaily, setGscDaily] = useState<GscDailyRecord[]>([]);
   const [range, setRange] = useState<TimeRange>('7d');
-  const [tab, setTab] = useState<'overview' | 'posts' | 'outbound' | 'visitors'>(
-    'overview'
-  );
+  const [gscDays, setGscDays] = useState<7 | 28 | 90>(28);
+  const [tab, setTab] = useState<
+    'overview' | 'seo' | 'posts' | 'outbound' | 'visitors'
+  >('overview');
 
   useEffect(() => {
     const unsubs: Array<() => void> = [];
@@ -178,6 +346,7 @@ const AdminDashboard = () => {
     unsubs.push(subscribeToOutboundStats(setOutboundStats));
     unsubs.push(subscribeToOutboundClicks(200, setOutboundClicks));
     unsubs.push(subscribeToMessages(setMessages));
+    unsubs.push(subscribeToGscDaily(90, setGscDaily));
     return () => unsubs.forEach((u) => u());
   }, []);
 
@@ -278,6 +447,115 @@ const AdminDashboard = () => {
     [rangedVisitors]
   );
 
+  // ============ GSC / SEO 聚合 ============
+  // gscDaily 已是升冪（舊→新）。取最後 gscDays 天為「本期」。
+  const gscWindow = useMemo(
+    () => gscDaily.slice(-gscDays),
+    [gscDaily, gscDays]
+  );
+  // 前一段同長度區間，用來算 period-over-period delta
+  const gscPrevWindow = useMemo(
+    () => gscDaily.slice(-gscDays * 2, -gscDays),
+    [gscDaily, gscDays]
+  );
+
+  const sumWindow = (rows: GscDailyRecord[]) => {
+    const imp = rows.reduce((s, r) => s + r.impressions, 0);
+    const clk = rows.reduce((s, r) => s + r.clicks, 0);
+    const ctr = imp ? (clk / imp) * 100 : 0;
+    // 曝光加權平均排名
+    const pos = imp
+      ? rows.reduce((s, r) => s + r.position * r.impressions, 0) / imp
+      : 0;
+    return { imp, clk, ctr, pos };
+  };
+
+  const gscNow = useMemo(() => sumWindow(gscWindow), [gscWindow]);
+  const gscPrev = useMemo(() => sumWindow(gscPrevWindow), [gscPrevWindow]);
+  const hasPrev = gscPrevWindow.length > 0;
+
+  // 關鍵字 → 文章 聚合（本期窗內所有天加總）。同一 query 可能落在多頁，取曝光最高那頁當代表。
+  const keywordAgg = useMemo(() => {
+    type Agg = {
+      query: string;
+      impressions: number;
+      clicks: number;
+      posSum: number; // 曝光加權排名分子
+      pageImp: Map<string, number>; // page -> impressions（決定代表頁）
+    };
+    const m = new Map<string, Agg>();
+    for (const day of gscWindow) {
+      for (const q of day.queries) {
+        let a = m.get(q.query);
+        if (!a) {
+          a = { query: q.query, impressions: 0, clicks: 0, posSum: 0, pageImp: new Map() };
+          m.set(q.query, a);
+        }
+        a.impressions += q.impressions;
+        a.clicks += q.clicks;
+        a.posSum += q.position * q.impressions;
+        if (q.page) a.pageImp.set(q.page, (a.pageImp.get(q.page) ?? 0) + q.impressions);
+      }
+    }
+    return Array.from(m.values())
+      .map((a) => {
+        let topPage = '';
+        let topImp = -1;
+        for (const [p, imp] of a.pageImp) {
+          if (imp > topImp) {
+            topImp = imp;
+            topPage = p;
+          }
+        }
+        return {
+          query: a.query,
+          page: topPage,
+          impressions: a.impressions,
+          clicks: a.clicks,
+          ctr: a.impressions ? (a.clicks / a.impressions) * 100 : 0,
+          position: a.impressions ? a.posSum / a.impressions : 0,
+        };
+      })
+      .sort((x, y) => y.impressions - x.impressions || y.clicks - x.clicks);
+  }, [gscWindow]);
+
+  // 🆕 新關鍵字：最新一天出現、但本期較早天數從未出現過的 query
+  const newKeywords = useMemo(() => {
+    if (gscWindow.length === 0) return [];
+    const latest = gscWindow[gscWindow.length - 1];
+    const earlier = new Set<string>();
+    for (let i = 0; i < gscWindow.length - 1; i++) {
+      for (const q of gscWindow[i].queries) earlier.add(q.query);
+    }
+    return latest.queries.filter((q) => !earlier.has(q.query));
+  }, [gscWindow]);
+
+  // 頁面聚合（本期窗內加總）
+  const pageAgg = useMemo(() => {
+    const m = new Map<string, { page: string; impressions: number; clicks: number; posSum: number }>();
+    for (const day of gscWindow) {
+      for (const p of day.pages) {
+        let a = m.get(p.page);
+        if (!a) {
+          a = { page: p.page, impressions: 0, clicks: 0, posSum: 0 };
+          m.set(p.page, a);
+        }
+        a.impressions += p.impressions;
+        a.clicks += p.clicks;
+        a.posSum += p.position * p.impressions;
+      }
+    }
+    return Array.from(m.values())
+      .map((a) => ({
+        page: a.page,
+        impressions: a.impressions,
+        clicks: a.clicks,
+        ctr: a.impressions ? (a.clicks / a.impressions) * 100 : 0,
+        position: a.impressions ? a.posSum / a.impressions : 0,
+      }))
+      .sort((x, y) => y.impressions - x.impressions || y.clicks - x.clicks);
+  }, [gscWindow]);
+
   const BUTTON_BASE =
     'px-3 py-1.5 text-sm font-mono uppercase tracking-widest border-2 border-black transition-colors';
   const BUTTON_ACTIVE =
@@ -305,7 +583,7 @@ const AdminDashboard = () => {
 
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 border-b-2 border-black pb-3">
-        {(['overview', 'posts', 'outbound', 'visitors'] as const).map((t) => (
+        {(['overview', 'seo', 'posts', 'outbound', 'visitors'] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -314,6 +592,8 @@ const AdminDashboard = () => {
           >
             {t === 'overview'
               ? '總覽'
+              : t === 'seo'
+              ? `SEO (${gscDaily.length})`
               : t === 'posts'
               ? `文章 (${postRanking.length})`
               : t === 'outbound'
@@ -418,6 +698,231 @@ const AdminDashboard = () => {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* SEO (GSC) */}
+      {tab === 'seo' && (
+        <div className="space-y-4">
+          {/* GSC 天數選擇 + 資料說明 */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs uppercase tracking-widest opacity-60 font-mono mr-1">
+              GSC 區間：
+            </span>
+            {([7, 28, 90] as const).map((d) => (
+              <button
+                key={d}
+                onClick={() => setGscDays(d)}
+                className={`${BUTTON_BASE} ${gscDays === d ? BUTTON_ACTIVE : BUTTON_IDLE}`}
+                style={gscDays === d ? { boxShadow: '3px 3px 0 #0a0a0a' } : undefined}
+              >
+                {d} 天
+              </button>
+            ))}
+            <span className="text-xs opacity-50 font-mono ml-auto">
+              已收 {gscDaily.length} 天 · GSC 有 3-4 天延遲
+            </span>
+          </div>
+
+          {gscDaily.length === 0 ? (
+            <div
+              className="border-2 border-black bg-white p-6 text-sm opacity-70"
+              style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
+            >
+              還沒有 GSC 數據。每天早上 routine 會自動寫入；第一次需等明早跑完，或手動跑
+              <code className="font-mono"> gsc-fetch-structured.py</code> 回補。
+            </div>
+          ) : (
+            <>
+              {/* 4 張趨勢卡 */}
+              <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
+                <TrendCard
+                  label={`曝光（${gscDays} 天）`}
+                  value={gscNow.imp.toLocaleString()}
+                  delta={hasPrev ? gscNow.imp - gscPrev.imp : undefined}
+                  spark={gscWindow.map((d) => d.impressions)}
+                  sparkColor="#2563EB"
+                />
+                <TrendCard
+                  label={`點擊（${gscDays} 天）`}
+                  value={gscNow.clk.toLocaleString()}
+                  delta={hasPrev ? gscNow.clk - gscPrev.clk : undefined}
+                  spark={gscWindow.map((d) => d.clicks)}
+                  sparkColor="#DC2626"
+                />
+                <TrendCard
+                  label="平均排名"
+                  value={gscNow.pos ? gscNow.pos.toFixed(1) : '—'}
+                  delta={hasPrev && gscPrev.pos ? gscNow.pos - gscPrev.pos : undefined}
+                  lowerIsBetter
+                  spark={gscWindow.map((d) => d.position)}
+                  sparkColor="#7C3AED"
+                />
+                <TrendCard
+                  label="CTR"
+                  value={`${gscNow.ctr.toFixed(1)}%`}
+                  delta={hasPrev ? gscNow.ctr - gscPrev.ctr : undefined}
+                  deltaSuffix="%"
+                  spark={gscWindow.map((d) => d.ctr)}
+                  sparkColor="#16A34A"
+                />
+              </div>
+
+              {/* 曝光 vs 點擊趨勢圖 */}
+              <div
+                className="border-2 border-black bg-white p-4"
+                style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
+              >
+                <div className="font-black mb-2">曝光 vs 點擊趨勢</div>
+                <ImpClickChart
+                  data={gscWindow.map((d) => ({
+                    date: d.date,
+                    impressions: d.impressions,
+                    clicks: d.clicks,
+                  }))}
+                />
+              </div>
+
+              {/* 🆕 新關鍵字 */}
+              {newKeywords.length > 0 && (
+                <div
+                  className="border-2 border-black p-4"
+                  style={{ boxShadow: '4px 4px 0 #0a0a0a', background: 'var(--color-neub-yellow)' }}
+                >
+                  <div className="font-black mb-2">
+                    🆕 最新一天冒出的新關鍵字（{newKeywords.length}）
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {newKeywords.map((q) => (
+                      <span
+                        key={q.query}
+                        className="inline-block px-2 py-1 bg-white border-2 border-black text-xs font-mono"
+                      >
+                        {q.query}
+                        <span className="opacity-50"> · {q.page || '?'} · 曝光 {q.impressions}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 關鍵字 → 文章 對應表（核心：別人搜什麼找到我的文章） */}
+              <div
+                className="border-2 border-black bg-white"
+                style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
+              >
+                <div className="p-4 border-b-2 border-black font-black">
+                  關鍵字 → 文章（{gscDays} 天，{keywordAgg.length} 個查詢）
+                </div>
+                {keywordAgg.length === 0 ? (
+                  <div className="p-4 text-sm opacity-60">
+                    此區間沒有查詢數據（GSC 對低流量查詢會匿名/門檻過濾，屬正常）。
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead className="bg-gray-50 border-b-2 border-black">
+                        <tr>
+                          <th className="text-left px-4 py-2 font-mono text-xs uppercase">關鍵字</th>
+                          <th className="text-left px-4 py-2 font-mono text-xs uppercase">落地文章</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">曝光</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">點擊</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">CTR</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">排名</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {keywordAgg.slice(0, 100).map((k) => (
+                          <tr key={k.query} className="border-b border-gray-200">
+                            <td className="px-4 py-2 font-semibold">{k.query}</td>
+                            <td className="px-4 py-2">
+                              {k.page ? (
+                                <a
+                                  href={k.page}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline font-mono text-xs break-all"
+                                >
+                                  {k.page}
+                                </a>
+                              ) : (
+                                <span className="opacity-40 font-mono text-xs">—</span>
+                              )}
+                            </td>
+                            <td className="px-4 py-2 text-right font-mono font-black">
+                              {k.impressions}
+                            </td>
+                            <td className="px-4 py-2 text-right font-mono">{k.clicks}</td>
+                            <td className="px-4 py-2 text-right font-mono opacity-70">
+                              {k.ctr.toFixed(1)}%
+                            </td>
+                            <td className="px-4 py-2 text-right font-mono opacity-70">
+                              {k.position.toFixed(1)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+
+              {/* Top 頁面 */}
+              <div
+                className="border-2 border-black bg-white"
+                style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
+              >
+                <div className="p-4 border-b-2 border-black font-black">
+                  Top 頁面（{gscDays} 天曝光排序）
+                </div>
+                {pageAgg.length === 0 ? (
+                  <div className="p-4 text-sm opacity-60">暫無資料</div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead className="bg-gray-50 border-b-2 border-black">
+                        <tr>
+                          <th className="text-left px-4 py-2 font-mono text-xs uppercase">#</th>
+                          <th className="text-left px-4 py-2 font-mono text-xs uppercase">頁面</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">曝光</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">點擊</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">CTR</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase">排名</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pageAgg.slice(0, 50).map((p, i) => (
+                          <tr key={p.page} className="border-b border-gray-200">
+                            <td className="px-4 py-2 font-mono">{i + 1}</td>
+                            <td className="px-4 py-2">
+                              <a
+                                href={p.page}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline font-mono text-xs break-all"
+                              >
+                                {p.page}
+                              </a>
+                            </td>
+                            <td className="px-4 py-2 text-right font-mono font-black">
+                              {p.impressions}
+                            </td>
+                            <td className="px-4 py-2 text-right font-mono">{p.clicks}</td>
+                            <td className="px-4 py-2 text-right font-mono opacity-70">
+                              {p.ctr.toFixed(1)}%
+                            </td>
+                            <td className="px-4 py-2 text-right font-mono opacity-70">
+                              {p.position.toFixed(1)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
       )}
 

@@ -453,3 +453,93 @@ export function subscribeToOutboundClicks(
     callback(rows);
   });
 }
+
+// ============ GSC（Google Search Console）每日數據 ============
+// 由 ~/.claude/scripts/gsc-fetch-structured.py 每日寫入 bob_gsc_daily/{YYYY-MM-DD}。
+// query+page 雙維度：每個關鍵字知道落在哪篇文章（核心訴求：別人搜什麼找到我的文章）。
+
+/** 一個關鍵字 → 文章的對應 + 當日成效 */
+export interface GscQueryRow {
+  query: string;
+  /** 該關鍵字主要落地的文章 path（已去掉 https://yanchen.app 前綴） */
+  page: string;
+  impressions: number;
+  clicks: number;
+  /** 百分比，例如 4.2 表示 4.2% */
+  ctr: number;
+  /** 平均排名 */
+  position: number;
+}
+
+/** 單一頁面的當日聚合成效 */
+export interface GscPageRow {
+  page: string;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+  position: number;
+}
+
+/** 單日 GSC 快照（doc id = date） */
+export interface GscDailyRecord {
+  date: string; // YYYY-MM-DD
+  impressions: number;
+  clicks: number;
+  ctr: number; // 百分比
+  position: number; // 平均排名
+  queries: GscQueryRow[];
+  pages: GscPageRow[];
+}
+
+/**
+ * 訂閱最近 N 天的 GSC 每日數據，依日期升冪排序（方便畫時間序列圖）。
+ * doc id 是 YYYY-MM-DD，字典序 = 時間序，所以直接用 documentId/date 排序即可。
+ */
+export function subscribeToGscDaily(
+  maxDays = 90,
+  callback: (records: GscDailyRecord[]) => void,
+  onError?: (error: Error) => void
+): Unsubscribe {
+  const db = getDb();
+  // 取最新 maxDays 筆（date desc + limit），再在 client 端轉回升冪。
+  const q = query(
+    collection(db, 'bob_gsc_daily'),
+    orderBy('date', 'desc'),
+    fsLimit(maxDays)
+  );
+  return onSnapshot(
+    q,
+    (snap) => {
+      const rows: GscDailyRecord[] = snap.docs.map((d) => {
+        const data = d.data();
+        return {
+          date: (data.date as string) || d.id,
+          impressions: (data.impressions as number) ?? 0,
+          clicks: (data.clicks as number) ?? 0,
+          ctr: (data.ctr as number) ?? 0,
+          position: (data.position as number) ?? 0,
+          queries: ((data.queries as GscQueryRow[]) ?? []).map((q2) => ({
+            query: q2.query ?? '',
+            page: q2.page ?? '',
+            impressions: q2.impressions ?? 0,
+            clicks: q2.clicks ?? 0,
+            ctr: q2.ctr ?? 0,
+            position: q2.position ?? 0,
+          })),
+          pages: ((data.pages as GscPageRow[]) ?? []).map((p) => ({
+            page: p.page ?? '',
+            impressions: p.impressions ?? 0,
+            clicks: p.clicks ?? 0,
+            ctr: p.ctr ?? 0,
+            position: p.position ?? 0,
+          })),
+        };
+      });
+      rows.sort((a, b) => a.date.localeCompare(b.date)); // 升冪：舊 → 新
+      callback(rows);
+    },
+    (error) => {
+      onError?.(error);
+    }
+  );
+}
