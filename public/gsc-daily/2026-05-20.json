@@ -1,0 +1,33 @@
+{
+  "date": "2026-05-20",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 6.7,
+  "queries": [
+    {
+      "query": "ai purple problem",
+      "page": "/blog/ai-frontend-purple-problem-explained/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-code-5hour-limit-schedule-loop/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.5
+    },
+    {
+      "page": "/blog/ai-frontend-purple-problem-explained/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ]
+}

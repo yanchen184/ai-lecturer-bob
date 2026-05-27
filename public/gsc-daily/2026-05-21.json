@@ -1,0 +1,180 @@
+{
+  "date": "2026-05-21",
+  "impressions": 29,
+  "clicks": 1,
+  "ctr": 3.45,
+  "position": 11.2,
+  "queries": [
+    {
+      "query": "k8s nodeport",
+      "page": "/blog/k8s/nodeport-three-services",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "query": "k8s deployment",
+      "page": "/blog/k8s/deployment-intro/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 29
+    },
+    {
+      "query": "hermes agent proxy",
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 17
+    },
+    {
+      "query": "k8s node port",
+      "page": "/blog/k8s/nodeport-three-services",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "query": "kubernetes master node worker node",
+      "page": "/blog/k8s/k8s-architecture-master-worker",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 27
+    },
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 48
+    },
+    {
+      "query": "mermaid plantuml 比較",
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "query": "nodeport service",
+      "page": "/blog/k8s/nodeport-three-services",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/nodeport-three-services",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.4
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.6
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.2
+    },
+    {
+      "page": "/blog/claude-code-5hour-limit-schedule-loop/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/k8s-architecture-master-worker",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19
+    },
+    {
+      "page": "/blog/k8s/deployment-intro/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 29
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/ai-frontend-purple-problem-explained/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 30
+    },
+    {
+      "page": "/blog/hermes-agent-quickstart/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/k8s/configmap-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/k8s/k8s-architecture-master-worker/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "page": "/blog/k8s/kubectl-advanced-tips/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 48
+    },
+    {
+      "page": "/blog/k8s/rolling-update-rollback",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14
+    }
+  ]
+}
