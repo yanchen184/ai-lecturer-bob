@@ -982,6 +982,47 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'screendoc-claude-code-skill',
+    title:
+      '我把「截圖寫操作手冊」做成 Claude Code skill：screendoc 拆解（4 視角審查 + 一鍵重跑）',
+    excerpt:
+      '每次系統改版都要重截一遍操作手冊、還老是截圖跟說明對不上？我把這件苦差事做成 Claude Code skill：/screendoc。一句指令偵測前端框架、跑 Playwright 截圖、用 UI/UX + 系統分析 + 新手 + 開發者 4 個視角逐張比對「截圖 vs 說明 vs 原始碼」、不一致就局部重截迭代到全過，最後產一份對外可發表的離線 HTML 手冊。本文拆它在幹嘛、Phase 0–5 跑了什麼、為什麼要 4 視角不是過度設計，以及怎麼透過 yc-plugin 一鍵裝起來用。附我在一個無關的 React + Vite 專案上 round-trip 跑通的實測。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'screendoc',
+      'Playwright',
+      'AI 工作流',
+      'Skill',
+      '操作手冊',
+      '前端',
+      'yc-plugin',
+    ],
+    faqItems: [
+      {
+        q: 'screendoc 跟一般的 Playwright E2E 測試差在哪？',
+        a: 'E2E 測試的目的是「驗證功能對不對」，斷言通過就好，截圖只是失敗時的證據。screendoc 的目的是「產給人看的操作手冊」，截圖是主角、還要配對得上的敘事說明、再經 4 視角審查確保圖文碼同步。它複用了 Playwright 當截圖引擎，但產出是 HTML 手冊不是測試報告。如果你已經有 e2e/ 目錄，screendoc 可以接著用，不用重寫。',
+      },
+      {
+        q: '我不太會寫 code，也能用 screendoc 嗎？',
+        a: '可以用，但你得有一個能在本機跑起來的前端專案（dev server 起得來）。screendoc 自己會偵測框架、寫 Playwright spec、跑截圖，你不用手寫測試碼。你需要做的是：把專案路徑給它、看它產出的手冊、覺得哪張圖或說明不對就回饋。它是「幫你做手冊」的工具，不是「教你寫測試」的工具。',
+      },
+      {
+        q: '改版後真的一句指令就能重跑？不會又要手動調？',
+        a: '大部分情況是。screendoc 每個階段的產出物都落檔（shotlist、context、manifest），重跑時會沿用上次的截圖清單、只重截變動的頁面。前提是頁面結構沒有大改 —— 如果你整個換了路由或拆了頁面，shotlist 要更新，但這也是它在 Phase 1 自動做的事。日常的「按鈕改色、文案改字、欄位增減」這種改版，重跑基本無痛。',
+      },
+      {
+        q: '我只想要這個 skill，不想裝整個 yc-plugin 可以嗎？',
+        a: '可以。skill 本質是一個資料夾（SKILL.md + templates + detectors），你可以只把 yc-plugin 裡的 skills/screendoc/ 複製到你的 ~/.claude/skills/screendoc/，一樣會被 Claude Code auto-discover。裝整個 plugin 只是最省事的途徑（一句 /plugin install），且未來 skill 更新跟著 plugin 走、不用自己同步。yc-plugin 其他指令是 YouTube 工作流，用不到不影響 screendoc。',
+      },
+      {
+        q: 'screendoc 支援哪些前端框架？我的專案沒用 UI 框架行嗎？',
+        a: '行。screendoc 內建框架偵測（React / Next / Vue / 其他 SPA）跟一組設計系統 adapter（generic / antd / mui / chakra / radix / mantine）。有用 UI 框架的走對應 preset、自動知道元件的 selector 慣例；沒用任何 UI 框架的純手刻站走 generic preset 一樣能跑 —— 我實測就是拿一個 React + Vite + Tailwind 純手刻站驗的，generic preset 直接生效。它靠 DOM anchor 鎖頁面，不依賴特定框架的內部結構。',
+      },
+    ],
+    featured: true,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
