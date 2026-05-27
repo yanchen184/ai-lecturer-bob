@@ -51,3 +51,9 @@ public/images/blog/**/article.md
 public/images/blog/**/evidence-brief.md
 public/images/blog/**/caption.txt
 public/images/blog/**/*.txt
+
+# Firebase / Firestore service-account keys — NEVER commit
+firestore-sa-key.json
+*-sa-key.json
+serviceAccountKey*.json
+firebase-adminsdk-*.json

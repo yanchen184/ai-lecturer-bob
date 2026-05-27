@@ -1,0 +1,109 @@
+rules_version = '2';
+
+// Firestore 安全規則 — forbidden-beauty / ai-lecturer-bob
+//
+// 設計前提（實測 2026-05-27）：
+//   - 收緊前是 test-mode 全開：匿名拿前端公開 API key 可讀寫刪所有 collection。
+//   - /admin 後台「沒有登入機制」，純前端用同一把 public key 讀統計。
+//     => 讀取無法靠 request.auth（會直接打爆 dashboard），故 read 維持公開，
+//        防線改放在「寫入驗證 + 禁改禁刪 + GSC 改 service-account-only」。
+//   - 寫入端：訪客/留言/計數器都是前端匿名 fire-and-forget；GSC 由每日腳本寫。
+//
+// 收緊策略（對應 Bob 選的「gsc 走 service account，stats 維持匿名可寫」）：
+//   1. bob_gsc_daily：匿名禁寫禁刪，只有 service account 能寫 => 堵掉偽造 SEO 數據。
+//   2. bob_post_stats / bob_outbound_stats：匿名可建、可 increment 更新，但禁刪。
+//   3. bob_visitors / bob_post_views / bob_outbound_clicks：匿名可新增，禁改禁刪、禁讀回原始 log。
+//   4. bob_messages：匿名可新增（含長度/型別驗證），禁改禁刪。
+//   5. bob_blog_posts：公開讀（build-time SSG 來源），匿名禁寫禁刪。
+//   6. 其餘一律拒絕。
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // service account（每日腳本用）token 沒有 firebase.sign_in_provider，
+    // 一般匿名/前端使用者請求則完全沒有 request.auth。用這個區分「腳本」vs「匿名」。
+    function isServiceAccount() {
+      return request.auth != null
+        && !('firebase' in request.auth.token);
+    }
+
+    // 只允許「increment 既有數值欄位 / 更新時間戳」這種計數器式更新，
+    // 不允許改其他欄位。粗略守門：限制本次變動的 key 集合。
+    function onlyStatsFields() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+        .hasOnly(['totalViews', 'totalClicks', 'lastViewAt', 'lastClickAt', 'title']);
+    }
+
+    // ---- 部落格文章：公開讀，匿名禁寫 ----
+    match /bob_blog_posts/{doc} {
+      allow read: if true;
+      allow write: if isServiceAccount();
+    }
+
+    // ---- GSC 每日數據：只有 service account 能寫，匿名禁寫禁刪 ----
+    match /bob_gsc_daily/{date} {
+      allow read: if true;
+      allow create, update: if isServiceAccount();
+      allow delete: if false;
+    }
+
+    // ---- 文章統計：匿名可建、可 increment，禁刪 ----
+    match /bob_post_stats/{slug} {
+      allow read: if true;
+      allow create: if request.resource.data.totalViews is int
+                    && request.resource.data.totalViews <= 1;
+      allow update: if onlyStatsFields();
+      allow delete: if false;
+    }
+
+    // ---- 外連統計：同上 ----
+    match /bob_outbound_stats/{target} {
+      allow read: if true;
+      allow create: if request.resource.data.totalClicks is int
+                    && request.resource.data.totalClicks <= 1;
+      allow update: if onlyStatsFields();
+      allow delete: if false;
+    }
+
+    // ---- 原始訪客 log：匿名可新增，禁改禁刪 ----
+    // read 維持公開：/admin 目前「沒有登入」，用同一把 public key 直接讀這些
+    // 畫 dashboard。匿名與 /admin 是同一個身分，無法「只讓 /admin 讀」。
+    // 若要真正藏起 raw log（userAgent / referrer 等）=> 必須先給 /admin 加
+    // Firebase Auth，把這三段 read 改成 `request.auth.uid == '<你的 uid>'`。
+    // 在那之前先堵住「禁改禁刪」，至少別人偽造/清空不了。
+    match /bob_visitors/{doc} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false;
+    }
+
+    match /bob_post_views/{doc} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false;
+    }
+
+    match /bob_outbound_clicks/{doc} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false;
+    }
+
+    // ---- 留言板：匿名可新增（驗證長度/型別），禁改禁刪 ----
+    match /bob_messages/{doc} {
+      allow read: if true;
+      allow create: if request.resource.data.nickname is string
+                    && request.resource.data.nickname.size() <= 20
+                    && request.resource.data.nickname.size() > 0
+                    && request.resource.data.content is string
+                    && request.resource.data.content.size() <= 500
+                    && request.resource.data.content.size() > 0;
+      allow update, delete: if false;
+    }
+
+    // ---- 其餘一律拒絕 ----
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
