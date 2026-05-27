@@ -49,6 +49,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'langchain-vs-langgraph-2026',
+    title:
+      'LangChain vs LangGraph 是什麼?2026 該學哪個(完整比較)',
+    excerpt:
+      'LangChain 跟 LangGraph 不是二選一,是上下層:LangGraph 是底層 runtime(管 state、流程、重試),LangChain 是建在它上面的高階 API。2025-10-22 兩者都上 1.0 正式版。這篇用比較表、三個情境判斷、三個真實踩坑,講清楚標準 agent loop 該用 LangChain、要精細控制流程分流與重試該用 LangGraph,以及完全新手該從哪個開始學。「用真實專案學 LangGraph」系列第一篇。',
+    category: 'AI 教學',
+    tags: [
+      'LangGraph',
+      'LangChain',
+      'LangGraph 教學',
+      'AI Agent',
+      'LangGraph vs LangChain',
+      'AI 應用開發',
+      'Python',
+    ],
+    publishDate: '2026-05-27',
+    faqItems: [
+      {
+        q: 'LangChain 跟 LangGraph 可以混用嗎?',
+        a: '可以,而且官方鼓勵。你可以用 LangChain 的 create_agent 快速做出 agent,然後把它當成 LangGraph 圖裡的一個 node。因為 LangChain 底層就是 LangGraph,兩者天生相容。',
+      },
+      {
+        q: '我完全不會,該先學 LangChain 還是 LangGraph?',
+        a: '先學 LangGraph 的核心三件事——state、node、edge。把這三個搞懂,LangChain 的 create_agent 你一看就懂,因為它只是把一個常見的 graph 包起來。反過來先學 LangChain,你會卡在不知道底下 runtime 長怎樣。',
+      },
+      {
+        q: 'LangGraph 1.0 穩定嗎?可以上 production 嗎?',
+        a: '可以。官方說它是 durable agent 框架領域的第一個穩定大版本,已經在 Uber、LinkedIn、Klarna 這些公司跑了一年多才正式 1.0,並承諾 2.0 前不做破壞性更新。',
+      },
+      {
+        q: '只做簡單的 RAG 問答,需要 LangGraph 嗎?',
+        a: '不一定需要。純 RAG(檢索加丟給模型回答)用 LangChain 的標準組件就夠。等你的流程開始長出分流、重試、人工審核、多步驟混合這些需求,再下沉到 LangGraph。不要為了用而用。',
+      },
+      {
+        q: 'LangChain 1.0 對 Python 版本有什麼要求?',
+        a: 'LangChain 1.0 把 Python 3.9 支援拿掉了,最低需要 3.10。如果你還在 3.9 的環境,pip 裝得起來但行為會怪,先升 Python 再說。',
+      },
+    ],
+    featured: true,
+  },
+  {
     slug: 'hermes-agent-intro',
     title:
       'Hermes Agent 是什麼?一篇給完全新手看的 AI 工具介紹(白話版)',
