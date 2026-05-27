@@ -1,0 +1,125 @@
+{
+  "date": "2026-05-23",
+  "impressions": 28,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 9.9,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 45.5
+    },
+    {
+      "query": "claude code 卡住",
+      "page": "/blog/claude-code-lesson-3/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.7
+    },
+    {
+      "page": "/blog/claude-code-lesson-3/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/chatgpt-image-2/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 45.5
+    },
+    {
+      "page": "/blog/karpathy-claude-skills",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14
+    },
+    {
+      "page": "/blog/claude-code-5hour-limit-schedule-loop/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/claude-code-lesson-4/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/hermes-agent-quickstart/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/k8s/deployment-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/yc-plugin-youtube-upload/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
