@@ -47,6 +47,18 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // ---- 全站計數器（bob_stats/visitors 等單一 doc）：匿名可建、可 increment，禁刪 ----
+    // firebase-client.ts trackVisitor() 寫這裡（totalVisits increment + lastVisit），
+    // AdminDashboard subscribeToVisitorStats() 讀這裡。收緊規則時漏掉這個 collection
+    // → 落到 catch-all if false → 首頁追蹤寫入 403、/admin dashboard 讀取 403。
+    match /bob_stats/{key} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys()
+                      .hasOnly(['totalVisits', 'totalClicks', 'lastVisit']);
+      allow delete: if false;
+    }
+
     // ---- 文章統計：匿名可建、可 increment，禁刪 ----
     match /bob_post_stats/{slug} {
       allow read: if true;
@@ -98,6 +110,57 @@ service cloud.firestore {
                     && request.resource.data.content is string
                     && request.resource.data.content.size() <= 500
                     && request.resource.data.content.size() > 0;
+      allow update, delete: if false;
+    }
+
+    // ============================================================
+    // forbidden-beauty 募資網（fb.yanchen.app）— 與本部落格共用同一個
+    // Firestore project，但用「裸名」collection（無 bob_ 前綴）。
+    //
+    // 重要：一個 Firebase project 只有「一份」安全規則。2026-05-27 收緊時
+    // 這份 rules 只寫了 bob_*，deploy 後覆蓋整個 project，導致 fb 站的這些
+    // collection 全部落到下方 catch-all if false → admin/留言/贊助/漏斗全掛。
+    // 兩站規則必須同檔共管（source: ~/workspace/forbidden-beauty/src/firebase.ts）。
+    //
+    // 策略沿用 bob_*：公開讀（admin 無登入）、log 類匿名可建禁改禁刪、
+    // 計數器類匿名可建可更新禁刪、comments/sponsors 加長度型別驗證。
+    // ============================================================
+
+    // ---- 原始 log（前端 fire-and-forget 追蹤）：匿名可建，禁改禁刪 ----
+    match /visitors/{doc}        { allow read: if true; allow create: if true; allow update, delete: if false; }
+    match /searchVisitors/{doc}  { allow read: if true; allow create: if true; allow update, delete: if false; }
+    match /searchKeywords/{doc}  { allow read: if true; allow create: if true; allow update, delete: if false; }
+    match /buttonClicks/{doc}    { allow read: if true; allow create: if true; allow update, delete: if false; }
+    match /scrollDepth/{doc}     { allow read: if true; allow create: if true; allow update, delete: if false; }
+    match /funnel/{doc}          { allow read: if true; allow create: if true; allow update, delete: if false; }
+
+    // ---- 計數器（get→set/update increment，欄位多樣含動態 from{engine}）：
+    //      匿名可建可更新，禁刪。守門重點是禁刪、禁竄改文件數量，不細列欄位。 ----
+    match /stats/{key}           { allow read: if true; allow create, update: if true; allow delete: if false; }
+    match /buttonStats/{id}      { allow read: if true; allow create, update: if true; allow delete: if false; }
+    match /sectionStats/{id}     { allow read: if true; allow create, update: if true; allow delete: if false; }
+    match /funnelStats/{key}     { allow read: if true; allow create, update: if true; allow delete: if false; }
+
+    // ---- 留言：匿名可新增（驗證長度/型別），禁改禁刪 ----
+    match /comments/{doc} {
+      allow read: if true;
+      allow create: if request.resource.data.nickname is string
+                    && request.resource.data.nickname.size() > 0
+                    && request.resource.data.nickname.size() <= 50
+                    && request.resource.data.content is string
+                    && request.resource.data.content.size() > 0
+                    && request.resource.data.content.size() <= 1000;
+      allow update, delete: if false;
+    }
+
+    // ---- 贊助者：匿名可新增（驗證型別），禁改禁刪 ----
+    match /sponsors/{doc} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() <= 50
+                    && request.resource.data.planName is string
+                    && request.resource.data.planPrice is int;
       allow update, delete: if false;
     }
 
