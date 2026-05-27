@@ -1,0 +1,293 @@
+{
+  "date": "2026-05-24",
+  "impressions": 88,
+  "clicks": 2,
+  "ctr": 2.27,
+  "position": 8.0,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 45
+    },
+    {
+      "query": "kfchou/wiki-skills",
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "query": "llm wiki",
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "query": "mac安装hermes agent",
+      "page": "/blog/hermes-agent-quickstart/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 67
+    },
+    {
+      "query": "musubi tuner",
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "query": "pod label",
+      "page": "/blog/k8s/self-healing-labels-selector/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "query": "superpowers github",
+      "page": "/blog/claude-code-lesson-4/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "query": "wan2.2_i2v",
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "query": "滾動更新",
+      "page": "/blog/k8s/rolling-update-rollback/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 21,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.4
+    },
+    {
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 13,
+      "clicks": 1,
+      "ctr": 7.69,
+      "position": 7.4
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "page": "/blog/claude-code-lesson-4/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/hermes-agent-quickstart/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19.5
+    },
+    {
+      "page": "/blog/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 13
+    },
+    {
+      "page": "/blog/claude-self-sync-intro/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/k8s/service-ingress-end-to-end/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.3
+    },
+    {
+      "page": "/blog/ralph-loop-real-world/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.7
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 45
+    },
+    {
+      "page": "/blog/karpathy-claude-skills/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 2
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/ai-daily-seo-email-bot-howto",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/claude-code-lesson-2/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-lesson-3/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/claude-code-lesson-4",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/k8s/daemonset-cronjob/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/k8s/deployment-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/k8s/kubectl-advanced-tips/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/rolling-update-rollback",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/rolling-update-rollback/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/k8s/self-healing-labels-selector/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "page": "/blog/memory-governance-ep1-claude-bad-notes",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/memory-governance-ep1-claude-bad-notes/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/memory-governance-ep2-rules-ai-cant-remember/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/zenbu-powers-claude-code-plugin-design",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ]
+}
