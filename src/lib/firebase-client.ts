@@ -544,3 +544,32 @@ export async function fetchGscDaily(maxDays = 90): Promise<GscDailyRecord[]> {
   rows.sort((a, b) => a.date.localeCompare(b.date)); // 升冪：舊 → 新
   return rows;
 }
+
+/** 單篇文章的結構分明細（programmatically-measurable 14 項，滿分 100）。 */
+export interface ContentScoreEntry {
+  total: number;
+  breakdown: Record<string, number>;
+  wordCount: number;
+}
+
+/** content-scores.json 的整檔形狀：slug → 分數。 */
+export interface ContentScoresFile {
+  generatedAt: string; // YYYY-MM-DD
+  scores: Record<string, ContentScoreEntry>;
+}
+
+/**
+ * 抓全站文章的「結構分」（publish 時由 scripts/publish-blog.mjs 算好寫進
+ * public/content-scores.json，按 slug keyed）。供 /admin 對照 SEO 流量做分析：
+ * 高結構分是不是真的換到更多曝光/點擊。讀不到時回空集合，不讓整頁掛掉。
+ */
+export async function fetchContentScores(): Promise<ContentScoresFile> {
+  const url = withBase('/content-scores.json');
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`content-scores ${res.status}`);
+  const data = (await res.json()) as Partial<ContentScoresFile>;
+  return {
+    generatedAt: data.generatedAt ?? '',
+    scores: data.scores ?? {},
+  };
+}

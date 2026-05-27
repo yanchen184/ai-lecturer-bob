@@ -9,6 +9,7 @@ import {
   subscribeToOutboundClicks,
   subscribeToMessages,
   fetchGscDaily,
+  fetchContentScores,
   type VisitorRecord,
   type PostStat,
   type PostView,
@@ -17,6 +18,7 @@ import {
   type GuestMessage,
   type VisitorStatsDoc,
   type GscDailyRecord,
+  type ContentScoresFile,
 } from '../lib/firebase-client';
 
 type TimeRange = 'today' | '7d' | '30d' | 'all';
@@ -158,6 +160,16 @@ const BarCard = ({ title, rows, emptyText = '暫無資料' }: BarCardProps) => {
   );
 };
 
+/**
+ * 從 GSC page URL 抽出 blog slug，對齊 content-scores.json 的 key。
+ * 例：https://yanchen.app/blog/langgraph-state-node-edge/ → langgraph-state-node-edge
+ * 非 /blog/ 頁面（首頁、tag 頁等）回 null。
+ */
+function slugFromUrl(url: string): string | null {
+  const m = url.match(/\/blog\/([^/?#]+)\/?/);
+  return m ? m[1] : null;
+}
+
 // ============ GSC / SEO 視覺元件（純 SVG，無圖表庫） ============
 
 /** 迷你折線 sparkline，畫在 trend card 裡 */
@@ -205,6 +217,91 @@ const Sparkline = ({
         r={2.5}
         fill={color}
       />
+    </svg>
+  );
+};
+
+/**
+ * 結構分 × 流量散點圖（手刻 SVG）。x = 結構分(0-100)，y = 曝光(log scale，因量級差很大)。
+ * 點顏色依分數高低，hover 顯示 slug。沒曝光的文章(y=0)壓在底軸上，仍畫出來方便看「高分但沒流量」。
+ */
+const ScoreTrafficScatter = ({
+  points,
+}: {
+  points: Array<{ slug: string; score: number; impressions: number; clicks: number }>;
+}) => {
+  const W = 560;
+  const H = 320;
+  const padL = 48;
+  const padB = 40;
+  const padT = 16;
+  const padR = 16;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+
+  if (points.length === 0) {
+    return <div className="p-4 text-sm opacity-60">暫無可對照的資料</div>;
+  }
+
+  const maxImp = Math.max(1, ...points.map((p) => p.impressions));
+  // log scale：y = log10(imp+1) / log10(maxImp+1)
+  const logMax = Math.log10(maxImp + 1) || 1;
+  const xOf = (score: number) => padL + (Math.min(100, Math.max(0, score)) / 100) * plotW;
+  const yOf = (imp: number) =>
+    padT + plotH * (1 - Math.log10(imp + 1) / logMax);
+
+  const colorOf = (s: number) => (s >= 85 ? '#16a34a' : s >= 70 ? '#ca8a04' : '#dc2626');
+
+  // x 軸刻度：0/25/50/75/100
+  const xTicks = [0, 25, 50, 75, 100];
+  // y 軸刻度：0, 10, 100, 1000…（log）
+  const yTicks: number[] = [0];
+  for (let v = 1; v <= maxImp; v *= 10) yTicks.push(v);
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ maxWidth: W }}>
+      {/* 軸線 */}
+      <line x1={padL} y1={padT} x2={padL} y2={padT + plotH} stroke="#0a0a0a" strokeWidth={2} />
+      <line x1={padL} y1={padT + plotH} x2={padL + plotW} y2={padT + plotH} stroke="#0a0a0a" strokeWidth={2} />
+      {/* x 刻度 */}
+      {xTicks.map((t) => (
+        <g key={`x${t}`}>
+          <line x1={xOf(t)} y1={padT + plotH} x2={xOf(t)} y2={padT + plotH + 4} stroke="#0a0a0a" strokeWidth={1} />
+          <text x={xOf(t)} y={padT + plotH + 18} textAnchor="middle" fontSize={11} fontFamily="monospace" fill="#0a0a0a">
+            {t}
+          </text>
+        </g>
+      ))}
+      <text x={padL + plotW / 2} y={H - 4} textAnchor="middle" fontSize={11} fontFamily="monospace" fill="#0a0a0a" fontWeight="bold">
+        結構分 →
+      </text>
+      {/* y 刻度 */}
+      {yTicks.map((t) => (
+        <g key={`y${t}`}>
+          <line x1={padL - 4} y1={yOf(t)} x2={padL} y2={yOf(t)} stroke="#0a0a0a" strokeWidth={1} />
+          <text x={padL - 6} y={yOf(t) + 3} textAnchor="end" fontSize={10} fontFamily="monospace" fill="#0a0a0a">
+            {t >= 1000 ? `${t / 1000}k` : t}
+          </text>
+        </g>
+      ))}
+      <text x={12} y={padT + plotH / 2} textAnchor="middle" fontSize={11} fontFamily="monospace" fill="#0a0a0a" fontWeight="bold" transform={`rotate(-90 12 ${padT + plotH / 2})`}>
+        曝光（log）↑
+      </text>
+      {/* 資料點 */}
+      {points.map((p) => (
+        <circle
+          key={p.slug}
+          cx={xOf(p.score)}
+          cy={yOf(p.impressions)}
+          r={5}
+          fill={colorOf(p.score)}
+          fillOpacity={0.7}
+          stroke="#0a0a0a"
+          strokeWidth={1.5}
+        >
+          <title>{`${p.slug}\n結構分 ${p.score} · 曝光 ${p.impressions} · 點擊 ${p.clicks}`}</title>
+        </circle>
+      ))}
     </svg>
   );
 };
@@ -331,6 +428,10 @@ const AdminDashboard = () => {
   const [outboundClicks, setOutboundClicks] = useState<OutboundClick[]>([]);
   const [messages, setMessages] = useState<GuestMessage[]>([]);
   const [gscDaily, setGscDaily] = useState<GscDailyRecord[]>([]);
+  const [contentScores, setContentScores] = useState<ContentScoresFile>({
+    generatedAt: '',
+    scores: {},
+  });
   const [range, setRange] = useState<TimeRange>('7d');
   const [gscDays, setGscDays] = useState<7 | 28 | 90>(28);
   const [tab, setTab] = useState<
@@ -350,6 +451,9 @@ const AdminDashboard = () => {
     fetchGscDaily(90)
       .then(setGscDaily)
       .catch((e) => console.error('[admin] fetchGscDaily failed', e));
+    fetchContentScores()
+      .then(setContentScores)
+      .catch((e) => console.error('[admin] fetchContentScores failed', e));
     return () => unsubs.forEach((u) => u());
   }, []);
 
@@ -558,6 +662,35 @@ const AdminDashboard = () => {
       }))
       .sort((x, y) => y.impressions - x.impressions || y.clicks - x.clicks);
   }, [gscWindow]);
+
+  // 結構分 × 流量 join：每點 = 一篇同時有「結構分」且「本期 GSC 有曝光」的文章。
+  // 用來肉眼檢驗「高結構分是否真的換到更多曝光」。
+  const scoreVsTraffic = useMemo(() => {
+    const byPage = new Map(pageAgg.map((p) => [p.page, p]));
+    const points: Array<{
+      slug: string;
+      score: number;
+      impressions: number;
+      clicks: number;
+    }> = [];
+    for (const [slug, sc] of Object.entries(contentScores.scores)) {
+      // pageAgg 的 page 是完整 URL；用 slug 反查代表頁的流量。
+      let agg: (typeof pageAgg)[number] | undefined;
+      for (const [url, p] of byPage) {
+        if (slugFromUrl(url) === slug) {
+          agg = p;
+          break;
+        }
+      }
+      points.push({
+        slug,
+        score: sc.total,
+        impressions: agg?.impressions ?? 0,
+        clicks: agg?.clicks ?? 0,
+      });
+    }
+    return points.sort((a, b) => b.impressions - a.impressions);
+  }, [contentScores, pageAgg]);
 
   const BUTTON_BASE =
     'px-3 py-1.5 text-sm font-mono uppercase tracking-widest border-2 border-black transition-colors';
@@ -891,10 +1024,14 @@ const AdminDashboard = () => {
                           <th className="text-right px-4 py-2 font-mono text-xs uppercase">點擊</th>
                           <th className="text-right px-4 py-2 font-mono text-xs uppercase">CTR</th>
                           <th className="text-right px-4 py-2 font-mono text-xs uppercase">排名</th>
+                          <th className="text-right px-4 py-2 font-mono text-xs uppercase" title="文章結構分（滿分 100，publish 時算）">結構分</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {pageAgg.slice(0, 50).map((p, i) => (
+                        {pageAgg.slice(0, 50).map((p, i) => {
+                          const slug = slugFromUrl(p.page);
+                          const sc = slug ? contentScores.scores[slug] : undefined;
+                          return (
                           <tr key={p.page} className="border-b border-gray-200">
                             <td className="px-4 py-2 font-mono">{i + 1}</td>
                             <td className="px-4 py-2">
@@ -917,12 +1054,51 @@ const AdminDashboard = () => {
                             <td className="px-4 py-2 text-right font-mono opacity-70">
                               {p.position.toFixed(1)}
                             </td>
+                            <td className="px-4 py-2 text-right font-mono">
+                              {sc ? (
+                                <span
+                                  className="font-black"
+                                  style={{ color: sc.total >= 85 ? '#16a34a' : sc.total >= 70 ? '#ca8a04' : '#dc2626' }}
+                                  title={Object.entries(sc.breakdown).map(([k, v]) => `${k}:${v}`).join(' / ')}
+                                >
+                                  {sc.total}
+                                </span>
+                              ) : (
+                                <span className="opacity-30">—</span>
+                              )}
+                            </td>
                           </tr>
-                        ))}
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
                 )}
+              </div>
+
+              {/* 結構分 × 流量散點圖（分析：高分是否真的換到流量） */}
+              <div
+                className="border-2 border-black bg-white"
+                style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
+              >
+                <div className="p-4 border-b-2 border-black font-black flex items-baseline justify-between flex-wrap gap-2">
+                  <span>結構分 × 曝光（{gscDays} 天）</span>
+                  <span className="text-xs font-mono font-normal opacity-60">
+                    {contentScores.generatedAt
+                      ? `分數算於 ${contentScores.generatedAt}`
+                      : ''}{' '}
+                    · {scoreVsTraffic.length} 篇
+                  </span>
+                </div>
+                <div className="p-4 space-y-3">
+                  <ScoreTrafficScatter points={scoreVsTraffic} />
+                  <div className="flex gap-4 text-xs font-mono opacity-70 flex-wrap">
+                    <span><span style={{ color: '#16a34a' }}>●</span> ≥85</span>
+                    <span><span style={{ color: '#ca8a04' }}>●</span> 70-84</span>
+                    <span><span style={{ color: '#dc2626' }}>●</span> &lt;70</span>
+                    <span>結構分只含 14 項可程式量測項，不含查證／SoT 對照（需人工）</span>
+                  </div>
+                </div>
               </div>
             </>
           )}

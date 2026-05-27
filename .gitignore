@@ -43,6 +43,7 @@ tmp-blog-content.md
 # Claude Code 本機設定 / 執行期鎖檔（不進 repo）
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
+.playwright-mcp/
 
 # blog 文章中間素材：本體發布到 Firestore，本地只是產文草稿
 # (blog-create skill 每次產文都會留下這些，圖檔才該進 repo)

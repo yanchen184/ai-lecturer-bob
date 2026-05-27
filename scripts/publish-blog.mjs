@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { homedir } from 'node:os'
 
@@ -1274,11 +1274,121 @@ const posts = [
 const wordCountOf = (s) => s.replace(/\s/g, '').length
 const readingTimeOf = (s) => Math.max(1, Math.round(wordCountOf(s) / 400))
 
+const SCORES_PATH = resolve('public/content-scores.json')
+const BANNED_WORDS_PATH = resolve(homedir(), '.claude/skills/ig-create/banned-words.txt')
+
+// 計算「結構分」/100。只算程式可客觀判定的 14 項;score-card 的「事實可追溯性」
+// 與「SoT Diff Gate」(共 25 分)需人工核對 source-of-truth,程式算不了,不納入。
+// 每項給原始分,加總後權重已直接設成總和 100,total 即為 /100 結構分。
+function computeContentScore(content, post) {
+  const lines = content.split('\n')
+  const h2 = lines.filter((l) => /^## /.test(l))
+  const h3 = lines.filter((l) => /^### /.test(l))
+  const wc = wordCountOf(content)
+  const emojiRe = /\p{Extended_Pictographic}/u
+
+  // 禁用詞命中數(檔不存在則視為 0,不擋發文)
+  let bannedHits = 0
+  if (existsSync(BANNED_WORDS_PATH)) {
+    const words = readFileSync(BANNED_WORDS_PATH, 'utf-8')
+      .split('\n')
+      .map((w) => w.trim())
+      .filter((w) => w && !w.startsWith('#'))
+    bannedHits = words.reduce(
+      (n, w) => n + (content.includes(w) ? 1 : 0),
+      0
+    )
+  }
+
+  // 各項判定(每項 raw 分,加總=100)
+  const items = {
+    // 字數 2000-3000(以 CJK 字元數計,跟 wordCountOf 一致):15
+    wordCount: wc >= 2000 ? 15 : wc >= 1500 ? 10 : 0,
+    // TL;DR blockquote:10
+    tldr: /^> \*\*TL;DR/m.test(content) ? 10 : 0,
+    // TOC 目錄:5
+    toc: /^## .*目錄/m.test(content) ? 5 : 0,
+    // H2 數 ≥ 6:10 / 4-5:5 / <4:0
+    h2Count: h2.length >= 6 ? 10 : h2.length >= 4 ? 5 : 0,
+    // H2 帶 emoji 比例:5(內文型 H2 如「是什麼」可不帶,按比例給)
+    h2Emoji: h2.length
+      ? Math.round((h2.filter((l) => emojiRe.test(l)).length / h2.length) * 5)
+      : 0,
+    // 比較表(markdown table 至少 1 個):10
+    table: /^\|.*\|.*\|/m.test(content) ? 10 : 0,
+    // 內嵌圖 ≥ 1(markdown image 或 kroki 圖):10 / 否則 5(僅封面)
+    image:
+      (content.match(/!\[[^\]]*\]\(/g) || []).length +
+        (content.match(/```kroki:/g) || []).length >=
+      1
+        ? 10
+        : 5,
+    // 踩坑段(H3 含坑/踩/錯誤/失敗,或 H2 含「踩過的坑」):5
+    pitfall:
+      h3.some((l) => /坑|踩|錯誤|失敗/.test(l)) ||
+      h2.some((l) => /踩過的坑/.test(l))
+        ? 5
+        : 0,
+    // FAQ ≥ 4 題(從 post.faqItems 數,非 grep markdown):10 / <4:5 / 無:0
+    faq:
+      (post.faqItems?.length || 0) >= 4
+        ? 10
+        : (post.faqItems?.length || 0) >= 1
+          ? 5
+          : 0,
+    // 延伸資源段:5
+    extLinks: /## .*延伸資源/m.test(content) ? 5 : 0,
+    // 禁用詞:5,每命中 1 個扣 1,扣到 0 為止
+    bannedWords: Math.max(0, 5 - bannedHits),
+    // code fence 語言標籤:5。逐行掃,追蹤 in/out fence 狀態;
+    // 「開頭 fence」(進入 code block 那一行)必須帶語言,否則違規→0。
+    codeFence: (() => {
+      let inFence = false
+      let violation = false
+      for (const l of lines) {
+        if (!/^```/.test(l)) continue
+        if (!inFence) {
+          // 這是開頭 fence,必須帶語言(``` 後接非空白)
+          if (/^```\s*$/.test(l)) violation = true
+          inFence = true
+        } else {
+          inFence = false // 閉合 fence,不要求語言
+        }
+      }
+      return violation ? 0 : 5
+    })(),
+  }
+
+  const total = Object.values(items).reduce((a, b) => a + b, 0)
+  return { total, breakdown: items }
+}
+
+// upsert 一篇分數進 public/content-scores.json(按 slug)
+function writeScoreFile(slug, score, wordCount) {
+  let data = { generatedAt: '', scores: {} }
+  if (existsSync(SCORES_PATH)) {
+    try {
+      data = JSON.parse(readFileSync(SCORES_PATH, 'utf-8'))
+      if (!data.scores) data.scores = {}
+    } catch {
+      data = { generatedAt: '', scores: {} }
+    }
+  }
+  data.scores[slug] = {
+    total: score.total,
+    breakdown: score.breakdown,
+    wordCount,
+  }
+  data.generatedAt = new Date().toISOString().slice(0, 10)
+  writeFileSync(SCORES_PATH, JSON.stringify(data, null, 2) + '\n', 'utf-8')
+}
+
 function buildFields(post) {
   const articlePath = resolve(`public/images/blog/${post.slug}/article.md`)
   const content = readFileSync(articlePath, 'utf-8')
   const wordCount = wordCountOf(content)
   const readingTime = readingTimeOf(content)
+  const score = computeContentScore(content, post)
 
   return {
     fields: {
@@ -1312,9 +1422,27 @@ function buildFields(post) {
           })),
         },
       },
+      contentScore: {
+        mapValue: {
+          fields: {
+            total: { integerValue: String(score.total) },
+            breakdown: {
+              mapValue: {
+                fields: Object.fromEntries(
+                  Object.entries(score.breakdown).map(([k, v]) => [
+                    k,
+                    { integerValue: String(v) },
+                  ])
+                ),
+              },
+            },
+          },
+        },
+      },
     },
     wordCount,
     readingTime,
+    score,
   }
 }
 
@@ -1334,7 +1462,7 @@ const accessToken = await getOwnerAccessToken()
 
 let anyFail = false
 for (const post of targets) {
-  const { fields, wordCount, readingTime } = buildFields(post)
+  const { fields, wordCount, readingTime, score } = buildFields(post)
   const docPath = encodeURIComponent(post.slug)
   const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/${docPath}?key=${API_KEY}`
   const res = await fetch(url, {
@@ -1351,12 +1479,14 @@ for (const post of targets) {
     anyFail = true
     continue
   }
+  writeScoreFile(post.slug, score, wordCount)
   console.log('OK doc id:', post.slug, '(upsert)')
   console.log(
     '  URL:',
     `https://yanchen.app/blog/${post.slug}/`
   )
   console.log('  reading time:', readingTime, 'min | word count:', wordCount)
+  console.log('  content score:', score.total, '/ 100', JSON.stringify(score.breakdown))
 }
 
 process.exit(anyFail ? 1 : 0)

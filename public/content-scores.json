@@ -1,0 +1,455 @@
+{
+  "generatedAt": "2026-05-27",
+  "scores": {
+    "langchain-vs-langgraph-2026": {
+      "total": 94,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5100
+    },
+    "langgraph-state-node-edge": {
+      "total": 85,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 0,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6621
+    },
+    "langgraph-conditional-edge-reducer": {
+      "total": 85,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 0,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6334
+    },
+    "langgraph-llm-node-structured-output": {
+      "total": 79,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 0,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5797
+    },
+    "langgraph-full-pipeline-hitl": {
+      "total": 94,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5201
+    },
+    "hermes-to-langgraph-migration": {
+      "total": 89,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 10,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4898
+    },
+    "hermes-agent-intro": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 4682
+    },
+    "hermes-agent-sandbox": {
+      "total": 80,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 6902
+    },
+    "hermes-agent-quickstart": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 6354
+    },
+    "hermes-agent-mac-install": {
+      "total": 85,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 12588
+    },
+    "hermes-agent-academic": {
+      "total": 84,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 4,
+        "codeFence": 5
+      },
+      "wordCount": 6515
+    },
+    "claude-code-two-lessons-astro-and-tasklist": {
+      "total": 85,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 7576
+    },
+    "popularize-slides-deck": {
+      "total": 72,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 2,
+        "codeFence": 5
+      },
+      "wordCount": 10221
+    },
+    "karpathy-llm-wiki": {
+      "total": 90,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 12416
+    },
+    "mempalace-3-3-5-claude-p-proxy": {
+      "total": 71,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 1,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 8520
+    },
+    "phone-local-llm-pocketpal": {
+      "total": 90,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 8659
+    },
+    "claude-code-lesson-1": {
+      "total": 55,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 0,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 6165
+    },
+    "claude-code-lesson-2": {
+      "total": 65,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 7535
+    },
+    "claude-code-lesson-3": {
+      "total": 55,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 0,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 8322
+    },
+    "claude-code-lesson-4": {
+      "total": 65,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 8575
+    },
+    "claude-code-pro-class-hub": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5823
+    },
+    "memory-governance-ep1-claude-bad-notes": {
+      "total": 85,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6508
+    },
+    "memory-governance-ep2-rules-ai-cant-remember": {
+      "total": 71,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 1,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 7208
+    },
+    "ai-daily-seo-email-bot-howto": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 10242
+    },
+    "hermes-agent-medical-cdss": {
+      "total": 86,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 1,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 8347
+    }
+  }
+}
