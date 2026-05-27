@@ -8,7 +8,7 @@ import {
   subscribeToOutboundStats,
   subscribeToOutboundClicks,
   subscribeToMessages,
-  subscribeToGscDaily,
+  fetchGscDaily,
   type VisitorRecord,
   type PostStat,
   type PostView,
@@ -346,7 +346,10 @@ const AdminDashboard = () => {
     unsubs.push(subscribeToOutboundStats(setOutboundStats));
     unsubs.push(subscribeToOutboundClicks(200, setOutboundClicks));
     unsubs.push(subscribeToMessages(setMessages));
-    unsubs.push(subscribeToGscDaily(90, setGscDaily));
+    // GSC 改讀靜態 JSON（非 Firestore）：一次抓取，非實時訂閱
+    fetchGscDaily(90)
+      .then(setGscDaily)
+      .catch((e) => console.error('[admin] fetchGscDaily failed', e));
     return () => unsubs.forEach((u) => u());
   }, []);
 

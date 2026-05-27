@@ -23,6 +23,7 @@ import {
   type Timestamp,
   type Unsubscribe,
 } from 'firebase/firestore';
+import { withBase } from './url';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDrAsh4pLbCebHSogupG8daABhRYdI2prk',
@@ -492,54 +493,54 @@ export interface GscDailyRecord {
 }
 
 /**
- * 訂閱最近 N 天的 GSC 每日數據，依日期升冪排序（方便畫時間序列圖）。
- * doc id 是 YYYY-MM-DD，字典序 = 時間序，所以直接用 documentId/date 排序即可。
+ * 抓最近 N 天的 GSC 每日數據，依日期升冪排序（方便畫時間序列圖）。
+ *
+ * 2026-05-27 起改讀 public/gsc-daily/*.json 靜態檔（不再走 Firestore）：
+ * 收緊安全規則後 bob_gsc_daily 只認 service account，為了零帳號操作改純 JSON。
+ * 靜態主機無法列目錄 → 先抓 manifest.json 取得日期清單，再平行抓最新 N 天的檔。
  */
-export function subscribeToGscDaily(
-  maxDays = 90,
-  callback: (records: GscDailyRecord[]) => void,
-  onError?: (error: Error) => void
-): Unsubscribe {
-  const db = getDb();
-  // 取最新 maxDays 筆（date desc + limit），再在 client 端轉回升冪。
-  const q = query(
-    collection(db, 'bob_gsc_daily'),
-    orderBy('date', 'desc'),
-    fsLimit(maxDays)
+export async function fetchGscDaily(maxDays = 90): Promise<GscDailyRecord[]> {
+  const manifestUrl = withBase('/gsc-daily/manifest.json');
+  const res = await fetch(manifestUrl, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`gsc manifest ${res.status}`);
+  const manifest = (await res.json()) as { dates?: string[] };
+  const allDates = (manifest.dates ?? []).slice().sort(); // 升冪
+  const dates = allDates.slice(-maxDays); // 最新 N 天
+
+  const settled = await Promise.allSettled(
+    dates.map(async (date) => {
+      const r = await fetch(withBase(`/gsc-daily/${date}.json`), { cache: 'no-store' });
+      if (!r.ok) throw new Error(`gsc ${date} ${r.status}`);
+      const data = (await r.json()) as Partial<GscDailyRecord>;
+      const row: GscDailyRecord = {
+        date: data.date || date,
+        impressions: data.impressions ?? 0,
+        clicks: data.clicks ?? 0,
+        ctr: data.ctr ?? 0,
+        position: data.position ?? 0,
+        queries: (data.queries ?? []).map((q2) => ({
+          query: q2.query ?? '',
+          page: q2.page ?? '',
+          impressions: q2.impressions ?? 0,
+          clicks: q2.clicks ?? 0,
+          ctr: q2.ctr ?? 0,
+          position: q2.position ?? 0,
+        })),
+        pages: (data.pages ?? []).map((p) => ({
+          page: p.page ?? '',
+          impressions: p.impressions ?? 0,
+          clicks: p.clicks ?? 0,
+          ctr: p.ctr ?? 0,
+          position: p.position ?? 0,
+        })),
+      };
+      return row;
+    })
   );
-  return onSnapshot(
-    q,
-    (snap) => {
-      const rows: GscDailyRecord[] = snap.docs.map((d) => {
-        const data = d.data();
-        return {
-          date: (data.date as string) || d.id,
-          impressions: (data.impressions as number) ?? 0,
-          clicks: (data.clicks as number) ?? 0,
-          ctr: (data.ctr as number) ?? 0,
-          position: (data.position as number) ?? 0,
-          queries: ((data.queries as GscQueryRow[]) ?? []).map((q2) => ({
-            query: q2.query ?? '',
-            page: q2.page ?? '',
-            impressions: q2.impressions ?? 0,
-            clicks: q2.clicks ?? 0,
-            ctr: q2.ctr ?? 0,
-            position: q2.position ?? 0,
-          })),
-          pages: ((data.pages as GscPageRow[]) ?? []).map((p) => ({
-            page: p.page ?? '',
-            impressions: p.impressions ?? 0,
-            clicks: p.clicks ?? 0,
-            ctr: p.ctr ?? 0,
-            position: p.position ?? 0,
-          })),
-        };
-      });
-      rows.sort((a, b) => a.date.localeCompare(b.date)); // 升冪：舊 → 新
-      callback(rows);
-    },
-    (error) => {
-      onError?.(error);
-    }
-  );
+
+  const rows = settled
+    .filter((s): s is PromiseFulfilledResult<GscDailyRecord> => s.status === 'fulfilled')
+    .map((s) => s.value);
+  rows.sort((a, b) => a.date.localeCompare(b.date)); // 升冪：舊 → 新
+  return rows;
 }
