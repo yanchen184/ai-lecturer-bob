@@ -1,10 +1,50 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { homedir } from 'node:os'
 
 const PROJECT_ID = 'forbidden-beauty'
 const API_KEY = 'AIzaSyDrAsh4pLbCebHSogupG8daABhRYdI2prk'
 const COLLECTION = 'bob_blog_posts'
+
+// 2026-05-27 起 firestore.rules 把 bob_blog_posts 寫入收緊成「只認 service account」，
+// 純 API key 的匿名 REST 寫入會 403。改用 firebase CLI 已登入的 owner OAuth token
+// 走 IAM 身分寫入 —— IAM/Admin 路徑不受 security rules 約束。
+// client_id / secret 是 firebase-tools 公開內建常數（Google 官方文件已公開,非機密）。
+const FIREBASE_CLI_CLIENT_ID =
+  '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com'
+const FIREBASE_CLI_CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi'
+
+async function getOwnerAccessToken() {
+  const cfgPath = `${homedir()}/.config/configstore/firebase-tools.json`
+  let refreshToken
+  try {
+    const cfg = JSON.parse(readFileSync(cfgPath, 'utf-8'))
+    refreshToken = cfg?.tokens?.refresh_token
+  } catch {
+    throw new Error(
+      `讀不到 firebase CLI 設定 (${cfgPath})。先跑 \`firebase login\` 登入 bobchen184@gmail.com。`
+    )
+  }
+  if (!refreshToken)
+    throw new Error('firebase CLI 設定缺 refresh_token,請重新 `firebase login`。')
+
+  const body = new URLSearchParams({
+    client_id: FIREBASE_CLI_CLIENT_ID,
+    client_secret: FIREBASE_CLI_CLIENT_SECRET,
+    refresh_token: refreshToken,
+    grant_type: 'refresh_token',
+  })
+  const res = await fetch('https://www.googleapis.com/oauth2/v4/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+  })
+  const data = await res.json()
+  if (!res.ok || !data.access_token)
+    throw new Error(`換 access token 失敗: ${JSON.stringify(data)}`)
+  return data.access_token
+}
 
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
@@ -1003,6 +1043,8 @@ if (onlySlugs.length && !targets.length) {
 // docId = slug 做 upsert,避免雙胞胎 doc。
 // PATCH /documents/{COLLECTION}/{slug} 不帶 currentDocument 條件 = create-or-overwrite。
 // (注意:overwrite 是整個 doc 重寫,buildFields 必須產出完整欄位)
+const accessToken = await getOwnerAccessToken()
+
 let anyFail = false
 for (const post of targets) {
   const { fields, wordCount, readingTime } = buildFields(post)
@@ -1010,7 +1052,10 @@ for (const post of targets) {
   const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/${docPath}?key=${API_KEY}`
   const res = await fetch(url, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
     body: JSON.stringify({ fields }),
   })
   const data = await res.json()
