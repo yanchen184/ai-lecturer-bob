@@ -450,6 +450,24 @@
         "codeFence": 0
       },
       "wordCount": 8347
+    },
+    "claude-code-hook-auto-verify-deploy": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 8247
     }
   }
 }

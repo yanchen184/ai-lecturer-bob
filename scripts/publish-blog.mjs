@@ -1365,10 +1365,10 @@ function computeContentScore(content, post) {
       1
         ? 10
         : 5,
-    // 踩坑段(H3 含坑/踩/錯誤/失敗,或 H2 含「踩過的坑」):5
+    // 踩坑段(H2/H3 含坑/踩/錯誤/失敗):5
     pitfall:
       h3.some((l) => /坑|踩|錯誤|失敗/.test(l)) ||
-      h2.some((l) => /踩過的坑/.test(l))
+      h2.some((l) => /坑|踩|錯誤|失敗/.test(l))
         ? 5
         : 0,
     // FAQ ≥ 4 題(從 post.faqItems 數,非 grep markdown):10 / <4:5 / 無:0
