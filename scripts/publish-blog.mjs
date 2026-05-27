@@ -1269,6 +1269,48 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'claude-code-hook-auto-verify-deploy',
+    title:
+      'Claude Code Hook 怎麼用？git push 後自動驗 GitHub Actions 部署（PostToolUse 實戰）',
+    excerpt:
+      '每次 git push 完都要手動切到 GitHub Actions 頁面盯著部署跑完，綠了放心、紅了回來修——這件事重複到讓人煩。我用 Claude Code 的 PostToolUse hook 把它自動化：hook 攔到 git push 成功就注入一段任務指示，叫 Claude 排程約 70 秒後查 Actions 結果，全綠回報、紅了抓 log 修。關鍵是一次性驗證（ScheduleWakeup 而非無限輪詢），而且改版後不綁特定 workflow 名、用 commit SHA 對齊，任何有 push-triggered Actions 的 repo 都通用。本文把實作三段、additionalContext 機制、從寫死 deploy.yml 到通用的兩刀改法，以及踩到的欄位名坑（tool_response 才是對的）全寫下來。',
+    publishDate: '2026-05-27',
+    category: '工作流',
+    tags: [
+      'Claude Code',
+      'PostToolUse hook',
+      'GitHub Actions',
+      'ScheduleWakeup',
+      'CI/CD',
+      'AI 工作流',
+      'git push',
+      '自動化',
+    ],
+    faqItems: [
+      {
+        q: 'PostToolUse 跟 PreToolUse hook 差在哪？驗部署為什麼用 PostToolUse？',
+        a: 'PreToolUse 在工具執行前觸發，可以攔截或修改參數；PostToolUse 在工具成功後才觸發。驗部署這件事必須等 git push 真的成功才有意義，而且可以利用「PostToolUse 只在成功時觸發」這個性質——hook 被叫到就代表這次 push 沒失敗（沒被拒、沒 403），省掉自己判斷成敗的步驟。所以這個需求落在 PostToolUse，matcher 設 Bash。',
+      },
+      {
+        q: 'hook 是全域註冊的，會不會干擾我那些不跑 CI 的專案？',
+        a: '不會。腳本有守門邏輯：指令不含 git push、不是 git repo、沒有 .github/workflows/ 目錄、或目錄裡沒有任何 push-triggered workflow，全部靜默 exit 0、不注入任何東西。只有「真的會跑 GitHub Actions」的 repo 才會觸發驗證流程，其餘 push 完全無感。',
+      },
+      {
+        q: '為什麼用 ScheduleWakeup 而不是寫個迴圈一直等部署跑完？',
+        a: '迴圈會把整個 session 卡在原地，而且判斷邏輯一出錯就變無限輪詢、燒 token、佔住對話。ScheduleWakeup 是排一個未來喚醒點就把控制權交回去，到點才查一次狀態。它是一次性驗證流程，不是常駐 daemon——全綠就停、紅了修完就結束，最多探 3 次（約 3.5 分鐘）避免 workflow 卡死時無限重排。',
+      },
+      {
+        q: '一個 git push 同時觸發好幾個 workflow 怎麼辦？',
+        a: '因為驗證是用 commit SHA 對齊（gh run list 篩 headSha 等於剛推的 commit），同一個 SHA 觸發的所有 run 都會被一起撈出來，必須全部 conclusion=success 才算通過。任何一個 run 失敗就走修復流程（gh run view --log-failed 看原因、修掉、重 push）。',
+      },
+      {
+        q: '這個做法只能用在 GitHub Pages 部署嗎？換成 Docker build 或一般 CI 行嗎？',
+        a: '行，這正是改版要解決的問題。第一版寫死「repo 必須有 deploy.yml」，漏掉了 workflow 叫別的名字的 repo（例如我的 whisper 叫 docker-build.yml）。改版後守門改成偵測有沒有 push-triggered workflow、驗證改用 SHA 對齊而不綁 workflow 名，所以不管 repo 跑的是 Pages 部署、Docker build 還是一般 CI test，只要 workflow 由 push 觸發都通用。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
