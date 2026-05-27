@@ -9,6 +9,7 @@ import RootLayout from '../../../layouts/RootLayout.astro';
 import NavbarNeub from '../../../components/NavbarNeub.astro';
 import FooterNeub from '../../../components/FooterNeub.astro';
 import ReadingProgress from '../../../components/ReadingProgress.astro';
+import GiscusComments from '../../../components/GiscusComments.astro';
 import {
   getAllK8sLessons,
   getAdjacentLessons,
@@ -381,6 +382,9 @@ const breadcrumbSchema = {
         )}
       </div>
     </section>
+
+    <!-- Comments (Giscus / GitHub Discussions) -->
+    <GiscusComments />
 
     <!-- 回 K8s 系列總覽 -->
     <section class="px-6 md:px-10 py-8 border-t-2 border-black">

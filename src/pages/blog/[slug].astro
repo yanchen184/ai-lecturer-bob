@@ -8,6 +8,7 @@ import NavbarNeub from '../../components/NavbarNeub.astro';
 import FooterNeub from '../../components/FooterNeub.astro';
 import BlogStyleSwitcher from '../../components/BlogStyleSwitcher.tsx';
 import ReadingProgress from '../../components/ReadingProgress.astro';
+import GiscusComments from '../../components/GiscusComments.astro';
 import { getAllPublishedPosts, type BlogPost } from '../../lib/firestore';
 import { renderMarkdown, inlineKrokiImages } from '../../lib/markdown';
 import { withBase } from '../../lib/url';
@@ -459,6 +460,9 @@ const jsonLdSchemas = faqSchema
         </div>
       </div>
     </section>
+
+    <!-- Comments (Giscus / GitHub Discussions) -->
+    <GiscusComments />
 
     <!-- Related Posts -->
     {

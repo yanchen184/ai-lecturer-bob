@@ -1,0 +1,70 @@
+---
+/**
+ * GiscusComments — 每篇文章底部的留言區，後端走 GitHub Discussions。
+ *
+ * 純前端 <script> 注入，無 React island、無 Firestore。讀者用 GitHub 登入留言。
+ * 設定值集中在 src/lib/giscus-config.ts，拿到 repo/category ID 後只改那一支。
+ *
+ * mapping="pathname" → 每個文章 URL 對應一個 Discussion，自動建立。
+ */
+import { GISCUS } from '../lib/giscus-config';
+
+const enabled = GISCUS.repoId !== '' && GISCUS.categoryId !== '';
+---
+
+{
+  enabled ? (
+    <section class="px-6 md:px-10 py-14 border-t-2 border-black" id="comments">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-2 font-mono">
+          comments
+        </div>
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight mb-6">留言討論</h2>
+        <p class="text-sm opacity-70 mb-6 leading-relaxed">
+          用 GitHub 帳號登入即可留言，討論直接同步到本站 repo 的 GitHub Discussions。
+        </p>
+        <div
+          class="giscus border-2 border-black bg-white p-4 md:p-6"
+          style="box-shadow: 4px 4px 0 #0a0a0a;"
+        />
+      </div>
+
+      <script
+        is:inline
+        define:vars={{
+          repo: GISCUS.repo,
+          repoId: GISCUS.repoId,
+          category: GISCUS.category,
+          categoryId: GISCUS.categoryId,
+          mapping: GISCUS.mapping,
+          theme: GISCUS.theme,
+          lang: GISCUS.lang,
+        }}
+      >
+        (function () {
+          const target = document.querySelector('.giscus');
+          if (!target || target.dataset.giscusLoaded) return;
+          target.dataset.giscusLoaded = '1';
+
+          const s = document.createElement('script');
+          s.src = 'https://giscus.app/client.js';
+          s.async = true;
+          s.crossOrigin = 'anonymous';
+          s.setAttribute('data-repo', repo);
+          s.setAttribute('data-repo-id', repoId);
+          s.setAttribute('data-category', category);
+          s.setAttribute('data-category-id', categoryId);
+          s.setAttribute('data-mapping', mapping);
+          s.setAttribute('data-strict', '0');
+          s.setAttribute('data-reactions-enabled', '1');
+          s.setAttribute('data-emit-metadata', '0');
+          s.setAttribute('data-input-position', 'top');
+          s.setAttribute('data-theme', theme);
+          s.setAttribute('data-lang', lang);
+          s.setAttribute('data-loading', 'lazy');
+          target.appendChild(s);
+        })();
+      </script>
+    </section>
+  ) : null
+}
