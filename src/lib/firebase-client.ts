@@ -490,6 +490,8 @@ export interface GscDailyRecord {
   position: number; // 平均排名
   queries: GscQueryRow[];
   pages: GscPageRow[];
+  analysis?: string; // 每日 Claude SEO 洞察（daily-seo-email.sh Step 4b 寫入）
+  analysisGeneratedAt?: string; // 分析產生時間（ISO）
 }
 
 /**
@@ -533,6 +535,8 @@ export async function fetchGscDaily(maxDays = 90): Promise<GscDailyRecord[]> {
           ctr: p.ctr ?? 0,
           position: p.position ?? 0,
         })),
+        analysis: data.analysis,
+        analysisGeneratedAt: data.analysisGeneratedAt,
       };
       return row;
     })

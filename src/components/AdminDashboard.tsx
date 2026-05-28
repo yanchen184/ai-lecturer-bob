@@ -566,6 +566,12 @@ const AdminDashboard = () => {
     [gscDaily, gscDays]
   );
 
+  // 最新一天有 Claude 洞察的記錄（daily-seo-email.sh Step 4b 寫入 analysis 欄位）
+  const latestAnalysis = useMemo(
+    () => [...gscDaily].reverse().find((d) => d.analysis && d.analysis.trim()),
+    [gscDaily]
+  );
+
   const sumWindow = (rows: GscDailyRecord[]) => {
     const imp = rows.reduce((s, r) => s + r.impressions, 0);
     const clk = rows.reduce((s, r) => s + r.clicks, 0);
@@ -870,6 +876,29 @@ const AdminDashboard = () => {
             </div>
           ) : (
             <>
+              {/* 🤖 今日 Claude SEO 洞察（daily-seo-email.sh 每早寫入） */}
+              {latestAnalysis?.analysis && (
+                <div
+                  className="border-2 border-black bg-[#FEF9C3] p-4"
+                  style={{ boxShadow: '4px 4px 0 #0a0a0a' }}
+                >
+                  <div className="flex items-baseline justify-between gap-2 mb-2">
+                    <span className="text-xs uppercase tracking-widest font-mono font-bold">
+                      🤖 今日洞察
+                    </span>
+                    <span className="text-xs opacity-50 font-mono">
+                      GSC {latestAnalysis.date}
+                      {latestAnalysis.analysisGeneratedAt
+                        ? ` · 產生於 ${latestAnalysis.analysisGeneratedAt.slice(0, 10)}`
+                        : ''}
+                    </span>
+                  </div>
+                  <p className="text-sm leading-relaxed whitespace-pre-line">
+                    {latestAnalysis.analysis}
+                  </p>
+                </div>
+              )}
+
               {/* 4 張趨勢卡 */}
               <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
                 <TrendCard
