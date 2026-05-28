@@ -426,7 +426,7 @@ const posts = [
   {
     slug: 'hermes-agent-mac-install',
     title:
-      '從 0 在 Mac 上裝 Hermes Agent 接內網 LLM：proxy 補洞 + launchd 自啟動完整實戰',
+      'Mac 裝 Hermes Agent 接內網 LLM：踩了 4 個洞才接通',
     excerpt:
       '想在 Mac 上裝 Hermes Agent 接自家內網 LLM,結果 hermes -z 跑完 exit 0、stdout 完全空白?本文記錄從 0 安裝 Hermes、發現 OpenAI-compatible wrapper 缺 4 件事 (/v1/models、usage、SSE streaming、system_fingerprint) 導致 silent fail,寫 FastAPI proxy 一次補齊,最後掛 launchd 開機自啟動的完整路徑。附完整可複製 proxy.py、踩坑清單、排查心法。',
     category: 'AI 工具',
@@ -599,7 +599,7 @@ const posts = [
   {
     slug: 'karpathy-llm-wiki',
     title:
-      'Karpathy 的 LLM Wiki 到底在紅什麼?跑兩週實測+踩坑',
+      'LLM Wiki 跟 RAG 差在哪?Karpathy 那套我跑兩週實測 token 降 87%',
     excerpt:
       '2026 年 4 月 Karpathy 在 gist 丟了一份 200 行 markdown,一週後全網炸開、12 個社群 implementation。一句話講:讓 LLM 把你丟的所有資料「編譯」成一個結構化的 markdown 知識庫,以後問問題不查原始檔、查這個被整理過的 wiki。本文拆解 RAG vs LLM Wiki 的編譯式/解釋式之差、三層架構、30 分鐘上手路徑、我把 7 場教學逐字稿 + 200 則 Discord QA 丟進去跑兩週的實測(token 降 87%)、5 個踩坑、什麼情境裝了反而是負擔。',
     category: 'AI 工具',
