@@ -369,5 +369,7 @@
       "ctr": 0,
       "position": 8
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n這週很穩，查詢結構健康。「claude code ultrawork」站穩排名 2.1、CTR 37% 是你的招牌詞，整站流量幾乎全靠那篇 harness 文撐起來，沒有意外狀況。\n\n【需要注意】\n兩件事。一是 karpathy LLM wiki 那篇：曝光 30 但只點 2 次，CTR 不到 7%，排名也才 3.8——曝光有了點擊吃不到，標題或描述明顯沒勾到人。二是 harness 那頁有「無斜線/有斜線」兩個版本同時被收（曝光 42 vs 13），流量被拆成兩條，長期會互相稀釋。\n\n【今天可以做】\n五分鐘改 /blog/karpathy-llm-wiki/ 的 title 和 meta description，針對「llm wiki」「karpathy llm wiki」這兩個已經在排名前段的詞重寫，把曝光換成點擊。改完到 GSC 對這頁手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-05-29T07:07:38+0800"
 }
