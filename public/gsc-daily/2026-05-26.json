@@ -1,0 +1,349 @@
+{
+  "date": "2026-05-26",
+  "impressions": 71,
+  "clicks": 6,
+  "ctr": 8.45,
+  "position": 6.8,
+  "queries": [
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering",
+      "impressions": 7,
+      "clicks": 4,
+      "ctr": 57.14,
+      "position": 1.1
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E5%AE%89%E8%A3%9D-oh-my-claude-codezephyrpersonal-%E7%89%88%E4%B8%89%E6%AD%A5%E9%A9%9F",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E7%A4%BE%E7%BE%A4%E5%85%A9%E6%B4%BE-ultrawork-%E5%B0%8D%E7%85%A7%E8%A1%A8",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E8%B8%A9%E5%9D%91%E8%88%87%E9%81%B8%E6%93%87%E5%BB%BA%E8%AD%B0",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 67
+    },
+    {
+      "query": "--dry-run",
+      "page": "/blog/k8s/kubectl-advanced-tips/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E5%AE%89%E8%A3%9D-oh-my-claudetechdufus-%E7%89%88%E4%B8%89%E6%AD%A5%E9%A9%9F",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E6%88%91%E8%87%AA%E5%B7%B1%E7%9A%84-harness-%E6%80%8E%E9%BA%BC%E6%BC%94%E5%8C%96%E7%9A%84",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%89%E4%BA%BA%E8%A6%81%E9%80%A0-ultrawork",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-anthropic-%E5%AE%98%E6%96%B9%E7%89%88harness%E9%95%B7%E4%BB%80%E9%BA%BC%E6%A8%A3",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "claude code ultrawork",
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-workflow--ultrawork",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "hermes uv",
+      "page": "/blog/hermes-agent-quickstart/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "query": "k8s nodeport",
+      "page": "/blog/k8s/nodeport-three-services",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "query": "musubi tuner",
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "query": "pv pvc",
+      "page": "/blog/k8s/pv-pvc-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "query": "vibe slop",
+      "page": "/blog",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 32
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering",
+      "impressions": 9,
+      "clicks": 5,
+      "ctr": 55.56,
+      "position": 2.2
+    },
+    {
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 7,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.4
+    },
+    {
+      "page": "/blog/zenbu-powers-claude-code-plugin-design/",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.5
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E5%AE%89%E8%A3%9D-oh-my-claude-codezephyrpersonal-%E7%89%88%E4%B8%89%E6%AD%A5%E9%A9%9F",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E7%A4%BE%E7%BE%A4%E5%85%A9%E6%B4%BE-ultrawork-%E5%B0%8D%E7%85%A7%E8%A1%A8",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.2
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 3,
+      "clicks": 1,
+      "ctr": 33.33,
+      "position": 3.7
+    },
+    {
+      "page": "/blog/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E8%B8%A9%E5%9D%91%E8%88%87%E9%81%B8%E6%93%87%E5%BB%BA%E8%AD%B0",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/ollama-cloud-hermes-langchain/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.3
+    },
+    {
+      "page": "/blog/ai-caught-cloudflare-dns-lying/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.5
+    },
+    {
+      "page": "/blog/claude-code-lesson-4",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/hermes-agent-quickstart/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.5
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 67
+    },
+    {
+      "page": "/blog/k8s/pv-pvc-intro/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/blog",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 32
+    },
+    {
+      "page": "/blog/claude-code-lesson-3/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E5%AE%89%E8%A3%9D-oh-my-claudetechdufus-%E7%89%88%E4%B8%89%E6%AD%A5%E9%A9%9F",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E6%88%91%E8%87%AA%E5%B7%B1%E7%9A%84-harness-%E6%80%8E%E9%BA%BC%E6%BC%94%E5%8C%96%E7%9A%84",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%89%E4%BA%BA%E8%A6%81%E9%80%A0-ultrawork",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-anthropic-%E5%AE%98%E6%96%B9%E7%89%88harness%E9%95%B7%E4%BB%80%E9%BA%BC%E6%A8%A3",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering#-workflow--ultrawork",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/clusterip-service/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/configmap-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/k8s/deployment-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/kubectl-advanced-tips/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/memory-governance-ep1-claude-bad-notes/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
