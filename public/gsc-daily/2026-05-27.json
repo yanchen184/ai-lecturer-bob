@@ -43,5 +43,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "流量穩、查詢結構單純。核心 query「claude code ultrawork」這週曝光 40、點擊 21、排名 1.9，幾乎一隻撐起全站流量；其他 query 都是個位數曝光，整體就是「靠一篇爆文吃飯」的狀態，沒突發事件。\n\n唯一要盯的是 karpathy-llm-wiki 那頁：曝光 37 卻只有 2 點擊，CTR 約 5%，明顯偏低；對應的「llm wiki」「andrej karpathy llm wiki」幾個 query 排名都在前段（3.8 / 12 / 4），有曝光卻接不住點擊，title / meta 應該沒打中搜尋意圖。5/27 那天全站只有 1 曝光 0 點擊，是單日數據少不是異常，不用慌。\n\n今天動手改 /blog/karpathy-llm-wiki 的 title 跟 meta description，把「Karpathy」「LLM Wiki」這兩個實際在搜的詞往前放、講清楚這篇在實作什麼，先把這 37 曝光的 CTR 拉起來，比追新流量划算。",
+  "analysisGeneratedAt": "2026-05-31T07:07:29+0800"
 }
