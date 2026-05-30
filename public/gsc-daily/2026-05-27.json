@@ -1,0 +1,47 @@
+{
+  "date": "2026-05-27",
+  "impressions": 4,
+  "clicks": 1,
+  "ctr": 25.0,
+  "position": 27.8,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 91
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/ai-caught-cloudflare-dns-lying",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 2
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 91
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/ralph-loop-real-world/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
