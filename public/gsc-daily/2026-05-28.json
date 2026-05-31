@@ -43,5 +43,7 @@
       "ctr": 0,
       "position": 9
     }
-  ]
+  ],
+  "analysis": "這份是純資料判讀，不是建構任務，沒有 skill 需要套用。直接輸出。\n\n【一句總評】\n這週沒事，流量穩。主力 query「claude code ultrawork」排名 1.9、CTR 過半（40 曝光 21 點），整個站幾乎靠這一篇撐起來，查詢結構健康但極度集中。\n\n【需要注意】\n兩件事。一是 5/28 單日掉到曝光 2、平均排名 90.5，跟 7 天平均差太多——但這是單日小樣本，先當噪音、別過度解讀，連看兩三天再說。二是 /blog/karpathy-llm-wiki/ 曝光 37 卻只 2 點（CTR 5%），跟 ultrawork 那篇差一個量級，題目明明有「llm wiki」「andrej karpathy llm wiki」在排，title/description 沒勾到人。\n\n【今天可以做】\n花 5 分鐘改 /blog/karpathy-llm-wiki/ 的 title 跟 meta description，把「Andrej Karpathy」「LLM Wiki」這兩個正在排的字塞進前段、加個能讓人想點的鉤子（數字/結論/疑問），這頁有曝光沒點擊，是現成可撿的點擊。",
+  "analysisGeneratedAt": "2026-06-01T07:07:31+0800"
 }
