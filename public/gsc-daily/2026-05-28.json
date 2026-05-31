@@ -1,0 +1,47 @@
+{
+  "date": "2026-05-28",
+  "impressions": 9,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 27.6,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90.5
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.7
+    },
+    {
+      "page": "/blog/yc-plugin-youtube-upload/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.7
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90.5
+    },
+    {
+      "page": "/blog/claude-code-lesson-3/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
