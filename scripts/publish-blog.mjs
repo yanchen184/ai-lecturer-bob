@@ -49,6 +49,88 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'claude-code-teams-owner-management-guide',
+    title:
+      'Claude Code Teams 怎麼管?Owner 視角 4 個後台動作完整指南',
+    excerpt:
+      '很多人把 Claude Code Teams 當「便宜的多人版」,但 owner 後台有 4 個會真的拿來用的管理動作:座位管理(誰當 Primary Owner 是治理大事)、Skills 集中派送(把公司 SOP 變成全員 day1 工具)、Tool permission 與 MCP enforce(收斂風險邊界)、ZDR(Enterprise 限定,法遵核選項)。這篇從 owner 視角,引官網原文,告訴你每個動作什麼時候用、不適用什麼場景、踩到會痛的地方。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'Claude Code Teams',
+      'Anthropic',
+      'Team Plan',
+      '企業導入',
+      'AI 管理',
+      'Primary Owner',
+    ],
+    publishDate: '2026-06-01',
+    faqItems: [
+      {
+        q: 'Claude Code Teams 跟 Enterprise plan 差在哪?',
+        a: 'Claude Code Teams plan 有 4 個管理動作中的前 3 個(座位、Skills 派送、tool/MCP 收斂),沒有 ZDR。Enterprise 加上 ZDR、audit log、SCIM、SSO 等 enterprise grade 功能,需要直接找 Anthropic sales 報價,不是 self-serve。一般軟體公司 50 人以下基本上 Team plan 就夠,有法遵需求才升 Enterprise。',
+      },
+      {
+        q: '沒開 ZDR,我們公司對話會被 Anthropic 拿去訓練嗎?',
+        a: '不會,Team 跟 Enterprise plan 預設都不用商業客戶資料訓練模型,這條官網 data usage 有寫。ZDR 解的是「Anthropic 端是否留存對話內容」這條,跟訓練是兩件事。即使沒開 ZDR,Anthropic 也不會拿你公司資料訓練。',
+      },
+      {
+        q: 'Skills 派送下去,成員可以拒絕嗎?',
+        a: '可以 toggle on/off。Owner upload 後成員端會自動看到,但每個成員可以在自己 client 端關掉某個 skill。這是「派送 ≠ 強制」的設計,但實務上 90% 工程師看到自動出現的 skill 不會去關,所以 owner 派下去基本上會被用。',
+      },
+      {
+        q: 'Primary Owner 離職了怎麼辦?',
+        a: '官網沒明寫流程,治理上必須離職前先轉移 Primary Owner 角色給接任者。如果已經離職沒轉,要聯絡 Anthropic support 協助轉移,流程會比較麻煩 — 你需要證明組織所有權(domain 驗證、billing 帳戶等)。所以這條我會列在公司 IT offboarding checklist 強制項目,不是離職當天才想到。',
+      },
+      {
+        q: '我們公司還沒開 Team Plan,這篇 owner 視角寫的東西有意義嗎?',
+        a: '有,這篇可以當決策框架用。讀完你會知道:Team Plan 真正值錢的能力是 Skills 集中派送(把 SOP 變工具),不是「多人共用 billing」。如果你只是想分擔費用、不想管組織級設定,Team Plan 對你 overkill;如果你想把公司工程規範變預設行為、收斂 Claude Code 風險,Team Plan 是 self-serve 級唯一選項,再上就是 Enterprise。',
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: 'claude-code-ultracode-ultrathink',
+    title:
+      'ultracode vs ultrathink:不是想更久,是派 16 隻 agent',
+    excerpt:
+      'ultracode 跟 ultrathink 名字像、做的事完全不同。ultrathink 是 prompt 關鍵字,只讓模型這一回合想更深(最高 31999 thinking token);ultracode 是 /effort 設定,把整個 session 切成 xhigh 推理 + 自動 dynamic workflow 編排,替每個任務派出一隊 agent(最多 16 並行 / 單次上限 1000)。附本機 Claude Code binary 實測字串為證。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'ultracode',
+      'ultrathink',
+      'dynamic workflow',
+      'AI 工作流',
+      'effort',
+      'Anthropic',
+    ],
+    publishDate: '2026-05-29',
+    faqItems: [
+      {
+        q: 'ultracode 跟 ultrathink 可以一起用嗎?',
+        a: '可以但通常沒必要。ultracode 已把 effort 固定在 xhigh,session 內每個任務都深度推理;ultrathink 是單 turn 加深,疊在 xhigh 上邊際效益很小。日常用 /effort high + 臨時 ultrathink,大工程直接 ultracode,不需要兩個一起。',
+      },
+      {
+        q: '開 ultracode 會很燒 token 嗎?',
+        a: '會而且明顯。每個正經任務都 xhigh + 可能開 workflow,一條 workflow 動輒派數十到上百個 agent,全算進你方案用量與 rate limit。官方明講每個請求都比低 effort 花更多 token、更久。高風險、要徹底、不在乎成本時才開,做完 /effort high 退回。',
+      },
+      {
+        q: '我沒看到 /effort ultracode 這個選項?',
+        a: '檢查三件事:claude --version 是否 ≥ 2.1.154;/config 裡 Dynamic workflows 有沒有開;/model 是不是支援 xhigh 的模型(如 Opus 4.8)。任一沒過選單就不列 ultracode,這是 binary 寫死的條件,不是壞掉。',
+      },
+      {
+        q: 'dynamic workflow 跟一般 subagent 差在哪?',
+        a: '差在計畫與中間結果放哪。subagent 是 Claude 一回合決定 spawn 誰,每個結果回流進 context,幾輪就爆。workflow 把迴圈和中間結果關在腳本變數,只有最終答案進 context,所以撐得起上百 agent,還能做 adversarial review 這種跨 agent 品質模式。',
+      },
+      {
+        q: 'workflow 最多能派幾個 agent?',
+        a: '單次 run 上限 1000 個 agent,同時並行最多 16 個(CPU 核心少會更少)。1000 是防無限迴圈失控,16 是限制本機資源占用,兩個都是 runtime 寫死。',
+      },
+    ],
+    featured: true,
+  },
+  {
     slug: 'langchain-vs-langgraph-2026',
     title:
       'LangChain vs LangGraph 是什麼?2026 該學哪個(完整比較)',
