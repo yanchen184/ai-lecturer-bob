@@ -53,7 +53,7 @@ const posts = [
     title:
       'Claude Code Teams 怎麼管?Owner 視角 4 個後台動作完整指南',
     excerpt:
-      '很多人把 Claude Code Teams 當「便宜的多人版」,但 owner 後台有 4 個會真的拿來用的管理動作:座位管理(誰當 Primary Owner 是治理大事)、Skills 集中派送(把公司 SOP 變成全員 day1 工具)、Tool permission 與 MCP enforce(收斂風險邊界)、ZDR(Enterprise 限定,法遵核選項)。這篇從 owner 視角,引官網原文,告訴你每個動作什麼時候用、不適用什麼場景、踩到會痛的地方。',
+      'Claude Code Teams 比個人 Pro 貴 7.5 倍($150/seat 月),願意付這筆錢的 owner 一定有「多人管理」需求。這篇從 owner 視角盤點後台 4 個會真的拿來用的管理動作:座位管理(誰當 Primary Owner 是治理大事)、Skills 集中派送(把公司 SOP 變成全員 day1 工具)、Tool permission 與 MCP enforce(收斂風險邊界)、ZDR(Enterprise 限定,法遵核選項)。每條能力背後引官網原文,告訴你什麼時候用、不適用什麼場景、踩到會痛的地方。',
     category: 'AI 工具',
     tags: [
       'Claude Code',
