@@ -8,9 +8,50 @@
  *   node scripts/update-blog-seo.mjs --apply      # 真的寫入
  */
 
+import { readFileSync } from 'node:fs'
+import { homedir } from 'node:os'
+
 const PROJECT_ID = 'forbidden-beauty'
 const API_KEY = 'AIzaSyDrAsh4pLbCebHSogupG8daABhRYdI2prk'
 const COLLECTION = 'bob_blog_posts'
+
+// 2026-05-27 起 firestore.rules 收緊：bob_blog_posts 寫入只認 service account / owner。
+// 裸 API key PATCH 會 403。改走 firebase CLI 的 owner OAuth token（同 publish-blog.mjs）。
+// client_id / secret 是 firebase-tools 公開內建常數（Google 官方文件已公開，非機密）。
+const FIREBASE_CLI_CLIENT_ID =
+  '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com'
+const FIREBASE_CLI_CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi'
+
+async function getOwnerAccessToken() {
+  const cfgPath = `${homedir()}/.config/configstore/firebase-tools.json`
+  let refreshToken
+  try {
+    const cfg = JSON.parse(readFileSync(cfgPath, 'utf-8'))
+    refreshToken = cfg?.tokens?.refresh_token
+  } catch {
+    throw new Error(
+      `讀不到 firebase CLI 設定 (${cfgPath})。先跑 \`firebase login\` 登入 bobchen184@gmail.com。`,
+    )
+  }
+  if (!refreshToken)
+    throw new Error('firebase CLI 設定缺 refresh_token，請重新 `firebase login`。')
+
+  const body = new URLSearchParams({
+    client_id: FIREBASE_CLI_CLIENT_ID,
+    client_secret: FIREBASE_CLI_CLIENT_SECRET,
+    refresh_token: refreshToken,
+    grant_type: 'refresh_token',
+  })
+  const res = await fetch('https://www.googleapis.com/oauth2/v4/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+  })
+  const data = await res.json()
+  if (!res.ok || !data.access_token)
+    throw new Error(`換 access token 失敗: ${JSON.stringify(data)}`)
+  return data.access_token
+}
 
 // 要改的文章。slug + 新 title + 新 excerpt。
 // 改的原則：把「使用者會打進搜尋框的詞」放標題前面。
@@ -60,14 +101,17 @@ async function queryBySlug(slug) {
   return hits[0].document
 }
 
-async function patchDoc(docName, fields) {
+async function patchDoc(docName, fields, accessToken) {
   const updateMask = Object.keys(fields)
     .map((k) => `updateMask.fieldPaths=${encodeURIComponent(k)}`)
     .join('&')
-  const url = `https://firestore.googleapis.com/v1/${docName}?${updateMask}&key=${API_KEY}`
+  const url = `https://firestore.googleapis.com/v1/${docName}?${updateMask}`
   const res = await fetch(url, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
     body: JSON.stringify({ fields }),
   })
   const data = await res.json()
@@ -78,6 +122,8 @@ async function patchDoc(docName, fields) {
 }
 
 const apply = process.argv.includes('--apply')
+
+const accessToken = apply ? await getOwnerAccessToken() : null
 
 let anyFail = false
 for (const u of updates) {
@@ -109,7 +155,7 @@ for (const u of updates) {
     },
   }
   try {
-    await patchDoc(doc.name, fields)
+    await patchDoc(doc.name, fields, accessToken)
     console.log(`  ✅ patched`)
   } catch (err) {
     console.error(`  ❌ ${err.message}`)

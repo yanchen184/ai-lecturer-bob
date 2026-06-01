@@ -3503,9 +3503,9 @@ ClusterIP 解決了**叢集內部**的連線。但**外面的使用者**怎麼�
     slug: 'nodeport-three-services',
     order: 18,
     group: 'networking',
-    title: 'K8s NodePort 是什麼？三種 Service 一張表選對',
+    title: 'Kubernetes NodePort 是什麼？K8s 三種 Service 一張表選對',
     excerpt:
-      'K8s NodePort 是什麼？ClusterIP 只在叢集內、NodePort 開 Node port 讓外網連、LoadBalancer 走雲端。一張對照表 + 實作講清楚三種 Service 怎麼選。',
+      'Kubernetes NodePort 是什麼？ClusterIP 只在叢集內、NodePort 開 Node port 讓外網連、LoadBalancer 走雲端。一張對照表 + 實作講清楚 K8s 三種 Service 怎麼選。',
     publishDate: '2026-05-15',
     tags: ['Kubernetes', 'NodePort', 'LoadBalancer', 'Service'],
     readingTime: 9,
