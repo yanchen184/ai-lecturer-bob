@@ -36,5 +36,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "這份是純數據解讀，不需要查 code 或建檔，直接輸出。\n\n【一句總評】\n流量很小但結構乾淨。\"claude code ultrawork\" 一條 query 撐起全站（曝光 40、點擊 21、排名 1.9），那篇 harness 文是你唯一的當家招牌，其餘都是零星長尾。\n\n【需要注意】\n兩件事。一是 5/29 單日只剩曝光 2、點擊 0、排名 93，跟 7 天彙總差太多，比較像當天資料還沒回填或剛搬家爬蟲沒跟上，不是真的崩；但要回 GSC 後台確認近幾天曝光趨勢有沒有真的斷。二是 karpathy-llm-wiki 那篇曝光 35 卻只點 2 次、CTR 約 6%，明顯偏低——排名 3.8 不差，是 title/description 沒勾到人。\n\n【今天可以做】\n去 GSC 對 /blog/karpathy-llm-wiki/ 手動 Request Indexing，順手把那篇的 title 改得更貼「llm wiki / karpathy」這兩個有實際曝光的字，meta description 補一句具體賣點。五分鐘內搞定，先把這篇唯一有量卻漏接的頁面救起來。",
+  "analysisGeneratedAt": "2026-06-02T07:07:27+0800"
 }
