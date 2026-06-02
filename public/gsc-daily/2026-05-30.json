@@ -71,5 +71,7 @@
       "ctr": 0,
       "position": 4
     }
-  ]
+  ],
+  "analysis": "這數據量很小，先看一下就能判斷。直接給你三段。\n\n【一句總評】\n站內昨天 16 UV / 9 PV、整週流量都極小,屬於剛起步的低基數階段;查詢結構乾淨,核心命中「claude code ultrawork」這條(28 天曝光 40、點擊 21、排名 1.9),撐起全站幾乎所有點擊。\n\n【需要注意】\n兩件事。一是過度集中:全站點擊幾乎只靠 ultrawork 那篇,其餘 query 全是個位數曝光,單篇出事整站就空。二是 karpathy-llm-wiki 那篇 7 天曝光 29 但只 2 點擊、「llm wiki」排名才 3.8,曝光夠、點擊轉不出來,CTR 偏低,題目對得上但標題/摘要沒勾到人。另外 2026-05-30 單日只剩 1 曝光,是不是正常波動值得明天再看一天確認。\n\n【今天可以做】\n改 /blog/karpathy-llm-wiki/ 的 title 跟 meta description:把「llm wiki」「andrej karpathy」這兩個已經有排名的字詞往前提到標題開頭,description 寫成一句能勾人點的話。5 分鐘內可改完,直接吃現有曝光衝點擊,比再寫新文章 CP 值高。\n\n字數約 230,在限制內。",
+  "analysisGeneratedAt": "2026-06-03T07:07:55+0800"
 }
