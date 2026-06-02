@@ -1,9 +1,75 @@
 {
   "date": "2026-05-30",
-  "impressions": 0,
-  "clicks": 0,
-  "ctr": 0.0,
-  "position": 0.0,
-  "queries": [],
-  "pages": []
+  "impressions": 23,
+  "clicks": 1,
+  "ctr": 4.35,
+  "position": 7.8,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 94
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 7,
+      "clicks": 1,
+      "ctr": 14.29,
+      "position": 2.6
+    },
+    {
+      "page": "/blog/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.6
+    },
+    {
+      "page": "/blog/claude-self-sync-intro/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1.7
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/claude-code-lesson-4/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.5
+    },
+    {
+      "page": "/blog/how-i-built-claude-self-sync-with-claude/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 94
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    }
+  ]
 }
