@@ -90,6 +90,47 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'pollinations-free-image-api-no-signup',
+    title: 'Pollinations 免費生圖 API:不用註冊、不用 key、一行 URL 就出圖(附實測坑)',
+    excerpt:
+      'Pollinations 是我看過門檻最低的生圖 API —— 不用註冊、不用 API key、不用綁信用卡,把 prompt 塞進一個 URL、curl 一下就回一張圖。這篇把它「URL 即 API」的設計、實測坑(/models 清單跟文件對不上、傳不存在的 model 不報錯而是靜默 fallback)、seed 決定性、匿名與註冊 tier 的差別、2025 之後的 watermark 政策、Referrer / Bearer 兩種認證都寫清楚,附可直接抄的 curl 與 Node.js 範例。本文 2 張配圖全是用 Pollinations 匿名 API 當場生的。',
+    category: '工程實作',
+    tags: [
+      'Pollinations',
+      '免費生圖',
+      'AI 生圖',
+      '生圖 API',
+      '免註冊',
+      'curl',
+      'Node.js',
+      'AI 工具',
+    ],
+    publishDate: '2026-06-02',
+    faqItems: [
+      {
+        q: 'Pollinations 真的完全不用註冊、不用 key?',
+        a: '匿名 tier 確實如此 —— 一個 GET 就回圖。註冊只是為了升 rate limit(從約 15 秒一張到 5 秒一張),不註冊也能用。',
+      },
+      {
+        q: '為什麼我傳 ?model=flux 沒報錯但圖不像 flux?',
+        a: '因為當下 /models 清單可能已經沒有 flux,服務會靜默 fallback 到清單裡的 model(我實測是 sana),不報錯。腳本啟動時打一次 /models 比對你要的 model 在不在,不在就自己擋。',
+      },
+      {
+        q: '同 prompt 同 seed 會拿到一模一樣的圖嗎?',
+        a: '會。我實測同 prompt、同 seed、同尺寸連抓兩次,md5 完全相同。所以批次補圖可以安全地「只補缺的、跳過已存在」。',
+      },
+      {
+        q: '免費生的圖可以商用嗎?有浮水印嗎?',
+        a: 'Pollinations 程式碼走 MIT,但 2025-03-31 起免費層生成的圖可能帶浮水印,nologo=true 不保證永遠去得乾淨。要正式商用建議走有明確授權保證的方案,或至少先確認當下的服務條款。',
+      },
+      {
+        q: 'Pollinations 和 HF FLUX.1-schnell 該選哪個?',
+        a: '看門檻與品質的取捨。要零門檻、快、補量選 Pollinations;要較高品質、整副統一選 HF FLUX.1-schnell 當主力。兩個疊起來(HF 主力 + Pollinations 補量)就是一條 $0 的完整管線。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'claude-code-teams-owner-management-guide',
     title:
       'Claude Code Teams 怎麼管?Owner 視角 4 個後台動作完整指南',
