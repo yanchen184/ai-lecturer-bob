@@ -131,6 +131,47 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'claude-code-build-a-game',
+    title: '用 Claude Code 從零做一款遊戲:不是會 prompt,是會這三件工程紀律',
+    excerpt:
+      '我用 Claude Code 從零做了一款 Splendor(璀璨寶石)網頁版 —— 規則引擎、React UI、單元測試、E2E、連 100 張卡牌插圖都生好,全程沒手寫幾行 code。但能跑得順的關鍵不是 prompt 寫得好,而是三件工程紀律:規則引擎跟 UI 徹底分離、用「不變量測試 + fuzzing」逼出 AI 看不到的暗 bug、E2E 走完整 round-trip 而不是繞過引擎。這篇拆解這套協作方法,附這個專案的真實程式碼。',
+    category: '工程實作',
+    tags: [
+      'Claude Code',
+      'AI 寫遊戲',
+      'TDD',
+      'fuzzing',
+      'Playwright',
+      'Vitest',
+      'Splendor',
+      'React',
+    ],
+    publishDate: '2026-06-02',
+    faqItems: [
+      {
+        q: '用 Claude Code 做遊戲,是不是丟個 prompt 就好?',
+        a: '不是。它能很快生出能跑的 code,但「正確、可維護、可驗證」要靠架構決策(規則/UI 分離)和測試策略(不變量 + fuzzing + round-trip E2E),這些是工程師要把關的。',
+      },
+      {
+        q: '為什麼要把規則引擎跟 UI 分離?',
+        a: '因為這樣測試規則完全不用渲染畫面,純函式餵狀態、檢查結果,毫秒級跑完幾百個 case。也讓 AI 改 UI 時不會手滑動到規則,邊界清楚。',
+      },
+      {
+        q: 'fuzzing 測試是什麼?為什麼對 AI 寫的 code 特別重要?',
+        a: '用固定 seed 的隨機數讓 bot 自動對打幾百局,每步檢查遊戲不變量(如寶石守恆)。AI 寫的 code 最大風險是「看起來對、某個沒測到的組合下默默算錯」,隨機對打能撞出人工想不到的 case。',
+      },
+      {
+        q: 'E2E 為什麼強調「走 round-trip 不繞過引擎」?',
+        a: '因為要驗的是「瀏覽器點下去真的接到引擎」,而不是 UI 自己另算一套。透過掛在 window 的測試橋接驅動真實 dispatch,一路渲染到勝利畫面,才證明整條鏈是通的。',
+      },
+      {
+        q: '這套方法只適用遊戲嗎?',
+        a: '不。純函式核心 + 不變量測試 + round-trip 驗收,適用任何有明確規則與狀態轉移的系統 —— 訂單、計費、權限、工作流引擎都一樣。遊戲只是規則密集、好示範。',
+      },
+    ],
+    featured: true,
+  },
+  {
     slug: 'claude-code-teams-owner-management-guide',
     title:
       'Claude Code Teams 怎麼管?Owner 視角 4 個後台動作完整指南',
