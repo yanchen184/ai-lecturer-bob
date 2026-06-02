@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01",
+  "generatedAt": "2026-06-02",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -504,6 +504,42 @@
         "codeFence": 5
       },
       "wordCount": 8890
+    },
+    "claude-code-codex-mcp-collab": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4938
+    },
+    "huggingface-flux-schnell-free-image-batch": {
+      "total": 90,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7782
     }
   }
 }

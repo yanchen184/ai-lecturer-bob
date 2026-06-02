@@ -49,6 +49,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'huggingface-flux-schnell-free-image-batch',
+    title: '免費生 100 張遊戲卡牌插圖:FLUX.1-schnell + Pollinations 零成本實戰(沒綁信用卡)',
+    excerpt:
+      '一款 Splendor 網頁版要 90 張發展卡 + 10 張貴族卡插圖,預算 $0、手上沒綁信用卡,不能讓任何一步不小心被扣款。最後用 Hugging Face 的 FLUX.1-schnell 當主力(免費帳號每月 $0.10 額度)、額度用完自動 fallback 到完全免費的 Pollinations,再用 sharp 後製依寶石色染色,100 張圖一次跑完、整副風格一致、總花費 $0。這篇把 token 怎麼拿、額度怎麼算、bash 怎麼封裝、批次 seed 怎麼固定保證可重現、schnell 不吃顏色怎麼用後製補色,全寫清楚,附可直接抄的 bash / Node.js 程式碼。',
+    category: '工程實作',
+    tags: [
+      'FLUX.1-schnell',
+      'Hugging Face',
+      'Pollinations',
+      '免費生圖',
+      'AI 生圖',
+      'sharp',
+      'Splendor',
+      '批次生成',
+    ],
+    publishDate: '2026-06-02',
+    faqItems: [
+      {
+        q: 'FLUX.1-schnell 免費可以商用嗎?',
+        a: '模型本身走 Apache-2.0 授權(Black Forest Labs 開源的 schnell 版本),生成的圖可商用。但每個 Inference Provider 的服務條款不同,正式商用前還是去確認你呼叫的那個 provider 的 ToS。',
+      },
+      {
+        q: '免費的 $0.10 額度用完會自動扣款嗎?',
+        a: '不會。免費帳號超額會直接擋下請求,要先在 billing 頁 purchase credit 才能續用。沒綁卡就不會有意外帳單 —— 這對「絕不能被扣款」的需求反而是保險。',
+      },
+      {
+        q: '為什麼不直接全用 Pollinations,免 key 又免費?',
+        a: '可以,但 Pollinations 匿名 tier 在高併發時會 rate limit、畫質也略遜 FLUX.1-schnell。我的策略是 HF 出主力品質的那幾十張,Pollinations 補剩下的量,兼顧品質與成本。',
+      },
+      {
+        q: 'schnell 和 dev 差在哪?該選哪個?',
+        a: 'schnell 是 distilled 速度版,4 步出圖、快、適合批次;dev 步數多、品質與顏色控制更好但較慢、計費也更高。批次大量出圖選 schnell + 後製,少量精修選 dev。',
+      },
+      {
+        q: 'seed 固定真的能完全重現嗎?',
+        a: '同一個 provider、同 model、同 prompt、同 seed 下結果穩定,這是「同 id 重生不變」的基礎。但跨 provider(HF vs Pollinations)不保證一致,所以補圖時要用「跳過已存在檔」而不是「整副重生」。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'claude-code-teams-owner-management-guide',
     title:
       'Claude Code Teams 怎麼管?Owner 視角 4 個後台動作完整指南',
@@ -1392,6 +1433,47 @@ const posts = [
       },
     ],
     featured: false,
+  },
+  {
+    slug: 'claude-code-codex-mcp-collab',
+    title:
+      '兩個 AI 真能「對等聊天」?Claude Code × Codex MCP 協作的真實邊界',
+    excerpt:
+      'Claude Code 透過 MCP 可以直接呼叫本機 Codex 跑子任務——我下 prompt、Codex 在同一台機器讀檔/跑指令/回報。但這是「結構化輪流問答」(one-shot + threadId 延續),不是兩個 AI 自由聊起來。這篇紀錄我接通的全程:怎麼用三題本機驗證確認「真的接通而不是腦補」(它回傳 commit hash 6cf8254 我去對)、怎麼用 tmux pane 即時看 Codex 的推理與指令、以及最能說明「對等有限度」的坑——MCP 接過去的 Codex 預設 read-only sandbox,嘴上能聊手上卻寫不了檔。結論:接通 ≠ 協作,能聊 ≠ 能動手。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'Codex',
+      'MCP',
+      'AI Agent',
+      '雙 AI 協作',
+      'OpenAI Codex',
+      'Anthropic',
+    ],
+    publishDate: '2026-06-01',
+    faqItems: [
+      {
+        q: 'Claude Code 真的能直接呼叫 Codex 嗎?',
+        a: '能。透過 MCP server 曝出的 codex / codex-reply 工具,Claude Code 可以開 Codex session、帶 threadId 續跑,Codex 在同一台機器上讀檔、跑指令、回報結果。雙向有回傳,不是單向發送。',
+      },
+      {
+        q: '這算是兩個 AI 在「聊天」嗎?',
+        a: '算結構化輪流問答,不算自由對話。我每輪都要主動發 prompt,Codex 才執行並回報;它不會主動找我講話,也不會自己持續推進。跟人類同事在 Slack 隨手丟一句的「主動性」差很多,所以「對等聊天」這講法是包裝過頭的。',
+      },
+      {
+        q: '怎麼確認 Codex 不是在「演」回答?',
+        a: '給它編不出來的本機題:讀只有你本機有的檔(例如某個型別定義那行)、跑 git log 回傳 commit hash、做算術。拿真實產物去對(round-trip),對得上才算數。我這次拿回傳的 commit hash 6cf8254 對我本機 git log,對上了才確認是真的在我機器上跑。handshake 不等於真的在幹活。',
+      },
+      {
+        q: '為什麼 Codex 查得到、聊得來,卻寫不了檔?',
+        a: 'MCP 接過去的 Codex session 預設是 read-only sandbox。對話跟寫入權限是兩層獨立的東西,要它真的落地產物(寫檔),得另開 workspace-write 權限的 session。所以會出現「它能完整討論這個檔該怎麼寫,手上卻動不了」的狀況。',
+      },
+      {
+        q: '怎麼即時看到另一個 AI(Codex)在做什麼?',
+        a: 'Codex 把每個 session 寫成 JSONL rollout log,放在 ~/.codex/sessions/YYYY/MM/DD/。寫一支腳本 tail -f 最新那份、解析事件(reasoning / function_call / message)染色印出,丟進一個 tmux pane,就能即時看到它的推理、跑的指令、回話滾動。注意它 idle 時 log 不長新行、畫面靜止是正常的。',
+      },
+    ],
+    featured: true,
   },
 ]
 
