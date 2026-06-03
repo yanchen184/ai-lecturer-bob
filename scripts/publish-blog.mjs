@@ -49,6 +49,48 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'open-slide-ai-agent-presentation-framework',
+    title:
+      'open-slide：用 Claude Code 寫簡報，4 千星 AI agent 簡報框架',
+    excerpt:
+      'open-slide 是台灣開發者 Yiwei Ho（@1weiho）做的開源簡報框架，定位是「給 AI coding agent 用的」：你在對話框講想要什麼，Claude Code 幫你把每一頁寫成 React 投影片，框架負責 canvas、縮放、導航、hot reload、演講模式這些雜事。上線沒多久 GitHub star 就從 4 千衝破 4.6k，repo 卡片已顯示 5k。這篇拆解它跟 Slidev / reveal.js 的根本差異（每頁是任意 React component、跑在固定 1920×1080 canvas）、npx 一行安裝、三個內建 agent skill（/create-slide、/slide-authoring、/apply-comments）怎麼配合，以及 inspector 點一下留 comment 讓 agent 改稿的工作流，附可直接抄的指令。',
+    category: 'AI 工具',
+    tags: [
+      'open-slide',
+      'Claude Code',
+      'AI 簡報',
+      'AI Agent',
+      'React',
+      '簡報框架',
+      'Slidev',
+      'Yiwei Ho',
+    ],
+    publishDate: '2026-06-03',
+    faqItems: [
+      {
+        q: 'open-slide 一定要用 Claude Code 嗎？沒有 agent 能用嗎？',
+        a: '不一定要 Claude Code。官方說同一批 skill 檔案 Codex、Cursor、Gemini CLI、OpenCode、Windsurf、Zed 都能讀。你甚至可以完全手寫 .tsx，因為每頁本來就是普通 React component，agent 只是讓「用講的生出投影片」變可能，不是必要條件。',
+      },
+      {
+        q: 'open-slide 跟 Slidev、reveal.js 差在哪？',
+        a: '最大差異是每頁的寫法。Slidev 用 Markdown + Vue 擴充語法、reveal.js 用 HTML section，都有各自的簡報 DSL 要學；open-slide 每一頁就是任意 React .tsx，你會 React 就能寫，不用學新語言。另外 open-slide 從一開始就為 coding agent 設計，內建 /create-slide 等 skill 跟視覺 inspector 改稿，這兩個 Slidev / reveal.js 都沒有。',
+      },
+      {
+        q: 'open-slide 跟 Claude 內建的簡報功能（Claude Design / Artifacts）差在哪？',
+        a: 'Claude 內建簡報生成是封閉的、跑在 Anthropic 服務裡，複雜需求容易撞限制。open-slide 是 MIT 開源、跑在你本機、產物是版控的 React 原始碼，你對每一頁有完全控制權，也能接任何 agent。要客製化、要進 git、要離線，open-slide 自由度高得多。',
+      },
+      {
+        q: '做出來的投影片怎麼分享給沒裝環境的人看？',
+        a: 'open-slide 支援把整份 deck export 成 self-contained 的 static HTML 或 print-ready PDF。HTML 版是單檔靜態站，丟到任何靜態 host（GitHub Pages、Vercel）就能給人看，對方不用裝任何東西。具體 export 指令旗標以 scaffold 出來的 repo 內 package.json scripts 或 README 為準。',
+      },
+      {
+        q: '我完全不會 React，用得動 open-slide 嗎？',
+        a: '能跑但會卡。因為 agent 幫你寫，基本生成你不碰 code 也行；可是一旦要微調、debug 某頁壞掉，看得懂 React 會差很多。建議至少懂 JSX 跟 component 概念再上手，不然遇到問題只能一直丟回給 agent 賭它修對。',
+      },
+    ],
+    featured: true,
+  },
+  {
     slug: 'huggingface-flux-schnell-free-image-batch',
     title: '免費生 100 張遊戲卡牌插圖:FLUX.1-schnell + Pollinations 零成本實戰(沒綁信用卡)',
     excerpt:

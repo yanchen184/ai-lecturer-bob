@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-02",
+  "generatedAt": "2026-06-03",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -540,6 +540,60 @@
         "codeFence": 5
       },
       "wordCount": 7782
+    },
+    "pollinations-free-image-api-no-signup": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6946
+    },
+    "claude-code-build-a-game": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6154
+    },
+    "open-slide-ai-agent-presentation-framework": {
+      "total": 94,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7585
     }
   }
 }
