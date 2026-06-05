@@ -155,11 +155,20 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
 
     // dedup by slug：Firestore 偶爾有重複寫入 (publish-blog.mjs 早期版本用 addDoc
     // 不是 setDoc(slug),造成同 slug 多 doc)。
-    // 策略:先按 docId asc 排,同 slug 只留第一筆 = 字典序最小的 docId。
-    // 行為穩定可預期、跟 Firestore 回傳順序無關,避免「兩筆 doc 隨機留到髒那筆」的 bug。
+    // 策略:**優先保留 canonical doc(docId === slug)**,其餘 fallback 用 docId 字典序。
+    //   publish-blog.mjs 現在 upsert 到 docId=slug,所以 canonical 一定是最新、最乾淨那筆。
+    //   舊版只取「字典序最小 docId」→ 會挑中比 canonical 更小的舊 addDoc 髒 doc,
+    //   害 re-publish canonical 後 build 仍渲染舊內容(2026-06-05 圖片前綴事故根因)。
+    // 行為穩定可預期、跟 Firestore 回傳順序無關。
+    const canonicalRank = (p: BlogPost): number => (p.id === p.slug ? 0 : 1);
     const seen = new Set<string>();
     const unique = [...posts]
-      .sort((a, b) => (a.id < b.id ? -1 : 1))
+      .sort((a, b) => {
+        const ra = canonicalRank(a);
+        const rb = canonicalRank(b);
+        if (ra !== rb) return ra - rb; // canonical(0) 排在非 canonical(1) 前面
+        return a.id < b.id ? -1 : 1; // 同級再按 docId 字典序,保持穩定
+      })
       .filter((p) => {
         if (seen.has(p.slug)) return false;
         seen.add(p.slug);
