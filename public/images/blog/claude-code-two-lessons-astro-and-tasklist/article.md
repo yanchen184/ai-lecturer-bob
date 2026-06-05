@@ -4,7 +4,7 @@
 > - **教訓二(流程)**:跨 ≥3 檔案、≥3 步驟的任務,該開 `TaskCreate` 追進度,**不是儀式,是斷線保險**。我這次硬靠對話文字串起 5 個檔案 + commit + republish + push,中間如果被打斷就要重建脈絡
 > - 共通點:兩個都是「該查不查 / 該開不開」的紀律退化症狀,該記下來下次別犯
 
-![封面 - Astro + Claude Code](/ai-lecturer-bob/images/blog/claude-code-two-lessons-astro-and-tasklist/astro-repo.png)
+![封面 - Astro + Claude Code](/images/blog/claude-code-two-lessons-astro-and-tasklist/astro-repo.png)
 
 ## 📌 這篇要回答的問題
 

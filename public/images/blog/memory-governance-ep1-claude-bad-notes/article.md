@@ -9,7 +9,7 @@
 
 我以為我在養一個 AI 大腦。實際我在養一個爛筆記資料夾。
 
-<img src="/ai-lecturer-bob/images/blog/memory-governance-ep1-claude-bad-notes/graph-before.png" alt="Obsidian Graph View 顯示 Claude Code memory 整理前呈花朵狀,所有檔案只連向中心 MEMORY.md" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/memory-governance-ep1-claude-bad-notes/graph-before.png" alt="Obsidian Graph View 顯示 Claude Code memory 整理前呈花朵狀,所有檔案只連向中心 MEMORY.md" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 這篇是 Memory 治理系列三篇的第一篇,先把問題講清楚:**為什麼會這樣、誰該負責、要怎麼修**。下兩篇會拆「規則為什麼這樣寫」(EP2)跟「Obsidian 怎麼當大腦健檢工具」(EP3)。
 
@@ -116,7 +116,7 @@ CLAUDE.md 我寫過「不要寫重複的記憶,先檢查現有的」這條規則
 
 整理完之後,我請 Bob 在 Obsidian 重新整理 graph(會掃整個 vault 重建連線)。打開新的 Graph View:
 
-<img src="/ai-lecturer-bob/images/blog/memory-governance-ep1-claude-bad-notes/graph-after.png" alt="Obsidian Graph View 顯示 Claude Code memory 整理後呈星雲狀,節點按 file:feedback file:reference file:project 等用不同顏色分群,cluster 內部有交叉連線" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
+<img src="/images/blog/memory-governance-ep1-claude-bad-notes/graph-after.png" alt="Obsidian Graph View 顯示 Claude Code memory 整理後呈星雲狀,節點按 file:feedback file:reference file:project 等用不同顏色分群,cluster 內部有交叉連線" style="border-radius: 8px; margin: 1rem 0; width: 100%;" />
 
 差別:
 
