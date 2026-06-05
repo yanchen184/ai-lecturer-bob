@@ -7,6 +7,29 @@
  * - 純函式，可在 Astro frontmatter 呼叫
  */
 import pako from 'pako';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+/**
+ * build-time 檢查 `public/<url>` 是否真的存在對應的 .webp 檔。
+ * renderMarkdown 在 Astro frontmatter(Node build env)執行,有 fs 權限。
+ *
+ * 為什麼需要:`![](...png)` 會被包成 <picture><source webp><img png>。
+ * 但專案沒有 build step 產 .webp,若 webp 不存在,支援 webp 的瀏覽器會選中
+ * <source> 拿到 404 且**不會** fallback 到 <img>(picture 規格:type 命中後
+ * img 只在「無 source 命中」時當 fallback,不在「source 載入失敗」時)→ 破圖。
+ * 解法:webp 真的存在才掛 <source>,否則只給乾淨 <img>。
+ */
+function webpSiblingExists(url: string): boolean {
+  // 只處理站內絕對路徑(/images/...);外部 / 相對路徑一律當不存在
+  if (!url.startsWith('/')) return false;
+  const webpRel = url.replace(/\.(png|jpe?g)$/i, '.webp').replace(/^\//, '');
+  try {
+    return existsSync(join(process.cwd(), 'public', webpRel));
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Kroki 服務 endpoint。預設用環境變數，沒設就退到公服務。
@@ -215,8 +238,12 @@ export function renderMarkdown(content: string): RenderedMarkdown {
       if (!isLocalRaster) {
         return `<img src="${url}" alt="${safeAlt}" ${loadAttrs} />`;
       }
-      const webp = url.replace(/\.(png|jpe?g)$/i, '.webp');
-      return `<picture><source srcset="${webp}" type="image/webp" /><img src="${url}" alt="${safeAlt}" ${loadAttrs} /></picture>`;
+      // 只在 .webp 真的存在時掛 <source>,否則 webp-capable 瀏覽器會吃 404 不 fallback。
+      if (webpSiblingExists(url)) {
+        const webp = url.replace(/\.(png|jpe?g)$/i, '.webp');
+        return `<picture><source srcset="${webp}" type="image/webp" /><img src="${url}" alt="${safeAlt}" ${loadAttrs} /></picture>`;
+      }
+      return `<img src="${url}" alt="${safeAlt}" ${loadAttrs} />`;
     })
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text: string, url: string) => {
       const external = /^https?:\/\//.test(url);
