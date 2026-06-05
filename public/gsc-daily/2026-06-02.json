@@ -5,5 +5,7 @@
   "ctr": 0.0,
   "position": 0.0,
   "queries": [],
-  "pages": []
+  "pages": [],
+  "analysis": "【一句總評】流量穩在低檔，沒事。昨天 20 UV，過去 28 天主力查詢 claude code ultrawork 排名 1.9、21 次點擊，這條撐起整個站，查詢結構健康但完全壓在這一根支柱上。\n\n【需要注意】兩件事。一是 7 天 Top 頁面 ultracode-ultrathink 曝光 23 但只 2 點擊、首頁 12 曝光 0 點擊，CTR 偏低，title/description 可能不夠勾人。二是 kubernetes nodeport 曝光 7、排名 92.3（第 10 頁外），等於有需求但你的頁面被埋在最底，沒有對應內容承接。另外 GSC 2026-06-02 單日無曝光數據，需要去後台檢查原因，先別下結論。\n\n【今天可以做】挑 ultracode-ultrathink 那篇，重寫 title 跟 meta description，把主關鍵字往前提、加一句能誘發點擊的痛點或數字（5 分鐘內可改完）。改完去 GSC 對那條 URL 手動 Request Indexing，並順手 curl 一下確認頁面回 200。",
+  "analysisGeneratedAt": "2026-06-06T07:30:55+0800"
 }
