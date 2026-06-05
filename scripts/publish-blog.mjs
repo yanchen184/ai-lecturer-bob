@@ -49,6 +49,48 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'arize-phoenix-llm-tracing-medical-cdss',
+    title:
+      'Arize Phoenix 接 LangGraph CDSS：3 個踩坑與醫師回饋閉環',
+    excerpt:
+      'Arize Phoenix 是開源、單容器自架的 LLM observability 工具（不像 Langfuse 還要外接 ClickHouse + Redis + S3）。我把它接進一個醫療 CDSS 的 LangGraph 8-step agent，目的不是看 latency，是要回答醫師那句「它為什麼開這個藥」。這篇記錄安裝三件套、三個讓我 debug 半天的踩坑（langchain 自動 instrument 散 trace、phoenix-client 預設讀錯 env、自家工具 OpenInference 抓不到），以及真正值錢的那段——把醫師回饋以 annotation 回掛到對應 trace，做成 human-in-the-loop 的評估閉環。附完整 code。',
+    category: '工程實作',
+    tags: [
+      'Arize Phoenix',
+      'LLM Observability',
+      'OpenTelemetry',
+      'LangGraph',
+      'OpenInference',
+      'LLM Tracing',
+      'CDSS',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-06-05',
+    faqItems: [
+      {
+        q: 'Arize Phoenix 是免費的嗎?',
+        a: '開源版(self-host)是免費的,Elastic License 2.0,功能包含 tracing、evaluation、prompt playground、LLM-as-judge。Arize 另有商業版 AX(雲端託管、依 span 數計價)。自架版對絕大多數團隊夠用。',
+      },
+      {
+        q: 'Phoenix 跟 Langfuse 我該選哪個?',
+        a: '要框架無關、要透明 volume-based 計價就選 Langfuse。要全開源 + 單容器好自架 + eval 嚴謹(尤其受監管 / 高準確度要求的場景)就選 Phoenix。我做醫療 CDSS 選 Phoenix,主因是單容器自架 + 資料不外傳。',
+      },
+      {
+        q: '一定要用 LangChain / LangGraph 才能接嗎?',
+        a: '不用。Phoenix 走 OpenTelemetry + OpenInference,框架無關。我這次甚至刻意關掉 langchain 自動 instrument、改手動串節點。只要你的 LLM 呼叫走 OpenAI 相容 API,OpenAIInstrumentor 就抓得到。',
+      },
+      {
+        q: '接了會不會拖慢正式環境 / 增加風險?',
+        a: '我的做法是 opt-in:沒設 PHOENIX_COLLECTOR_ENDPOINT 就完全 no-op,連追蹤套件沒裝都不會讓服務啟動失敗(每個 import 都包 try/except)。正式環境不想開就不設那個 env,零成本。',
+      },
+      {
+        q: 'trace 資料會外傳嗎?',
+        a: 'self-host 版本 trace 全部落在你本地的 docker volume(phoenix_data),不外傳第三方。處理敏感資料時這是關鍵——但要注意 span 裡若記了 PII,得自己管好 Phoenix 的存取權限。',
+      },
+    ],
+    featured: true,
+  },
+  {
     slug: 'open-slide-ai-agent-presentation-framework',
     title:
       'open-slide：用 Claude Code 寫簡報，4 千星 AI agent 簡報框架',
