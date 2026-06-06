@@ -57,5 +57,7 @@
       "ctr": 0,
       "position": 9
     }
-  ]
+  ],
+  "analysis": "分析這份數據，三段直接給你。\n\n【一句總評】\n整體沒事，但流量極低。過去 28 天唯一健康的 query 是「claude code ultrawork」（曝光 40、點擊 21、排名 1.9），這支撐起你幾乎全部的點擊；這週其他 query 都是個位數曝光、零星點擊，屬於正常的長尾噪音，沒有突發異常。\n\n【需要注意】\n兩件事。一是你的命脈 query「claude code ultrawork」這週的 7 天數據裡完全沒出現，反而是 ultracode 那篇頁面（曝光 47、點擊 2）扛流量——要確認 ultrawork 那篇還在不在、排名 1.9 有沒有掉。二是「過去 7 天 Top 查詢」解析失敗（Expecting value: char 0），這是抓數據的程式吐空字串，不是 GSC 沒資料，去修一下抓取腳本，不然你每天少看一塊。\n\n【今天可以做】\n去 GSC 用 URL Inspection 對 /blog/claude-code-ultracode-ultrathink/ 跑一次 Request Indexing——它這週 47 次曝光只有 2 次點擊、CTR 4%，是你目前最有量的頁面，值得確認索引狀態並順手檢查它的 title 跟 meta description 有沒有勾到「ultracode/ultrathink」這組字，提高點閱。",
+  "analysisGeneratedAt": "2026-06-07T07:39:52+0800"
 }
