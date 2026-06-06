@@ -1,0 +1,61 @@
+{
+  "date": "2026-06-03",
+  "impressions": 28,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 6.2,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 92
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 20,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.3
+    },
+    {
+      "page": "/blog/yc-plugin-youtube-upload/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 92
+    },
+    {
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
