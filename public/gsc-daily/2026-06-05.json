@@ -1,0 +1,31 @@
+{
+  "date": "2026-06-05",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 4.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/open-slide-ai-agent-presentation-framework/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    }
+  ]
+}
