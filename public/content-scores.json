@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-05",
+  "generatedAt": "2026-06-08",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -215,7 +215,7 @@
         "bannedWords": 5,
         "codeFence": 0
       },
-      "wordCount": 7576
+      "wordCount": 7560
     },
     "popularize-slides-deck": {
       "total": 72,
@@ -395,7 +395,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 6508
+      "wordCount": 6476
     },
     "memory-governance-ep2-rules-ai-cant-remember": {
       "total": 71,
@@ -467,10 +467,10 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 8247
+      "wordCount": 8215
     },
     "claude-code-ultracode-ultrathink": {
-      "total": 86,
+      "total": 85,
       "breakdown": {
         "wordCount": 15,
         "tldr": 10,
@@ -482,10 +482,10 @@
         "pitfall": 5,
         "faq": 10,
         "extLinks": 5,
-        "bannedWords": 5,
+        "bannedWords": 4,
         "codeFence": 5
       },
-      "wordCount": 9014
+      "wordCount": 8998
     },
     "claude-code-teams-owner-management-guide": {
       "total": 90,
@@ -503,7 +503,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 8890
+      "wordCount": 8874
     },
     "claude-code-codex-mcp-collab": {
       "total": 95,
@@ -521,7 +521,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 4938
+      "wordCount": 4922
     },
     "huggingface-flux-schnell-free-image-batch": {
       "total": 90,
@@ -539,7 +539,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 7782
+      "wordCount": 7734
     },
     "pollinations-free-image-api-no-signup": {
       "total": 95,
@@ -557,7 +557,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 6946
+      "wordCount": 6914
     },
     "claude-code-build-a-game": {
       "total": 95,
@@ -575,7 +575,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 6154
+      "wordCount": 6138
     },
     "open-slide-ai-agent-presentation-framework": {
       "total": 94,
@@ -593,7 +593,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 7585
+      "wordCount": 7553
     },
     "arize-phoenix-llm-tracing-medical-cdss": {
       "total": 95,
@@ -611,7 +611,25 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 9790
+      "wordCount": 9774
+    },
+    "ai-deploy-firebase-custom-domain": {
+      "total": 90,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7171
     }
   }
 }

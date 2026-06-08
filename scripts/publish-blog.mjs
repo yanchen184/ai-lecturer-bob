@@ -1641,6 +1641,48 @@ const posts = [
     ],
     featured: true,
   },
+  {
+    slug: 'ai-deploy-firebase-custom-domain',
+    title: '我讓 AI 把遊戲部署上自己的網域:難的不是 deploy,是怎麼確認真的上線',
+    excerpt:
+      '我讓 Claude Code 一條龍把一個 React 遊戲(戰旗 J7 Reborn)部署上 Firebase Hosting、再接自己的網域 j7.yanchen.app,全程只下一句「上架到這個網域」。關鍵不是 `firebase deploy` 那 30 秒,是「怎麼判斷真的上線了」:Deploy complete!、Console 顯示「已連結」、單次 curl 回 200,三個都不算數。這篇把 build → deploy → 接 custom domain → DNS → 等 SSL → round-trip 驗證整條寫透,重點放在那個卡了幾小時的坑:custom domain 顯示「已連結」卻一直 404 —— 以及為什麼那其實不是設定錯,是邊緣節點內容還沒收斂,該等不該動。附 openssl 驗 SAN、curl 連打、SPA rewrite 的實際做法。',
+    category: '工程實作',
+    tags: [
+      'Firebase Hosting',
+      'Claude Code',
+      'custom domain',
+      '自訂網域',
+      'SSL',
+      'DNS',
+      'SPA',
+      'AI 部署',
+      'round-trip',
+    ],
+    publishDate: '2026-06-08',
+    faqItems: [
+      {
+        q: '`firebase deploy` 印了 Deploy complete!,為什麼網站還是打不開?',
+        a: 'Deploy complete! 只代表檔案上傳完成(handshake),不代表你打的網址已能正確回應。預設 web.app 網址通常很快活;剛接好的 custom domain 可能還在邊緣節點內容同步、會 flapping。先 curl 預設 web.app 確認部署本身 OK,再分開看 custom domain。',
+      },
+      {
+        q: 'custom domain 顯示「已連結」但一直 404,是我設定錯了嗎?',
+        a: '先用 openssl 看 SSL 憑證 SAN 有沒有命中你的網域。有命中 = 設定正確,404 是 Firebase 邊緣內容同步還沒收斂,會 flap 數小時到近一天,不要動設定、等就好。SAN 沒命中 = 那才是真的 DNS/設定問題,回去查 DNS 紀錄與 Console 網域狀態。',
+      },
+      {
+        q: 'SSL 憑證的 SAN 裡有一堆別人的網域,是被駭了嗎?',
+        a: '不是。Firebase Hosting 用 multi-SAN 共用憑證,把很多客戶網域包在同一張憑證裡,是正常的成本優化。你只要確認清單裡有自己的 DNS:你的網域 就對了,其他不相干的網域不用管。',
+      },
+      {
+        q: '首頁能開,但分享出去的深連結(像 /battle/c1-1)打不開?',
+        a: '你少了 SPA rewrite。在 firebase.json 的 hosting 加 "rewrites": [{ "source": "**", "destination": "/index.html" }],讓所有路徑都回 index.html、由前端 router 接手解析。重 deploy 一次即可。',
+      },
+      {
+        q: '怎麼知道部署「真的」成功,而不是看起來成功?',
+        a: '做 round-trip,不要只看 handshake。最低標準:curl 連打數次都穩定 200(單次會被 flapping 騙)+ 回傳 HTML 的 <title> 是你的站 + 真的開瀏覽器點一下確認畫面正常。三者皆過才算上線。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
