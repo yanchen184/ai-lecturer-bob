@@ -27,5 +27,7 @@
       "ctr": 0,
       "position": 4
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n站內流量低檔但穩（UV 16/PV 9），查詢結構偏健康——主力 query「claude code ultrawork」28 天排名 1.9、21 點擊穩坐招牌，不是亂流。GSC 單日無曝光只是樣本太小，不用緊張。\n\n【需要注意】\n這週的 Top 頁面 /blog/claude-code-ultracode-ultrathink/ 曝光 51 卻只有 2 點擊（CTR ~4%），排名八成卡在第 2-3 頁邊緣——有曝光沒點擊，多半是 title/description 在搜尋結果裡不夠勾人。另外 kubernetes nodeport（排名 93）、pv mount（排名 77）這兩個 k8s query 純粹是排名太後面被洗出來的雜訊，現階段不用理。\n\n【今天可以做】\n去 GSC URL Inspection 對 /blog/claude-code-ultracode-ultrathink/ 手動按 Request Indexing，順手把這頁的 `<title>` 和 meta description 改得更貼「claude code ultrawork / ultrathink」的實際搜尋字眼——這頁已經有 51 曝光的底子，CTR 拉起來是這週投報率最高的一動。",
+  "analysisGeneratedAt": "2026-06-09T07:12:40+0800"
 }
