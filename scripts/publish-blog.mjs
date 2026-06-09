@@ -49,6 +49,90 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'llm-token-counting-methods',
+    title:
+      'LLM token 怎麼算才準？5 種計量方案實測比較（中文差 47% 的坑）',
+    excerpt:
+      'LLM token 計量沒有單一正解，而是一條從輕到重的光譜：啟發式估算（字數÷4）、本機 tokenizer（tiktoken）、provider 官方 count API（Anthropic count_tokens 免費）、跨模型計價庫（liteLLM / tokencost）、線上 observability（Langfuse / Helicone）。關鍵是分清「事前估」還是「事後對帳」——前者用本機 tokenizer，後者直接讀 API response 的 usage。最大的坑是 tokenization 不跨 provider 標準化：我本機實測同一段 66 字中文，GPT-4 的 cl100k_base 算 62 token、GPT-4o 的 o200k_base 只算 42——差 47%。這篇把 5 種方案逐個拆、做成優劣總表與決策流程圖，附本機 tiktoken 實測指令。',
+    category: 'AI 工具',
+    tags: [
+      'token 計量',
+      'tiktoken',
+      'LLM',
+      'count token',
+      'Claude',
+      'OpenAI',
+      'liteLLM',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-06-09',
+    featured: true,
+    faqItems: [
+      {
+        q: '中文一個字到底是幾個 token？',
+        a: '沒有固定答案，看 tokenizer。我本機實測 66 字中文，cl100k_base 算 62、o200k_base 算 42——同一段差 47%。粗估可以抓「1 字 ≈ 1～1.5 token」，但要計費請用對應模型的 tokenizer 實算。',
+      },
+      {
+        q: 'tiktoken 可以拿來算 Claude 或 Gemini 嗎？',
+        a: '只能近似。tiktoken 是 OpenAI 的 BPE，Claude 用 SentencePiece、Gemini 用自有方案。很多庫對非 OpenAI 模型會 fallback 到 cl100k_base 硬估，數字「看起來像」但不是真的。要準就用 Anthropic／Google 各自的 count API。',
+      },
+      {
+        q: 'Anthropic 的 count_tokens 要錢嗎？',
+        a: '不計費。它只做 tokenize、不跑 inference，所以沒有 compute 成本——但仍需要 API key 驗身份。沒有理由為了省錢避開它做事前精算。',
+      },
+      {
+        q: '我只是想知道某次 call 花多少錢，需要裝這麼多東西嗎？',
+        a: '不用。事後對帳直接讀 API response 的 usage（input_tokens / output_tokens），那就是計費依據。只有「上線後要長期追蹤、做成本歸因」才需要 Langfuse／Helicone 這類 observability。',
+      },
+      {
+        q: 'liteLLM / tokencost 的成本數字可信嗎？',
+        a: 'token 數對 OpenAI 精準、對其他家是近似；價目表是第三方維護，可能跟最新官方定價有時間差。拿來做預算告警／量級預估很好用，但要拿去跟帳單對帳前，先抽樣驗一下對不對得上。',
+      },
+    ],
+  },
+  {
+    slug: 'agent-browser-ai-chrome-automation',
+    title:
+      'agent-browser 是什麼？AI agent 專用瀏覽器自動化 CLI 實戰（含 Claude Code 接法）',
+    excerpt:
+      'agent-browser 是 Vercel Labs 出的 AI agent 專用瀏覽器自動化 CLI，用 Chrome 跑、不依賴 Playwright。它最大的差別是「snapshot + refs」——回傳精簡的可訪問性元素清單（每頁約 200-400 tokens），而不是整坨 HTML。我今天把它裝到 Mac、跑通一個登入流程、再裝成 Claude Code skill，全程實測。這篇是覆盤：安裝怎麼裝、登入流程怎麼跑（snapshot→fill→click→截圖 round-trip）、踩了哪些坑（Hacker News 被反爬擋、ref 會過期、nvm 路徑可攜性），以及怎麼用「薄存根 + CLI 動態供給」把它接進 Claude Code 對話直接調用。',
+    category: 'AI 工具',
+    tags: [
+      'agent-browser',
+      'AI Agent',
+      'Claude Code',
+      'Playwright MCP',
+      '瀏覽器自動化',
+      'Browser Automation',
+      'Vercel Labs',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-06-09',
+    featured: true,
+    faqItems: [
+      {
+        q: 'agent-browser 需要先裝 Playwright 嗎？',
+        a: '不用。它透過 CDP（Chrome DevTools Protocol）直接驅動 Chrome，自己用 `agent-browser install` 抓一份 Chrome for Testing，跟 Playwright / Puppeteer 完全無關。',
+      },
+      {
+        q: '它會動到我日常用的 Chrome 嗎？',
+        a: '不會。install 抓的是獨立的 Chrome for Testing，裝在 ~/.agent-browser/browsers/，跟你平常用的 Chrome 分開，不互相干擾。',
+      },
+      {
+        q: '預設看得到瀏覽器視窗嗎？',
+        a: '預設 headless（背景跑、看不到）。要看到視窗加 --headed，例如 agent-browser open --headed <url>。有些會擋自動化的站，用有頭模式也比較不容易被擋。',
+      },
+      {
+        q: 'ref（@e1、@e2）為什麼有時候點不到東西？',
+        a: '最常見是 ref 過期了。ref 每次 snapshot 重新編號、頁面一變（導航 / 表單送出 / 動態 re-render / 開 dialog）就失效，下次 ref 操作前要先重新 snapshot -i 拿新的編號。',
+      },
+      {
+        q: '跟 Playwright MCP 比，真的省很多 token 嗎？',
+        a: '設計上是。snapshot 只回精簡元素清單而非整頁 HTML，官方稱每頁約 200-400 tokens，我實測 snapshot 輸出確實很短。具體省幾成我這輪沒做嚴格計量，網路上的對比數字（如省 ~82%）當參考就好。',
+      },
+    ],
+  },
+  {
     slug: 'arize-phoenix-llm-tracing-medical-cdss',
     title:
       'Arize Phoenix 接 LangGraph CDSS：3 個踩坑與醫師回饋閉環',
