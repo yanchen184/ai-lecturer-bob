@@ -5,5 +5,7 @@
   "ctr": 0.0,
   "position": 0.0,
   "queries": [],
-  "pages": []
+  "pages": [],
+  "analysis": "【一句總評】\n站內幾乎沒流量（UV 8/PV 2），GSC 過去 7 天只有兩個個位數曝光的 k8s 查詢，整站搜尋曝光基本歸零；但 28 天看 claude code ultrawork 排名 1.9、點擊 21，那篇是唯一在拉量的頁，其餘全是雜訊。\n\n【需要注意】\n最該盯的是 ultrawork 這條主力 query 近 7 天從 28 天的 40 曝光掉到幾乎沒進前 10 頁面榜，ultracode-ultrathink 那篇 44 曝光卻只有 1 點擊、CTR 約 2%，標題對搜尋意圖的吸引力偏弱。另外 GSC 2026-06-06 單日無曝光、近 7 天整體曝光掉到個位數，這需要進後台查原因，數據本身看不出是搬家爬取中、索引延遲還是其他問題，不要猜定論。\n\n【今天可以做】\n去 GSC URL 檢查工具對 /blog/claude-code-ultracode-ultrathink/ 手動 Request Indexing，順手 curl 一次 sitemap.xml 確認回 200、看 robots.txt 沒擋到 /blog/，五分鐘內可做完，確保主力頁至少被重新抓取。",
+  "analysisGeneratedAt": "2026-06-10T07:08:31+0800"
 }
