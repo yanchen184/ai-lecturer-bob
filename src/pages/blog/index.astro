@@ -99,8 +99,8 @@ const jsonLd = {
       <!-- Featured hero -->
       {heroPost && <BlogFeaturedHero post={heroPost} views={viewsMap.get(heroPost.slug)} />}
 
-      <!-- Filters (sticky 在 navbar 下,scroll 過 hero 後仍可用) -->
-      <div class="sticky top-[68px] z-30 mb-10">
+      <!-- Filters (隨頁面捲動,不 sticky — 避免卡住畫面遮內容) -->
+      <div class="mb-10">
         <BlogFilters
           client:load
           categories={categories}
