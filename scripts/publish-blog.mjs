@@ -128,7 +128,7 @@ const posts = [
       },
       {
         q: '跟 Playwright MCP 比，真的省很多 token 嗎？',
-        a: '設計上是。snapshot 只回精簡元素清單而非整頁 HTML，官方稱每頁約 200-400 tokens，我實測 snapshot 輸出確實很短。具體省幾成我這輪沒做嚴格計量，網路上的對比數字（如省 ~82%）當參考就好。',
+        a: '真的。我用 tiktoken 實測過：同一個 GitHub repo 頁，渲染後完整 HTML 是 433,903 token，agent-browser 的 snapshot 只要 35,219（省 91.9%）、snapshot -i 只要 12,778（省 97.1%）。原文作者測的是 ~82%，我這台機器測下來更高，同一個量級。注意這是單頁單樣本，HTML 越肥的頁省越多。',
       },
     ],
   },
