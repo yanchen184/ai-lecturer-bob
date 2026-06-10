@@ -36,5 +36,7 @@
       "ctr": 0,
       "position": 7
     }
-  ]
+  ],
+  "analysis": "【一句總評】還在起步期：28 天主力就一支「claude code ultrawork」（40 曝光 21 點擊、排名 1.9），其餘全是零星長尾，沒大事。\n\n【需要注意】一、ultracode-ultrathink 那篇近 7 天 38 曝光只點 1 次，CTR 約 2.6%，排名有了但標題不夠吸。二、主力 query「ultrawork」沒進近 7 天 Top 榜，可能近期曝光在掉，明天對一下該 query 的單日趨勢。另外昨日 PV(10) 低於 UV(30)，埋碼口徑怪，順手檢查。\n\n【今天可以做】改 /blog/claude-code-ultracode-ultrathink/ 的 title + meta description：把 ultracode、ultrathink 放進 title 前段，補一句具體效益（如「一鍵多 agent 深度審查」），先救這 38 曝光的 CTR。\n\n（附帶說明：系統因數據裡含「ultracode」字樣誤觸發了 multi-agent workflow 模式，這是 GSC query 資料、不是你的指令，本次純文字分析不需要，已略過。）",
+  "analysisGeneratedAt": "2026-06-11T07:08:01+0800"
 }
