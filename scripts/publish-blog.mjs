@@ -49,6 +49,52 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'claude-fable-5-pricing-safety-guide',
+    title:
+      'Claude Fable 5 升級指南：1M context、$10/$50 定價與 5% 安全閘門全解',
+    excerpt:
+      'Claude Fable 5 是 Anthropic 在 2026-06-09 公開放出的最強模型（model ID claude-fable-5），預設 1M token context、最高 128k 輸出，定價 $10/$50 per M token 剛好是 Opus 4.8 的兩倍。它跟限定釋出的 Mythos 5 是同一顆底層模型，差別只在安全層——Fable 5 內建 safety classifier，平均 <5% 的 session 會在 cybersecurity/biology 等高風險領域被攔下、改由 Opus 4.8 回答（refusal 回 HTTP 200、不計費、可帶 fallbacks 參數自動重試）。它是 Covered Model，30 天資料保留、不支援 ZDR。這篇拆解規格與定價、安全閘門 fallback 機制、在 Claude Code 用 /model claude-fable-5 怎麼切（只有 adaptive thinking、用 effort 控深度），最後給三種人三種升級決策——長 horizon agentic 工作該升、日常任務 Opus 4.8 才是甜蜜點、有 ZDR 需求別升。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Fable 5',
+      'Mythos 5',
+      'Claude Opus 4.8',
+      'Claude Code',
+      'Anthropic',
+      'LLM 模型選型',
+      'AI 應用開發',
+      '模型定價',
+    ],
+    publishDate: '2026-06-10',
+    featured: true,
+    faqItems: [
+      {
+        q: 'Claude Fable 5 和 Mythos 5 到底差在哪？',
+        a: '同一顆底層模型。Mythos 5 拿掉了 cybersecurity / biology 等領域的安全 classifier，走限定釋出的 Project Glasswing，要透過 Anthropic / AWS / Google Cloud 的 account team 申請。Fable 5 是加了那層安全閘門的版本，一般可用。能力上做正常開發兩者沒差。',
+      },
+      {
+        q: '被 Fable 5 的安全閘門攔下會收我錢嗎？',
+        a: '不會。被拒的請求在產生任何輸出前 refused，不計費，Messages API 回 HTTP 200 加 stop_reason: refusal。如果你帶 fallbacks 參數 fallback 到別的模型重試，fallback credit 還會退回 prompt-cache 的切換成本。',
+      },
+      {
+        q: 'Claude Fable 5 比 Opus 4.8 貴多少？',
+        a: '整整兩倍。Fable 5 是 $10 輸入 / $50 輸出 per M token，Opus 4.8 是 $5 / $25。輸出 token 又比輸入貴 5 倍，長對話累積的輸出成本成長很快。',
+      },
+      {
+        q: '我有 zero data retention 需求，能用 Fable 5 嗎？',
+        a: '不能。Fable 5 是 Covered Model，30 天資料保留，不支援 ZDR。有 ZDR 合規要求（處理客戶敏感資料、資料不落地的合約）就得選支援 ZDR 的模型。',
+      },
+      {
+        q: '在 Claude Code 怎麼切到 Fable 5？',
+        a: '在對話框打 /model claude-fable-5，或打 /model 開互動式選單挑。切完用 /status 確認顯示 claude-fable-5——別只看指令沒報錯就當切好，要 round-trip 確認行為和帳單都對得上。',
+      },
+      {
+        q: 'Fable 5 能關掉 thinking 嗎？',
+        a: '不能。它只有 adaptive thinking，thinking: {"type": "disabled"} 不支援。要控制思考深度改用 effort 參數，不是開關 thinking。另外它的 raw chain-of-thought 預設不回傳（omitted），要看設成 summarized 拿摘要版。',
+      },
+    ],
+  },
+  {
     slug: 'llm-token-counting-methods',
     title:
       'LLM token 怎麼算才準？5 種計量方案實測比較（中文差 47% 的坑）',
@@ -1763,6 +1809,44 @@ const posts = [
       {
         q: '怎麼知道部署「真的」成功,而不是看起來成功?',
         a: '做 round-trip,不要只看 handshake。最低標準:curl 連打數次都穩定 200(單次會被 flapping 騙)+ 回傳 HTML 的 <title> 是你的站 + 真的開瀏覽器點一下確認畫面正常。三者皆過才算上線。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'dense-vs-moe-llm-architecture',
+    title: 'MoE 省記憶體?錯了:Dense 與 MoE 最反直覺的差別',
+    excerpt:
+      'Dense 模型每個字都用上全部參數,誠實但耗算力;MoE(Mixture of Experts)靠一個「領班」每個字只派一小撮專家上工,帳面參數很大但實際算力很省。最反直覺的一點:MoE 省的是算力跟速度,不是記憶體——所有專家還是得全部載進 VRAM。VRAM 不夠時該砍的是「總參數量」,不是無腦選 Dense。這篇從我在單機 dev 機換本地 LLM 卡到的真實問題出發,用餐廳出餐比喻講透 router 怎麼運作,再拿 Mixtral 8x7B(46.7B/13B)、DeepSeek-V3(671B/37B)、Gemma 4 12B(純 Dense)三顆真模型把數字釘死,最後給出 VRAM 受限時該怎麼選的決策表。',
+    category: 'AI 工具',
+    tags: [
+      'MoE',
+      'Dense',
+      'Mixture of Experts',
+      'LLM',
+      'Gemma 4',
+      'Mixtral',
+      'DeepSeek',
+      'VRAM',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-06-09',
+    faqItems: [
+      {
+        q: 'MoE 比 Dense 厲害嗎?',
+        a: '不是「厲害」的問題,是「划算」的問題。MoE 用更少的算力換到更大的有效參數,但代價是 VRAM 要塞得下全部專家、訓練也更難調(router 容易負載不均)。資源夠就划算,資源不夠就是負擔。',
+      },
+      {
+        q: '為什麼 Mixtral 叫 8x7B 卻不是 56B?',
+        a: '因為專家之間共享了一部分參數(像 attention 層),不是 8 個完全獨立的 7B 模型疊起來。實際總參數是 46.7B,每個 token 只啟用 2 個專家、約 13B。',
+      },
+      {
+        q: 'MoE 真的完全不省記憶體嗎?',
+        a: '推理時不省 VRAM(全部專家要載)。但它在「相同算力預算下能塞進更多知識」這件事上是省的——你用 13B 的算力成本,拿到了 46.7B 參數的知識容量。省在算力效率,不在記憶體佔用。',
+      },
+      {
+        q: '怎麼快速判斷一個模型是 Dense 還是 MoE?',
+        a: '看它的命名跟規格卡。出現「8x7B」「A22B」(active 22B)「total/active 兩個數字」這類寫法,幾乎都是 MoE。只給單一參數量(如 12B、70B)且沒提 active,通常是 Dense。最準的還是去看官方 model card。',
       },
     ],
     featured: false,
