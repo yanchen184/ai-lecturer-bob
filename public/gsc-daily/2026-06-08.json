@@ -1,0 +1,38 @@
+{
+  "date": "2026-06-08",
+  "impressions": 21,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 5.5,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/karpathy-claude-skills/",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2.4
+    },
+    {
+      "page": "/blog/arize-phoenix-llm-tracing-medical-cdss/",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.2
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.3
+    },
+    {
+      "page": "/blog/claude-self-sync-intro/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
