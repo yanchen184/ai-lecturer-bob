@@ -34,5 +34,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "昨天 UV 20、PV 7（人比頁多，多半是首頁跳出或爬蟲）。28 天結構其實健康：「claude code ultrawork」曝光 40、點 21、排名 1.9，這個核心 query 撐住整站，是你的招牌。其餘沒事。\n\n需要注意兩件。一是近 7 天那篇 ultracode 文章（/blog/claude-code-ultracode-ultrathink/）曝光衝到 30 但點擊 0，而 28 天的「ultrawork」明明 CTR 過半——同主題一個爆點一個掛蛋，落差大到值得去 GSC 查這頁實際吃到哪些 query、SERP 上標題長相如何。二是 GSC 近 7 天整體曝光極少（多數 query 只有 1 次曝光、排名 70～92），單日還空白；數據空白原因很多，需要去後台檢查，別憑這份數據下定論。\n\n今天五分鐘內：去 GSC URL Inspection 對 /blog/claude-code-ultracode-ultrathink/ 按一次 Request Indexing，順手在瀏覽器直接開 yanchen.app/sitemap.xml 確認回 200、內容是新網域的網址。這兩件不管後台狀態如何都該做，能同時推進收錄又驗證站點基本健康。\n\n(註：這題是單純的數據判讀輸出，不需要多 agent 編排，所以直接作答。需要我之後每天自動跑這份晨間 SEO 簡報再說。)",
+  "analysisGeneratedAt": "2026-06-12T07:07:30+0800"
 }
