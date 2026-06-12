@@ -49,6 +49,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'agent-browser-screenshot-annotate-visual',
+    title: 'agent-browser 截圖標註：3 招讓 AI 看著畫面操作',
+    excerpt:
+      'agent-browser 的主力是純文字 snapshot（一頁 200-400 tokens 的可訪問性元素清單），但它抓不到「沒文字標籤的 icon 按鈕、canvas 畫的東西、純視覺狀態」。這篇接續上一篇純文字流，實測它的三個視覺標註指令——screenshot --annotate（在截圖上疊元素編號 [1][2][3]，每個對應 @eN ref，截完可直接 click @e2）、highlight（高亮單一元素做聚焦驗證）、diff screenshot（截圖像素級比對，抓「長相變了」，配合 diff snapshot 抓「結構變了」）——把 AI 從「只能讀文字」升級成「看著畫面操作」。核心是 annotate 把視覺感知跟動作指令對齊：同一套 @eN ref 文字流跟視覺流共用，多模態模型看圖推理完直接產生跟純文字流一樣的指令。也講清楚一個常見誤會：它沒有自由畫圖/打字的小畫家功能，標註指的是元素編號疊加。踩坑含 annotate 只支援 CDP 後端（Chrome/Lightpanda）Safari 不行、ref 會過期、diff threshold 不調會一直假警報。版本 v0.27.2，全程 Mac 實測。',
+    category: 'AI 工具',
+    tags: [
+      'agent-browser',
+      '截圖標註',
+      'annotate',
+      'AI Agent',
+      'Claude Code',
+      '多模態 AI',
+      '瀏覽器自動化',
+      'Vercel Labs',
+    ],
+    publishDate: '2026-06-12',
+    featured: false,
+    faqItems: [
+      {
+        q: 'agent-browser 可以在截圖上自由畫圖、寫字嗎？',
+        a: '不行。它沒有 paint / 自由標註功能。它的「標註」是 --annotate 自動疊元素編號、highlight 高亮元素、diff 視覺比對——目的是讓 AI 看懂畫面，不是給人塗鴉。要在圖上手動畫框寫字，那是截圖編輯工具（如 macOS 預覽、Skitch）的事。',
+      },
+      {
+        q: 'annotate 的編號 [N] 和純文字 snapshot 的 @eN 是同一套嗎？',
+        a: '是。這是它設計得最聰明的地方——[2] 對應 @e2，視覺流跟文字流共用同一套 ref，不用維護兩套座標。多模態 AI 看著截圖上的 [2] 推理完，產生的指令 click @e2 跟純文字流一模一樣。',
+      },
+      {
+        q: 'diff screenshot 跟 diff snapshot 差在哪？',
+        a: 'diff screenshot 比像素（長相變了沒），diff snapshot 比可訪問性樹（結構/內容變了沒）。按鈕變色、間距跑版用前者；DOM 結構、文字內容變動用後者。前者記得用 -t 調 threshold 過濾抗鋸齒雜訊。',
+      },
+      {
+        q: '為什麼 Safari 後端不能用 annotate？',
+        a: 'annotate 需要 CDP（Chrome DevTools Protocol）的能力來掃描並疊加元素標籤，Safari 走的是 WebDriver 協定，目前還沒實作這塊。要用 annotate 就切 Chrome 或 Lightpanda 後端。',
+      },
+      {
+        q: '這些視覺標註指令適合接進 Claude Code 嗎？',
+        a: '適合。跟前一篇的純文字流一樣，這三招都是 CLI 指令，可以用「薄存根 + CLI 動態供給」的方式接進 Claude Code 直接調用。多模態場景（要 AI 看圖操作）特別適合用 annotate 當輸入。',
+      },
+    ],
+  },
+  {
     slug: 'ccs-multi-account-claude-codex-switch',
     title:
       'AI agent 額度爆了不用乾等：ccs 多帳號無縫切換（Claude Code + Codex，同一場對話接得起來）',

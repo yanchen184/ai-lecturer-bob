@@ -110,7 +110,7 @@
       "wordCount": 4898
     },
     "hermes-agent-intro": {
-      "total": 70,
+      "total": 69,
       "breakdown": {
         "wordCount": 15,
         "tldr": 10,
@@ -122,13 +122,13 @@
         "pitfall": 0,
         "faq": 10,
         "extLinks": 0,
-        "bannedWords": 5,
+        "bannedWords": 4,
         "codeFence": 0
       },
       "wordCount": 4682
     },
     "hermes-agent-sandbox": {
-      "total": 80,
+      "total": 79,
       "breakdown": {
         "wordCount": 15,
         "tldr": 10,
@@ -140,7 +140,7 @@
         "pitfall": 5,
         "faq": 10,
         "extLinks": 5,
-        "bannedWords": 5,
+        "bannedWords": 4,
         "codeFence": 0
       },
       "wordCount": 6902
@@ -254,7 +254,7 @@
       "wordCount": 12416
     },
     "mempalace-3-3-5-claude-p-proxy": {
-      "total": 71,
+      "total": 76,
       "breakdown": {
         "wordCount": 15,
         "tldr": 10,
@@ -263,7 +263,7 @@
         "h2Emoji": 1,
         "table": 10,
         "image": 5,
-        "pitfall": 0,
+        "pitfall": 5,
         "faq": 10,
         "extLinks": 5,
         "bannedWords": 5,
@@ -272,7 +272,7 @@
       "wordCount": 8520
     },
     "phone-local-llm-pocketpal": {
-      "total": 90,
+      "total": 88,
       "breakdown": {
         "wordCount": 15,
         "tldr": 10,
@@ -284,7 +284,7 @@
         "pitfall": 5,
         "faq": 10,
         "extLinks": 5,
-        "bannedWords": 5,
+        "bannedWords": 3,
         "codeFence": 0
       },
       "wordCount": 8659
@@ -344,7 +344,7 @@
       "wordCount": 8322
     },
     "claude-code-lesson-4": {
-      "total": 65,
+      "total": 70,
       "breakdown": {
         "wordCount": 15,
         "tldr": 0,
@@ -353,7 +353,7 @@
         "h2Emoji": 0,
         "table": 10,
         "image": 5,
-        "pitfall": 0,
+        "pitfall": 5,
         "faq": 10,
         "extLinks": 5,
         "bannedWords": 5,
@@ -720,6 +720,24 @@
         "codeFence": 5
       },
       "wordCount": 4834
+    },
+    "agent-browser-screenshot-annotate-visual": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5971
     }
   }
 }
