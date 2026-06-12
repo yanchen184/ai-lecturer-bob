@@ -1,8 +1,9 @@
 ---
 /**
  * Neub 風格 Navbar（SSR 友善、純 CSS 可展開手機選單）。
- * - md+ : Logo 左、5 個連結排右
- * - < md: Logo 左、hamburger 按鈕右，點開後以 <details> 展開全部連結
+ * - md+ : 左側固定全高垂直側欄（Logo 在上、連結垂直排、主題切換在下），
+ *         主內容由全域 body padding-left 往右讓位。
+ * - < md: 頂部 sticky bar，Logo 左、hamburger 右，點開後以 <details> 展開全部連結。
  *         用 <details>/<summary> 無需 JS、鍵盤可存取、有語義。
  * - currentPath 用於高亮 active link
  */
@@ -36,11 +37,64 @@ const resolveHref = (href: string) =>
   href.startsWith('/#') ? withBase('/') + href.slice(1) : withBase(href);
 ---
 
+<!-- ============ md+ : 左側固定全高垂直側欄 ============ -->
 <nav
-  class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b-[3px] border-black"
+  class="site-sidebar hidden md:flex md:flex-col fixed left-0 top-0 z-40 h-screen bg-white/95 backdrop-blur-sm border-r-[3px] border-black"
   aria-label="主要導覽"
 >
-  <div class="max-w-7xl mx-auto px-6 md:px-10 py-3 flex items-center">
+  <!-- Logo -->
+  <a
+    href={withBase('/')}
+    class="flex items-center gap-2 font-black tracking-tight hover:bg-[var(--color-neub-yellow)] px-4 py-4 border-b-2 border-black transition-colors"
+    aria-label="回到首頁"
+  >
+    <span
+      class="w-9 h-9 inline-flex items-center justify-center overflow-hidden bg-[var(--color-neub-yellow)] border-2 border-black shrink-0"
+    >
+      <img
+        src={withBase('/images/logo-mark.png')}
+        alt="陳彥彤 YC 頭像"
+        width="144"
+        height="144"
+        loading="eager"
+        decoding="async"
+        class="w-full h-full object-cover"
+      />
+    </span>
+    <span class="text-sm">陳彥彤 YC</span>
+  </a>
+
+  <!-- 垂直連結列 -->
+  <div class="flex-1 flex flex-col gap-1 p-3 text-sm font-mono overflow-y-auto">
+    {
+      navItems.map((item) => (
+        <a
+          href={resolveHref(item.href)}
+          class:list={[
+            'px-3 py-2.5 uppercase tracking-widest border-2 transition-colors',
+            isActive(item.href)
+              ? 'bg-black text-white border-black'
+              : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
+          ]}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </div>
+
+  <!-- 底部主題切換 -->
+  <div class="p-3 border-t-2 border-black">
+    <ThemeSwitch />
+  </div>
+</nav>
+
+<!-- ============ <md : 頂部 sticky bar + hamburger（純 CSS、無 JS） ============ -->
+<nav
+  class="md:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b-[3px] border-black"
+  aria-label="主要導覽"
+>
+  <div class="px-6 py-3 flex items-center">
     <a
       href={withBase('/')}
       class="flex items-center gap-2 font-black tracking-tight hover:bg-[var(--color-neub-yellow)] px-2 py-1 transition-colors"
@@ -62,35 +116,13 @@ const resolveHref = (href: string) =>
       <span class="hidden sm:inline text-sm">陳彥彤 YC</span>
     </a>
 
-    <!-- md+ : 桌機排成一列 -->
-    <div class="ml-auto hidden md:flex items-center gap-1 text-sm font-mono">
-      {
-        navItems.map((item) => (
-          <a
-            href={resolveHref(item.href)}
-            class:list={[
-              'px-3 py-1.5 uppercase tracking-widest border-2 transition-colors',
-              isActive(item.href)
-                ? 'bg-black text-white border-black'
-                : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
-            ]}
-          >
-            {item.label}
-          </a>
-        ))
-      }
-      <div class="ml-2 pl-2 border-l-2 border-black">
-        <ThemeSwitch />
-      </div>
-    </div>
-
-    <!-- <md : 手機上 ThemeSwitch 放在 hamburger 左側 -->
-    <div class="md:hidden ml-auto mr-2">
+    <!-- ThemeSwitch 放在 hamburger 左側 -->
+    <div class="ml-auto mr-2">
       <ThemeSwitch />
     </div>
 
-    <!-- <md : 手機 hamburger（純 CSS、無 JS） -->
-    <details class="md:hidden mobile-menu" aria-label="開啟選單">
+    <!-- hamburger -->
+    <details class="mobile-menu" aria-label="開啟選單">
       <summary
         class="list-none cursor-pointer select-none w-10 h-10 inline-flex items-center justify-center border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] relative z-50"
         aria-label="切換導覽選單"
@@ -130,6 +162,21 @@ const resolveHref = (href: string) =>
     </details>
   </div>
 </nav>
+
+<!-- 側欄寬度 + 主內容讓位（md+ 才推移；手機是頂部 bar 不需推） -->
+<style is:global>
+  :root {
+    --sidebar-w: 220px;
+  }
+  .site-sidebar {
+    width: var(--sidebar-w);
+  }
+  @media (min-width: 768px) {
+    body {
+      padding-left: var(--sidebar-w);
+    }
+  }
+</style>
 
 <style>
   /* 隱藏 summary 預設三角形 */
