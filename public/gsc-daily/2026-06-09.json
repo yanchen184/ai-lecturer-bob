@@ -1,0 +1,47 @@
+{
+  "date": "2026-06-09",
+  "impressions": 6,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 16.8,
+  "queries": [
+    {
+      "query": "kube",
+      "page": "/blog/k8s/kube-system-explore/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 73
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-code-teams-owner-management-guide/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/kube-system-explore/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 73
+    }
+  ]
+}
