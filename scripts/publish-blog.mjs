@@ -49,6 +49,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'firebase-free-web-app-domain',
+    title: 'Firebase .web.app 免費網域：5 步驟申請，一個帳號能開幾個',
+    excerpt:
+      'Firebase 的 .web.app 是免費內建網域，連 HTTPS 憑證都自動簽好。本文用 5 個步驟教你從零申請，並回答一個帳號到底能開幾個（單一專案最多 36 個 site）。',
+    category: 'AI 工具',
+    tags: [
+      'Firebase',
+      'Firebase Hosting',
+      '免費網域',
+      'web.app',
+      '免費架站',
+      'HTTPS',
+      '自訂網域',
+      'GitHub Actions',
+    ],
+    publishDate: '2026-06-12',
+    featured: false,
+    faqItems: [
+      {
+        q: '.web.app 網域真的完全免費嗎？會不會哪天開始收錢？',
+        a: '是免費的，且不需綁信用卡。官方文件明寫「at no cost」。它屬於 Firebase Hosting 的免費 Spark 方案，你只在「儲存超過 10 GB」或「月傳輸超過 10 GB」時才會被要求升級付費——對小專案幾乎不會發生。',
+      },
+      {
+        q: '.web.app 跟 .firebaseapp.com 我該用哪個？',
+        a: '兩個指向同一份內容，隨便用。建議拿較短、較新的 .web.app 當主力對外分享，.firebaseapp.com 留著備用即可。',
+      },
+      {
+        q: '一個 Firebase 帳號可以申請幾個免費網域？',
+        a: '非常多。單一專案最多能開 36 個 Hosting site（每個 site 給一組 .web.app + 一組 .firebaseapp.com），一個 Google 帳號又能開多個專案，相乘下來一個帳號能拿到數十甚至上百個免費網址，個人用途等於用不完。唯一限制是名稱全球唯一。',
+      },
+      {
+        q: '綁自訂網域要付錢給 Firebase 嗎？',
+        a: '不用。Firebase 端連接自訂網域、簽 HTTPS 憑證都不收費。你要付的只有「向網域註冊商買網域」那筆錢（一年通常 NT$300～600 起跳），那是付給 GoDaddy / Cloudflare 這類網域商，跟 Firebase 無關。',
+      },
+      {
+        q: '自訂網域要怎麼接？',
+        a: '在 Firebase Hosting 後台輸入你的網域 → 加一筆 TXT 記錄到 DNS 驗證所有權 → 把 A 記錄指向 Firebase 給的 IP → 等 DNS 生效，Firebase 自動簽 SSL（最多 24 小時，多半幾小時內好）。注意每個 apex 網域最多 20 個子網域。',
+      },
+    ],
+  },
+  {
     slug: 'agent-browser-screenshot-annotate-visual',
     title: 'agent-browser 截圖標註：3 招讓 AI 看著畫面操作',
     excerpt:
