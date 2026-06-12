@@ -49,6 +49,52 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'ccs-multi-account-claude-codex-switch',
+    title:
+      'AI agent 額度爆了不用乾等：ccs 多帳號無縫切換（Claude Code + Codex，同一場對話接得起來）',
+    excerpt:
+      '額度撞 rate limit 最痛的不是要等刷新，是對話脈絡斷掉。ccs 這套把這個痛點直接做掉——一鍵切到第二個帳號，把同一串對話搬過去用它的額度繼續跑，脈絡完全不斷。核心原理 provider-agnostic：每一場對話其實是一個 .jsonl 檔躺在硬碟上，用 CLAUDE_CONFIG_DIR / CODEX_HOME 環境變數隔離兩個帳號身份，撞 limit 時把那場對話檔複製到第二個帳號目錄、再用它 resume 就好，額度算第二個帳號的、歷史一字不差。支援 Claude Code 與 Codex，連 Codex 斷了用 Claude 接的跨工具接力都涵蓋。安全上用「按需複製單一對話檔」而非 symlink 整個資料夾（後者雙開會 corrupt），token 永遠留在你自己的 Keychain、不被搬移。本文最後一段可以直接複製貼給 Claude Code，它會自己 git clone + 跑 install.sh 幫你裝好——唯一要你自己按的只有第二個帳號的 login。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'Codex',
+      'AI agent',
+      'rate limit',
+      '多帳號切換',
+      'CLAUDE_CONFIG_DIR',
+      'Claude Code skill',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-06-12',
+    featured: true,
+    faqItems: [
+      {
+        q: 'ccs 切帳號會把我的對話歷史弄丟嗎？',
+        a: '不會，剛好相反，它存在就是為了不丟脈絡。每一場對話是一個 .jsonl 檔，ccs 接力時複製你挑的那一場到第二個帳號目錄、再用它 resume，歷史一字不差。額度算第二個帳號的，但對話完全接得起來。',
+      },
+      {
+        q: '它怎麼隔離兩個帳號，不會互相干擾？',
+        a: 'Claude Code 看 CLAUDE_CONFIG_DIR 環境變數（預設 ~/.claude，指到 ~/.claude-2 就是另一套設定、登入、歷史），Codex 看 CODEX_HOME，邏輯一樣。兩個帳號的 token 在 macOS Keychain 存不同條目（service name 依 config dir 做 hash），不會互蓋。',
+      },
+      {
+        q: '為什麼不直接把兩個帳號的資料夾 symlink 接通就好？',
+        a: '因為兩個 agent 同時跑時，.claude.json / projects / sessions 這些檔會被並發寫入弄壞（對應 Anthropic 已知的雙開 corruption issue）。所以 ccs 設計成只在接力那一刻按需複製單一對話檔，而不是同步整個資料夾。',
+      },
+      {
+        q: '安裝會自動幫我登入第二個帳號嗎？',
+        a: '不會，也不該。install.sh 自動處理環境變數、目錄、PATH、腳本，但第二個帳號的 login（開瀏覽器、輸帳密 / 2FA）那一步沒有任何工具能代勞，要你自己按。其餘設定全自動。',
+      },
+      {
+        q: '我現在還沒有第二個帳號，能先裝嗎？',
+        a: '可以。先把這套裝起來，等你哪天開了第二個帳號，再打 ccs 走設定流程把它接上即可。裝在前、用在後，不衝突。',
+      },
+      {
+        q: 'Codex 撞 limit 也能用 Claude 接續嗎？',
+        a: '可以。ccs 的跨工具接力會把來源（Codex）對話濃縮成一份 handoff capsule——原始任務、最後進度、改過的檔、git diff——餵給 Claude 讓它讀懂接手。原理 provider-agnostic，反過來 Claude 斷了用 Codex 接也行。',
+      },
+    ],
+  },
+  {
     slug: 'claude-fable-5-pricing-safety-guide',
     title:
       'Claude Fable 5 升級指南：1M context、$10/$50 定價與 5% 安全閘門全解',
