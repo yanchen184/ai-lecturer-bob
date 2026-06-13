@@ -1,0 +1,54 @@
+{
+  "date": "2026-06-10",
+  "impressions": 21,
+  "clicks": 1,
+  "ctr": 4.76,
+  "position": 5.5,
+  "queries": [
+    {
+      "query": "\"ultracode needs dynamic workflows enabled\"",
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.4
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.9
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.8
+    },
+    {
+      "page": "/blog/ollama-cloud-hermes-langchain/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.7
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "page": "/blog/open-slide-ai-agent-presentation-framework/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    }
+  ]
+}
