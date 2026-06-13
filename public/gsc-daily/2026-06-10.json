@@ -50,5 +50,7 @@
       "ctr": 100,
       "position": 1
     }
-  ]
+  ],
+  "analysis": "昨天沒事，這週也沒事。3 個 UV、5 個曝光、0 點擊，數字小到談不上趨勢，正常波動。28 天看 \"claude code ultrawork\" 曝光 40 點擊 21、排名 1.9 是你的金雞母，結構健康。\n\n需要注意的就一件：ultrawork 系列已經幫你卡到第一頁第一名，但「ultracode」這個近義詞 7 天 / 28 天都只有 1 次曝光、排名 9，而 /blog/claude-code-ultracode-ultrathink/ 這頁 7 天 13 次曝光全部 0 點擊。代表 Google 有在送這頁流量、但你的 title/meta 對「ultracode」「ultrathink」這組字沒抓到點擊。另外 \"ultracode needs dynamic workflows enabled\" 這個錯誤訊息 query 5 次曝光排名 3.4 卻 0 點擊，是高意圖、低競爭的長尾，值得吃。\n\n今天 5 分鐘做這個：把 /blog/claude-code-ultracode-ultrathink/ 的 `<title>` 和 meta description 改寫，明確塞進 \"ultracode\" 跟那句 \"ultracode needs dynamic workflows enabled\" 錯誤訊息原文——讓搜這個錯誤的人一眼看到你的頁面就是答案。改完去 GSC URL Inspection 對這頁手動 Request Indexing，順便 curl 確認 sitemap 回 200。\n\n（你開了 ultracode，但這是純數據解讀、沒有要 fan-out 跑多 agent 的活，single pass 就夠，沒必要燒 workflow 的 token。需要我直接動手改那頁的 title/meta 就說一聲。）",
+  "analysisGeneratedAt": "2026-06-14T07:13:31+0800"
 }
