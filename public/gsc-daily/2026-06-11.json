@@ -79,5 +79,7 @@
       "ctr": 0,
       "position": 80
     }
-  ]
+  ],
+  "analysis": "結論先說:這份數據量太小,不需要動用 workflow 多 agent 編排(那會是殺雞用牛刀、燒 token)。直接分析就好。以下三段。\n\n【一句總評】\n網站基本沒流量、處於冷啟動階段:昨日站內 1 UV / 0 PV,GSC 單日曝光只有 2、點擊 0。28 天唯一亮點是 \"claude code ultrawork\" 曝光 40、點擊 21、排名 1.9,撐起整站幾乎全部點擊;其餘 query 都是個位數曝光的長尾,結構還沒成形。\n\n【需要注意】\n最該盯的是 \"claude code ultrawork\" 這條救命稻草——它是你唯一有實質點擊的 query,要確認對應頁面內容沒被改壞、排名守住第 1。其次 \"ultracode needs dynamic workflows enabled\"(7 天曝光 6、排名 3.5)和 ultracode 系列正在冒頭但點擊全 0,代表標題對這群人沒勾到點擊慾;而曝光最高的 /blog/claude-code-ultracode-ultrathink/(11 曝光 0 點擊)更是典型「排得到、沒人點」。\n\n【今天可以做】\n去 GSC 對 /blog/claude-code-ultracode-ultrathink/ 這頁手動 Request Indexing,並把它的 title 改得更貼 \"ultracode needs dynamic workflows enabled\" 這個實際在搜的精準錯誤訊息(例如標題直接含這句報錯),把已有曝光換成點擊。5 分鐘內可動手。\n\n(註:GSC 後台是否驗證、sitemap 有沒有交、robots 設定,這些我從上面數據看不到,不評論。)",
+  "analysisGeneratedAt": "2026-06-15T07:19:33+0800"
 }
