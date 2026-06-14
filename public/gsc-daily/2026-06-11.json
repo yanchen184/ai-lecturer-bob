@@ -1,0 +1,83 @@
+{
+  "date": "2026-06-11",
+  "impressions": 18,
+  "clicks": 1,
+  "ctr": 5.56,
+  "position": 13.4,
+  "queries": [
+    {
+      "query": "\"ultracode needs dynamic workflows enabled\"",
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "query": "陳彥彤",
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-fable-5-pricing-safety-guide/",
+      "impressions": 7,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.4
+    },
+    {
+      "page": "/blog/arize-phoenix-llm-tracing-medical-cdss/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.3
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/open-slide-ai-agent-presentation-framework/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 12
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29
+    },
+    {
+      "page": "/blog/claude-code-teams-owner-management-guide/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 80
+    }
+  ]
+}
