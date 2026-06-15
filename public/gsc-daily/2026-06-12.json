@@ -1,0 +1,38 @@
+{
+  "date": "2026-06-12",
+  "impressions": 18,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 5.9,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/claude-code-teams-owner-management-guide/",
+      "impressions": 8,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.5
+    },
+    {
+      "page": "/blog/arize-phoenix-llm-tracing-medical-cdss/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.3
+    },
+    {
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.3
+    }
+  ]
+}
