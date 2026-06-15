@@ -1,10 +1,9 @@
 ---
 /**
  * Neub 風格 Navbar（SSR 友善、純 CSS 可展開手機選單）。
- * - md+ : 左側固定全高垂直側欄（Logo 在上、連結垂直排、主題切換在下），
- *         主內容由全域 body padding-left 往右讓位。
+ * - md+ : 左側固定全高「深色」垂直側欄（Logo 在上、編號導覽、底部社群 + 版權），
+ *         對齊 design-targets/refined-neub-* 風格。主內容由 body padding-left 讓位。
  * - < md: 頂部 sticky bar，Logo 左、hamburger 右，點開後以 <details> 展開全部連結。
- *         用 <details>/<summary> 無需 JS、鍵盤可存取、有語義。
  * - currentPath 用於高亮 active link
  */
 import { withBase, base } from '../lib/url';
@@ -19,12 +18,14 @@ const currentPath = rawPath.startsWith(base)
   : rawPath;
 
 const navItems = [
-  { label: '首頁', href: '/' },
-  { label: '作品', href: '/#portfolio' },
-  { label: '關於', href: '/#about' },
-  { label: '服務', href: '/#courses' },
-  { label: '部落格', href: '/blog' },
-  { label: '聯繫', href: '/#contact' },
+  { label: '首頁', en: 'home', href: '/' },
+  { label: '關於我', en: 'about', href: '/#about' },
+  { label: '企業內訓', en: 'training', href: '/#courses' },
+  { label: '技術專長', en: 'skills', href: '/#skills' },
+  { label: '作品與案例', en: 'work', href: '/#portfolio' },
+  { label: '文章與分享', en: 'blog', href: '/blog' },
+  { label: '活動與課程', en: 'events', href: '/#production' },
+  { label: '聯絡我', en: 'contact', href: '/#contact' },
 ] as const;
 
 const isActive = (href: string) => {
@@ -37,15 +38,15 @@ const resolveHref = (href: string) =>
   href.startsWith('/#') ? withBase('/') + href.slice(1) : withBase(href);
 ---
 
-<!-- ============ md+ : 左側固定全高垂直側欄 ============ -->
+<!-- ============ md+ : 左側固定全高「深色」垂直側欄 ============ -->
 <nav
-  class="site-sidebar hidden md:flex md:flex-col fixed left-0 top-0 z-40 h-screen bg-white/95 backdrop-blur-sm border-r-[3px] border-black"
+  class="site-sidebar hidden md:flex md:flex-col fixed left-0 top-0 z-40 h-screen bg-[#0a0a0a] text-white border-r-[3px] border-black"
   aria-label="主要導覽"
 >
-  <!-- Logo -->
+  <!-- Logo 區 -->
   <a
     href={withBase('/')}
-    class="flex items-center gap-2 font-black tracking-tight hover:bg-[var(--color-neub-yellow)] px-4 py-4 border-b-2 border-black transition-colors"
+    class="flex items-center gap-2.5 px-4 py-4 border-b-2 border-white/15 hover:bg-white/5 transition-colors group"
     aria-label="回到首頁"
   >
     <span
@@ -61,31 +62,88 @@ const resolveHref = (href: string) =>
         class="w-full h-full object-cover"
       />
     </span>
-    <span class="text-sm">陳彥彤 YC</span>
+    <span class="min-w-0">
+      <span class="block text-base font-black tracking-tight leading-none">YAN CHEN</span>
+      <span class="block text-[10px] font-mono uppercase tracking-[0.2em] text-white/45 mt-1 truncate">yanchen.app</span>
+    </span>
   </a>
 
-  <!-- 垂直連結列 -->
-  <div class="flex-1 flex flex-col gap-1 p-3 text-sm font-mono overflow-y-auto">
+  <!-- NAVIGATION 標題 -->
+  <div class="px-4 pt-5 pb-2">
+    <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-white/35">navigation</span>
+  </div>
+
+  <!-- 編號導覽列 -->
+  <div class="flex-1 flex flex-col px-3 text-sm font-mono overflow-y-auto neub-scrollbar">
     {
-      navItems.map((item) => (
+      navItems.map((item, i) => (
         <a
           href={resolveHref(item.href)}
           class:list={[
-            'px-3 py-2.5 uppercase tracking-widest border-2 transition-colors',
+            'flex items-center justify-between gap-3 px-3 py-2.5 border-2 transition-colors',
             isActive(item.href)
-              ? 'bg-black text-white border-black'
-              : 'border-transparent hover:border-black hover:bg-[var(--color-neub-yellow)]',
+              ? 'bg-[var(--color-neub-yellow)] text-black border-black'
+              : 'border-transparent text-white/85 hover:bg-white/8 hover:border-white/20',
           ]}
         >
-          {item.label}
+          <span class="flex items-center gap-2.5">
+            <span class:list={['inline-flex items-center justify-center w-5 h-5 shrink-0', isActive(item.href) ? 'text-black' : 'text-white/55']} aria-hidden="true">
+              <span class="w-1.5 h-1.5 bg-current inline-block"></span>
+            </span>
+            <span class="tracking-wide">{item.label}</span>
+          </span>
+          <span class:list={['text-[10px] tabular-nums shrink-0', isActive(item.href) ? 'text-black/55' : 'text-white/30']}>
+            {String(i + 1).padStart(2, '0')}
+          </span>
         </a>
       ))
     }
   </div>
 
-  <!-- 底部主題切換 -->
-  <div class="p-3 border-t-2 border-black">
-    <ThemeSwitch />
+  <!-- STATUS 區塊（對齊目標圖 AVAILABLE） -->
+  <div class="px-3 pb-3">
+    <div class="border-2 border-white/25 bg-white/[0.03] px-3 py-2.5">
+      <div class="text-[9px] font-mono uppercase tracking-[0.25em] text-white/35 mb-1.5">STATUS</div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 bg-[#4ade80] inline-block shrink-0"></span>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-white/80 leading-tight">
+          AVAILABLE<br />FOR TRAINING / PROJECT
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部：社群 + 主題切換 + 版權 -->
+  <div class="border-t-2 border-white/15">
+    <!-- 社群 icon 列 -->
+    <div class="flex items-stretch border-b-2 border-white/15">
+      <a
+        href="https://github.com/yanchen184"
+        target="_blank"
+        rel="noopener"
+        aria-label="GitHub"
+        class="flex-1 flex items-center justify-center py-3 text-white/60 hover:text-black hover:bg-[var(--color-neub-yellow)] transition-colors border-r-2 border-white/15"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.57v-2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.36-1.34-1.72-1.34-1.72-1.09-.73.08-.72.08-.72 1.2.08 1.84 1.21 1.84 1.21 1.07 1.79 2.81 1.27 3.5.97.11-.76.42-1.27.76-1.56-2.67-.3-5.47-1.3-5.47-5.79 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.5.12-3.13 0 0 1.01-.32 3.3 1.2a11.6 11.6 0 016.01 0c2.29-1.52 3.3-1.2 3.3-1.2.66 1.63.25 2.83.12 3.13.77.82 1.24 1.87 1.24 3.15 0 4.5-2.81 5.49-5.49 5.78.43.36.82 1.09.82 2.2v3.26c0 .32.21.69.82.57A12.01 12.01 0 0024 12.29C24 5.78 18.63.5 12 .5z"/></svg>
+      </a>
+      <a
+        href="mailto:bobchen184@gmail.com"
+        aria-label="Email"
+        class="flex-1 flex items-center justify-center py-3 text-white/60 hover:text-black hover:bg-[var(--color-neub-yellow)] transition-colors"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="1"/><path d="m2 6 10 7L22 6"/></svg>
+      </a>
+    </div>
+
+    <!-- 主題切換 -->
+    <div class="px-3 py-3 border-b-2 border-white/15 sidebar-theme">
+      <ThemeSwitch />
+    </div>
+
+    <!-- 版權 -->
+    <div class="px-4 py-3 text-[10px] font-mono uppercase tracking-widest text-white/30">
+      © 2026 YC · ALL RIGHTS RESERVED
+    </div>
   </div>
 </nav>
 
@@ -94,10 +152,10 @@ const resolveHref = (href: string) =>
   class="md:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b-[3px] border-black"
   aria-label="主要導覽"
 >
-  <div class="px-6 py-3 flex items-center">
+  <div class="px-4 py-2.5 flex items-center gap-2">
     <a
       href={withBase('/')}
-      class="flex items-center gap-2 font-black tracking-tight hover:bg-[var(--color-neub-yellow)] px-2 py-1 transition-colors"
+      class="flex items-center gap-2 font-black tracking-tight px-1 py-1 transition-colors"
       aria-label="回到首頁"
     >
       <span
@@ -113,13 +171,16 @@ const resolveHref = (href: string) =>
           class="w-full h-full object-cover"
         />
       </span>
-      <span class="hidden sm:inline text-sm">陳彥彤 YC</span>
+      <span class="text-sm font-mono lowercase tracking-tight">yanchen.app</span>
     </a>
 
-    <!-- ThemeSwitch 放在 hamburger 左側 -->
-    <div class="ml-auto mr-2">
-      <ThemeSwitch />
-    </div>
+    <!-- 立即聯繫 CTA（對齊目標圖手機頂 bar） -->
+    <a
+      href={resolveHref('/#contact')}
+      class="ml-auto inline-flex items-center bg-[var(--color-neub-yellow)] border-2 border-black px-3 py-2 text-[12px] font-mono font-black uppercase tracking-wider hover:-translate-y-0.5 transition-transform"
+    >
+      立即聯繫
+    </a>
 
     <!-- hamburger -->
     <details class="mobile-menu" aria-label="開啟選單">
@@ -134,21 +195,26 @@ const resolveHref = (href: string) =>
         </span>
       </summary>
 
-      <div class="mobile-menu-panel fixed left-0 right-0 bg-white border-t-2 border-black z-40 overflow-y-auto" style="top: 65px; height: calc(100vh - 65px);">
+      <div class="mobile-menu-panel fixed left-0 right-0 bg-white border-t-2 border-black z-40 overflow-y-auto" style="top: 60px; height: calc(100vh - 60px);">
+        <div class="px-6 py-4 border-b-2 border-black sidebar-theme flex items-center justify-between">
+          <span class="text-[11px] font-mono uppercase tracking-widest opacity-60">style</span>
+          <ThemeSwitch />
+        </div>
         <ul class="flex flex-col font-mono">
           {
-            navItems.map((item) => (
+            navItems.map((item, i) => (
               <li class="border-b-2 border-black">
                 <a
                   href={resolveHref(item.href)}
                   class:list={[
-                    'flex items-center justify-between px-6 py-5 text-base uppercase tracking-widest font-black transition-colors',
+                    'flex items-center gap-3 px-6 py-5 text-base uppercase tracking-widest font-black transition-colors',
                     isActive(item.href)
                       ? 'bg-black text-white'
                       : 'hover:bg-[var(--color-neub-yellow)]',
                   ]}
                 >
-                  <span>{item.label}</span>
+                  <span class="text-xs opacity-40 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="flex-1">{item.label}</span>
                   <span aria-hidden="true" class="text-xl opacity-60">→</span>
                 </a>
               </li>
@@ -156,17 +222,46 @@ const resolveHref = (href: string) =>
           }
         </ul>
         <div class="px-6 py-8 text-xs uppercase tracking-widest font-mono opacity-60">
-          © 陳彥彤 · ai lecturer
+          © 2026 YC · AI lecturer
         </div>
       </div>
     </details>
   </div>
 </nav>
 
+<!-- ============ <md : 底部固定 icon 導覽列（對齊 target mobile 排版） ============ -->
+<nav
+  class="mobile-bottom-nav md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t-[3px] border-black grid grid-cols-5"
+  aria-label="底部導覽"
+>
+  {
+    [
+      { label: '首頁', href: '/', icon: 'M3 11.5 12 4l9 7.5M5 10v10h14V10' },
+      { label: '作品', href: '/#portfolio', icon: 'M4 5h16v14H4zM4 9h16M9 5v4' },
+      { label: '服務', href: '/#courses', icon: 'M12 3 3 8l9 5 9-5zM3 8v6l9 5 9-5V8' },
+      { label: '部落格', href: '/blog', icon: 'M5 4h11l3 3v13H5zM9 9h7M9 13h7M9 17h4' },
+      { label: '聯繫', href: '/#contact', icon: 'M2 5h20v14H2zM2 6l10 7 10-7' },
+    ].map((item) => (
+      <a
+        href={resolveHref(item.href)}
+        class:list={[
+          'flex flex-col items-center justify-center gap-1 py-2 text-[10px] font-mono uppercase tracking-widest transition-colors border-r-2 border-black/10 last:border-r-0',
+          isActive(item.href) ? 'bg-[var(--color-neub-yellow)] text-black font-black' : 'text-black/70 hover:bg-[var(--color-neub-yellow)]',
+        ]}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d={item.icon} />
+        </svg>
+        <span>{item.label}</span>
+      </a>
+    ))
+  }
+</nav>
+
 <!-- 側欄寬度 + 主內容讓位（md+ 才推移；手機是頂部 bar 不需推） -->
 <style is:global>
   :root {
-    --sidebar-w: 220px;
+    --sidebar-w: 230px;
   }
   .site-sidebar {
     width: var(--sidebar-w);
@@ -176,12 +271,27 @@ const resolveHref = (href: string) =>
       padding-left: var(--sidebar-w);
     }
   }
+  /* 手機：底部固定 nav 高度讓位，避免蓋住內容 */
+  @media (max-width: 767px) {
+    body {
+      padding-bottom: 64px;
+    }
+  }
+  /* 深色 sidebar 內的 ThemeSwitch 反白 */
+  .sidebar-theme :is(button, a) {
+    color: rgba(255, 255, 255, 0.7);
+  }
 </style>
 
 <style>
   /* 隱藏 summary 預設三角形 */
   summary::-webkit-details-marker { display: none; }
   summary::marker { display: none; content: ''; }
+
+  /* 深色 sidebar 捲動條 */
+  .neub-scrollbar::-webkit-scrollbar { width: 6px; }
+  .neub-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .neub-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); }
 
   /* Hamburger → X 動畫 */
   .hamburger-icon {
@@ -214,8 +324,11 @@ const resolveHref = (href: string) =>
     transform: rotate(-45deg);
   }
 
-  /* 展開時防止背景捲動 */
-  .mobile-menu[open] ~ * {
-    /* no-op, left here for future */
+  /* 預設收合：fixed 面板需手動隱藏（<details> 原生隱藏對 fixed 子元素不可靠） */
+  .mobile-menu:not([open]) .mobile-menu-panel {
+    display: none;
+  }
+  .mobile-menu[open] .mobile-menu-panel {
+    display: block;
   }
 </style>

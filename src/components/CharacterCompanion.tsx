@@ -112,7 +112,7 @@ interface CharacterCompanionProps {
 export default function CharacterCompanion({ embedded = false }: CharacterCompanionProps) {
   const [gazeKey, setGazeKey] = useState<GazeKey>('MC');
   const [isReacting, setIsReacting] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [sectionClip, setSectionClip] = useState<{ src: string; label: string } | null>(null);
   const [currentSection, setCurrentSection] = useState<string>('hero');
 
@@ -312,7 +312,7 @@ export default function CharacterCompanion({ embedded = false }: CharacterCompan
       <button
         type="button"
         onClick={() => setCollapsed(false)}
-        className="fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-[var(--color-neub-yellow)] border-2 border-black grid place-items-center font-black hover:scale-110 transition-transform"
+        className="hidden md:grid fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-[var(--color-neub-yellow)] border-2 border-black place-items-center font-black hover:scale-110 transition-transform"
         style={{ boxShadow: '3px 3px 0 #0a0a0a' }}
         aria-label="show character"
       >
@@ -387,7 +387,7 @@ export default function CharacterCompanion({ embedded = false }: CharacterCompan
   // 浮動模式
   return (
     <div
-      className="fixed bottom-4 right-4 z-50 select-none"
+      className="hidden md:block fixed bottom-4 right-4 z-50 select-none"
       style={{ width: 'clamp(140px, 18vw, 220px)' }}
     >
       <div

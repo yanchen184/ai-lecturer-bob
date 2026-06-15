@@ -2,9 +2,20 @@
 
 /* === Theme tokens（Tailwind v4 @theme 替代 tailwind.config）=== */
 @theme {
-  --color-neub-yellow: #FFEB3B;
-  --color-neub-black: #000000;
-  --color-neub-bg: #FAFAFA;
+  /* Refined editorial neubrutalist palette —
+     premium golden yellow（不是螢光黃）+ 暖紙底 + 純墨黑。 */
+  --color-neub-yellow: #F5D547;
+  --color-neub-black: #0A0A0A;
+  --color-neub-bg: #FAFAF7;
+
+  /* 暖紙底層次：paper（主底）/ panel（白卡）/ sink（下凹區塊）。 */
+  --color-paper: #FAFAF7;
+  --color-panel: #FFFFFF;
+  --color-sink: #F3F1EA;
+  --color-ink: #0A0A0A;
+  --color-ink-60: #5C5A54;
+  --color-rule: #0A0A0A;
+  --color-hairline: rgba(10, 10, 10, 0.12);
 
   --color-anti-paper: #FAFAF8;
   --color-anti-kraft: #C4A77D;
@@ -27,6 +38,8 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -57,12 +70,70 @@ body {
   background: #FFF;
 }
 
+/* === Refined editorial neubrutalist system ===
+ * 收斂版硬陰影 + 編輯式網格輔助。風格不變(暖紙、墨黑、黃強調、厚黑線、
+ * mono 標籤、硬幾何),只是更克制、層次更清楚。 */
+
+/* 收斂的陰影梯度 — 取代散落各處的 4/6/8/10px inline box-shadow */
+.shadow-hard      { box-shadow: 4px 4px 0 var(--color-ink); }
+.shadow-hard-sm   { box-shadow: 2px 2px 0 var(--color-ink); }
+.shadow-hard-lg   { box-shadow: 6px 6px 0 var(--color-ink); }
+
+/* hover 抬升:位移 + 陰影一起跑,手感扎實不飄 */
+.lift {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.lift:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+/* Eyebrow:mono 小標 + 前綴方塊。編輯式「kicker」。 */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-ink-60);
+}
+.eyebrow::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--color-neub-yellow);
+  border: 1.5px solid var(--color-ink);
+  flex-shrink: 0;
+}
+
+/* 區塊頂部的 hairline 細格線背景(編輯式定位用) */
+.rule-grid {
+  background-image:
+    linear-gradient(var(--color-hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* 文章 / 卡片標題的黃色 marker 高亮(box-decoration-clone 安全換行) */
+.mark-yellow {
+  background: var(--color-neub-yellow);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.25rem;
+}
+
 /* === Blog prose: Neub 預設 === */
 .blog-prose {
   font-size: 1.0625rem;
   color: #1a1a1a;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  /* grid item：強制可收縮，內部寬內容（pre / svg）才不會把整頁撐爆 */
+  min-width: 0;
+  max-width: 100%;
 }
 @media (max-width: 640px) {
   .blog-prose { font-size: 1rem; }
@@ -96,13 +167,16 @@ body {
   font-weight: 700;
 }
 .blog-prose code {
-  background: #FFEB3B;
+  background: var(--color-neub-yellow);
   color: #000;
   border: 2px solid #000;
   padding: 0 6px;
   font-family: var(--font-mono);
   font-size: 0.9375em;
   border-radius: 2px;
+  /* 行內 code：長 token（網址、路徑）在窄螢幕安全換行，不撐破容器 */
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .blog-prose pre {
   background: #1A1A1A;
@@ -116,6 +190,9 @@ body {
   font-size: 0.875rem;
   line-height: 1.6;
   -webkit-overflow-scrolling: touch;
+  /* 程式碼塊保留橫向捲動，但塊本身永遠塞進容器，不外溢成頁面層級 overflow */
+  max-width: 100%;
+  min-width: 0;
 }
 @media (max-width: 640px) {
   .blog-prose pre {
@@ -129,6 +206,9 @@ body {
   border: none;
   color: inherit;
   padding: 0;
+  /* 塊內 code 不換行、不繼承行內 code 的 break 規則 → 內部橫向捲動 */
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 /* Code block wrapper（JS 注入）：header + pre 同一個 box，共享邊框與 shadow */
@@ -137,6 +217,8 @@ body {
   border: 3px solid #000;
   box-shadow: 5px 5px 0 #000;
   background: #1A1A1A;
+  max-width: 100%;
+  min-width: 0;
 }
 .blog-prose .code-block > pre {
   margin: 0;
@@ -236,6 +318,41 @@ body {
     margin: 1rem 0 !important;
   }
 }
+/* Kroki / Mermaid 圖（markdown.ts 內聯成 <figure data-kroki>）：
+ * 圖的自然寬度常超過手機 viewport（.flowchart#container 1164px 等）。
+ * figure 當成可橫向捲動的容器、SVG max-width:100% → 圖縮進框內，
+ * 真的太寬時在 figure 內部捲動，不外溢成頁面層級 overflow。 */
+.blog-prose figure[data-kroki] {
+  margin: 1.5rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  background: var(--color-paper, #FAFAF8);
+  padding: 1rem;
+}
+.blog-prose figure[data-kroki] svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+@media (max-width: 640px) {
+  .blog-prose figure[data-kroki] {
+    border-width: 2px;
+    box-shadow: 3px 3px 0 #000;
+    padding: 0.75rem;
+  }
+}
+/* 任何遺漏的塊級 SVG（非 kroki 包裝）也兜底，不讓它撐破頁面 */
+.blog-prose > svg,
+.blog-prose p > svg,
+.blog-prose figure > svg {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Table 用 wrapper 處理手機捲動（:has() 可簡化，但避免瀏覽器相容性問題
    用外層 .blog-prose 觸發捲動 overflow fallback） */
 /* Scroll hint：JS 動態加在會 overflow 的 table / pre 前 */

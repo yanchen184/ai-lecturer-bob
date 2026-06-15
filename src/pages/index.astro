@@ -264,89 +264,189 @@ const courses = [
   <NavbarNeub />
 
   <main class="font-sans text-[#0a0a0a]">
-    <!-- Hero -->
-    <section data-companion-section="hero" class="px-6 md:px-10 py-20 md:py-28 border-b-[3px] border-black">
-      <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1.6fr_1fr] lg:items-center">
+    <!-- 頂部 meta bar（淺色細條，對齊目標圖） -->
+    <div class="hidden md:flex items-center justify-between border-b-[3px] border-black bg-[var(--color-neub-bg)] px-6 md:px-10 py-2.5 text-[11px] font-mono uppercase tracking-widest text-black/60">
+      <div>
+        <span class="text-black font-black">// BUILD SOFTWARE. EMPOWER PEOPLE.</span>
+      </div>
+      <div class="flex items-center gap-5">
+        <span>taipei, taiwan</span>
+        <span class="w-2 h-2 bg-[var(--color-neub-yellow)] border border-black inline-block"></span>
+        <span>utc+8</span>
+        <span class="text-black/40">|</span>
+        <span class="tabular-nums">build · sat</span>
+      </div>
+    </div>
+
+    <!-- Hero（米白背景，對齊目標圖：左標題 + AI WORKFLOW、右人像 + CORE STACK + CODE SNAPSHOT） -->
+    <section
+      data-companion-section="hero"
+      class="relative px-6 md:px-10 py-12 md:py-16 border-b-[3px] border-black bg-[var(--color-neub-bg)] text-[#0a0a0a] overflow-hidden"
+    >
+      <!-- 背景格線（淺色細線） -->
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style="background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 44px 44px;"
+      ></div>
+
+      <div class="relative max-w-7xl mx-auto grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+        <!-- 左：標題欄 -->
         <div>
-        <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
-          ai enterprise training · ai consulting · taiwan
-        </div>
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] md:leading-[1.05] tracking-tight">
-          <span class="block">想讓你的團隊</span>
-          <span class="inline-block mt-2 bg-[var(--color-neub-yellow)] px-2 md:px-3 box-decoration-clone">
-            用 AI 把日常做得更快？
-          </span>
-        </h1>
-
-        <p class="mt-8 text-lg md:text-xl max-w-3xl leading-relaxed opacity-80">
-          我是<strong>陳彥彤 YC</strong>。教 <strong>Claude Code、AI Agent、AI 工作流</strong>——
-          課程內容就是我自己每天在 production 用的同一套工具。<br class="hidden md:inline" />
-          學員下課就能照著做，下週就能在自己工位繼續用。
-        </p>
-
-        <!-- 兩條業務線一目了然 -->
-        <div class="mt-8 grid gap-2 max-w-2xl text-sm md:text-base font-mono">
-          <div class="flex items-baseline gap-3 leading-relaxed">
-            <span class="opacity-50 shrink-0">▎</span>
-            <span><strong class="bg-[var(--color-neub-yellow)] px-1">AI 企業內訓主力：</strong>Claude Code、AI Agent、工作效率提升</span>
+          <div class="inline-block bg-black text-white text-[12px] md:text-[13px] font-black px-3 py-1.5 mb-6">
+            AI 企業內訓 <span class="text-[var(--color-neub-yellow)] mx-1">×</span> 實戰落地
           </div>
-          <div class="flex items-baseline gap-3 leading-relaxed">
-            <span class="opacity-50 shrink-0">▎</span>
-            <span><strong class="bg-[var(--color-neub-yellow)] px-1">AI 顧問實作：</strong>醫療決策輔助、Breeze-ASR-25 語音辨識、會議 RAG</span>
+          <h1 class="text-4xl md:text-5xl lg:text-[3.4rem] xl:text-[3.75rem] font-black leading-[1.12] tracking-tight">
+            <span class="block">讓團隊真正用好 AI，</span>
+            <span class="block mt-2">創造可衡量的業務價值</span>
+          </h1>
+
+          <p class="mt-7 text-[15px] md:text-base max-w-lg leading-relaxed text-black/70">
+            結合後端工程、系統架構與生成式 AI 實戰經驗，設計貼近企業場景的內訓課程與工作坊，從概念到落地，帶團隊建立可持續的 AI 生產力。
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#contact"
+              class="px-6 py-3 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest border-2 border-black font-mono font-black shadow-hard hover:-translate-y-0.5 transition-transform"
+            >
+              查看內訓方案 ↗
+            </a>
+            <a
+              href="#about"
+              class="px-6 py-3 text-sm uppercase tracking-widest font-mono font-black border-2 border-black bg-white shadow-hard hover:-translate-y-0.5 transition-transform"
+            >
+              關於我 ↗
+            </a>
           </div>
-        </div>
 
-        <div class="mt-10 flex flex-wrap items-center gap-3">
-          <a
-            href="#contact"
-            class="px-6 py-3 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest border-2 border-black hover:bg-black hover:text-[var(--color-neub-yellow)] transition-colors font-mono font-black"
-            style="box-shadow: 4px 4px 0 #0a0a0a;"
-          >
-            聊聊你的需求 →
-          </a>
-          <a
-            href="#courses"
-            class="text-sm uppercase tracking-widest font-mono underline decoration-black/30 decoration-2 underline-offset-4 hover:bg-[var(--color-neub-yellow)] px-1 transition-colors"
-          >
-            看內訓方案
-          </a>
-        </div>
-
-        <!-- Stats -->
-        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {
-            stats.map((s, i) => (
-              <div
-                class:list={[
-                  'border-2 border-black px-4 py-5 md:p-6 transition-transform hover:-translate-y-0.5',
-                  i === 0 ? 'bg-[var(--color-neub-yellow)]' : 'bg-white',
-                ]}
-                style="box-shadow: 4px 4px 0 #0a0a0a;"
-              >
-                <div class="text-2xl md:text-4xl font-black tracking-tight leading-none">
-                  {s.number}
-                </div>
-                <div class="text-xs md:text-sm opacity-70 mt-2 font-mono uppercase tracking-wider">
-                  {s.label}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-        </div>
-
-        <!-- Hero 形象區 — 鑲嵌式動態人物(取代原本浮動右下角) -->
-        <div class="hidden lg:block">
-          <div
-            class="relative bg-[var(--color-neub-yellow)] p-3 border-2 border-black"
-            style="box-shadow: 8px 8px 0 #0a0a0a; aspect-ratio: 480 / 832;"
-          >
-            <CharacterCompanion client:load embedded={true} />
-            <div class="absolute -bottom-3 -right-3 bg-black text-white text-[10px] font-mono uppercase tracking-widest px-2 py-1 border-2 border-black z-10">
-              yc · 工程師教工程師
+          <!-- AI WORKFLOW 五步橫條 -->
+          <div class="mt-11">
+            <div class="text-[11px] font-mono uppercase tracking-[0.25em] text-black/50 mb-3">// AI WORKFLOW</div>
+            <div class="flex flex-wrap items-stretch gap-2">
+              {
+                [
+                  { c: 'var(--color-neub-yellow)', zh: '問題定義', en: 'Problem' },
+                  { c: '#5b9bff', zh: '資料理解', en: 'Data' },
+                  { c: '#3ec5c5', zh: '模型與工具', en: 'Model' },
+                  { c: '#5b9bff', zh: '整合落地', en: 'Integration' },
+                  { c: '#ff4fa3', zh: '持續優化', en: 'Optimize' },
+                ].map((s, i, arr) => (
+                  <>
+                    <div class="flex items-center gap-2 border-2 border-black bg-white px-3 py-2">
+                      <span class="w-3 h-3 border border-black inline-block shrink-0" style={`background:${s.c}`}></span>
+                      <span class="leading-tight">
+                        <span class="block text-[12px] font-black">{s.zh}</span>
+                        <span class="block text-[9px] font-mono uppercase tracking-wider text-black/45">{s.en}</span>
+                      </span>
+                    </div>
+                    {i < arr.length - 1 && <span class="self-center text-black/30" aria-hidden="true">›</span>}
+                  </>
+                ))
+              }
             </div>
           </div>
         </div>
+
+        <!-- 右：人像卡片 + CORE STACK + CODE SNAPSHOT -->
+        <div class="hidden lg:grid grid-cols-[1.05fr_1fr] gap-4 items-start">
+          <!-- 人像卡片（黃底 + play overlay + 角落標籤） -->
+          <div class="relative bg-[var(--color-neub-yellow)] border-[3px] border-black overflow-hidden self-stretch shadow-hard-lg" style="aspect-ratio: 3 / 4;">
+            <img
+              src={withBase('/images/character/half_01.png')}
+              alt="陳彥彤 YC"
+              class="absolute inset-0 w-full h-full object-cover object-top"
+              loading="eager"
+              decoding="async"
+            />
+            <!-- play 按鈕 overlay（置中圓形） -->
+            <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 grid place-items-center bg-white/85 text-black border-2 border-black rounded-full text-lg" aria-hidden="true">▶</span>
+            <!-- 角落標籤 -->
+            <div class="absolute bottom-0 left-0 right-0 bg-black text-white px-3 py-2">
+              <span class="block text-[12px] font-mono font-black tracking-widest">&gt; YC / Bob Chen</span>
+              <span class="block text-[9px] font-mono uppercase tracking-widest text-white/55">AI LECTURER / SENIOR BACKEND ENGINEER</span>
+            </div>
+          </div>
+
+          <!-- 右欄：CORE STACK + CODE SNAPSHOT 兩塊堆疊 -->
+          <div class="flex flex-col gap-4 self-stretch">
+            <!-- CORE STACK 面板 -->
+            <div class="border-[3px] border-black bg-[#0d0d0d] overflow-hidden shadow-hard">
+              <div class="px-3 py-1.5 bg-[#0d0d0d] border-b-2 border-white/15">
+                <span class="text-[10px] font-mono font-black uppercase tracking-widest text-white/70">// CORE STACK</span>
+              </div>
+              <ul class="p-3 space-y-3 font-mono">
+                {
+                  [
+                    { icon: '☕', label: 'JAVA' },
+                    { icon: '🧠', label: 'AI' },
+                    { icon: '🗄', label: 'RAG' },
+                    { icon: '🤖', label: 'AGENT' },
+                  ].map((s) => (
+                    <li class="flex items-center justify-between">
+                      <span class="flex items-center gap-2.5">
+                        <span class="text-base w-5 text-center leading-none">{s.icon}</span>
+                        <span class="text-[var(--color-neub-yellow)] text-base font-black tracking-wide">{s.label}</span>
+                      </span>
+                      <span class="w-2 h-2 bg-[#4ade80] inline-block"></span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+
+            <!-- CODE SNAPSHOT 面板 -->
+            <div class="border-[3px] border-black bg-[#0d0d0d] overflow-hidden shadow-hard">
+              <div class="px-3 py-1.5 bg-[#0d0d0d] border-b-2 border-white/15">
+                <span class="text-[10px] font-mono font-black uppercase tracking-widest text-white/70">// CODE SNAPSHOT</span>
+              </div>
+              <pre class="px-3 py-3 text-[10.5px] leading-relaxed font-mono text-white/90 overflow-x-auto"><code><span class="text-white/30 select-none">01 </span><span class="text-[#7cc0ff]">public</span> String askWithRag(q) &#123;
+<span class="text-white/30 select-none">02 </span>  <span class="text-[#7cc0ff]">var</span> emb = embed(q);
+<span class="text-white/30 select-none">03 </span>  <span class="text-[#7cc0ff]">var</span> docs = store.search(emb);
+<span class="text-white/30 select-none">04 </span>  <span class="text-[#7cc0ff]">var</span> prompt = build(q, docs);
+<span class="text-white/30 select-none">05 </span>  <span class="text-[#7cc0ff]">return</span> llm.<span class="text-[var(--color-neub-yellow)]">generate</span>(prompt);
+<span class="text-white/30 select-none">06 </span>&#125;</code></pre>
+              <div class="px-3 py-1.5 border-t-2 border-white/15 flex justify-end">
+                <span class="text-[9px] font-mono uppercase tracking-widest text-[#5b9bff]">JETBRAINS MONO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCROLL TO EXPLORE 分隔 -->
+    <div class="bg-[var(--color-neub-bg)] border-b-[3px] border-black">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 py-3 text-center">
+        <span class="text-[11px] font-mono uppercase tracking-[0.35em] text-black/45">SCROLL TO EXPLORE</span>
+      </div>
+    </div>
+
+    <!-- 服務四格 band（淺色卡 + 彩色編號塊，對齊目標圖） -->
+    <section class="border-b-[3px] border-black bg-[var(--color-neub-bg)]">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 py-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          [
+            { no: '01', c: 'var(--color-neub-yellow)', title: '企業內訓', desc: '客製化 AI 工作坊與內訓課程，從團隊需求出發，設計可落地的學習路徑。' },
+            { no: '02', c: '#5b9bff', title: '技術顧問', desc: '後端系統設計、AI 應用導入、RAG 與 Agent 架構諮詢與實作支援。' },
+            { no: '03', c: '#ff4fa3', title: '專案合作', desc: '承接後端開發與 AI 整合專案，用工程品質實現你的產品想法。' },
+            { no: '04', c: '#5b9bff', title: '演講與分享', desc: '受邀演講、技術分享、黑客松評審，推動台灣開發者社群的成長。' },
+          ].map((c) => (
+            <a
+              href="#courses"
+              class="group block bg-white text-[#0a0a0a] p-5 border-2 border-black shadow-hard hover:-translate-y-1 transition-transform"
+            >
+              <div class="flex items-center justify-between mb-5">
+                <span class="w-9 h-9 inline-flex items-center justify-center border-2 border-black text-[12px] font-mono font-black text-black" style={`background:${c.c}`}>
+                  {c.no}
+                </span>
+                <span class="text-black" aria-hidden="true">↗</span>
+              </div>
+              <div class="text-xl font-black leading-tight mb-2">{c.title}</div>
+              <p class="text-[12.5px] leading-relaxed text-black/65">{c.desc}</p>
+            </a>
+          ))
+        }
       </div>
     </section>
 
@@ -359,8 +459,9 @@ const courses = [
       ></div>
 
       <div class="relative max-w-7xl mx-auto px-6 md:px-10 py-16">
-        <div class="text-xs uppercase tracking-widest opacity-60 mb-4 font-mono">
-          [ what makes me different ]
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest mb-5 font-mono text-white/60">
+          <span class="w-2 h-2 bg-[var(--color-neub-yellow)] border border-white/40"></span>
+          what makes me different
         </div>
         <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1] max-w-4xl">
           內訓現場的範例，<br />
@@ -397,19 +498,17 @@ const courses = [
     </section>
 
     <!-- Production AI 落地經驗 — 真實案例 -->
-    <section id="production" data-companion-section="production" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
+    <section id="production" data-companion-section="production" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[var(--color-panel)]">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
-            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-              production ai cases · 顧問實作經驗
-            </div>
+            <div class="eyebrow mb-4">production ai cases · 顧問實作經驗</div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              四個<span class="bg-[var(--color-neub-yellow)] px-2">真的上線在跑</span>的<br />
+              四個<span class="mark-yellow">真的上線在跑</span>的<br />
               落地實作 · 從電商到 AI
             </h2>
           </div>
-          <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70">
+          <p class="text-sm md:text-base leading-relaxed max-w-md text-[var(--color-ink-60)]">
             下面三個是我實際做過、教學現場可直接拆解的案例。
             細節為配合 NDA 已抽象化，但工程實踐是真的。
           </p>
@@ -418,10 +517,7 @@ const courses = [
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {
             productionCases.map((p) => (
-              <article
-                class="border-2 border-black bg-white p-6 flex flex-col"
-                style="box-shadow: 6px 6px 0 #0a0a0a;"
-              >
+              <article class="shadow-hard-lg lift border-2 border-black bg-[var(--color-panel)] p-6 flex flex-col">
                 <div
                   class="inline-block self-start px-2 py-0.5 text-[11px] uppercase tracking-widest font-mono font-black mb-4 border-2 border-black"
                   style={`background: ${p.color};`}
@@ -431,11 +527,11 @@ const courses = [
                 <h3 class="text-xl md:text-2xl font-black leading-tight mb-4">
                   {p.title}
                 </h3>
-                <p class="text-sm leading-relaxed opacity-80 mb-5 flex-1">
+                <p class="text-sm leading-relaxed text-[var(--color-ink-60)] mb-5 flex-1">
                   {p.body}
                 </p>
                 <div class="pt-4 border-t-2 border-black">
-                  <div class="text-[10px] uppercase tracking-widest opacity-60 font-mono mb-1.5">
+                  <div class="text-[10px] uppercase tracking-widest text-[var(--color-ink-60)] font-mono mb-1.5">
                     fit for · 適合你們的場景
                   </div>
                   <div class="text-sm leading-snug font-bold">
@@ -447,26 +543,24 @@ const courses = [
           }
         </div>
 
-        <p class="mt-8 text-sm md:text-base font-mono opacity-70 max-w-3xl leading-relaxed">
-          ▸ 看到對應到你們的場景？這些案的選型、踩坑、最後怎麼結，可以在內訓 / 顧問現場直接拆給你工程團隊看。
+        <p class="mt-8 text-sm md:text-base font-mono text-[var(--color-ink-60)] max-w-3xl leading-relaxed border-l-2 border-black pl-4">
+          看到對應到你們的場景？這些案的選型、踩坑、最後怎麼結，可以在內訓 / 顧問現場直接拆給你工程團隊看。
         </p>
       </div>
     </section>
 
     <!-- Portfolio — 看得到的作品（直接連到 GitHub） -->
-    <section id="portfolio" data-companion-section="portfolio" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[#fafaf6]">
+    <section id="portfolio" data-companion-section="portfolio" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[var(--color-paper)]">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
-            <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-              portfolio · 看得到的作品
-            </div>
+            <div class="eyebrow mb-4">portfolio · 看得到的作品</div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              code 都<span class="bg-[var(--color-neub-yellow)] px-2">公開在 GitHub</span>，<br />
+              code 都<span class="mark-yellow">公開在 GitHub</span>，<br />
               不是 PPT 上的口頭專案
             </h2>
           </div>
-          <p class="text-sm md:text-base leading-relaxed max-w-md opacity-70">
+          <p class="text-sm md:text-base leading-relaxed max-w-md text-[var(--color-ink-60)]">
             上面 Production 案是顧問實作（受 NDA 保密）。下面這些是公開可看、可 clone、可審視的——
             判斷我這個人寫不寫 code，看這裡最快。
           </p>
@@ -479,8 +573,7 @@ const courses = [
                 href={p.link}
                 target="_blank"
                 rel="noopener"
-                class="group block border-2 border-black bg-white p-6 transition-transform hover:-translate-x-1 hover:-translate-y-1"
-                style="box-shadow: 6px 6px 0 #0a0a0a;"
+                class="group block shadow-hard-lg lift border-2 border-black bg-[var(--color-panel)] p-6"
               >
                 <div class="flex items-start justify-between gap-4 mb-4">
                   <div
@@ -489,7 +582,7 @@ const courses = [
                   >
                     {p.label}
                   </div>
-                  <span class="text-xs font-mono opacity-50 group-hover:opacity-100 transition-opacity uppercase tracking-widest">
+                  <span class="text-xs font-mono text-[var(--color-ink-60)] group-hover:text-[var(--color-ink)] transition-colors uppercase tracking-widest">
                     github →
                   </span>
                 </div>
@@ -497,17 +590,17 @@ const courses = [
                 <h3 class="text-xl md:text-2xl font-black leading-tight mb-1">
                   {p.title}
                 </h3>
-                <div class="text-xs md:text-sm font-mono opacity-60 mb-4 uppercase tracking-wider">
+                <div class="text-xs md:text-sm font-mono text-[var(--color-ink-60)] mb-4 uppercase tracking-wider">
                   {p.subtitle}
                 </div>
 
-                <p class="text-sm leading-relaxed opacity-85 mb-5">
+                <p class="text-sm leading-relaxed text-[var(--color-ink-60)] mb-5">
                   {p.body}
                 </p>
 
-                <div class="pt-4 border-t-2 border-black/10 flex flex-wrap gap-2">
+                <div class="pt-4 border-t-2 border-[var(--color-hairline)] flex flex-wrap gap-2">
                   {p.techs.map((t) => (
-                    <span class="text-[11px] font-mono px-2 py-0.5 border border-black/30">
+                    <span class="text-[11px] font-mono px-2 py-0.5 border border-[var(--color-ink-60)] text-[var(--color-ink-60)]">
                       {t}
                     </span>
                   ))}
@@ -517,9 +610,9 @@ const courses = [
           }
         </div>
 
-        <p class="mt-8 text-sm md:text-base font-mono opacity-70 max-w-3xl leading-relaxed">
-          ▸ 完整作品清單在
-          <a href="https://github.com/yanchen184" target="_blank" rel="noopener" class="underline font-black hover:bg-[var(--color-neub-yellow)] px-1">
+        <p class="mt-8 text-sm md:text-base font-mono text-[var(--color-ink-60)] max-w-3xl leading-relaxed border-l-2 border-black pl-4">
+          完整作品清單在
+          <a href="https://github.com/yanchen184" target="_blank" rel="noopener" class="underline font-black hover:bg-[var(--color-neub-yellow)] px-1 text-[var(--color-ink)]">
             github.com/yanchen184
           </a>
           ——產品、教材、玩具專案、實驗 repo 都在。
@@ -528,23 +621,18 @@ const courses = [
     </section>
 
     <!-- About -->
-    <section id="about" data-companion-section="about" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-white">
+    <section id="about" data-companion-section="about" class="px-6 md:px-10 py-20 border-b-[3px] border-black bg-[var(--color-panel)]">
       <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1fr_2fr] items-start">
         <div>
-          <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-            about me
-          </div>
+          <div class="eyebrow mb-4">about me</div>
           <h2 class="text-3xl md:text-4xl font-black tracking-tight leading-tight">
             關於我
           </h2>
-          <div class="mt-6 inline-block bg-[var(--color-neub-yellow)] px-3 py-1 text-sm font-bold">
+          <div class="mt-6 inline-block bg-[var(--color-neub-yellow)] border-2 border-black px-3 py-1 text-sm font-bold">
             陳彥彤 · Bob Chen
           </div>
 
-          <div
-            class="mt-8 border-2 border-black bg-white p-2 max-w-[260px]"
-            style="box-shadow: 6px 6px 0 #0a0a0a;"
-          >
+          <div class="mt-8 shadow-hard-lg border-2 border-black bg-[var(--color-panel)] p-2 max-w-[260px]">
             <img
               src={withBase('/images/character/head_01.png')}
               alt="陳彥彤 YC — 來吧"
@@ -557,7 +645,7 @@ const courses = [
           </div>
         </div>
 
-        <div class="space-y-5 text-base md:text-lg leading-relaxed">
+        <div class="space-y-5 text-base md:text-lg leading-relaxed text-[var(--color-ink)]">
           <p>
             <strong>Java 後端 8 年、AI 工程師 2 年。</strong>
             出身<strong>電商核心系統</strong>——雙 11 級流量、跨境訂單、跨團隊整合、線上事故處理。
@@ -574,7 +662,7 @@ const courses = [
             企業內訓 10-50 場（<strong>Claude Code、AI Agent、Docker、Kubernetes、Java 高併發</strong>），
             教材全部公開在 Blog 跟 GitHub，學員下課可以直接 clone 回家繼續看。
           </p>
-          <p class="text-base opacity-75 italic border-l-4 border-black pl-4">
+          <p class="text-base text-[var(--color-ink-60)] italic border-l-4 border-[var(--color-neub-yellow)] pl-4">
             我不是「以前是工程師現在轉講師」——我是<strong>邊做 production 邊教書的工程師</strong>。
             今天卡的 bug，下個月變成內訓現場的真實 case。
           </p>
@@ -587,9 +675,9 @@ const courses = [
                 { title: '職訓局講師', desc: 'AI 概論初級班' },
                 { title: '企業內訓', desc: '10-50 場累積' },
               ].map((i) => (
-                <div class="border-2 border-black p-3">
+                <div class="border-2 border-black bg-[var(--color-sink)] p-3">
                   <div class="font-black text-sm">{i.title}</div>
-                  <div class="text-xs opacity-70 mt-1">{i.desc}</div>
+                  <div class="text-xs text-[var(--color-ink-60)] mt-1">{i.desc}</div>
                 </div>
               ))
             }
@@ -601,9 +689,7 @@ const courses = [
     <!-- Skills -->
     <section id="skills" data-companion-section="skills" class="px-6 md:px-10 py-20 border-b-[3px] border-black">
       <div class="max-w-7xl mx-auto">
-        <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
-          tech stack
-        </div>
+        <div class="eyebrow mb-4">tech stack</div>
         <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-10">
           技術專長
         </h2>
@@ -611,10 +697,7 @@ const courses = [
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {
             skills.map((s) => (
-              <div
-                class="border-2 border-black bg-white overflow-hidden"
-                style="box-shadow: 4px 4px 0 #0a0a0a;"
-              >
+              <div class="shadow-hard lift border-2 border-black bg-[var(--color-panel)] overflow-hidden">
                 <div
                   class="px-5 py-3 border-b-2 border-black flex items-center justify-between font-mono"
                   style={`background: ${s.color};`}
@@ -627,7 +710,7 @@ const courses = [
                 <ul class="p-5 space-y-2 text-sm font-bold">
                   {s.items.map((it) => (
                     <li class="flex items-start gap-2">
-                      <span class="text-black/40 select-none">▸</span>
+                      <span class="w-1.5 h-1.5 mt-2 bg-black shrink-0 select-none" aria-hidden="true"></span>
                       <span>{it}</span>
                     </li>
                   ))}
@@ -911,6 +994,9 @@ const courses = [
     <!-- Message Board (Firebase island, lazy) -->
     <MessageBoard client:visible />
   </main>
+
+  <!-- 浮動角色（右下角，互動 + scroll 導覽） -->
+  <CharacterCompanion client:idle />
 
   <FooterNeub />
 </RootLayout>

@@ -82,18 +82,27 @@ const jsonLd = {
 
   <main>
     <div class="max-w-7xl mx-auto px-6 md:px-10 py-12 md:py-16">
-      <!-- Header -->
-      <header class="mb-10">
-        <div class="text-xs uppercase tracking-widest font-mono opacity-60 mb-3">
-          The Bob Post · 後端踩坑筆記 + 教學現場
+      <!-- Header — 大標 + 副標 + 右側引言卡（對齊目標圖） -->
+      <header class="mb-10 flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+        <div>
+          <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">部落格</h1>
+          <div class="mt-4 inline-block bg-black text-[var(--color-neub-yellow)] text-[12px] font-mono font-black uppercase tracking-[0.2em] px-3 py-1.5">
+            The Bob Post.
+          </div>
+          <p class="mt-5 text-sm md:text-base leading-relaxed text-[var(--color-ink-60)] max-w-2xl">
+            AI 工程師 + Java 後端的技術筆記。LLM / RAG / Agent 導入、Spring Boot、雲端踩坑、教學現場觀察。
+          </p>
         </div>
-        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-none">
-          <span class="bg-[var(--color-neub-yellow)] px-2 box-decoration-clone">部落格</span>
-        </h1>
-        <p class="mt-6 text-base md:text-lg leading-relaxed opacity-80 max-w-3xl">
-          AI 工程師 + Java 後端的技術筆記。LLM / RAG / Agent 導入、Spring Boot、雲端踩坑、教學現場觀察。共
-          <strong class="bg-[var(--color-neub-yellow)] px-1">{posts.length}</strong> 篇。
-        </p>
+
+        <!-- 右側便利貼引言卡 -->
+        <aside class="shrink-0 md:max-w-xs">
+          <div class="bg-[var(--color-neub-yellow)] border-2 border-black shadow-hard px-4 py-3 -rotate-1">
+            <p class="text-[13px] leading-snug font-medium text-black">
+              寫給未來的自己，也寫給正在踩同一個坑的你。
+            </p>
+            <p class="mt-2 text-[11px] font-mono font-black text-black/70">— Bob</p>
+          </div>
+        </aside>
       </header>
 
       <!-- Featured hero -->
@@ -111,31 +120,29 @@ const jsonLd = {
 
       <!-- All posts (magazine grid) -->
       <section class="mb-16">
-        <div class="flex items-baseline justify-between mb-5">
-          <div class="text-xs uppercase tracking-widest font-mono font-black">
-            全部文章
-          </div>
-          <div class="text-[11px] uppercase tracking-widest font-mono opacity-60">
+        <div class="flex items-baseline justify-between gap-4 mb-5 border-b-[3px] border-black pb-3">
+          <div class="eyebrow">全部文章 · All posts</div>
+          <div class="text-[11px] uppercase tracking-widest font-mono text-[var(--color-ink-60)]">
             {listPosts.length} posts
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {listPosts.map((post) => (
-            <BlogCardListItem post={post} views={viewsMap.get(post.slug)} />
+          {listPosts.map((post, i) => (
+            <BlogCardListItem post={post} views={viewsMap.get(post.slug)} index={i} />
           ))}
         </div>
 
         <div
           data-blog-empty
           hidden
-          class="border-2 border-dashed border-black p-10 md:p-14 text-center mt-6"
+          class="border-2 border-dashed border-black bg-[var(--color-sink)] p-10 md:p-14 text-center mt-6"
         >
-          <div class="text-5xl md:text-6xl font-black mb-3 opacity-30">?</div>
-          <div class="font-mono uppercase tracking-widest text-sm mb-2 opacity-70">
+          <div class="text-5xl md:text-6xl font-black mb-3 text-[var(--color-ink-60)] opacity-40">?</div>
+          <div class="font-mono uppercase tracking-widest text-sm mb-2 text-[var(--color-ink-60)]">
             沒有符合條件的文章
           </div>
-          <div class="text-xs opacity-60 mb-5">
+          <div class="text-xs text-[var(--color-ink-60)] mb-5">
             可能是關鍵字太特殊,或者這個分類還沒寫到
           </div>
           <button
@@ -151,16 +158,14 @@ const jsonLd = {
       <!-- 閱讀系列（含 K8s 教學） -->
       {(seriesGroups.length > 0 || k8sLessons.length > 0) && (
         <section class="mb-16" data-blog-section="series">
-          <div class="flex items-baseline justify-between mb-5">
+          <div class="flex items-baseline justify-between gap-4 mb-5 border-b-[3px] border-black pb-3">
             <div>
-              <div class="text-xs uppercase tracking-widest font-mono font-black">
-                閱讀系列
-              </div>
-              <p class="text-xs md:text-sm opacity-60 mt-1">
+              <div class="eyebrow">閱讀系列 · Series</div>
+              <p class="text-xs md:text-sm text-[var(--color-ink-60)] mt-2">
                 按照閱讀順序集中露出 — 從第一篇開始讀更順
               </p>
             </div>
-            <div class="text-[11px] uppercase tracking-widest font-mono opacity-60">
+            <div class="text-[11px] uppercase tracking-widest font-mono text-[var(--color-ink-60)] shrink-0">
               {seriesGroups.length + (k8sLessons.length > 0 ? 1 : 0)} series
             </div>
           </div>
@@ -171,10 +176,10 @@ const jsonLd = {
 
           {/* K8s 教學系列 — 結構不同(分組 lessons),沿用既有渲染但對齊新風格 */}
           {k8sLessons.length > 0 && (
-            <details class="border-2 border-black bg-white mb-4 group/series" id="k8s">
-              <summary class="cursor-pointer list-none p-4 md:p-5 flex items-center justify-between gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors border-b-2 border-black">
+            <details class="border-[3px] border-black bg-[var(--color-paper)] shadow-hard mb-4 group/series" id="k8s">
+              <summary class="cursor-pointer list-none p-4 md:p-5 flex items-center justify-between gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors border-b-[3px] border-black">
                 <div class="min-w-0">
-                  <div class="text-[11px] uppercase tracking-widest font-mono opacity-60 mb-1 flex items-center gap-2">
+                  <div class="text-[11px] uppercase tracking-widest font-mono text-[var(--color-ink-60)] mb-1 flex items-center gap-2">
                     <span>series</span>
                     <span class="opacity-40">·</span>
                     <span class="font-black">{k8sLessons.length.toString().padStart(2, '0')} 課</span>
@@ -190,7 +195,7 @@ const jsonLd = {
               </summary>
 
               <div class="p-4 md:p-5">
-                <p class="text-sm md:text-base leading-relaxed opacity-80 mb-5">
+                <p class="text-sm md:text-base leading-relaxed text-[var(--color-ink-60)] mb-5">
                   完全沒碰過 K8s 的新手向。每一課對應一個搜尋意圖，從「為什麼需要 K8s」一路講到上線、Probe、HPA。
                 </p>
 
@@ -199,21 +204,21 @@ const jsonLd = {
                     <div class="text-[11px] uppercase tracking-widest font-mono font-black mb-2 bg-[var(--color-neub-yellow)] inline-block px-2 py-0.5 border-2 border-black">
                       {g.meta.label} · {g.lessons.length.toString().padStart(2, '0')} lessons
                     </div>
-                    <ol class="list-none p-0 m-0 border-2 border-black bg-white mt-2">
+                    <ol class="list-none p-0 m-0 border-2 border-black bg-[var(--color-panel)] mt-2">
                       {g.lessons.map((lesson, idx) => (
                         <li class="border-b-2 border-black last:border-b-0">
                           <a
                             href={withBase(`/blog/k8s/${lesson.slug}`)}
                             class="flex items-baseline gap-3 p-3 hover:bg-[var(--color-neub-yellow)] transition-colors"
                           >
-                            <span class="text-xs font-mono opacity-50 w-7 flex-shrink-0 font-black">
+                            <span class="text-xs font-mono text-[var(--color-ink-60)] w-7 flex-shrink-0 font-black">
                               {(idx + 1).toString().padStart(2, '0')}
                             </span>
                             <span class="flex-1 min-w-0">
                               <span class="block font-black leading-snug truncate">
                                 {lesson.title}
                               </span>
-                              <span class="block text-[11px] font-mono opacity-60 mt-0.5">
+                              <span class="block text-[11px] font-mono text-[var(--color-ink-60)] mt-0.5">
                                 {lesson.readingTime} min
                               </span>
                             </span>
@@ -224,7 +229,7 @@ const jsonLd = {
                   </div>
                 ))}
 
-                <p class="text-xs italic opacity-60 mt-4">
+                <p class="text-xs italic text-[var(--color-ink-60)] mt-4">
                   更多主題（HPA、Probe、Helm、RBAC、StatefulSet…）持續補上中。
                 </p>
               </div>
@@ -235,9 +240,7 @@ const jsonLd = {
 
       <!-- Motto -->
       <section class="mt-16 pt-10 border-t-[3px] border-black">
-        <div class="text-xs uppercase tracking-widest font-mono opacity-60 mb-3">
-          Motto
-        </div>
+        <div class="eyebrow mb-4">Motto</div>
         <blockquote class="text-xl md:text-2xl font-black leading-snug max-w-2xl mb-4">
           我輩修行之人，以
           <span class="bg-[var(--color-neub-yellow)] px-1">聖</span>

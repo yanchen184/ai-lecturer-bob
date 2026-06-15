@@ -23,13 +23,13 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
 ---
 
 <details
-  class="border-2 border-black bg-white mb-4 group/series"
+  class="border-[3px] border-black bg-[var(--color-paper)] shadow-hard mb-4 group/series"
   open={defaultOpen}
   id={`series-${meta.key}`}
 >
-  <summary class="cursor-pointer list-none p-4 md:p-5 flex items-center justify-between gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors border-b-2 border-black">
+  <summary class="cursor-pointer list-none p-4 md:p-5 flex items-center justify-between gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors border-b-[3px] border-black">
     <div class="min-w-0">
-      <div class="text-[11px] uppercase tracking-widest font-mono opacity-60 mb-1 flex items-center gap-2">
+      <div class="text-[11px] uppercase tracking-widest font-mono text-[var(--color-ink-60)] mb-1 flex items-center gap-2">
         <span>series</span>
         <span class="opacity-40">·</span>
         <span class="font-black">{posts.length.toString().padStart(2, '0')} 篇</span>
@@ -45,25 +45,25 @@ const formatDate = (d: string) => d.replaceAll('-', '/');
   </summary>
 
   <div class="p-4 md:p-5">
-    <p class="text-sm md:text-base leading-relaxed opacity-80 mb-5">
+    <p class="text-sm md:text-base leading-relaxed text-[var(--color-ink-60)] mb-5">
       {meta.description}
     </p>
 
-    <ol class="list-none p-0 m-0 border-2 border-black bg-white">
+    <ol class="list-none p-0 m-0 border-2 border-black bg-[var(--color-panel)]">
       {posts.map((post, idx) => (
         <li class="border-b-2 border-black last:border-b-0">
           <a
             href={withBase(`/blog/${post.slug}`)}
             class="flex items-baseline gap-3 p-3 hover:bg-[var(--color-neub-yellow)] transition-colors"
           >
-            <span class="text-xs font-mono opacity-50 w-7 flex-shrink-0 font-black">
+            <span class="text-xs font-mono text-[var(--color-ink-60)] w-7 flex-shrink-0 font-black">
               {(idx + 1).toString().padStart(2, '0')}
             </span>
             <span class="flex-1 min-w-0">
               <span class="block font-black leading-snug truncate">
                 {post.title}
               </span>
-              <span class="block text-[11px] font-mono opacity-60 mt-0.5">
+              <span class="block text-[11px] font-mono text-[var(--color-ink-60)] mt-0.5">
                 {formatDate(post.publishDate)} · {post.readingTime} min
               </span>
             </span>

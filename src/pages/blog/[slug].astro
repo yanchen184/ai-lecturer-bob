@@ -138,123 +138,161 @@ const jsonLdSchemas = faqSchema
   <NavbarNeub />
 
   <main class="font-sans text-[#0a0a0a]">
-    <!-- Breadcrumb + Style Switcher -->
+    <!-- Breadcrumb + reading time + Style Switcher -->
     <nav
       class="px-6 md:px-10 py-3 border-b-2 border-black text-xs uppercase tracking-widest font-mono"
       aria-label="breadcrumb"
     >
-      <div class="max-w-5xl mx-auto flex items-center gap-3">
+      <div class="max-w-6xl mx-auto flex items-center gap-3">
         <div class="flex items-center gap-2 opacity-70 min-w-0 flex-1">
-          <a href={withBase('/')} class="hover:bg-[#ffff00] px-1 shrink-0">home</a>
+          <a href={withBase('/')} class="hover:bg-[#ffff00] px-1 shrink-0">首頁</a>
           <span class="shrink-0">/</span>
-          <a href={withBase('/blog')} class="hover:bg-[#ffff00] px-1 shrink-0">blog</a>
+          <a href={withBase('/blog')} class="hover:bg-[#ffff00] px-1 shrink-0">Articles</a>
           <span class="shrink-0">/</span>
           <span class="font-black opacity-100 truncate min-w-0">{post.title}</span>
         </div>
-        <div class="shrink-0">
+        <div class="hidden sm:flex items-center gap-3 shrink-0">
+          <span class="opacity-60">{post.readingTime} min read</span>
           <BlogStyleSwitcher client:load defaultStyle={post.defaultStyle ?? 'neub'} />
         </div>
       </div>
     </nav>
 
-    <!-- Header -->
-    <header class="px-6 md:px-10 py-12 border-b-2 border-black bg-white">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-xs uppercase tracking-widest mb-4 opacity-70 flex flex-wrap items-center gap-2 font-mono">
-          <span class="font-black">[{post.category}]</span>
-          <span>·</span>
-          <time datetime={post.publishDate}>{formatDate(post.publishDate)}</time>
-          <span>·</span>
-          <span>{post.readingTime}min read</span>
+    <!-- Header — title-first，標題置頂大字 → cover 圖 → tags（對齊 target 排版） -->
+    <header class="border-b-2 border-black bg-[var(--color-sink)]">
+      <div class="max-w-6xl mx-auto px-6 md:px-10 py-10 md:py-12">
+        <!-- meta chips -->
+        <div class="flex flex-wrap items-center gap-2 mb-5 font-mono text-[11px] uppercase tracking-widest font-black">
+          <span class="bg-[var(--color-neub-yellow)] border-2 border-black px-2.5 py-1 leading-none">
+            {post.category}
+          </span>
+          <span class="border-2 border-black px-2.5 py-1 leading-none">
+            <time datetime={post.publishDate}>{formatDate(post.publishDate)}</time>
+          </span>
+          <span class="border-2 border-black px-2.5 py-1 leading-none">
+            {post.readingTime} min read
+          </span>
           {post.featured && (
-            <>
-              <span>·</span>
-              <span class="font-black bg-[#ffff00] px-1">★ FEATURED</span>
-            </>
+            <span class="bg-[var(--color-neub-yellow)] border-2 border-black px-2.5 py-1 leading-none">
+              ★ Featured
+            </span>
           )}
         </div>
 
-        <h1
-          class="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-6"
-        >
+        <!-- 大標題置頂 -->
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight mb-6 max-w-4xl">
           {post.title}
         </h1>
 
-        <p class="text-base md:text-lg leading-relaxed opacity-80 max-w-3xl">
+        <!-- cover 圖（黑框）置於標題下 -->
+        {post.coverImage && (
+          <div class="relative aspect-[16/9] md:aspect-[2.4/1] border-2 border-black shadow-hard bg-[var(--color-paper)] overflow-hidden mb-6">
+            <img
+              src={withBase(post.coverImage)}
+              alt={post.title}
+              loading="eager"
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        <p class="text-base md:text-lg leading-relaxed text-[var(--color-ink-60)] max-w-3xl mb-6">
           {post.excerpt}
         </p>
 
-        <div class="mt-6 flex flex-wrap items-center gap-2 font-mono">
-          <span class="text-xs uppercase tracking-widest opacity-60">by</span>
-          <span class="font-black">{post.author}</span>
-          <span class="text-xs opacity-50">·</span>
-          <div class="flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <a
-                href={withBase(`/blog?tag=${encodeURIComponent(tag)}`)}
-                class="text-xs border-2 border-black px-2.5 py-1 hover:bg-[#ffff00] leading-none"
-              >
-                #{tag}
-              </a>
-            ))}
-          </div>
+        <!-- tags + author -->
+        <div class="flex flex-wrap items-center gap-2 font-mono">
+          {post.tags.map((tag) => (
+            <a
+              href={withBase(`/blog?tag=${encodeURIComponent(tag)}`)}
+              class="text-xs border-2 border-black px-2.5 py-1 hover:bg-[var(--color-neub-yellow)] leading-none transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
         </div>
       </div>
     </header>
 
-    <!-- TOC + Content -->
+    <!-- Content + floating TOC（content 左、TOC 右，對齊 target 排版） -->
     <div class="px-6 md:px-10 py-14">
-      <div class="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[220px_1fr]">
-        {
-          toc.length > 0 && (
-            <>
-              {/* Mobile: collapsible TOC（預設展開讓讀者一眼看到整篇結構） */}
-              <details open class="lg:hidden border-2 border-black bg-white min-w-0">
-                <summary class="cursor-pointer list-none px-4 py-3 flex items-center justify-between font-mono text-xs uppercase tracking-widest font-black bg-[var(--color-neub-yellow)] border-b-2 border-black">
-                  <span>章節目錄 · {toc.length}</span>
-                  <span aria-hidden="true" class="toc-caret">▾</span>
-                </summary>
-                <ul class="border-t-2 border-black text-xs font-mono">
+      <div class="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1fr_240px]">
+        {/* Mobile: collapsible TOC（在內文上方，預設展開） */}
+        {toc.length > 0 && (
+          <details open class="lg:hidden border-2 border-black bg-white min-w-0">
+            <summary class="cursor-pointer list-none px-4 py-3 flex items-center justify-between font-mono text-xs uppercase tracking-widest font-black bg-[var(--color-neub-yellow)] border-b-2 border-black">
+              <span>本文目錄 · {toc.length}</span>
+              <span aria-hidden="true" class="toc-caret">▾</span>
+            </summary>
+            <ul class="border-t-2 border-black text-xs font-mono">
+              {toc.map((item) => (
+                <li class="border-b border-black/10 last:border-b-0">
+                  <a
+                    href={`#${item.id}`}
+                    data-toc-link={item.id}
+                    class="block px-4 py-2 opacity-80 hover:bg-[#ffff00] leading-snug"
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
+
+        <article data-blog-prose class="blog-prose min-w-0" set:html={html} />
+
+        {/* Desktop: 右側浮動 TOC + 作者迷你卡 */}
+        <aside class="hidden lg:block">
+          <div class="sticky top-24 space-y-4">
+            {toc.length > 0 && (
+              <div class="border-2 border-black bg-white text-xs font-mono">
+                <div class="uppercase tracking-widest font-black px-3 py-2 bg-[var(--color-neub-yellow)] border-b-2 border-black">
+                  本文目錄
+                </div>
+                <ul class="p-1">
                   {toc.map((item) => (
-                    <li class="border-b border-black/10 last:border-b-0">
+                    <li>
                       <a
                         href={`#${item.id}`}
                         data-toc-link={item.id}
-                        class="block px-4 py-2 opacity-80 hover:bg-[#ffff00] leading-snug"
+                        class="toc-link block px-2 py-1 opacity-70 hover:opacity-100 hover:bg-[#ffff00] leading-snug transition-all"
                       >
                         {item.text}
                       </a>
                     </li>
                   ))}
                 </ul>
-              </details>
+              </div>
+            )}
 
-              {/* Desktop: sticky sidebar with scroll-spy */}
-              <aside class="hidden lg:block">
-                <div class="sticky top-24 text-xs font-mono">
-                  <div class="uppercase tracking-widest font-black mb-3 opacity-60">
-                    目錄
-                  </div>
-                  <ul class="space-y-1 border-l-2 border-black/10">
-                    {toc.map((item) => (
-                      <li>
-                        <a
-                          href={`#${item.id}`}
-                          data-toc-link={item.id}
-                          class="toc-link block pl-3 -ml-[2px] py-1 opacity-70 hover:opacity-100 hover:bg-[#ffff00] leading-snug transition-all"
-                        >
-                          {item.text}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </aside>
-            </>
-          )
-        }
-
-        <article data-blog-prose class="blog-prose min-w-0" set:html={html} />
+            {/* 作者迷你卡 */}
+            <div class="border-2 border-black bg-white p-3 text-center shadow-hard">
+              <div class="w-12 h-12 mx-auto bg-[var(--color-neub-yellow)] border-2 border-black flex items-center justify-center font-black mb-2">
+                陳
+              </div>
+              <div class="font-black text-sm leading-tight">{post.author}</div>
+              <div class="font-mono text-[10px] uppercase tracking-widest opacity-60 mt-1">
+                AI Lecturer · Engineer
+              </div>
+              <div class="mt-2 flex justify-center gap-1.5 font-mono">
+                <a
+                  href="mailto:bobchen184@gmail.com"
+                  class="px-2 py-1 text-[10px] uppercase tracking-widest border-2 border-black hover:bg-[#ffff00]"
+                  >email</a
+                >
+                <a
+                  href="https://github.com/yanchen184"
+                  target="_blank"
+                  rel="noopener"
+                  class="px-2 py-1 text-[10px] uppercase tracking-widest border-2 border-black hover:bg-[#ffff00]"
+                  >github</a
+                >
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
 
@@ -263,9 +301,6 @@ const jsonLdSchemas = faqSchema
         opacity: 1;
         font-weight: 900;
         background: #ffeb3b;
-        border-left: 2px solid #0a0a0a;
-        margin-left: -2px;
-        padding-left: 0.75rem;
       }
     </style>
 
