@@ -293,17 +293,32 @@ const courses = [
       <div class="relative max-w-7xl mx-auto grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
         <!-- 左：標題欄 -->
         <div>
-          <div class="inline-block bg-black text-white text-[12px] md:text-[13px] font-black px-3 py-1.5 mb-6">
-            AI 企業內訓 <span class="text-[var(--color-neub-yellow)] mx-1">×</span> 實戰落地
+          <div class="text-[11px] md:text-[12px] font-mono tracking-[0.25em] text-black/50 mb-4">
+            // 企業內訓 <span class="mx-1 text-black/30">·</span> 實戰落地
           </div>
-          <h1 class="text-4xl md:text-5xl lg:text-[3.4rem] xl:text-[3.75rem] font-black leading-[1.12] tracking-tight">
+          <h1 class="text-3xl md:text-4xl lg:text-[2.9rem] xl:text-[3.1rem] font-black leading-[1.14] tracking-tight">
             <span class="block">讓團隊真正用好 AI，</span>
-            <span class="block mt-2">創造可衡量的業務價值</span>
+            <span class="block mt-1.5">創造可衡量的業務價值</span>
           </h1>
 
           <p class="mt-7 text-[15px] md:text-base max-w-lg leading-relaxed text-black/70">
             結合後端工程、系統架構與生成式 AI 實戰經驗，設計貼近企業場景的內訓課程與工作坊，從概念到落地，帶團隊建立可持續的 AI 生產力。
           </p>
+
+          <!-- mobile 限定人像卡（對齊目標 mobile hero：大標下緊接人像） -->
+          <div class="lg:hidden mt-6 relative border-[3px] border-black overflow-hidden bg-[var(--color-neub-yellow)] shadow-hard-lg" style="aspect-ratio: 16 / 11;">
+            <img
+              src={withBase('/images/character/half_01.png')}
+              alt="陳彥彤 YC"
+              class="absolute inset-0 w-full h-full object-cover object-top"
+              loading="eager"
+              decoding="async"
+            />
+            <div class="absolute bottom-0 left-0 right-0 bg-black text-white px-3 py-2">
+              <span class="block text-[12px] font-mono font-black tracking-widest">&gt; YC / Bob Chen</span>
+              <span class="block text-[9px] font-mono uppercase tracking-widest text-white/55">AI LECTURER / SENIOR BACKEND ENGINEER</span>
+            </div>
+          </div>
 
           <div class="mt-8 flex flex-wrap items-center gap-3">
             <a

@@ -158,59 +158,63 @@ const jsonLdSchemas = faqSchema
       </div>
     </nav>
 
-    <!-- Header — title-first，標題置頂大字 → cover 圖 → tags（對齊 target 排版） -->
+    <!-- Header — 左標題 + 右 cover 兩欄（對齊 target：標題左、cover 圖右並排） -->
     <header class="border-b-2 border-black bg-[var(--color-sink)]">
       <div class="max-w-6xl mx-auto px-6 md:px-10 py-10 md:py-12">
-        <!-- meta chips -->
-        <div class="flex flex-wrap items-center gap-2 mb-5 font-mono text-[11px] uppercase tracking-widest font-black">
-          <span class="bg-[var(--color-neub-yellow)] border-2 border-black px-2.5 py-1 leading-none">
-            {post.category}
-          </span>
-          <span class="border-2 border-black px-2.5 py-1 leading-none">
-            <time datetime={post.publishDate}>{formatDate(post.publishDate)}</time>
-          </span>
-          <span class="border-2 border-black px-2.5 py-1 leading-none">
-            {post.readingTime} min read
-          </span>
-          {post.featured && (
-            <span class="bg-[var(--color-neub-yellow)] border-2 border-black px-2.5 py-1 leading-none">
-              ★ Featured
-            </span>
-          )}
-        </div>
+        <div class="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+          <!-- 左欄：meta + 大標 + 摘要 + tags -->
+          <div>
+            <!-- meta chips -->
+            <div class="flex flex-wrap items-center gap-2 mb-5 font-mono text-[11px] uppercase tracking-widest font-black">
+              <span class="bg-[var(--color-neub-yellow)] border-2 border-black px-2.5 py-1 leading-none">
+                {post.category}
+              </span>
+              <span class="border-2 border-black px-2.5 py-1 leading-none">
+                <time datetime={post.publishDate}>{formatDate(post.publishDate)}</time>
+              </span>
+              <span class="border-2 border-black px-2.5 py-1 leading-none">
+                {post.readingTime} min read
+              </span>
+              {post.featured && (
+                <span class="bg-[var(--color-neub-yellow)] border-2 border-black px-2.5 py-1 leading-none">
+                  ★ Featured
+                </span>
+              )}
+            </div>
 
-        <!-- 大標題置頂 -->
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight mb-6 max-w-4xl">
-          {post.title}
-        </h1>
+            <h1 class="text-3xl md:text-4xl lg:text-[2.6rem] font-black leading-tight tracking-tight mb-5">
+              {post.title}
+            </h1>
 
-        <!-- cover 圖（黑框）置於標題下 -->
-        {post.coverImage && (
-          <div class="relative aspect-[16/9] md:aspect-[2.4/1] border-2 border-black shadow-hard bg-[var(--color-paper)] overflow-hidden mb-6">
-            <img
-              src={withBase(post.coverImage)}
-              alt={post.title}
-              loading="eager"
-              decoding="async"
-              class="absolute inset-0 w-full h-full object-cover"
-            />
+            <p class="text-base md:text-lg leading-relaxed text-[var(--color-ink-60)] mb-5">
+              {post.excerpt}
+            </p>
+
+            <!-- tags -->
+            <div class="flex flex-wrap items-center gap-2 font-mono">
+              {post.tags.map((tag) => (
+                <a
+                  href={withBase(`/blog?tag=${encodeURIComponent(tag)}`)}
+                  class="text-xs border-2 border-black px-2.5 py-1 hover:bg-[var(--color-neub-yellow)] leading-none transition-colors"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </div>
           </div>
-        )}
 
-        <p class="text-base md:text-lg leading-relaxed text-[var(--color-ink-60)] max-w-3xl mb-6">
-          {post.excerpt}
-        </p>
-
-        <!-- tags + author -->
-        <div class="flex flex-wrap items-center gap-2 font-mono">
-          {post.tags.map((tag) => (
-            <a
-              href={withBase(`/blog?tag=${encodeURIComponent(tag)}`)}
-              class="text-xs border-2 border-black px-2.5 py-1 hover:bg-[var(--color-neub-yellow)] leading-none transition-colors"
-            >
-              #{tag}
-            </a>
-          ))}
+          <!-- 右欄：cover 圖（黑框） -->
+          {post.coverImage && (
+            <div class="relative aspect-[16/10] border-2 border-black shadow-hard bg-[var(--color-paper)] overflow-hidden">
+              <img
+                src={withBase(post.coverImage)}
+                alt={post.title}
+                loading="eager"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+          )}
         </div>
       </div>
     </header>
@@ -247,8 +251,9 @@ const jsonLdSchemas = faqSchema
         <aside class="hidden lg:block">
           <div class="sticky top-24 space-y-4">
             {toc.length > 0 && (
-              <div class="border-2 border-black bg-white text-xs font-mono">
-                <div class="uppercase tracking-widest font-black px-3 py-2 bg-[var(--color-neub-yellow)] border-b-2 border-black">
+              <div class="border-2 border-black bg-white text-xs font-mono shadow-hard">
+                <div class="uppercase tracking-widest font-black px-3 py-2 bg-[var(--color-neub-yellow)] border-b-2 border-black flex items-center gap-2">
+                  <span class="w-2 h-2 bg-black inline-block shrink-0" aria-hidden="true"></span>
                   本文目錄
                 </div>
                 <ul class="p-1">
@@ -257,7 +262,7 @@ const jsonLdSchemas = faqSchema
                       <a
                         href={`#${item.id}`}
                         data-toc-link={item.id}
-                        class="toc-link block px-2 py-1 opacity-70 hover:opacity-100 hover:bg-[#ffff00] leading-snug transition-all"
+                        class="toc-link block px-2 py-1.5 opacity-85 hover:opacity-100 hover:bg-[#ffff00] leading-snug transition-all border-l-2 border-transparent hover:border-black"
                       >
                         {item.text}
                       </a>
