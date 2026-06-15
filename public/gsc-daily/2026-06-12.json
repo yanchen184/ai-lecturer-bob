@@ -34,5 +34,7 @@
       "ctr": 0,
       "position": 4.3
     }
-  ]
+  ],
+  "analysis": "【一句總評】整體沒事，流量穩。28 天主力 query「claude code ultrawork」曝光 40、點擊 21、排名 1.9，是健康的招牌字；站內 UV 97 也正常。沒有突發事件。\n\n【需要注意】兩件事。一是過去 7 天 GSC 整體曝光/點擊量縮到個位數，多數頁面（arize-phoenix 曝光 13、claude-code-teams 曝光 12、ultracode-ultrathink 曝光 10）點擊全掛零，CTR 0%——排名沒進首頁前段就吃不到點擊，屬正常但值得盯。二是「ultracode needs dynamic workflows enabled」這個 query 曝光 6、排名 3.5 卻 0 點擊，是個有需求、你已經排進前段、但標題勾不到人的字。\n\n【今天可以做】去 GSC 用 URL Inspection 對 /blog/claude-code-ultracode-ultrathink/ 手動 Request Indexing，順手把該頁 title／meta description 改成直接命中「ultracode needs dynamic workflows enabled」這句報錯——這 query 已經排第 3.5，title 對齊一下就有機會把 0 點擊轉成實際流量，5 分鐘內可動手。",
+  "analysisGeneratedAt": "2026-06-16T07:07:53+0800"
 }
