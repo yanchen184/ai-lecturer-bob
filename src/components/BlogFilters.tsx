@@ -7,7 +7,7 @@
  *
  * URL query 為 single source of truth：?cat=xxx&tag=yyy&q=zzz
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Props {
   categories: string[];
@@ -144,11 +144,9 @@ export default function BlogFilters({
     [pushQuery]
   );
 
-  const tagOpen = useMemo(() => tag !== ALL, [tag]);
-
   const chipClass = (active: boolean): string =>
     [
-      'px-3 py-1 text-xs uppercase tracking-widest font-mono font-black border-2 border-black transition-colors',
+      'px-2 py-0.5 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black transition-colors',
       active
         ? 'bg-black text-[var(--color-neub-yellow)]'
         : 'bg-white hover:bg-[var(--color-neub-yellow)]',
@@ -156,15 +154,16 @@ export default function BlogFilters({
 
   const tagChipClass = (active: boolean): string =>
     [
-      'px-2 py-0.5 text-[11px] uppercase tracking-widest font-mono border-2 border-black transition-colors',
+      'px-1.5 py-0.5 text-[10px] uppercase tracking-widest font-mono border border-black/40 transition-colors',
       active
-        ? 'bg-black text-[var(--color-neub-yellow)] font-black'
-        : 'bg-white hover:bg-[var(--color-neub-yellow)]',
+        ? 'bg-black text-[var(--color-neub-yellow)] font-black border-black'
+        : 'bg-[var(--color-sink)] text-[var(--color-ink-60)] hover:bg-[var(--color-neub-yellow)] hover:text-black',
     ].join(' ');
 
   return (
-    <div className="border-2 border-black bg-white p-4 md:p-5 flex flex-col gap-4">
-      <div className="relative w-full">
+    <div className="flex flex-wrap items-center gap-2">
+      {/* 搜尋：縮小,只佔一點點 */}
+      <div className="relative">
         <label htmlFor="blog-search" className="sr-only">
           搜尋文章
         </label>
@@ -173,70 +172,65 @@ export default function BlogFilters({
           type="search"
           value={query}
           onChange={(e) => onQuery(e.target.value)}
-          placeholder="搜尋標題或摘要…"
-          className="w-full border-2 border-black bg-white px-4 py-2.5 text-sm font-mono focus:outline-none focus:bg-[var(--color-neub-yellow)] placeholder:opacity-50"
+          placeholder="搜尋…"
+          className="w-40 sm:w-48 border-2 border-black bg-white pl-2.5 pr-7 py-1 text-xs font-mono focus:outline-none focus:bg-[var(--color-neub-yellow)] placeholder:opacity-50"
         />
         {query && (
           <button
             type="button"
             onClick={() => onQuery('')}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] px-2 py-0.5"
+            className="absolute right-1 top-1/2 -translate-y-1/2 text-[10px] font-mono font-black hover:text-black/50"
             aria-label="清除搜尋"
           >
-            clear
+            ✕
           </button>
         )}
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        <button onClick={() => onCat(ALL)} className={chipClass(category === ALL)}>
-          All
+      {/* 分類 + 標籤 同一行 */}
+      <button onClick={() => onCat(ALL)} className={chipClass(category === ALL)}>
+        All
+      </button>
+      {categories.map((c) => (
+        <button key={c} onClick={() => onCat(c)} className={chipClass(category === c)}>
+          {c}
         </button>
-        {categories.map((c) => (
-          <button key={c} onClick={() => onCat(c)} className={chipClass(category === c)}>
-            {c}
-          </button>
-        ))}
-      </div>
+      ))}
 
       {tags.length > 0 && (
-        <details open={tagOpen} className="border-t border-dashed border-black/30 pt-3">
-          <summary className="cursor-pointer list-none flex items-center gap-2 text-xs uppercase tracking-widest font-mono font-black select-none hover:text-black/60 transition-colors">
-            <span aria-hidden="true" className="inline-block w-4 text-center">+</span>
-            <span>展開標籤</span>
-            {tag !== ALL && (
-              <span className="ml-auto bg-[var(--color-neub-yellow)] px-2 py-0.5 border-2 border-black">
-                #{tag}
-              </span>
-            )}
-          </summary>
-          <div className="flex flex-wrap gap-1.5 mt-3 pl-6">
-            <button onClick={() => onTag(ALL)} className={tagChipClass(tag === ALL)}>
-              all
-            </button>
-            {tags.map((t) => (
-              <button key={t} onClick={() => onTag(t)} className={tagChipClass(tag === t)}>
-                #{t}
+        <>
+          <span aria-hidden="true" className="text-black/20">|</span>
+          <details className="relative">
+            <summary className="cursor-pointer list-none flex items-center gap-1 text-[11px] uppercase tracking-widest font-mono font-black border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] px-2 py-0.5 select-none">
+              <span>標籤</span>
+              {tag !== ALL ? (
+                <span className="bg-[var(--color-neub-yellow)] border border-black px-1 leading-none">#{tag}</span>
+              ) : (
+                <span aria-hidden="true">▾</span>
+              )}
+            </summary>
+            <div className="absolute left-0 top-full mt-1 z-20 w-[min(20rem,80vw)] max-h-64 overflow-y-auto border-2 border-black bg-white shadow-hard p-2 flex flex-wrap gap-1.5">
+              <button onClick={() => onTag(ALL)} className={tagChipClass(tag === ALL)}>
+                all
               </button>
-            ))}
-          </div>
-        </details>
+              {tags.map((t) => (
+                <button key={t} onClick={() => onTag(t)} className={tagChipClass(tag === t)}>
+                  #{t}
+                </button>
+              ))}
+            </div>
+          </details>
+        </>
       )}
 
       {hasFilter && (
-        <div className="flex items-baseline justify-between gap-3 border-t border-dashed border-black/30 pt-3 text-xs font-mono uppercase tracking-widest">
-          <span>
-            <span data-blog-count className="font-black text-base">{totalPosts}</span>
-            <span className="ml-1.5 opacity-70">篇符合條件</span>
-          </span>
-          <button
-            type="button"
-            onClick={reset}
-            className="font-black border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] px-2 py-1"
-          >
-            reset →
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={reset}
+          className="ml-auto text-[10px] uppercase tracking-widest font-mono font-black border-2 border-black bg-white hover:bg-[var(--color-neub-yellow)] px-2 py-0.5"
+        >
+          reset <span className="opacity-70">(<span data-blog-count>{totalPosts}</span>)</span>
+        </button>
       )}
     </div>
   );

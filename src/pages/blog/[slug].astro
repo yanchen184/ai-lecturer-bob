@@ -282,9 +282,15 @@ const jsonLdSchemas = faqSchema
 
             {/* 作者迷你卡 */}
             <div class="border-2 border-black bg-white p-3 text-center shadow-hard">
-              <div class="w-12 h-12 mx-auto bg-[var(--color-neub-yellow)] border-2 border-black flex items-center justify-center font-black mb-2">
-                陳
-              </div>
+              <img
+                src={withBase('/images/logo-mark.png')}
+                alt="Bob Chen 自畫像"
+                width="56"
+                height="56"
+                loading="lazy"
+                decoding="async"
+                class="w-14 h-14 mx-auto bg-[var(--color-neub-yellow)] border-2 border-black object-cover mb-2"
+              />
               <div class="font-black text-sm leading-tight">{post.author}</div>
               <div class="font-mono text-[10px] uppercase tracking-widest opacity-60 mt-1">
                 AI Lecturer · Engineer

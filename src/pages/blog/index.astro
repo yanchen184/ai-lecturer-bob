@@ -117,16 +117,9 @@ const jsonLd = {
 
       <!-- All posts (magazine grid) -->
       <section class="mb-16">
-        <div class="flex items-baseline justify-between gap-4 mb-5 border-b-[3px] border-black pb-3">
-          <div class="eyebrow">全部文章 · All posts</div>
-          <div class="text-[11px] uppercase tracking-widest font-mono text-[var(--color-ink-60)]">
-            {listPosts.length} posts
-          </div>
-        </div>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {listPosts.map((post, i) => (
-            <BlogCardListItem post={post} views={viewsMap.get(post.slug)} index={i} />
+          {listPosts.map((post) => (
+            <BlogCardListItem post={post} views={viewsMap.get(post.slug)} />
           ))}
         </div>
 

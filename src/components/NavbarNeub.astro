@@ -179,16 +179,15 @@ const resolveHref = (href: string) =>
 
   <!-- 頭像 + 身分 -->
   <div class="flex items-center gap-3 px-4 py-4 border-b-2 border-black/15">
-    <span
-      class="w-12 h-12 shrink-0 inline-flex items-center justify-center bg-[#0a0a0a] border-2 border-black"
-      aria-hidden="true"
-    >
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-neub-yellow)" stroke-width="2" stroke-linecap="round">
-        <circle cx="8.5" cy="9.5" r="1.2" fill="var(--color-neub-yellow)" stroke="none" />
-        <circle cx="15.5" cy="9.5" r="1.2" fill="var(--color-neub-yellow)" stroke="none" />
-        <path d="M7.5 14.5c1.2 1.6 7.8 1.6 9 0" />
-      </svg>
-    </span>
+    <img
+      src={withBase('/images/logo-mark.png')}
+      alt="Yan Chen 自畫像"
+      width="48"
+      height="48"
+      loading="lazy"
+      decoding="async"
+      class="w-12 h-12 shrink-0 bg-[var(--color-neub-yellow)] border-2 border-black object-cover"
+    />
     <span class="min-w-0 leading-tight">
       <span class="block text-sm font-black tracking-tight">Yan Chen</span>
       <span class="block text-[11px] text-[var(--color-ink-60)] mt-0.5">AI Lecturer /<br />Senior Backend Engineer</span>

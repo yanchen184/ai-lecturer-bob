@@ -15,18 +15,17 @@ import { withBase } from '../lib/url';
 interface Props {
   post: BlogPost;
   views?: number;
-  index?: number;
 }
 
-const { post, views, index } = Astro.props;
+const { post, views } = Astro.props;
 const cover = post.coverImage;
 const formatDate = (d: string) => d.replaceAll('-', '/');
 const formatViews = (n: number): string => {
   if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
   return n.toString();
 };
-const num = typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
 const hasViews = (views ?? 0) > 0;
+const metaRight = hasViews ? `${formatViews(views!)} reads` : `${post.readingTime} min`;
 ---
 
 <article
@@ -38,17 +37,6 @@ const hasViews = (views ?? 0) > 0;
   class="group border-2 border-black bg-[var(--color-paper)] relative flex flex-col h-full lift"
 >
   <a href={withBase(`/blog/${post.slug}`)} class="block flex-1 flex flex-col min-w-0">
-    {/* 頂部 meta 軌：編號 + 日期 + reads */}
-    <div class="flex items-center justify-between gap-2 px-4 py-2 border-b-2 border-black bg-[var(--color-sink)] font-mono text-[10px] uppercase tracking-widest">
-      <span class="flex items-center gap-2 min-w-0">
-        {num && <span class="font-black shrink-0">{num}</span>}
-        <span class="opacity-60 truncate">{formatDate(post.publishDate)}</span>
-      </span>
-      <span class="opacity-60 shrink-0">
-        {hasViews ? `${formatViews(views!)} reads` : `${post.readingTime} min`}
-      </span>
-    </div>
-
     {cover && (
       <div class="relative aspect-[16/10] border-b-2 border-black bg-[var(--color-sink)] overflow-hidden">
         <img
@@ -63,22 +51,27 @@ const hasViews = (views ?? 0) > 0;
       </div>
     )}
 
-    <div class="p-4 md:p-5 flex-1 flex flex-col min-w-0">
-      <div class="font-mono text-[10px] uppercase tracking-widest mb-2">
-        <span class="inline-block bg-[var(--color-neub-yellow)] border-2 border-black px-2 py-0.5 leading-none font-black">
+    <div class="p-3 md:p-4 flex-1 flex flex-col min-w-0">
+      <div class="flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-widest mb-2">
+        <span class="inline-block bg-[var(--color-neub-yellow)] border-2 border-black px-2 py-0.5 leading-none font-black shrink-0">
           {post.category}
+        </span>
+        <span class="flex items-center gap-1.5 text-[var(--color-ink-60)] min-w-0">
+          <span class="truncate">{formatDate(post.publishDate)}</span>
+          <span class="opacity-40 shrink-0">·</span>
+          <span class="shrink-0">{metaRight}</span>
         </span>
       </div>
 
       <h3 class:list={[
-        'font-black leading-snug tracking-tight mb-2 break-words',
+        'font-black leading-snug tracking-tight mb-1.5 break-words',
         cover ? 'text-base md:text-lg line-clamp-2' : 'text-lg md:text-xl line-clamp-3',
       ]}>
         {post.title}
       </h3>
 
       <p class:list={[
-        'text-xs md:text-sm leading-relaxed text-[var(--color-ink-60)] mb-3 flex-1 break-words',
+        'text-xs md:text-sm leading-relaxed text-[var(--color-ink-60)] mb-2.5 flex-1 break-words',
         cover ? 'line-clamp-2' : 'line-clamp-3',
       ]}>
         {post.excerpt}
