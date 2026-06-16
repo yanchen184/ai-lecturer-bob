@@ -365,8 +365,8 @@ const courses = [
 
         <!-- 右：人像卡片 + CORE STACK + CODE SNAPSHOT -->
         <div class="hidden lg:grid grid-cols-[1.05fr_1fr] gap-4 items-start">
-          <!-- 人像卡片（黃底 + play overlay + 角落標籤） -->
-          <div class="relative bg-[var(--color-neub-yellow)] border-[3px] border-black overflow-hidden self-stretch shadow-hard-lg" style="aspect-ratio: 3 / 4;">
+          <!-- 人像卡片（深色框 + play overlay + 角落標籤，對齊 target 的深色半身構圖） -->
+          <div class="relative bg-[#15140f] border-[3px] border-black overflow-hidden self-stretch shadow-hard-lg" style="aspect-ratio: 3 / 4;">
             <img
               src={withBase('/images/character/half_01.png')}
               alt="陳彥彤 YC"
@@ -374,6 +374,8 @@ const courses = [
               loading="eager"
               decoding="async"
             />
+            <!-- 深色暈影：讓人像融入深色卡，對齊 target 的暗調 -->
+            <div aria-hidden="true" class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.55) 100%);"></div>
             <!-- play 按鈕 overlay（置中圓形） -->
             <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 grid place-items-center bg-white/85 text-black border-2 border-black rounded-full text-lg" aria-hidden="true">▶</span>
             <!-- 角落標籤 -->

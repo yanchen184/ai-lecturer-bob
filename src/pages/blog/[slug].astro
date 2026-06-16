@@ -9,6 +9,7 @@ import FooterNeub from '../../components/FooterNeub.astro';
 import BlogStyleSwitcher from '../../components/BlogStyleSwitcher.tsx';
 import ReadingProgress from '../../components/ReadingProgress.astro';
 import GiscusComments from '../../components/GiscusComments.astro';
+import TerminalCover from '../../components/TerminalCover.astro';
 import { getAllPublishedPosts, type BlogPost } from '../../lib/firestore';
 import { renderMarkdown, inlineKrokiImages } from '../../lib/markdown';
 import { withBase } from '../../lib/url';
@@ -160,8 +161,8 @@ const jsonLdSchemas = faqSchema
 
     <!-- Header — 左標題 + 右 cover 兩欄（對齊 target：標題左、cover 圖右並排） -->
     <header class="border-b-2 border-black bg-[var(--color-sink)]">
-      <div class="max-w-6xl mx-auto px-6 md:px-10 py-10 md:py-12">
-        <div class="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+      <div class="max-w-6xl mx-auto px-6 md:px-10 py-8 md:py-10">
+        <div class="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
           <!-- 左欄：meta + 大標 + 摘要 + tags -->
           <div>
             <!-- meta chips -->
@@ -182,11 +183,11 @@ const jsonLdSchemas = faqSchema
               )}
             </div>
 
-            <h1 class="text-3xl md:text-4xl lg:text-[2.6rem] font-black leading-tight tracking-tight mb-5">
+            <h1 class="text-2xl md:text-3xl lg:text-[1.85rem] font-black leading-[1.15] tracking-tight mb-4">
               {post.title}
             </h1>
 
-            <p class="text-base md:text-lg leading-relaxed text-[var(--color-ink-60)] mb-5">
+            <p class="text-sm md:text-base leading-relaxed text-[var(--color-ink-60)] mb-5">
               {post.excerpt}
             </p>
 
@@ -203,16 +204,23 @@ const jsonLdSchemas = faqSchema
             </div>
           </div>
 
-          <!-- 右欄：cover 圖（黑框） -->
-          {post.coverImage && (
-            <div class="relative aspect-[16/10] border-2 border-black shadow-hard bg-[var(--color-paper)] overflow-hidden">
-              <img
-                src={withBase(post.coverImage)}
-                alt={post.title}
-                loading="eager"
-                decoding="async"
-                class="absolute inset-0 w-full h-full object-cover"
-              />
+          <!-- 右欄：cover（顯式圖 → img；fallback 弱圖 → 程式畫的 terminal 封面） -->
+          {(post.coverImage || !post.coverIsExplicit) && (
+            <div
+              class="relative aspect-[16/10] border-2 border-black shadow-hard bg-[var(--color-paper)] overflow-hidden"
+              style="container-type: inline-size;"
+            >
+              {post.coverIsExplicit && post.coverImage ? (
+                <img
+                  src={withBase(post.coverImage)}
+                  alt={post.title}
+                  loading="eager"
+                  decoding="async"
+                  class="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : (
+                <TerminalCover />
+              )}
             </div>
           )}
         </div>

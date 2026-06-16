@@ -17,7 +17,7 @@ import {
   type Firestore,
 } from 'firebase/firestore';
 import { staticPosts } from '../data/staticPosts';
-import { detectCoverImage } from './blog-cover';
+import { detectCover } from './blog-cover';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDrAsh4pLbCebHSogupG8daABhRYdI2prk',
@@ -61,6 +61,12 @@ export interface BlogPost {
    * 列表頁透過 fs 在 build 時偵測；Firestore 不需要寫此欄位。
    */
   coverImage?: string;
+  /**
+   * coverImage 是否為「可信封面」。
+   * - true：Firestore 顯式寫的 coverImage，或資料夾內有 `cover.*`
+   * - false：字母序 fallback 撿到的圖（品質不保證）→ 消費端可改 render TerminalCover
+   */
+  coverIsExplicit?: boolean;
 }
 
 let db: Firestore | null = null;
@@ -193,12 +199,20 @@ export async function getAllPublishedPosts(): Promise<BlogPost[]> {
   }
 }
 
-/** 為每篇文章補上 build-time 偵測到的 cover 圖路徑 */
+/** 為每篇文章補上 build-time 偵測到的 cover 圖路徑 + 可信度旗標 */
 function withCoverImages(posts: BlogPost[]): BlogPost[] {
-  return posts.map((p) => ({
-    ...p,
-    coverImage: p.coverImage ?? detectCoverImage(p.slug),
-  }));
+  return posts.map((p) => {
+    // Firestore 顯式寫了 coverImage → 視為可信
+    if (p.coverImage) {
+      return { ...p, coverIsExplicit: true };
+    }
+    const detected = detectCover(p.slug);
+    return {
+      ...p,
+      coverImage: detected.src,
+      coverIsExplicit: detected.explicit,
+    };
+  });
 }
 
 /**

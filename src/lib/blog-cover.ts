@@ -21,15 +21,27 @@ const BLOG_IMAGES_ROOT = join(process.cwd(), 'public', 'images', 'blog');
 const COVER_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'] as const;
 const IMG_PATTERN = /\.(png|jpe?g|webp)$/i;
 
-export function detectCoverImage(slug: string): string | undefined {
-  if (!slug) return undefined;
+export interface CoverDetection {
+  /** 封面圖路徑（顯式或 fallback 撿到的）。沒有任何圖則 undefined。 */
+  src?: string;
+  /**
+   * true = 顯式 `cover.*`（可信的封面）；
+   * false = 字母序 fallback 撿到的圖（可能是 og/抽象圖,品質不保證）。
+   * 消費端可據此決定 fallback 圖要不要改 render 程式畫的 TerminalCover。
+   */
+  explicit: boolean;
+}
+
+/** 完整偵測:回封面路徑 + 是否為顯式封面。 */
+export function detectCover(slug: string): CoverDetection {
+  if (!slug) return { explicit: false };
   const dir = join(BLOG_IMAGES_ROOT, slug);
-  if (!existsSync(dir)) return undefined;
+  if (!existsSync(dir)) return { explicit: false };
 
   // 1) 顯式 cover.*
   for (const ext of COVER_EXTENSIONS) {
     if (existsSync(join(dir, `cover.${ext}`))) {
-      return `/images/blog/${slug}/cover.${ext}`;
+      return { src: `/images/blog/${slug}/cover.${ext}`, explicit: true };
     }
   }
 
@@ -39,11 +51,16 @@ export function detectCoverImage(slug: string): string | undefined {
       .filter((f) => IMG_PATTERN.test(f))
       .sort();
     if (files.length > 0) {
-      return `/images/blog/${slug}/${files[0]}`;
+      return { src: `/images/blog/${slug}/${files[0]}`, explicit: false };
     }
   } catch {
     // readdir 失敗就放棄
   }
 
-  return undefined;
+  return { explicit: false };
+}
+
+/** 向後相容:只回路徑（顯式或 fallback）。 */
+export function detectCoverImage(slug: string): string | undefined {
+  return detectCover(slug).src;
 }

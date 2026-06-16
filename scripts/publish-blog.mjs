@@ -93,7 +93,7 @@ const posts = [
     slug: 'agent-browser-screenshot-annotate-visual',
     title: 'agent-browser 截圖標註：3 招讓 AI 看著畫面操作',
     excerpt:
-      'agent-browser 的主力是純文字 snapshot（一頁 200-400 tokens 的可訪問性元素清單），但它抓不到「沒文字標籤的 icon 按鈕、canvas 畫的東西、純視覺狀態」。這篇接續上一篇純文字流，實測它的三個視覺標註指令——screenshot --annotate（在截圖上疊元素編號 [1][2][3]，每個對應 @eN ref，截完可直接 click @e2）、highlight（高亮單一元素做聚焦驗證）、diff screenshot（截圖像素級比對，抓「長相變了」，配合 diff snapshot 抓「結構變了」）——把 AI 從「只能讀文字」升級成「看著畫面操作」。核心是 annotate 把視覺感知跟動作指令對齊：同一套 @eN ref 文字流跟視覺流共用，多模態模型看圖推理完直接產生跟純文字流一樣的指令。也講清楚一個常見誤會：它沒有自由畫圖/打字的小畫家功能，標註指的是元素編號疊加。踩坑含 annotate 只支援 CDP 後端（Chrome/Lightpanda）Safari 不行、ref 會過期、diff threshold 不調會一直假警報。版本 v0.27.2，全程 Mac 實測。',
+      'agent-browser 能在截圖上畫圖、寫字——不是給人塗鴉的小畫家，而是自動把 AI 看得懂的標記畫進截圖像素裡。這篇接續上一篇純文字流，實測它在截圖上畫東西的三種畫法——screenshot --annotate（在每個可互動元素上畫編號 [1][2][3] 並寫出對照清單，每個對應 @eN ref，截完可直接 click @e2）、highlight（在指定元素外畫高亮框做聚焦驗證）、diff screenshot（把畫面差異畫成像素級比對圖，抓「長相變了」，配合 diff snapshot 抓「結構變了」）——把只能讀純文字 snapshot（一頁 200-400 tokens）的 agent 升級成「看著畫面操作」，補上 icon 按鈕、canvas、純視覺狀態這些純文字抓不到的盲區。核心是 annotate 把視覺感知跟動作指令對齊：畫上去的 @eN 編號文字流跟視覺流共用同一套 ref，多模態模型看圖推理完直接產生跟純文字流一樣的指令。踩坑含 annotate 只支援 CDP 後端（Chrome/Lightpanda）Safari 不行、ref 會過期、diff threshold 不調會一直假警報。版本 v0.27.2，全程 Mac 實測。',
     category: 'AI 工具',
     tags: [
       'agent-browser',
@@ -109,8 +109,8 @@ const posts = [
     featured: false,
     faqItems: [
       {
-        q: 'agent-browser 可以在截圖上自由畫圖、寫字嗎？',
-        a: '不行。它沒有 paint / 自由標註功能。它的「標註」是 --annotate 自動疊元素編號、highlight 高亮元素、diff 視覺比對——目的是讓 AI 看懂畫面，不是給人塗鴉。要在圖上手動畫框寫字，那是截圖編輯工具（如 macOS 預覽、Skitch）的事。',
+        q: 'agent-browser 可以在截圖上畫圖、寫字嗎？',
+        a: '可以，而且這正是它的賣點。--annotate 會在截圖上畫出元素編號 [N] 並寫出對照清單、highlight 會在指定元素外畫高亮框、diff screenshot 會把差異畫在輸出圖上——這些都是直接畫進截圖像素裡的標記與文字。它不是讓你手動塗鴉的小畫家（要手畫框寫字用 macOS 預覽、Skitch 那類工具），而是自動畫出 AI 看得懂的標註，畫的目的是讓多模態模型看圖就能精準操作。',
       },
       {
         q: 'annotate 的編號 [N] 和純文字 snapshot 的 @eN 是同一套嗎？',

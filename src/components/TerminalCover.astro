@@ -1,0 +1,79 @@
+---
+/**
+ * TerminalCover — 純 CSS/HTML 的深色 terminal 視窗封面。
+ *
+ * 用途:文章沒有 cover.* 圖時的 fallback 封面,取代「撿資料夾第一張圖」
+ * 撿到的黑色幾何抽象圖。對齊 design target 的「深色 code 視窗 + 黃便利貼」風格,
+ * 但用真 monospace 文字 render,字更清晰、顏色精準、零外部資產依賴。
+ *
+ * 設計取向(對齊 refined-neub 目標圖):
+ * - 深色窗 (#15140f) + 紅黃綠 traffic-light + 標題列
+ * - prompt 行 + RAG pipeline 階段橫條 (ingest→…→generate)
+ * - 語法高亮 pseudo-code (teal 關鍵字 / orange 字串 / grey 註解)
+ * - 2 張黃便利貼註解,微旋轉
+ *
+ * 自適應容器:絕對定位填滿父層(父層負責 aspect-ratio + 黑框)。
+ */
+interface Props {
+  /** 額外 class（通常不用） */
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+const stages = ['ingest', 'chunk', 'embed', 'index', 'retrieve', 'generate'];
+---
+
+<div
+  class:list={['absolute inset-0 w-full h-full bg-[#15140f] overflow-hidden select-none', className]}
+  aria-hidden="true"
+>
+  <!-- 視窗標題列 -->
+  <div class="flex items-center gap-2 px-3 py-2 border-b border-white/10 bg-black/30">
+    <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57] inline-block"></span>
+    <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e] inline-block"></span>
+    <span class="w-2.5 h-2.5 rounded-full bg-[#28c840] inline-block"></span>
+    <span class="ml-2 font-mono text-[10px] text-white/40 tracking-wide truncate">rag-pipeline.ts — yanchen.app</span>
+  </div>
+
+  <!-- 視窗內容 -->
+  <div class="px-3 py-2.5 font-mono leading-relaxed" style="font-size: clamp(8px, 1.6cqw, 12px);">
+    <!-- prompt -->
+    <div class="text-[#4ade80]">$ yanchen.app</div>
+    <div class="text-white/55 mb-2">&gt; architecting trustworthy AI systems<span class="opacity-60">…</span></div>
+
+    <!-- pipeline 橫條 -->
+    <div class="flex flex-wrap items-center gap-x-1 gap-y-1 mb-2.5">
+      {stages.map((s, i) => (
+        <>
+          <span class="text-[#3ec5c5]">{s}</span>
+          {i < stages.length - 1 && <span class="text-white/25">→</span>}
+        </>
+      ))}
+    </div>
+
+    <!-- pseudo-code -->
+    <div class="space-y-0.5">
+      <div><span class="text-white/25 mr-2">01</span><span class="text-[#7cc0ff]">async function</span> <span class="text-[#febc2e]">answer</span>(question) &#123;</div>
+      <div><span class="text-white/25 mr-2">02</span>  <span class="text-[#7cc0ff]">const</span> emb   = <span class="text-[#febc2e]">embed</span>(question);</div>
+      <div><span class="text-white/25 mr-2">03</span>  <span class="text-[#7cc0ff]">const</span> docs  = store.<span class="text-[#febc2e]">search</span>(emb);</div>
+      <div><span class="text-white/25 mr-2">04</span>  <span class="text-white/35">// evaluate every step</span></div>
+      <div><span class="text-white/25 mr-2">05</span>  <span class="text-[#7cc0ff]">const</span> prompt = <span class="text-[#febc2e]">build</span>(question, docs);</div>
+      <div><span class="text-white/25 mr-2">06</span>  <span class="text-[#7cc0ff]">return</span> llm.<span class="text-[var(--color-neub-yellow)]">generate</span>(prompt);</div>
+      <div><span class="text-white/25 mr-2">07</span>&#125;</div>
+    </div>
+  </div>
+
+  <!-- 黃便利貼 1（右上,微旋轉） -->
+  <div
+    class="absolute top-[14%] right-[5%] bg-[var(--color-neub-yellow)] border border-black px-2 py-1.5 shadow-[2px_2px_0_0_#000] rotate-[4deg] max-w-[42%]"
+  >
+    <span class="block font-mono font-black text-black tracking-tight" style="font-size: clamp(8px, 1.5cqw, 12px);">RAG = retrieval + LLM</span>
+  </div>
+
+  <!-- 黃便利貼 2（右下,反向微旋轉 + 箭頭 doodle） -->
+  <div
+    class="absolute bottom-[10%] right-[8%] bg-[var(--color-neub-yellow)] border border-black px-2 py-1.5 shadow-[2px_2px_0_0_#000] -rotate-[3deg] max-w-[44%]"
+  >
+    <span class="block font-mono font-black text-black tracking-tight" style="font-size: clamp(8px, 1.5cqw, 12px);">grounded answers ↘</span>
+  </div>
+</div>

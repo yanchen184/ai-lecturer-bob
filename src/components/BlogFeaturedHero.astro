@@ -10,6 +10,7 @@
  */
 import type { BlogPost } from '../lib/firestore';
 import { withBase } from '../lib/url';
+import TerminalCover from './TerminalCover.astro';
 
 interface Props {
   post: BlogPost;
@@ -18,6 +19,8 @@ interface Props {
 
 const { post, views } = Astro.props;
 const cover = post.coverImage;
+// 有顯式 cover → 用圖；只有 fallback 撿到的弱圖 → 改 render 程式畫的 terminal 封面
+const useTerminalCover = !post.coverIsExplicit;
 const formatDate = (d: string) => d.replaceAll('-', '/');
 const formatViews = (n: number): string => {
   if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
@@ -27,17 +30,22 @@ const formatViews = (n: number): string => {
 
 <section
   data-blog-featured
-  class="relative border-[3px] border-black bg-[var(--color-paper)] shadow-hard-lg mb-12 lift"
+  class="relative border-[3px] border-black bg-[var(--color-paper)] shadow-hard-lg mb-6 lift"
 >
   <a
     href={withBase(`/blog/${post.slug}`)}
     class:list={[
       'block group',
-      cover && 'md:grid md:grid-cols-[1.05fr_1fr] md:gap-0',
+      'md:grid md:grid-cols-[1.15fr_1fr] md:gap-0 md:items-stretch',
     ]}
   >
-    {cover && (
-      <div class="relative aspect-[16/10] md:aspect-auto md:h-full border-b-[3px] md:border-b-0 md:border-r-[3px] border-black bg-[var(--color-sink)] overflow-hidden">
+    <div
+      class="relative aspect-[16/9] md:aspect-auto border-b-[3px] md:border-b-0 md:border-r-[3px] border-black bg-[var(--color-sink)] overflow-hidden"
+      style="container-type: inline-size;"
+    >
+      {useTerminalCover ? (
+        <TerminalCover />
+      ) : (
         <img
           src={withBase(cover)}
           alt={post.title}
@@ -45,14 +53,14 @@ const formatViews = (n: number): string => {
           decoding="async"
           class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
         />
-      </div>
-    )}
+      )}
+    </div>
 
     <div class:list={[
       'flex flex-col justify-center relative bg-[var(--color-sink)]',
-      cover ? 'p-6 md:p-8 lg:p-10' : 'p-8 md:p-12',
+      cover ? 'p-4 md:p-5 lg:p-6' : 'p-8 md:p-12',
     ]}>
-      <div class="flex items-center justify-between gap-3 mb-5">
+      <div class="flex items-center justify-between gap-3 mb-2">
         <span class="eyebrow">Most Read · 最多人讀</span>
         {views && views > 0 && (
           <span class="font-mono text-[11px] font-black uppercase tracking-widest opacity-70 whitespace-nowrap">
@@ -61,7 +69,7 @@ const formatViews = (n: number): string => {
         )}
       </div>
 
-      <div class="flex flex-wrap items-center gap-2 mb-5 font-mono text-[11px] uppercase tracking-widest font-black">
+      <div class="flex flex-wrap items-center gap-2 mb-3 font-mono text-[11px] uppercase tracking-widest font-black">
         <span class="bg-[var(--color-neub-yellow)] border-2 border-black px-2.5 py-1 leading-none">
           {post.category}
         </span>
@@ -74,15 +82,15 @@ const formatViews = (n: number): string => {
       </div>
 
       <h2 class:list={[
-        'font-black leading-[1.08] tracking-tight mb-4',
-        cover ? 'text-2xl md:text-3xl lg:text-[2.5rem]' : 'text-3xl md:text-5xl lg:text-6xl',
+        'font-black leading-[1.12] tracking-tight mb-3 text-[var(--color-ink)]',
+        cover ? 'text-lg md:text-xl lg:text-[1.55rem]' : 'text-3xl md:text-5xl lg:text-6xl',
       ]}>
-        <span class="mark-yellow box-decoration-clone">{post.title}</span>
+        {post.title}
       </h2>
 
       <p class:list={[
-        'leading-relaxed mb-6 text-[var(--color-ink-60)]',
-        cover ? 'text-sm md:text-base line-clamp-3' : 'text-base md:text-lg max-w-3xl line-clamp-4',
+        'leading-relaxed mb-4 text-[var(--color-ink-60)]',
+        cover ? 'text-sm md:text-[15px] line-clamp-2' : 'text-base md:text-lg max-w-3xl line-clamp-4',
       ]}>
         {post.excerpt}
       </p>
