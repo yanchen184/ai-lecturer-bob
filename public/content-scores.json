@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-12",
+  "generatedAt": "2026-06-17",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -647,7 +647,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 6832
+      "wordCount": 6961
     },
     "llm-token-counting-methods": {
       "total": 95,
@@ -756,6 +756,42 @@
         "codeFence": 5
       },
       "wordCount": 7493
+    },
+    "ponytail-ai-agent-less-code-plugin": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6192
+    },
+    "pyjianyingdraft-python-jianying-automation": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 8761
     }
   }
 }

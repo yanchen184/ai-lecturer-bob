@@ -49,6 +49,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'pyjianyingdraft-python-jianying-automation',
+    title: 'pyJianYingDraft 實測：Python 自動剪映的 4 個版本天花板',
+    excerpt:
+      'pyJianYingDraft 是用 Python 自動生成剪映草稿的開源庫。實測安裝、模板模式與批量導出，並把剪映 6+ 加密、Mac 不能導出等 4 個版本限制一次講清楚。',
+    category: '工程實作',
+    tags: [
+      'pyJianYingDraft',
+      '剪映自動化',
+      'Python 剪映',
+      '剪映草稿生成',
+      '批量導出',
+      'CapCut 自動化',
+      '自動剪片',
+      '影片自動化',
+    ],
+    publishDate: '2026-06-17',
+    featured: false,
+    faqItems: [
+      {
+        q: 'pyJianYingDraft 支援 CapCut 國際版嗎？',
+        a: '本庫針對中國版剪映（JianYing）。國際版 CapCut 請看作者另一個正在開發的倉庫 pyCapCut。兩個是不同倉庫，草稿檔格式有差，別混用。',
+      },
+      {
+        q: '我的剪映是 7.x，pyJianYingDraft 還能用嗎？',
+        a: '草稿生成可以（5.0+ 全支援）。但模板模式（剪映 6+ 把 draft_content.json 加密）和批量導出（剪映 7+ 隱藏了控件）都用不了。要完整功能請把剪映鎖在 5.9 並關掉自動更新。',
+      },
+      {
+        q: 'Mac 可以用 pyJianYingDraft 全自動產片加導出嗎？',
+        a: '不行。Mac/Linux 只能生草稿和跑模板模式，批量導出依賴 Windows-only 的 uiautomation 庫。生出來的草稿最後仍要拿到 Windows 版剪映才能導出。',
+      },
+      {
+        q: 'trange 的第二個參數是結束時間嗎？',
+        a: '不是，是持續時長（duration）。trange("4s", "1s") 代表「從 4 秒開始、持續 1 秒」（即 4~5 秒），不是「4 秒到 1 秒」。因為起點 0s 時兩種解讀剛好同值，新手很容易誤判，一律把第二參數當 duration 讀。',
+      },
+      {
+        q: '批量導出跑到一半卡住不動怎麼辦？',
+        a: '先檢查兩件事：剪映版本是否 ≤ 6（7+ 控件被隱藏用不了）、帳號是否有導出權限。如果模板用了 VIP 才有的特效但帳號沒開 VIP，導出時會跳付費牆，UI 自動化點不過去就無限重試。另外它會佔用滑鼠，跑的時候別動電腦，建議夜間跑。',
+      },
+    ],
+  },
+  {
     slug: 'ponytail-ai-agent-less-code-plugin',
     title: 'Ponytail 插件實測：讓 AI 程式碼少 80-94%、成本降四成的「懶資深工程師」法則',
     excerpt:
