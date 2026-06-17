@@ -49,6 +49,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'ponytail-ai-agent-less-code-plugin',
+    title: 'Ponytail 插件實測：讓 AI 程式碼少 80-94%、成本降四成的「懶資深工程師」法則',
+    excerpt:
+      '爆紅 AI 插件 Ponytail 用一條 YAGNI 決策階梯，逼 AI Agent 能不寫就不寫。實測程式碼少 80-94%、速度快 3-6 倍、成本降四成，5 天衝 2.7 萬星，本文含安裝與實測。',
+    category: 'AI 工具',
+    tags: [
+      'Ponytail',
+      'AI 過度設計',
+      'AI Agent 插件',
+      'YAGNI',
+      'Claude Code 插件',
+      'Codex',
+      'Gemini CLI',
+      'AI 寫太多 code',
+    ],
+    publishDate: '2026-06-17',
+    featured: true,
+    faqItems: [
+      {
+        q: 'Ponytail 會幫我寫程式碼嗎？',
+        a: '不會。它本身幾乎不產 code，做的是「注入規則」讓你的 AI Agent 傾向少寫，以及主動幫你抓出可以刪掉的過度設計（可掃 diff 或掃整個 repo 回你一張刪除清單）。實際寫 code 的還是你原本的 Agent。',
+      },
+      {
+        q: 'Ponytail 那個「降四成」到底是降什麼？',
+        a: '是每個任務的成本（cost per task）降 42–75%，不是 token 數降四成。程式碼行數降的是 80–94%，速度是快 3–6 倍，三個是不同指標，網路上常被混為一談。數字出自官方 README，用三個 Claude 模型、五個任務各跑 10 次取中位數。',
+      },
+      {
+        q: 'Ponytail 只支援 Claude Code 嗎？',
+        a: '不只。官方列出 14+ 種宿主，包含 Codex、Gemini CLI、Cursor、Windsurf、Cline、Aider、GitHub Copilot CLI、OpenCode、Kiro 等，各自有對應安裝方式。Claude Code 是 /plugin marketplace add 再 install。',
+      },
+      {
+        q: 'Ponytail 會不會為了少寫，把安全驗證也砍掉？',
+        a: '不會。作者明確把信任邊界驗證（trust-boundary validation）、資料遺失處理、安全性、無障礙這四類劃為紅線，永遠不在被砍清單上。它的原則是 lazy not negligent——砍的是過度工程，不是必要防護。',
+      },
+      {
+        q: '為什麼這個插件叫「Ponytail（馬尾）」？',
+        a: '作者官方只在 FAQ 丟了一句「Why ponytail? You know exactly why.」，沒正面解釋。社群心領神會的是那種綁長馬尾、戴橢圓眼鏡、話不多的資深大神——你拿五十行 code 去問他，他一句不說直接幫你換成一行。橢圓眼鏡馬尾大神是社群與讀者的聯想，不是官方明文。',
+      },
+    ],
+  },
+  {
     slug: 'firebase-free-web-app-domain',
     title: 'Firebase .web.app 免費網域：5 步驟申請，一個帳號能開幾個',
     excerpt:
