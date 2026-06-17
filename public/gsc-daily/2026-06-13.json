@@ -1,0 +1,33 @@
+{
+  "date": "2026-06-13",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 6.0,
+  "queries": [
+    {
+      "query": "\"ultracode needs dynamic workflows enabled\"",
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/blog/zenbu-powers-claude-code-plugin-design",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
