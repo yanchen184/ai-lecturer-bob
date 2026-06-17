@@ -1,0 +1,47 @@
+{
+  "date": "2026-06-14",
+  "impressions": 7,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 8.4,
+  "queries": [
+    {
+      "query": "陳彥彤",
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 18
+    }
+  ],
+  "pages": [
+    {
+      "page": "/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "page": "/blog/ai-frontend-purple-problem-explained/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
