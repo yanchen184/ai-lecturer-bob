@@ -49,6 +49,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'annsmemory-cognitive-memory-plugin',
+    title: 'ANNsmemory 是什麼？Claude Code 認知記憶外掛完整教學（安裝、四指令與單一寫入架構）',
+    excerpt:
+      'ANNsmemory（外掛名 cognitive-memory）是 Claude Code 的認知記憶外掛，用 Go 寫的 memctl 當唯一寫入者，提供跨專案結構化記憶。本文拆解安裝、recall/remember/consolidate 四指令、episode/semantic/procedural 三種節點與單一寫入架構，附實測踩坑與 FAQ。',
+    category: 'AI 工具',
+    tags: [
+      'ANNsmemory',
+      'cognitive-memory',
+      'Claude Code 記憶外掛',
+      'Claude Code 跨專案記憶',
+      'memctl',
+      'single-writer',
+      'AI 記憶管理',
+      'Claude Code plugin',
+    ],
+    publishDate: '2026-06-18',
+    featured: true,
+    faqItems: [
+      {
+        q: 'ANNsmemory 跟直接在專案裡放 .md 筆記有什麼不同？',
+        a: '最大差別是「誰能寫」跟「索引怎麼來」。手寫筆記是你自由編、索引手動維護；ANNsmemory 只有 memctl 能寫 frontmatter、索引由程式衍生，所以不會有索引脫鉤、schema 被改壞的問題，recall 也是確定性的（同樣輸入給同樣排序）。',
+      },
+      {
+        q: '使用 ANNsmemory 需要會寫 Go 嗎？',
+        a: '不用。它 95.5% 是 Go 沒錯，但 binary 已經預編譯 commit 進 repo，marketplace 安裝時不會 build。你只會用到四個 slash 指令，碰不到 Go 原始碼。要自己改才需要 make build（會交叉編譯 darwin/linux × arm64/amd64）。',
+      },
+      {
+        q: 'ANNsmemory 的記憶存在哪？換電腦會不會不見？',
+        a: '存在 ~/.claude-memory，這是一個你自己掌控的 git repo。換機器就把這個 repo 同步過去即可（它不自動 commit，commit 節奏你自己抓）。每個專案底下的 .memory/ 只是投影（projection），不是另一份真相。',
+      },
+      {
+        q: 'ANNsmemory 跨專案的記憶會互相污染嗎？',
+        a: '不會無差別污染。節點有 scope：project 範圍的記憶只在原專案吃滿權重；其他專案的記憶以 recall_cross_project_weight（預設 0.4）的背景權重出現——既保留跨專案聯想，又不會喧賓奪主。',
+      },
+      {
+        q: '我已經有一堆舊 memory 檔，能直接搬進 ANNsmemory 嗎？',
+        a: '能。用 /cognitive-memory:memory-migrate，預設 dry-run 先給你看搬法。它的 parser 容錯度高：吃得下沒有 frontmatter 的檔、認三種 node_id 命名法、缺 TLDR 會自動補並標記。確認分類正確後再加 --apply 落地。',
+      },
+    ],
+  },
+  {
     slug: 'pyjianyingdraft-python-jianying-automation',
     title: 'pyJianYingDraft 實測：Python 自動剪映的 4 個版本天花板',
     excerpt:
