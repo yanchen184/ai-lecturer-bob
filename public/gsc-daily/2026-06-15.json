@@ -1,0 +1,61 @@
+{
+  "date": "2026-06-15",
+  "impressions": 12,
+  "clicks": 2,
+  "ctr": 16.67,
+  "position": 8.0,
+  "queries": [
+    {
+      "query": "陳彥彤",
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 33
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.2
+    },
+    {
+      "page": "/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 20
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    },
+    {
+      "page": "/blog/arize-phoenix-llm-tracing-medical-cdss/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/claude-code-lesson-4/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    }
+  ]
+}
