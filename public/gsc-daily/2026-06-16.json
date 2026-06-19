@@ -72,5 +72,7 @@
       "ctr": 0,
       "position": 94
     }
-  ]
+  ],
+  "analysis": "昨天小流量、查詢結構乾淨，沒有突發事件，但有一個訊號值得盯。直接給你三段：\n\n【一句總評】\n昨天就 6 個 UV、3 個 PV，量小但正常波動，沒事。過去 28 天主力查詢「claude code ultrawork」排名 1.9、21 次點擊撐住整個站，查詢結構健康，沒崩。\n\n【需要注意】\n兩件事。一是「ultracode needs dynamic workflows enabled」這個 query 過去 7 天曝光 7、排名 3.7，但點擊掛 0——排在前段卻一個人都沒點進來，標題對不上搜尋意圖，是這週最該補的洞。二是 28 天主力字「claude code ultrawork」40 曝光只換 21 點擊、CTR 約 52%，排名第 1 還漏掉一半的人，title/description 還有壓榨空間。\n\n【今天可以做】\n去翻 /blog/claude-code-ultracode-ultrathink/ 這頁（28 天它吃下 ultracode 相關曝光），把 title 或開頭 H1 直接寫進「ultracode needs dynamic workflows enabled」這個錯誤訊息字串＋一句解法，讓搜這串報錯的人一眼看到答案。5 分鐘內可改完，改完手動去 GSC 對這頁送一次 Request Indexing。",
+  "analysisGeneratedAt": "2026-06-20T07:30:46+0800"
 }
