@@ -1,0 +1,76 @@
+{
+  "date": "2026-06-16",
+  "impressions": 13,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 15.3,
+  "queries": [
+    {
+      "query": "nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 94
+    },
+    {
+      "query": "陈彦彤",
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 26
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.8
+    },
+    {
+      "page": "/blog/claude-code-teams-owner-management-guide/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 26
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/huggingface-flux-schnell-free-image-batch/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 94
+    }
+  ]
+}
