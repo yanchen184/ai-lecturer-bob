@@ -57,5 +57,7 @@
       "ctr": 0,
       "position": 7
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n整體還是冷的，昨天站內 7 人 4 PV、GSC 6/15 單日只有 1 曝光 0 點擊，沒有突發事件，就「沒事但也沒量」。唯一健康的是 28 天的「claude code ultrawork」，曝光 40、點擊 21、排名 1.9，這條是你目前唯一真正吃到流量的查詢。\n\n【需要注意】\n最該盯的是「ultracode needs dynamic workflows enabled」這條：7 天曝光 7、排名 3.7，但點擊 0——排前段卻一個人都沒點，是個被你晾著的需求訊號。對照之下 ultrawork 那篇明明能轉，代表你的內容打得到「ultrawork」卻沒人專門寫「ultracode dynamic workflows」這個錯誤訊息。另外 7 天 top 頁面整體曝光全是個位數，自然流量基本斷層，不是哪條滑落、是水位太低。\n\n【今天可以做】\n五分鐘內：去 GSC 對「ultracode needs dynamic workflows enabled」這個 query 排名最高的那頁手動送一次 Request Indexing，順手用 curl 確認該頁回 200、不被 robots 擋。今天稍晚再花點時間補一篇直接以這個錯誤訊息當標題的短文，把這個有曝光沒內容的洞補起來。",
+  "analysisGeneratedAt": "2026-06-19T09:05:09+0800"
 }
