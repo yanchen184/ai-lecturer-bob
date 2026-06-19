@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { homedir } from 'node:os'
+import { execSync } from 'node:child_process'
 
 const PROJECT_ID = 'forbidden-beauty'
 const API_KEY = 'AIzaSyDrAsh4pLbCebHSogupG8daABhRYdI2prk'
@@ -966,6 +967,7 @@ const posts = [
   },
   {
     slug: 'hermes-agent-intro',
+    publishDate: '2026-05-15',
     title:
       'Hermes Agent 是什麼?一篇給完全新手看的 AI 工具介紹(白話版)',
     excerpt:
@@ -1010,6 +1012,7 @@ const posts = [
   },
   {
     slug: 'hermes-agent-sandbox',
+    publishDate: '2026-05-15',
     title:
       'Hermes Agent 的沙盒(Sandbox)詳解:7 種隔離環境怎麼選?',
     excerpt:
@@ -1050,6 +1053,7 @@ const posts = [
   },
   {
     slug: 'hermes-agent-quickstart',
+    publishDate: '2026-05-15',
     title:
       'Hermes Agent 最簡安裝指南:5 分鐘新手版(macOS/Linux/Windows)',
     excerpt:
@@ -1095,6 +1099,7 @@ const posts = [
   },
   {
     slug: 'hermes-agent-mac-install',
+    publishDate: '2026-05-15',
     title:
       'Mac 裝 Hermes Agent 接內網 LLM：踩了 4 個洞才接通',
     excerpt:
@@ -1140,6 +1145,7 @@ const posts = [
   },
   {
     slug: 'hermes-agent-academic',
+    publishDate: '2026-05-15',
     title:
       'Hermes Agent 為什麼擠進 OpenRouter App 排行榜第 2?結構性原因解析',
     excerpt:
@@ -1180,6 +1186,7 @@ const posts = [
   },
   {
     slug: 'claude-code-two-lessons-astro-and-tasklist',
+    publishDate: '2026-05-15',
     title:
       '兩個教訓:Astro base path 不會自動套 markdown 連結、跨多檔案任務該開 TaskList',
     excerpt:
@@ -1224,6 +1231,7 @@ const posts = [
   },
   {
     slug: 'popularize-slides-deck',
+    publishDate: '2026-05-19',
     title:
       '我把 AI 課程簡報全做成 HTML 丟上 GitHub Pages：popularize-slides 開源拆解',
     excerpt:
@@ -1268,6 +1276,7 @@ const posts = [
   },
   {
     slug: 'karpathy-llm-wiki',
+    publishDate: '2026-05-20',
     title:
       'LLM Wiki 跟 RAG 差在哪?Karpathy 那套我跑兩週實測 token 降 87%',
     excerpt:
@@ -1317,6 +1326,7 @@ const posts = [
   },
   {
     slug: 'mempalace-3-3-5-claude-p-proxy',
+    publishDate: '2026-05-20',
     title:
       'MemPalace 3.3.5 救援實錄:HNSW Quarantine、from-sqlite 重建,與一支 claude -p HTTP proxy',
     excerpt:
@@ -1362,6 +1372,7 @@ const posts = [
   },
   {
     slug: 'phone-local-llm-pocketpal',
+    publishDate: '2026-05-20',
     title:
       '手機跑本地 LLM 怎麼裝？iPhone 15 Plus / Android 完整教學（PocketPal AI 安裝、模型選擇、踩坑）',
     excerpt:
@@ -1768,6 +1779,7 @@ const posts = [
   },
   {
     slug: 'hermes-agent-medical-cdss',
+    publishDate: '2026-05-25',
     title:
       '如何用 Hermes Agent 把 AI 接到高風險醫療決策?血脂治療二級預防 CDSS 完整 round-trip 拆解',
     excerpt:
@@ -1814,6 +1826,7 @@ const posts = [
   },
   {
     slug: 'ollama-cloud-hermes-langchain',
+    publishDate: '2026-05-26',
     title:
       'Ollama Cloud 接到 hermes-agent 跟 LangChain:免費跑 Gemma4 31B 不用 GPU 完整指南',
     excerpt:
@@ -1859,6 +1872,7 @@ const posts = [
   },
   {
     slug: 'claude-code-ultrawork-harness-engineering',
+    publishDate: '2026-05-25',
     title:
       'Claude Code Harness EP1｜ultrawork 到底在 work 什麼?社群兩派 + Anthropic 三方對照',
     excerpt:
@@ -1900,6 +1914,7 @@ const posts = [
   },
   {
     slug: 'screendoc-claude-code-skill',
+    publishDate: '2026-05-27',
     title:
       '我把「截圖寫操作手冊」做成 Claude Code skill：screendoc 拆解（4 視角審查 + 一鍵重跑）',
     excerpt:
@@ -2216,6 +2231,25 @@ function writeScoreFile(slug, score, wordCount) {
   writeFileSync(SCORES_PATH, JSON.stringify(data, null, 2) + '\n', 'utf-8')
 }
 
+// 缺 publishDate 的 fallback：用該文章資料夾的 git 最舊 commit 日（= 真正進倉日）。
+// 比 `new Date()`(當天) 穩定可重現——重跑腳本不會把舊文蓋成執行當天。
+// 用資料夾路徑而非 article.md：部分文章首次 commit 時檔名/路徑不同，
+// --follow article.md 會斷；資料夾層級的最舊 commit 才抓得到。
+// 取不到 git 紀錄（未進倉 / 非 git 環境）才退回今天。
+function firstCommitDate(slug) {
+  try {
+    const out = execSync(
+      `git log --format=%ad --date=short -- "public/images/blog/${slug}/"`,
+      { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] },
+    ).trim()
+    const lines = out.split('\n').filter(Boolean)
+    if (lines.length) return lines[lines.length - 1] // 最舊那筆 = 首次進倉
+  } catch {
+    // fall through
+  }
+  return new Date().toISOString().slice(0, 10)
+}
+
 function buildFields(post) {
   const articlePath = resolve(`public/images/blog/${post.slug}/article.md`)
   const content = readFileSync(articlePath, 'utf-8')
@@ -2231,8 +2265,7 @@ function buildFields(post) {
       content: { stringValue: content },
       author: { stringValue: '陳彥彤' },
       publishDate: {
-        stringValue:
-          post.publishDate || new Date().toISOString().slice(0, 10),
+        stringValue: post.publishDate || firstCommitDate(post.slug),
       },
       category: { stringValue: post.category },
       tags: {
