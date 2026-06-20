@@ -50,6 +50,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'devspace-mcp-chatgpt-as-codex',
+    title: 'DevSpace 是什麼？把 ChatGPT 變 Codex 的 MCP 教學（額度真相＋安裝踩坑）',
+    excerpt:
+      'DevSpace 是開源的 self-hosted MCP server，把 ChatGPT 接到你本機 repo，讓它像 Codex 一樣讀寫、搜尋、跑指令。社群的賣點是「ChatGPT 跟 Codex 額度分開算＝額度翻倍」，但這是副作用、不是官方功能。本文實測：修正 Threads 原貼錯誤的安裝指令（@waishnav/devspace）、tunnel 接法、403／Windows 要 Bash 等踩坑，以及 ToS 風險的誠實面。',
+    category: 'AI 工具',
+    tags: [
+      'DevSpace',
+      'DevSpace MCP',
+      'ChatGPT 變 Codex',
+      'Codex 額度',
+      'MCP server 教學',
+      'ChatGPT 操作本機 repo',
+      'Model Context Protocol',
+      'AI coding agent',
+    ],
+    publishDate: '2026-06-20',
+    featured: true,
+    faqItems: [
+      {
+        q: 'DevSpace 真的能讓 Codex 額度變兩倍嗎？',
+        a: '不精準。DevSpace 是把 ChatGPT 接成能操作本機 repo 的 coding agent。「額度翻倍」是因為社群觀察到 ChatGPT 跟 Codex 的用量分開計算，這是計費實作的副作用、不是官方功能，OpenAI 隨時可以改算法或把這條路堵掉。',
+      },
+      {
+        q: 'Threads 上的安裝指令 npm install -g waishnav/devspace 能用嗎？',
+        a: '不能。套件名漏了 scope 的 @（正確是 @waishnav/devspace），而且官方走的是 npx @waishnav/devspace init 互動式流程，不是 npm install -g。照原貼貼會裝到不存在的東西。',
+      },
+      {
+        q: 'Windows 可以跑 DevSpace 嗎？',
+        a: '可以，但 shell 執行要 Bash——原生 PowerShell / cmd.exe 不支援。實務上用 Git Bash 或 WSL。Node 版本要 >=20.12 <27（建議 Node 22 LTS）。',
+      },
+      {
+        q: 'DevSpace 一直噴 403 Forbidden 怎麼辦？',
+        a: '多半是 tunnel 的實際網址跟你在 init 填的 Public Base URL 不符，被 host header 檢查擋下。免費／臨時 tunnel 每次重啟換網址就會中，改用綁固定 domain 的 tunnel（Cloudflare Tunnel 或 ngrok 付費版）最穩。',
+      },
+      {
+        q: '用 DevSpace 會不會被 OpenAI 封號？',
+        a: '官方文件沒提這點，但這招踩在 ToS 灰色地帶，原貼自己都說「哪天 OpenAI 可能關掉」。更實際的風險是：你開了一個讓雲端 AI 直接讀寫本機檔案、跑 shell 指令的開口，Owner 密碼或 auth.json 外流等於交出開發環境鑰匙。風險自負，別押在重要帳號或工作流上。',
+      },
+    ],
+  },
+  {
     slug: 'annsmemory-cognitive-memory-plugin',
     title: 'ANNsmemory 是什麼？Claude Code 認知記憶外掛完整教學（安裝、四指令與單一寫入架構）',
     excerpt:

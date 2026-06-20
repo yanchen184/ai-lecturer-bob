@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19",
+  "generatedAt": "2026-06-20",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -810,6 +810,24 @@
         "codeFence": 5
       },
       "wordCount": 7363
+    },
+    "devspace-mcp-chatgpt-as-codex": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5990
     }
   }
 }
