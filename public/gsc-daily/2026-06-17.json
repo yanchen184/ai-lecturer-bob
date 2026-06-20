@@ -65,5 +65,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n站內流量極低（UV 8），GSC 28 天主力查詢「claude code ultrawork」仍在排名 1.9 左右撐場，但 7 天數據顯示點擊掉到 0，這週明顯冷卻。\n\n【需要注意】\n「ultracode needs dynamic workflows enabled」這個 query 28 天累積 8 次曝光全部沒點擊，排名 4.1 已夠好但 CTR 是 0%，幾乎確定是 title/description 沒抓住搜尋意圖。另外「陳彥彤」系列查詢（繁體/簡體各 3/1 曝光）冒出來掛在排名 26，這是品牌名流量，代表有人在搜你本人，但對應頁面沒有強力承接。\n\n【今天可以做】\n打開 `/blog/claude-code-ultracode-ultrathink/` 這篇，把 `<title>` 或文章 H1 裡加入「ultracode needs dynamic workflows enabled 解法」這句話，讓 Google 重新抓取匹配這個 query 的意圖，5 分鐘改完存檔就好。",
+  "analysisGeneratedAt": "2026-06-21T07:12:07+0800"
 }
