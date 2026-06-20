@@ -50,6 +50,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'pixelmotion-ai-sprite-animation',
+    title: 'PixelMotion AI 是什麼？上傳一張圖，30 秒生出 14 種動作的像素 Sprite Sheet',
+    excerpt:
+      'PixelMotion AI（pixelmotion.art）是一個像素動畫生成器：上傳一張靜止角色圖、選個動作，30 秒左右就生出透明 PNG Sprite Sheet 和 GIF。內建 14 種預設動作、5 種匯出格式，底層用 Google Gemini，1 積分一次生成、失敗不扣積分。本文實測完整流程、定價、踩坑與適配對象，並釐清它跟同名的 pixelmotion.io 是兩個不同產品。',
+    category: 'AI 工具',
+    tags: [
+      'PixelMotion AI',
+      '像素動畫生成器',
+      'AI Sprite Sheet',
+      'pixel art 動畫',
+      '2D 遊戲素材',
+      '像素角色動畫',
+      'AI 生成像素圖',
+      'Gemini 像素動畫',
+    ],
+    publishDate: '2026-06-20',
+    featured: true,
+    faqItems: [
+      {
+        q: 'PixelMotion AI 免費嗎？',
+        a: '有提供註冊體驗，但生成需要消耗積分。最便宜的「新手行囊」¥9.9 給 5 積分，1 積分能生成一次。生成失敗不扣積分、積分永不過期，所以實際花費很可控。',
+      },
+      {
+        q: 'PixelMotion AI 和 pixelmotion.io 是同一個嗎？',
+        a: '不是。pixelmotion.art 是做像素動畫 Sprite Sheet 的工具（本文主題）；pixelmotion.io 是做照片轉影片、社群行銷的平台，月費 $29 起。兩個是完全不同的產品，名字撞了而已。',
+      },
+      {
+        q: '生成的像素動畫可以用在商業遊戲裡嗎？',
+        a: '可以。你對生成的作品有完整使用權，遊戲素材、品牌設計都能用。前提是上傳的原始圖片是你有權使用的（自己畫的、獲授權的、或你自己的照片）。',
+      },
+      {
+        q: '做 2D 遊戲該匯出哪種格式？',
+        a: 'PNG Sprite Sheet（4×4 網格）是 2D 遊戲開發最常用的格式，拉進 Unity / Godot / Phaser 切一切就能用。追求畫質和透明度乾淨度則選 WebP。',
+      },
+      {
+        q: '生成一次要等多久？',
+        a: '預設動作通常 15-30 秒，自訂動作 30-90 秒。高峰時段可能稍長，超過 3 分鐘多半是排隊人多，可以直接重試，不會重複扣積分。',
+      },
+    ],
+  },
+  {
     slug: 'devspace-mcp-chatgpt-as-codex',
     title: 'DevSpace 是什麼？把 ChatGPT 變 Codex 的 MCP 教學（額度真相＋安裝踩坑）',
     excerpt:
