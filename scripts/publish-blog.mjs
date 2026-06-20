@@ -2250,12 +2250,27 @@ function firstCommitDate(slug) {
   return new Date().toISOString().slice(0, 10)
 }
 
+// 封面圖提示詞：約定放在 public/images/blog/<slug>/cover-prompt.txt
+// （跟 cover.png 並列）。發圖時把生封面用的 prompt 順手寫進該檔，
+// 發文時一起寫進 Firestore coverPrompt 欄位，未來重生 / 補圖才有依據。
+// 沒有該檔（舊文 / 沒記）就回空字串，不報錯。
+function readCoverPrompt(slug) {
+  const p = resolve(`public/images/blog/${slug}/cover-prompt.txt`)
+  if (!existsSync(p)) return ''
+  try {
+    return readFileSync(p, 'utf-8').trim()
+  } catch {
+    return ''
+  }
+}
+
 function buildFields(post) {
   const articlePath = resolve(`public/images/blog/${post.slug}/article.md`)
   const content = readFileSync(articlePath, 'utf-8')
   const wordCount = wordCountOf(content)
   const readingTime = readingTimeOf(content)
   const score = computeContentScore(content, post)
+  const coverPrompt = readCoverPrompt(post.slug)
 
   return {
     fields: {
@@ -2267,6 +2282,7 @@ function buildFields(post) {
       publishDate: {
         stringValue: post.publishDate || firstCommitDate(post.slug),
       },
+      coverPrompt: { stringValue: coverPrompt },
       category: { stringValue: post.category },
       tags: {
         arrayValue: {
