@@ -1,0 +1,69 @@
+{
+  "date": "2026-06-17",
+  "impressions": 19,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 7.9,
+  "queries": [
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "query": "\"ultracode needs dynamic workflows enabled\"",
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.6
+    },
+    {
+      "page": "/blog/dense-vs-moe-llm-architecture/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.7
+    },
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
