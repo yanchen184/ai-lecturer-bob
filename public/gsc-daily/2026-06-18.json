@@ -1,0 +1,55 @@
+{
+  "date": "2026-06-18",
+  "impressions": 9,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 3.6,
+  "queries": [
+    {
+      "query": "\"ultracode needs dynamic workflows enabled\"",
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/ralph-loop-real-world/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2.7
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    }
+  ]
+}
