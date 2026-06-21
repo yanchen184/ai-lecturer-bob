@@ -51,5 +51,7 @@
       "ctr": 0,
       "position": 6
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n流量微弱但結構穩定，28 天內「claude code ultrawork」那條 query 排名 1.9、帶進 21 次點擊，是目前唯一有實際表現的查詢。\n\n【需要注意】\n\"ultracode needs dynamic workflows enabled\" 這個 query 有 10 次曝光、排名 4.5，但 0 點擊，CTR 完全掛掉——看起來是精確比對短語、意圖偏工具性，但 /blog/claude-code-ultracode-ultrathink/ 的 title 或 meta description 沒有精準回應這個需求，導致人看到就略過。kkterm 出現 3 次曝光但排名 7.7，是近期新冒出來的 query，值得注意它之後有沒有繼續爬升。\n\n【今天可以做】\n進去改 /blog/claude-code-ultracode-ultrathink/ 的 title tag 和 meta description，把 \"ultracode needs dynamic workflows enabled\" 這個片語或語意直接寫進去——排名已在第 5，補一個更吻合搜尋意圖的 description 就有機會把 CTR 從 0% 拉起來。五分鐘以內可動手。",
+  "analysisGeneratedAt": "2026-06-22T07:09:54+0800"
 }
