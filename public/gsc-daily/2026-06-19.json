@@ -1,0 +1,38 @@
+{
+  "date": "2026-06-19",
+  "impressions": 5,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 5.8,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/claude-code-5hour-limit-schedule-loop/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    }
+  ]
+}
