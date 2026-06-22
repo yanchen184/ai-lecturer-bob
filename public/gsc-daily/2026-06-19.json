@@ -34,5 +34,7 @@
       "ctr": 0,
       "position": 8
     }
-  ]
+  ],
+  "analysis": "Added user:design:read and user:design:write to your claude.ai login (for the Design MCP connector).\n流量穩,沒事。本週站內 5 UV / 2 PV、GSC 曝光只剩個位數,屬常態低基期,沒有暴漲暴跌,查詢結構也健康——主力 query「claude code ultrawork」28 天 21 點擊、排名 1.9,撐住整個站。\n\n要注意兩件事。一是 7 天主力曝光掉得明顯:ultrawork 系列從 28 天的高量縮到近 7 天幾乎見不到,可能是季節性退燒,盯著別讓排名跟著滑。二是「ultracode needs dynamic workflows enabled」這個 query 28 天累積 10 曝光、排名 4.5 卻 0 點擊,明顯是有人搜這個錯誤訊息但你沒有對應內容接住——這是現成的流量缺口。\n\n今天做一件事:幫「ultracode needs dynamic workflows enabled」補一篇短文。這是個具體錯誤訊息,搜的人意圖明確(想解錯),你只要寫清楚「這訊息什麼意思 + 怎麼開 dynamic workflows」,排名 4.5 很容易往前推、把那 0 點擊變成有點擊。寫完去 GSC 對該頁手動 Request Indexing 加速收錄。",
+  "analysisGeneratedAt": "2026-06-23T07:07:34+0800"
 }
