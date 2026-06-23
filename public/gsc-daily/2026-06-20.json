@@ -1,0 +1,40 @@
+{
+  "date": "2026-06-20",
+  "impressions": 9,
+  "clicks": 1,
+  "ctr": 11.11,
+  "position": 9.0,
+  "queries": [
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 9
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 9
+    },
+    {
+      "page": "/blog/arize-phoenix-llm-tracing-medical-cdss/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
