@@ -36,5 +36,7 @@
       "ctr": 0,
       "position": 9
     }
-  ]
+  ],
+  "analysis": "【一句總評】沒事，量級就是個位數。28 天 \"claude code ultrawork\" 拿 21 點擊（排名 1.9）是你唯一真正的流量來源，其餘全是零星曝光。本週 GSC 只有 2 曝光 1 點擊，太小無法談趨勢，別過度解讀。\n\n【需要注意】兩件事。一是 ultracode/ultrawork 這群是你的命脈，但 \"ultracode needs dynamic workflows enabled\"（28 天 10 曝光、排名 4.5、點擊 0）明顯是有人在找「這個錯誤怎麼解」，你卡在第二頁邊緣卻一個點擊都接不到——有曝光沒點擊通常是標題/摘要沒對到搜尋意圖。二是 nodeport 這次掉到排名 94，等於沒進前十頁，但它本來就只 1 曝光，不用緊張。\n\n【今天可以做】針對 \"ultracode needs dynamic workflows enabled\" 這個 query：開你那篇 ultracode/ultrawork 文章，在內文補一段「遇到這個錯誤訊息怎麼解」的明確小節（H2 直接用這句報錯當標題、底下寫排查步驟），讓 Google 的摘要能抓到對得上意圖的片段，再去 Search Console 對這頁手動 Request Indexing。5 分鐘內可動手。",
+  "analysisGeneratedAt": "2026-06-24T07:17:32+0800"
 }
