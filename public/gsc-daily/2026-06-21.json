@@ -116,5 +116,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n站子處在「冷啟動」階段，昨天 9 UV/9 PV、單日曝光個位數，沒有任何單日爆量或崩盤，數據健康但量太小，談不上趨勢。唯一亮點是 28 天的 \"claude code ultrawork\"（曝光 40、點擊 21、排名 1.9），那篇是你目前唯一在賺真流量的頁。\n\n【需要注意】\n兩件事。第一，ultrawork 那組 query 是你的命脈，但 7 天榜上它掉出前段、被 kkterm 和 \"ultracode needs dynamic workflows enabled\"（曝光 5、排名 6.6、點擊 0）頂上來——排第二的這組排名已進前 7 卻 0 點擊，title/description 對搜尋意圖沒對上。第二，blog 列表頁 /blog/ 7 天曝光 10、點擊 0，當聚合頁卻完全沒吃到點擊，可惜。\n\n【今天可以做】\n改 /blog/claude-code-ultracode-ultrathink/ 那篇的 title 和 meta description，把 \"ultracode needs dynamic workflows enabled\" 這句精準字串（含引號語氣）塞進去——它排名 6.6、有人在搜、你卻 0 點擊，title 對上意圖最可能立刻換到第一個點擊。改完去 GSC 對這頁手動 Request Indexing 催一次重抓。",
+  "analysisGeneratedAt": "2026-06-25T07:07:37+0800"
 }
