@@ -50,6 +50,171 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'ai-cloudflare-workers-free-backend',
+    title: '我想要一個自己的後端:用 AI 協作把 Cloudflare Workers 免費方案架起來(附免費額度怎麼算)',
+    excerpt:
+      '想在純靜態部落格旁加一個「自己的後端」——能存資料、能驗身分,又不想養 server、不想付月費。最後選了 Cloudflare Workers + D1,全程用 AI 協作從零架到線上。這篇只記三件事:怎麼一個下午搭好骨架並部署、workerd 沒有 Node 怎麼用 WebCrypto 手刻密碼與 JWT、以及最實用的——Cloudflare 免費方案額度怎麼算、什麼時候撞牆(Workers 每天 10 萬請求、D1 每天讀 500 萬列寫 10 萬列、5GB 儲存)。',
+    category: '工程實作',
+    tags: [
+      'Cloudflare Workers',
+      'Cloudflare D1',
+      '免費方案',
+      'AI 協作開發',
+      'Serverless',
+      'wrangler',
+      'WebCrypto',
+      'Hono',
+    ],
+    publishDate: '2026-06-25',
+    featured: true,
+    faqItems: [
+      {
+        q: 'Cloudflare Workers 免費方案一天能撐多少請求?',
+        a: '每天 100,000 requests(UTC 午夜重置),每次呼叫最多 10ms CPU 時間(I/O 等待不算)。對個人專案、小工具、會員站,這額度幾乎不可能用完——換算下來大約是每秒平均 1 個請求持續一整天。',
+      },
+      {
+        q: 'D1 免費方案的「讀 500 萬列」是怎麼算的?',
+        a: 'D1 算的是「列數」不是「查詢數」。一個 SELECT 掃 100 列就算 100 reads,不是 1。所以要留意的是有沒有寫出會掃全表的爛查詢——加對索引、別 SELECT * 撈整張表,500 萬列/天 對小站綽綽有餘。免費寫入是每天 10 萬列、儲存共 5GB。',
+      },
+      {
+        q: 'Workers 不是 Node.js,密碼雜湊怎麼做?',
+        a: 'Workers 跑在 workerd runtime,沒有 Node 的 crypto 模組、也不能 npm install bcrypt。要用瀏覽器標準的 WebCrypto API(crypto.subtle)自己刻 PBKDF2。workerd 限制 PBKDF2 迭代不能超過 10 萬次,而 10 萬次正好落在免費版每次 10ms CPU 的預算內,用 100k 剛剛好。',
+      },
+      {
+        q: '本地測試時資料寫進去卻查不到,是 bug 嗎?',
+        a: '不是你的 bug。wrangler dev 跟 wrangler d1 execute --local 在 wrangler v4 用了各自獨立的本地 persistence 目錄,你往 A 寫、B 讀不到。本地驗資料對不上時先懷疑這個,別懷疑自己的 SQL。',
+      },
+      {
+        q: '機密(JWT secret、token)要放哪?',
+        a: '只能走 wrangler secret put(存在 Cloudflare 端,程式用 env.X 拿),絕不能寫進 wrangler.toml——那個檔會進版控,等於把鑰匙 commit 進 git。非機密的設定(像 CORS 白名單)才放 wrangler.toml 的 [vars]。',
+      },
+    ],
+  },
+  {
+    slug: 'claude-code-teams-plugin-auto-update',
+    title: 'Claude Code Teams Plugin 為什麼不會自動更新？根因 + 3 步修法',
+    excerpt:
+      'Claude Code Teams Plugin 永遠不更新的根因：version string 兩端相等。3 步修法：git SHA 比對 + GitHub Action 自動 bump + Managed Settings 推 SessionStart hook，session 啟動自動拉最新。',
+    category: '工程實作',
+    tags: [
+      'Claude Code Teams',
+      'plugin 自動更新',
+      'git SHA',
+      'Managed Settings',
+      'SessionStart hook',
+      'GitHub Actions',
+      'Claude Code plugin',
+      'marketplace.json',
+    ],
+    publishDate: '2026-06-24',
+    featured: true,
+    readingTime: 8,
+    faqItems: [
+      {
+        q: '成員第一次安裝 plugin 還是要手動嗎？',
+        a: '是，第一次需要執行 /plugin install wez@wezoomtek。Managed Settings 管的是「已安裝後的自動更新」，不是首次安裝流程。後續所有更新都是自動的。',
+      },
+      {
+        q: 'Marketplace clone（~/.claude/plugins/marketplaces/wezoomtek/）是從哪來的？',
+        a: '執行 /plugin install wez@wezoomtek 時，Claude Code 會把你指定的 marketplace repo clone 到本機。這個 clone 就是後續 git pull 的來源。腳本用 git -C "$MARKETPLACE_DIR" pull 來拉最新版。',
+      },
+      {
+        q: '[skip ci] 真的能防止 GitHub Actions 無限循環嗎？',
+        a: '[skip ci]、[ci skip]、skip-checks: true 都是 GitHub 官方支援的跳過觸發機制，對 push event 有效。bump-version commit 加 [skip ci] 就不會再觸發下一輪。',
+      },
+      {
+        q: '這個腳本跑失敗會影響 session 啟動嗎？',
+        a: '不會。腳本在每個關鍵步驟後都有 exit 0（git pull 失敗就退出、SHA 為空就退出）。失敗會靜默退出，成員不會感覺到任何異常——只是這次沒更新而已。下次 session 再試。',
+      },
+      {
+        q: '每次 session 都要 git pull 會不會很慢？',
+        a: 'git pull --quiet 遠端沒有變動的話通常 1 秒內。加上 async: true，這個操作不在 session 啟動的關鍵路徑上，實際感受不到延遲。',
+      },
+    ],
+  },
+  {
+    slug: 'claude-code-teams-plugin-webhook-setup',
+    title: 'Claude Code Teams Plugin Webhook 5 步設定教學（含踩坑排查）',
+    excerpt:
+      'Claude Code Teams 的 Plugin Webhook 設定路徑是 claude.ai/admin-settings/plugins，前置條件是 Claude GitHub App 必須安裝在 repo 上、沒有被 Suspend、且批准過 Webhooks 讀寫權限。5 步啟用自動同步，含「Cannot access repository」踩坑排查。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code Teams',
+      'Plugin Webhook',
+      'Claude GitHub App',
+      'plugin 自動同步',
+      'Organization settings',
+      'Cannot access repository',
+      'claude.ai 後台設定',
+      'Teams plugin marketplace',
+    ],
+    publishDate: '2026-06-22',
+    featured: true,
+    faqItems: [
+      {
+        q: '我不是 Owner，能設 Webhook 嗎？',
+        a: '不行。只有 Primary Owner 和 Owner 角色能進 admin-settings，其他角色連頁面都看不到。需要請 org owner 操作。',
+      },
+      {
+        q: 'Webhook 是設在 GitHub 還是 claude.ai？',
+        a: '兩邊都有。按下 Enable webhook 後，Claude GitHub App 會自動在你的 GitHub repo 建立 webhook（去 repo 的 Settings > Webhooks 可以看到），claude.ai 這邊也會記錄同步狀態。你不需要自己手動去 GitHub 設 webhook。',
+      },
+      {
+        q: '我推了版但 Last updated 沒更新，怎麼確認 webhook 有沒有觸發？',
+        a: '去 GitHub repo 的 Settings > Webhooks，點進 Claude 建的那筆，可以看到每次觸發的 delivery 記錄和 response code。200 = 成功接收；如果是 4xx/5xx，通常是 App 權限問題，重新走一遍 Step 3-4。',
+      },
+      {
+        q: 'Team plan 和 Enterprise plan 的 plugin 管理有差嗎？',
+        a: '有。Enterprise 多了 strictPluginOnlyCustomization（鎖死只能用 org 指定的 plugin）、allowedMcpServers（管控 MCP server 白名單）等進階控管。Team plan 的後台主要是讓 owner 管理 marketplace 來源和 plugin 安裝預設值，不支援這些進階限制。',
+      },
+      {
+        q: 'Plugin 設成「Installed by default」，新 seat 加入後會自動裝嗎？',
+        a: '是。User access 欄位設成 Installed by default 的 plugin，新成員加入 org 並安裝 Claude Code 後，登入時會自動套用。不需要每個人手動裝。',
+      },
+    ],
+  },
+  {
+    slug: 'gemma4-31b-cloud-free-no-gpu',
+    title: '不用 GPU，免費跑 31B 開源模型：gemma4:31b-cloud 完整使用指南',
+    excerpt:
+      'Google DeepMind 的 Gemma 4 31B 在 Arena AI 開源模型榜排第 3，AIME 2026 數學推理 89.2%、Codeforces ELO 2150。Ollama 的 gemma4:31b-cloud 把計算搬到雲端——一行 ollama run gemma4:31b-cloud 就能用，不用下載 20GB 模型、不需要 GPU。本文完整介紹三條免費取得路線（Ollama Cloud、Google AI Studio、OpenRouter）、256K context 與 thinking mode 的用法、以及實際踩過的 4 個坑。',
+    category: 'AI 工具',
+    tags: [
+      'gemma4:31b-cloud',
+      'Gemma 4 31B',
+      'Ollama Cloud',
+      '免費 AI 模型',
+      '開源大型語言模型',
+      '無 GPU 跑 AI',
+      'Google DeepMind',
+      'thinking mode',
+    ],
+    publishDate: '2026-06-22',
+    featured: true,
+    faqItems: [
+      {
+        q: 'gemma4:31b-cloud 完全免費嗎？有額度限制嗎？',
+        a: 'Ollama Cloud 提供免費方案，gemma4:31b-cloud 在免費額度內可用。OpenRouter 的 google/gemma-4-31b-it:free 是 $0/M token，但有速率限制。Google AI Studio 也有免費 playground 和 API。超量或高頻使用場景建議看各平台的付費方案。',
+      },
+      {
+        q: 'privacy 怎麼看？prompt 會被 Ollama 存嗎？',
+        a: 'cloud variant 的 prompt 確實傳到 Ollama 伺服器處理。敏感程式碼或私人資料建議用本地版 gemma4:31b（需自備 GPU），或走 Google Cloud / Vertex AI 的企業方案。',
+      },
+      {
+        q: '跟 Claude Sonnet 4 / GPT-4o 比怎麼樣？',
+        a: 'Gemma 4 31B 是開源模型，Arena AI 排行 #3（開源）。閉源模型普遍仍在它前面，但差距在縮小。最大優勢是免費 + 開源 + 可本地部署，不是在所有 benchmark 都超越閉源模型。',
+      },
+      {
+        q: '256K context 實際用起來穩嗎？',
+        a: '官方 benchmark 在 128K needles（MRCR v2）拿 66.4%，不是 100%。超長 context 的「needle in a haystack」測試顯示中間部分有衰減，這是目前所有長 context 模型的共通問題。',
+      },
+      {
+        q: '台灣繁體中文輸出品質怎樣？',
+        a: 'Gemma 4 支援 140+ 語言，繁體中文輸出測下來通順，但和 Claude 或 GPT-4o 相比，繁中細節處理還是有一點差距。日常使用沒問題，專業術語或複雜中文推理建議自己測一下。',
+      },
+    ],
+  },
+  {
     slug: 'pixelmotion-ai-sprite-animation',
     title: 'PixelMotion AI 是什麼？上傳一張圖，30 秒生出 14 種動作的像素 Sprite Sheet',
     excerpt:
@@ -2234,8 +2399,8 @@ function computeContentScore(content, post) {
   const items = {
     // 字數 2000-3000(以 CJK 字元數計,跟 wordCountOf 一致):15
     wordCount: wc >= 2000 ? 15 : wc >= 1500 ? 10 : 0,
-    // TL;DR blockquote:10
-    tldr: /^> \*\*TL;DR/m.test(content) ? 10 : 0,
+    // 懶人包 blockquote:10
+    tldr: /^> \*\*(TL;DR|懶人包)/m.test(content) ? 10 : 0,
     // TOC 目錄:5
     toc: /^## .*目錄/m.test(content) ? 5 : 0,
     // H2 數 ≥ 6:10 / 4-5:5 / <4:0
