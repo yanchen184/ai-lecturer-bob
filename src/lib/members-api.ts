@@ -4,7 +4,7 @@
  * - 純瀏覽器端用（client island），SSG build 時的公開清單抓取另走 fetchPublicPosts
  */
 
-const API_BASE = import.meta.env.PUBLIC_MEMBERS_API || 'https://api.yanchen.app';
+const API_BASE = import.meta.env.PUBLIC_MEMBERS_API || 'https://bob-members.bobchen184.workers.dev';
 const TOKEN_KEY = 'bob_member_token';
 
 export interface Member {

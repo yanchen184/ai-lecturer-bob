@@ -14,7 +14,7 @@ ALLOWED_ORIGIN = "https://yanchen.app"
 [[d1_databases]]
 binding = "DB"
 database_name = "bob-members"
-database_id = "REPLACE_AFTER_D1_CREATE"
+database_id = "709d3326-1888-4677-9b2e-d71af4db3170"
 migrations_dir = "migrations"
 
 # 綁自訂網域 api.yanchen.app 在 CF dashboard → Worker → Settings → Triggers → Custom Domains
