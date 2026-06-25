@@ -54,6 +54,16 @@ const formatDate = (ms: number) =>
           ) : (
             posts.map((post) => (
               <article class="border-2 border-black bg-white p-6 md:p-10" style="box-shadow: 8px 8px 0 #0a0a0a">
+                {/* 公開封面圖(吃 SEO 勾子;細節截圖留鎖文) */}
+                {post.cover && (
+                  <img
+                    src={post.cover}
+                    alt={post.title}
+                    loading="lazy"
+                    class="w-full border-2 border-black mb-6"
+                    style="box-shadow: 4px 4px 0 #0a0a0a; aspect-ratio: 16 / 9; object-fit: cover;"
+                  />
+                )}
                 {/* 公開部分:標題 + 摘要(吃 SEO) */}
                 <div class="mb-2 text-[11px] uppercase tracking-widest font-mono opacity-50">
                   {formatDate(post.created_at)}
