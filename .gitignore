@@ -58,3 +58,8 @@ firestore-sa-key.json
 *-sa-key.json
 serviceAccountKey*.json
 firebase-adminsdk-*.json
+
+# Cloudflare Worker（會員後端）本地產物 / 機密
+worker/node_modules/
+worker/.wrangler/
+worker/.dev.vars

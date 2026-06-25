@@ -1,0 +1,21 @@
+# Cloudflare Worker — bob 部落格會員專區後端
+# 部署:npx wrangler deploy
+# 本地:npx wrangler dev（用 --local D1）
+name = "bob-members"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+# 公開變數（非機密）。機密走 `wrangler secret put`：JWT_SECRET / ADMIN_TOKEN
+[vars]
+ALLOWED_ORIGIN = "https://yanchen.app"
+
+# D1：建立後把 database_id 填進來
+#   npx wrangler d1 create bob-members
+[[d1_databases]]
+binding = "DB"
+database_name = "bob-members"
+database_id = "REPLACE_AFTER_D1_CREATE"
+migrations_dir = "migrations"
+
+# 綁自訂網域 api.yanchen.app 在 CF dashboard → Worker → Settings → Triggers → Custom Domains
+# （也可在這裡用 routes，但 dashboard 綁最省事）

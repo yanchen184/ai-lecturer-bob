@@ -20,6 +20,7 @@ import {
   type GscDailyRecord,
   type ContentScoresFile,
 } from '../lib/firebase-client';
+import MembersAdminPanel from './MembersAdminPanel';
 
 type TimeRange = 'today' | '7d' | '30d' | 'all';
 
@@ -435,7 +436,7 @@ const AdminDashboard = () => {
   const [range, setRange] = useState<TimeRange>('7d');
   const [gscDays, setGscDays] = useState<7 | 28 | 90>(28);
   const [tab, setTab] = useState<
-    'overview' | 'seo' | 'posts' | 'outbound' | 'visitors'
+    'overview' | 'seo' | 'posts' | 'outbound' | 'visitors' | 'members'
   >('overview');
 
   useEffect(() => {
@@ -725,7 +726,7 @@ const AdminDashboard = () => {
 
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 border-b-2 border-black pb-3">
-        {(['overview', 'seo', 'posts', 'outbound', 'visitors'] as const).map((t) => (
+        {(['overview', 'seo', 'posts', 'outbound', 'visitors', 'members'] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -740,7 +741,9 @@ const AdminDashboard = () => {
               ? `文章 (${postRanking.length})`
               : t === 'outbound'
               ? `外連 (${outboundRanking.length})`
-              : `訪客 (${rangedVisitors.length})`}
+              : t === 'visitors'
+              ? `訪客 (${rangedVisitors.length})`
+              : '會員'}
           </button>
         ))}
       </div>
@@ -1369,6 +1372,9 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
+      {/* Members（資料源:Cloudflare Worker D1,非 Firestore）*/}
+      {tab === 'members' && <MembersAdminPanel />}
     </div>
   );
 };
