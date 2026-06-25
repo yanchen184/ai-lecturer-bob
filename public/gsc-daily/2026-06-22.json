@@ -85,5 +85,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "這個就純粹是給你看的數據簡報，沒事的時候就講「沒事」。我先看數據再給你輸出。\n\n【一句總評】\n站內幾乎沒人（昨日 9 UV / 6 PV），GSC 也是一灘死水——7 天最高曝光的 query「kkterm」也才 7 次曝光 1 點擊，整體就是「還沒被看見」的小站常態，沒有突發事件。\n\n【需要注意】\n唯一值得記的是 28 天那筆「claude code ultrawork」曝光 7、點擊 4、排名 1.1——CTR 高得誇張，是你目前唯一真正帶得進人的 query；但近 7 天它完全消失（沒進 Top），代表那波流量沒延續，這題的內容值得回頭加固。另外 6/22 單日只有 1 曝光 0 點擊，這量級低到任何「異常」都還在雜訊裡，不用過度解讀。\n\n【今天可以做】\n把「claude code ultrawork」那篇文章打開，標題（title）跟首段塞進 1-2 個相關長尾詞（例：ultracode、dynamic workflows——這些都是你 GSC 真的有曝光的 query），存檔後去 GSC URL Inspection 手動按一次 Request Indexing。五分鐘內可動手，趁那題排名還在第 1 名時把曝光面擴出去。",
+  "analysisGeneratedAt": "2026-06-26T07:07:37+0800"
 }
