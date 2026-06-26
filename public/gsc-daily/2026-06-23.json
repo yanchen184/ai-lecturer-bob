@@ -1,0 +1,66 @@
+{
+  "date": "2026-06-23",
+  "impressions": 20,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 5.5,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.2
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.5
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.8
+    },
+    {
+      "page": "/blog/firebase-free-web-app-domain/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.3
+    },
+    {
+      "page": "/blog/claude-code-teams-owner-management-guide/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.5
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 20
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/devspace-mcp-chatgpt-as-codex/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    }
+  ]
+}
