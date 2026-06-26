@@ -62,5 +62,7 @@
       "ctr": 0,
       "position": 7
     }
-  ]
+  ],
+  "analysis": "沒事。站內 UV 4 / PV 4，GSC 過去 7 天只有 13 次曝光、2 次點擊，量太小談不上趨勢，整體就是低流量小站的正常狀態，沒有突發事件。kkterm 跟 ultracode 兩個 query 持續穩定出現，查詢結構健康沒亂。\n\n唯一值得記的是 ultracode 那條。\"ultracode needs dynamic workflows enabled\" 28 天累計 12 次曝光、排名 4.9，但點擊掛零；kkterm 排名 8.7 卻有 1 次點擊。代表 ultracode 這頁排在第一頁前段、卻沒人點，多半是 title / description 跟使用者搜這句話想找的答案對不上。另外 kubernetes nodeport 排名從 7 天的 37 掉到 28 天的 86，但曝光只有個位數，是雜訊不是滑落，先不管。\n\n今天花 5 分鐘做一件事：把 \"ultracode needs dynamic workflows enabled\" 這頁的 title 改成更貼近這句報錯的「解法型」標題（例如直接放「如何修復 ultracode needs dynamic workflows enabled」+ 一句話解法塞進 meta description），讓搜這句話的人在 SERP 一眼看到答案就點進來。改完去 GSC 對這個 URL 手動 Request Indexing 讓 Google 早點重抓。\n\n(這次數據量小、是純分析輸出，不需要動用多 agent workflow，直接給結論最省事。需要我幫你定位並改那頁的 title/meta 再說。)",
+  "analysisGeneratedAt": "2026-06-27T07:22:28+0800"
 }
