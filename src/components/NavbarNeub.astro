@@ -62,7 +62,7 @@ const resolveHref = (href: string) =>
 <!-- ============ md+ : 左側固定全高「深色」垂直側欄（variant=dark） ============ -->
 {variant === 'dark' && (
 <nav
-  class="site-sidebar hidden md:flex md:flex-col fixed left-0 top-0 z-40 h-screen bg-[#0a0a0a] text-white border-r-[3px] border-black"
+  class="site-sidebar neub-scrollbar hidden md:flex md:flex-col fixed left-0 top-0 z-40 h-screen overflow-y-auto bg-[#0a0a0a] text-white border-r-[3px] border-black"
   aria-label="主要導覽"
 >
   <!-- Logo 區 -->
@@ -90,22 +90,22 @@ const resolveHref = (href: string) =>
   </div>
 
   <!-- 編號導覽列 -->
-  <div class="flex-1 flex flex-col gap-1 px-3 text-sm font-mono overflow-y-auto neub-scrollbar">
+  <div class="flex flex-col gap-1 px-3 text-sm font-mono">
     {
       navItems.map((item, i) => (
         <a
           href={resolveHref(item.href)}
           class:list={[
-            'flex items-center justify-between gap-3 px-3 py-3 border-2 transition-all',
+            'relative flex items-center justify-between gap-3 px-3 py-3 border-2 transition-all',
             isActive(item.href)
               ? 'bg-[var(--color-neub-yellow)] text-black border-black'
               : 'highlight' in item && item.highlight
-                ? 'bg-[var(--color-neub-yellow)] text-black border-black font-black shadow-[3px_3px_0_0_#fff] hover:bg-black hover:text-[var(--color-neub-yellow)] hover:shadow-[3px_3px_0_0_var(--color-neub-yellow)]'
+                ? 'nav-highlight-dark border-white/20 bg-[var(--color-neub-yellow)]/10 text-[var(--color-neub-yellow)] font-black hover:bg-[var(--color-neub-yellow)]/20 hover:border-[var(--color-neub-yellow)]'
                 : 'border-transparent text-white/85 hover:bg-white/8 hover:border-white/20',
           ]}
         >
           <span class="flex items-center gap-2.5">
-            <span class:list={['inline-flex items-center justify-center w-5 h-5 shrink-0', isActive(item.href) || ('highlight' in item && item.highlight) ? 'text-current' : 'text-white/55']} aria-hidden="true">
+            <span class:list={['inline-flex items-center justify-center w-5 h-5 shrink-0', isActive(item.href) ? 'text-current' : ('highlight' in item && item.highlight) ? 'text-[var(--color-neub-yellow)]' : 'text-white/55']} aria-hidden="true">
               <span class="w-1.5 h-1.5 bg-current inline-block"></span>
             </span>
             <span class="tracking-wide">{item.label}</span>
@@ -119,7 +119,7 @@ const resolveHref = (href: string) =>
   </div>
 
   <!-- STATUS 區塊（對齊目標圖 AVAILABLE） -->
-  <div class="px-3 pb-3">
+  <div class="mt-auto px-3 pb-3 pt-3">
     <div class="border-2 border-white/25 bg-white/[0.03] px-3 py-2.5">
       <div class="text-[9px] font-mono uppercase tracking-[0.25em] text-white/35 mb-1.5">STATUS</div>
       <div class="flex items-center gap-2">
@@ -169,7 +169,7 @@ const resolveHref = (href: string) =>
 <!-- ============ md+ : 左側固定全高「淺底」垂直側欄（variant=light，對齊 blog-index 目標） ============ -->
 {variant === 'light' && (
 <nav
-  class="site-sidebar hidden md:flex md:flex-col fixed left-0 top-0 z-40 h-screen bg-[var(--color-neub-bg)] text-[var(--color-ink)] border-r-[3px] border-black"
+  class="site-sidebar neub-scrollbar-light hidden md:flex md:flex-col fixed left-0 top-0 z-40 h-screen overflow-y-auto bg-[var(--color-neub-bg)] text-[var(--color-ink)] border-r-[3px] border-black"
   aria-label="主要導覽"
 >
   <!-- Logo 區：YAN CHEN 大字 + .APP 黃條 -->
@@ -208,29 +208,32 @@ const resolveHref = (href: string) =>
   </div>
 
   <!-- 導覽列（outline icon，無編號） -->
-  <div class="flex-1 flex flex-col gap-0.5 px-2 py-1 text-sm overflow-y-auto neub-scrollbar">
+  <div class="flex flex-col gap-0.5 px-2 py-1 text-sm">
     {
       navItems.map((item, i) => (
         <a
           href={resolveHref(item.href)}
           class:list={[
-            'flex items-center gap-3 px-3 py-2.5 border-2 transition-all',
+            'relative flex items-center gap-3 px-3 py-2.5 border-2 transition-all',
             isActive(item.href)
               ? 'bg-[var(--color-neub-yellow)] text-black border-black font-black'
               : 'highlight' in item && item.highlight
-                ? 'bg-[var(--color-neub-yellow)] text-black border-black font-black shadow-[3px_3px_0_0_#000] hover:-translate-y-0.5 hover:bg-black hover:text-[var(--color-neub-yellow)]'
+                ? 'nav-highlight border-black/15 bg-[var(--color-neub-yellow)]/10 text-black font-black hover:bg-[var(--color-neub-yellow)]/25 hover:border-black'
                 : 'border-transparent text-[var(--color-ink)] hover:bg-black/[0.04] hover:border-black/15',
           ]}
         >
           <span class="shrink-0 inline-flex items-center justify-center w-5 h-5" aria-hidden="true" set:html={navIcons[i]} />
-          <span class="tracking-wide">{item.label}</span>
+          <span class="tracking-wide flex-1">{item.label}</span>
+          {'highlight' in item && item.highlight && !isActive(item.href) && (
+            <span class="shrink-0 text-[8px] font-mono font-black uppercase tracking-wider bg-black text-[var(--color-neub-yellow)] px-1.5 py-0.5 leading-none" aria-hidden="true">★</span>
+          )}
         </a>
       ))
     }
   </div>
 
   <!-- 訂閱框 + 社群 + 版權 -->
-  <div class="px-3 pb-3 pt-2 border-t-2 border-black/15">
+  <div class="mt-auto px-3 pb-3 pt-2 border-t-2 border-black/15">
     <!-- 訂閱最新文章 -->
     <div class="border-2 border-black bg-[var(--color-paper)] px-3 py-3 shadow-[3px_3px_0_0_#000]">
       <div class="text-[13px] font-black tracking-tight mb-0.5">訂閱最新文章</div>
@@ -407,6 +410,23 @@ const resolveHref = (href: string) =>
   .neub-scrollbar::-webkit-scrollbar { width: 6px; }
   .neub-scrollbar::-webkit-scrollbar-track { background: transparent; }
   .neub-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); }
+
+  /* 淺底 sidebar 捲動條 */
+  .neub-scrollbar-light::-webkit-scrollbar { width: 6px; }
+  .neub-scrollbar-light::-webkit-scrollbar-track { background: transparent; }
+  .neub-scrollbar-light::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); }
+
+  /* highlight 導覽:左側黃色強調條（與 active 實心黃塊區隔） */
+  .nav-highlight::before,
+  .nav-highlight-dark::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    bottom: -2px;
+    width: 4px;
+    background: var(--color-neub-yellow);
+  }
 
   /* Hamburger → X 動畫 */
   .hamburger-icon {
