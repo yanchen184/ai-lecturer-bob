@@ -72,5 +72,7 @@
       "ctr": 0,
       "position": 8
     }
-  ]
+  ],
+  "analysis": "流量太小,沒事。先看數據。\n\n【一句總評】\n站幾乎沒流量,昨天 UV 6 PV 3、GSC 單日曝光才 2 點擊 0,但這不是壞掉,是規模還太小、文章還沒被 Google 排上量;查詢結構也合理,kkterm 排名 8.8 是站上最有機會的詞。\n\n【需要注意】\n唯一值得盯的是 kkterm:7 天/28 天都穩定排在第 8 名、有曝光也吃到 1 次點擊,卡在第一頁底部,再往上推就能放大點擊。其次 \"ultracode needs dynamic workflows enabled\" 排名 4.9、28 天累積 12 曝光卻 0 點擊,代表有人搜到但你的 snippet 沒吸引到點,這詞極長尾、本來就難轉點擊,不用太焦慮。整體曝光基數太小(個位數),任何 CTR 數字都還沒統計意義,別過度解讀。\n\n【今天可以做】\n進 GSC 用 URL 檢查工具對 /blog/kkterm-windows-terminal-ai/ 按一次 Request Indexing,順手 curl 一下確認該頁回 200、再開 robots.txt 看沒擋到 /blog/;這頁是你目前最有排名的資產,確保它被即時重抓,比補新文章更划算。\n\n(你開了 ultracode,但這是純數據判讀、不需要多 agent 跑工作流,直接給結論最省。需要我之後幫 kkterm 那頁做 title/meta 優化再說。)",
+  "analysisGeneratedAt": "2026-06-28T07:21:58+0800"
 }
