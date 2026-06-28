@@ -1,0 +1,55 @@
+{
+  "date": "2026-06-25",
+  "impressions": 8,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 28.2,
+  "queries": [
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 94
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.3
+    },
+    {
+      "page": "/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 94
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ]
+}
