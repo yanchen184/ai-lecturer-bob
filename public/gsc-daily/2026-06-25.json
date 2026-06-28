@@ -51,5 +51,7 @@
       "ctr": 0,
       "position": 5
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n站子整體就是「沒事但也沒量」——昨日 7 UV / 1 PV、GSC 單日曝光 4 點擊 0，屬於極低基數的正常波動，不是出包。查詢結構健康，kkterm 穩定排第 9、ultracode 那條長尾排名也在前段，沒有突發暴漲或崩盤。\n\n【需要注意】\n兩件事：一是 kkterm 是你唯一真正會帶點擊的 query（28 天排名 8.6、有 1 次點擊），但 7 天頁面數據裡這篇文章曝光 8 卻只點 1，CTR 偏低，title 沒勾住人；二是 `\"ultracode needs dynamic workflows enabled\"` 這條 28 天累積 12 次曝光、排名 4.9 卻 0 點擊——排名夠前但完全沒人點，代表你站上根本沒有正面回答這個錯誤訊息的內容，曝光在浪費。\n\n【今天可以做】\n去 GSC URL Inspection 對 `/blog/kkterm-windows-terminal-ai/` 手動 Request Indexing 一次，順手把這篇的 `<title>` 改得更貼搜尋意圖（例如把「kkterm」放最前面 + 一句痛點），這是不管後台狀態如何都該做、5 分鐘內能動手的事。",
+  "analysisGeneratedAt": "2026-06-29T07:15:19+0800"
 }
