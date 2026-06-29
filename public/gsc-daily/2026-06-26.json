@@ -65,5 +65,7 @@
       "ctr": 0,
       "position": 9
     }
-  ]
+  ],
+  "analysis": "結論先講:站很冷,但查詢結構沒病,沒有需要救火的事件。下面三段。\n\n【一句總評】\n流量極低(昨日 4 UV、單日曝光 8 點擊 0),但這是規模問題不是健康問題;kkterm 穩坐主力查詢(排名 8.5、唯一有點擊的詞),查詢結構乾淨沒亂入垃圾流量,維持現狀就好。\n\n【需要注意】\n兩件事。一是 kkterm 排名第 8.5、卡在第一頁底部,曝光 12 卻只 1 點擊——差一步就能吃到更多自然流量,值得推一把。二是 \"ultracode needs dynamic workflows enabled\" 這個 query 28 天 12 次曝光、排名 4.9 卻 0 點擊,代表你有頁面在排這個錯誤訊息但標題/摘要沒讓人想點,是個被浪費的長尾機會。\n\n【今天可以做】\n五分鐘內:去 GSC URL 檢查工具,對 /blog/kkterm-windows-terminal-ai/ 手動按一次 Request Indexing,順手確認 sitemap.xml 用 curl 回 200。若還有空,把那篇 title 前段塞進「kkterm」主關鍵字、改寫 meta description 更貼近「Windows Terminal AI」搜尋意圖,擠進第一頁前段。\n\n(數據量太小,不需要動用多 agent 分析;有具體要追的 query 再說。)",
+  "analysisGeneratedAt": "2026-06-30T07:09:21+0800"
 }
