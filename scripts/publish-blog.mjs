@@ -2364,6 +2364,48 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'codegraph-code-knowledge-graph',
+    title: 'CodeGraph vs grep：AI 讀 codebase 少 81% 工具呼叫的知識圖譜',
+    excerpt:
+      'CodeGraph 把整個 codebase 預先建成一張「程式碼知識圖譜」（symbol 節點 + call 邊），讓 Claude Code、Codex、Cursor 這類 AI agent 不用一個一個檔案爬，一次 codegraph_explore 就拿到相關 source、call path 跟改動波及範圍。官方在 7 個真實開源專案實測：VS Code 少 81% tool call、少 64% token，Alamofire 便宜 40%、快 33%。這篇把它是什麼、三層架構（tree-sitter + SQLite + file watcher）、安裝三件套、跟 grep / LSP 的差別、以及我接的時候要注意的點寫一遍。100% 本機跑、MIT、支援 23 種語言、8 個 agent。',
+    category: 'AI 工具',
+    tags: [
+      'CodeGraph',
+      '程式碼知識圖譜',
+      'Claude Code',
+      'AI Agent',
+      'MCP',
+      'tree-sitter',
+      'AI 應用開發',
+    ],
+    publishDate: '2026-06-29',
+    metaDescription:
+      'CodeGraph 把整個 codebase 建成程式碼知識圖譜，AI agent 一次查就拿到 call path，少 81% 工具呼叫、64% token。本機跑、支援 23 種語言，安裝指令全附。',
+    faqItems: [
+      {
+        q: 'CodeGraph 會把我的程式碼上傳到雲端嗎？',
+        a: '不會。CodeGraph 強調 100% local，圖建在本機 .codegraph/codegraph.db（SQLite），解析與查詢都在你機器上跑，不外送。這對公司內網、有保密需求的 codebase 是關鍵。',
+      },
+      {
+        q: '用 CodeGraph 一定要先裝 Node.js 嗎？',
+        a: '用官方 install.sh / install.ps1 不用——它自帶 runtime。只有走 npm i -g 安裝、或要把 CodeGraph 當 library 嵌入（需 Node 22.5+）才需要 Node。',
+      },
+      {
+        q: 'CodeGraph 跟 Claude Code 內建的搜尋有什麼不一樣？',
+        a: 'Claude Code 預設靠 grep + Read 即時爬檔，每次都付探勘成本。CodeGraph 預先把整張呼叫圖建好，agent 透過 MCP 一次查就拿到 call path 與波及範圍，省掉反覆讀檔——官方實測 file read 接近零、tool call 大幅下降。',
+      },
+      {
+        q: 'CodeGraph 支援哪些 AI agent？',
+        a: '8 個：Claude Code、Cursor、Codex CLI、opencode、Hermes Agent、Gemini CLI、Antigravity IDE、Kiro。codegraph install 會自動偵測已安裝的並設好 MCP。',
+      },
+      {
+        q: '大專案改一個檔，CodeGraph 的圖會整個重建嗎？',
+        a: '不會。同步是增量的，原生 file watcher 偵測變更後只更新受影響的部分（debounced），所以一般存檔不會卡。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
