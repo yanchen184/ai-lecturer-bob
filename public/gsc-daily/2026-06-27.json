@@ -1,0 +1,69 @@
+{
+  "date": "2026-06-27",
+  "impressions": 10,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 14.6,
+  "queries": [
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.7
+    },
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 89
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.7
+    },
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 89
+    },
+    {
+      "page": "/blog/ollama-cloud-hermes-langchain/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    }
+  ]
+}
