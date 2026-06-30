@@ -65,5 +65,7 @@
       "ctr": 0,
       "position": 7
     }
-  ]
+  ],
+  "analysis": "【一句總評】沒事，流量極小但查詢結構正常。昨天站內 4 UV、GSC 單日 4 曝光 0 點擊，數字小到任何單日波動都沒統計意義；唯一進帳是 fb.yanchen.app 那頁 7 天拿到 3 個點擊。\n\n【需要注意】兩件事。一是「kkterm」這個你的招牌詞 28 天排名 8.2、曝光 18 卻只有 1 點擊、近 7 天直接 0 點擊——排前段卻沒人點，title/description 對這個詞沒吸引力。二是「ultracode needs dynamic workflows enabled」28 天排名 4.9 但 0 點擊，這是高意圖的報錯查詢，你排很前面卻沒接住流量。\n\n【今天可以做】挑「kkterm」對應的那頁，去 GSC URL Inspection 對它做一次 Request Indexing，順手把該頁 title 改成更貼「kkterm 是什麼／怎麼用」的問題式寫法（現在排第 8 卻 0 點擊，多半是標題沒講清楚這頁能解決什麼）。五分鐘內可動手。",
+  "analysisGeneratedAt": "2026-07-01T07:07:35+0800"
 }
