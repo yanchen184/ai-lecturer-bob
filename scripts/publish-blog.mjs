@@ -50,6 +50,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'nesma-function-points-software-sizing',
+    title: '軟體有多大?Nesma 功能點分析:只數功能不數行數',
+    excerpt:
+      'Nesma 是荷蘭軟體度量協會(Netherlands Software Metrics Association),主推功能點分析(FPA):不看程式碼行數、只數軟體對使用者做了幾件事,來量一套系統多大。這篇講清楚它是什麼、資料功能(ILF/EIF)+交易功能(EI/EO/EQ)在數什麼、三種計數層級(detailed/estimated/indicative 荷蘭法),以及跟 IFPUG、COSMIC、敏捷 Story Point 差在哪——功能點波動不到 5%、Story Point 團隊間差異可達 400%。對一個 2026 年同時教課又接案的開發者,功能點最實用的價值不是精算,是當一把「客觀的尺」。',
+    category: '工程實作',
+    tags: [
+      'Nesma',
+      '功能點分析',
+      'Function Point',
+      'FPA',
+      'IFPUG',
+      'COSMIC',
+      'Story Point',
+      '軟體度量',
+    ],
+    publishDate: '2026-07-01',
+    featured: true,
+    faqItems: [
+      {
+        q: 'Nesma 跟 IFPUG 到底該選哪個?',
+        a: '如果你要對接 ISBSG 這類國際基準資料庫,或做傳統企業專案估算,兩者幾乎通用——自 IFPUG CPM 4.2(2004)起指南高度一致,Nesma 多了 detailed/estimated/indicative 三種計數層級,早期估算更實用。真正要跟它們比較、且做敏捷/user story 的話,考慮 COSMIC。',
+      },
+      {
+        q: '功能點可以取代敏捷的 Story Point 嗎?',
+        a: '不能,也不該。它們量的是不同東西:功能點量「功能大小」(客觀規模,不同人數同一套系統通常差不到 5%),Story Point 量「相對工作量」(主觀,團隊之間同樣的東西可以差到 400%)。功能點用於對外報價/跨團隊比較,Story Point 用於團隊內衝刺規劃,通常搭配使用。',
+      },
+      {
+        q: '算功能點一定要專業認證嗎?',
+        a: 'detailed 精算需要訓練與經驗。但 Nesma 的 indicative「荷蘭法(the Dutch Method)」只需數邏輯資料檔(ILF/EIF)的數量,套個公式就吐出粗估,一個熟悉系統的工程師花十分鐘就能做,不需要證照。你在專案啟動會議上就能拿它當個規模 sanity check。',
+      },
+      {
+        q: '功能點在敏捷開發裡還有意義嗎?',
+        a: '有。Nesma 官網現在的定位就是「敏捷功能性軟體規模量測」;COSMIC 更是設計成能從不完整需求、直接從 user story 量測。功能點在敏捷裡的角色是「跨團隊可比的客觀規模」,補 Story Point 無法對外比較、無法簽約的短板。',
+      },
+      {
+        q: '功能點跟程式碼行數(LOC)差在哪?',
+        a: '行數受語言、寫法、工程師習慣影響很大——同一個功能 Java 跟 Python 行數差好幾倍,用它當生產力指標等於獎勵寫囉唆的 code。功能點量的是「對使用者呈現的功能量」(資料功能 + 交易功能),跟實作語言無關,所以能公平比較不同技術棧的專案,也能在還沒寫任何 code 的需求階段就算出來。',
+      },
+    ],
+  },
+  {
     slug: 'app-screenshots-claude-code-skill',
     title: 'app-screenshots 是什麼?讓 Claude Code 自動產「標註版截圖文件」的 skill',
     excerpt:
