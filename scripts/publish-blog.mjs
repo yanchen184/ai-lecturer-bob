@@ -50,6 +50,88 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'app-screenshots-claude-code-skill',
+    title: 'app-screenshots 是什麼?讓 Claude Code 自動產「標註版截圖文件」的 skill',
+    excerpt:
+      'app-screenshots 是 Alexander Opalic 寫的 Claude Code skill:你只要說「幫我截圖這個網站做文件」,AI 就自己開頁、找元素、在截圖上畫好帶編號的語意標註(紅框圈按鈕、藍圈標連結)、產出圖文對照的 Markdown。底層靠 agent-browser 驅動 Chrome + 一支 298 行純前端 SVG 注入腳本 annotate.js。本文拆解它的六階段工作流、那支沒被作者講清楚的標註引擎(canvas 量測字寬、六候選點避讓、失敗大聲回報)、三種標註類型(box/click/circle)怎麼選、實際跑出來長怎樣、安裝使用、以及適合誰不適合誰。附我用它底層引擎跑出來的真實標註圖。',
+    category: 'AI 工具',
+    tags: [
+      'app-screenshots',
+      'Claude Code skill',
+      '截圖文件',
+      '自動標註截圖',
+      'agent-browser',
+      'annotate.js',
+      'UI 操作手冊',
+      'Vercel Labs',
+    ],
+    publishDate: '2026-07-01',
+    featured: true,
+    faqItems: [
+      {
+        q: 'app-screenshots 跟直接叫 AI「截個圖」差在哪?',
+        a: '差在「標註 + 結構化 + 紀律」。直接叫 AI 截圖你只拿到一張乾圖;這個 skill 會幫你在圖上畫好帶編號的語意標註、產出圖文對照的 Markdown,而且內建「先驗 selector、截完讀回確認」的驗證流程,不會給你一張標歪或漏標的圖。',
+      },
+      {
+        q: '一定要用 agent-browser 嗎?能用 Playwright 嗎?',
+        a: 'skill 本身綁 agent-browser(它的 annotate.js 是靠 agent-browser 的 eval 注入的)。原理上 annotate.js 是純前端 SVG,理論上任何能執行頁面 JS + 截圖的工具都能套,但 skill 的工作流指令是照 agent-browser 寫的,換工具要自己改接法。',
+      },
+      {
+        q: '標註是畫進圖片像素裡,還是另外一層?',
+        a: '截圖那一刻,標註是頁面上一層真實的 SVG DOM,所以會被一起截進 PNG 像素裡,產出的是「已經有標註的圖檔」,不是圖 + 另存的座標檔。這也是為什麼它能直接貼進 Markdown 就用。',
+      },
+      {
+        q: '中文標籤會爆版嗎?',
+        a: '不會。annotate.js 用 canvas measureText 實際量測每個標籤的字寬再畫底色矩形,中文、英文、長短標籤都會貼合。實測中文 label 顯示正常。',
+      },
+      {
+        q: '它能標互動後的狀態嗎(例如展開的選單、搜尋建議)?',
+        a: '能。skill 有 interactive screenshots 段落:先 snapshot 拿 ref → 用 ref 點擊/輸入觸發狀態 → 再標註結果 → 截圖。搜尋建議、modal、hover 態都能標。',
+      },
+    ],
+  },
+  {
+    slug: 'upgrade-screenshot-skill',
+    title: '我怎麼把別人的 skill 吸進自己產線,做成更強的 skill:一次語意標註實作覆盤',
+    excerpt:
+      '看到好用的 skill,大部分人裝來用;如果你有自己的產線,更值錢的做法是拆它的零件焊進你的流程。我原本有一套截圖審查+手冊產線(/screenshot-review),但手冊圖是「乾圖」沒有圖上標註——這正是 app-screenshots 的 annotate.js 補得上的洞。本文覆盤:我怎麼把它拆進產線,過程撞到一個架構級的坑(標註截不進圖=OVERLAY GONE:agent-browser 每個 CLI 指令是獨立 CDP 呼叫,eval 注入的 overlay 下一指令就蒸發),查根因、用 batch 把 open→eval→screenshot 綁進同一 session 解掉、封裝成 annotate-shot.sh、寫回自己的 skill。全程真的跑真的驗,附 batch 解法的真實成果圖與踩坑總表。',
+    category: '工程實作',
+    tags: [
+      'Claude Code skill',
+      'agent-browser',
+      'annotate.js',
+      'CDP',
+      'batch',
+      '截圖標註',
+      'skill 客製化',
+      'AI 工作流',
+    ],
+    publishDate: '2026-07-01',
+    featured: true,
+    faqItems: [
+      {
+        q: '為什麼不乾脆直接用作者的 app-screenshots skill 就好,幹嘛自己焊?',
+        a: '因為我原本就有一條成熟的截圖審查+手冊產線(/screenshot-review),它做的 debug + 反橡皮圖章審查 + 同模板手冊是 app-screenshots 沒有的。我要的不是換一套流程,是在我的流程上補一塊標註能力。拆零件焊進去,比整包換划算。',
+      },
+      {
+        q: 'OVERLAY GONE 是 agent-browser 的 bug 嗎?會被修掉嗎?',
+        a: '不是 bug,是它「每個 CLI 指令 = 一次獨立 CDP 呼叫」這個架構的必然結果。在 0.27 和 0.31 都驗過,行為一致。所以別等它修好,正解就是用 batch 把注入和截圖綁進同一次 session。',
+      },
+      {
+        q: 'annotate-shot.sh 一定要 node 24 / agent-browser 0.31 嗎?',
+        a: '不用。實測 node v22 + agent-browser 0.27 一樣能跑。這支腳本的核心是「用 batch 保住 session」,不綁特定版本。0.31 只是需要 node ≥24,跟標註能不能截進圖無關。',
+      },
+      {
+        q: '一張圖可以標幾個?',
+        a: '沿用 annotate.js 的設計:每張最多 3 個標註(顏色輪替紅藍綠琥珀紫最多 5 色,但擠太多會互相避讓到看不清)。要標更多就拆成多張圖,這也是好手冊的通則——一張圖講一件事。',
+      },
+      {
+        q: '原生 screenshot --annotate 跟 annotate.js 差在哪?',
+        a: '原生 --annotate 自動標所有互動元素、標籤是冷冰冰的 [1][2](對應 @eN,給 AI 看圖操作用),不能選、不能寫中文、無語意分類。annotate.js 能選定重點元素、給語意分類(box/click)、寫中文說明,是給人讀的操作手冊標註。要語意標註就得走 annotate.js + batch。',
+      },
+    ],
+  },
+  {
     slug: 'claude-code-editable-pptx-skill',
     title: 'Claude Code 怎麼做出「好看又可編輯」的 PPT?pptx skill 四支柱實作',
     excerpt:

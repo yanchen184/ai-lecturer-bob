@@ -953,7 +953,43 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 6431
+      "wordCount": 6322
+    },
+    "app-screenshots-claude-code-skill": {
+      "total": 90,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6696
+    },
+    "upgrade-screenshot-skill": {
+      "total": 90,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7543
     }
   }
 }
