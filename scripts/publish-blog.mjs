@@ -50,6 +50,47 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'claude-code-editable-pptx-skill',
+    title: 'AI 做的 PPT 不能改?用 Claude Code pptx skill 產原生可編輯投影片',
+    excerpt:
+      'AI 生的 PPT 常是「整頁一張圖」,想改一個錯字都點不進去,只能整頁重生。這篇記我用 Claude Code 官方 pptx skill(底層 python-pptx)做出真正可編輯 .pptx 的完整流程:三條生簡報路線差在哪、怎麼裝、為什麼原生元素比圖片貼死重要、從「陽春」到「優質」的三個槓桿(自訂版型、生成圖配圖、render 驗收 loop),以及我親手踩到的四個坑(shape 預設陰影、圓角不支援、文字框內距、盲寫不 render 一定翻車)。文章裡的投影片截圖都是真的用 python-pptx 產、真的 render 出來的。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'pptx skill',
+      'python-pptx',
+      'AI 做簡報',
+      'PowerPoint',
+      '可編輯 PPT',
+      'Claude 生 PPT',
+      'AI 簡報工具',
+    ],
+    publishDate: '2026-07-01',
+    featured: true,
+    faqItems: [
+      {
+        q: 'pptx skill 產出的 .pptx 真的能在 PowerPoint 打開改嗎?',
+        a: '能。因為投影片是原生 PowerPoint 元素(文字框、shape、圖片)組成的,每個元素都能照 PowerPoint 的正常方式編輯、搬動、換色。這正是它跟「整頁一張圖」式 AI 簡報最大的差別——後者你只拿到像素,改不動。',
+      },
+      {
+        q: '我要用 /pptx 指令觸發 pptx skill 嗎?',
+        a: '不用。pptx 是 skill 不是 slash command,你用白話講「幫我做一份 X 主題的簡報,幾頁、給誰看」,Claude 會自動判斷語意觸發它,不需要打斜線。打 /pptx 反而不會如預期運作。',
+      },
+      {
+        q: '只是要產檔,一定要裝 LibreOffice 嗎?',
+        a: '產檔只需要 python-pptx。但 LibreOffice(soffice)+ Poppler(pdftoppm)是驗收必備——把 .pptx render 成圖逐頁檢查。python-pptx 是盲寫,看不到成品,不 render 你永遠發現不了中文爆版、色塊蓋字這類問題,所以強烈建議一起裝。',
+      },
+      {
+        q: 'python-pptx 排版能力弱,那「優質」怎麼來?',
+        a: '靠三個槓桿:自訂版型設計(切題配色 + 字型級距 + 重複的視覺母題)、用生成圖配圖(codex image_gen)、render 成圖逐頁挑錯的驗收 loop。工具本身樸素、連圓角陰影都不支援,質感是設計出來的,不是內建效果堆出來的。',
+      },
+      {
+        q: 'Claude 生 PPT 跟 Gamma 比,該用哪個?',
+        a: '看你要什麼。內容/文案品質看重、且打算自己搭版型、要能反覆改並進 PowerPoint,就用 Claude pptx skill(可控性最高)。要視覺開箱即用、對外交付漂亮,就用 Gamma。也有混合打法:Claude 產內容貼進 Gamma 排版,但產出會綁在 Gamma 平台,不如原生 .pptx 自由。',
+      },
+    ],
+  },
+  {
     slug: 'ai-cloudflare-workers-free-backend',
     title: '我想要一個自己的後端:用 AI 協作把 Cloudflare Workers 免費方案架起來(附免費額度怎麼算)',
     excerpt:
