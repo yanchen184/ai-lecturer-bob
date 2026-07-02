@@ -145,6 +145,23 @@ $ curl .../demo-site/api/kv/score-1
 2. **Web UI**——開 `http://your-server:8090/`,拖檔進去、填 identity、送出。不碰 terminal 的同事走這條。
 3. **Claude Code plugin**——`/wez:upload-html`,除了推現成檔,還能「一句中文需求,Claude 直接寫整頁含 KV 整合的 HTML 再推上去」。這個入口把「我想要一個問卷畫圓餅圖的頁」直接變成一個線上網址,中間的寫 code 跟部署都不用自己動手。
 
+## 內網之外:同一套概念的公開版,一句 `/html-deploy` 推上去
+
+wez-html 定位在內網,但「一句話把靜態內容變成常駐網址」這個概念,我在公開端也想要——推個 demo 給客戶看、放個專案狀態頁,不必每次都開 nginx 配一輪。
+
+所以我把同一套概念移植到 Cloudflare(Pages Functions + Workers KV),跑成一個公開版:`html.yanchen.app`。它跟內網 wez-html 是雙胞胎——一樣是「推一個檔、拿一個常駐 URL」,差別只在目標端:內網版推到公司 LAN 的機器,公開版推到 Cloudflare edge,對外可直接點。
+
+平常我不手 curl,是包成一個 Claude Code slash command `/html-deploy`,一句就推完:
+
+```text
+/html-deploy ./dashboard.html my-demo
+→ https://html.yanchen.app/my-demo/
+```
+
+它做的事其實就是內網 CLI 那套的公開版:推之前先查站名撞不撞(撞了會停下來問要不要覆蓋,不會默默蓋掉別人的站)、帶上上傳者跟來源 repo 路徑當追溯資訊,推完**不是看 API 回 `ok` 就算**,而是真的去 `curl` 那個 URL 確認回 HTTP 200、內容是我推的那份,才算成功。這個「round-trip 才算數」的習慣,跟內網版我堅持用 `curl` 讀回內容、而不是信「build 成功」的訊號,是同一個原則。
+
+一個實際用途:我所有專案的公開狀態看板就掛在這上面。新專案骨架成形,我把「功能 + 驗收狀態 + 進度」做成一頁 HTML,`/html-deploy` 推到 `html.yanchen.app/<專案>/`,之後有更新回來再推一次——這頁本身就是 wez-html 概念的活用例。
+
 ## 限制,先看清楚再用
 
 - **不支援 HTTPS。** 對外一定要 nginx / Caddy 反代,別直接曝到公網。
