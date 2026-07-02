@@ -65,5 +65,7 @@
       "ctr": 0,
       "position": 2
     }
-  ]
+  ],
+  "analysis": "【一句總評】站基本沒動靜——昨日 5 UV / 2 PV、GSC 單日 7 曝光 0 點擊，週點擊全靠 kkterm 撐住 1 次，這是一個「只有單篇文章在吃流量、其餘全躺平」的低基期狀態，不是壞掉，是還沒起量。\n\n【需要注意】兩件事。一是 kkterm 是你唯一真正接單的 query（排名 8.4、28 天 2 點擊），整站命脈壓在一頁上，太脆；二是排名很好卻 0 點擊的 query 有堆——「ultracode needs dynamic workflows enabled」排名 5.1、13 曝光全掛零，「ultracode」排名 9.0 也掛零，代表你在這些字有排名但標題/描述沒讓人想點，這是最可惜的漏水點。\n\n【今天可以做】改 kkterm 那篇（/blog/kkterm-windows-terminal-ai/）的 title 與 meta description，把最有勝算的 query 收乾淨——它排名已到第 8、曝光最高，CTR 一提升就直接變點擊。順手在文章裡補一段回答「ultracode needs dynamic workflows enabled」這個已經排到第 5 名卻零點擊的問題，把那股白撈的曝光接住。五分鐘內能動手。",
+  "analysisGeneratedAt": "2026-07-03T07:07:33+0800"
 }
