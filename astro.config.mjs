@@ -12,7 +12,7 @@ const base = process.env.PUBLIC_BASE ?? '/';
 export default defineConfig({
   site,
   base,
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
   integrations: [
     react(),
     sitemap({

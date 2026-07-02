@@ -184,6 +184,38 @@ export async function trackPostView(slug: string, title?: string): Promise<void>
   }
 }
 
+type BlogEventName =
+  | 'card_impression'
+  | 'card_click'
+  | 'article_engaged'
+  | 'article_scroll';
+
+/** 輕量內容漏斗事件；同一 session 的同事件/文章/數值只記一次。 */
+export async function trackBlogEvent(
+  event: BlogEventName,
+  details: { slug: string; slot?: string; rank?: number; value?: number },
+): Promise<void> {
+  try {
+    if (typeof window === 'undefined' || !details.slug) return;
+    const dedupKey = `bob_event_${event}_${details.slug}_${details.slot ?? ''}_${details.value ?? ''}`;
+    if (sessionStorage.getItem(dedupKey)) return;
+    sessionStorage.setItem(dedupKey, '1');
+
+    await addDoc(collection(getDb(), 'bob_blog_events'), {
+      event,
+      slug: details.slug,
+      slot: details.slot ?? '',
+      rank: details.rank ?? null,
+      value: details.value ?? null,
+      path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      timestamp: serverTimestamp(),
+    });
+  } catch (err) {
+    console.error('[bob] trackBlogEvent failed', err);
+  }
+}
+
 /**
  * 紀錄外連點擊。識別並分類常見目標（instagram / youtube / github / email 等）。
  */

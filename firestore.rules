@@ -95,6 +95,18 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // ---- 內容漏斗事件：卡片曝光/點擊、閱讀時間、捲動深度 ----
+    match /bob_blog_events/{doc} {
+      allow read: if true;
+      allow create: if request.resource.data.event in [
+                      'card_impression', 'card_click', 'article_engaged', 'article_scroll'
+                    ]
+                    && request.resource.data.slug is string
+                    && request.resource.data.slug.size() > 0
+                    && request.resource.data.slug.size() <= 160;
+      allow update, delete: if false;
+    }
+
     match /bob_outbound_clicks/{doc} {
       allow read: if true;
       allow create: if true;

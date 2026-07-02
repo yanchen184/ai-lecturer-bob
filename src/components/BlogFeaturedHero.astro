@@ -15,9 +15,10 @@ import TerminalCover from './TerminalCover.astro';
 interface Props {
   post: BlogPost;
   views?: number;
+  label?: string;
 }
 
-const { post, views } = Astro.props;
+const { post, views, label = 'Latest · 最新文章' } = Astro.props;
 const cover = post.coverImage;
 // 有顯式 cover → 用圖；只有 fallback 撿到的弱圖 → 改 render 程式畫的 terminal 封面
 const useTerminalCover = !post.coverIsExplicit;
@@ -34,6 +35,10 @@ const formatViews = (n: number): string => {
 >
   <a
     href={withBase(`/blog/${post.slug}`)}
+    data-blog-link
+    data-blog-slug={post.slug}
+    data-blog-slot="hero"
+    data-blog-rank="0"
     class:list={[
       'block group',
       'md:grid md:grid-cols-[1.15fr_1fr] md:gap-0 md:items-stretch',
@@ -61,7 +66,7 @@ const formatViews = (n: number): string => {
       cover ? 'p-4 md:p-5 lg:p-6' : 'p-8 md:p-12',
     ]}>
       <div class="flex items-center justify-between gap-3 mb-2">
-        <span class="eyebrow">Most Read · 最多人讀</span>
+        <span class="eyebrow">{label}</span>
         {views && views > 0 && (
           <span class="font-mono text-[11px] font-black uppercase tracking-widest opacity-70 whitespace-nowrap">
             {formatViews(views)} reads

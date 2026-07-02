@@ -8,11 +8,16 @@
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-/** 把站內相對路徑加上 base；絕對 URL（http/https）不動。 */
+/** 把站內相對路徑加上 base，並把頁面路由統一成尾斜線；資產與絕對 URL 不動。 */
 export function withBase(path: string): string {
-  if (/^https?:\/\//.test(path)) return path;
-  const normalized = path.startsWith('/') ? path : `/${path}`;
-  return `${base}${normalized}`;
+  if (/^[a-z][a-z\d+.-]*:/i.test(path)) return path;
+  const [pathname, suffix = ''] = path.split(/(?=[?#])/);
+  let normalized = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  const isAsset = /\/[^/]+\.[^/]+$/.test(normalized);
+  if (normalized !== '/' && !normalized.endsWith('/') && !isAsset) {
+    normalized += '/';
+  }
+  return `${base}${normalized}${suffix}`;
 }
 
 export { base };

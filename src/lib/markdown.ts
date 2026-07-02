@@ -100,6 +100,17 @@ export interface RenderedMarkdown {
   toc: TocItem[];
 }
 
+/**
+ * 移除文章內手寫的「目錄」段落，頁面會以同一份 h2 資料生成導覽。
+ * 「目錄」是頁面層級的保留章節名；正文中若存在就整段移除，避免雙重導覽。
+ */
+export function stripManualTableOfContents(content: string): string {
+  return content.replace(
+    /^##\s+(?:本文)?目錄[^\n]*\n([\s\S]*?)(?=^##\s+|\s*$)/gim,
+    '',
+  );
+}
+
 /** 從 content 解析出所有 `##` 標題的 TOC。 */
 function extractToc(content: string): TocItem[] {
   const items: TocItem[] = [];

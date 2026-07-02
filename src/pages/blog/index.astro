@@ -4,7 +4,7 @@
  *
  * 結構（從上到下）:
  *   1. Header
- *   2. Featured Hero（最多人讀）
+ *   2. Featured Hero（最新文章）
  *   3. Filters
  *   4. All posts（magazine grid，2-3 欄）
  *   5. 閱讀系列（Hermes、Claude Code 初階班、K8s...）
@@ -31,13 +31,15 @@ import { withBase } from '../../lib/url';
 const posts = await getAllPublishedPosts();
 const viewsMap = await getViewsMap();
 
-const categories = [...new Set(posts.map((p) => p.category))];
-const tags = [...new Set(posts.flatMap((p) => p.tags))];
+const categories = [...new Set(posts.map((p) => p.category))].sort();
+const tags = [...new Set(posts.flatMap((p) => p.tags))].sort();
 
 const topSlugs = await getTopViewedSlugs();
-const heroPost =
-  topSlugs.map((slug) => posts.find((p) => p.slug === slug)).find(Boolean) ??
-  posts.find((p) => p.featured);
+const heroPost = posts[0];
+const popularPosts = topSlugs
+  .map((slug) => posts.find((p) => p.slug === slug))
+  .filter((post): post is NonNullable<typeof post> => Boolean(post) && post.slug !== heroPost?.slug)
+  .slice(0, 3);
 
 const listPosts = heroPost ? posts.filter((p) => p.slug !== heroPost.slug) : posts;
 
@@ -105,6 +107,29 @@ const jsonLd = {
       <!-- Featured hero -->
       {heroPost && <BlogFeaturedHero post={heroPost} views={viewsMap.get(heroPost.slug)} />}
 
+      {popularPosts.length > 0 && (
+        <nav class="mb-6 border-2 border-black bg-[var(--color-paper)] p-3 md:p-4" aria-label="熱門文章">
+          <div class="eyebrow mb-3">Popular · 讀者最常看</div>
+          <ol class="grid md:grid-cols-3 gap-2">
+            {popularPosts.map((post, index) => (
+              <li>
+                <a
+                  href={withBase(`/blog/${post.slug}`)}
+                  data-blog-link
+                  data-blog-slug={post.slug}
+                  data-blog-slot="popular"
+                  data-blog-rank={index + 1}
+                  class="flex gap-3 border border-black/30 p-2.5 h-full hover:bg-[var(--color-neub-yellow)] transition-colors"
+                >
+                  <span class="font-mono font-black text-sm">0{index + 1}</span>
+                  <span class="text-sm font-black leading-snug line-clamp-2">{post.title}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
       <!-- Filters (隨頁面捲動,不 sticky — 避免卡住畫面遮內容) -->
       <div class="mb-6">
         <BlogFilters
@@ -117,9 +142,16 @@ const jsonLd = {
 
       <!-- All posts (magazine grid) -->
       <section class="mb-16">
+        <div class="flex items-end justify-between gap-4 mb-4 border-b-2 border-black pb-2">
+          <div>
+            <div class="eyebrow">All stories · 最新到最舊</div>
+            <p class="text-xs text-[var(--color-ink-60)] mt-1">先從問題和結論進場，再按需要深入細節。</p>
+          </div>
+          <span class="font-mono text-xs font-black">{listPosts.length} posts</span>
+        </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {listPosts.map((post) => (
-            <BlogCardListItem post={post} views={viewsMap.get(post.slug)} />
+          {listPosts.map((post, index) => (
+            <BlogCardListItem post={post} views={viewsMap.get(post.slug)} rank={index + 1} />
           ))}
         </div>
 
@@ -246,4 +278,42 @@ const jsonLd = {
   </main>
 
   <FooterNeub />
+
+  <script>
+    import { trackBlogEvent } from '../../lib/firebase-client';
+
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-blog-link]'));
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        void trackBlogEvent('card_click', {
+          slug: link.dataset.blogSlug ?? '',
+          slot: link.dataset.blogSlot,
+          rank: Number(link.dataset.blogRank || 0),
+        });
+      });
+    });
+
+    const timers = new WeakMap<Element, number>();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const link = entry.target as HTMLAnchorElement;
+        const rank = Number(link.dataset.blogRank || 0);
+        if (rank > 12) return;
+        if (entry.isIntersecting) {
+          const timer = window.setTimeout(() => {
+            void trackBlogEvent('card_impression', {
+              slug: link.dataset.blogSlug ?? '',
+              slot: link.dataset.blogSlot,
+              rank,
+            });
+            observer.unobserve(link);
+          }, 800);
+          timers.set(link, timer);
+        } else {
+          window.clearTimeout(timers.get(link));
+        }
+      });
+    }, { threshold: 0.5 });
+    links.forEach((link) => observer.observe(link));
+  </script>
 </RootLayout>

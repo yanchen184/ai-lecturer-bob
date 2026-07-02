@@ -11,7 +11,7 @@ import ReadingProgress from '../../components/ReadingProgress.astro';
 import GiscusComments from '../../components/GiscusComments.astro';
 import TerminalCover from '../../components/TerminalCover.astro';
 import { getAllPublishedPosts, type BlogPost } from '../../lib/firestore';
-import { renderMarkdown, inlineKrokiImages } from '../../lib/markdown';
+import { renderMarkdown, inlineKrokiImages, stripManualTableOfContents } from '../../lib/markdown';
 import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
@@ -29,7 +29,8 @@ interface Props {
 
 const { post, allPosts } = Astro.props;
 
-const { html: rawHtml, toc } = renderMarkdown(post.content);
+const articleContent = stripManualTableOfContents(post.content);
+const { html: rawHtml, toc } = renderMarkdown(articleContent);
 // build 時把 Kroki <figure> 改寫成 inline SVG。
 // fetch 失敗會保留 <img> fallback，不會 break build。
 const html = await inlineKrokiImages(rawHtml);
@@ -161,7 +162,7 @@ const jsonLdSchemas = faqSchema
 
     <!-- Header — 左標題 + 右 cover 兩欄（對齊 target：標題左、cover 圖右並排） -->
     <header class="border-b-2 border-black bg-[var(--color-sink)]">
-      <div class="max-w-6xl mx-auto px-6 md:px-10 py-8 md:py-10">
+      <div class="max-w-5xl mx-auto px-6 md:px-10 py-9 md:py-12">
         <div class="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
           <!-- 左欄：meta + 大標 + 摘要 + tags -->
           <div>
@@ -183,17 +184,17 @@ const jsonLdSchemas = faqSchema
               )}
             </div>
 
-            <h1 class="text-2xl md:text-3xl lg:text-[1.85rem] font-black leading-[1.15] tracking-tight mb-4">
+            <h1 class="text-3xl md:text-4xl lg:text-[2.65rem] font-black leading-[1.12] tracking-tight mb-5">
               {post.title}
             </h1>
 
-            <p class="text-sm md:text-base leading-relaxed text-[var(--color-ink-60)] mb-5">
+            <p class="text-base md:text-lg leading-relaxed text-[var(--color-ink-60)] mb-6">
               {post.excerpt}
             </p>
 
             <!-- tags -->
             <div class="flex flex-wrap items-center gap-2 font-mono">
-              {post.tags.map((tag) => (
+              {post.tags.slice(0, 3).map((tag) => (
                 <a
                   href={withBase(`/blog?tag=${encodeURIComponent(tag)}`)}
                   class="text-xs border-2 border-black px-2.5 py-1 hover:bg-[var(--color-neub-yellow)] leading-none transition-colors"
@@ -201,6 +202,11 @@ const jsonLdSchemas = faqSchema
                   #{tag}
                 </a>
               ))}
+              {post.tags.length > 3 && (
+                <span class="text-xs px-1 py-1 text-[var(--color-ink-60)]">
+                  +{post.tags.length - 3} tags
+                </span>
+              )}
             </div>
           </div>
 
@@ -228,11 +234,11 @@ const jsonLdSchemas = faqSchema
     </header>
 
     <!-- Content + floating TOC（content 左、TOC 右，對齊 target 排版） -->
-    <div class="px-6 md:px-10 py-14">
-      <div class="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1fr_240px]">
-        {/* Mobile: collapsible TOC（在內文上方，預設展開） */}
+    <div class="px-5 md:px-10 py-10 md:py-14">
+      <div class="max-w-5xl mx-auto grid gap-10 xl:grid-cols-[minmax(0,760px)_200px] xl:justify-center">
+        {/* Mobile / tablet: collapsible TOC（預設收合，先讓讀者進正文） */}
         {toc.length > 0 && (
-          <details open class="lg:hidden border-2 border-black bg-white min-w-0">
+          <details class="xl:hidden border-2 border-black bg-white min-w-0">
             <summary class="cursor-pointer list-none px-4 py-3 flex items-center justify-between font-mono text-xs uppercase tracking-widest font-black bg-[var(--color-neub-yellow)] border-b-2 border-black">
               <span>本文目錄 · {toc.length}</span>
               <span aria-hidden="true" class="toc-caret">▾</span>
@@ -256,7 +262,7 @@ const jsonLdSchemas = faqSchema
         <article data-blog-prose class="blog-prose min-w-0" set:html={html} />
 
         {/* Desktop: 右側浮動 TOC + 作者迷你卡 */}
-        <aside class="hidden lg:block">
+        <aside class="hidden xl:block">
           <div class="sticky top-24 space-y-4">
             {toc.length > 0 && (
               <div class="border-2 border-black bg-white text-xs font-mono shadow-hard">
@@ -563,7 +569,7 @@ const jsonLdSchemas = faqSchema
 
   <div id="__post_meta" data-slug={post.slug} data-title={post.title} hidden></div>
   <script>
-    import { trackPostView } from '../../lib/firebase-client';
+    import { trackBlogEvent, trackPostView } from '../../lib/firebase-client';
     const el = document.getElementById('__post_meta') as HTMLElement | null;
     const slug = el?.dataset.slug ?? '';
     const title = el?.dataset.title ?? '';
@@ -574,6 +580,28 @@ const jsonLdSchemas = faqSchema
       } else {
         setTimeout(fire, 1200);
       }
+
+      const engagementTimer = window.setTimeout(() => {
+        void trackBlogEvent('article_engaged', { slug, value: 30 });
+      }, 30_000);
+
+      const reached = new Set<number>();
+      const onScroll = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollable <= 0) return;
+        const depth = Math.round((window.scrollY / scrollable) * 100);
+        [25, 50, 90].forEach((threshold) => {
+          if (depth >= threshold && !reached.has(threshold)) {
+            reached.add(threshold);
+            void trackBlogEvent('article_scroll', { slug, value: threshold });
+          }
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('pagehide', () => {
+        window.clearTimeout(engagementTimer);
+        window.removeEventListener('scroll', onScroll);
+      }, { once: true });
     }
   </script>
 </RootLayout>

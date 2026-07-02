@@ -45,7 +45,16 @@ const withBase = (p: string): string =>
   /^https?:\/\//.test(p) ? p : `${base}${p.startsWith('/') ? '' : '/'}${p}`;
 
 const pathInput = canonical ?? (Astro.url.pathname.replace(base, '') || '/');
-const canonicalUrl = `${siteUrl}${withBase(pathInput)}`;
+const normalizeCanonicalPath = (path: string): string => {
+  if (/^https?:\/\//.test(path)) return path;
+  const [pathname, suffix = ''] = path.split(/(?=[?#])/);
+  if (pathname === '/' || pathname.endsWith('/') || /\/[^/]+\.[^/]+$/.test(pathname)) return path;
+  return `${pathname}/${suffix}`;
+};
+const normalizedCanonical = normalizeCanonicalPath(pathInput);
+const canonicalUrl = /^https?:\/\//.test(normalizedCanonical)
+  ? normalizedCanonical
+  : `${siteUrl}${withBase(normalizedCanonical)}`;
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${withBase(ogImage)}`;
 const rssUrl = `${siteUrl}${withBase('/rss.xml')}`;
 
