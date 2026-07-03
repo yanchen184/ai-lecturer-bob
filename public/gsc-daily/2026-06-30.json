@@ -1,0 +1,83 @@
+{
+  "date": "2026-06-30",
+  "impressions": 12,
+  "clicks": 1,
+  "ctr": 8.33,
+  "position": 26.3,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90.7
+    },
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90.7
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 1.5
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/devspace-mcp-chatgpt-as-codex/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/karpathy-claude-skills/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    }
+  ]
+}
