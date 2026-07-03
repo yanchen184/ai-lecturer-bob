@@ -79,5 +79,7 @@
       "ctr": 0,
       "position": 6
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事,流量安靜但沒異常。昨天站內 4 UV / 3 PV、GSC 單日曝光 4 點擊 0,量體本來就小到談不上趨勢;kkterm 這條主力 query 排名穩在 8.5、7 天有 1 個點擊,查詢結構正常。\n\n【需要注意】\nkkterm-windows-terminal-ai 這頁 7 天曝光 21、排名 8.5(第一頁),但只換到 1 個點擊、CTR 極低,title/描述在搜尋結果沒吸引到人,是目前最該擰的一滴水。另外 kubernetes nodeport 曝光累積 14 但排名掉在 88~92,實際等於沒進榜,那篇內容對這 query 撐不起來。\n\n【今天可以做】\n把 kkterm 那篇的 `<title>` 和 meta description 重寫一次——排名已在第一頁,吸引點擊比拉排名划算。塞進使用者搜「kkterm」當下想要的字眼(下載、設定、Windows Terminal AI 整合),控制在 title ≤ 60 字、description ≤ 155 字,五分鐘內可改完 commit。\n\n(數據量體這麼小,不值得動用多代理 workflow,我直接判讀完就好;要我實際去改那篇 title/meta 再跟我說。)",
+  "analysisGeneratedAt": "2026-07-04T07:29:50+0800"
 }
