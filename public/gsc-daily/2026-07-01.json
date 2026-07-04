@@ -1,0 +1,84 @@
+{
+  "date": "2026-07-01",
+  "impressions": 13,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 21.5,
+  "queries": [
+    {
+      "query": "\"822e\" python codeforces github",
+      "page": "/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90.5
+    },
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 20
+    },
+    {
+      "page": "/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90.5
+    },
+    {
+      "page": "/blog/ralph-loop-real-world/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/ollama-cloud-hermes-langchain/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    }
+  ]
+}
