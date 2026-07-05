@@ -65,5 +65,7 @@
       "ctr": 0,
       "position": 4
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事,流量本來就低(昨天 3 UV / 2 PV),GSC 曝光也只有個位數,查詢結構跟上週幾乎沒變。kkterm 仍是唯一穩定帶點擊的 query(28 天累計 2 次點擊、排名 8.6),這條是你目前唯一站得住的入口。\n\n【需要注意】\n兩件事。一是 kkterm 排名 8.6、有曝光有點擊,卡在第一頁底部,CTR 偏低(18 曝光才 1 點),title 沒吃到位;二是 kubernetes nodeport 系列曝光不少(28 天 18 次)但排名 85 以上、幾乎進不了前十頁,等於有需求卻完全接不到。至於 GSC 單日只有 4 曝光,數字太小談不上「異常」,別過度解讀。\n\n【今天可以做】\n5 分鐘內:去 GSC 用 URL 檢查工具對 /blog/kkterm-windows-terminal-ai/ 手動按一次 Request Indexing,順便確認該頁 title 有把「kkterm」放在最前面、descriptive 一點,把那 18 個曝光的點擊率拉起來。這件事不管後台狀態如何都該做。",
+  "analysisGeneratedAt": "2026-07-06T07:08:14+0800"
 }
