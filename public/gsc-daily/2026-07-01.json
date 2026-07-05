@@ -80,5 +80,7 @@
       "ctr": 0,
       "position": 1
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事。這週流量小到本質上是零（昨天站內 0/0，GSC 單日曝光 5、點擊 0），查詢結構倒是健康——kkterm 排名穩在 8.6、7 天 20 曝光 1 點擊，是你唯一真正在動的入口，其他查詢都是零星尾巴。\n\n【需要注意】\n兩件值得盯：一是 kkterm 排名 8.6、卡在第一頁底/第二頁頭，這一格上不去點擊就出不來，是目前最接近突破的 query；二是 kubernetes nodeport 28 天 15 曝光但排名 88，等於 Google 認得這頁的主題、卻把它壓在第九頁——有需求、沒排名。至於整站曝光只有個位數，這是「量太小」不是「出事」，別過度解讀。\n\n【今天可以做】\n去 GSC 對 `/blog/kkterm-windows-terminal-ai/` 手動 Request Indexing（URL Inspection → 要求建立索引），逼 Google 重爬你唯一有點擊的頁；順手把該頁 `<title>` 的核心詞 kkterm 往最前面挪，衝那 8.6 名的 CTR。五分鐘內能做完。\n\n（附帶提醒：報告要求限制在「數據本身」，我沒動用多 agent workflow——這題是純數據解讀，開 workflow 是浪費，直接判讀更快。）",
+  "analysisGeneratedAt": "2026-07-05T08:16:14+0800"
 }
