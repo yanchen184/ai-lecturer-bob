@@ -78,11 +78,15 @@ const postUrl = absoluteUrl(`/blog/${post.slug}`);
 const homeUrl = absoluteUrl('/');
 const blogUrl = absoluteUrl('/blog');
 
+const coverAbsoluteUrl =
+  post.coverIsExplicit && post.coverImage ? absoluteUrl(post.coverImage) : absoluteUrl('/og-default.png');
+
 const blogPostingSchema = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: post.title,
   description: post.excerpt,
+  image: coverAbsoluteUrl,
   url: postUrl,
   datePublished: post.publishDate,
   dateModified: post.updateDate ?? post.publishDate,
@@ -135,6 +139,7 @@ const jsonLdSchemas = faqSchema
   title={post.title}
   description={post.excerpt}
   canonical={`/blog/${post.slug}`}
+  ogImage={post.coverIsExplicit && post.coverImage ? post.coverImage : undefined}
   jsonLd={jsonLdSchemas}
 >
   <ReadingProgress />

@@ -57,21 +57,28 @@ async function getOwnerAccessToken() {
 // 改的原則：把「使用者會打進搜尋框的詞」放標題前面。
 const updates = [
   {
-    slug: 'mempalace-3-3-5-claude-p-proxy',
+    // 2026-07-07 CTR 優化：GSC 28 天 69 曝光 0 點擊（query「hermes agent proxy」pos 28）。
+    // 舊題「Mac 裝 Hermes Agent 接內網 LLM：踩了 4 個洞才接通」— 關鍵字沒前置。
+    slug: 'hermes-agent-mac-install',
     newTitle:
-      'MemPalace 知識管理工具完整教學：3.3.5 救援、HNSW 修復、claude -p proxy 省 API 錢',
+      'Hermes Agent Mac 安裝教學：接內網 LLM proxy 踩了 4 個洞才接通',
     newExcerpt:
-      'MemPalace 是 AI agent 用的長期記憶系統。chromadb 1.5.x 在 macOS 26.4 ARM64 必 SIGSEGV，所有 CLI 全死、只剩 MCP server 苟活。MemPalace 3.3.5 用兩個機制救回來：HNSW segment quarantine 自動隔離壞索引、repair --mode from-sqlite 從 sqlite3 直接撈資料重灌新 palace。本文記錄完整升級路徑、3.3.5 兩個救命機制原理、外加 180 行 Python claude-p-openai-proxy.py 把 claude -p CLI 包成 OpenAI 相容 HTTP 端點，讓 mempalace compress 走 Max 訂閱、零 API 成本。',
+      'Hermes Agent 在 Mac 的完整安裝與內網 LLM proxy 接法。hermes -z 跑完 exit 0、stdout 完全空白？根因是 OpenAI-compatible wrapper 缺 4 件事：/v1/models、usage 欄位、SSE streaming 格式、system_fingerprint。本文從 0 安裝 Hermes 到真正接通，每個坑附症狀與修法，最後附完整 wrapper 檢查清單。',
   },
   {
-    slug: 'karpathy-llm-wiki',
+    // 2026-07-07 CTR 優化：GSC 28 天 60 曝光 0 點擊，query「musubi tuner」pos 5 卻沒人點 —
+    // 舊題「19 次失敗才訓出 LoRA：Windows + RTX 4070 的 8 個地雷」完全沒出現 musubi-tuner。
+    slug: 'ohwx-companion',
     newTitle:
-      'LLM Wiki 是什麼？Karpathy 知識編譯方案兩週實測（vs RAG、token 降 87%、踩坑筆記）',
+      'musubi-tuner Windows 訓練 LoRA：19 次失敗換來的 8 個地雷（RTX 4070）',
     newExcerpt:
-      'LLM Wiki 是什麼？2026 年 4 月 Karpathy 在 gist 丟了 200 行 markdown，一週後全網炸開、12 個社群 implementation。一句話講：讓 LLM 把你丟的所有資料「編譯」成一個結構化的 markdown 知識庫，以後問問題不查原始檔、查這個被整理過的 wiki。本文拆解 RAG vs LLM Wiki 的編譯式/解釋式之差、三層架構、30 分鐘上手路徑、我把 7 場教學逐字稿 + 200 則 Discord QA 丟進去跑兩週的實測（token 降 87%）、5 個踩坑、什麼情境裝了反而是負擔。',
+      'musubi-tuner 在 Windows + RTX 4070 訓練 Wan 2.2 i2v LoRA 的完整避雷 SOP：5 次 BSOD、19 次訓練失敗換來 8 個地雷區。含 dataset 準備、訓練參數、每個地雷的症狀與解法，最後把訓好的卡通形象 LoRA 做成 scroll-aware 浮動角色掛上個人網站。',
   },
 ]
 
+// 同 slug 可能有多筆 doc（歷史 addDoc 殘留）。build dedup 只留
+// 「published=true 且 docId 字典序最小」那筆，patch 別筆會「Firestore 對、線上不變」。
+// 所以這裡撈全部同 slug doc → 濾 published → 按 docId asc 取 [0]。
 async function queryBySlug(slug) {
   const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents:runQuery?key=${API_KEY}`
   const body = {
@@ -84,7 +91,6 @@ async function queryBySlug(slug) {
           value: { stringValue: slug },
         },
       },
-      limit: 1,
     },
   }
   const res = await fetch(url, {
@@ -96,9 +102,18 @@ async function queryBySlug(slug) {
   if (!res.ok) {
     throw new Error(`Query failed for ${slug}: ${JSON.stringify(data)}`)
   }
-  const hits = data.filter((d) => d.document)
+  const hits = data
+    .filter((d) => d.document)
+    .map((d) => d.document)
+    .filter((doc) => doc.fields?.published?.booleanValue === true)
+    .sort((a, b) => (a.name < b.name ? -1 : 1))
   if (hits.length === 0) return null
-  return hits[0].document
+  if (hits.length > 1) {
+    console.log(
+      `  ⚠️  ${slug} 有 ${hits.length} 筆 published doc，patch build winner: ${hits[0].name.split('/').pop()}`,
+    )
+  }
+  return hits[0]
 }
 
 async function patchDoc(docName, fields, accessToken) {
