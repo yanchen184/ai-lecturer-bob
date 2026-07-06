@@ -9,6 +9,7 @@ import FooterNeub from '../../components/FooterNeub.astro';
 import BlogStyleSwitcher from '../../components/BlogStyleSwitcher.tsx';
 import ReadingProgress from '../../components/ReadingProgress.astro';
 import GiscusComments from '../../components/GiscusComments.astro';
+import ConsultCTA from '../../components/ConsultCTA.astro';
 import TerminalCover from '../../components/TerminalCover.astro';
 import { getAllPublishedPosts, type BlogPost } from '../../lib/firestore';
 import { renderMarkdown, inlineKrokiImages, stripManualTableOfContents } from '../../lib/markdown';
@@ -520,6 +521,9 @@ const jsonLdSchemas = faqSchema
         </div>
       </div>
     </section>
+
+    <!-- 顧問服務 CTA（依文章分類切換服務線） -->
+    <ConsultCTA category={post.category} tags={post.tags} postTitle={post.title} />
 
     <!-- Comments (Giscus / GitHub Discussions) -->
     <GiscusComments />

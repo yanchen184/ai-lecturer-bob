@@ -27,7 +27,7 @@ const currentPath = rawPath.startsWith(base)
 const navItems = [
   { label: '首頁', en: 'home', href: '/' },
   { label: '關於我', en: 'about', href: '/#about' },
-  { label: '企業內訓', en: 'training', href: '/#courses' },
+  { label: '顧問服務', en: 'services', href: '/services', highlight: true },
   { label: '技術專長', en: 'skills', href: '/#skills' },
   { label: '作品與案例', en: 'work', href: '/#portfolio' },
   { label: '技術部落格', en: 'blog', href: '/blog', highlight: true },
@@ -238,17 +238,22 @@ const resolveHref = (href: string) =>
     <div class="border-2 border-black bg-[var(--color-paper)] px-3 py-3 shadow-[3px_3px_0_0_#000]">
       <div class="text-[13px] font-black tracking-tight mb-0.5">訂閱最新文章</div>
       <div class="text-[11px] text-[var(--color-ink-60)] mb-2.5 leading-snug">每週一篇技術筆記與觀點</div>
-      <form action="https://yanchen.app/#contact" class="flex items-stretch border-2 border-black bg-white">
-        <input
-          type="email"
-          placeholder="輸入你的 Email"
-          aria-label="訂閱 Email"
-          class="min-w-0 flex-1 px-2.5 py-1.5 text-[12px] bg-transparent outline-none placeholder:text-black/40"
-        />
-        <button type="submit" aria-label="訂閱" class="shrink-0 bg-black text-white px-2.5 flex items-center justify-center hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-      </form>
+      <div class="flex items-stretch gap-1.5">
+        <a
+          href="https://yanchen.app/rss.xml"
+          class="flex-1 flex items-center justify-center gap-1.5 border-2 border-black bg-white px-2 py-1.5 text-[11px] font-mono font-black uppercase tracking-wider hover:bg-[var(--color-neub-yellow)] transition-colors"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.18 17.82a2.18 2.18 0 11-4.36 0 2.18 2.18 0 014.36 0zM2 9.1v2.9c4.97 0 9 4.03 9 9h2.9C13.9 14.43 8.57 9.1 2 9.1zm0-5.6v2.9C9.46 6.4 15.6 12.54 15.6 20h2.9C18.5 11.1 11.4 4 2 3.5z"/></svg>
+          RSS 訂閱
+        </a>
+        <a
+          href="mailto:bobchen184@gmail.com?subject=%5B%E8%A8%82%E9%96%B1%5D%20%E6%96%B0%E6%96%87%E7%AB%A0%E9%80%9A%E7%9F%A5"
+          class="flex-1 flex items-center justify-center gap-1.5 border-2 border-black bg-black text-white px-2 py-1.5 text-[11px] font-mono font-black uppercase tracking-wider hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="1"/><path d="m2 6 10 7L22 6"/></svg>
+          Email 我
+        </a>
+      </div>
     </div>
 
     <!-- 社群 icon 列 -->
@@ -256,7 +261,7 @@ const resolveHref = (href: string) =>
       <a href="https://github.com/yanchen184" target="_blank" rel="noopener" aria-label="GitHub" class="text-[var(--color-ink-60)] hover:text-black transition-colors">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.57v-2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.36-1.34-1.72-1.34-1.72-1.09-.73.08-.72.08-.72 1.2.08 1.84 1.21 1.84 1.21 1.07 1.79 2.81 1.27 3.5.97.11-.76.42-1.27.76-1.56-2.67-.3-5.47-1.3-5.47-5.79 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.5.12-3.13 0 0 1.01-.32 3.3 1.2a11.6 11.6 0 016.01 0c2.29-1.52 3.3-1.2 3.3-1.2.66 1.63.25 2.83.12 3.13.77.82 1.24 1.87 1.24 3.15 0 4.5-2.81 5.49-5.49 5.78.43.36.82 1.09.82 2.2v3.26c0 .32.21.69.82.57A12.01 12.01 0 0024 12.29C24 5.78 18.63.5 12 .5z"/></svg>
       </a>
-      <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-[var(--color-ink-60)] hover:text-black transition-colors">
+      <a href="https://www.linkedin.com/in/yanchen184/" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-[var(--color-ink-60)] hover:text-black transition-colors">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
       </a>
       <a href="https://yanchen.app/rss.xml" aria-label="RSS" class="text-[var(--color-ink-60)] hover:text-black transition-colors">
@@ -356,7 +361,7 @@ const resolveHref = (href: string) =>
     [
       { label: '首頁', href: '/', icon: 'M3 11.5 12 4l9 7.5M5 10v10h14V10' },
       { label: '作品', href: '/#portfolio', icon: 'M4 5h16v14H4zM4 9h16M9 5v4' },
-      { label: '服務', href: '/#courses', icon: 'M12 3 3 8l9 5 9-5zM3 8v6l9 5 9-5V8' },
+      { label: '服務', href: '/services', icon: 'M12 3 3 8l9 5 9-5zM3 8v6l9 5 9-5V8' },
       { label: '技術部落格', href: '/blog', icon: 'M5 4h11l3 3v13H5zM9 9h7M9 13h7M9 17h4' },
       { label: '聯繫', href: '/#contact', icon: 'M2 5h20v14H2zM2 6l10 7 10-7' },
     ].map((item) => (

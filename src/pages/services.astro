@@ -1,0 +1,349 @@
+---
+/**
+ * /services — 顧問服務 / 企業內訓專屬著陸頁。
+ * 目標關鍵字：AI 企業內訓、Claude Code 內訓、AI 導入顧問、Kubernetes 企業內訓。
+ * 首頁是形象總覽；這頁只做一件事——讓有預算的人（HR / CTO / PM 主管）看完敢寄信。
+ */
+import RootLayout from '../layouts/RootLayout.astro';
+import NavbarNeub from '../components/NavbarNeub.astro';
+import FooterNeub from '../components/FooterNeub.astro';
+import { withBase } from '../lib/url';
+import {
+  courses,
+  faqs,
+  mailtoInquiry,
+  MAILTO_EXPLORE,
+  MAILTO_INQUIRY,
+  CONTACT_EMAIL,
+} from '../data/services';
+
+const steps = [
+  {
+    no: '01',
+    title: '寄信說明需求',
+    body: '用下方任一入口寄信——主旨與問題清單都幫你寫好，填空就能寄。還不確定要什麼也可以，直接約 30 分鐘聊。',
+    dur: 'day 0',
+  },
+  {
+    no: '02',
+    title: '30-60 分鐘對焦',
+    body: '我回你一份課前訪談題庫（團隊現況、工具、卡點、想達到什麼），約一次線上會議對焦。這一步免費，聊完我直接報價。',
+    dur: 'day 1-3',
+  },
+  {
+    no: '03',
+    title: '客製大綱 → 簽核',
+    body: '產出針對你們團隊的客製大綱與報價單，你拿去內部簽核。簽核通過我才開始備課、寫範例 repo。',
+    dur: 'week 1-2',
+  },
+  {
+    no: '04',
+    title: '上課 + 課後支援',
+    body: '內訓現場拆的是我 production 在跑的同一套 code。結訓後一個月內 Q&A 不加收，要長期陪跑可加雙週 review 顧問。',
+    dur: 'week 2+',
+  },
+];
+
+const whyMe = [
+  {
+    title: '不是職業講師，是還在寫 code 的工程師',
+    body: 'Java 後端 8 年（電商雙 11 級流量）、近兩年主導醫療 AI 看診輔助平台 6-repo 微服務從零到上線。今天卡的 bug，下個月就是內訓現場的真實 case。',
+  },
+  {
+    title: '教材全公開，先看再決定',
+    body: '部落格 100+ 篇技術筆記、K8s 完整教學系列、Claude Code 實戰文全部公開。你可以先讓工程團隊讀過，覺得口味對再找我——不用賭。',
+  },
+  {
+    title: '政府與企業都教過',
+    body: '職訓局 AI 概論初級班講師、企業內訓 10-50 場累積（Claude Code、AI Agent、Docker、Kubernetes、Java 高併發）。可開發票、可月結，簽核文件我配合你們流程。',
+  },
+];
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首頁', item: 'https://yanchen.app/' },
+    { '@type': 'ListItem', position: 2, name: '顧問服務', item: 'https://yanchen.app/services/' },
+  ],
+};
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'AI 企業內訓與導入顧問',
+  serviceType: 'AI 企業內訓 / AI 導入顧問 / Claude Code 內訓 / Kubernetes 內訓',
+  provider: {
+    '@type': 'Person',
+    name: '陳彥彤 Bob Chen',
+    url: 'https://yanchen.app/',
+    jobTitle: 'AI 講師 · 資深後端工程師',
+  },
+  areaServed: { '@type': 'Country', name: 'Taiwan' },
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    serviceUrl: 'https://yanchen.app/services/',
+  },
+  inLanguage: 'zh-Hant',
+};
+---
+
+<RootLayout
+  title="AI 企業內訓與導入顧問｜Claude Code / Kubernetes / Java 高併發｜陳彥彤 YC"
+  description="工程師教工程師的 AI 企業內訓：Claude Code、AI Agent、RAG、Kubernetes、Java 高併發。半天到兩天客製課程 + 導入顧問，教材就是 production 在跑的同一套 code。可開發票、可月結，先聊需求再報價。"
+  canonical="/services/"
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+>
+  <NavbarNeub />
+
+  <main class="font-sans text-[#0a0a0a]">
+    <!-- Hero -->
+    <section class="relative px-6 md:px-10 py-14 md:py-20 border-b-[3px] border-black bg-[var(--color-neub-bg)] overflow-hidden">
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style="background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 44px 44px;"
+      ></div>
+      <div class="relative max-w-7xl mx-auto">
+        <div class="inline-flex items-center gap-2 bg-black text-white px-3 py-1.5 mb-6 text-[11px] md:text-[12px] font-mono uppercase tracking-[0.25em]">
+          <span class="w-2 h-2 bg-[var(--color-neub-yellow)] inline-block"></span>
+          services · 顧問服務與企業內訓
+        </div>
+        <h1 class="text-3xl md:text-5xl font-black leading-[1.1] tracking-tight max-w-4xl">
+          AI 企業內訓與導入顧問——<br />
+          <span class="bg-[var(--color-neub-yellow)] px-2">教材就是我 production 在跑的同一套 code</span>
+        </h1>
+        <p class="mt-7 text-[15px] md:text-lg max-w-2xl leading-relaxed text-black/70">
+          Claude Code、AI Agent、RAG、Kubernetes、Java 高併發。半天到兩天的客製內訓，
+          或內訓 + 雙週 review 的導入顧問。先聊需求再報價，可開發票、可月結。
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a
+            href={MAILTO_INQUIRY}
+            class="px-6 py-3 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest border-2 border-black font-mono font-black shadow-hard hover:-translate-y-0.5 transition-transform"
+          >
+            直接寄信詢價 →
+          </a>
+          <a
+            href={MAILTO_EXPLORE}
+            class="px-6 py-3 text-sm uppercase tracking-widest font-mono font-black border-2 border-black bg-white shadow-hard hover:-translate-y-0.5 transition-transform"
+          >
+            先約 30 分鐘聊聊
+          </a>
+        </div>
+        <p class="mt-4 text-xs font-mono text-black/50">
+          回信節奏 1-2 個工作日 · 對焦會議免費 · 聊完直接報價不繞圈
+        </p>
+      </div>
+    </section>
+
+    <!-- 三種角色方案 -->
+    <section class="px-6 md:px-10 py-16 md:py-20 border-b-[3px] border-black bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+          who are you · 對應方案
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-3">
+          告訴我你是誰，我給你對應方案
+        </h2>
+        <p class="text-sm md:text-base opacity-70 max-w-3xl leading-relaxed mb-10">
+          三種角色找我的需求最常見。挑一張像你的卡片，點「寄信聊」——<strong>主旨與問題清單已經幫你寫好</strong>。
+        </p>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          {
+            courses.map((c) => (
+              <div
+                class="relative border-2 border-black bg-white p-6 flex flex-col"
+                style="box-shadow: 6px 6px 0 #0a0a0a;"
+              >
+                <div class="absolute -top-3 -left-3 px-2 py-0.5 text-xs font-black uppercase border-2 border-black font-mono bg-[var(--color-neub-yellow)]">
+                  {c.badge}
+                </div>
+                <div class="text-[11px] uppercase tracking-widest opacity-70 mb-2 font-mono">
+                  if you are
+                </div>
+                <div class="text-base font-black mb-4 leading-tight">{c.persona}</div>
+                <h3 class="text-xl font-black leading-tight mb-3 border-t-2 border-black pt-4">
+                  {c.title}
+                </h3>
+                <p class="text-sm leading-relaxed opacity-80 mb-4">
+                  <strong>你的痛：</strong>
+                  {c.problem}
+                </p>
+                <div class="text-[11px] uppercase tracking-widest opacity-60 mb-2 font-mono">我給你</div>
+                <ul class="space-y-2 text-sm mb-5 flex-1">
+                  {c.deliver.map((d) => (
+                    <li class="flex items-start gap-2 leading-relaxed">
+                      <span class="text-black/40 select-none">▸</span>
+                      <span>{d}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="border-t-2 border-black pt-3 mt-auto flex items-center justify-between text-xs font-mono">
+                  <span class="opacity-70">
+                    時長：<strong>{c.duration}</strong>
+                  </span>
+                  <a
+                    href={mailtoInquiry(
+                      `[${c.persona}] 想聊聊 ${c.title}`,
+                      `嗨 YC，\n\n我是 ___（公司／團隊）___ 的 ${c.persona}。\n\n• 目前情境：\n• 想解決的問題：\n• 預期時程：\n• 大概人數 / 預算範圍：\n\n謝謝！`,
+                    )}
+                    class="font-black uppercase tracking-widest hover:underline"
+                  >
+                    寄信聊 →
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 合作流程 -->
+    <section class="px-6 md:px-10 py-16 md:py-20 border-b-[3px] border-black bg-[var(--color-neub-bg)]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+          how it works · 合作流程
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-3">
+          從寄信到上課，四步
+        </h2>
+        <p class="text-sm md:text-base opacity-70 max-w-3xl leading-relaxed mb-10">
+          流程透明寫在這裡——你可以直接拿去跟老闆說「我們找了一個講師，流程是這樣」。
+        </p>
+
+        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {
+            steps.map((s) => (
+              <div class="border-2 border-black bg-white p-5 shadow-hard flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="w-9 h-9 inline-flex items-center justify-center border-2 border-black text-[12px] font-mono font-black bg-[var(--color-neub-yellow)]">
+                    {s.no}
+                  </span>
+                  <span class="text-[10px] font-mono uppercase tracking-widest opacity-50">{s.dur}</span>
+                </div>
+                <div class="text-lg font-black leading-tight mb-2">{s.title}</div>
+                <p class="text-[13px] leading-relaxed text-black/65">{s.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 為什麼是我 -->
+    <section class="px-6 md:px-10 py-16 md:py-20 border-b-[3px] border-black bg-black text-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest mb-5 font-mono text-white/60">
+          <span class="w-2 h-2 bg-[var(--color-neub-yellow)] border border-white/40"></span>
+          why me · 為什麼是我
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-10 max-w-3xl leading-tight">
+          市面上 AI 講師很多，<br />
+          <span class="bg-[var(--color-neub-yellow)] text-black px-2">還在第一線寫 production 的很少</span>
+        </h2>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          {
+            whyMe.map((w) => (
+              <div class="border-2 border-white/25 bg-white/[0.04] p-6">
+                <div class="text-lg font-black leading-tight mb-3">{w.title}</div>
+                <p class="text-sm leading-relaxed text-white/70">{w.body}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="mt-10 flex flex-wrap gap-3 text-xs font-mono">
+          <a
+            href={withBase('/blog')}
+            class="px-4 py-2 border-2 border-white/40 hover:bg-[var(--color-neub-yellow)] hover:text-black hover:border-black transition-colors uppercase tracking-widest font-black"
+          >
+            先看 100+ 篇公開教材 →
+          </a>
+          <a
+            href="https://github.com/yanchen184"
+            target="_blank"
+            rel="noopener"
+            class="px-4 py-2 border-2 border-white/40 hover:bg-[var(--color-neub-yellow)] hover:text-black hover:border-black transition-colors uppercase tracking-widest font-black"
+          >
+            GitHub 看作品 →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-6 md:px-10 py-16 md:py-20 border-b-[3px] border-black bg-[#fafaf6]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-xs uppercase tracking-widest opacity-60 mb-3 font-mono">
+          frequently asked · 寄信前先看這裡
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-10">常見問題</h2>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          {
+            faqs.map((f, i) => (
+              <details class="group border-2 border-black bg-white" style="box-shadow: 4px 4px 0 #0a0a0a;">
+                <summary class="cursor-pointer list-none p-5 flex items-start gap-4 hover:bg-[var(--color-neub-yellow)] transition-colors">
+                  <span class="text-xs font-mono font-black opacity-50 mt-0.5 shrink-0">
+                    Q{(i + 1).toString().padStart(2, '0')}
+                  </span>
+                  <span class="font-black text-base leading-snug flex-1">{f.q}</span>
+                  <span class="font-mono opacity-50 transition-transform group-open:rotate-90 shrink-0">›</span>
+                </summary>
+                <div class="px-5 pb-5 pl-12 text-sm leading-relaxed opacity-85 border-t-2 border-black/10">
+                  <p class="pt-4">{f.a}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 最後 CTA -->
+    <section class="px-6 md:px-10 py-16 md:py-20 bg-[var(--color-neub-bg)]">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-4">
+          下一步：寄一封信就好
+        </h2>
+        <p class="text-sm md:text-base opacity-70 leading-relaxed mb-8 max-w-xl mx-auto">
+          不用先想清楚才能聯繫。主旨與問題清單都幫你寫好了，填空寄出，1-2 個工作日內回。
+        </p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a
+            href={MAILTO_INQUIRY}
+            class="px-6 py-3 bg-[var(--color-neub-yellow)] text-black text-sm uppercase tracking-widest border-2 border-black font-mono font-black shadow-hard hover:-translate-y-0.5 transition-transform"
+          >
+            已有需求，直接詢價 →
+          </a>
+          <a
+            href={MAILTO_EXPLORE}
+            class="px-6 py-3 text-sm uppercase tracking-widest font-mono font-black border-2 border-black bg-white shadow-hard hover:-translate-y-0.5 transition-transform"
+          >
+            還在評估，先聊 30 分鐘
+          </a>
+        </div>
+        <p class="mt-6 text-xs font-mono opacity-60">
+          direct: <a href={`mailto:${CONTACT_EMAIL}`} class="underline hover:bg-[var(--color-neub-yellow)] px-1">{CONTACT_EMAIL}</a>
+          · 台灣（線上 / 北中南實體皆可）
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <FooterNeub />
+</RootLayout>

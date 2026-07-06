@@ -1,0 +1,52 @@
+---
+/**
+ * 文章頁尾情境式顧問 CTA。
+ * 依文章分類/tags 對應服務線（K8s 內訓 / AI 內訓 / 通用顧問），
+ * 文案主打「把這篇轉給主管或 HR」——讀者是工程師，買單的是主管。
+ */
+import { withBase } from '../lib/url';
+import { ctaVariantFor, mailtoInquiry } from '../data/services';
+
+interface Props {
+  category: string;
+  tags: string[];
+  postTitle: string;
+}
+
+const { category, tags, postTitle } = Astro.props;
+const v = ctaVariantFor(category, tags);
+const mailHref = mailtoInquiry(
+  v.mailSubject,
+  `嗨 YC，\n\n我看了你的文章《${postTitle}》，想聊聊：\n• 我們團隊狀況：\n• 想解決的問題：\n• 大概人數 / 時程：\n\n謝謝！`,
+);
+---
+
+<aside class="px-6 md:px-10 py-12 border-t-[3px] border-black bg-[var(--color-neub-yellow)]">
+  <div class="max-w-5xl mx-auto">
+    <div class="border-2 border-black bg-white p-6 md:p-8" style="box-shadow: 6px 6px 0 #0a0a0a;">
+      <div class="text-[11px] uppercase tracking-[0.25em] font-mono font-black opacity-60 mb-3">
+        {v.eyebrow}
+      </div>
+      <h2 class="text-2xl md:text-3xl font-black tracking-tight leading-tight mb-3">
+        {v.heading}
+      </h2>
+      <p class="text-sm md:text-base leading-relaxed text-black/75 max-w-3xl mb-6">
+        {v.body}
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <a
+          href={mailHref}
+          class="px-5 py-2.5 bg-black text-white text-xs md:text-sm uppercase tracking-widest border-2 border-black font-mono font-black hover:bg-[var(--color-neub-yellow)] hover:text-black transition-colors"
+        >
+          寄信聊聊 →
+        </a>
+        <a
+          href={withBase('/services')}
+          class="px-5 py-2.5 bg-white text-xs md:text-sm uppercase tracking-widest border-2 border-black font-mono font-black hover:bg-black hover:text-white transition-colors"
+        >
+          看顧問服務方案
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>

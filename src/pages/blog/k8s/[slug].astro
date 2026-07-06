@@ -10,6 +10,7 @@ import NavbarNeub from '../../../components/NavbarNeub.astro';
 import FooterNeub from '../../../components/FooterNeub.astro';
 import ReadingProgress from '../../../components/ReadingProgress.astro';
 import GiscusComments from '../../../components/GiscusComments.astro';
+import ConsultCTA from '../../../components/ConsultCTA.astro';
 import {
   getAllK8sLessons,
   getAdjacentLessons,
@@ -382,6 +383,9 @@ const breadcrumbSchema = {
         )}
       </div>
     </section>
+
+    <!-- 顧問服務 CTA（K8s 系列固定走 K8s 內訓變體） -->
+    <ConsultCTA category="Kubernetes" tags={['k8s']} postTitle={lesson.title} />
 
     <!-- Comments (Giscus / GitHub Discussions) -->
     <GiscusComments />
