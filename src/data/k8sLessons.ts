@@ -4137,7 +4137,7 @@ hello-cron-...              Error       # ← 真的有問題
 
 到第五堂結尾，你已經能用 K8s 部署完整的微服務架構：Deployment + Service + DNS。
 
-但**從外面進來**還只能用 NodePort \`Node IP:30080\`。生產環境要乾淨的網域路徑（\`/api\` / \`/admin\`），就要用 [Ingress 把 Service 串起來](/blog/k8s/service-ingress-end-to-end)。
+但**從外面進來**還只能用 [NodePort](/blog/k8s/nodeport-three-services) \`Node IP:30080\`。生產環境要乾淨的網域路徑（\`/api\` / \`/admin\`），就要用 [Ingress 把 Service 串起來](/blog/k8s/service-ingress-end-to-end)。
 
 > 📅 **下一篇**：[Service + Ingress 端到端串通](/blog/k8s/service-ingress-end-to-end)
 > 把 NodePort 升級成「網域 + 路徑」的入口,微服務正式長得像個生產系統。
@@ -4386,7 +4386,7 @@ K8s 確實比 Compose 囉嗦，但**換來的是對外路由、副本管理、�
 你已經把整條 K8s 部署鏈路串起來了。Ingress 在這篇只是路由的「最外層配角」,下一篇單獨拆開講:[Kubernetes Ingress 是什麼？怎麼從 NodePort 升級到 Ingress](/blog/k8s/kubernetes-ingress-intro)——把 path-based 路由的細節、Ingress Controller 是什麼、為什麼比 NodePort 好,完整講清楚。
 
 > 📅 **下一篇**：[Kubernetes Ingress 是什麼？怎麼從 NodePort 升級到 Ingress](/blog/k8s/kubernetes-ingress-intro)
-> 把這篇用過的 Ingress 拉出來單獨講——Controller 是什麼、path-based 路由完整原理、跟 NodePort 的差別。
+> 把這篇用過的 Ingress 拉出來單獨講——Controller 是什麼、path-based 路由完整原理、跟 [NodePort](/blog/k8s/nodeport-three-services) 的差別。
 
 > 📚 **完整系列總覽**：[K8s 系列教學首頁](/blog/#k8s)（共 40 課，按學習路徑順序排）
 `,
@@ -4405,7 +4405,7 @@ K8s 確實比 Compose 囉嗦，但**換來的是對外路由、副本管理、�
     content: `
 ## 為什麼需要 Ingress？先看 NodePort 的痛
 
-如果你已經學過 NodePort，那網址大概長這樣：
+如果你已經學過 [Kubernetes NodePort](/blog/k8s/nodeport-three-services)，那網址大概長這樣：
 
 \`\`\`
 http://192.168.1.100:30080
@@ -8750,6 +8750,8 @@ spec:
   ports:
   - port: 80
 \\\`\\\`\\\`
+
+> ClusterIP / NodePort / LoadBalancer 差在哪、什麼時候用哪個：[Kubernetes NodePort 是什麼？K8s 三種 Service 一張表選對](/blog/k8s/nodeport-three-services)。
 
 ---
 
