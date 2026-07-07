@@ -18,7 +18,9 @@ import { join } from 'node:path';
 // 但 build 一定從專案根執行 (package.json 跑 `astro build`)。
 const BLOG_IMAGES_ROOT = join(process.cwd(), 'public', 'images', 'blog');
 
-const COVER_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'] as const;
+// webp 排最前:同 slug 同時有 cover.webp 與 cover.png 時撿 webp。
+// (9 篇舊文內文 hard-code cover.png,那些 png 必須保留,但封面走 webp)
+const COVER_EXTENSIONS = ['webp', 'png', 'jpg', 'jpeg'] as const;
 const IMG_PATTERN = /\.(png|jpe?g|webp)$/i;
 
 export interface CoverDetection {
