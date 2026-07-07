@@ -1,0 +1,55 @@
+{
+  "date": "2026-07-04",
+  "impressions": 7,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 28.4,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 88
+    },
+    {
+      "query": "nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 87
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 87.5
+    },
+    {
+      "page": "/blog/topics/llm-wiki/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
