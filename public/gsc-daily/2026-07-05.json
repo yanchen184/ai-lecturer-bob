@@ -1,0 +1,47 @@
+{
+  "date": "2026-07-05",
+  "impressions": 6,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 47.5,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 88.3
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 88.3
+    },
+    {
+      "page": "/blog/devspace-mcp-chatgpt-as-codex/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/karpathy-llm-wiki/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    }
+  ]
+}
