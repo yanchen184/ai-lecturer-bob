@@ -43,5 +43,7 @@
       "ctr": 0,
       "position": 11
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事,就是流量太小數據沒統計意義。昨天 UV 11、GSC 單日曝光 3 點擊 0,整站還在冷啟動階段,現在任何 CTR / 排名數字都只是噪音。\n\n【需要注意】\n真正值得看的是這條:kkterm 28 天排名 8.6、曝光 27、拿到 2 次點擊,是全站唯一有點擊的 query,也是唯一排進第一頁的主題 query——這是你的種子關鍵字,別讓它掉。反觀 kubernetes nodeport 曝光量最高(28 天 24 次)卻卡在排名 86,等於進了 Google 索引但完全排不上去,有需求、沒名次。另外 fb.yanchen.app 那條是別的 property 的資料混進來,不是本站,別當自己的。\n\n【今天可以做】\n去 GSC 對 kubernetes nodeport 對應的那頁(若還沒有專門頁就是這問題本身)手動送一次 Request Indexing,順便 curl 確認該頁回 200、robots.txt 沒擋。5 分鐘內能做完,先讓有需求的 query 有一個對得上的落地頁。",
+  "analysisGeneratedAt": "2026-07-09T07:07:38+0800"
 }
