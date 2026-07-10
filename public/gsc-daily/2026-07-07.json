@@ -50,5 +50,7 @@
       "ctr": 0,
       "position": 5
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事。昨天 4 UV / 3 PV,GSC 一週曝光個位數(單日曝光 1、點擊 0),整站還在早期低量,查詢結構沒異常、沒暴衝也沒崩,就是量太小、樣本不足以談趨勢。\n\n【需要注意】\n兩件事。一是 kubernetes nodeport 這 query 28 天曝光 26 次卻排名 85、點擊掛零 —— 有需求、有被 Google 掃到,但排在第 9 頁後,等於白曝光;二是 kkterm 是你目前唯一「排名 8.6、有 2 次真實點擊」的 query,是最接近能吃到流量的資產,別讓對應頁面掉出前十。\n\n【今天可以做】\n挑 kkterm 對應那頁,去 GSC 用 URL 檢查工具手動 Request Indexing 催一次索引,順手確認頁面 title 有把「kkterm」放進去、self-canonical 指向自己;5 分鐘內能做完,先保住這條唯一有點擊的 query,再談 nodeport 那種長尾。",
+  "analysisGeneratedAt": "2026-07-11T07:07:34+0800"
 }
