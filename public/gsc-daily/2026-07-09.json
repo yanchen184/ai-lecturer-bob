@@ -43,5 +43,7 @@
       "ctr": 0,
       "position": 92
     }
-  ]
+  ],
+  "analysis": "結論先行:昨天沒事,GSC 曝光極少但沒異常。\n\n【一句總評】\n昨天站內 15 UV/15 PV,GSC 7/9 單日只有 1 曝光 0 點擊,量小到談不上趨勢;28 天看 kkterm(排名 8.6、2 點擊)是你唯一真的有名次的查詢,其餘 nodeport 系列全卡在 86~97 名的深海,結構正常沒異狀。\n\n【需要注意】\nnodeport 系列曝光量最大(28 天 kubernetes nodeport 曝光 28),但排名 86~97 等於根本沒人看得到,這是「有需求、你排不上」的落差;另一頭 kkterm 排名 8.6 卻只 2 點擊、CTR 偏低,代表那頁的 title/description 在搜尋結果裡沒吸引力,是目前最該補的一塊——不是排名問題,是點擊問題。\n\n【今天可以做】\n改 kkterm 那頁的 title 和 meta description,把賣點寫進去(kkterm 是什麼、能解決什麼),讓已經排第 8 的曝光轉得出點擊;順手去 GSC 用 URL 檢查工具對該頁手動 Request Indexing 確保是最新版。5 分鐘內可動手。",
+  "analysisGeneratedAt": "2026-07-13T07:07:32+0800"
 }
