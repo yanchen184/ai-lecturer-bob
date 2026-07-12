@@ -1,0 +1,47 @@
+{
+  "date": "2026-07-09",
+  "impressions": 8,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 16.8,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 92
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.4
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/how-i-built-claude-self-sync-with-claude/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 92
+    }
+  ]
+}
