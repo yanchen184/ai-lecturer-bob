@@ -50,6 +50,42 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'mattpocock-skills-ai-agent-discipline',
+    title: '166k Star Skill 庫拆解:4 個 AI Agent 老問題,各自的解法',
+    excerpt:
+      'GitHub 166k star 個人 Skill 庫實際拆解:6 個核心 skill 對應 4 個 AI agent 常見失控問題,Matt Pocock 怎麼用 vertical slice 逼 agent 先問清楚再動手。',
+    category: '工作流',
+    tags: [
+      'mattpocock/skills',
+      'Claude Code skill',
+      'AI Agent',
+      'TDD',
+      'Code Review',
+      'Vertical Slice',
+      'Matt Pocock',
+      'Superpowers',
+    ],
+    publishDate: '2026-07-12',
+    faqItems: [
+      {
+        q: '166k stars 是真的還是灌水?',
+        a: '這個數字來自 `gh repo view mattpocock/skills` 直接查 GitHub API,是可重現、可驗證的公開數據。至於「750 萬次下載」這個說法完全查無來源——GitHub 沒有公開的下載量指標,這個 repo 本身也不是發布成 npm 套件的形式。這個數字目前找不到任何一手來源可以佐證,本文不採用。',
+      },
+      {
+        q: '是不是要裝 5 個 skill 才算用完整?',
+        a: '不是。查證後的實際結構是「4 個常見失控問題,對應到 6 個核心 skill(加上 grill-with-docs、implement 兩個輔助 skill)」,repo 本身沒有「5 個 skill 一條龍」這種框架敘事。這篇文章特地按查到的真實結構寫,不是照搬「5 個 skill」的說法硬套。',
+      },
+      {
+        q: '跟 Anthropic 官方的 skill-creator 有關係嗎?',
+        a: '沒有直接關係。skill-creator 是 Anthropic 官方教你怎麼寫 skill 的 meta 工具;mattpocock/skills 是個人已經寫好、可以直接拿來用的一套 skill 內容。兩者可以一起用——用 skill-creator 學怎麼寫,用 mattpocock/skills 當現成範本或直接安裝使用。',
+      },
+      {
+        q: '一定要是 TypeScript 專案才能用嗎?',
+        a: '不一定。這套 skill 談的是工程流程(spec、拆票、TDD、review),不綁定特定語言或框架,任何用 Claude Code / Codex 開發、且願意照這套紀律走的專案都能用。作者本身是 TypeScript 生態出身,但 skill 內容本身是語言無關的流程描述。',
+      },
+    ],
+  },
+  {
     slug: '12-factor-agents-lessons',
     title: '12-Factor Agents vs 我的遊戲專案:3 條原則,同一個坑',
     excerpt:
