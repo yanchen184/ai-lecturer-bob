@@ -50,6 +50,37 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: '12-factor-agents-lessons',
+    title: '12-Factor Agents vs 我的遊戲專案:3 條原則,同一個坑',
+    excerpt:
+      'HumanLayer 的 12-Factor Agents 有 24.2k star，我對照自己寫 Splendor 網頁版時踩出的工程紀律，發現其中 3 條原則我半年前就已經做對，這是實測後的對照筆記。',
+    category: '工程實作',
+    tags: [
+      '12-Factor Agents',
+      'AI Agent',
+      'Claude Code',
+      'HumanLayer',
+      '工程紀律',
+      'Splendor',
+      'fuzzing',
+    ],
+    publishDate: '2026-07-12',
+    faqItems: [
+      {
+        q: '12-Factor Agents 是一個框架嗎?需要安裝什麼套件?',
+        a: '不是。它是一份原則清單(GitHub repo,MD 文件為主),沒有對應的 npm 套件或 SDK 要安裝。原則本身是框架無關的,你可以在任何語言、任何 agent 實作方式裡套用。',
+      },
+      {
+        q: '這份清單只適用於「AI agent」專案嗎?',
+        a: '不完全是。這篇文章的重點正是:即使你的專案裡沒有 LLM 在 runtime 做決策(像我的規則引擎遊戲),裡面關於控制流程、錯誤處理、職責邊界的原則,依然是通用的軟體工程紀律。',
+      },
+      {
+        q: '要把 12 條原則全部做到才算合格嗎?',
+        a: '不用,也不該勉強湊滿。這份清單是從不同生產案例萃取出的獨立原則,不同專案的架構會踩中不同子集。硬套用不相關的原則(例如把 Pause/Resume 套進一個同步系統)只會讓設計變得奇怪。',
+      },
+    ],
+  },
+  {
     slug: 'nesma-function-points-software-sizing',
     title: '軟體有多大?Nesma 功能點分析:只數功能不數行數',
     excerpt:
