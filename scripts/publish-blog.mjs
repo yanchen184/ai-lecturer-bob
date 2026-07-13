@@ -50,6 +50,46 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'gnhf-autonomous-coding-agent-loop',
+    title: 'good night, have fun:讓 AI Agent 過夜自己跑迴圈的 orchestrator(實測 0.1.41)',
+    excerpt:
+      'gnhf(good night, have fun)是把 coding agent 包成自動迴圈的 orchestrator,GitHub 3.2k star。實測安裝、7 種 agent 支援、小步 commit + 失敗回滾 + 連續失敗中止機制,以及它跟 ralph-loop / 手寫 while 迴圈差在哪。',
+    category: 'AI 工具',
+    tags: [
+      'gnhf',
+      'good night have fun',
+      'AI Agent',
+      'Claude Code',
+      'Codex',
+      'autonomous agent',
+      'orchestrator',
+      'ralph-loop',
+    ],
+    publishDate: '2026-07-13',
+    faqItems: [
+      {
+        q: 'gnhf 是一個新的 AI coding agent 嗎?',
+        a: '不是。gnhf 本身不寫任何一行 code,它是一個 orchestrator(協調器)——把你既有的 coding agent(Claude、Codex、Copilot 等)包進一個會自動重跑的迴圈。真正動手改檔案的還是底層 agent,gnhf 負責外圈的控制流程:要不要繼續下一輪、跑爛了要不要回滾、連續失敗幾次該收手。',
+      },
+      {
+        q: '讓 AI 無人看管跑一整晚,不會把 repo 搞爛嗎?',
+        a: 'gnhf 設計了幾道煞車來框住爆炸半徑:每輪只做一個小的可提交改動(壞掉範圍就是那一個 commit)、commit 失敗會做修復處理、連續失敗到閾值會自動中止、預設另開一條 gnhf 分支而不是直接改 main。加上 --max-iterations / --max-tokens 兩個硬上限,最壞情況也燒不超過你設的額度。這些機制以官方 README 與 gnhf --help 輸出為準。',
+      },
+      {
+        q: '我從 npm 裝到的版本是最新的嗎?',
+        a: '不一定。查證時(2026-07-13)npm registry 上 gnhf 套件的 latest 是 0.1.41(發布於 2026-05-07),但 GitHub 上的最新 release tag 是 gnhf-v0.1.42(2026-05-13)——GitHub 的 tag 比 npm 能裝到的新一版。要 0.1.42 可能得從 source 裝。本文所有實測都在 0.1.41 上跑。',
+      },
+      {
+        q: 'gnhf 跟自己寫 while 迴圈狂叫 agent(ralph-loop)差在哪?',
+        a: '概念一樣(讓 agent 不做完一步就停、自己往下跑),差在控制流程的完整度。手寫迴圈跑歪時通常沒有煞車:不會回滾、不會數失敗次數、不會自動收手,你早上可能看到一堆爛 commit 跟燒光的額度。gnhf 把 rollback、連續失敗中止、token/輪數上限、分支隔離都做成內建預設。如果你只想跑三五輪、人又在旁邊看,那手寫迴圈或 /loop 就夠,不必多裝工具。',
+      },
+      {
+        q: '可以把 gnhf 塞進 CI / cron 排程嗎?',
+        a: '要先自己驗。gnhf 跑起來是常駐的互動式 TUI,不是「跑完印一段 log 就結束」的批次工具。我本輪實測想用 --max-iterations 1 讓它跑一輪就乾淨退出,它停在 TUI 等互動、沒有俐落結束,最後是手動中斷的。所以在無 TTY 的 CI / cron 場景能不能乾淨非互動退出,本文沒驗成功,建議你在自己的環境先試過再說。',
+      },
+    ],
+  },
+  {
     slug: 'mattpocock-skills-ai-agent-discipline',
     title: '166k Star Skill 庫拆解:4 個 AI Agent 老問題,各自的解法',
     excerpt:
