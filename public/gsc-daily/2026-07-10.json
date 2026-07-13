@@ -71,5 +71,7 @@
       "ctr": 0,
       "position": 12
     }
-  ]
+  ],
+  "analysis": "【一句總評】還在冷啟動期：昨日 UV 11，GSC 單日曝光只有 2、零點擊；28 天唯一有點擊的是 kkterm（排名 8.6、2 次點擊），其他全掛零。\n\n【需要注意】一、kubernetes nodeport 是最大曝光源（28 天 30 次）但排名 86.8，等於完全看不到，現有內容接不住這個字。二、\"ultracode needs dynamic workflows enabled\" 排名 6.6 已在第一頁，8 次曝光卻零點擊，title 沒吸到人。\n\n【今天可以做】改 ultracode 那篇的 title 與 meta description：把完整查詢句放進 title、description 直接寫出解法一句話。這是目前離「第一個自然點擊」最近的一步，5 分鐘內可完成。",
+  "analysisGeneratedAt": "2026-07-14T07:07:52+0800"
 }
