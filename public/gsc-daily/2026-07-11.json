@@ -51,5 +51,7 @@
       "ctr": 0,
       "position": 7
     }
-  ]
+  ],
+  "analysis": "【一句總評】沒事，就是量體太小。昨天 4 UV、GSC 單日 3 曝光 0 點擊，這種規模下 CTR 0%、平均排名 76.8 都不構成訊號，純粹是樣本不夠。\n\n【需要注意】兩件。一是 kubernetes nodeport 28 天累積 32 曝光、排名 86.9 掉在第 9 頁，這是站上唯一有穩定需求的 query，但排名等於沒進場。二是 kkterm 28 天 27 曝光、2 點擊、排名 8.6，是全站唯一真的在賺流量的 query，接近首頁前段，值得看是哪頁在接、能不能再往上推。\n\n【今天可以做】把 kkterm 對應那頁的 title 拿出來看一次，確認「kkterm」有出現在 title 最前面、description 有寫清楚它是什麼。排名 8.6 的 query 微調 title 是投報率最高的動作，五分鐘內能改完。順手對 kubernetes nodeport 那頁手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-07-15T07:07:24+0800"
 }
