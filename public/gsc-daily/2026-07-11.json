@@ -1,0 +1,55 @@
+{
+  "date": "2026-07-11",
+  "impressions": 6,
+  "clicks": 1,
+  "ctr": 16.67,
+  "position": 42.0,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 89.5
+    },
+    {
+      "query": "ccchen",
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 64
+    }
+  ],
+  "pages": [
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 1
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 89.5
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 64
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    }
+  ]
+}
