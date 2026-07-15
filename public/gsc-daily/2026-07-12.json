@@ -57,5 +57,7 @@
       "ctr": 0,
       "position": 90
     }
-  ]
+  ],
+  "analysis": "沒事,但這站基本上是「Google 還沒把你當回事」的狀態。GSC 7 天總曝光個位數、單日 1 曝光、排名 90 名外,昨天 UV 14 也大多不是搜尋來的。這種量級講不上「趨勢」,任何波動都是雜訊。\n\n值得注意的只有兩件。一是 `kkterm`(28 天 27 曝光、2 點擊、排名 8.6)是全站唯一有真實排名跟點擊的查詢,但它掉出 7 天榜單 —— 要嘛是季節性,要嘛是那頁最近沒被抓,值得回頭看那篇還在不在。二是 `kubernetes nodeport` 28 天 33 曝光、點擊 0、排名 87 —— 有需求、你有內容,但排到 90 名外等於沒露臉,這是目前最明顯的缺口。\n\n今天做一件事:把 `kubernetes nodeport` 相關那頁的 URL 丟進 GSC 的 URL Inspection,按 Request Indexing,再順手看一下 title 有沒有把「Kubernetes NodePort」放在最前面(現在排 87 名,很可能是內容深度不足或 title 沒對準)。5 分鐘內能動手。",
+  "analysisGeneratedAt": "2026-07-16T07:07:27+0800"
 }
