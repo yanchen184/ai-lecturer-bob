@@ -50,6 +50,45 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'claude-agents-background-agent-view',
+    title: 'claude agents 是什麼?跟 ~/.claude/agents/ 完全是兩回事',
+    excerpt:
+      'claude agents 是管理背景 session 的 CLI 子指令,~/.claude/agents/ 是定義 subagent 角色的設定檔——名字幾乎一樣,東西完全不同。實測 2.1.210:派背景 agent 去數資料夾(它數對了)、--bg 印出的隱藏指令、以及官方沒寫的坑:--json 跟 --json --all 欄位名不一樣,照抄會 KeyError。',
+    category: 'AI 工具',
+    tags: [
+      'claude agents',
+      'Claude Code',
+      'agent view',
+      'background agent',
+      '背景 agent',
+      'subagent',
+      'CLI',
+      'AI 工具',
+    ],
+    faqItems: [
+      {
+        q: 'claude agents 跟 ~/.claude/agents/ 到底哪裡不同?',
+        a: '前者是 CLI 子指令,管「正在背景跑的 session」;後者是 .md 設定檔,定義「subagent 的角色人格」。一個管行程,一個管設定。交會點只有一個:claude --agent <名字> --bg "任務" 可以指定用某個角色去跑背景任務。',
+      },
+      {
+        q: '關掉終端機,背景 agent 會死嗎?',
+        a: '不會。背景 session 不需要終端機掛著,Esc 離開 agent view 它照跑。但它跑在你自己機器上,關機就沒了——這不是雲端服務。',
+      },
+      {
+        q: 'claude stop 之後對話還在嗎?',
+        a: '在。官方 --help 明講「Its conversation is kept; resume it later with claude attach <id>」。停止只是停行程,不是刪對話。要真的刪,在 agent view 裡按兩次 Ctrl+X。',
+      },
+      {
+        q: '為什麼 claude logs 印出一堆亂碼?',
+        a: '那不是亂碼,是 ANSI escape code。logs 抓的是 TUI 的終端機畫面而非純文字流。要在腳本裡用就先剝控制碼,例如用 perl 把 escape sequence 濾掉。',
+      },
+      {
+        q: '開很多背景 agent 會不會比較快?',
+        a: 'wall-clock 上會,但額度上不會省。官方文件寫明背景 session 跟互動式一樣吃訂閱用量,開十隻約莫燒十倍速。平行度換的是你的時間,不是 Anthropic 的算力折扣。',
+      },
+    ],
+  },
+  {
     slug: 'gnhf-autonomous-coding-agent-loop',
     title: 'good night, have fun:讓 AI Agent 過夜自己跑迴圈的 orchestrator(實測 0.1.41)',
     excerpt:
