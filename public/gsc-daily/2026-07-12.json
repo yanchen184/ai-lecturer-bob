@@ -1,0 +1,61 @@
+{
+  "date": "2026-07-12",
+  "impressions": 8,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 22.5,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90
+    }
+  ],
+  "pages": [
+    {
+      "page": "/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 35
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/kubectl-cheatsheet/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 38
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90
+    }
+  ]
+}
