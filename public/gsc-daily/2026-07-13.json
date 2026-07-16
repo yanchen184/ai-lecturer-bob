@@ -1,0 +1,47 @@
+{
+  "date": "2026-07-13",
+  "impressions": 5,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 37.6,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 88
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 88
+    },
+    {
+      "page": "/blog/claude-code-lesson-4/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/devspace-mcp-chatgpt-as-codex/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ]
+}
