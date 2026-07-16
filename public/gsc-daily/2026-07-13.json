@@ -43,5 +43,7 @@
       "ctr": 0,
       "position": 2
     }
-  ]
+  ],
+  "analysis": "【一句總評】尊上，昨日 UV 12 屬低量平盤；這週 GSC 曝光極薄（單日僅 2 次、零點擊），整體還在冷啟動期，唯一能打的字是 kkterm（排名 8.6、有點擊）。\n\n【需要注意】kubernetes nodeport 是最大曝光來源（28 天 35 次）但排名 87-89、零點擊，大字競爭不過；另外首頁 7 天曝光 3 次零點擊，代表 title/描述沒吸到人。\n\n【今天可以做】改 nodeport 那篇的 title 和 H1，從大字轉打長尾（例如「NodePort 與 ClusterIP 差別」「NodePort 埠範圍」），改完對該頁手動 Request Indexing，一次 5 分鐘內搞定。\n\n（收尾自檢：本回合為純數據解讀，無 TaskList 項目、無檔案改動、無背景任務，無需 round-trip。）",
+  "analysisGeneratedAt": "2026-07-17T07:07:44+0800"
 }
