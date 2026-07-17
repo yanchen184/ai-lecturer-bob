@@ -233,6 +233,22 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     return `<table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table>`;
   });
 
+  // YouTube 嵌入：@[youtube](VIDEO_ID) 或 @[youtube](https://youtu.be/VIDEO_ID)
+  // → responsive 16:9 iframe。VIDEO_ID 走嚴格白名單，杜絕注入。
+  // 必須在 image / link 規則之前跑，才不會被 ![]() / []() 先吃掉。
+  html = html.replace(
+    /@\[youtube\]\(([^)]+)\)/gi,
+    (_m, raw: string) => {
+      const idMatch = raw
+        .trim()
+        .match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/)|^)([a-zA-Z0-9_-]{6,20})/);
+      const id = idMatch?.[1];
+      if (!id || !/^[a-zA-Z0-9_-]{6,20}$/.test(id)) return '';
+      const src = `https://www.youtube-nocookie.com/embed/${id}`;
+      return `<figure class="yt-embed"><iframe src="${src}" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></figure>`;
+    }
+  );
+
   html = html
     .replace(/^## (.+)$/gm, (_m, title: string) => {
       const id = resolveId(title.trim());

@@ -51,40 +51,44 @@ async function getOwnerAccessToken() {
 const posts = [
   {
     slug: 'claude-agents-background-agent-view',
-    title: 'claude agents 是什麼?跟 ~/.claude/agents/ 完全是兩回事',
+    title: 'Claude Code agent view 怎麼用?一個看板管住所有背景 agent',
     excerpt:
-      'claude agents 是管理背景 session 的 CLI 子指令,~/.claude/agents/ 是定義 subagent 角色的設定檔——名字幾乎一樣,東西完全不同。實測 2.1.210:派背景 agent 去數資料夾(它數對了)、--bg 印出的隱藏指令、以及官方沒寫的坑:--json 跟 --json --all 欄位名不一樣,照抄會 KeyError。',
+      'claude agents(官方叫 agent view）是 Claude Code 新的背景 agent 控制台:把原本開一堆終端分頁、靠腦子記「哪個 agent 在跑什麼」的混亂,收進一個看板畫面。實測 2.1.212 拆解:看板三分組(等你輸入/執行中/完成)實際怎麼運作、一次派三個 agent 的完整並行工作流、自動 worktree 隔離 + 自動開 draft PR、跟 tmux / subagent 差在哪,以及三個一定要知道的限制。附 Anthropic 官方介紹影片。',
     category: 'AI 工具',
     tags: [
+      'agent view',
       'claude agents',
       'Claude Code',
-      'agent view',
       'background agent',
       '背景 agent',
-      'subagent',
-      'CLI',
+      '並行 agent',
+      'parallel agents',
       'AI 工具',
     ],
     faqItems: [
       {
-        q: 'claude agents 跟 ~/.claude/agents/ 到底哪裡不同?',
-        a: '前者是 CLI 子指令,管「正在背景跑的 session」;後者是 .md 設定檔,定義「subagent 的角色人格」。一個管行程,一個管設定。交會點只有一個:claude --agent <名字> --bg "任務" 可以指定用某個角色去跑背景任務。',
+        q: 'agent view 到底幫我解決什麼?',
+        a: '把多個平行的 Claude Code session 收進一個看板畫面,依狀態分組(等你輸入 / 執行中 / 完成),讓你一眼看完誰在忙、誰在等你、誰跑完了,不用在一堆終端分頁之間切換、逐一看 log。核心價值是降低你同時盯多個 agent 的認知負擔,不是讓 agent 跑更快。',
+      },
+      {
+        q: '怎麼一次派多個 agent?',
+        a: '打開 claude agents 看板,在底部輸入框一句一句打、每按一次 Enter 就開一個獨立 session。或從 shell 直接 claude --bg "任務" 派,每個都會變成看板上的一行。',
       },
       {
         q: '關掉終端機,背景 agent 會死嗎?',
-        a: '不會。背景 session 不需要終端機掛著,Esc 離開 agent view 它照跑。但它跑在你自己機器上,關機就沒了——這不是雲端服務。',
+        a: '不會。背景 session 不需要終端機掛著,Esc 離開看板它照跑。但它跑在你自己機器上,關機就沒了——這不是雲端服務。',
       },
       {
-        q: 'claude stop 之後對話還在嗎?',
-        a: '在。官方 --help 明講「Its conversation is kept; resume it later with claude attach <id>」。停止只是停行程,不是刪對話。要真的刪,在 agent view 裡按兩次 Ctrl+X。',
+        q: '多個 agent 平行改同一個 repo,會不會互相踩到?',
+        a: '不會。背景 session 動檔案前會先搬進自己的 git worktree(.claude/worktrees/ 底下),各寫各的。v2.1.198 起還會自己 commit、push 分支、開 draft PR,但永遠不碰 main / master、不 force push、不自己 merge。',
       },
       {
-        q: '為什麼 claude logs 印出一堆亂碼?',
-        a: '那不是亂碼,是 ANSI escape code。logs 抓的是 TUI 的終端機畫面而非純文字流。要在腳本裡用就先剝控制碼,例如用 perl 把 escape sequence 濾掉。',
+        q: 'agent view 跟 subagent 差在哪?',
+        a: 'subagent 是「一個任務內部拆給多個角色協作」,主 session 要掛著等;agent view 是「多個彼此獨立的任務」,背景各自跑、關掉視窗照跑、晚點再收。要細緻協調用前者,要「派出去別管」用後者。',
       },
       {
         q: '開很多背景 agent 會不會比較快?',
-        a: 'wall-clock 上會,但額度上不會省。官方文件寫明背景 session 跟互動式一樣吃訂閱用量,開十隻約莫燒十倍速。平行度換的是你的時間,不是 Anthropic 的算力折扣。',
+        a: '牆上時間會,額度上不會省。官方文件寫明背景 session 跟互動式一樣吃訂閱用量,開十隻約莫燒十倍速。平行度換的是你的時間,不是算力折扣。',
       },
     ],
   },
