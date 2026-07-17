@@ -57,5 +57,7 @@
       "ctr": 0,
       "position": 6
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n尊上，還在冷啟動期：昨日 UV 17 / PV 18，幾乎每人只看一頁就走；GSC 端曝光極少，搜尋還撐不起流量。\n\n【需要注意】\n「kubernetes nodeport」28 天曝光 36 次是最大需求來源，但排名 87、零點擊，有需求吃不到。kkterm 排名 8.6、有 2 點擊，是唯一健康查詢，但屬長尾詞，天花板低。\n\n【今天可以做】\n改 nodeport 那篇文章的 title，開頭直接放精準關鍵字，例如「Kubernetes NodePort 是什麼？與 ClusterIP、LoadBalancer 差異」，改完對該頁手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-07-18T07:07:28+0800"
 }
