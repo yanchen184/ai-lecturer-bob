@@ -50,5 +50,7 @@
       "ctr": 0,
       "position": 5
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n站內流量穩（UV 340），但搜尋端幾乎是零：7/16 整天 GSC 只有 1 次曝光，站內人潮和 Google 搜尋目前是兩條不相交的線，SEO 還沒開始貢獻流量。\n\n【需要注意】\n一、kubernetes nodeport 是最大曝光源（28 天 38 次）但排名 87、零點擊——有搜尋需求、內容沒吃到。二、昨日 PV（334）比 UV（340）還低，每人不到 1 頁不合理，埋點或計數可能有問題，值得看一眼。\n\n【今天可以做】\n把 NodePort 那篇文章的 title 改成直接命中查詢句，例如「Kubernetes NodePort 是什麼？用法與 port 範圍完整解說」，首段補一句定義。排名 87 代表 Google 認為弱相關，title 對齊關鍵字是最便宜的第一步，改完順手對該頁按一次 Request Indexing。",
+  "analysisGeneratedAt": "2026-07-20T07:07:39+0800"
 }
