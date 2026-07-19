@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-16",
+  "impressions": 7,
+  "clicks": 2,
+  "ctr": 28.57,
+  "position": 15.6,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 92
+    }
+  ],
+  "pages": [
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 1
+    },
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 4
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 92
+    },
+    {
+      "page": "/blog/ralph-loop-real-world/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ]
+}
