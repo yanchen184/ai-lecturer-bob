@@ -29,5 +29,7 @@
       "ctr": 0,
       "position": 19
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事，但也沒東西。整站 7 天曝光個位數、GSC 單日只有 1 曝光，這不是「數據波動」的量級，是索引/收錄根本沒鋪開；站內 UV 75 的流量幾乎都不是 Google 來的。\n\n【需要注意】\n兩件。一是 kubernetes nodeport 28 天曝光 38、排名 87.4，有需求但你的頁排在 9 頁後，等於白曝光；nodeport 系列（nodeport / nodeport k8s）也全在 87～97 名，代表這題你有內容但權重完全不夠。二是 kkterm 28 天 24 曝光 2 點擊、排名 8.7，是唯一真的在賺點擊的 query，但過去 7 天它從 Top 查詢消失了，要確認是季節性還是掉出榜。\n\n【今天可以做】\n去 GSC 用 URL Inspection 對 kubernetes nodeport 那篇送一次 Request Indexing，順手把 title 改成明確吃長尾的寫法（例如「Kubernetes NodePort 是什麼？跟 ClusterIP / LoadBalancer 差在哪（實作範例）」）。排名 87 改 title 的邊際效益比寫新文章高，五分鐘內能做完。",
+  "analysisGeneratedAt": "2026-07-21T07:07:34+0800"
 }
