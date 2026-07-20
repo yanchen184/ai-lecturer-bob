@@ -1,0 +1,33 @@
+{
+  "date": "2026-07-17",
+  "impressions": 3,
+  "clicks": 1,
+  "ctr": 33.33,
+  "position": 7.0,
+  "queries": [
+    {
+      "query": "k8s docker",
+      "page": "/blog/k8s/docker-vs-kubernetes/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19
+    }
+  ],
+  "pages": [
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 1
+    },
+    {
+      "page": "/blog/k8s/docker-vs-kubernetes/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19
+    }
+  ]
+}
