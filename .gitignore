@@ -63,3 +63,9 @@ firebase-adminsdk-*.json
 worker/node_modules/
 worker/.wrangler/
 worker/.dev.vars
+
+# CodeGraph 索引（工具工作檔，不進版控）
+.codegraph/
+
+# 個人工作筆記（角色 LoRA 生圖腳本，含外部對話連結）
+.character-lora-prompts.md
