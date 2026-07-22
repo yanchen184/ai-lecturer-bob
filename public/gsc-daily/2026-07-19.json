@@ -71,5 +71,7 @@
       "ctr": 0,
       "position": 7
     }
-  ]
+  ],
+  "analysis": "【一句總評】尊上，站內 UV 164 穩，但 GSC 每天曝光只有個位數，搜尋流量近乎零——站內流量跟 Google 搜尋目前是兩條不相干的線。\n\n【需要注意】kkterm 是唯一站上第一頁的詞（28 天排名 8.8、曝光 24）卻只拿 1 次點擊，CTR 明顯偏低；kubernetes nodeport 曝光 38 但排名 88.8，有需求卻完全搆不到。\n\n【今天可以做】改 kkterm 對應頁的 title 和 meta description：關鍵字放最前、一句講清楚它是什麼、解決什麼問題。這是唯一接近可收割的詞，5 分鐘能改完。",
+  "analysisGeneratedAt": "2026-07-23T07:18:39+0800"
 }
