@@ -241,6 +241,47 @@ const posts = [
     ],
   },
   {
+    slug: 'browser-record-claude-code-skill',
+    title: '錄教學影片時,游標為什麼錄不進去?一個 Claude Code 錄影 skill 的誕生',
+    excerpt:
+      '想讓 AI 操作瀏覽器順便錄成教學影片,結果撞到作業系統層級的限制:單一視窗的錄影裡,滑鼠游標不可能出現。macOS `screencapture -l <windowid>` 能在視窗被完全蓋住時照錄乾淨內容(讀 window server backing store),但同樣的機制決定了它永遠沒有游標——游標是系統畫在所有視窗「之上」的獨立圖層,不屬於任何視窗。這篇記錄我怎麼查清這條物理限制、然後換掉前提:用 Playwright 錄自己起的瀏覽器,在頁面注入一顆 DOM 假游標(CSS transform 平滑移動 + 點擊漣漪),一次解掉「要游標/要畫面乾淨/要能同時做別的事」三難。最花時間的不是畫游標,是驗證它真的有出現——抽影片畫格檢查害我對著幻覺改了三輪程式碼。已開源成 MIT 授權的 Claude Code skill。',
+    category: 'AI 工具',
+    tags: [
+      'browser-record',
+      'Claude Code skill',
+      '螢幕錄影',
+      'Playwright',
+      '教學影片',
+      'demo 影片',
+      'screencapture',
+      'macOS',
+    ],
+    publishDate: '2026-07-22',
+    featured: true,
+    faqItems: [
+      {
+        q: '為什麼單視窗錄影不能有滑鼠游標?這是 macOS 的 bug 嗎?',
+        a: '不是 bug,是機制的必然結果。`screencapture -l <windowid>` 讀的是那個視窗自己的 backing store(繪圖快取),所以其他視窗蓋住它也不影響——但滑鼠游標不屬於任何視窗,它是系統合成在所有視窗「之上」的獨立圖層。同一個原理讓它「擋不住」也讓它「抓不到游標」,兩者是一體兩面。要真游標就只能用全螢幕錄影。',
+      },
+      {
+        q: '假游標看起來會不會很假?',
+        a: '會,它就是一顆紅點,不是 macOS 的箭頭。但教學影片要的是「觀眾知道現在點了哪裡」,一顆帶漣漪動畫的紅點在這件事上比真實箭頭更清楚——真箭頭在 1280 寬的影片裡其實很難看見。',
+      },
+      {
+        q: '為什麼不能抽影片畫格來確認游標有沒有出現?',
+        a: '因為看不到不代表沒有。我隨手挑的時間點剛好落在游標兩次移動之間的空檔,加上游標初始位置在畫面外(translate(-50px,-50px)),而劇本第一個動作是捲動不是點擊,所以開頭十秒本來就看不到。我因此以為注入失敗、對著幻覺改了三輪程式。正解是用 --verify 在「點擊那一瞬間」存截圖,在確定該有東西的時刻驗證。',
+      },
+      {
+        q: 'Windows / Linux 能用嗎?',
+        a: '模式 C(Playwright + 假游標)可以,只依賴 Playwright 和 ffmpeg。模式 A(全螢幕)和 B(單視窗)是 macOS 專屬,分別靠 avfoundation 和內建 screencapture。',
+      },
+      {
+        q: '跟現成的螢幕錄影軟體差在哪?',
+        a: '如果你是手動操作、要錄自己的畫面,現成軟體更好。這個 skill 的場景是「讓 AI 執行一段可重複的操作流程並錄下來」——網站改版後重跑一次劇本就得到新影片,不用重錄。而且錄製期間不占用你的螢幕,可以繼續做別的事。',
+      },
+    ],
+  },
+  {
     slug: 'app-screenshots-claude-code-skill',
     title: 'app-screenshots 是什麼?讓 Claude Code 自動產「標註版截圖文件」的 skill',
     excerpt:
