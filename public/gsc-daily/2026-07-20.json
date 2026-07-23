@@ -1,0 +1,33 @@
+{
+  "date": "2026-07-20",
+  "impressions": 5,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 8.6,
+  "queries": [
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
