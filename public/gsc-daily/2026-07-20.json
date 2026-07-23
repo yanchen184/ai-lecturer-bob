@@ -29,5 +29,7 @@
       "ctr": 0,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "一句總評:昨天 UV/PV 77、GSC 只有 4 曝光 0 點擊,量還很小,查詢結構沒亂,但整體流量規模仍偏低。\n\n需要注意:kubernetes nodeport 這個查詢過去 28 天曝光 38 次全站最高,排名卻在 88.8 幾乎看不到,是目前最大的浪費;kkterm 排名進到 8.9(前段班)但曝光只有 7、點擊仍是 0,CTR 掉到底,值得盯。\n\n今天可以做:去 /blog/ 底下找有沒有涵蓋 kubernetes nodeport 的文章,把該篇 title/H1 加進「nodeport」字樣強化相關性;若沒有對應文章,先確認 sitemap 有沒有收錄相關頁面、用 GSC 手動 Request Indexing 推一次現有最相關的文章。",
+  "analysisGeneratedAt": "2026-07-24T07:07:21+0800"
 }
