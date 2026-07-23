@@ -2761,6 +2761,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'grilling-ai-agent-vs-pm-interview',
+    title: 'AI 逼問法 vs 需求訪談：grilling skill 三代拆解',
+    excerpt:
+      'mattpocock/skills(183k star)裡的 grilling 系列 skill,把「AI 動手前先逼問使用者」拆成三代演化:一次一題、一次一輪、邊問邊產文件。拆開三份 SKILL.md 原始碼,對照人類需求訪談「一次一題 vs 一次一輪」的老權衡,附今天這篇文章寫作過程本身當真實案例。',
+    category: '工作流',
+    tags: [
+      'mattpocock/skills',
+      'grilling',
+      'AI Agent',
+      'Claude Code skill',
+      '需求訪談',
+      'Matt Pocock',
+      '決策樹',
+    ],
+    publishDate: '2026-07-23',
+    metaDescription:
+      'grilling skill 讓 AI 像逼問一樣一題題釐清決策，對照人類需求訪談的一次一題 vs 一次一輪老權衡，附三代演化規則原文，能不能直接拿來用一次講清楚。',
+    faqItems: [
+      {
+        q: 'grilling 跟 grill-me 是同一個東西嗎？',
+        a: '是。grill-me 是 skills/productivity/grill-me/SKILL.md 定義的一個 command，內容只有一行:「Run a /grilling session」，等於是 grilling 的別名，方便打字。',
+      },
+      {
+        q: '這篇跟你上一篇《166k Star Skill 庫拆解》講的不是同一件事嗎？',
+        a: '上一篇是拆整個 repo 的 6 個核心 skill，對應 4 個 agent 常見失控問題，是一篇全景介紹；grilling 在那篇只在 FAQ 提過一句。這篇只聚焦這一套「逼問」邏輯本身，把它的三個變體攤開對照，並且拉到跟人類需求訪談做比較——是同一個 repo 裡不同的切片，不是重寫。',
+      },
+      {
+        q: 'batch-grill-me 能拿去正式專案用嗎？',
+        a: '作者自己把它放在 skills/in-progress/，最近一次相關 commit 是 2026-07-16，屬於還在調整中的實驗性功能。想試可以裝，但目前不建議當成穩定依賴。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
