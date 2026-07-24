@@ -93,5 +93,7 @@
       "ctr": 0,
       "position": 4
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事，但也沒進展。整站一週曝光個位數、昨天 UV 9 / PV 2，樣本小到任何百分比都沒意義，現在還在「等 Google 認識你」的階段。\n\n【需要注意】\n兩件。一是 kkterm 這條是唯一有量的品牌字（28 天曝光 28、排名 8.9），但 7 天內 8 次曝光 0 點擊、排名還從 8.9 掉到 9.9 — 排在第一頁尾巴卻沒人點，通常是 title/description 沒吸引力。二是 kubernetes nodeport 曝光 38 卻排名 88.8，等於在第 9 頁被掃到，相關頁面內容深度不足，這條目前是純浪費曝光。\n\n【今天可以做】\n改 kkterm 那頁的 title 和 meta description：title 前 30 字塞進「kkterm」+ 一個具體利益點（例如「怎麼用／實測」），description 寫成一句能讓人想點的說明。改完存檔、部署，順手對那個 URL 手動 Request Indexing。5 分鐘內做得完，而且不管後台狀態如何都該做。",
+  "analysisGeneratedAt": "2026-07-25T07:07:33+0800"
 }
