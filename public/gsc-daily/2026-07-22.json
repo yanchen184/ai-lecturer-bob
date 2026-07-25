@@ -1,0 +1,24 @@
+{
+  "date": "2026-07-22",
+  "impressions": 2,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 7.5,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/hermes-agent-medical-cdss/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
