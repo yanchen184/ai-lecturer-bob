@@ -1,0 +1,24 @@
+{
+  "date": "2026-07-25",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 7.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/arize-phoenix-llm-tracing-medical-cdss/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
