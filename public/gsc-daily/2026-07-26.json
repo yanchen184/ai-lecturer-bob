@@ -1,0 +1,31 @@
+{
+  "date": "2026-07-26",
+  "impressions": 4,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 6.5,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/firebase-free-web-app-domain/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/dns-namespace/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 17
+    }
+  ]
+}
