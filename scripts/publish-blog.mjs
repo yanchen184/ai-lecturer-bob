@@ -50,7 +50,49 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'llm-inference-load-test-goodput',
+    title: '壓測 LLM 推論服務,別只問「能撐幾個 client」——用 goodput 回答容量',
+    excerpt:
+      '「這個 AI 推論服務能不能上線」不能用「最多幾個 client」回答:連線數只描述掛得住幾條連線,不告訴你「在使用者能接受的延遲下,每秒服務得動幾個成功請求」。這篇把容量改寫成一句可驗收的話——在指定 workload 與流量模型下,仍同時滿足成功率、TTFT/TPOT/E2E、且零 OOM/restart 的最大 offered load,以及對應的 SLO-qualified goodput——並做成一個能跑的 skill。內容含:goodput vs completed throughput 差在哪、串流式 LLM 要量哪四個指標、為什麼 HTTP 2xx 不等於合格、coordinated omission 怎麼藏掉壅塞、穩定性缺 probe 為何標 UNKNOWN 不標 PASS。附一次真實 smoke 的樣本:reasoning 模型 TTFT 從 0.9 秒抖到 85 秒、max_tokens 被推理和答案一起吃掉。',
+    category: '工程實作',
+    tags: [
+      'LLM 壓測',
+      'load test',
+      'goodput',
+      'TTFT',
+      'TPOT',
+      'vLLM',
+      'SLO',
+      '推論服務',
+      '容量測試',
+    ],
+    publishDate: '2026-07-29',
+    faqItems: [
+      {
+        q: '「能撐幾個 client」為什麼不是容量答案?',
+        a: 'client 數只描述服務同時掛得住幾條連線,不代表在使用者能接受的延遲下每秒服務得動幾個成功請求。LLM 服務會排隊、會被 KV cache 撐爆、會冷啟動,超過某個點之後多開連線只是讓每個請求都變慢。正式容量要用「同時符合全部 SLO 的 goodput」回答,不是連線上限。',
+      },
+      {
+        q: 'goodput 跟 throughput 差在哪?',
+        a: 'completed throughput 是「單純完成的請求速率」,一個回 200 但慢到使用者早關掉分頁的請求也算數;goodput 只計「成功且全部延遲條件(TTFT/TPOT/E2E)都達標」的請求速率。容量報告要報的是 goodput,因為它擋得住「成功率 99% 但一半請求慢到沒人要用」這種好看的假數據。',
+      },
+      {
+        q: '壓測串流式 LLM 要量哪些指標?',
+        a: '至少四個:TTFT(第一個字多久出來)、TPOT(後面每個 token 吐多快)、E2E(整體體感)、input/output token throughput(真實產能)。沒有 tokenizer 或 usage 資料時,字元數只能當同一模型內的 fallback,不能拿來跨模型比較,因為不同 tokenizer 一個 token 對應的字元數天差地遠。',
+      },
+      {
+        q: 'HTTP 2xx 為什麼不等於這個請求合格?',
+        a: '2xx 只代表服務沒在最外層掛掉。一個回 200 但 E2E 20 秒的請求,對一個 SLO 訂 P95 E2E < 5s 的服務來說是失敗的。goodput 只計同時符合所有 request-level SLO 的請求,一條都不能少算——這條規則就是用來擋漂亮的假數據。',
+      },
+      {
+        q: '穩定性「零 OOM/restart」要什麼證據才算?',
+        a: '要有 before/after 的累積計數:壓測前記一次 restart_count / oom_count / gpu_xid_count,壓測後再記一次取 delta,health 用 exit code 判。沒有這組 probe,對應項只能標 UNKNOWN/證據不足,不能標 PASS。缺資料時也不補零——「沒接 GPU counter」跟「GPU 錯誤數是 0」是兩件完全不同的事。',
+      },
+    ],
+  },
+  {
     slug: 'claude-agents-background-agent-view',
+    title: 'Claude Code agent view 怎麼用?一個看板管住所有背景 agent',
     title: 'Claude Code agent view 怎麼用?一個看板管住所有背景 agent',
     excerpt:
       'claude agents(官方叫 agent view）是 Claude Code 新的背景 agent 控制台:把原本開一堆終端分頁、靠腦子記「哪個 agent 在跑什麼」的混亂,收進一個看板畫面。實測 2.1.212 拆解:看板三分組(等你輸入/執行中/完成)實際怎麼運作、一次派三個 agent 的完整並行工作流、自動 worktree 隔離 + 自動開 draft PR、跟 tmux / subagent 差在哪,以及三個一定要知道的限制。附 Anthropic 官方介紹影片。',
