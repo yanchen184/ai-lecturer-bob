@@ -50,5 +50,7 @@
       "ctr": 0,
       "position": 88
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事，站內 19 UV / 22 PV 是小站常態波動；GSC 端 7 天總曝光只有 10 次上下，樣本量太小，任何 CTR、排名數字都不具統計意義，不值得解讀。\n\n【需要注意】\n唯一有量的是 `kubernetes nodeport` — 28 天 32 次曝光、排名 88，代表你有頁面被 Google 收了但壓在第 9 頁後，等於零流量。`kkterm` 10 次曝光、排名 9.8 卡在第一頁尾巴，是全站最接近能拿到點擊的 query，卻 0 點擊，值得看一下那頁的 title 和 description 對不對得上搜尋意圖。另外整站 28 天幾乎全 0 點擊，唯一 1 次點擊來自 `fb.yanchen.app`，主站的收錄與排名基本還沒起來。\n\n【今天可以做】\n去 GSC URL Inspection 手動對 `kkterm` 命中的那頁跑一次 Request Indexing，同時改該頁 title：把「kkterm」放到最前面、加一句能吸引點擊的說明（例如具體用途或結果）。排名 9.8 的頁面改 title 是投報率最高的五分鐘動作。",
+  "analysisGeneratedAt": "2026-07-31T07:07:30+0800"
 }
