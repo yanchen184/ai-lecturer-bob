@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23",
+  "generatedAt": "2026-07-30",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -1062,6 +1062,24 @@
         "codeFence": 5
       },
       "wordCount": 4156
+    },
+    "llm-inference-load-test-goodput": {
+      "total": 65,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4146
     }
   }
 }
