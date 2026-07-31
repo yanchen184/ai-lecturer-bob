@@ -1,0 +1,47 @@
+{
+  "date": "2026-07-28",
+  "impressions": 7,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 16.9,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 87
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 87
+    },
+    {
+      "page": "/blog/karpathy-claude-skills/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
