@@ -43,5 +43,7 @@
       "ctr": 0,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事，量太小談不上趨勢——昨天站內 4 UV、GSC 單日只有 1 次曝光 0 點擊。28 天總曝光大概 50 上下，這個級距任何波動都是雜訊。\n\n【需要注意】\n一件事：`kubernetes nodeport` 佔 28 天曝光 30 次（全站最大宗），但排名 87.7、點擊 0 —— 有需求、有頁面被撈到，只是排在第 9 頁沒人看得到。相對地 `kkterm`（曝光 9、排名 9.9）和 `\"822e\" python codeforces github`（排名 3.0）排名很前面卻一樣 0 點擊，代表這兩個 query 的 title/description 在 SERP 上沒吸引到點。\n\n【今天可以做】\n挑排名 9.9 的 `kkterm` 那頁，改 title 和 meta description，把「kkterm」放進 title 前段、description 寫成一句能回答搜尋者問題的話。排名已在第一頁，改文案是唯一 5 分鐘內能動、且最可能拿到第一個點擊的槓桿；`kubernetes nodeport` 排 87 名要的是寫新文章，不是今天的事。",
+  "analysisGeneratedAt": "2026-08-01T07:08:30+0800"
 }
