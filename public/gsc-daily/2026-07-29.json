@@ -1,0 +1,47 @@
+{
+  "date": "2026-07-29",
+  "impressions": 6,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 17.8,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 87
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.7
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 87
+    }
+  ]
+}
