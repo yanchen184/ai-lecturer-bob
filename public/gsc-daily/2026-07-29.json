@@ -43,5 +43,7 @@
       "ctr": 0,
       "position": 87
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事,量太小談不上趨勢。GSC 單日只有 1 曝光、0 點擊,站內 UV 7 人,整個站基本還在沒有流量的狀態。\n\n【需要注意】\nkubernetes nodeport 是唯一有量的 query(28 天 29 曝光),但平均排名 87.5、7 天內也還在 89,這排名等於在第 9 頁,曝光再多也不會有點擊。另外 kkterm 曝光 8、排名 9.9,是全站唯一「排名進得了第一頁但 0 點擊」的 query,這個比 nodeport 更值得看——排名接近前十卻完全沒人點,通常是 title/description 跟搜尋意圖對不上。\n\n【今天可以做】\n去改 kkterm 對應那頁的 title 跟 meta description,把 kkterm 這個詞直接放進 title 開頭,description 寫清楚這頁能解決什麼。它已經排在第 10 名附近,改文案是最短路徑;nodeport 排到 87 名,現在花時間優化文案沒意義。改完手動去 GSC 對那頁 Request Indexing。",
+  "analysisGeneratedAt": "2026-08-02T07:12:37+0800"
 }
