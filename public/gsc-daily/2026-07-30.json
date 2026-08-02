@@ -1,0 +1,33 @@
+{
+  "date": "2026-07-30",
+  "impressions": 3,
+  "clicks": 1,
+  "ctr": 33.33,
+  "position": 59.3,
+  "queries": [
+    {
+      "query": "kubernetes nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 88
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 88
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 2
+    }
+  ]
+}
