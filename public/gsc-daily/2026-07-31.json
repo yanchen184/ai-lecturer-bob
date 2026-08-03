@@ -1,0 +1,47 @@
+{
+  "date": "2026-07-31",
+  "impressions": 6,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 6.2,
+  "queries": [
+    {
+      "query": "kkterm",
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/claude-code-ultrawork-harness-engineering/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ]
+}
