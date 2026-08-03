@@ -2841,7 +2841,7 @@ const posts = [
     slug: 'openai-codex-security-cli',
     title: 'OpenAI codex-security 是什麼？跑在本機的 AI 漏洞掃描 CLI 實測拆解',
     excerpt:
-      'OpenAI 在 2026 年 7 月開源了 codex-security：不是 GitHub Action、不是網頁服務，而是一支裝在你自己機器上的 CLI 加 TypeScript SDK，派 AI agent 去讀你的程式碼找可被利用的漏洞。這篇把 repo clone 下來逐檔讀完，客觀拆解它到底是什麼、跟規則式 SAST 差在哪、exit code 怎麼把「掃不完整」跟「掃出問題」分開、掃完之後的驗證／比對／修補流程為什麼是它最有價值的部分、Docker 硬化做到什麼程度，以及 README 自己寫明的本機安全模型風險——它跑在你的權限下、子行程會繼承你環境裡所有 API token 和雲端憑證。最後給出「什麼情況下不該用它」的具體清單。',
+      'OpenAI 在 2026-07-13 開的 Apache-2.0 專案，把 codex agent 包成本機資安掃描 CLI + TypeScript SDK，直接在你機器上跑 agent 讀程式碼找漏洞。三週 160 commits、還在 0.1.x、README 自己標明 1.0 前 API 隨時會變——功能活躍但別當穩定品。',
     category: 'AI 工具',
     tags: [
       'codex-security',
@@ -2884,9 +2884,9 @@ const posts = [
   },
   {
     slug: 'claude-code-security-review-action',
-    title: 'claude-code-security-review 拆解：好 prompt、壞維護，還有一個靜默的假綠燈',
+    title: 'claude-code-security-review 拆解：一份值得抄的 AI 資安審查 prompt',
     excerpt:
-      'Anthropic 開源的 claude-code-security-review 是一個 GitHub Action：PR 一開就讓 Claude 讀 diff 找新引入的漏洞，並把 finding 留成行內評論。這篇把 Python 原始碼逐檔讀完做客觀拆解：它那 175 行的審查 prompt 為什麼是整個專案最值得複用的資產（信心門檻量化、排除清單重複兩次、強制 exploit_scenario 欄位）、三層過濾架構怎麼設計；以及一個在原始碼裡追得出行號的實質問題——claude_api_client.py 第 62 行寫死了已退役的模型，導致被當作主打功能的 AI 假陽性過濾層整個被靜默關閉，而流水線照樣報綠。附 repo 現況（30 個 commit、最後 push 停在 2026-02-11、79 個 issue 開著）與可行的替代用法。',
+      'Anthropic 2025-08-04 開的 MIT / Python 專案，做成 GitHub Action 在 PR diff 上跑資安審查，另附一個 /security-review slash command 可在本機 Claude Code 直接用。prompt 設計紮實（>80% 可利用性門檻、三階段方法論、結構化 JSON 輸出），但最後 push 停在 2026-02-11、79 個 open issue，而且那層 AI 誤判過濾因為寫死已退役的模型早就靜默停用了。',
     category: 'AI 工具',
     tags: [
       'claude-code-security-review',
