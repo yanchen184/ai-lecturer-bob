@@ -1098,6 +1098,42 @@
         "codeFence": 5
       },
       "wordCount": 6912
+    },
+    "openai-codex-security-cli": {
+      "total": 65,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 5,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7361
+    },
+    "claude-code-security-review-action": {
+      "total": 60,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 5,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7345
     }
   }
 }
