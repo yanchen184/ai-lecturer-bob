@@ -2837,6 +2837,145 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'openai-codex-security-cli',
+    title: 'OpenAI codex-security 是什麼？跑在本機的 AI 漏洞掃描 CLI 實測拆解',
+    excerpt:
+      'OpenAI 在 2026 年 7 月開源了 codex-security：不是 GitHub Action、不是網頁服務，而是一支裝在你自己機器上的 CLI 加 TypeScript SDK，派 AI agent 去讀你的程式碼找可被利用的漏洞。這篇把 repo clone 下來逐檔讀完，客觀拆解它到底是什麼、跟規則式 SAST 差在哪、exit code 怎麼把「掃不完整」跟「掃出問題」分開、掃完之後的驗證／比對／修補流程為什麼是它最有價值的部分、Docker 硬化做到什麼程度，以及 README 自己寫明的本機安全模型風險——它跑在你的權限下、子行程會繼承你環境裡所有 API token 和雲端憑證。最後給出「什麼情況下不該用它」的具體清單。',
+    category: 'AI 工具',
+    tags: [
+      'codex-security',
+      'OpenAI',
+      'AI 資安掃描',
+      'SAST',
+      '漏洞掃描',
+      'CLI 工具',
+      'SARIF',
+      'AI 工具',
+    ],
+    publishDate: '2026-08-03',
+    faqItems: [
+      {
+        q: 'codex-security 跟 Semgrep、CodeQL 這類 SAST 差在哪？',
+        a: '規則式 SAST 靠事先寫好的 pattern 和資料流分析比對，快、可重現、零成本重跑，但看不懂業務意圖，抓不到「這個 endpoint 少了一層授權」這種需要讀懂上下文才成立的問題。codex-security 讓語言模型實際讀程式碼再判斷，代價是要花錢、每次結果不完全一樣、需要網路和 OpenAI 帳號。兩者強項幾乎不重疊，實務上是互補不是替代。',
+      },
+      {
+        q: '它預設會擋住我的 CI 嗎？',
+        a: '不會。掃描預設是 report-only，有漏洞也回 exit code 0。要真的擋門必須自己加 --fail-on-severity，例如 --fail-on-severity high。這個預設值容易被誤會成「掃過了沒問題」，設 CI 前一定要確認。',
+      },
+      {
+        q: 'exit code 2 代表什麼？',
+        a: '輸入無效、覆蓋範圍不完整、或執行期／匯出錯誤。關鍵在它把「掃不完整」跟「掃出問題」（exit code 1）分開了——README 明講這是刻意的，覆蓋不完整不能被誤認為政策通過。一個沒掃完的 repo 回綠燈比掃出漏洞還危險，這個設計把假綠燈擋掉了。',
+      },
+      {
+        q: '掃描成本怎麼控制？',
+        a: '用 --max-cost 設美元上限，超過就停（含它派出去的 worker），部分結果會保留。也可以換模型和推理強度，例如 --model gpt-5.6-terra --effort high。要注意 README 註明成本是用標準 API token 價格估算，不含額外費用與附加費，那個數字是估算不是帳單。預設 gpt-5.6-sol 加 xhigh 推理強度是相當貴的組合。',
+      },
+      {
+        q: '在公司機器上跑它有什麼風險？',
+        a: 'README 的 Local security model 寫得很清楚：它用你本機的作業系統權限執行，套用 approvalPolicy 為 never，不會跳出來問你要不要批准；而且掃描與 workbench 的子行程會繼承你的環境變數，包含不相關的 API token 和雲端憑證。如果你的 shell 裡塞著 AWS key 或資料庫密碼，這些會一起進到掃描行程。官方建議只帶它需要的憑證去啟動掃描。另外輸出目錄要放在被掃 repo 之外並設成 chmod 700，因為報告本身含原始碼片段與重現步驟，等於一份攻擊指南。',
+      },
+      {
+        q: '什麼情況下不該用 codex-security？',
+        a: '需要每次跑出完全一樣結果時（LLM 掃描本質上不可重現）、預算不能浮動時、要掃你不擁有或未被授權評估的 repo 時（SECURITY.md 明文禁止）、完全離線環境、以及需要穩定 API 時——版本還在 0.1.x，官方自己說 minor 版之間可能破壞相容性，三週內就累積了 160 個 commit。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-code-security-review-action',
+    title: 'claude-code-security-review 拆解：好 prompt、壞維護，還有一個靜默的假綠燈',
+    excerpt:
+      'Anthropic 開源的 claude-code-security-review 是一個 GitHub Action：PR 一開就讓 Claude 讀 diff 找新引入的漏洞，並把 finding 留成行內評論。這篇把 Python 原始碼逐檔讀完做客觀拆解：它那 175 行的審查 prompt 為什麼是整個專案最值得複用的資產（信心門檻量化、排除清單重複兩次、強制 exploit_scenario 欄位）、三層過濾架構怎麼設計；以及一個在原始碼裡追得出行號的實質問題——claude_api_client.py 第 62 行寫死了已退役的模型，導致被當作主打功能的 AI 假陽性過濾層整個被靜默關閉，而流水線照樣報綠。附 repo 現況（30 個 commit、最後 push 停在 2026-02-11、79 個 issue 開著）與可行的替代用法。',
+    category: 'AI 工具',
+    tags: [
+      'claude-code-security-review',
+      'Anthropic',
+      'GitHub Action',
+      'AI 資安審查',
+      'security review',
+      'Claude Code',
+      '假陽性過濾',
+      'AI 工具',
+    ],
+    publishDate: '2026-08-03',
+    faqItems: [
+      {
+        q: 'claude-code-security-review 是什麼？',
+        a: '一個掛在 pull request 上的 GitHub Action，用 Claude 讀 PR 的 diff 做語意層資安審查，只回報它認為高信心、真的可被利用的漏洞，並把 finding 留成 PR 行內評論。同一套分析能力也被包成 Claude Code 內建的 /security-review 斜線指令，不用架 CI 就能試。',
+      },
+      {
+        q: '它的假陽性過濾真的有在運作嗎？',
+        a: '規則式的硬排除有在跑，但被宣傳為主打功能的 AI 過濾層目前是關掉的。claudecode/claude_api_client.py 第 62 行的前置檢查把模型寫死成已退役的 claude-3-5-haiku-20241022，呼叫會拿到 404；findings_filter.py 第 186 到 195 行接住失敗後把 use_claude_filtering 設成 False，整個階段跳過，而 Action 不會失敗、不會回非零 exit code。repo 的 issue #114 與 #123 都獨立回報了這件事，兩張至今仍開著。這個模型名稱跟你在 claude-model 參數填什麼無關，是硬編碼的、改不到。',
+      },
+      {
+        q: '它的 prompt 有什麼值得學的？',
+        a: 'prompts.py 只有 175 行但寫得很克制：把信心門檻量化寫死（只報 >80% 確信可被利用的、confidence 0.7 以下不報）、排除清單在開頭和結尾各寫一次、強制三階段方法論（先理解 repo 既有資安慣例，再比對新程式碼，最後逐檔評估）、只看這次 PR 新引入的問題不翻舊帳、輸出強制 JSON 且必填 exploit_scenario 欄位逼模型寫出具體攻擊路徑。就算不用這個 Action，這份 prompt 也值得拿去改成自己的審查指令。',
+      },
+      {
+        q: '這個 repo 還有在維護嗎？',
+        a: '2026 年 8 月 3 日查到的狀態：總共 30 個 commit、最後一次 push 停在 2026-02-11、79 個 issue 開著。影響核心功能的 #114 從 2026 年 6 月掛到現在未修。要用就要有自己 fork 來維護的心理準備。',
+      },
+      {
+        q: '除了過濾層，還有哪些會造成假綠燈的問題？',
+        a: 'issue #120 回報快取的 restore-keys 用前綴比對，導致新 commit 被誤判成已掃過而被跳過，回報者指出這是 issue #42 的根因；可以用 run-every-commit: true 繞開，代價是成本上升且 README 註明多 commit 的 PR 這樣跑會增加假陽性。另外 issue #118 指出 action.yml 串接的 setup-python、cache、setup-node、upload-artifact 都還 pin 在已被 GitHub 標記棄用的 node20 版本。',
+      },
+      {
+        q: '我可以直接拿它掃外部貢獻者的 PR 嗎？',
+        a: '不建議。README 明文寫著它沒有針對 prompt injection 做防護，只該用來審查可信的 PR，並建議去 repo 設定開啟「Require approval for all external contributors」讓 workflow 只在維護者審過後才跑。開源專案上任何人都能開 PR，而 PR 內容會進到 prompt 裡，惡意 PR 可以在註解裡塞指令試圖影響審查結果。',
+      },
+      {
+        q: '最低成本的試用方式是什麼？',
+        a: '直接在 Claude Code 裡打 /security-review，它會審查你目前所有未提交的變更，用的是同一套分析邏輯，不必架 workflow。想客製化就把 repo 裡的 .claude/commands/security-review.md 複製到你專案的 .claude/commands/ 底下再改。這條路徑還順便避開了 Python 管線裡那個過濾層被關掉的問題。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'openai-codex-plugin-claude-code',
+    title:
+      'OpenAI 官方外掛讓 Codex 進 Claude Code：實測兩種 review，一種漏掉兩個高風險問題',
+    excerpt:
+      'OpenAI 在自己的 GitHub organization 下開源了給 Claude Code 用的官方外掛 codex-plugin-cc（Apache-2.0，撰文當下 30,993 顆星），裝上去就能在 Claude Code 裡直接叫 Codex 審 code 或把任務丟給它跑。我裝了 v1.0.6 並拿一段故意寫壞的批次退款程式碼實測：/codex:review 花 41 秒抓出 2 個 P1；同一份程式碼換 /codex:adversarial-review 抓出 4 個，多的兩個是「刪訂單摧毀稽核軌跡」與「完全沒有退款授權邊界」，標準 review 完全沒提。這篇把安裝步驟、7 個指令的實際差別，以及那個預設關閉、逾時或失敗都會 block 你 session 的 review gate 寫透。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'Codex',
+      'OpenAI',
+      'Code Review',
+      'AI 工具',
+      'Claude Code Plugin',
+      'AI Agent',
+    ],
+    publishDate: '2026-08-03',
+    faqItems: [
+      {
+        q: '這真的是 OpenAI 官方的外掛嗎？',
+        a: '是。repo 位於 github.com/openai/codex-plugin-cc，掛在 OpenAI 自己的 GitHub organization 下，plugin.json 的 author 欄位寫 OpenAI，授權是 Apache-2.0。撰文當下（2026-08-03）用 GitHub API 撈到 30,993 顆星、13 位 contributor、最新 release 是 2026-07-08 的 v1.0.6。',
+      },
+      {
+        q: 'Codex plugin for Claude Code 免費嗎？',
+        a: '外掛本身開源免費，但它會消耗你的 Codex 額度，而 Codex 需要 ChatGPT 訂閱（Free 方案也可以）或 OpenAI API key。所以是「外掛免費、推論要錢」。它沒有自己的 Codex runtime，用的是你本機已安裝的 Codex CLI 與同一份登入狀態。',
+      },
+      {
+        q: '怎麼安裝 OpenAI Codex plugin 到 Claude Code？',
+        a: '在 Claude Code 裡依序打 /plugin marketplace add openai/codex-plugin-cc、/plugin install codex@openai-codex、/reload-plugins，最後跑 /codex:setup 驗證。前置需求是 Node.js 18.18 以上，以及已登入的 Codex。/codex:setup --json 回傳 ready: true 才算真的裝好。',
+      },
+      {
+        q: '/codex:review 跟 /codex:adversarial-review 差在哪？',
+        a: '一般 review 不吃自訂 focus 文字，看的是程式碼細節；adversarial review 可以帶 focus 敘述，會質疑設計方向本身。我用同一段有問題的批次退款程式碼實測，一般版 41 秒抓 2 個 P1（SQL injection、非原子交易），adversarial 版抓 4 個，多出來的兩個是「刪除訂單破壞帳務稽核」與「退款授權邊界完全缺失」這類設計層問題。上線前把關建議用 adversarial 那個。',
+      },
+      {
+        q: 'review gate 該不該開？',
+        a: '預設是關的，我建議先維持關閉。它掛的是 Stop hook，會在 Claude 每次要結束回合時叫 Codex 審一遍，審出問題就擋住不讓停。從 stop-review-gate-hook.mjs 原始碼看，timeout 設 15 分鐘，而且逾時、非零 exit、回傳無法解析的 JSON 全都會走 decision: block——擋住你的可能不是 code 有問題，而是審查本身跑不起來。README 也警告它可能造成長時間 Claude/Codex 迴圈並快速消耗額度。',
+      },
+      {
+        q: '這個外掛會自己改我的程式碼嗎？',
+        a: '兩個 review 指令都是 read-only，不會動你的 code。只有 /codex:rescue 會實際動手，而那是你明確叫它做事的時候。其餘 /codex:status、/codex:result、/codex:cancel、/codex:transfer 都不改檔案。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
@@ -3048,6 +3187,17 @@ function buildFields(post) {
   }
 }
 
+// 只有「被當成 CLI 直接執行」時才跑發布流程。
+// 被 import（語法檢查、測試、工具鏈掃描）進來時不產生任何副作用——
+// 2026-08-03 踩過:用 `node -e "import('./scripts/publish-blog.mjs')"` 想做語法檢查,
+// 結果直接對 Firestore 跑了真實 upsert。語法檢查請用 `node --check`。
+if (import.meta.url !== `file://${process.argv[1]}`) {
+  // 被 import,不執行發布。
+} else {
+await main()
+}
+
+async function main() {
 const onlySlugs = process.argv.slice(2)
 const targets = onlySlugs.length
   ? posts.filter((p) => onlySlugs.includes(p.slug))
@@ -3092,3 +3242,4 @@ for (const post of targets) {
 }
 
 process.exit(anyFail ? 1 : 0)
+}
