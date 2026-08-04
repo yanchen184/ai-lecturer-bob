@@ -50,6 +50,49 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'whisperx-word-timestamps-diarization',
+    title: 'WhisperX 字級時間戳與語者分離:M2 MacBook 純 CPU 實測',
+    excerpt:
+      'Max Bain 的 BSD-2-Clause 開源專案,在 faster-whisper 的逐字稿之上多接 wav2vec2 強制對齊與 pyannote 語者分離,把時間戳細到每一個字。我在 M2 / 8GB 的 MacBook 純 CPU 實測 17.66 秒中文:base 加對齊 35 秒,86 個字全部拿到 start / end / score——但 NLTK 的 punkt_tab 沒補裝的話,對齊那步會跑完什麼都不輸出。',
+    category: 'AI 工具',
+    tags: [
+      'WhisperX',
+      'Whisper',
+      '語音轉文字',
+      '字級時間戳',
+      '語者分離',
+      'faster-whisper',
+      'pyannote',
+      'AI 工具',
+    ],
+    faqItems: [
+      {
+        q: 'WhisperX 跟 Whisper 差在哪?',
+        a: 'Whisper 給你「這段音檔講了什麼」,WhisperX 多給你「每一個字出現在第幾秒」。它的轉錄是呼叫 faster-whisper,自己做的是前後三段:先用 VAD 切掉靜音、轉完用 wav2vec2 強制對齊把時間戳磨細到字級、需要的話再用 pyannote 標出每句是誰講的。',
+      },
+      {
+        q: '字級時間戳是怎麼算出來的?為什麼比 Whisper 自己的準?',
+        a: 'Whisper 的時間戳是生成模型順便預測的,會漂。WhisperX 另外載入 wav2vec2 音素模型做強制對齊:逐字稿已知的情況下,問題變成「把已知的字排進時間軸最合理的位置」,這是可以用動態規劃解的對齊問題,不是猜測。精度來自一個專門做時間解析的模型。',
+      },
+      {
+        q: 'Apple Silicon 上跑得動嗎?速度如何?',
+        a: '跑得動,但是 CPU 在跑。torch 的 MPS 可用但轉錄後端 CTranslate2 走 CPU 路徑,要指定 --device cpu --compute_type int8。我在 M2 / 8GB 實測 17.66 秒中文:base 加對齊 35.11 秒,--no_align 是 25.71 秒。README 上的 70x realtime 是 CUDA 環境的數字,跟 Mac 無關。',
+      },
+      {
+        q: '為什麼跑完對齊卻什麼檔案都沒輸出?',
+        a: '多半是缺 NLTK 的 punkt_tab。句子切分要用它,但這份資料不會跟著套件一起裝,缺了會在最後一步噴 Resource punkt_tab not found 然後輸出目錄空的。補裝 python -c "import nltk; nltk.download(\'punkt_tab\')" 即可,只會遇到這一次。',
+      },
+      {
+        q: '啟動時噴一堆 libtorchcodec 載入失敗的紅字要緊嗎?',
+        a: '不要緊,轉錄照跑、結果照出。那只是找不到 torchcodec 要用的 FFmpeg 動態連結庫,接著就退回其他方式讀音檔。想清掉就裝一份 FFmpeg(brew install ffmpeg),不裝也不影響輸出。',
+      },
+      {
+        q: '語者分離要準備什麼?',
+        a: '加 --diarize 並帶 --hf_token。預設模型 pyannote/speaker-diarization-community-1 是 HuggingFace 上的 gated model,要先到模型頁面接受使用條款再用自己的 access token。已知人數時可以用 --min_speakers / --max_speakers 縮小搜尋範圍。',
+      },
+    ],
+  },
+  {
     slug: 'whisper-cpp-local-speech-to-text',
     title: 'whisper.cpp 本機語音轉文字:M2 MacBook 實測,不用 Python、不上雲',
     excerpt:
