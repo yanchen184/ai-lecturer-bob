@@ -50,6 +50,49 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'whisper-cpp-local-speech-to-text',
+    title: 'whisper.cpp 本機語音轉文字:M2 MacBook 實測,不用 Python、不上雲',
+    excerpt:
+      '純 C/C++ 寫成的 Whisper 實作,MIT 授權、無 Python 依賴,clone 完 cmake 一下就能跑,Apple Silicon 走 Metal 加速。我在 M2 / 8GB 的 MacBook 上實測三種模型:base 系列約 6-7 倍即時速度但中文會寫錯人名,large-v3-turbo 全對且仍有 1.5 倍即時——8GB 記憶體跑 1.5G 模型無壓力。',
+    category: 'AI 工具',
+    tags: [
+      'whisper.cpp',
+      'Whisper',
+      '語音轉文字',
+      'speech to text',
+      '本機 AI',
+      'Apple Silicon',
+      'Metal',
+      'AI 工具',
+    ],
+    faqItems: [
+      {
+        q: 'whisper.cpp 跟 OpenAI 官方 Whisper 差在哪?',
+        a: '官方 Whisper 是 Python 專案,要裝 PyTorch 與一整套依賴;whisper.cpp 是同一個模型的純 C/C++ 重寫,build 完只有一支執行檔,不需要 Python 也不需要 PyTorch。模型是單一 .bin 檔,搬到別台機器一樣能用。',
+      },
+      {
+        q: '在 Mac 上要怎麼安裝?',
+        a: 'git clone 專案後跑 cmake -B build -DCMAKE_BUILD_TYPE=Release 再 cmake --build build -j --config Release,執行檔會在 build/bin/whisper-cli。macOS 不用另外裝東西,Metal 支援預設就是開的。模型用專案內附的 bash ./models/download-ggml-model.sh <模型名> 下載。',
+      },
+      {
+        q: '8GB 記憶體的 MacBook 跑得動大模型嗎?',
+        a: '跑得動。我在 M2 / 8GB 上載入 1.5GB 的 large-v3-turbo 全程沒有 swap 爆掉,實際運算配置的緩衝區加起來不到 200MB。轉錄 17.6 秒的中文音檔運算耗時約 11.9 秒,仍然快過即時。',
+      },
+      {
+        q: '為什麼我的中文音檔轉出來只有 (speaking in foreign language)?',
+        a: '因為用到了 .en 結尾的英文專用模型。base.en、small.en 這類模型認得出「這不是英文」但沒有能力轉錄中文,而且不會報錯。要處理中文請改用沒有 .en 後綴的多語版本,例如 base、small、medium、large-v3-turbo。',
+      },
+      {
+        q: '轉出來是簡體字怎麼辦?',
+        a: '這是 Whisper 模型本身處理中文的行為,不是 whisper.cpp 的問題——訓練資料裡簡體中文佔多數。繁中使用者需要在輸出後接一層轉換,例如 OpenCC。',
+      },
+      {
+        q: '要單字級時間戳或語者分離怎麼辦?',
+        a: 'whisper.cpp 的原生能力在這兩塊比較弱。需要精準到單字的時間戳、或要分辨誰在什麼時候說話(語者分離),WhisperX 那類在 Whisper 之外再接強制對齊與語者分群的方案更適合。',
+      },
+    ],
+  },
+  {
     slug: 'llm-inference-load-test-goodput',
     title: '壓測 LLM 推論服務,別只問「能撐幾個 client」——用 goodput 回答容量',
     excerpt:
