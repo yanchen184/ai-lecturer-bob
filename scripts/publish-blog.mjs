@@ -50,6 +50,45 @@ async function getOwnerAccessToken() {
 /** 每篇文章: { slug, title, excerpt, category, tags[], faqItems[], featured? } */
 const posts = [
   {
+    slug: 'whisper-cpp-vs-whisperx',
+    title: 'whisper.cpp 與 WhisperX 不是二選一:M2 實測後我兩個都留著',
+    excerpt:
+      '兩套本機語音轉文字工具,我在同一台 M2 MacBook(8GB)上都裝過都跑過:whisper.cpp 贏在形態,clone 加兩行 cmake、零個坑;WhisperX 贏在設計,用 wav2vec2 強制對齊把時間戳磨到字級還附信心分數。裝 WhisperX 我踩了三個坑——結論是先裝 whisper.cpp,真需要字級時間戳再加 WhisperX,兩個不衝突。',
+    category: 'AI 工具',
+    tags: [
+      'whisper.cpp',
+      'WhisperX',
+      '語音轉文字',
+      'speech to text',
+      '本機 AI',
+      '字級時間戳',
+      'Apple Silicon',
+      'AI 工具',
+    ],
+    faqItems: [
+      {
+        q: 'whisper.cpp 跟 WhisperX 該選哪一個?',
+        a: '多數情況先選 whisper.cpp,因為安裝成本近乎為零而且對一般轉錄需求足夠。只有當你需要字級時間戳、語者分離或對齊信心分數時,才需要再裝 WhisperX。這兩個不是互斥選項,可以同時裝——我自己兩個都留在機器上。',
+      },
+      {
+        q: 'WhisperX 為什麼比 whisper.cpp 慢?',
+        a: '因為它做的事情比較多。WhisperX 除了轉錄,還跑了 VAD 前處理和 wav2vec2 強制對齊。我實測對齊那一步在 M2 純 CPU 上大約多花 9 秒(17.66 秒的音檔,35.11 秒對上 25.71 秒)。另外我的 WhisperX 測試是純 CPU,whisper.cpp 大模型走的是 Metal GPU,這兩組數字用的不是同一段音檔也不是同一個後端,不能直接對比。',
+      },
+      {
+        q: '字級時間戳一定要用 WhisperX 嗎?',
+        a: 'whisper.cpp 有參數可以控制輸出粒度,但那是把句子切短,時間戳的來源仍然是 Whisper 生成時自己預測的。WhisperX 的字級時間戳是另外載入 wav2vec2 音素模型做強制對齊算出來的,而且附帶信心分數 score,來源和品質是兩回事。',
+      },
+      {
+        q: '兩個都裝會不會衝突?',
+        a: '不會。whisper.cpp 是一支獨立執行檔加一個 .bin 模型檔,WhisperX 是 Python 套件,我把它裝在獨立的 venv 裡。兩者各自的模型權重也是分開下載、分開快取的。',
+      },
+      {
+        q: '8GB 記憶體的 Mac 跑得動嗎?',
+        a: '我這台就是 8GB 的 M2。whisper.cpp 載入 1.5GB 的 large-v3-turbo 全程沒有 swap 壓力,運算緩衝區加起來不到 200MB。WhisperX 用 base 模型加 int8 量化也跑得動,但它同時要載轉錄模型和對齊模型,記憶體壓力比 whisper.cpp 明顯大。',
+      },
+    ],
+  },
+  {
     slug: 'whisperx-word-timestamps-diarization',
     title: 'WhisperX 字級時間戳與語者分離:M2 MacBook 純 CPU 實測',
     excerpt:
