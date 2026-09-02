@@ -71,5 +71,7 @@
       "ctr": 0,
       "position": 7
     }
-  ]
+  ],
+  "analysis": "自檢：本回合是純數據評論，未建 task、未動檔案、未派背景任務，無需 round-trip。重送收尾回報如下。\n\n【一句總評】\n沒事但也沒動靜。單日曝光 1、點擊 0，週流量幾乎全靠首頁與 /blog/ 的零星曝光撐著，還沒有任何 query 有穩定曝光。\n\n【需要注意】\n尊上，28 天內唯一成型的主題是 NodePort（三個變體共 10 次曝光），但排名全在 76 到 86，等於被撈到卻沒人看得到。另外 /blog/ 曝光 6 次點擊 0，列表頁 title 對搜尋者沒吸引力。\n\n【今天可以做】\n找出被 NodePort 撈到的那篇文章，把 title 和 H1 改成直接含「Kubernetes NodePort」字樣，改完到 GSC 對該網址手動 Request Indexing，五分鐘內可完成。",
+  "analysisGeneratedAt": "2026-09-03T07:07:41+0800"
 }
