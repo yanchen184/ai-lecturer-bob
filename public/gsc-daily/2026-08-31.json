@@ -1,0 +1,59 @@
+{
+  "date": "2026-08-31",
+  "impressions": 10,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 24.2,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.3
+    },
+    {
+      "page": "/blog/k8s/kubectl-advanced-tips/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 68.5
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/claude-code-lesson-2/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/k8s/pv-pvc-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 69
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    }
+  ]
+}
