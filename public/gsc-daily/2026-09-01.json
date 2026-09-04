@@ -1,0 +1,61 @@
+{
+  "date": "2026-09-01",
+  "impressions": 18,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 3.1,
+  "queries": [
+    {
+      "query": "cdss-8090",
+      "page": "/blog/hermes-agent-medical-cdss/",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/hermes-agent-medical-cdss/",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.7
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/firebase-free-web-app-domain/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/yc-plugin-youtube-upload/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    }
+  ]
+}
