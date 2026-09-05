@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-02",
+  "impressions": 13,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 3.9,
+  "queries": [
+    {
+      "query": "cdss-8090",
+      "page": "/blog/hermes-agent-medical-cdss/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/hermes-agent-medical-cdss/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/claude-code-teams-plugin-webhook-setup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/ollama-cloud-hermes-langchain/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    }
+  ]
+}
