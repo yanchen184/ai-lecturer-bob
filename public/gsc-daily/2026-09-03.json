@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-03",
+  "impressions": 9,
+  "clicks": 1,
+  "ctr": 11.11,
+  "position": 8.2,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/topics/local-llm-mobile/",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 50.0,
+      "position": 15
+    },
+    {
+      "page": "/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/claude-code-teams-plugin-webhook-setup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/devspace-mcp-chatgpt-as-codex/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/topics/mempalace/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    }
+  ]
+}
