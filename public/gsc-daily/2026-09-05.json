@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-05",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 4.7,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
