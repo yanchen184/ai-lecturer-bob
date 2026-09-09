@@ -1,0 +1,103 @@
+{
+  "date": "2026-09-06",
+  "impressions": 26,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 8.7,
+  "queries": [
+    {
+      "query": "nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 96
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/blog/claude-code-lesson-2/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.5
+    },
+    {
+      "page": "/blog/claude-code-pro-class-hub/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/blog/claude-code-teams-owner-management-guide/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2.5
+    },
+    {
+      "page": "/blog/gemma4-31b-cloud-free-no-gpu/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/kkterm-windows-terminal-ai/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.5
+    },
+    {
+      "page": "/blog/open-slide-ai-agent-presentation-framework/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.5
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 96
+    }
+  ]
+}
