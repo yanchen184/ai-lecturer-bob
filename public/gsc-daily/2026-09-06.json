@@ -99,5 +99,7 @@
       "ctr": 0,
       "position": 96
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事，站台流量還在個位數，GSC 這幾天基本沒訊號——9/06 只有 1 次曝光、0 點擊，7 天內唯一有量的是 cdss-8090（15 曝光）。整體還在「有排名但沒人看到」的階段。\n\n【需要注意】\n最值得盯的是 cdss-8090：排名第 2 名、15 次曝光卻 0 點擊，CTR 掛零。第 2 名不該完全沒人點，多半是 title/description 跟這個查詢對不上，或它其實是內部代號、搜的人一看標題就知道不是自己要的。另一群 nodeport / k8s service type nodeport / kubernetes nodeport 共 10 次曝光，排名全在 76～96，等於在第 8 頁以後，這些字有需求但你的頁面根本排不進視線範圍。\n\n【今天可以做】\n去 GSC 搜 cdss-8090 找出對應的那個 URL，打開它的 `<title>` 和 meta description，把「cdss-8090」這個字串明確放進標題前段，改完直接對該 URL 手動送 Request Indexing。五分鐘內能做完，排名第 2 的字改 title 是投報率最高的一件事。",
+  "analysisGeneratedAt": "2026-09-10T07:07:33+0800"
 }
