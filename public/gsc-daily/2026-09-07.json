@@ -1,0 +1,52 @@
+{
+  "date": "2026-09-07",
+  "impressions": 11,
+  "clicks": 2,
+  "ctr": 18.18,
+  "position": 4.6,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.3
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 2,
+      "clicks": 2,
+      "ctr": 100,
+      "position": 1.5
+    },
+    {
+      "page": "/blog/claude-code-teams-owner-management-guide/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/how-i-built-claude-self-sync-with-claude/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
