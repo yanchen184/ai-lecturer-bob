@@ -41,5 +41,7 @@
       "ctr": 0,
       "position": 2
     }
-  ]
+  ],
+  "analysis": "沒事，站台還在低流量摸索期。7 天曝光加起來不到 20 次，UV 3 人，這種量級任何百分比變化都是雜訊，不用解讀。唯一有結構意義的是 cdss-8090 這個查詢：排名 2.0、28 天累積 15 次曝光、點擊 0。\n\n兩件事。第一，cdss-8090 排在第 2 名卻一次都沒被點，這是全站最異常的訊號——排第 2 的 CTR 正常該有兩成以上，歸零通常代表 title/description 在搜尋結果頁沒說服力，或搜這個詞的人要找的根本不是你那頁。第二，nodeport 系列（kubernetes nodeport、node port k8s、k8s service type nodeport）合計 8 次曝光但排名全在 76–96 名，等於 Google 認得你有這主題、但完全不給位置；GSC 2026-09-08 單日空白這件事我沒法判斷原因，要你去後台看。\n\n今天做一件事：把 cdss-8090 那頁的 title 和 meta description 重寫。先自己 Google 一次 cdss-8090，看前 5 名的標題長什麼樣、搜這詞的人到底想要什麼，然後把你的 title 改成直接命中那個意圖（含關鍵字、25 字內、講清楚這頁能給什麼）。改完手動 Request Indexing。五分鐘的事，而且排名已經在第 2 名，CTR 一動就是實質流量。",
+  "analysisGeneratedAt": "2026-09-12T07:07:33+0800"
 }
