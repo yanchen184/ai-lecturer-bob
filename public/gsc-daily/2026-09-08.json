@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-08",
+  "impressions": 5,
+  "clicks": 2,
+  "ctr": 40.0,
+  "position": 3.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/how-i-built-claude-self-sync-with-claude/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/style/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ]
+}
