@@ -55,5 +55,7 @@
       "ctr": 0,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "昨天 UV 2、PV 2，站內基本沒人；GSC 這邊 7 天總曝光 19、點擊 5，樣本小到談不上趨勢。9/09 單日沒曝光數據，但這在低流量站很正常，不用當成事故。\n\n值得注意兩件。一是 cdss-8090 這個 query 28 天 15 次曝光、排名 2.0，卻 0 點擊——排在第二名還沒人點，通常是 title/description 跟這個查詢意圖對不上，或搜的人只是要看你有沒有這頁。二是 nodeport 系列（k8s service type nodeport、kubernetes nodeport、node port k8s）加起來 7 次曝光，排名全在 76~96 名，代表你有內容但沒被 Google 當回事，這群字目前只是雜訊等級。另外 fb.yanchen.app 曝光 3 點擊 3，CTR 100%，那是品牌導向流量，不用管。\n\n今天五分鐘：把 cdss-8090 那頁的 title 和 meta description 改掉，title 直接把「cdss-8090」放前面，description 一句話講清楚這頁能解決什麼問題。排名 2.0 的曝光是白給的，改文案是唯一成本近零、又能直接吃到點擊的動作。改完順手在 GSC 對那頁按 Request Indexing 讓 Google 重抓。",
+  "analysisGeneratedAt": "2026-09-13T07:07:30+0800"
 }
