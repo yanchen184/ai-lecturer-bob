@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-12",
+  "impressions": 4,
+  "clicks": 1,
+  "ctr": 25.0,
+  "position": 4.5,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/hermes-agent-mac-install/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 2
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    }
+  ]
+}
