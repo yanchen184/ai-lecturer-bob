@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-15",
+  "impressions": 6,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 18.5,
+  "queries": [
+    {
+      "query": "k8s是什麼",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 93
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/devspace-mcp-chatgpt-as-codex/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 93
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
