@@ -1,0 +1,52 @@
+{
+  "date": "2026-09-16",
+  "impressions": 7,
+  "clicks": 2,
+  "ctr": 28.57,
+  "position": 4.6,
+  "queries": [],
+  "pages": [
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 2,
+      "clicks": 2,
+      "ctr": 100,
+      "position": 2
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/claude-code-ultracode-ultrathink/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/firebase-free-web-app-domain/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/ollama-cloud-hermes-langchain/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
