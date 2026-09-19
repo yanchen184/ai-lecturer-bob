@@ -48,5 +48,7 @@
       "ctr": 0,
       "position": 9
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n沒事，但也沒動靜。昨天 1 UV 1 PV、GSC 單日 0 曝光，7 天全站曝光個位數、點擊全 0，這個量級任何波動都是雜訊，不用解讀。\n\n【需要注意】\n兩件。一是 cdss-8090 這個 query 28 天 15 次曝光、平均排名 2.0 卻 0 點擊——排在第二名沒人點，通常是 title/description 跟這個字的搜尋意圖對不上，或搜的人只是要找內部服務不是找文章，值得去看一下這個 query 落在哪一頁。二是 GSC 單日空白、7 天主站頁面（/、/blog/）全部 0 點擊，唯一有點擊的是 fb.yanchen.app（11 曝光 8 點擊）——主站為什麼完全接不到點擊，光看這些數字判斷不了，要去後台確認原因，不要先認定是哪一個。\n\n【今天可以做】\n去 GSC 的網址審查（URL Inspection）貼 https://yanchen.app/ 和 /blog/ 各查一次，看是否已編入索引、抓取時間是什麼時候，順手按 Request Indexing。同時瀏覽器直接開 yanchen.app/sitemap.xml 和 /robots.txt 確認都回 200 且內容正確——五分鐘內做得完，而且不管後台狀態如何都該做。",
+  "analysisGeneratedAt": "2026-09-20T07:13:06+0800"
 }
