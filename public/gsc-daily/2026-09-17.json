@@ -97,5 +97,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "本回合為純數據解讀輸出，無 TaskList、無工具執行、無背景任務、無檔案路徑，不涉及 round-trip 驗證。重新送出：\n\n【一句總評】\n昨天 UV 3、PV 0，GSC 2026-09-17 單日沒有曝光數據，7 天總曝光也只有個位數，整體還在冷啟動狀態，沒什麼可解讀的訊號。唯一像樣的流量來自 fb.yanchen.app（曝光 11、點擊 6），不是主站。\n\n【需要注意】\n兩件事。一是 GSC 數據空白，原因可能很多（剛搬家還在爬、索引未完成、後台設定等），不要猜，要進後台實際確認資料是否有正常回報。二是 28 天的 cdss-8090 排名 2.0、曝光 15 卻 0 點擊，排到第 2 名還沒人點，通常是 title/description 跟該查詢的意圖對不上，或那本來就不是你要的流量。另外 /blog/ 曝光 11、點擊 0，k8s是什麼、oomkilled、nodeport 排名都在 76~97，等於沒進戰場。\n\n【今天可以做】\n去 GSC 對 https://yanchen.app/ 和 /blog/ 各手動送一次 Request Indexing，順手在瀏覽器開 yanchen.app/sitemap.xml 和 /robots.txt 確認都回 200 且內容正常。五分鐘內做得完，而且不管後台是什麼狀態都該做。",
+  "analysisGeneratedAt": "2026-09-21T07:12:31+0800"
 }
