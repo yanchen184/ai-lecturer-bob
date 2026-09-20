@@ -3140,6 +3140,47 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claudex-loop-claude-codex-adversarial-review',
+    title: 'claudex-loop 實測：我丟一份有洞的計畫，Codex 40 秒抓出來',
+    excerpt:
+      'chaseai-yt 在 2026-06 開的 Claude Code skill，把 Claude 與 Codex 配成對手：Claude 寫計畫、Codex 帶證據反駁，不通過不准動工，寫完 code 再換人檢查。我丟一份 Acceptance 只驗單一 happy path 的計畫進去，兩輪獨立實測都在 33 到 41 秒回 REVISE 並指到同一行——真的會抓，但每輪吃掉四萬多 input tokens，不是免費午餐。',
+    category: 'AI 工具',
+    tags: [
+      'claudex-loop',
+      'Claude Code',
+      'Codex',
+      'AI code review',
+      'AI 協作',
+      'skill',
+      'CLI 工具',
+      'AI 工具',
+    ],
+    publishDate: '2026-09-20',
+    faqItems: [
+      {
+        q: 'claudex-loop 是什麼？跟直接叫 AI 審查有什麼不同？',
+        a: '它是一組 Claude Code skill，把「寫」跟「評」硬性拆給兩個不同模型：Claude 寫 PLAN.md，Codex 帶證據反駁，不通過就不准動工；開始寫 code 之後角色再互換，寫的人不評自己的作品。跟直接叫同一個 AI「你再檢查一次」的差別在於審查方沒參與產出、沒有要維護自己前面說過的話，而且它每次都要引用具體檔案與行號，不能只回一句「看起來沒問題」。',
+      },
+      {
+        q: '它會不會偷偷改我的 code？',
+        a: '審查那一段不會。我把它實際產生的 command.json 挖出來看，審查方是以 -s read-only 加上 approval_policy="never" 啟動的，拿不到寫入權限，也不會跳任何核准提示。另外 runner.py 全檔 420 行只 import subprocess，grep 過沒有任何網路呼叫、也不讀 token 或 api_key，它做的事就是在你本機把另一支 CLI 叫起來。',
+      },
+      {
+        q: '審查結果可以被挪用到別份計畫嗎？',
+        a: '不行，它把 plan 的 SHA-256 寫進結果裡。一份 APPROVED 是綁在那份計畫的內容雜湊上的，計畫改一個字雜湊就變了，舊的通過結論就對不上——所以沒辦法先拿一份無害的計畫換到通過，再把內容換掉動工。',
+      },
+      {
+        q: '實測下來它真的抓得到東西嗎？',
+        a: '我刻意寫了一份有洞的計畫：Behavior 列三條規則，Acceptance 只驗一條，而且驗的那個輸入頭尾本來就沒有連字號，所以就算實作完全漏掉「去除首尾連字號」也會綠。兩輪獨立執行（32.98 秒與 40.58 秒）都回 REVISE，都指到 PLAN.md:10，都說同一件事：驗收只涵蓋單一正常案例，證明不了列出的行為。能重現比單次跑得漂亮更有說服力。',
+      },
+      {
+        q: '成本大概是多少？',
+        a: '我這兩輪光是 review 一份三百多 bytes 的計畫，單輪就吃掉四萬到八萬多 input tokens（其中約一半是 cached），output 一千出頭。那是實打實走你的 ChatGPT 額度，計畫越長、repo 越大吃得越多。它換到的是「動工前先被問一輪」，值不值得要看你那份計畫改錯的代價有多高。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
