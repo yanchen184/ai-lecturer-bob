@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { homedir } from 'node:os'
 import { execSync } from 'node:child_process'
+import { pathToFileURL } from 'node:url'
 
 const PROJECT_ID = 'forbidden-beauty'
 const API_KEY = 'AIzaSyDrAsh4pLbCebHSogupG8daABhRYdI2prk'
@@ -3396,7 +3397,11 @@ function buildFields(post) {
 // 被 import（語法檢查、測試、工具鏈掃描）進來時不產生任何副作用——
 // 2026-08-03 踩過:用 `node -e "import('./scripts/publish-blog.mjs')"` 想做語法檢查,
 // 結果直接對 Firestore 跑了真實 upsert。語法檢查請用 `node --check`。
-if (import.meta.url !== `file://${process.argv[1]}`) {
+// 用 pathToFileURL 而非字串拼 `file://`：argv[1] 在 Windows 是
+// `C:\...` 或相對路徑，拼出來的 `file://scripts/publish-blog.mjs`
+// 永遠對不上 import.meta.url 的 `file:///C:/...`，直接執行也會被當成
+// 被 import 而跳過發布——且 exit code 仍是 0，看起來完全成功。
+if (import.meta.url !== pathToFileURL(process.argv[1]).href) {
   // 被 import,不執行發布。
 } else {
 await main()
