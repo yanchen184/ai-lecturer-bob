@@ -111,12 +111,60 @@ export function stripManualTableOfContents(content: string): string {
   );
 }
 
+/**
+ * 逐行掃出 fenced code block 的範圍。
+ * regex 追蹤不了巢狀 fence（```markdown 裡面又有 ```bash），會在內層的收尾處提早
+ * 結束，害外層後半段漏出去被當成真的 markdown 渲染，而且收尾位移會一路往後串。
+ * 依 CommonMark：收尾 fence 不得帶 info string，長度不得少於開頭 fence。
+ */
+function scanFences(
+  content: string,
+  onCode: (lang: string, filename: string, body: string) => string,
+  onText: (line: string) => string
+): string {
+  const lines = content.split('\n');
+  const out: string[] = [];
+  let i = 0;
+  while (i < lines.length) {
+    const raw = lines[i];
+    const open = /^(`{3,})([\w-]*)(?::([^\r\n]+))?[ \t]*\r?$/.exec(raw);
+    if (!open) {
+      out.push(onText(raw));
+      i += 1;
+      continue;
+    }
+    const closeRe = new RegExp('^`{' + open[1].length + ',}[ \t]*\r?$');
+    const body: string[] = [];
+    let j = i + 1;
+    let closed = false;
+    while (j < lines.length) {
+      if (closeRe.test(lines[j])) {
+        closed = true;
+        break;
+      }
+      body.push(lines[j]);
+      j += 1;
+    }
+    if (!closed) {
+      // 沒有收尾 fence：原樣輸出這一行，不吞掉後面所有內容。
+      out.push(onText(raw));
+      i += 1;
+      continue;
+    }
+    // 收尾 fence 行尾若有 CR 要保留，否則以 CRLF 為界的段落規則會在這行失準。
+    const cr = lines[j].endsWith('\r') ? '\r' : '';
+    out.push(onCode(open[2] ?? '', open[3] ?? '', body.join('\n')) + cr);
+    i = j + 1;
+  }
+  return out.join('\n');
+}
+
 /** 從 content 解析出所有 `##` 標題的 TOC。 */
 function extractToc(content: string): TocItem[] {
   const items: TocItem[] = [];
   const used = new Set<string>();
   // 先移除 fenced code block,否則範例 markdown 裡的 `## Goal` 會被收進側邊 TOC。
-  const withoutCode = content.replace(/```[\s\S]*?```/g, '');
+  const withoutCode = scanFences(content, () => '', (line) => line);
   const regex = /^## (.+)$/gm;
   let m: RegExpExecArray | null;
   while ((m = regex.exec(withoutCode)) !== null) {
@@ -160,37 +208,43 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     return `\u0000CODEBLOCK${codeBlocks.length - 1}\u0000`;
   };
 
-  let html = content
-    // Code blocks first — protect their content
-    // 支援：
-    //   ```lang             → 一般 highlight code block
-    //   ```lang:filename    → 帶檔名 hint
-    //   ```kroki:<type>     → 攔截，輸出 <figure data-kroki ...><img src="...kroki url..."/></figure>
-    //                         （可用 inlineKrokiImages() 後處理改寫成 inline SVG）
-    .replace(/```([\w-]*)(?::([^\n]+))?\n?([\s\S]*?)```/g, (_m, lang: string, filename: string, code: string) => {
-      const trimmed = code.replace(/\n$/, '');
-      const langLabel = (lang || 'code').toLowerCase();
+  // 把一個 fenced code block 轉成最終 HTML（kroki 或 <pre>）。
+  const renderFence = (lang: string, filename: string, code: string): string => {
+    const trimmed = code.replace(/\r?\n$/, '');
+    const langLabel = (lang || 'code').toLowerCase();
 
-      // Kroki diagram block
-      if (langLabel === 'kroki' && filename) {
-        const krokiType = filename.trim().toLowerCase();
-        if (KROKI_SUPPORTED.has(krokiType)) {
-          const src = buildKrokiUrl(krokiType, trimmed);
-          const alt = `${krokiType} diagram`;
-          // data-kroki-source 保留原始碼，方便後處理 / debug
-          const sourceB64 =
-            typeof btoa === 'function'
-              ? btoa(unescape(encodeURIComponent(trimmed)))
-              : Buffer.from(trimmed, 'utf-8').toString('base64');
-          return stash(`<figure data-kroki="${krokiType}" data-kroki-source="${sourceB64}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" /></figure>`);
-        }
+    // Kroki diagram block
+    if (langLabel === 'kroki' && filename) {
+      const krokiType = filename.trim().toLowerCase();
+      if (KROKI_SUPPORTED.has(krokiType)) {
+        const src = buildKrokiUrl(krokiType, trimmed);
+        const alt = `${krokiType} diagram`;
+        // data-kroki-source 保留原始碼，方便後處理 / debug
+        const sourceB64 =
+          typeof btoa === 'function'
+            ? btoa(unescape(encodeURIComponent(trimmed)))
+            : Buffer.from(trimmed, 'utf-8').toString('base64');
+        return `<figure data-kroki="${krokiType}" data-kroki-source="${sourceB64}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" /></figure>`;
       }
+    }
 
-      const escaped = escapeHtml(trimmed);
-      const prismClass = langLabel === 'code' ? '' : ` class="language-${langLabel}"`;
-      const fileAttr = filename ? ` data-filename="${escapeHtml(filename.trim())}"` : '';
-      return stash(`<pre data-lang="${langLabel}"${fileAttr}><code${prismClass}>${escaped}</code></pre>`);
-    });
+    const escaped = escapeHtml(trimmed);
+    const prismClass = langLabel === 'code' ? '' : ` class="language-${langLabel}"`;
+    const fileAttr = filename ? ` data-filename="${escapeHtml(filename.trim())}"` : '';
+    return `<pre data-lang="${langLabel}"${fileAttr}><code${prismClass}>${escaped}</code></pre>`;
+  };
+
+  // Code blocks first — protect their content。支援：
+  //   ```lang             → 一般 highlight code block
+  //   ```lang:filename    → 帶檔名 hint
+  //   ```kroki:<type>     → 攔截，輸出 <figure data-kroki ...><img src="...kroki url..."/></figure>
+  //                         （可用 inlineKrokiImages() 後處理改寫成 inline SVG）
+  let html = scanFences(
+    content,
+    (lang, filename, body) => stash(renderFence(lang, filename, body)),
+    (line) => line
+  );
+
 
   // GFM tables — must run BEFORE other block-level regexes so `|` pipes aren't
   // mistaken for inline syntax. Matches header + separator + 1+ body rows.

@@ -72,7 +72,7 @@ EP1 講了我用 Obsidian 打開 Claude 的 memory,看到一片花朵狀的慘�
 
 把同一條規則改寫成「觸發 → 動作 → 違規判斷」三段:
 
-```markdown
+````markdown
 ## auto-memory 寫入 SOP(寫 memory 前必跑)
 
 ### Step 1 — 找既有檔(15 秒)
@@ -116,7 +116,7 @@ ls ~/.claude/projects/-Users-yanchen/memory/*.md
 1. 寫 memory 跳過 Step 1(沒 ls 既有檔就動筆)→ 違規
 2. 寫完沒加 `## 相關` 區塊 → 違規
 3. 內容明顯跨專案規範卻存到專案級 → 違規
-```
+````
 
 差在哪?
 
