@@ -249,8 +249,10 @@ export function renderMarkdown(content: string): RenderedMarkdown {
   // GFM tables — must run BEFORE other block-level regexes so `|` pipes aren't
   // mistaken for inline syntax. Matches header + separator + 1+ body rows.
   // Alignment hints in the separator (`:--`, `:-:`, `--:`) map to th/td align.
+  // 換行要吃 \r?\n：文章多半是 CRLF，只配 \n 的話 \r 卡在收尾的 | 跟換行
+  // 之間，整段永遠配不上，表格會原樣輸出成一堆裸管線文字。
   const tableRe =
-    /^(\|.+\|)\n(\|[-: |]+\|)\n((?:\|.*\|(?:\n|$))+)/gm;
+    /^(\|.+\|)\r?\n(\|[-: |]+\|)\r?\n((?:\|.*\|(?:\r?\n|$))+)/gm;
   html = html.replace(tableRe, (_m, header: string, sep: string, body: string) => {
     const parseRow = (row: string): string[] =>
       row
