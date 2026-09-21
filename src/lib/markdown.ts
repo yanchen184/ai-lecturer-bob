@@ -115,9 +115,11 @@ export function stripManualTableOfContents(content: string): string {
 function extractToc(content: string): TocItem[] {
   const items: TocItem[] = [];
   const used = new Set<string>();
+  // 先移除 fenced code block,否則範例 markdown 裡的 `## Goal` 會被收進側邊 TOC。
+  const withoutCode = content.replace(/```[\s\S]*?```/g, '');
   const regex = /^## (.+)$/gm;
   let m: RegExpExecArray | null;
-  while ((m = regex.exec(content)) !== null) {
+  while ((m = regex.exec(withoutCode)) !== null) {
     const text = m[1].trim();
     let id = slugify(text) || `heading-${items.length}`;
     let unique = id;
@@ -148,6 +150,16 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     return unique;
   };
 
+  // 先把 code block 抽成 placeholder,全部行內／區塊規則跑完再換回去。
+  // 只做 escapeHtml 不夠:`## Goal`、`- item` 這類內容沒有角括號,escape 後原樣
+  // 保留,後面的標題／清單 regex 就會在 <pre> 裡面把它們當成真的 markdown 處理,
+  // 產出 <h2> 與破損的 <ul>/<li> 巢狀,並把後續段落吃進 <ul> 裡。
+  const codeBlocks: string[] = [];
+  const stash = (h: string): string => {
+    codeBlocks.push(h);
+    return `\u0000CODEBLOCK${codeBlocks.length - 1}\u0000`;
+  };
+
   let html = content
     // Code blocks first — protect their content
     // 支援：
@@ -170,14 +182,14 @@ export function renderMarkdown(content: string): RenderedMarkdown {
             typeof btoa === 'function'
               ? btoa(unescape(encodeURIComponent(trimmed)))
               : Buffer.from(trimmed, 'utf-8').toString('base64');
-          return `<figure data-kroki="${krokiType}" data-kroki-source="${sourceB64}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" /></figure>`;
+          return stash(`<figure data-kroki="${krokiType}" data-kroki-source="${sourceB64}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" /></figure>`);
         }
       }
 
       const escaped = escapeHtml(trimmed);
       const prismClass = langLabel === 'code' ? '' : ` class="language-${langLabel}"`;
       const fileAttr = filename ? ` data-filename="${escapeHtml(filename.trim())}"` : '';
-      return `<pre data-lang="${langLabel}"${fileAttr}><code${prismClass}>${escaped}</code></pre>`;
+      return stash(`<pre data-lang="${langLabel}"${fileAttr}><code${prismClass}>${escaped}</code></pre>`);
     });
 
   // GFM tables — must run BEFORE other block-level regexes so `|` pipes aren't
@@ -299,6 +311,7 @@ export function renderMarkdown(content: string): RenderedMarkdown {
 
   // Paragraphs: split by blank line, skip lines that already look like block elements
   const isBlock = (line: string): boolean =>
+    /^\u0000CODEBLOCK\d+\u0000$/.test(line.trim()) ||
     /^<(h2|h3|pre|ul|ol|blockquote|img|picture|figure|div|table|svg)\b/.test(
       line.trim()
     );
@@ -312,6 +325,11 @@ export function renderMarkdown(content: string): RenderedMarkdown {
       return `<p>${trimmed.replace(/\n/g, '<br/>')}</p>`;
     })
     .join('\n');
+
+  html = html.replace(
+    /\u0000CODEBLOCK(\d+)\u0000/g,
+    (_m, n: string) => codeBlocks[Number(n)]
+  );
 
   return { html, toc };
 }
