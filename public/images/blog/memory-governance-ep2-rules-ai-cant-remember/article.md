@@ -19,7 +19,7 @@ EP1 講了我用 Obsidian 打開 Claude 的 memory,看到一片花朵狀的慘�
 
 整理完 memory 之後,我隨手翻自己半年內寫過的 CLAUDE.md 行為規範,看到一堆這樣的句子:
 
-```
+```text
 - 不要重複造輪子,動手前先查 memory 有沒有踩過坑
 - 寫 memory 時注意分類,避免同主題開新檔
 - 跨檔的關聯要記得 link,讓 graph 不要太花
@@ -135,7 +135,7 @@ ls ~/.claude/projects/-Users-yanchen/memory/*.md
 
 我自己用了一個簡單公式重寫 CLAUDE.md 的每一條規則:
 
-```
+```text
 描述性(壞):「<期望狀態 / 抽象原則>」
                       ↓
 程序性(好):「<觸發條件> → <強制動作> → <違規判斷>」

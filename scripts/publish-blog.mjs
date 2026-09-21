@@ -3256,16 +3256,21 @@ function computeContentScore(content, post) {
     // code fence 語言標籤:5。逐行掃,追蹤 in/out fence 狀態;
     // 「開頭 fence」(進入 code block 那一行)必須帶語言,否則違規→0。
     codeFence: (() => {
-      let inFence = false
+      // 依 CommonMark 配對:收尾 fence 不得帶 info string,長度不得少於開頭
+      // fence。不記長度的話,````markdown 裡面的 ``` 會被當成收尾,之後每一行
+      // fence 的開/收判斷就整串錯位。
+      let openLen = 0
       let violation = false
-      for (const l of lines) {
-        if (!/^```/.test(l)) continue
-        if (!inFence) {
-          // 這是開頭 fence,必須帶語言(``` 後接非空白)
-          if (/^```\s*$/.test(l)) violation = true
-          inFence = true
-        } else {
-          inFence = false // 閉合 fence,不要求語言
+      for (const raw of lines) {
+        const l = raw.replace(/\r$/, '')
+        const m = /^(`{3,})(.*)$/.exec(l)
+        if (!m) continue
+        if (openLen === 0) {
+          // 這是開頭 fence,必須帶語言(fence 後接非空白)
+          if (m[2].trim() === '') violation = true
+          openLen = m[1].length
+        } else if (m[1].length >= openLen && m[2].trim() === '') {
+          openLen = 0 // 閉合 fence,不要求語言
         }
       }
       return violation ? 0 : 5
