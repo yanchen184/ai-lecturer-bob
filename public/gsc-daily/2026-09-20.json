@@ -27,5 +27,7 @@
       "ctr": 0,
       "position": 6
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n量太少，看不出趨勢。9/20 單日 GSC 數據空白，得去後台查原因；7 天內只有 1 個查詢，排在第 93 名。\n\n【需要注意】\ncdss-8090 平均排名第 2、有 15 次曝光，點擊卻是 0，先確認這個字跟站上內容有沒有關係。另外昨天 UV 4、PV 2，PV 比 UV 少不太合理，追蹤數據可能有問題。\n\n【今天可以做】\n在 GSC 用網址檢查工具，對 /blog/devspace-mcp-chatgpt-as-codex/ 和 /blog/claude-code-ultracode-ultrathink/ 手動 Request Indexing，順便確認 sitemap.xml 回 200。",
+  "analysisGeneratedAt": "2026-09-24T07:09:53+0800"
 }
