@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-21",
+  "impressions": 2,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 7.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/open-slide-ai-agent-presentation-framework/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ]
+}
