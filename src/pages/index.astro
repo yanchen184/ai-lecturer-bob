@@ -18,6 +18,9 @@ const posts = await getAllPublishedPosts();
 const latest = posts.slice(0, 3);
 const formatDate = (d: string) => d.replaceAll('-', '/');
 
+// 首頁內容最後更新日——改首頁內容時手動更新（不用 build 時間：daily cron 每天重 build 會讓日期失真）
+const HOME_UPDATED = '2026-09-24';
+
 const stats = [
   { number: '8 年', label: '電商核心系統實戰' },
   { number: '10-50', label: '場企業內訓' },
@@ -100,17 +103,17 @@ const productionCases = [
     color: '#ff6ec7',
   },
   {
-    domain: '政府長照 · 語音 + LLM',
-    title: '訪視錄音 → AI 照顧計畫草稿',
-    body: '個管師上傳訪視錄音，本地 Breeze-ASR-25（聯發科開源繁中 ASR）轉逐字稿，再由 LLM 產出「計畫目標」與「執行規劃」草稿，個管師確認後回寫原系統。SSO 承接既有系統登入、GPU 共用排程、壓測都做完才交付測試。',
-    fitFor: '訪談、看診、客服等「先錄音再寫文件」的流程',
+    domain: '企業語音辨識',
+    title: '用聯發科 Breeze-ASR-25 落地',
+    body: '協助企業導入繁體中文語音辨識（基於聯發科開源 ASR 模型），含部署、領域術語調教、品質監控。本土模型也能用得上。',
+    fitFor: '客服中心、醫療逐字稿、會議記錄、客訴分析',
     color: '#ffaa00',
   },
   {
-    domain: '企業業務 · 本地 LLM',
-    title: '外貿業務 AI 助理：查不到就不准答',
-    body: '問訂單 / 報價、客戶來信寫英文回覆草稿、從信中抽出貨資料回填。模型只能引用檢索到的系統資料——路由閘門在「沒撈到記錄」時直接拒答，報價依客戶隔離，別家的價格不會被寫進外發信件。',
-    fitFor: '想讓 AI 碰業務資料、但一個編造的數字都承擔不起的團隊',
+    domain: '企業內部',
+    title: '會議記錄 RAG 檢索',
+    body: '跨部門會議檔的向量檢索與語意問答，含 ACL 權限切割——不同角色看到不同會議，不靠 prompt 攔截，靠 retrieval 層先過濾。',
+    fitFor: '知識管理、企業內部問答、跨部門資料檢索',
     color: '#7cc0ff',
   },
 ];
@@ -236,8 +239,11 @@ const skills = [
         <span class="w-2 h-2 bg-[var(--color-neub-yellow)] border border-black inline-block"></span>
         <span>utc+8</span>
         <span class="text-black/40">|</span>
-        <span class="tabular-nums">build · sat</span>
+        <span class="tabular-nums">最後更新 · {formatDate(HOME_UPDATED)}</span>
       </div>
+    </div>
+    <div class="md:hidden px-6 pt-2 text-right text-[10px] font-mono tracking-widest text-black/50 tabular-nums">
+      最後更新 · {formatDate(HOME_UPDATED)}
     </div>
 
     <!-- Hero（米白背景，對齊目標圖：左標題 + AI WORKFLOW、右人像 + CORE STACK + CODE SNAPSHOT） -->
@@ -486,12 +492,12 @@ const skills = [
           <div>
             <div class="eyebrow mb-4">production ai cases · 顧問實作經驗</div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              四個<span class="mark-yellow">真的在跑</span>的<br />
+              四個<span class="mark-yellow">真的上線在跑</span>的<br />
               落地實作 · 從電商到 AI
             </h2>
           </div>
           <p class="text-sm md:text-base leading-relaxed max-w-md text-[var(--color-ink-60)]">
-            下面四個是我實際做過、教學現場可直接拆解的案例。
+            下面三個是我實際做過、教學現場可直接拆解的案例。
             細節為配合 NDA 已抽象化，但工程實踐是真的。
           </p>
         </div>
