@@ -37,9 +37,28 @@ const portfolio = [
     color: '#ff6ec7',
   },
   {
+    label: 'oss · ai tools',
+    title: '開源 AI 工程工具箱',
+    subtitle: '自己每天在用 · MIT / Apache-2.0 開源',
+    body: 'ccs：額度爆掉時一鍵切帳號、同一串對話接著跑（Claude Code / Codex）。browser-record：讓 AI 操作瀏覽器順便錄教學影片，注入假游標。ai-serving-load-test：用 SLO goodput 回答「這個 LLM 服務撐得住幾個人」。',
+    techs: ['Claude Code Skill', 'Codex', 'Playwright', 'LLM 壓測', 'TTFT / TPOT'],
+    link: 'https://github.com/yanchen184?tab=repositories',
+    color: '#00ffd1',
+  },
+  {
+    label: 'ai apps',
+    title: '自建 AI 應用 · 資料不出內網',
+    subtitle: '會員專區有完整拆解',
+    body: 'letsMeet：開會即時逐字稿，AI 站在你的視角生成該追問的問題。OCR 報帳填表：一疊收據照片，本地多模態模型讀圖、分類、扣抵判定，自動填進四張報帳 Excel。另有專家定稿驅動、越用越準的 AI 判斷架構。',
+    techs: ['Whisper ASR', 'WebSocket', 'Gemma 多模態', 'OCR', 'RAG'],
+    link: '/members',
+    cta: 'members →',
+    color: '#ffaa00',
+  },
+  {
     label: 'teaching',
     title: 'Kubernetes 從零到上線 · 完整教材',
-    subtitle: '中文 K8s 教學系列 · 已開放閱讀',
+    subtitle: '全國勞工聯合總工會實務班教材 · 已開放閱讀',
     body: '完全沒碰過 K8s 的工程師向。從「為什麼需要 K8s」、Pod / Deployment / Service、Probe、HPA 一路到上線。每一課對應一個搜尋意圖，邊讀邊跑得起來。',
     techs: ['Kubernetes', 'Docker', '微服務部署', 'HPA / Probe'],
     link: '/blog/#k8s',
@@ -81,17 +100,17 @@ const productionCases = [
     color: '#ff6ec7',
   },
   {
-    domain: '企業語音辨識',
-    title: '用聯發科 Breeze-ASR-25 落地',
-    body: '協助企業導入繁體中文語音辨識（基於聯發科開源 ASR 模型），含部署、領域術語調教、品質監控。本土模型也能用得上。',
-    fitFor: '客服中心、醫療逐字稿、會議記錄、客訴分析',
+    domain: '政府長照 · 語音 + LLM',
+    title: '訪視錄音 → AI 照顧計畫草稿',
+    body: '個管師上傳訪視錄音，本地 Breeze-ASR-25（聯發科開源繁中 ASR）轉逐字稿，再由 LLM 產出「計畫目標」與「執行規劃」草稿，個管師確認後回寫原系統。SSO 承接既有系統登入、GPU 共用排程、壓測都做完才交付測試。',
+    fitFor: '訪談、看診、客服等「先錄音再寫文件」的流程',
     color: '#ffaa00',
   },
   {
-    domain: '企業內部',
-    title: '會議記錄 RAG 檢索',
-    body: '跨部門會議檔的向量檢索與語意問答，含 ACL 權限切割——不同角色看到不同會議，不靠 prompt 攔截，靠 retrieval 層先過濾。',
-    fitFor: '知識管理、企業內部問答、跨部門資料檢索',
+    domain: '企業業務 · 本地 LLM',
+    title: '外貿業務 AI 助理：查不到就不准答',
+    body: '問訂單 / 報價、客戶來信寫英文回覆草稿、從信中抽出貨資料回填。模型只能引用檢索到的系統資料——路由閘門在「沒撈到記錄」時直接拒答，報價依客戶隔離，別家的價格不會被寫進外發信件。',
+    fitFor: '想讓 AI 碰業務資料、但一個編造的數字都承擔不起的團隊',
     color: '#7cc0ff',
   },
 ];
@@ -200,7 +219,7 @@ const skills = [
 
 <RootLayout
   title="陳彥彤 YC｜AI 企業內訓講師 · Claude Code / Kubernetes / AI Agent 教學"
-  description="工程師教工程師的 AI 企業內訓與導入顧問。電商核心系統 8 年高併發實戰、近年主導醫療 AI 看診輔助平台 6-repo 全棧落地。Claude Code、AI Agent、Kubernetes、Java 高併發內訓主力，課程內容就是 production 在跑的同一套工具。職訓局 AI 概論初級班講師。"
+  description="工程師教工程師的 AI 企業內訓與導入顧問。電商核心系統 8 年高併發實戰、近年主導醫療 AI 看診輔助平台 6-repo 全棧落地。Claude Code、AI Agent、Kubernetes、Java 高併發內訓主力，課程內容就是 production 在跑的同一套工具。全國勞工聯合總工會（產業人才投資方案）Kubernetes 實務班專任講師。"
   canonical="/"
   jsonLd={structuredDataJsonLd}
 >
@@ -467,12 +486,12 @@ const skills = [
           <div>
             <div class="eyebrow mb-4">production ai cases · 顧問實作經驗</div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              四個<span class="mark-yellow">真的上線在跑</span>的<br />
+              四個<span class="mark-yellow">真的在跑</span>的<br />
               落地實作 · 從電商到 AI
             </h2>
           </div>
           <p class="text-sm md:text-base leading-relaxed max-w-md text-[var(--color-ink-60)]">
-            下面三個是我實際做過、教學現場可直接拆解的案例。
+            下面四個是我實際做過、教學現場可直接拆解的案例。
             細節為配合 NDA 已抽象化，但工程實踐是真的。
           </p>
         </div>
@@ -519,12 +538,12 @@ const skills = [
           <div>
             <div class="eyebrow mb-4">portfolio · 看得到的作品</div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-[1.1]">
-              code 都<span class="mark-yellow">公開在 GitHub</span>，<br />
+              <span class="mark-yellow">看得到、點得開</span>的作品，<br />
               不是 PPT 上的口頭專案
             </h2>
           </div>
           <p class="text-sm md:text-base leading-relaxed max-w-md text-[var(--color-ink-60)]">
-            上面 Production 案是顧問實作（受 NDA 保密）。下面這些是公開可看、可 clone、可審視的——
+            上面 Production 案是顧問實作（受 NDA 保密）。下面這些是公開可看、可 clone、可讀完整拆解的——
             判斷我這個人寫不寫 code，看這裡最快。
           </p>
         </div>
@@ -546,7 +565,7 @@ const skills = [
                     {p.label}
                   </div>
                   <span class="text-xs font-mono text-[var(--color-ink-60)] group-hover:text-[var(--color-ink)] transition-colors uppercase tracking-widest">
-                    github →
+                    {p.cta ?? 'github →'}
                   </span>
                 </div>
 
@@ -606,6 +625,32 @@ const skills = [
               decoding="async"
             />
           </div>
+
+          <a
+            href={withBase('/images/credentials/k8s-instructor-appointment.webp')}
+            target="_blank"
+            rel="noopener"
+            class="group mt-8 block shadow-hard-lg lift border-2 border-black bg-[var(--color-panel)] p-3 max-w-[260px]"
+          >
+            <div class="text-[10px] uppercase tracking-widest font-mono font-black text-[var(--color-ink-60)] mb-2">
+              credential · 講師聘書
+            </div>
+            <img
+              src={withBase('/images/credentials/k8s-instructor-appointment.webp')}
+              alt="全國勞工聯合總工會聘書：聘陳彥彤為 115 年度產業人才投資方案 Kubernetes 入門到叢集管理員實務班專任講師"
+              width="900"
+              height="1274"
+              class="block w-full h-auto border border-[var(--color-hairline)]"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="mt-2 text-xs font-bold leading-snug">
+              全國勞工聯合總工會 · Kubernetes 實務班專任講師
+            </div>
+            <div class="text-[11px] font-mono text-[var(--color-ink-60)] mt-1 group-hover:text-[var(--color-ink)]">
+              115 年度產業人才投資方案 · 點開看原件 →
+            </div>
+          </a>
         </div>
 
         <div class="space-y-5 text-base md:text-lg leading-relaxed text-[var(--color-ink)]">
@@ -621,8 +666,8 @@ const skills = [
             這些不是 demo——是真的在跑、真的要對 PM 解釋為什麼預算超標的系統。
           </p>
           <p>
-            另一條線是<strong>教學</strong>：政府 <strong>職訓局 AI 概論初級班</strong>講師、
-            企業內訓 10-50 場（<strong>Claude Code、AI Agent、Docker、Kubernetes、Java 高併發</strong>），
+            另一條線是<strong>教學</strong>：<strong>全國勞工聯合總工會 Kubernetes 入門到叢集管理員實務班</strong>專任講師（產業人才投資方案）、
+            企業內訓 10-50 場（<strong>企業內部 AI 概論、Claude Code、AI Agent、Docker、Kubernetes、Java 高併發</strong>），
             教材全部公開在 Blog 跟 GitHub，學員下課可以直接 clone 回家繼續看。
           </p>
           <p class="text-base text-[var(--color-ink-60)] italic border-l-4 border-[var(--color-neub-yellow)] pl-4">
@@ -635,8 +680,8 @@ const skills = [
               [
                 { title: 'AI 落地', desc: 'Multi-Agent · RAG · OCR' },
                 { title: '電商高併發', desc: 'Java · Spring Boot 8 年' },
-                { title: '職訓局講師', desc: 'AI 概論初級班' },
-                { title: '企業內訓', desc: '10-50 場累積' },
+                { title: 'K8s 專任講師', desc: '全國勞工聯合總工會' },
+                { title: '企業內訓', desc: 'AI 概論 · 10-50 場' },
               ].map((i) => (
                 <div class="border-2 border-black bg-[var(--color-sink)] p-3">
                   <div class="font-black text-sm">{i.title}</div>

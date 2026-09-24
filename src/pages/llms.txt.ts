@@ -34,7 +34,7 @@ export async function GET(context: APIContext): Promise<Response> {
 
 > 繁體中文的 AI 工程實戰筆記。主題涵蓋 Claude Code / AI agent 工作流、Kubernetes 教學系列、Spring Boot 與前後端開發踩坑紀錄。所有文章皆為第一手實測,附可重現步驟。
 
-作者:陳彥彤(YC),職訓局講師 + 全端開發者。
+作者:陳彥彤(YC),全國勞工聯合總工會 Kubernetes 實務班專任講師 + 全端開發者。
 
 - [首頁](${site}${withBase('/')})
 - [文章列表](${site}${withBase('/blog')})
