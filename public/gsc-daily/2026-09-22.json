@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-22",
+  "impressions": 12,
+  "clicks": 2,
+  "ctr": 16.67,
+  "position": 13.7,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/",
+      "impressions": 10,
+      "clicks": 1,
+      "ctr": 10.0,
+      "position": 15.1
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 3
+    },
+    {
+      "page": "/blog/ai-search-faq-jsonld/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
