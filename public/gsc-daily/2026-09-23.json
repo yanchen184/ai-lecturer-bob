@@ -13,5 +13,7 @@
       "ctr": 100,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n量很小，這週只有首頁和 fb.yanchen.app 各拿到 2 次點擊。GSC 9/23 單日沒有曝光數據，需要去後台檢查原因。昨天站內 UV 4、PV 1，UV 比 PV 多，數字對不上。\n\n【需要注意】\n「cdss-8090」28 天曝光 15、排名 2.0，但點擊是 0，排第二還沒人點，標題或摘要可能和搜尋意圖不合。K8s 相關的查詢（nodeport、oomkilled）排名都在 76～97，等於沒有排上。\n\n【今天可以做】\n去 GSC 查「cdss-8090」是哪一頁在吃曝光，改那頁的 title 和 meta description，讓它直接回答這個查詢，改完手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-09-27T07:18:15+0800"
 }
