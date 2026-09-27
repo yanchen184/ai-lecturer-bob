@@ -1,0 +1,41 @@
+{
+  "date": "2026-09-24",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 17.7,
+  "queries": [
+    {
+      "query": "k8s 教學",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22
+    },
+    {
+      "query": "k8s是什麼",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 27
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 24.5
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    }
+  ]
+}
