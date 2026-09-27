@@ -37,5 +37,7 @@
       "ctr": 0,
       "position": 4
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n流量接近零，昨天 UV 6、PV 5，GSC 單日只有 2 次曝光，這週沒什麼事。\n\n【需要注意】\n「cdss-8090」28 天有 15 次曝光、平均排名 2.0，點擊卻是 0，位置很好但沒人點，代表 title 或摘要跟搜尋意圖對不上。另外昨天 PV 5 比 UV 6 還少，數字不合邏輯，站內追蹤可能漏記。\n\n【今天可以做】\n到 GSC 用「cdss-8090」篩查詢，看是哪一頁排在第 2 名，然後把那頁的 title 和 meta description 改成開頭就回答這個查詢，改完手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-09-28T07:07:54+0800"
 }
