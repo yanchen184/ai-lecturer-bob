@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-28",
+  "impressions": 15,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 5.9,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.5
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/blog/ai-frontend-purple-problem-explained/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "page": "/blog/huggingface-flux-schnell-free-image-batch/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ]
+}
