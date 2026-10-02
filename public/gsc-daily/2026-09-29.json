@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-29",
+  "impressions": 9,
+  "clicks": 1,
+  "ctr": 11.11,
+  "position": 8.9,
+  "queries": [
+    {
+      "query": "k8s 教學",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15
+    },
+    {
+      "query": "k8s是什麼",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 30
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.8
+    },
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.5
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
