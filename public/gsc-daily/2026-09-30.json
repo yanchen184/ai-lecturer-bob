@@ -5,5 +5,7 @@
   "ctr": 0.0,
   "position": 0.0,
   "queries": [],
-  "pages": []
+  "pages": [],
+  "analysis": "【一句總評】\n量很小，站內昨天只有 7 個 UV、7 次 PV。GSC 9/30 單日沒有曝光數據，需要去後台檢查原因。這週的曝光全部來自 k8s 相關查詢。\n\n【需要注意】\n/blog/ 列表頁有 13 次曝光、0 點擊，曝光是全站最多，卻沒帶進任何流量。k8s 教學查詢平均排名在 19～20，卡在第二頁邊緣，kubernetes-intro 頁有 8 次曝光、0 點擊。\n\n【今天可以做】\n把 /blog/k8s/kubernetes-intro/ 的 title 開頭改成「K8s 教學：Kubernetes 是什麼」，直接對準 k8s 教學和 k8s是什麼這兩個查詢。改完到 GSC 對這頁手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-10-04T07:07:26+0800"
 }
