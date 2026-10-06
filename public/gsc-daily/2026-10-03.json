@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-03",
+  "impressions": 12,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 12.6,
+  "queries": [
+    {
+      "query": "k8s 是什麼",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29.5
+    },
+    {
+      "query": "k8s 教學",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 21
+    },
+    {
+      "query": "k8s教學",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 23
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 25.8
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "page": "/blog/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/pollinations-free-image-api-no-signup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/topics/ai-video/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    }
+  ]
+}
