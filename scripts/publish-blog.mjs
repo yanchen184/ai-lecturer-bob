@@ -3182,6 +3182,41 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-mod-validate-force-push',
+    title: 'Claude Code mod 是什麼？13 行擋 force push，裝前先 validate',
+    excerpt:
+      'Claude Code mod 是 v2.1.287 起支援的外掛形態：一組跑在 Claude Code 行程裡的 JS／TS 函式，能畫介面、攔 tool call，以你的權限執行、沒有沙箱。我用 claude plugin validate 審過 Let\'s Write 開源的兩支 mod，再寫一支 13 行的 mod 擋下 force push——4 支測試全綠、實機載入真的擋住。',
+    category: 'AI 工具',
+    tags: [
+      'Claude Code',
+      'Claude Code mod',
+      'Claude Code Plugin',
+      'Hooks',
+      'AI 工具',
+      'AI Agent',
+    ],
+    publishDate: '2026-10-07',
+    faqItems: [
+      {
+        q: 'Claude Code mod 跟 settings hook 差在哪？',
+        a: 'settings hook 是事件發生時另外跑一支腳本或打 HTTP，只能決定放行、阻擋、改參數或補 context；mod 是在 Claude Code 行程裡被呼叫的函式，除了攔 tool call，還能畫側欄、在輸入框上方顯示資訊、註冊不經過 Claude 的指令。只要擋或記錄，既有腳本做得到就用 settings hook；要介面或互動才需要 mod。',
+      },
+      {
+        q: '怎麼知道一支 mod 安不安全？',
+        a: 'clone 下來先跑 claude plugin validate <資料夾>，看輸出的 hooks: 和 calls: 兩行。只用 $.ui、$.state、$.clock 的 mod 碰不到檔案和網路；出現 $.process.run、$.fs、$.model 這類呼叫，就打開原始碼確認用途。官方建議只從信任的作者和 marketplace 安裝。',
+      },
+      {
+        q: 'mod 需要什麼版本？',
+        a: '終端機的 Claude Code v2.1.287 以上，Desktop app 從 v2.1.286 起。用 claude --version，或在 Desktop 的 Code 分頁打 /status 看 Claude Code 那一列。',
+      },
+      {
+        q: '寫 mod 需要裝 Node.js 嗎？',
+        a: '不需要。Claude Code 直接載入 .js 和 .ts，不用打包或建置。但 mod 自己若用 $.process.run 呼叫 node（像 Let\'s Write 的 open-todos），那台電腦就要有 node。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
