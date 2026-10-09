@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-06",
+  "impressions": 3,
+  "clicks": 1,
+  "ctr": 33.33,
+  "position": 15.7,
+  "queries": [
+    {
+      "query": "k8s 教學",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 18
+    },
+    {
+      "query": "k8s是什麼",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 28
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 23
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    }
+  ]
+}
