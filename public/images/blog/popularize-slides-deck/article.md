@@ -11,7 +11,7 @@
 
 ## 目錄
 
-1. [一個職訓局講師為什麼自己寫 HTML 簡報](#一個職訓局講師為什麼自己寫-html-簡報)
+1. [一個企業內訓講師為什麼自己寫 HTML 簡報](#一個企業內訓講師為什麼自己寫-html-簡報)
 2. [專案規模：4 堂課、12 commits、單檔 HTML](#專案規模4-堂課12-commits單檔-html)
 3. [4 堂課在教什麼](#4-堂課在教什麼)
 4. [技術選擇：為什麼是 HTML 不是 Reveal.js / Slidev](#技術選擇為什麼是-html-不是-revealjs--slidev)
@@ -23,9 +23,9 @@
 
 ---
 
-## 一個職訓局講師為什麼自己寫 HTML 簡報
+## 一個企業內訓講師為什麼自己寫 HTML 簡報
 
-我在職訓局教「AI Claude Code 概論初級班」，4 堂課、每堂 3 小時。第一堂我用 Keynote 做了一份漂亮的簡報，現場 demo 第一個 code block —— **Cormorant Garamond 字體在 Keynote 裡是斜體，code block 顯示出來空白被吃掉、縮排亂了**。學生抬頭看大螢幕、低頭看自己機器，**看到的東西不一樣**。
+我在企業內訓教「AI Claude Code 概論初級班」，4 堂課、每堂 3 小時。第一堂我用 Keynote 做了一份漂亮的簡報，現場 demo 第一個 code block —— **Cormorant Garamond 字體在 Keynote 裡是斜體，code block 顯示出來空白被吃掉、縮排亂了**。學生抬頭看大螢幕、低頭看自己機器，**看到的東西不一樣**。
 
 我那場補救方法是把 code block 全部換成截圖，下課就決定第二堂不再用 Keynote。
 
@@ -130,7 +130,7 @@
 
 ## 技術選擇：為什麼是 HTML 不是 Reveal.js / Slidev
 
-這節展開上面那張表的細節。**如果你只是要做一份簡報、隨便丟一下就好，請用 Slidev**，這節跳過。如果你的場景跟我一樣（職訓局現場 demo + 學生要拿去 fork），讀下去。
+這節展開上面那張表的細節。**如果你只是要做一份簡報、隨便丟一下就好，請用 Slidev**，這節跳過。如果你的場景跟我一樣（企業內訓現場 demo + 學生要拿去 fork），讀下去。
 
 ### Slidev 的問題
 
@@ -320,7 +320,7 @@ YAGNI 原則：當我有第 8 堂課、共用樣式真的吵到我之前，不�
 
 GitHub Pages 對 public repo **完全免費**，soft limit 是每月 100GB 流量、100GB 倉庫大小（我這個 repo 才 51KB，完全用不到）。
 
-職訓局一場課 30 個學生、每人連線一次、靜態 HTML 30KB，**一場課總流量約 1MB**。流量永遠不會是問題。
+企業內訓一場課 30 個學生、每人連線一次、靜態 HTML 30KB，**一場課總流量約 1MB**。流量永遠不會是問題。
 
 唯一要注意：private repo 用 GitHub Pages 要 GitHub Pro / Team / Enterprise。教學素材建議 public，學生也才能 fork。
 

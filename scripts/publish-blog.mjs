@@ -2044,14 +2044,14 @@ const posts = [
     title:
       '我把 AI 課程簡報全做成 HTML 丟上 GitHub Pages：popularize-slides 開源拆解',
     excerpt:
-      '我在職訓局教 4 堂 AI Claude Code 概論初級班，把簡報全寫成 HTML 而不是 Keynote / Slidev / Reveal.js，丟在 GitHub Pages 上跑。本文拆解：為什麼放棄 Keynote、為什麼不用 Slidev、設計系統（深色 + 黃金 accent + 襯線標題）、部署用一條 push 指令、學生 clone 下來雙擊就能看（沒有 npm install）。Repo 全開源，歡迎 fork 改成你的教學內容。',
+      '我在企業內訓教 4 堂 AI Claude Code 概論初級班，把簡報全寫成 HTML 而不是 Keynote / Slidev / Reveal.js，丟在 GitHub Pages 上跑。本文拆解：為什麼放棄 Keynote、為什麼不用 Slidev、設計系統（深色 + 黃金 accent + 襯線標題）、部署用一條 push 指令、學生 clone 下來雙擊就能看（沒有 npm install）。Repo 全開源，歡迎 fork 改成你的教學內容。',
     category: 'AI 教學',
     tags: [
       'Claude Code',
       'GitHub Pages',
       'HTML',
       '簡報設計',
-      '職訓局',
+      '企業內訓',
       'AI 教學',
       'Superpowers',
     ],
@@ -2070,7 +2070,7 @@ const posts = [
       },
       {
         q: 'GitHub Pages 不會收費嗎？流量大會掛嗎？',
-        a: 'public repo 完全免費，soft limit 每月 100GB 流量、100GB 倉庫大小，我這個 repo 才 51KB 完全用不到。一場職訓局 30 個學生連一次靜態 HTML，總流量約 1MB。流量永遠不會是問題。private repo 用 GitHub Pages 要 GitHub Pro 以上，教學素材建議 public，學生才能 fork。',
+        a: 'public repo 完全免費，soft limit 每月 100GB 流量、100GB 倉庫大小，我這個 repo 才 51KB 完全用不到。一場企業內訓 30 個學生連一次靜態 HTML，總流量約 1MB。流量永遠不會是問題。private repo 用 GitHub Pages 要 GitHub Pro 以上，教學素材建議 public，學生才能 fork。',
       },
       {
         q: '學生用手機看會 OK 嗎？',
@@ -2292,7 +2292,7 @@ const posts = [
     faqItems: [
       {
         q: '全域 CLAUDE.md 跟專案 CLAUDE.md 要寫什麼不同?',
-        a: '全域寫「你這個人不變的偏好」——人設(資深工程師)、輸出格式(繁體中文簡潔)、約束(不准 commit credentials)、護欄(不准 force push)、memory 索引在哪。專案寫「這個 repo 的技術細節」——用什麼框架版本、test 怎麼跑、business domain 術語對照、這個 repo 特殊紀律(像 popularize 專案我寫「Bob 是職訓局講師,教材路徑常含中文資料夾」)。兩份檔每次 session 開頭都會被讀,等於兩層 system prompt。',
+        a: '全域寫「你這個人不變的偏好」——人設(資深工程師)、輸出格式(繁體中文簡潔)、約束(不准 commit credentials)、護欄(不准 force push)、memory 索引在哪。專案寫「這個 repo 的技術細節」——用什麼框架版本、test 怎麼跑、business domain 術語對照、這個 repo 特殊紀律(像 popularize 專案我寫「Bob 是企業內訓講師,教材路徑常含中文資料夾」)。兩份檔每次 session 開頭都會被讀,等於兩層 system prompt。',
       },
       {
         q: '十大定義是 Anthropic 官方分類嗎?',

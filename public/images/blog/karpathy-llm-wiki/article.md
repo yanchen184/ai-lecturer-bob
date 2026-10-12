@@ -182,7 +182,7 @@ cp ~/Downloads/karpathy-llm-wiki-original.md sources/articles/
 
 ## 🔬 我用兩週的真實體驗
 
-我手邊一直有個情境:**職訓局教學素材**。過去半年我講過 4 堂 Claude Code 課、3 堂 Hermes Agent 課,每堂課的 4 件套(投影片 outline、逐字稿、demo code、學員 QA)散在不同資料夾,還有歷次學員 Discord 提問、自己的反省筆記。每次要備新一堂,我就得重翻一次。完全 RAG 場景。
+我手邊一直有個情境:**企業內訓教學素材**。過去半年我講過 4 堂 Claude Code 課、3 堂 Hermes Agent 課,每堂課的 4 件套(投影片 outline、逐字稿、demo code、學員 QA)散在不同資料夾,還有歷次學員 Discord 提問、自己的反省筆記。每次要備新一堂,我就得重翻一次。完全 RAG 場景。
 
 把這些塞進 LLM Wiki,跑了兩週,實際體驗:
 
