@@ -3217,6 +3217,42 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'screenshot-to-code-self-host',
+    title: 'screenshot-to-code 是什麼？8 萬星截圖轉網站工具，自架前先看這 5 件事',
+    excerpt:
+      'screenshot-to-code 是 Abi Raja 開源的 MIT 專案：丟網站截圖、Figma 稿或 30 秒內的螢幕錄影，用你自己的 OpenAI／Claude／Gemini key 生成 HTML、React、Vue 前端程式碼，目前 8 萬顆星。我在 Mac 上把前後端裝起來並讀過原始碼——一次 Create 會同時打 4 次模型、影片模式只認 Gemini，自架前先把 key 和預算準備好。',
+    category: 'AI 工具',
+    tags: [
+      'screenshot-to-code',
+      '截圖轉程式碼',
+      'AI 前端生成',
+      'Gemini',
+      'Claude',
+      '自架',
+      'AI 工具',
+    ],
+    publishDate: '2026-10-12',
+    faqItems: [
+      {
+        q: 'screenshot-to-code 免費嗎？',
+        a: '程式碼是 MIT 授權，可以免費自架；但它本身不含模型，生成時要用你自己的 OpenAI、Anthropic 或 Gemini API key，模型費用由你付。不想自架可以用官方託管版 screenshottocode.com。',
+      },
+      {
+        q: '按下 Generate 全部失敗、畫面只寫 Error generating code 怎麼辦？',
+        a: '看跑 uvicorn 的後端終端機。沒設 key 時 log 會寫 No OpenAI, Anthropic, or Gemini API key found。把 key 寫進 backend/.env 後要重啟後端，或直接在前端 Settings 填。',
+      },
+      {
+        q: '一次生成會花多少 API 次數？',
+        a: 'backend/config.py 的 NUM_VARIANTS 是 4，一次 Create 會同時跑 4 個 variant；Update 和影片模式各 2 個。只有一把 key 時會用同一家的模型循環補滿 4 個。想省成本可以改這個常數和 routes/model_choice_sets.py。',
+      },
+      {
+        q: '影片轉程式碼需要什麼？',
+        a: '一定要 Gemini API key。程式碼在 input_mode 為 video 時沒有 Gemini key 會直接丟錯，OpenAI 或 Anthropic 的 key 不能替代。影片限制 30 秒、單檔 20MB 以內。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length

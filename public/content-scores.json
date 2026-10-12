@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21",
+  "generatedAt": "2026-10-12",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -218,7 +218,7 @@
       "wordCount": 7560
     },
     "popularize-slides-deck": {
-      "total": 72,
+      "total": 75,
       "breakdown": {
         "wordCount": 15,
         "tldr": 0,
@@ -230,10 +230,10 @@
         "pitfall": 0,
         "faq": 10,
         "extLinks": 5,
-        "bannedWords": 2,
+        "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 10221
+      "wordCount": 10227
     },
     "karpathy-llm-wiki": {
       "total": 90,
@@ -251,7 +251,7 @@
         "bannedWords": 5,
         "codeFence": 0
       },
-      "wordCount": 12416
+      "wordCount": 12417
     },
     "mempalace-3-3-5-claude-p-proxy": {
       "total": 76,
@@ -305,7 +305,7 @@
         "bannedWords": 5,
         "codeFence": 0
       },
-      "wordCount": 6165
+      "wordCount": 6144
     },
     "claude-code-lesson-2": {
       "total": 65,
@@ -1224,6 +1224,42 @@
         "codeFence": 5
       },
       "wordCount": 8656
+    },
+    "screendoc-claude-code-skill": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 0
+      },
+      "wordCount": 5679
+    },
+    "screenshot-to-code-self-host": {
+      "total": 65,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 0,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6139
     }
   }
 }
