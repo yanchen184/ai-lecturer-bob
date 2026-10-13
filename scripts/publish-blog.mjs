@@ -3253,6 +3253,42 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'find-skills-claude-code-skill-search',
+    title: 'find-skills 是什麼？讓 Claude Code 自己找 skill，380 萬安裝實測',
+    excerpt:
+      'find-skills 是 Vercel 開源的 skill：問 Claude「有沒有 skill 能做 X」，它就搜 skills.sh、照安裝數與來源篩選，問過你才裝，已有 380 萬次安裝。我實測它不會擅自安裝，但 CLI 只按安裝數排序——相關性要靠 Claude 讀結果判斷。',
+    category: 'AI 工具',
+    tags: [
+      'find-skills',
+      'Claude Code',
+      'Agent Skills',
+      'skills.sh',
+      'Vercel',
+      'npx skills',
+      'AI 工具',
+    ],
+    publishDate: '2026-10-13',
+    faqItems: [
+      {
+        q: 'find-skills 會自動安裝 skill 嗎？',
+        a: '不會主動安裝。SKILL.md 的流程是先列推薦，使用者要裝才執行 npx skills add。我用「先不要安裝」實測，跑完 lock 檔裡沒有新增任何 skill。但它給的安裝指令帶 -y，要靠 Claude Code 的權限確認做最後一道關卡。',
+      },
+      {
+        q: 'find-skills 只能用在 Claude Code 嗎？',
+        a: '不是。Skills CLI 支援多種 agent，安裝時用 -a 指定，不指定會偵測你電腦上裝了哪些。只裝給 Claude Code 就用 -a claude-code。',
+      },
+      {
+        q: 'find-skills 要錢嗎？',
+        a: 'skill 本身和 Skills CLI 都是 MIT 授權、免費。實際花的是 Claude 執行搜尋與整理時的 token，我那次一輪約 0.64 美元。',
+      },
+      {
+        q: '不裝 find-skills 也能找 skill 嗎？',
+        a: '可以。直接跑 npx skills find <關鍵字>，或到 skills.sh 搜。find-skills 做的是讓 Claude 在你問問題時自己想到要去找，並幫你濾掉不相關的結果。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
