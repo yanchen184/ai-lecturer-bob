@@ -3289,6 +3289,42 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'rea-reverse-engineer-anything-claude-code',
+    title: 'REA 是什麼？24.7 萬星的 AI 逆向工程 MCP，我實測拆 Electron App',
+    excerpt:
+      'REA 是 morluto 在 2026 年 4 月開源的 MIT 專案，用 MCP 把 Hopper、Ghidra、IDA、JADX 等逆向工具接給 Claude Code、Codex，讓 agent 帶著證據分析 App 怎麼運作。我用 6.5.0 實測 Electron 範例，兩條 IPC 呼叫鏈全部配對正確、還會標出哪些只是候選——但要 Node 22.19+、setup 會改全域設定，原生二進位還得另裝反組譯引擎。',
+    category: 'AI 工具',
+    tags: [
+      'REA',
+      'rea-agents',
+      '逆向工程',
+      'MCP',
+      'Claude Code',
+      'Electron',
+      'AI 工具',
+    ],
+    publishDate: '2026-10-15',
+    faqItems: [
+      {
+        q: 'REA 要錢嗎？',
+        a: 'REA 本身是 MIT 授權、免費，在本機執行。但原生二進位分析要搭配反組譯引擎：Ghidra 免費，Hopper 與 IDA 是商業軟體，REA 不附授權。agent 呼叫模型的 token 費用另計。',
+      },
+      {
+        q: '分析 JavaScript 或 Electron App 需要裝 Ghidra 嗎？',
+        a: '不需要。靜態 JavaScript 與 Electron 分析只要 Node.js（22.19+、24.11+ 或 26+）。我機器上 Ghidra、IDA、JADX 都沒設定，analyze-javascript-application 照樣跑完。',
+      },
+      {
+        q: 'REA 會把我要分析的 App 上傳出去嗎？',
+        a: 'REA 的分析在本機跑，不上傳目標檔案。但 agent 拿到的工具結果會送給模型供應商，適用對方的資料政策，分析公司內部程式前要先確認。',
+      },
+      {
+        q: '用 REA 能拿到別人 App 的原始碼嗎？',
+        a: '不能。它回傳的是偽代碼、組合語言或模組關係等證據。DISCLAIMER 也明列不支援繞過 DRM、授權檢查、反作弊，或複製專有軟體受保護的程式碼。只用在你有權限分析的軟體上。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
