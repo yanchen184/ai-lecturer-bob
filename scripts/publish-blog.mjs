@@ -3360,6 +3360,38 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-tool-learning-notes-writing-breakdown',
+    title: '好的 AI 工具學習筆記怎麼寫？拆解一份 21 篇 Claude Code 筆記的 7 個寫法',
+    excerpt:
+      '一份 21 篇、154 頁的「給設計師的 Claude Code」繁中筆記，摘要 Nick Babich 的英文文章再加上作者自己的補充。它好讀的原因是固定骨架、原文與補充分開標、範例貼完就拆結構——但 AI 工具筆記保存期限只有幾個月，我對官方文件找出 3 處已經不一樣。',
+    category: '工作流',
+    tags: [
+      'Claude Code',
+      '學習筆記',
+      '技術寫作',
+      'Claude Code Skill',
+      'Claude Code Plugin',
+      'CLAUDE.md',
+      'Plan Mode',
+    ],
+    publishDate: '2026-10-16',
+    faqItems: [
+      {
+        q: '整理英文技術文章成中文筆記，可以公開分享嗎？',
+        a: '要看原文授權。這份筆記的做法是每篇標出處、寫明「僅供學習使用」、只摘重點不全文翻譯，並附原文連結。就算這樣，公開發表前還是應該確認原作者的授權條款；Medium 上的會員文章尤其要注意。',
+      },
+      {
+        q: '學習筆記一定要做一頁總結表嗎？',
+        a: '不一定。21 篇裡只有 8 篇有。適合放的是「有幾個平行概念要比較」的篇章，例如四個習慣、Skill 和 Plugin 的差別。只講一個工具怎麼用的短篇，用延伸閱讀收尾就夠了。',
+      },
+      {
+        q: '用 Notion 寫技術筆記，匯出 PDF 好用嗎？',
+        a: '這份筆記的程式碼區塊、表格、emoji 標題在 PDF 裡都保留下來，頁尾自動帶篇名和頁碼，當成交付物很整齊。我用程式抽 PDF 文字時，表格會變成一格一行，要整理成可複製的內容得自己重排；如果讀者需要複製指令，同時留一份線上版比較方便。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
