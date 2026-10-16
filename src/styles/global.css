@@ -379,6 +379,15 @@ body {
   height: auto;
 }
 
+/* Mermaid 節點文字是 foreignObject 裡的 <p>，高度由 Kroki 依自身字型算死；
+ * 套到文章段落的 line-height／margin／字型會把第二行擠出框外。 */
+.blog-prose figure[data-kroki] foreignObject p {
+  margin: 0;
+  line-height: 1.5;
+  font-family: inherit !important;
+  color: inherit !important;
+}
+
 /* Table 用 wrapper 處理手機捲動（:has() 可簡化，但避免瀏覽器相容性問題
    用外層 .blog-prose 觸發捲動 overflow fallback） */
 /* Scroll hint：JS 動態加在會 overflow 的 table / pre 前 */
