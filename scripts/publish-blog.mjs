@@ -3325,6 +3325,41 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'strata-qwen3-8-flash-next-local-gpu',
+    title: 'Strata 是什麼？12GB 顯卡跑 125B 的 Qwen3.8-Flash-Next，門檻與原理拆解',
+    excerpt:
+      'Strata 是 Niko1221 在 2026-09-24 開源的 MIT 推論引擎，靠把 24,576 個 expert 分層放在顯卡、RAM 和 SSD，讓 12GB 顯卡加 32GB 以上 RAM 就能跑 125B 的 Qwen3.8-Flash-Next，並開出 OpenAI／Anthropic 相容 API。三週 2.5 萬星、已發到 0.1.44.1，幾乎天天出版——能用但還在快速變動，Mac 版更是 10/12 才加進來的新功能。',
+    category: 'AI 工具',
+    tags: [
+      'Strata',
+      'Qwen3.8-Flash-Next',
+      '本機 LLM',
+      'MoE',
+      'Claude Code',
+      'AI 工具',
+    ],
+    publishDate: '2026-10-16',
+    faqItems: [
+      {
+        q: 'Strata 要錢嗎？可以商用嗎？',
+        a: 'Strata 引擎是 MIT 授權、免費。但它跑的 Qwen3.8-Flash-Next 權重走 qwen-community-1.0 授權，不是 MIT，商用前要先讀模型的 LICENSE。',
+      },
+      {
+        q: '跑 Strata 最少要多少 RAM？',
+        a: '官方最低需求是 12GB VRAM 顯卡加 32GB RAM，但 32GB 只能選砍掉一半 expert 的 Coder 版，中文表現較弱。64GB 所有量化大小都能跑。',
+      },
+      {
+        q: 'Mac 可以跑 Strata 嗎？',
+        a: '可以，但屬實驗性支援，Metal 版 2026-10-12 才加入，需要 Apple Silicon 與 macOS 15 以上。官方只實測過 128GB M5 Max 和 32GB M4 Mac mini；我在 8GB M2 跑 ./setup.sh --check 會通過，但那只代表能編譯啟動，記憶體不足時會改成從 SSD 串流，速度有限。',
+      },
+      {
+        q: 'Strata 怎麼接 Claude Code？',
+        a: 'Strata 0.1.17 以上在 http://127.0.0.1:8080 開 Anthropic Messages 相容端點。設 ANTHROPIC_BASE_URL=http://127.0.0.1:8080、ANTHROPIC_AUTH_TOKEN 隨便填、ANTHROPIC_MODEL 填 Claude Code 認得的模型名，再執行 claude 即可。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
