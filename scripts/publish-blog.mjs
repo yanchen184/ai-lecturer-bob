@@ -3392,6 +3392,58 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'orca-ai-agent-orchestrator',
+    title: 'Orca 是什麼？實測一個任務一個 worktree，agent 平行不打架',
+    excerpt:
+      'Orca 是 Stably AI 開源的 MIT 桌面 app，每個任務開一個 git worktree，讓 Claude Code、Codex 這些 agent 各自在自己的資料夾裡改檔，改完在同一個視窗看 diff、開 PR。七個月 9.3 萬星、十天發 4 個正式版——功能更新很快，我的部落格就在它開的 worktree 裡寫，但截圖與選單位置以官方文件為準。',
+    category: 'AI 工具',
+    tags: ['Orca', 'git worktree', 'Claude Code', 'Codex', 'AI agent', 'AI 工具'],
+    publishDate: '2026-10-16',
+    faqItems: [
+      {
+        q: 'Orca 要錢嗎？',
+        a: 'Orca 本身是 MIT 授權的開源軟體，免費下載。它不附 AI 模型，Claude Code、Codex 這些 agent 用的是你自己的訂閱或 API 額度。',
+      },
+      {
+        q: 'Orca 和 Cursor、VS Code 差在哪？',
+        a: 'Cursor、VS Code 是以編輯器為中心，AI 是編輯器裡的一個功能。Orca 是以 agent 和 worktree 為中心，主要畫面是一排 worktree 和 agent 終端機，編輯器、diff、瀏覽器是輔助。它也能開 Cursor CLI 當其中一個 agent。',
+      },
+      {
+        q: 'Orca 支援 Windows 嗎？',
+        a: '支援，Windows 有安裝檔，預設 shell 可以選 PowerShell 或 CMD。我自己就是在 Windows 11 上用 Orca 寫這個部落格。',
+      },
+      {
+        q: '刪掉 Orca 的 worktree，branch 會不見嗎？',
+        a: '官方文件寫的是刪 worktree 會連 branch 一起刪，刪之前會確認。如果 git 判斷那個 branch 還有沒合併的 commit 而保留下來，Orca 會另外提供檢查的步驟。要留下的成果，先 push 或合併再刪。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'herdr-terminal-agent-runtime',
+    title: 'herdr 是什麼？實測終端機 agent 多工器，誰卡住一眼看到',
+    excerpt:
+      'herdr 是 Rust 寫的 Apache-2.0 終端機多工器，像 tmux 一樣切 workspace 和 pane，但認得裡面跑的 Claude Code、Codex，標出每個 agent 在工作、卡住還是閒著。我在 Windows 實測 v0.9.5，server 重啟後版面回來、執行中的程式不會——還在 0.x，適合平常就住在終端機裡的人。',
+    category: 'AI 工具',
+    tags: ['herdr', 'tmux', 'Claude Code', 'Codex', 'AI agent', '終端機', 'AI 工具'],
+    publishDate: '2026-10-16',
+    faqItems: [
+      {
+        q: 'herdr 和 tmux 差在哪？',
+        a: 'tmux 只管終端機，不知道裡面跑的是什麼。herdr 也是終端機多工器，但認得 pane 裡的 coding agent，會標出 working、blocked 等狀態，還有給 agent 用的 CLI 和 API，可以讓一個 agent 開 pane、派工給另一個 agent。',
+      },
+      {
+        q: 'herdr 會把我的程式碼送出去嗎？',
+        a: 'herdr 本身是本機的終端機工具，程式碼在你的電腦上，送到哪裡取決於你在 pane 裡跑的 agent。我觀察到的對外行為是下載 agent 偵測規則，規則檔存在 %LOCALAPPDATA%\herdr\agent-detection\remote\。',
+      },
+      {
+        q: '不想用了怎麼清乾淨？',
+        a: '刪掉 herdr 執行檔，再刪掉它的資料夾。在 Windows 上，我試用後留下的是 %APPDATA%\herdr（session 與 socket）、%LOCALAPPDATA%\herdr（偵測規則）和 ~/.herdr（worktree）。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
