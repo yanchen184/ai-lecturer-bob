@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-16",
+  "impressions": 1,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 99.0,
+  "queries": [
+    {
+      "query": "service nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 99
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 99
+    }
+  ]
+}
