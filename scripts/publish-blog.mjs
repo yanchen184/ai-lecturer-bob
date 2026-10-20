@@ -3444,6 +3444,34 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'personal-knowledge-base-obsidian-claude-code',
+    title: '個人知識庫怎麼讓 AI 真的用上？Obsidian + Claude Code hook 讀寫兩條路實作',
+    excerpt:
+      '我的個人知識庫是一個 372 張卡片的 Obsidian vault，由 Claude Code 的 Stop hook 排隊、每晚用 claude -p 整理成卡片，再由 UserPromptSubmit hook 用 BM25 在每次提問時撈出相關卡片注入 context。六週 51 封日報共寫入 142 張卡，檢索每次約 0.5 到 0.9 秒——字面比對撈得準，換個說法就撈不到，是目前最大的缺口。',
+    category: 'AI 工具',
+    tags: ['個人知識庫', 'Obsidian', 'Claude Code', 'hooks', 'BM25', 'LLM Wiki', 'RAG'],
+    publishDate: '2026-10-20',
+    faqItems: [
+      {
+        q: '一定要用 Obsidian 嗎？',
+        a: '不用。卡片就是一般的 markdown 檔，hook 只讀檔案系統。Obsidian 的用處是讓我自己翻卡片、看連結關係比較方便。',
+      },
+      {
+        q: '為什麼不直接用向量資料庫？',
+        a: '向量檢索需要 embedding 模型和索引維護。我裝的 mempalace 就遇過索引跟資料筆數對不上、需要重建的狀況。BM25 每次直接讀 markdown 計算，沒有額外的狀態要維護，卡片數在幾百張的規模時速度也夠。',
+      },
+      {
+        q: 'UserPromptSubmit hook 會不會拖慢每次提問？',
+        a: '我的實測是每次 0.5 到 0.9 秒，372 張卡。hook 有設 10 秒逾時。卡片數再多一個數量級時，就需要把斷詞結果快取起來，不要每次重算。',
+      },
+      {
+        q: '夜間整理會不會把錯的東西寫進卡片？',
+        a: '會有這個風險，因為判斷寫什麼的是 LLM。我的做法是每晚寄日報列出寫了哪幾張卡，自己看標題抽查；寫卡規則要求先找同主題的卡補充，不要一直開新卡。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
