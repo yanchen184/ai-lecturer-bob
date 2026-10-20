@@ -3472,6 +3472,30 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-flagship-skills',
+    title: '8 支 Claude Code 旗艦 skill：從開案到發文一條龍',
+    excerpt:
+      '我把每天反覆在做的工作流寫成 8 支 Claude Code 旗艦 skill：開案的 /wez-cms-scaffold、/springboot-init，開發的 /spec-flow、/plan、/review-and-clean，驗收部署的 /screenshot-review、/jenkins-docker，還有發文的 /blog-create。共通點是完成要從輸出端驗、沒驗過就標沒驗過——想要可以寫信跟我拿。',
+    category: '工作流',
+    tags: ['Claude Code', 'Claude Code Skill', '工作流', 'TDD', 'round-trip', 'AI Agent'],
+    publishDate: '2026-10-20',
+    faqItems: [
+      {
+        q: '這些 skill 可以直接裝來用嗎？',
+        a: '部分可以。/plan、/review-and-clean、/screenshot-review、/blog-create 的流程與 gate 跟專案無關；/wez-cms-scaffold、/springboot-init、/jenkins-docker 綁著我公司的範本、共用模組與部署環境，拿去要改設定才能跑。想要的話寫信到 bobchen184@gmail.com 跟我要。',
+      },
+      {
+        q: '什麼樣的 skill 才算旗艦？',
+        a: '我的標準是跨越一整段工作流、有多個階段、有明確的完成定義，而且會被反覆當骨幹用。只做一個動作的薄殼指令，例如跑一次 build 或推一次部署，不算旗艦。',
+      },
+      {
+        q: '/plan 跟 /spec-flow 差在哪？',
+        a: '/plan 是日常任務的起手式，一個需求從計畫、TDD、驗證跑到交付；/spec-flow 給從零開始的新專案或大功能，先寫規格文件、拆成帶 ID 的節點，再讓測試與狀態表跟著節點走。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
