@@ -3496,6 +3496,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'apple-design-skill-claude-code',
+    title: 'apple-design skill 實測：17 節 Apple 動效規範，點名最保險',
+    metaDescription:
+      'apple-design 是 Emil Kowalski 開源的 Claude Code skill，把 WWDC 動效原則寫成 17 節規範。我用同一個 bottom sheet 實測差異，附安裝指令與不觸發的坑。',
+    excerpt:
+      'apple-design 是 Emil Kowalski（Linear、前 Vercel）收在 MIT 授權 emilkowalski/skills 裡的 AI agent skill，把 Apple WWDC 的動效、手勢與材質原則改寫成 17 節給網頁用的規範。repo 有 47.8k stars（15 支 skill 共用）；我實測點名使用時，Claude Code 寫的 bottom sheet 多了彈簧、動量投射與橡皮筋——但沒點名時 3 次只觸發 1 次。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'apple-design', 'Emil Kowalski', '動效設計', 'WWDC'],
+    publishDate: '2026-10-20',
+    faqItems: [
+      {
+        q: 'apple-design skill 是 Apple 官方出的嗎？',
+        a: '不是。它是 Emil Kowalski 個人開源的 skill，內容整理自 Apple 公開的 WWDC 設計演講，主軸是 2018 年的 Designing Fluid Interfaces，授權是 MIT。',
+      },
+      {
+        q: '47.8k stars 是 apple-design 一支的嗎？',
+        a: '不是。GitHub 只能對整個 repo 加星，emilkowalski/skills 裡有 15 支 skill，47.8k 是整套共用的數字。',
+      },
+      {
+        q: '裝了之後一定會自動被用上嗎？',
+        a: '不一定。我用同一句寫 bottom sheet 的需求、沒點名 skill 跑了 3 次，只有 1 次自動載入。想穩定生效就在需求前面打 /apple-design。',
+      },
+      {
+        q: '可以拿來寫 iOS 或 SwiftUI 嗎？',
+        a: '它是翻譯給網頁的版本，範例都是 CSS、Pointer Events 和 JavaScript。寫原生 App 可以看同 repo 的 write-swift 與 mobile-native。',
+      },
+      {
+        q: '跟 dickwu/apple-design-skill 差在哪？',
+        a: 'emilkowalski 這支專注網頁上的動效、手勢與材質，適合寫互動元件；dickwu 那支是跨平台的 Human Interface Guidelines 審查，適合檢查介面合不合 Apple 規範。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
