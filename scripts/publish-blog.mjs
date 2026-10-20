@@ -3448,7 +3448,7 @@ const posts = [
     slug: 'personal-knowledge-base-obsidian-claude-code',
     title: '個人知識庫怎麼讓 AI 真的用上？Obsidian + Claude Code hook 讀寫兩條路實作',
     excerpt:
-      '我的個人知識庫是一個 372 張卡片的 Obsidian vault，由 Claude Code 的 Stop hook 排隊、每晚用 claude -p 整理成卡片，再由 UserPromptSubmit hook 用 BM25 在每次提問時撈出相關卡片注入 context。六週 51 封日報共寫入 142 張卡，檢索每次約 0.5 到 0.9 秒——字面比對撈得準，換個說法就撈不到，是目前最大的缺口。',
+      '我的個人知識庫是一個 258 張卡片的 Obsidian vault，由 Claude Code 的 Stop hook 排隊、每晚用 claude -p 整理成卡片，再由 UserPromptSubmit hook 用 BM25 在每次提問時撈出相關卡片注入 context。六週 51 封日報共寫入 142 張卡，檢索每次約 0.5 到 0.9 秒——字面比對撈得準，換個說法就撈不到，是目前最大的缺口。',
     category: 'AI 工具',
     tags: ['個人知識庫', 'Obsidian', 'Claude Code', 'hooks', 'BM25', 'LLM Wiki', 'RAG'],
     publishDate: '2026-10-20',
@@ -3463,7 +3463,7 @@ const posts = [
       },
       {
         q: 'UserPromptSubmit hook 會不會拖慢每次提問？',
-        a: '我的實測是每次 0.5 到 0.9 秒，372 張卡。hook 有設 10 秒逾時。卡片數再多一個數量級時，就需要把斷詞結果快取起來，不要每次重算。',
+        a: '我的實測是每次 0.5 到 0.9 秒，當時 372 張卡。hook 有設 10 秒逾時。卡片數再多一個數量級時，就需要把斷詞結果快取起來，不要每次重算。',
       },
       {
         q: '夜間整理會不會把錯的東西寫進卡片？',
