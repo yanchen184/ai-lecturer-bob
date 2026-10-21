@@ -334,6 +334,29 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     }
   );
 
+  // 連續的 `>` 行合成一個 blockquote；其中的 `- ` 行轉成清單，其餘行以 <br/> 相接。
+  // 必須在清單包裝之前跑（否則包裝會吃掉換行，`>` 不在行首）；li 先用佔位符，避免被外層清單包裝重包
+  html = html.replace(/^>(?: .*)?(?:\r?\n>(?: .*)?)*$/gm, (block) => {
+    const lines = block.split('\n').map((l) => l.replace(/\r$/, '').replace(/^> ?/, ''));
+    const parts: string[] = [];
+    let items: string[] = [];
+    const flush = () => {
+      if (items.length) parts.push(`<ul>${items.map((i) => `\u0000LI\u0000${i}\u0000/LI\u0000`).join('')}</ul>`);
+      items = [];
+    };
+    for (const line of lines) {
+      const li = /^- (.+)$/.exec(line);
+      if (li) {
+        items.push(li[1]);
+        continue;
+      }
+      flush();
+      if (line.trim()) parts.push(line);
+    }
+    flush();
+    return `<blockquote>${parts.join('<br/>').replace(/<br\/><ul>/g, '<ul>')}</blockquote>`;
+  });
+
   html = html
     .replace(/^## (.+)$/gm, (_m, title: string) => {
       const id = resolveId(title.trim());
@@ -364,7 +387,6 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     })
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
     .replace(/^- (.+)$/gm, '<li>$1</li>')
     .replace(/^\d+\. (.+)$/gm, '<li class="ol">$1</li>');
 
@@ -381,6 +403,7 @@ export function renderMarkdown(content: string): RenderedMarkdown {
       return `<ol>${cleaned}</ol>`;
     }
   );
+  html = html.replace(/\u0000(\/?)LI\u0000/g, '<$1li>');
 
   // Paragraphs: split by blank line, skip lines that already look like block elements
   const isBlock = (line: string): boolean =>
