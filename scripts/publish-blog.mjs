@@ -3530,6 +3530,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'emilkowalski-skills-claude-code-guide',
+    title: 'emilkowalski/skills 另外 14 支 skill 怎麼挑：動效、審查到手機坑',
+    metaDescription:
+      'emilkowalski/skills 除了 apple-design 還有 14 支 Claude Code skill。整理每支用途、安裝與點名方式，附 find-animation-opportunities 與 mobile-native 實測。',
+    excerpt:
+      'emilkowalski/skills 是 Emil Kowalski 以 MIT 開源的 skill 合集，apple-design 之外還有 14 支，管動效、設計、開發流程與 Sonner、Swift。我實測其中兩支，抓到沒寫 CSS 的目錄箭頭與會讓 iOS 放大的 12px 搜尋框——另有三支要打 /名稱 點名才會用。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'Emil Kowalski', '動效設計', 'mobile-native', '前端審查'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: '14 支要全部裝嗎？',
+        a: '不用。npx skills@latest add emilkowalski/skills 會整包裝；只想要其中一支，加 --skill 指定名稱就能單獨裝，例如 --skill mobile-native。',
+      },
+      {
+        q: '為什麼有些 skill 裝了卻不會自己觸發？',
+        a: 'pick-ui-library、prototype、review-animations 三支在 frontmatter 設了 disable-model-invocation: true，模型不會主動載入，要自己打 /pick-ui-library 這類指令點名。',
+      },
+      {
+        q: 'review-animations 跟 improve-animations 差在哪？',
+        a: 'review-animations 針對一段既有動畫做嚴格審查，預設會挑毛病；improve-animations 掃整個專案的動畫，只產出改善計畫、不直接改程式碼。',
+      },
+      {
+        q: 'mobile-native 能取代實機測試嗎？',
+        a: '不能。字級、100vh、hover 沒保護這類看程式碼就能確定；安全區實際被遮多少、下拉手感、點擊延遲，還是要拿手機實際點過才知道。',
+      },
+      {
+        q: '不是 React 專案也能用嗎？',
+        a: '動效與手機類的 skill 講的是 CSS 與瀏覽器行為，我的部落格是 Astro 也能用。pick-ui-library 的清單以 React 為主，animate-expo 則專給 React Native 與 Expo。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
