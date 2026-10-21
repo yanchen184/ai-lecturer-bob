@@ -254,13 +254,30 @@ export function renderMarkdown(content: string): RenderedMarkdown {
   const tableRe =
     /^(\|.+\|)\r?\n(\|[-: |]+\|)\r?\n((?:\|.*\|(?:\r?\n|$))+)/gm;
   html = html.replace(tableRe, (_m, header: string, sep: string, body: string) => {
-    const parseRow = (row: string): string[] =>
-      row
-        .trim()
-        .replace(/^\|/, '')
-        .replace(/\|$/, '')
-        .split('|')
-        .map((c) => c.trim());
+    // 依 GFM：反引號 code span 內的 `|` 與跳脫的 `\|` 都不是欄位分隔，`\|` 還原成 `|`。
+    const parseRow = (row: string): string[] => {
+      const src = row.trim().replace(/^\|/, '').replace(/\|$/, '');
+      const cells: string[] = [];
+      let cell = '';
+      let inCode = false;
+      for (let i = 0; i < src.length; i++) {
+        const ch = src[i];
+        if (ch === '\\' && src[i + 1] === '|') {
+          cell += '|';
+          i++;
+        } else if (ch === '`') {
+          inCode = !inCode;
+          cell += ch;
+        } else if (ch === '|' && !inCode) {
+          cells.push(cell.trim());
+          cell = '';
+        } else {
+          cell += ch;
+        }
+      }
+      cells.push(cell.trim());
+      return cells;
+    };
 
     const alignFromSep = (cell: string): string => {
       const l = cell.startsWith(':');
