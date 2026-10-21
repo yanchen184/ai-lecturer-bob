@@ -395,13 +395,10 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     /(?:<li>(?:.|\n)*?<\/li>\s*)+/g,
     (m) => `<ul>${m.replace(/\s+/g, ' ')}</ul>`
   );
-  // Wrap ordered list items
+  // Wrap consecutive ordered list items into <ol>（須在 <ul> 包裝之後，否則去掉 class 的 <li> 會被再包一層）
   html = html.replace(
-    /<ul>(\s*(<li class="ol">[^<]*<\/li>\s*)+)<\/ul>/g,
-    (_m, inner: string) => {
-      const cleaned = inner.replace(/ class="ol"/g, '');
-      return `<ol>${cleaned}</ol>`;
-    }
+    /(?:<li class="ol">.*?<\/li>\s*)+/g,
+    (m) => `<ol>${m.replace(/ class="ol"/g, '').replace(/\s+/g, ' ')}</ol>`
   );
   html = html.replace(/\u0000(\/?)LI\u0000/g, '<$1li>');
 

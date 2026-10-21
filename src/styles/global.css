@@ -305,6 +305,8 @@ body {
   margin: 1rem 0;
   line-height: 1.8;
 }
+.blog-prose ul { list-style: disc; }
+.blog-prose ol { list-style: decimal; }
 .blog-prose li { margin: 0.5rem 0; }
 .blog-prose img {
   max-width: 100%;
