@@ -7,7 +7,7 @@
  *
  * URL query 為 single source of truth：?cat=xxx&tag=yyy&q=zzz
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Props {
   categories: string[];
@@ -17,6 +17,50 @@ interface Props {
 }
 
 const ALL = 'all';
+
+const CARD_OFFSET_PX = 8;
+const cardAnimations = new WeakMap<HTMLElement, Animation>();
+
+/**
+ * 卡片進出場走同一條路徑：往下淡出、從下淡入。
+ * 中途反向時從當下的透明度接著跑，不會跳回起點。
+ */
+function setCardVisible(el: HTMLElement, show: boolean, animated: boolean): void {
+  const targetHidden = !show;
+  if ((el.dataset.filterHidden === '1') === targetHidden) return;
+  el.dataset.filterHidden = targetHidden ? '1' : '';
+
+  const running = cardAnimations.get(el);
+  const from = el.hidden ? 0 : parseFloat(getComputedStyle(el).opacity);
+  running?.cancel();
+  cardAnimations.delete(el);
+
+  if (!animated || typeof el.animate !== 'function') {
+    el.hidden = targetHidden;
+    return;
+  }
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const offset = (progress: number): string =>
+    reduce ? 'none' : `translateY(${(1 - progress) * CARD_OFFSET_PX}px)`;
+
+  el.hidden = false;
+  const animation = el.animate(
+    [
+      { opacity: from, transform: offset(from) },
+      { opacity: show ? 1 : 0, transform: offset(show ? 1 : 0) },
+    ],
+    show
+      ? { duration: 220, easing: 'cubic-bezier(0.2, 0, 0, 1)' }
+      : { duration: 140, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' }
+  );
+  cardAnimations.set(el, animation);
+  animation.onfinish = () => {
+    if (!show) el.hidden = true;
+    animation.cancel();
+    cardAnimations.delete(el);
+  };
+}
 
 export default function BlogFilters({
   categories,
@@ -59,8 +103,13 @@ export default function BlogFilters({
     []
   );
 
+  // 首次套用 URL 帶進來的篩選時不跑動畫
+  const hasApplied = useRef(false);
+
   // state → DOM hide/show（用 debouncedQuery 跑,避免快速打字時 layout thrash）
   useEffect(() => {
+    const animated = hasApplied.current;
+    hasApplied.current = true;
     const normalizedQuery = debouncedQuery.trim().toLowerCase();
     const articles = document.querySelectorAll<HTMLElement>(
       '[data-blog-card]'
@@ -81,7 +130,7 @@ export default function BlogFilters({
         elExcerpt.includes(normalizedQuery);
 
       const show = matchCat && matchTag && matchQuery;
-      el.hidden = !show;
+      setCardVisible(el, show, animated);
       if (show) visible += 1;
     });
 

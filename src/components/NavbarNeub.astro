@@ -277,7 +277,7 @@ const resolveHref = (href: string) =>
 </nav>
 )}
 
-<!-- ============ <md : 頂部 sticky bar + hamburger（純 CSS、無 JS） ============ -->
+<!-- ============ <md : 頂部 sticky bar + hamburger ============ -->
 <nav
   class="md:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b-[3px] border-black"
   aria-label="主要導覽"
@@ -316,7 +316,7 @@ const resolveHref = (href: string) =>
         </span>
       </summary>
 
-      <div class="mobile-menu-panel fixed left-0 right-0 bg-white border-t-2 border-black z-40 overflow-y-auto" style="top: 60px; height: calc(100vh - 60px);">
+      <div class="mobile-menu-panel fixed left-0 right-0 bg-white border-t-2 border-black z-40 overflow-y-auto" style="top: 60px;">
         <div class="px-6 py-4 border-b-2 border-black sidebar-theme flex items-center justify-between">
           <span class="text-[11px] font-mono uppercase tracking-widest opacity-60">style</span>
           <ThemeSwitch />
@@ -354,7 +354,7 @@ const resolveHref = (href: string) =>
 
 <!-- ============ <md : 底部固定 icon 導覽列（對齊 target mobile 排版） ============ -->
 <nav
-  class="mobile-bottom-nav md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t-[3px] border-black grid grid-cols-5"
+  class="mobile-bottom-nav md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t-[3px] border-black grid grid-cols-5 pb-[env(safe-area-inset-bottom)]"
   aria-label="底部導覽"
 >
   {
@@ -471,4 +471,59 @@ const resolveHref = (href: string) =>
   .mobile-menu[open] .mobile-menu-panel {
     display: block;
   }
+
+  /* 面板從右上的漢堡鈕長出來，收合時沿原路縮回去 */
+  .mobile-menu-panel {
+    height: calc(100vh - 60px);
+    height: calc(100dvh - 60px);
+    transform-origin: top right;
+    transition:
+      opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+      transform 220ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  @starting-style {
+    .mobile-menu[open] .mobile-menu-panel {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.96);
+    }
+  }
+  .mobile-menu.is-closing .mobile-menu-panel {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+    transition-duration: 140ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
 </style>
+
+<script>
+  const CLOSE_FALLBACK_MS = 300;
+
+  document.querySelectorAll<HTMLDetailsElement>('details.mobile-menu').forEach((menu) => {
+    const summary = menu.querySelector('summary');
+    const panel = menu.querySelector<HTMLElement>('.mobile-menu-panel');
+    if (!summary || !panel) return;
+
+    const finishClose = () => {
+      if (!menu.classList.contains('is-closing')) return;
+      menu.classList.remove('is-closing');
+      menu.open = false;
+    };
+
+    summary.addEventListener('click', (event) => {
+      if (menu.classList.contains('is-closing')) {
+        // 收合途中再按一次 → 反向展開
+        event.preventDefault();
+        menu.classList.remove('is-closing');
+        return;
+      }
+      if (!menu.open) return;
+      event.preventDefault();
+      menu.classList.add('is-closing');
+      window.setTimeout(finishClose, CLOSE_FALLBACK_MS);
+    });
+
+    panel.addEventListener('transitionend', (event) => {
+      if (event.target === panel && event.propertyName === 'opacity') finishClose();
+    });
+  });
+</script>
