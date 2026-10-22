@@ -397,7 +397,7 @@ const resolveHref = (href: string) =>
   /* 手機：底部固定 nav 高度讓位，避免蓋住內容 */
   @media (max-width: 767px) {
     body {
-      padding-bottom: 64px;
+      padding-bottom: calc(64px + env(safe-area-inset-bottom));
     }
   }
   /* 深色 sidebar 內的 ThemeSwitch 反白 */

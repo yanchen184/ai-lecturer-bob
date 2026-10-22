@@ -3531,35 +3531,434 @@ const posts = [
     featured: false,
   },
   {
-    slug: 'emilkowalski-skills-claude-code-guide',
-    title: 'emilkowalski/skills 另外 14 支 skill 怎麼挑：動效、審查到手機坑',
+    slug: 'emil-design-eng-skill-claude-code',
+    title: 'emil-design-eng skill 實測：674 行規範，差異全在動態',
     metaDescription:
-      'emilkowalski/skills 除了 apple-design 還有 14 支 Claude Code skill。整理每支用途、安裝與點名方式，附 find-animation-opportunities 與 mobile-native 實測。',
+      'emil-design-eng 是 Emil Kowalski 最長的 Claude Code skill，674 行講 easing、時長與何時不要動畫。我用同一個下拉選單實測差異，附安裝、點名與 token 成本。',
     excerpt:
-      'emilkowalski/skills 是 Emil Kowalski 以 MIT 開源的 skill 合集，apple-design 之外還有 14 支，管動效、設計、開發流程與 Sonner、Swift。我實測其中兩支，抓到沒寫 CSS 的目錄箭頭與會讓 iOS 放大的 12px 搜尋框——另有三支要打 /名稱 點名才會用。',
+      'emil-design-eng 是 Emil Kowalski 收在 MIT 授權 emilkowalski/skills 裡最長的一支 skill（674 行），把他對 easing、動畫時長、何時不該動畫與 UI 細節的判斷寫給 AI agent 看。我實測同一個下拉選單，點名後開啟 102ms 就接近不透明、關閉比開啟快，截圖卻幾乎一樣——而且不點名 3 次只觸發 1 次，載入一次約多 9.9k tokens。',
     category: 'AI 工具',
-    tags: ['Claude Code', 'Claude Code Skill', 'Emil Kowalski', '動效設計', 'mobile-native', '前端審查'],
+    tags: ['Claude Code', 'Claude Code Skill', 'emil-design-eng', 'Emil Kowalski', '動效設計', 'easing'],
     publishDate: '2026-10-21',
     faqItems: [
       {
-        q: '14 支要全部裝嗎？',
-        a: '不用。npx skills@latest add emilkowalski/skills 會整包裝；只想要其中一支，加 --skill 指定名稱就能單獨裝，例如 --skill mobile-native。',
+        q: 'emil-design-eng 跟 apple-design 要裝哪一支？',
+        a: '寫拖曳、可甩動的面板選 apple-design，它有動量投射與橡皮筋公式；一般網頁元件的開關動畫、審查 CSS 的時長與曲線選 emil-design-eng。兩支不撞名，可以都裝，但同時載入會多吃 context。',
       },
       {
-        q: '為什麼有些 skill 裝了卻不會自己觸發？',
-        a: 'pick-ui-library、prototype、review-animations 三支在 frontmatter 設了 disable-model-invocation: true，模型不會主動載入，要自己打 /pick-ui-library 這類指令點名。',
+        q: '48k stars 是 emil-design-eng 一支的嗎？',
+        a: '不是。GitHub 只能對整個 repo 加星，2026-10-21 查詢 emilkowalski/skills 是 48,159 stars，由 repo 內 15 支 skill 共用。',
       },
       {
-        q: 'review-animations 跟 improve-animations 差在哪？',
-        a: 'review-animations 針對一段既有動畫做嚴格審查，預設會挑毛病；improve-animations 掃整個專案的動畫，只產出改善計畫、不直接改程式碼。',
+        q: '裝了之後會自動被用上嗎？',
+        a: '不一定。它沒有 disable-model-invocation，但 description 沒寫使用情境。我同一句下拉選單需求不點名跑 3 次，只有 1 次自動載入；要穩定生效就在需求前面打 /emil-design-eng。',
       },
       {
-        q: 'mobile-native 能取代實機測試嗎？',
-        a: '不能。字級、100vh、hover 沒保護這類看程式碼就能確定；安全區實際被遮多少、下拉手感、點擊延遲，還是要拿手機實際點過才知道。',
+        q: '單獨打 /emil-design-eng 為什麼只回一句話？',
+        a: 'skill 規定在沒有具體問題時只回固定的一句招呼，不主動給建議。把需求接在同一行，例如「/emil-design-eng 審查這個 dropdown 的動畫」，它才會開始做事。',
       },
       {
-        q: '不是 React 專案也能用嗎？',
-        a: '動效與手機類的 skill 講的是 CSS 與瀏覽器行為，我的部落格是 Astro 也能用。pick-ui-library 的清單以 React 為主，animate-expo 則專給 React Native 與 Expo。',
+        q: '載入 emil-design-eng 要多少 token？',
+        a: '我從 stream-json 量到，點名後第一個請求的 input tokens 從 25,360 增加到 35,313，約多 9.9k；只是裝著沒載入時，description 約佔 59 tokens。',
+      },
+    ],
+    featured: false,
+  },
+  { slug:'animation-vocabulary-skill-claude-code', title:'animation-vocabulary skill 實測：91 個動畫術語，問名字才觸發', metaDescription:'animation-vocabulary 把模糊動畫描述反查成 91 個標準術語。24 次 claude -p 對照：問「叫什麼」全觸發、Pop in 三次一致，只描述則 0/3；附安裝與點名法。', excerpt:'animation-vocabulary 是 Emil Kowalski 的反查型 skill，用 91 個術語把「彈一下」翻成 Pop in 這類標準詞。24 次 claude -p 對照中，問名稱的題目全部自動觸發，只描述感覺則 0/3——要穩就直接點名。', category:'AI 工具', tags:['Claude Code','Claude Code Skill','animation-vocabulary','Emil Kowalski','動效設計','動畫術語'], publishDate:'2026-10-21', faqItems:[{q:'animation-vocabulary 會不會自己寫動畫程式碼？',a:'不會。description 明寫只負責命名、不負責設計或實作，實測中它只回傳術語、定義與近似詞，沒有產生程式碼。'},{q:'用中文問 animation-vocabulary 有用嗎？',a:'有用。24 次實驗全部用中文 prompt，問名稱的題目都正確觸發；只是術語與定義維持英文，中文說明由模型另外補。'},{q:'一定要裝整個 emilkowalski/skills 嗎？',a:'不用。npx skills@latest add emilkowalski/skills --skill animation-vocabulary 只裝這一支；它只有一個 SKILL.md，手動複製到 .claude/skills/animation-vocabulary/ 也可以。'},{q:'為什麼說「彈一下」animation-vocabulary 沒反應？',a:'只描述感覺時模型會當成實作需求，實測 3 次都沒呼叫 Skill 工具。句子裡加上「這叫什麼」，或直接打 /animation-vocabulary 點名就會觸發。'}], featured:false },
+  {
+    slug: 'animate-skill-claude-code',
+    title: 'animate skill 實測：4 次都拒絕替 Ctrl+K 加動畫',
+    metaDescription:
+      'animate 是 Emil Kowalski 開源的 Claude Code skill，用 7 步決定動畫該不該做、怎麼做。我用同一句需求對照有無 skill 跑 7 次，附安裝指令與 Git Bash 點名的坑。',
+    excerpt:
+      'animate 是 Emil Kowalski 在 2026 年 8 月放進 emilkowalski/skills（MIT）的 Claude Code skill，用一份 SKILL.md 加 14 份元件食譜，把「加個動畫」拆成先問該不該動、再挑工具與曲線的 7 步流程。同一句需求實測，沒裝 skill 的 3 次都替 Ctrl+K 面板加了動畫、1 次還弄壞，有 skill 的 4 次全部拒絕，下拉選單也統一用 0.95 縮放與同一條曲線——它最有價值的是會說「這不該動」。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'animate', 'Emil Kowalski', '動效設計', 'CSS 動畫'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'animate skill 是什麼？',
+        a: 'animate 是 Emil Kowalski 開源在 emilkowalski/skills（MIT）裡的 Claude Code skill，專門從零實作動畫。它要求依序回答 7 個問題：該不該動、目的、工具、屬性、曲線與時長、中斷與退場、減少動態效果，前兩步沒過就不寫程式碼。',
+      },
+      {
+        q: 'animate 為什麼會拒絕替命令面板加動畫？',
+        a: 'skill 第 1 步依觸發頻率分級，一天 100 次以上的動作（鍵盤快捷鍵、命令面板開關）規定不加動畫，並以 Raycast 為例。實測 4 次有 skill 的執行都拒絕替 Ctrl+K 面板加動畫，改建議瞬間開關或靜態提示。',
+      },
+      {
+        q: '裝了 animate 不點名也會自動觸發嗎？',
+        a: '它沒有設 disable-model-invocation，模型可以自己載入。我用「加開關動畫」的需求沒點名跑 3 次，3 次都自動載入，但樣本小；想穩定的話在需求前加 /animate。',
+      },
+      {
+        q: '怎麼安裝 animate skill？',
+        a: '執行 npx skills@latest add emilkowalski/skills --skill animate。不想回答互動問題可加 --agent claude-code --copy -y，會產生 .claude/skills/animate/ 底下的 SKILL.md 與 RECIPES.md，以及 skills-lock.json。',
+      },
+      {
+        q: '在 Git Bash 用 claude -p "/animate" 為什麼沒反應？',
+        a: 'Git Bash（MSYS）會把開頭的 /animate 當成路徑改寫成 C:/Program Files/Git/animate，模型收到的就不是 slash 指令。在指令前加 MSYS_NO_PATHCONV=1，或改用 PowerShell、互動式 Claude Code 就正常。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'animate-expo-skill-claude-code',
+    title: 'animate-expo skill 實測：5 組對照，點名版拒做分頁滑動',
+    metaDescription:
+      'animate-expo skill 實測：同一句 Expo 需求跑 5 組 Claude Code，沒裝 skill 的 spring、慣性投射、減少動態都是 0，點名版還直接拒做分頁滑動。附安裝指令與限制。',
+    excerpt:
+      'animate-expo 是 Emil Kowalski 寫給 AI 的 Expo 動效規範，管手勢、sheet 與觸覺回饋。同一句需求跑 5 組 Claude Code，裝了的 3 組都用上 spring 與減少動態，沒裝的 2 組是 0，點名版還拒做分頁滑動。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'animate-expo', 'Emil Kowalski', 'Expo', 'React Native'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'animate-expo 和 animate 差在哪？',
+        a: 'animate 管網頁動畫（CSS、WAAPI、Motion），animate-expo 管 React Native／Expo（Reanimated、Gesture Handler、Expo Router、expo-haptics）。animate 的 SKILL.md 自己寫明 React Native 交給 animate-expo。',
+      },
+      {
+        q: '48k stars 是 animate-expo 一支的嗎？',
+        a: '不是。2026-10-21 查到 emilkowalski/skills 有 48,157 stars，GitHub 只能對整個 repo 加星，這是 15 支 skill 共用的數字。',
+      },
+      {
+        q: '裝了之後不點名會自動用上嗎？',
+        a: '我用一句 Expo 需求沒點名跑了 2 次，2 次都在第一步自己載入。它沒有設 disable-model-invocation，模型可以自己判斷要不要用。樣本很小，想穩定生效還是在需求前面打 /animate-expo。',
+      },
+      {
+        q: '只打 /animate-expo 為什麼只回一句話？',
+        a: 'SKILL.md 規定被叫出來時如果沒有具體問題，只回一句英文開場白。要把需求接在 /animate-expo 後面一起打。',
+      },
+      {
+        q: '實測的動畫手感有比較好嗎？',
+        a: '我只跑了 npx tsc --noEmit 型別檢查，只做程式碼層比對、未在裝置上執行。skill 自己規定手感只能在 release build、最慢的支援機型上判斷。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'find-animation-opportunities-skill-claude-code',
+    title: 'find-animation-opportunities 實測：抓到沒寫 CSS 的目錄箭頭',
+    metaDescription:
+      'find-animation-opportunities 是 Emil Kowalski 的 Claude Code skill，用 4 題 Gate 找該加與不該加動畫的地方。我跑兩次並把建議修進正式站，附 diff。',
+    excerpt:
+      'find-animation-opportunities 是 Emil Kowalski 收在 MIT 授權 emilkowalski/skills 裡的 Claude Code skill，用頻率、目的、速度、功能四題 Gate 篩出介面上該加與不該加動畫的地方，只出報告、不改程式碼。我拿部落格前端跑了兩次，點名那次抓到有 class 沒樣式的目錄箭頭，兩次對篩選動畫卻給出相反結論——箭頭與篩選動畫後來都修進正式站，附 diff 與 Playwright 實測。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'find-animation-opportunities', 'Emil Kowalski', '動效設計', '前端審查'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'find-animation-opportunities 會直接改我的程式碼嗎？',
+        a: '不會。SKILL.md 的第一條 Hard Rule 就是不改原始碼，它只輸出建議表、否決清單和結論。要實作時，它會建議交給 improve-animations plan，或把建議表拿給任何 agent 去做。',
+      },
+      {
+        q: '48,160 stars 是這一支 skill 的嗎？',
+        a: '不是。GitHub 只能對整個 repo 加星，emilkowalski/skills 裡有 15 支 skill，48,160（2026-10-21 查詢）是整套共用的數字。',
+      },
+      {
+        q: '要點名才會用嗎？',
+        a: '不一定要。它的 frontmatter 沒有 disable-model-invocation，模型可以自己載入。但我實測兩種叫法結論不同，想要可重現的結果，就在需求前面打 /find-animation-opportunities。',
+      },
+      {
+        q: '跟 improve-animations、review-animations 差在哪？',
+        a: 'find-animation-opportunities 找的是「還沒有動畫、但應該有」的地方；improve-animations 稽核既有動畫並產出修正計畫；review-animations 審查既有動畫的品質。三支分工不重疊。',
+      },
+      {
+        q: '同一份程式碼跑兩次，結果會一樣嗎？',
+        a: '不保證。我的兩次實測有三項建議重疊，但目錄箭頭只在點名那次被抓到，篩選動畫一次建議做進場、一次直接否決。重要的介面建議多跑一次再決定。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'improve-animations-skill-claude-code',
+    title: 'improve-animations 實測：9 分鐘審完全站動畫，剛修的也被抓',
+    metaDescription: 'improve-animations 是 emilkowalski/skills 裡只寫計畫不改碼的動畫審計 skill。實測部落格前端 9 分鐘出 4 份計畫，線上驗證 3 條成立，含剛修出的 ease-in。',
+    excerpt: 'improve-animations 是 Emil Kowalski 開源的 Claude Code skill，掃整個 repo 的動畫程式碼，只把修法寫成 plans/ 底下的自足計畫、不動原始碼。我拿剛修完動畫的部落格前端跑一次，約 9 分鐘、US$2.04 產出 8 條發現與 4 份計畫，挑 3 條到正式站量測全部成立，其中一條就是當天新加的 ease-in。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'improve-animations', 'Emil Kowalski', '動效設計', '動畫審計'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'improve-animations 會直接修改我的程式碼嗎？',
+        a: '不會。它的硬規則是只能在 plans/（或 animation-plans/）底下建立計畫檔，也不跑 install、build、commit。要實作可以用 improve-animations execute <plan>，它會在隔離的 worktree 派執行者改，再用 review-animations 的標準審 diff。',
+      },
+      {
+        q: 'improve-animations 和 review-animations 差在哪？',
+        a: 'improve-animations 掃整個 repo，產出排好優先度的發現表與自足計畫；review-animations 審一段既有的動畫或 diff，預設立場是挑毛病。前者沒有 disable-model-invocation，可以自動觸發；後者必須點名。',
+      },
+      {
+        q: '只輸入 /improve-animations 為什麼什麼都沒做？',
+        a: 'SKILL.md 規定不帶問題呼叫時只回一句「I\'m ready to audit your animations and plan the fixes…」就停。要在後面寫明範圍與深度，例如「審計 src/ 全部互動 UI 的動畫（standard effort）」。',
+      },
+      {
+        q: '跑一次 improve-animations 要多久、多少錢？',
+        a: '我用 Opus 5.5 對一個 Astro 6 加 React 19 的部落格前端跑 standard 深度，約 9.2 分鐘、28 turns、US$2.04，沒有派 subagent。deep 深度最多會派 8 個 subagent，我沒有實測。',
+      },
+      {
+        q: '怎麼安裝 improve-animations？',
+        a: '執行 npx skills@latest add emilkowalski/skills --skill improve-animations。我實測 skills CLI 1.7.4 會把檔案放進 .claude/skills/improve-animations/ 並產生 skills-lock.json。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'review-animations-skill-claude-code',
+    title: 'review-animations skill 實測：8 條意見零誤報，漏了 3 處',
+    metaDescription:
+      'review-animations 是 Emil Kowalski 開源的 Claude Code 動畫審查 skill，只能打斜線點名。我拿它審部落格剛上線的動畫，附 8 條意見真假判定與安裝指令。',
+    excerpt:
+      'review-animations 是 Emil Kowalski 以 MIT 開源的動畫審查 skill，拿 10 條標準比對 diff、一定判 Block 或 Approve，只能打 /review-animations 點名。我拿它審部落格剛上線的動畫 commit，8 條意見 3 條在正式站重現、0 條誤報——但漏了 3 個量得到的問題，適合當第二雙眼睛。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'review-animations', 'Emil Kowalski', '動效設計', 'Code Review'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'review-animations 裝了之後會自動審查嗎？',
+        a: '不會。它的 frontmatter 設了 disable-model-invocation: true，模型不會自己載入它，要在需求前面打 /review-animations 才會跑。我拿掉斜線再跑一次，模型改去載入 apple-design。',
+      },
+      {
+        q: '它跟 improve-animations 差在哪？',
+        a: 'review-animations 審一份 diff，輸出修改前、修改後、原因的對照表並判 Block 或 Approve，不改程式；improve-animations 是掃整個專案、找出可以加強的動畫並動手改。',
+      },
+      {
+        q: '它的審查意見準嗎？',
+        a: '我拿部落格 commit 07d7267 實測，它提 8 條意見，3 條在正式站用 Playwright 實際重現，其餘是設計立場或未量測的建議，沒有一條是誤報；但它漏了 3 個量得到的問題，例如減少動態模式下封面圖仍會放大。',
+      },
+      {
+        q: '48k stars 是 review-animations 一支的嗎？',
+        a: '不是。GitHub 只能對整個 repo 加星，2026-10-21 時 emilkowalski/skills 是 48,156 stars，由 repo 裡 15 支 skill 共用。',
+      },
+      {
+        q: '怎麼安裝？',
+        a: '在專案根目錄執行 npx skills@latest add emilkowalski/skills --skill review-animations，裝好後用 /review-animations 加上要審的範圍呼叫。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'animation-performance-skill-claude-code',
+    title: 'animation-performance skill 實測：抓的問題沒變多，排序變準',
+    metaDescription:
+      'animation-performance 是 Emil Kowalski 的 Claude Code skill，專抓動畫掉幀。我做有無 skill 對照與 Playwright 量測，附安裝指令與 layout 歸零幀率卻沒變的原因。',
+    excerpt:
+      'animation-performance 是 Emil Kowalski 以 MIT 開源的 Claude Code skill，專門診斷網頁動畫為什麼掉幀，裝了會自動觸發。我實測有無 skill 的審查，問題清單差不多，但有 skill 的 4 次都把動 width 的進度條排第 1；改成 scaleX 後 layout 從約 250 次降到 0——桌機幀率卻沒變，要實機錄影才算數。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'animation-performance', 'Emil Kowalski', '動畫效能', '前端效能'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'animation-performance skill 會自動觸發嗎？',
+        a: '會。它的 frontmatter 沒有 disable-model-invocation，我用一句「審查動畫效能」的需求、沒點名跑了 3 次，3 次都自動載入。需求裡沒有效能、卡頓、掉幀這類字時，建議在前面打 /animation-performance 點名。',
+      },
+      {
+        q: '48k stars 是 animation-performance 一支的嗎？',
+        a: '不是。GitHub 只能對整個 repo 加星，emilkowalski/skills 裡有 15 支 skill，2026-10-21 查到的 48,162 stars 是整套共用的數字。',
+      },
+      {
+        q: '它會幫我量 fps 或錄 Performance 嗎？',
+        a: '不會。它在 Claude Code 裡是讀程式碼做靜態審查，報告會標出哪些是從程式碼確認、哪些需要實機錄影。實際量測要自己用 DevTools Performance 面板或 Playwright 腳本做。',
+      },
+      {
+        q: '把 width 動畫改成 transform: scaleX 一定會變順嗎？',
+        a: '不一定看得出來。我在正式文章頁量到 layout 從約 250 次降到 0，但桌機上平均幀間隔兩版都在 17ms 左右。SKILL.md 也寫明 layout 動畫不一定會掉幀，改 scaleX 的理由是在慢裝置上不會退步。',
+      },
+      {
+        q: '它跟 animate、review-animations 差在哪？',
+        a: 'animation-performance 只回答每一幀能不能在 16.7ms 內畫完；easing、時長與要不要動畫歸 animate；整體審查動效、包括動畫該不該存在歸 review-animations，而且 review-animations 要點名才會用。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'mobile-native-skill-claude-code',
+    title: 'mobile-native skill 實測：19 項審查抓出 14 個手機坑',
+    metaDescription:
+      'mobile-native 是 Emil Kowalski 開源的 Claude Code skill，專抓手機網頁 11 種症狀。我拿它審自己的部落格，附 iOS 放大、100vh、安全區的修法 diff 與線上驗證。',
+    excerpt:
+      'mobile-native 是 Emil Kowalski 以 MIT 開源的 AI agent skill，專抓網頁在手機上露餡的 11 種症狀，例如 hover 黏住、100vh 與輸入框放大。我點名它審自己的部落格，19 列抓出 14 個問題、修完再審又找到一個新坑，但模擬器只能證明 CSS 上線，iOS 實機仍要拿手機驗。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'mobile-native', 'Emil Kowalski', '手機網頁', 'iOS Safari'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: '為什麼 iOS 點輸入框整頁會放大？',
+        a: 'iOS Safari 在輸入框字級小於 16px 時，聚焦會自動放大頁面，而且離開輸入框也不會縮回。正解是把輸入框字級拉到 16px，不是在 viewport 加 maximum-scale 或 user-scalable=no 禁止縮放。',
+      },
+      {
+        q: '48,160 stars 是 mobile-native 一支的嗎？',
+        a: '不是。GitHub 只能對整個 repo 加星，emilkowalski/skills 裡有 15 支 skill，這是整套共用的數字（2026-10-21 查）。',
+      },
+      {
+        q: '100vh、100dvh、100svh 該用哪個？',
+        a: '依 mobile-native 的分法：選單、抽屜、App 外殼這類要貼著可視範圍的元素用 100dvh；首屏和行銷區塊用 100svh，捲動時不會跳版。舊瀏覽器需要時可在上一行留 100vh 當備援。',
+      },
+      {
+        q: '用 Playwright 或 Chrome 裝置模擬驗過就算修好了嗎？',
+        a: '不算。模擬器沒有網址列和瀏海，safe-area 量到 0px、vh 和 dvh 也一樣，只能證明 CSS 有上線。iOS 放大、安全區遮擋、網址列收合要用實機確認。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'pick-ui-library-skill-claude-code',
+    title: 'pick-ui-library 實測：20 個前端套件清單，6 情境抓到 2 個坑',
+    metaDescription:
+      'pick-ui-library 是 Emil Kowalski 的 Claude Code 選套件 skill，要手打 /pick-ui-library 才觸發。我跑 6 個情境，附 20 個套件的 npm 現況與安裝指令。',
+    excerpt:
+      'pick-ui-library 是 Emil Kowalski 收在 MIT 授權 emilkowalski/skills 裡的 Claude Code skill，用 85 行清單把 19 種前端任務對到 20 個函式庫，要手打 /pick-ui-library 才載入。我跑 6 個情境，它會先看 package.json、不亂換依賴，但一次給了已棄用的套件名——清單值得用，安裝前自己核對 npm。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'pick-ui-library', 'Emil Kowalski', 'React', '前端套件選型'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'pick-ui-library 裝了之後會自動觸發嗎？',
+        a: '不會。它的 frontmatter 設了 disable-model-invocation: true，Claude 不能自己載入它，要在需求前面打 /pick-ui-library 才會生效。只打指令不帶問題時，它只回一句固定開場白。',
+      },
+      {
+        q: '為什麼我沒點名，Claude 還是照清單推薦？',
+        a: '我實測沒點名的兩個情境，模型都沒透過 Skill 工具載入它，但用 Bash 探索專案時讀到了 .claude/skills/ 底下的 SKILL.md。disable-model-invocation 只擋自動載入，不會把檔案藏起來。',
+      },
+      {
+        q: '照它的推薦安裝套件要注意什麼？',
+        a: '清單只寫函式庫名稱和官網連結，沒寫 npm 套件名。base-ui 現在的套件名是 @base-ui/react，舊名 @base-ui-components/react 已棄用；cva 要裝 class-variance-authority，npm 上的 cva 是 0.0.0 的佔位版本。安裝前先到 npm 核對名稱與最新版。',
+      },
+      {
+        q: '怎麼只裝 pick-ui-library 這一支？',
+        a: '執行 npx skills@latest add emilkowalski/skills --skill pick-ui-library。我用 skills CLI 1.7.4 實裝過，會在專案下產生 .claude/skills/pick-ui-library/SKILL.md 和一份 skills-lock.json。',
+      },
+      {
+        q: '不是 React 專案能用嗎？',
+        a: '用處有限。清單以 React 生態為主，base-ui、Sonner、cmdk、input-otp、Virtuoso 都是 React 元件，Vue、Svelte 或原生 App 大多對不上；shiki、Satori、clsx 這幾個則不綁框架。寫原生 iOS 可以看同 repo 的 write-swift 與 mobile-native。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'prototype-skill-claude-code',
+    title: 'prototype skill 實測：AI 一次做 4 版 UI，有 1 版是壞的',
+    metaDescription:
+      'prototype 是 Emil Kowalski 的 Claude Code skill，一次做多版 UI 放進切換器挑。實測點名做出 4 版卡片 hover，附安裝指令、PICKER 規格與不自動觸發的坑。',
+    excerpt:
+      'prototype 是 Emil Kowalski 開源的 Claude Code skill，把一個 UI 元件做成幾版不同原型，放進切換器讓你挑。repo 有 48.2k stars（15 支共用）；我實測點名時做出 4 版卡片 hover、沒碰正式程式，但 1 版全黑沒自驗，不點名不載入。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'prototype', 'Emil Kowalski', 'UI 原型', '前端設計'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'prototype skill 會自己觸發嗎？',
+        a: '不會。它在 frontmatter 設了 disable-model-invocation: true，要打 /prototype 加上需求才會跑。我用同一句需求不點名跑一次，Claude 完全沒讀這份 skill，直接改了 3 支正式程式檔。',
+      },
+      {
+        q: 'PICKER.md 是什麼？是把幾個方案並排比較嗎？',
+        a: '不是並排。PICKER.md 是切換器的固定規格：畫面底部一顆深色膠囊，一次只顯示一個版本、全尺寸放在真實情境裡，用數字鍵或方向鍵切換，目前版本記在網址的 ?v= 參數。',
+      },
+      {
+        q: '它會改到我的正式程式碼嗎？',
+        a: '探索期間不會。我實測點名那次，所有版本都放在獨立的 prototype.html 與 src/prototypes/，git status 顯示 App.tsx、ArticleCard.tsx 沒被動過。要等你回 keep <版本名> 才會整合進正式程式並刪掉原型區。',
+      },
+      {
+        q: '做出來的版本可以直接相信嗎？',
+        a: '要自己逐版看過。我那次 4 版裡有 1 版內文區整片黑底、字看不見，tsc 和 lint 都抓不到。skill 要求 Claude 在瀏覽器逐版檢查，但沒有瀏覽器工具時這一步就會被跳過。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ask-sonner-skill-claude-code',
+    title: 'ask-sonner skill 實測：Sonner 作者的指南，有 1 個 API 不存在',
+    metaDescription:
+      'ask-sonner 是 Sonner 作者 Emil Kowalski 寫的 Claude Code skill。我用 5 組 claude -p 對照實測，找出它跟 Sonner 2.0.8 對不上的 API，附安裝與點名方式。',
+    excerpt:
+      'ask-sonner 是 Sonner 作者 Emil Kowalski 寫的 skill，教 AI 設定與排查 React toast。它教的 getActiveToasts() 不在 Sonner 2.0.8 公開 API，5 組實測唯一編譯失敗的就是照抄那組，用時要叫 AI 跑 tsc。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'ask-sonner', 'Sonner', 'Emil Kowalski', 'React', 'Toast'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'ask-sonner 是 Sonner 官方出的嗎？',
+        a: '是作者本人寫的。Sonner 和 ask-sonner 都是 Emil Kowalski 的作品，Sonner 的 README 安裝段落也推薦用 /ask-sonner 來設定。skill 收在 emilkowalski/skills，授權是 MIT。',
+      },
+      {
+        q: '48k stars 是 ask-sonner 一支的嗎？',
+        a: '不是。GitHub 只能對整個 repo 加星，emilkowalski/skills 裡有 15 支 skill，2026-10-21 查到的 48,159 stars 是整套共用的數字。',
+      },
+      {
+        q: 'skill 裡寫的 toast.getActiveToasts() 能用嗎？',
+        a: '在 Sonner 2.0.8 不能用。公開的是 toast.getToasts() 和 toast.getHistory()，getActiveToasts 只是內部方法。照寫 TypeScript 會報 TS2339，跳過型別檢查則執行時丟出 is not a function。官方文件也寫錯了同一處。',
+      },
+      {
+        q: '裝了之後一定會自動被用上嗎？',
+        a: '不一定。我用同一句需求、沒點名跑了 2 次，只有 1 次載入 skill。要穩定生效就在需求前面打 /ask-sonner，並且把需求接在同一行，只打指令它只會回一句待命訊息。',
+      },
+      {
+        q: '沒用 Sonner 的專案需要裝嗎？',
+        a: '不需要。它只講 Sonner 的設定、樣式和疑難排解，不是通用的 toast 設計指南。還在挑元件函式庫的話，可以先看同 repo 的 pick-ui-library。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'write-swift-skill-claude-code',
+    title: 'write-swift skill 實測：5 次對照補出取消檢查，版本表落後 6.4',
+    metaDescription:
+      'write-swift 是 Emil Kowalski 開源的 Claude Code skill，教 AI 照 Swift 6.2 並行模型寫程式。我用 SwiftUI 列表做 5 次對照，附安裝、版本勘誤與坑。',
+    excerpt:
+      'write-swift 是 Emil Kowalski 收在 MIT 授權 emilkowalski/skills 裡的 AI agent skill，用 16 節規則教 AI 照 Swift 6.2 之後的並行模型寫 Swift。我讓 Claude Code 寫同一個 SwiftUI 列表做 5 次對照，沒裝 skill 也會用 @concurrent，裝了才 3 次都補上取消檢查與 Mutex——但它把 6.3 當目前版本，swift.org 已是 6.4.1。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'write-swift', 'Emil Kowalski', 'Swift', 'Swift 6.2', 'SwiftUI', 'Swift Concurrency'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'write-swift skill 是 Apple 官方出的嗎？',
+        a: '不是。它是 Emil Kowalski 個人開源的 skill，2026-08-21 加進 emilkowalski/skills，授權是 MIT。版本敘述要自己對照 swift.org 與 swift-evolution 的提案狀態。',
+      },
+      {
+        q: '48,159 stars 是 write-swift 一支的嗎？',
+        a: '不是。這是 2026-10-21 查到的 emilkowalski/skills 整個 repo 的數字，repo 裡有 15 支 skill 共用。',
+      },
+      {
+        q: '裝了之後會自動被用上嗎？',
+        a: 'frontmatter 沒有 disable-model-invocation，靠 description 自動觸發。我裝了不點名跑 2 次，2 次都由模型自己載入；想確定就在需求前面打 /write-swift。',
+      },
+      {
+        q: '沒裝 skill 的 Claude Code 寫 Swift 差很多嗎？',
+        a: '這次實測差在細節。沒裝的版本已經會用 @concurrent、actor 去重和 Swift Testing；裝了之後 3 次都多了取消檢查與 Mutex，測試替身也不再用 nonisolated(unsafe) 和 .serialized。程式都沒有在 Xcode 上編譯。',
+      },
+      {
+        q: 'skill 裡的 Swift 版本可以照抄嗎？',
+        a: '要先核對。skill 以 6.3 為基準，但 Swift 6.4 已在 2026-09-15 釋出，標 ⚠ 未釋出的功能多數已能用；raw identifiers 實際是 6.2、weak let 實際是 6.3，skill 都標錯了。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'break-ui-skill-claude-code',
+    title: 'break-ui skill 實測：33 個破綻有 12 個在正式站重現',
+    metaDescription:
+      'break-ui 是 Emil Kowalski 的 Claude Code skill，用最壞的真實資料壓 UI。我拿部落格實測：33 條問題逐條上線驗證，12 條重現，附安裝、點名方式與限制。',
+    excerpt:
+      'break-ui 是 Emil Kowalski 收在 MIT 授權 emilkowalski/skills 裡的 Claude Code skill，用長名字、空清單、只有 1 筆這類真實會出現的最壞資料壓 UI，先回報、等你點頭才修。我拿自己的部落格前端給它測，33 條問題到正式站逐條驗證，12 條重現、6 條是 Broken——值得裝，但它標「推論」的項目一定要開瀏覽器確認。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'break-ui', 'Emil Kowalski', 'UI 測試', '邊界案例'],
+    publishDate: '2026-10-21',
+    faqItems: [
+      {
+        q: 'break-ui 會自己修改程式碼嗎？',
+        a: '預設不會。它的規則是先回報再修，交出報告後就停下。要它修，回覆 fix all 或 fix 1, 3，或一開始就在需求後面加 + fix。',
+      },
+      {
+        q: 'break-ui 需要能跑起來的 dev server 嗎？',
+        a: '不一定。有 dev server 時它用 ?data=worst 切換資料；沒有時它產一個單檔 HTML 當切換器，並改從 CSS 推論、在報告裡標明哪些是推論。',
+      },
+      {
+        q: 'break-ui 跟 emil-design-eng、review-animations 差在哪？',
+        a: 'break-ui 只用最壞資料找會壞的地方；emil-design-eng 做視覺設計評論；review-animations 審動效。三支在 description 裡互相指路。',
+      },
+      {
+        q: 'break-ui 產的測試資料會用到真實網域嗎？',
+        a: '不會。它的 CATALOG.md 規定 email 和 URL 一律用 example.com、example.org 或 .test 網域。',
+      },
+      {
+        q: 'break-ui 的星數是多少？',
+        a: 'GitHub 只能對整個 repo 加星。emilkowalski/skills 在 2026-10-21 是 48,165 stars、2,785 forks，是 15 支 skill 共用的數字。',
       },
     ],
     featured: false,
