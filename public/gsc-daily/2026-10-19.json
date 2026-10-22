@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-19",
+  "impressions": 1,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 5.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ]
+}
