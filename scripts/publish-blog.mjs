@@ -3963,6 +3963,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'graphify-claude-code-knowledge-graph',
+    title: 'Graphify 實測：0 token 建 Claude Code 知識圖譜，哪裡贏 grep',
+    metaDescription:
+      'Graphify 用 tree-sitter 在本機把專案建成程式碼知識圖譜，Claude Code 打 /graphify 就能查呼叫路徑。實測 80 多個檔 12 秒建好、0 token，附安裝指令與 6 個坑。',
+    excerpt:
+      'Graphify 是 Graphify-Labs 2026 年 4 月開源（Apache-2.0）的程式碼知識圖譜工具，在 Claude Code 打 /graphify 就用 tree-sitter 在本機把專案解析成「符號 + 關係」的圖，讓 AI 查圖而不是一個一個檔案 grep。半年 13 萬星、PyPI 累計約 900 萬下載；我拿 80 多個檔的部落格 repo 實測 12 秒建好、0 token——多跳路徑明顯贏 grep，單跳查詢差不多，安裝會改 CLAUDE.md 和 hooks。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Graphify', '知識圖譜', 'tree-sitter', 'AI Coding', 'CodeGraph'],
+    publishDate: '2026-10-22',
+    faqItems: [
+      {
+        q: 'Graphify 會把程式碼送到雲端嗎？',
+        a: '程式碼部分不會。tree-sitter 解析在本機跑，實測全程沒設 API key，報告寫 Token cost: 0。只有文件、PDF、圖片的語意抽取與 community 命名才會呼叫你設定的模型。',
+      },
+      {
+        q: 'pip 裝 graphify 要裝哪個套件？',
+        a: 'PyPI 套件名是 graphifyy（兩個 y），裝完的指令才是 graphify。官方建議 uv tool install graphifyy 或 pipx install graphifyy。',
+      },
+      {
+        q: 'Graphify 是向量資料庫或 RAG 嗎？',
+        a: '不是。它存的是符號和關係組成的圖，查詢是 BFS 與最短路徑，不是 embedding 相似度；每條邊標 EXTRACTED 或 INFERRED。',
+      },
+      {
+        q: '程式碼改了，Graphify 的圖要重建嗎？',
+        a: '要。跑 graphify update . 只重做 AST、不花 token，80 多個檔的 repo 約 8 秒；也可用 graphify watch 或 graphify hook install 自動重建。',
+      },
+      {
+        q: 'Codex 也能用 Graphify 嗎？',
+        a: '可以。graphify install --platform codex，在 Codex 裡的觸發詞是 $graphify，不是 /graphify。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
