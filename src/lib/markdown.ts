@@ -183,7 +183,9 @@ function extractToc(content: string): TocItem[] {
 }
 
 /** Markdown → HTML。樣式由 `.blog-prose` 統一處理。 */
-export function renderMarkdown(content: string): RenderedMarkdown {
+export function renderMarkdown(source: string): RenderedMarkdown {
+  // 段落、清單、標題的 regex 都以 \n 為分隔
+  const content = source.replace(/\r\n?/g, '\n');
   const toc = extractToc(content);
   const tocIds = new Set<string>();
   const resolveId = (text: string): string => {
