@@ -3999,34 +3999,34 @@ const posts = [
   },
   {
     slug: 'line-talk-claude-code-line-conversation',
-    title: 'LINE 串 Claude Code：一個聊天室同時做多件事還接得上話的 5 層設計',
+    title: 'LINE 串 Claude Code 怎麼接得上話？每則訊息開新程序、用 --resume 接同一個 session',
     metaDescription:
-      'Claude Code 接上 LINE 官方帳號，一個聊天室怎麼多件事並行又接得上話？常駐 session、話題分線、Haiku 分流、長按回覆、任務卡片 5 層機制條列。',
+      'LINE 官方帳號串 Claude Code，每則訊息都是新的 claude -p 程序，靠 --resume 接同一個 session。照程式碼拆解 state.json、聊天分線、Haiku 分流、長按回覆與背景任務接續。',
     excerpt:
-      'line-talk 是我把家裡桌機的 Claude Code 接上 LINE 官方帳號的橋接服務：手機傳訊息、claude -p 處理、再推回 LINE，底部圖文選單放研究、寫 Blog、做 Shorts、記事提醒等六種用法。對話接得上靠五層機制——常駐 session、依話題分線並行、Haiku 秒回分流、長按回覆跳回原 session、背景任務卡片；上線兩天收發 69 則訊息、建 11 張任務卡，最長一件跑 88 分鐘。',
+      'line-talk 把家裡桌機的 Claude Code 接上 LINE：每則訊息開一個新的 claude -p 程序，帶 --resume 接回同一個 session，服務只在 state.json 記下一句該接哪個 id。上線兩天，常駐 session 一個檔案接了 11 則聊天——同時問多件事靠 Promise 鏈分線，追問特定任務靠長按回覆查回原本的 session。',
     category: '工程實作',
     tags: ['Claude Code', 'LINE Bot', 'LINE Messaging API', 'line-talk', 'AI Agent', 'Haiku'],
     publishDate: '2026-10-23',
     faqItems: [
       {
-        q: 'LINE 官方帳號串 Claude Code 要用 API key 嗎？',
-        a: 'line-talk 呼叫的是本機的 claude CLI，用 Claude Code 登入的帳號，服務本身沒有另外設 Anthropic API key。LINE 這邊需要 Messaging API 的 channel secret 和 access token，放在 .env 不進版控。',
+        q: '每則 LINE 訊息都開新的 session 嗎？',
+        a: '每則都開新的 claude -p 程序，但 session 不是新的：程序帶 --resume <chatSessionId>，讀回同一段對話再接下去。只有傳 /new、常駐 session 出錯，或常駐 session 正在忙要 fork 時，才會換成新的 session。',
       },
       {
-        q: '為什麼不讓每則 LINE 訊息都開新 session？',
-        a: '每則都開新 session，追問時 Claude Code 不知道前面在講什麼。line-talk 預設接常駐 session，只有常駐 session 正在忙時才用 --fork-session 分出新的一段，兩邊都保有之前的脈絡。',
+        q: 'LINE 官方帳號串 Claude Code 要用 API key 嗎？',
+        a: 'line-talk 呼叫本機的 claude CLI，用的是 Claude Code 登入的帳號，服務沒有另外設 Anthropic API key。LINE 這邊需要 Messaging API 的 channel secret 和 access token，放在 .env，不進版控。',
       },
       {
         q: '長按回覆和直接打字差在哪？',
-        a: '直接打字會先經過 Haiku 判斷屬於哪條線；長按回覆跳過判斷，直接回到被引用那則訊息的 session 和工作資料夾，追問特定任務時不會接錯。',
+        a: '直接打字先經過 Haiku 判斷屬於哪條線；長按回覆用被引用訊息的 id 查 state.json，直接 resume 那則訊息背後的 session，連工作資料夾都切回去。',
       },
       {
         q: '背景任務做到一半，可以從電腦接手嗎？',
-        a: '可以。每張任務卡片裡有 cd 到工作資料夾再 claude --resume <sessionId> 的指令，在電腦終端機貼上就是同一個 session。',
+        a: '可以。任務卡片裡有 cd 到工作資料夾再 claude --resume <sessionId> 的指令，在終端機貼上就是同一個 session。',
       },
       {
         q: 'Haiku 分流多久回應？',
-        a: '逾時上限設 30 秒，超過或回傳格式不對就當成新的事處理。這是程式設定值，不是實測平均延遲。',
+        a: '逾時上限 30 秒，超過或格式不對就當新的事處理。這是程式設定值，不是實測平均。',
       },
     ],
     featured: false,
