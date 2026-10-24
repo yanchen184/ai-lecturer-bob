@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-21",
+  "impressions": 4,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 30.2,
+  "queries": [
+    {
+      "query": "k8s",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 38
+    },
+    {
+      "query": "k8s nodeport",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 74
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 38
+    },
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 74
+    },
+    {
+      "page": "/blog/kroki-self-host-diagram-pipeline/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    }
+  ]
+}
