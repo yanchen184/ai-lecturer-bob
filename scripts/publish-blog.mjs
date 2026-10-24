@@ -4031,6 +4031,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'omniroute-claude-code-free-test',
+    title: 'OmniRoute 能讓 Claude Code 免費用嗎？v3.8.52 接本機 Ollama 實測：閘道全通、8B 模型做不了事',
+    metaDescription:
+      'OmniRoute 讓 Claude Code 改接其他模型。實測 v3.8.52 接本機 Ollama：協定與工具呼叫全通，8B 模型卻建不出檔案，附安裝步驟與風險。',
+    excerpt:
+      'OmniRoute 是 2026 年 2 月開源、MIT 授權的本機 AI 閘道，8 萬多星，提供 OpenAI 與 Anthropic 相容 API，把 Claude Code 的請求轉給你自己接上的供應商。我在 Windows 接本機 Ollama 實測：協定和工具呼叫轉換都正確，但 8B 模型撐不住 Claude Code 一萬多 token 的請求——免費額度要自己註冊各家帳號，接上去跑的也不是 Claude。',
+    category: 'AI 工具',
+    tags: ['OmniRoute', 'Claude Code', 'AI Gateway', 'Ollama', 'LLM 路由', '本地 LLM'],
+    publishDate: '2026-10-25',
+    faqItems: [
+      {
+        q: 'OmniRoute 裝好就能免費用 Claude 嗎？',
+        a: '不行。README 寫明「~1.62B free tokens/mo」是各家第三方免費層加總的估算，不是 OmniRoute 送的 token，帳號要自己註冊。Claude Code 接上 OmniRoute 後，背後跑的是你接的模型，不是 Claude。',
+      },
+      {
+        q: 'Claude Code 怎麼接 OmniRoute？',
+        a: '設定 ANTHROPIC_BASE_URL=http://127.0.0.1:20128（不加 /v1），ANTHROPIC_AUTH_TOKEN 放 OmniRoute 的 API key，ANTHROPIC_MODEL 填 OmniRoute 的模型名，例如 ollama/hermes3:8b。OmniRoute 文件也提供 omniroute launch 一鍵啟動。',
+      },
+      {
+        q: '本機 Ollama 小模型可以拿來跑 Claude Code 嗎？',
+        a: '我的實測不行。Ollama 預設 4,096 context 會把請求截斷；用 Modelfile 開到 32K 後，hermes3:8b 完整收到 12,273 token，卻只用文字描述工具呼叫，沒有建出檔案。',
+      },
+      {
+        q: '用 OmniRoute 會不會被 Anthropic 停權？',
+        a: '自己的電腦接自己的 API key 是正常的 gateway 用法，但 Anthropic 官方不支援透過 gateway 讓 Claude Code 跑非 Claude 模型。把 Claude 訂閱帳號接上去給別人用，違反消費者條款「不得分享帳號憑證」的規定。',
+      },
+      {
+        q: 'OmniRoute 回應怎麼看實際走了哪個供應商？',
+        a: '看回應 header：x-omniroute-provider、x-omniroute-model、x-omniroute-decision 會寫出供應商、模型和路由策略，x-omniroute-response-cost 是成本。Dashboard 的請求日誌也逐筆列出。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
