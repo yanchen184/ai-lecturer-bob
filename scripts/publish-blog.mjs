@@ -4040,7 +4040,7 @@ const posts = [
       'OmniRoute 是 2026 年 2 月開源、MIT 授權的本機 AI 閘道，8 萬多星，提供 OpenAI 與 Anthropic 相容 API，把 Claude Code 的請求轉給你自己接上的供應商。我在 Windows 接本機 Ollama 實測：協定和工具呼叫轉換都正確，但 8B 模型撐不住 Claude Code 一萬多 token 的請求——免費額度要自己註冊各家帳號，接上去跑的也不是 Claude。',
     category: 'AI 工具',
     tags: ['OmniRoute', 'Claude Code', 'AI Gateway', 'Ollama', 'LLM 路由', '本地 LLM'],
-    publishDate: '2026-10-25',
+    publishDate: '2026-10-24',
     faqItems: [
       {
         q: 'OmniRoute 裝好就能免費用 Claude 嗎？',
