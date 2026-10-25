@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-22",
+  "impressions": 2,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 6.0,
+  "queries": [
+    {
+      "query": "node port",
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/k8s/nodeport-three-services/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/pyjianyingdraft-python-jianying-automation/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
