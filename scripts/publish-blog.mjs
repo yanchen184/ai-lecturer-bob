@@ -4065,6 +4065,301 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-p5js-animation-claudeanimationbase',
+    title: 'Claude 寫 p5.js 做動畫：ClaudeAnimationBase 模板實測，9 秒原創短片怎麼做出來',
+    metaDescription:
+      'ClaudeAnimationBase 讓 Claude 寫 p5.js 逐格畫手繪動畫。整理 461 行指南的三條核心規則，附原創短片實測：RTX 4070 渲染 327 秒，軟體渲染慢 12 倍。',
+    excerpt:
+      'ClaudeAnimationBase 是 JohnHeibel 在 2026 年 9 月開源的 MIT 模板，讓 Claude 寫 p5.js 程式逐格畫出手繪水彩風動畫，再輸出 MP4。我照它 461 行的指南做了 9 秒原創短片〈楓葉帽子〉——先分鏡、看縮圖自審兩輪，RTX 4070 渲染 327 秒，沒有獨顯會慢 12 倍。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'ClaudeAnimationBase', 'p5.js', 'p5.brush', 'AI 動畫', '程式動畫'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: 'ClaudeAnimationBase 一定要用 Claude 嗎？',
+        a: '不一定。README 寫明可以在 Claude Code 或任何 coding agent 裡使用，能讀檔、寫程式、跑指令的代理人都能用。作者的測試影片是 Opus 5.5 加 xhigh 推理強度做的。',
+      },
+      {
+        q: '沒有獨立顯示卡可以跑 ClaudeAnimationBase 嗎？',
+        a: '可以，加 --soft-gl 用軟體渲染 WebGL。我實測每格約 16 秒，是 RTX 4070 的 12 倍左右。README 建議這種情況請模型不要用水彩填色。',
+      },
+      {
+        q: '可以把 Clawd 換成自己的角色嗎？',
+        a: '可以，指南寫明角色、表情、道具都只是起點。我把 Clawd 換成麻糬角色 Mochi，身體、眼睛、嘴巴的繪製函式約 40 行。',
+      },
+      {
+        q: '用 ClaudeAnimationBase 做出來的影片可以商用嗎？',
+        a: '模板是 MIT 授權，改作再發布要保留授權聲明。Clawd 是 Anthropic 的吉祥物，公開作品建議換成原創角色。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-character-sheet-mascot-consistency',
+    title: 'AI 生圖角色不跑掉：把 52 張封面的吉祥物整理成一張角色設定圖',
+    metaDescription:
+      'AI 生圖角色一致性靠參考圖。我盤點 52 張部落格封面，把吉祥物整理成四視圖、六表情、四動作加色票的角色設定圖，並接進每次生封面的流程。',
+    excerpt:
+      '角色設定圖（character sheet）是把角色的轉面、表情、動作、色票和禁止清單畫在同一張的參考圖，生圖時附上，模型就照圖畫。我盤點部落格 52 張封面，吉祥物有 1 張畫成別的角色、三張封面量到三種圍巾黃——原因是提示詞只固定兩個特徵，所以我改成每次附設定圖生封面。',
+    category: 'AI 工具',
+    tags: ['AI 生圖', '角色設定圖', 'character sheet', '角色一致性', 'Codex', '部落格封面'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: '角色設定圖要包含哪些東西？',
+        a: '至少有轉面圖（正面、3/4 側、側面、背面）、表情集、幾個常用動作、每個部位的色碼，加上「不可以畫成什麼」的清單。給 AI 當參考圖的版本不要放文字，另外做一張加標註的給人看。',
+      },
+      {
+        q: '只寫很詳細的提示詞，不附參考圖可以嗎？',
+        a: '每次生圖都是獨立請求，同一段文字每次會畫出些微不同的比例和顏色。我的部落格封面原本只靠提示詞，52 張裡有 1 張畫成另一個角色、圍巾顏色也每張不同。提示詞適合描述場景，角色長相交給參考圖固定。',
+      },
+      {
+        q: '用 Codex CLI 怎麼附參考圖生圖？',
+        a: '用 codex exec 的 -i 參數附圖片，提示詞從 stdin 餵：codex exec --sandbox workspace-write --skip-git-repo-check -C <資料夾> -i character-sheet-raw.png - < prompt.txt。我用 0.163.0 實測，生出的圖會放在 ~/.codex/generated_images/<thread>/ 底下，要自己搬出來。',
+      },
+      {
+        q: '設定圖上的色碼怎麼決定？',
+        a: '我在無字原圖上框出圍巾、毛衣、褲子、靴子各自的區域，取像素中位數當色碼，得到圍巾 #FAC32A、毛衣 #F2EBDC、褲子 #352E29、短靴 #483526。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-mythical-beast-short-video-formula',
+    title: 'AI 神獸短片怎麼做：拆解 9.5 萬讚〈開明獸〉Reel，做成 6 鏡山海經分鏡產生器',
+    metaDescription:
+      '拆解 IG 9.5 萬讚 AI 短片〈開明獸・奔山而來〉：比例反差、唯一紅色、反轉結局，整理成 6 鏡 20 秒公式，做成免登入的山海經神獸分鏡產生器，附原典對照。',
+    excerpt:
+      'bywind_art 的 AI 短片〈開明獸・奔山而來〉三週拿到 9.5 萬讚，靠的是巨獸對小人的比例反差，加上一句「它不是來攔路的，它是來見你的」。我把它拆成 6 鏡 20 秒的公式，做成可選 6 隻山海經神獸的分鏡產生器——要注意原典的開明獸是九首人面虎，Reel 畫的是白毛巨獸。',
+    category: 'AI 工具',
+    tags: ['AI 影片', 'AI 短影音', '山海經', '開明獸', '分鏡', '圖生影片', 'Prompt'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: '開明獸在山海經裡長什麼樣子？',
+        a: '《山海經・海內西經》寫「開明獸身大類虎而九首，皆人面，東嚮立昆侖上」，是一隻老虎身形、九個人頭的巨獸，守在昆侖山的九道門前。',
+      },
+      {
+        q: 'AI 神獸短片要拆成幾個鏡頭？',
+        a: '我把〈開明獸〉的四段文案對到畫面，拆成 6 鏡共 20 秒：遠景、人物背影、巨影奔來、停步、低頭對望、餘韻。巨獸和人第一次同框在第 4 鏡，適合當封面。',
+      },
+      {
+        q: '山海經神獸分鏡產生器要付費或登入嗎？',
+        a: '不用。它是單檔網頁，資料都寫在檔案裡，不呼叫 API，打開 html.yanchen.app/shanhai-storyboard 就能用。產出的 prompt 再自己貼到生圖和圖生影片工具。',
+      },
+      {
+        q: '生圖要照原典還是做成好看的版本？',
+        a: '看用途。科普向選原典，忠於經文但畫面可能獵奇；情緒向選大眾化，好看但離原典遠。同一個系列建議只用一種，不要混。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-game-map-level-topology',
+    title: 'AI 生遊戲地圖為什麼亂？先排關卡拓撲：循環、鑰匙與鎖的產生器實測',
+    metaDescription:
+      '只叫 AI 做 30 區地圖等於只給數量。我把關卡拓撲做成產生器：主線、鑰匙環、捷徑先排好，1,500 組測試 0 失敗，隨機版 500 張有 211 張走不到 Boss。',
+    excerpt:
+      '關卡拓撲是先決定區域怎麼連、玩家怎麼走，再畫地圖外觀的設計方法，源自《Unexplored》的 cyclic generation。我把它做成網頁產生器，和「只給數量」的隨機地圖對照：拓撲版 1,500 組測試 0 失敗，隨機版 500 張有 211 張走不到 Boss——給 AI 地圖要先給連線，不是只給數量。',
+    category: 'AI 教學',
+    tags: ['關卡設計', '關卡拓撲', 'cyclic generation', 'AI 生圖', '程序生成', '提示詞'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: '關卡拓撲是什麼？',
+        a: '關卡拓撲只描述區域之間怎麼相連、要滿足什麼條件才能通過，例如哪扇門要鑰匙、哪條捷徑只能單向打開，不管距離和外觀。同一張拓撲可以畫成森林、地城或太空站，玩家的動線都一樣。',
+      },
+      {
+        q: 'cyclic dungeon generation 是誰提出的？',
+        a: 'Joris Dormans 在 2017 年的遊戲《Unexplored》用這套方法產生關卡：每層以一個從起點到目標的大循環為骨幹，兩條弧上放不同障礙，再加小循環當繞路。Boris the Brave 的文章統計它有 24 種主要循環型別、約 5,000 條圖形替換規則。',
+      },
+      {
+        q: '怎麼確認關卡裡的鎖不是裝飾？',
+        a: '用程式模擬玩家：能走就走、撿到鑰匙才能開對應的門、捷徑只能從遠端通過。再把某把鑰匙拿掉重跑一次，如果 Boss 還是走得到，那道鎖就沒有擋路。我的產生器每張圖都跑這個檢查，1,500 組 0 失敗。',
+      },
+      {
+        q: '排好的拓撲可以直接丟給生圖 AI 嗎？',
+        a: '產生器會輸出把每一區、每條路、每道門鎖都列出來的英文提示詞，可以直接複製。但我還沒實測生圖模型是否照每條連線畫，這一步需要另外做 A／B 對照才能下結論。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'code-watercolor-animation-canvas',
+    title: '程式碼畫水彩動畫：不用 AI 生圖，Canvas 2D 單檔 HTML 算出 32 秒〈溪山晚照〉',
+    metaDescription:
+      '用 Canvas 2D 純程式碼畫水彩動畫：Hobbs 多邊形暈染、乾筆飛白、宣紙紋理，同一個 seed 每次畫出同一幅，逐格輸出成 32 秒 MP4，附參數對照與踩坑。',
+    excerpt:
+      '〈溪山晚照〉是我用 Claude Code 寫的單檔 HTML 水彩動畫：Canvas 2D、368 行、沒有一張 AI 生成圖，宣紙暈開、遠山疊色、乾筆飛白都是演算法一筆一筆畫出來，起點是 Threads 作者 @jelenaaigc 用 Codex 做的同類作品。同一個 seed 每次畫出同一幅（兩次 md5 相同），逐格算成 32 秒 MP4——代價是只能畫演算法寫得出來的東西。',
+    category: '工程實作',
+    tags: ['程式碼畫圖', '水彩動畫', 'Canvas', 'Generative Art', 'Claude Code', 'Codex'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: '程式碼畫的水彩動畫跟 AI 生圖差在哪？',
+        a: 'AI 生圖給你一張成品，同一段提示詞每次結果不同；程式碼畫的是一段演算法，同一個 seed 每次畫出同一幅，每一筆的過程都能做成動畫，影片要多長就算多少格。代價是只能畫演算法描述得出來的東西，人臉、建築細節這類就不適合。',
+      },
+      {
+        q: 'Canvas 2D 怎麼模擬水彩暈染？',
+        a: '用 Tyler Hobbs 的多邊形變形法：把形狀的每條邊從中點切開、中點沿高斯分布隨機位移，重複幾輪後用很低的透明度疊幾十層，每層形狀都略有不同。我的作品大面積每層透明度 1.6%～4.5%、疊 26～46 層，長邊要先切成每段 70px 以內再變形，不然多邊形會炸開蓋滿畫面。',
+      },
+      {
+        q: '程式碼產生的動畫怎麼輸出成 MP4？',
+        a: '讓畫面只由時間 t 決定（renderAt(t)），用 Playwright 對每一格呼叫一次並把畫布存成 PNG，再用 ffmpeg -framerate 24 合成。我的 32 秒作品是 769 格，合成出 3.2 MB 的 1280×720 MP4；逐格輸出不受即時播放效能影響。',
+      },
+      {
+        q: '原作者用的是什麼框架？',
+        a: '原 Threads 貼文只標了 #codex，沒提到任何具體技術。這篇是我自己用 Canvas 2D 的復刻，不代表原作者的做法；如果想用現成框架，HyperFrames（HTML 轉影片）和 Remotion（React 轉影片）是同一個思路。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'folia-music-player-lyrics-animation',
+    title: 'Folia 音樂播放器實測：15 種全螢幕歌詞動畫，把歌詞變成文字 PV',
+    metaDescription: 'Folia 是開源音樂播放器，內建 15 種全螢幕歌詞動畫。我在本機用探針頁跑完 15 種模式並截圖，整理安裝方式、原始碼架構與 AGPL 授權限制。',
+    excerpt: 'Folia 是 GitHub 上 9.4k 星的 AGPL-3.0 開源音樂播放器，Windows、Mac、Linux 都有安裝包，主打把歌詞做成像文字 PV 的全螢幕排版動畫。我在本機用它的探針頁跑完 15 種模式、頁面錯誤 0——自己聽歌直接裝 v0.7.22，AGPL 加非官方音源不適合放進公司產品。',
+    category: '工程實作',
+    tags: ['Folia', '音樂播放器', '歌詞動畫', '開源專案', 'React', 'PixiJS', 'three.js'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      { q: 'Folia 是免費的嗎？', a: '是。Folia 以 AGPL-3.0 開源，GitHub Releases 上的安裝包可以免費下載。README 寫明僅供個人學習、技術交流與非營利測試使用。' },
+      { q: 'Folia 支援哪些平台？', a: '桌面版有 Windows、macOS（Apple Silicon 與 Intel）、Linux。另有可自架的 Node.js Web 版，手機走 PWA，Android 有社群移植版。' },
+      { q: '沒有網易雲或 QQ 音樂帳號能用嗎？', a: '可以播本機音樂或接自架的 Navidrome。只想看歌詞動畫的話，可以用原始碼的 dev-probe.html 探針頁，它用合成歌詞驅動，不需要任何帳號。' },
+      { q: 'Folia 有幾種歌詞動畫？', a: 'v0.7.22 內建 15 種：流光、心象、云阶、浮名、莫奈、群唱、倾诉、回环、镜台、时计、商籁、凝彩、绘光、花火、静止。清單定義在 src/types/visualizerModes.ts。' },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'higgsfield-genjutsu-ai-flex-scam-ela',
+    title: 'Higgsfield Genjutsu 炫富影片怎麼辨識？ELA 實測與 C2PA 一轉檔就消失',
+    metaDescription:
+      'Higgsfield Genjutsu 能把客廳影片換成坐進法拉利。我用 ELA 和 C2PA 實測 AI 炫富圖：拼貼抓得到、整張生成分不出來，標記轉存一次就消失，附檢測工具與防詐檢查表。',
+    excerpt:
+      'Higgsfield Genjutsu 是影片轉影片功能，上傳一段普通影片就能保留動作、把場景換成豪車豪宅，15 秒 1080p 約 7.2 美元。我用 ELA 和 C2PA 實測 AI 炫富圖：拼貼區誤差 1.75 倍、AI 生成區也有 1.65 倍，標記轉存一次 JPEG 就全部消失——看圖抓不準，看對方行為才準。',
+    category: 'AI 工具',
+    tags: ['Higgsfield', 'Genjutsu', 'AI 影片', 'ELA', 'C2PA', '防詐騙'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: 'Higgsfield Genjutsu 生成的影片有浮水印或 C2PA 嗎？',
+        a: '我查的 Genjutsu 官方頁面與官方部落格（2026-10-26）都沒有提到浮水印、C2PA 或濫用政策。我沒有實際付費生成，所以無法確認輸出檔裡有沒有標記。就算有，經過社群平台重新壓縮後也很可能被清掉。',
+      },
+      {
+        q: 'ELA 可以判斷一張圖是不是 AI 生成的嗎？',
+        a: '不行。我的實驗裡，手工拼貼區的 ELA 比值是 1.75，AI 整張生成圖的跑車區也有 1.65，比值分不出來。ELA 能看出的是「有一塊後貼上去、邊界不連續」，對整張由模型算出來的圖沒有判斷力。',
+      },
+      {
+        q: '檔案裡沒有 AI 生成標記，就代表照片是真的嗎？',
+        a: '不代表。我把一張帶 C2PA 和 IPTC 標記的 AI 生成 PNG 轉存一次 JPEG，標記就全部消失了。真照片沒有標記，被重存過的 AI 圖也沒有，沒找到標記無法證明任何事。',
+      },
+      {
+        q: '懷疑對方用 AI 假炫富照騙投資，該怎麼辦？',
+        a: '停止轉帳，看對方的行為而不是照片：主動聊投資、保證獲利、要你轉到個人帳戶、拒絕即時視訊，這幾項出現兩項以上就該停手。打 165 反詐騙諮詢專線，或到 165 全民防騙網查詢。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'mosaic-motion-claude-motion-graphics',
+    title: 'Mosaic Motion 是什麼？用 Claude 實測一句話做出 9 秒動態影片',
+    metaDescription:
+      'Mosaic Motion 是透過 MCP 接進 ChatGPT、Claude 的動態設計影片 agent，點數制 6 美金起。我用 Claude Code 加 Playwright、ffmpeg 自建免費版，一句話做出直式 MP4。',
+    excerpt:
+      'Motion 是 Mosaic 在 2026 年 6 月發表的動態設計影片 agent，透過 MCP 接進 ChatGPT、Claude，點數制 6 美金 200 點起。我用 Claude Code 加 Playwright、ffmpeg 自建一套，一句話做出 9 秒 1080×1920 MP4——短片頭和數據動畫夠用，要配音或工程檔再付費。',
+    category: 'AI 工具',
+    tags: [
+      'Mosaic Motion',
+      'Motion Graphics',
+      '動態設計',
+      'Claude Code',
+      'ChatGPT',
+      'MCP',
+      'Playwright',
+      'ffmpeg',
+    ],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: 'Mosaic Motion 有免費方案嗎？',
+        a: '2026-10-26 查官網，沒有列免費方案或免費點數。最低是 Flex 6 美金 200 點，不用訂閱、點數不過期。給 OpenAI 用的 MCP 版本有「sponsored generation」，但文件沒說明怎麼計費。',
+      },
+      {
+        q: 'ChatGPT 免費版能用 Motion 嗎？',
+        a: 'Motion 文件只寫 Developer mode 能不能開「depends on your ChatGPT plan and workspace settings」，沒列方案。要先在 ChatGPT 的 Settings → Apps → Advanced settings 看得到 Developer mode 開關，才接得上。',
+      },
+      {
+        q: 'Claude 可以直接呼叫 Motion 嗎？',
+        a: '可以。Claude 的連接器設定或 Claude Code 加入 https://mcp.motion.so/mcp/anthropic，用 OAuth 登入 Motion 帳號。只支援 Motion medium 引擎，扣的是 Motion 點數，沒有 AI 生圖、配音和音樂。',
+      },
+      {
+        q: '自己用 Claude 做動態影片要花錢嗎？',
+        a: '不用買 Motion 點數，但 claude -p 會用到你 Claude 帳號的額度。Playwright 和 ffmpeg 都是免費開源工具。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'solo-company-tool-stack-cost-claude-max',
+    title: '一人公司工具棧月費 4 千怎麼來？拆開看 3,230 是 Claude Max（附成本計算器）',
+    metaDescription:
+      '一人公司用 Claude Code、n8n、Supabase、Vercel 等工具，月費 4 千怎麼來？照 2026-10 官網牌價拆解：Claude Max 佔九成，附成本計算器。',
+    excerpt:
+      'Threads 上有人說一人公司用 Claude Code、n8n、Supabase、Vercel、Cloudflare、Gumroad 免費版，月費約 4 千出頭；我照 2026-10-26 官網牌價拆開算，並做成成本計算器。起步規模約 NT$3,456，Claude Max 5x 就佔 3,230——開始收錢後 Vercel、Supabase 得升 Pro，約 NT$4,910。',
+    category: 'AI 工具',
+    tags: ['一人公司', 'Claude Code', 'Claude Max', 'n8n', 'Supabase', 'Vercel', 'Gumroad', '成本計算'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: '一人公司用 Claude Code 一定要訂 Max 嗎？',
+        a: '不一定。Claude 官網的方案表裡，Pro（月繳 US$20）就含 Claude Code，Free 方案不含。Max 5x（US$100）和 Max 20x（US$200）差在用量倍數。我的計算器預設 Max 5x，是照原貼文「4 千出頭」反推的。',
+      },
+      {
+        q: 'Vercel 免費版可以拿來做公司網站嗎？',
+        a: '照 Vercel 官網 pricing 頁的說明，Hobby 方案是「personal, non-commercial use」。拿來收錢的網站要用 Pro，US$20／月。',
+      },
+      {
+        q: 'Supabase 免費版為什麼會停掉？',
+        a: 'Supabase 官網寫 Free 專案閒置一週會被暫停。正式上線的服務要不就升 Pro（US$25／月起），要不就自己確保專案一直有流量。',
+      },
+      {
+        q: 'Gumroad 實際會抽多少？',
+        a: '直接銷售每筆 10% + US$0.50，刷卡手續費 2.9% + US$0.30 另計。US$15 的商品每筆約被拿走 18%；從 Gumroad Discover 市集賣出的則是統一 30%。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'stairs-foot-ik',
+    title: '角色走樓梯腳會穿模？腳步 IK 四步驟拆解，對照實驗誤差 4.22→0.32 px',
+    metaDescription:
+      '角色上樓腳插進階梯、下樓腳懸空，腳步 IK 怎麼解？用瀏覽器對照實驗拆成射線、踏板吸附、兩段骨 IK、骨盆下沉四步，附逐項關閉的數據與互動頁。',
+    excerpt:
+      '香港獨立開發者零零花一週讓遊戲角色走樓梯時每步都踩在階上，Threads 貼文 1.9 萬次瀏覽。我把腳步 IK 拆成射線、踏板吸附、兩段骨 IK、骨盆下沉四步，做成瀏覽器對照實驗：階高 22 時腳底誤差從 4.22 px 降到 0.32 px——其中骨盆下沉的效果要有下樓場景才量得出來。',
+    category: '工程實作',
+    tags: ['腳步 IK', 'Foot IK', '反向運動學', '遊戲開發', '角色動畫', '獨立遊戲'],
+    publishDate: '2026-10-26',
+    faqItems: [
+      {
+        q: '腳步 IK 是什麼？',
+        a: 'IK 是 inverse kinematics（反向運動學）。一般動畫是給每個關節角度，算出腳在哪裡；IK 反過來，先決定腳要踩在哪裡，再算出膝蓋和髖要怎麼彎。腳步 IK 就是讓角色的腳貼合實際地形，而不是照著平地錄的動畫走。',
+      },
+      {
+        q: '為什麼走樓梯特別難？',
+        a: '樓梯每一階的高度是跳躍式的，兩隻腳常常踩在不同高度，腳也可能落在階緣。我的 POC 裡，沒有 IK 時上樓腳插進階梯、下樓腳懸空，兩種錯誤方向相反，只調整整個角色的高度修不好。',
+      },
+      {
+        q: '骨盆下沉為什麼這麼重要？',
+        a: '腿長是固定的。下樓時如果骨盆不先往下，低的那隻腳到地面的距離超過腿長，IK 只能把腿打直，腳停在半空。實驗裡關掉骨盆下沉後，支撐不良從 5% 升到 14%。',
+      },
+      {
+        q: '兩段骨 IK 一定要用 FABRIK 或 CCD 嗎？',
+        a: '不用。大腿和小腿只有兩段，髖、膝、踝是一個三邊長都已知的三角形，用餘弦定理就能直接解出膝蓋角度。FABRIK、CCD 這類迭代解法適合更長的骨鏈，例如觸手或尾巴。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
