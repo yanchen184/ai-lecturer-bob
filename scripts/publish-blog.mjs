@@ -4540,6 +4540,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-cyberpunk-reel-seedance-keyframe-workflow',
+    title: 'AI 賽博龐克 Reel 怎麼做？拆解 4.3 萬讚短片：一張關鍵幀、Seedance 2.5 圖生影片、再放大',
+    metaDescription:
+      '拆解 IG 4.3 萬讚賽博龐克 Reel：GPT-Image 關鍵幀、Seedance 2.5 圖生影片、Topaz 放大。我用 Codex 加 ffmpeg 本機重現，附 API 價格與 prompt 產生器。',
+    excerpt:
+      'soft_respawn 這支 4.3 萬讚的賽博龐克溜冰 Reel，貼文寫明流程是 GPT-Image 生關鍵幀、Seedance 2.5 圖生影片、Topaz 放大，三步在 SYNTX 上跑，是業配。我用 Codex 加 ffmpeg 在本機 5.8 秒重現一次——關鍵幀決定八成畫面，但 ffmpeg 只能動鏡頭，角色要動還是得接每秒約 0.13–0.47 美元的圖生影片 API。',
+    category: 'AI 工具',
+    tags: ['AI 影片', 'AI 短影音', 'Seedance 2.5', '圖生影片', '賽博龐克', 'ffmpeg', 'Prompt'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: 'GPT-Image 生的圖可以直接丟進 Seedance 嗎？',
+        a: '可以。圖生影片端點吃一般圖片檔，fal.ai 的頁面寫支援 jpg、png、webp 等格式，上傳後當成首幀。生圖時就做成 9:16，跟影片輸出比例一致，避免被裁切。',
+      },
+      {
+        q: '沒有預算，只用 ffmpeg 能做出這種 Reel 嗎？',
+        a: '做得出會動的畫面，做不出角色在動的影片。ffmpeg 只能推鏡頭、閃光、疊雨絲，角色會像一張貼紙，適合當封面動態或片頭，要當主片還是得接圖生影片模型。',
+      },
+      {
+        q: 'Seedance 2.5 圖生影片一支要多少錢？',
+        a: '依 2026-10-27 查到的第三方 API：Atlas Cloud 每秒 0.134 美元，fal.ai 以 token 計價，720p 約每秒 0.46 美元。一支 6 秒 9:16 片段大約 0.8 到 2.8 美元，實際以當天價格頁為準。',
+      },
+      {
+        q: '用動畫裡的角色做同人短片可以嗎？',
+        a: '原片 hashtag 掛的是 Cyberpunk: Edgerunners，我重現時刻意用原創角色。要公開或接業配的作品，用自己設計的角色比較單純。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
