@@ -359,9 +359,21 @@ export function renderMarkdown(source: string): RenderedMarkdown {
     return `<blockquote>${parts.join('<br/>').replace(/<br\/><ul>/g, '<ul>')}</blockquote>`;
   });
 
+  // 行內 code 的內容要 escape，否則 `<canvas>` 會被瀏覽器當成真的元素渲染。
+  // 抽成 placeholder 是為了不讓後面的連結／粗體規則改到 code 內容。
+  const inlineCodes: string[] = [];
+  const inlineRaw: string[] = [];
+  html = html.replace(/`([^`\n]+)`/g, (m, code: string) => {
+    inlineCodes.push(`<code>${escapeHtml(code)}</code>`);
+    inlineRaw.push(m);
+    return `\u0000INLINECODE${inlineCodes.length - 1}\u0000`;
+  });
+  const rawText = (s: string): string =>
+    s.replace(/\u0000INLINECODE(\d+)\u0000/g, (_m, n: string) => inlineRaw[Number(n)]);
+
   html = html
     .replace(/^## (.+)$/gm, (_m, title: string) => {
-      const id = resolveId(title.trim());
+      const id = resolveId(rawText(title.trim()));
       return `<h2 id="${id}">${title}</h2>`;
     })
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
@@ -388,7 +400,6 @@ export function renderMarkdown(source: string): RenderedMarkdown {
       return `<a href="${url}"${rel}>${text}</a>`;
     })
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/^- (.+)$/gm, '<li>$1</li>')
     .replace(/^\d+\. (.+)$/gm, '<li class="ol">$1</li>');
 
@@ -424,6 +435,10 @@ export function renderMarkdown(source: string): RenderedMarkdown {
   html = html.replace(
     /\u0000CODEBLOCK(\d+)\u0000/g,
     (_m, n: string) => codeBlocks[Number(n)]
+  );
+  html = html.replace(
+    /\u0000INLINECODE(\d+)\u0000/g,
+    (_m, n: string) => inlineCodes[Number(n)]
   );
 
   return { html, toc };
