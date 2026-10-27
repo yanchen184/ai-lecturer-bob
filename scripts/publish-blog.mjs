@@ -4131,7 +4131,7 @@ const posts = [
     metaDescription:
       '拆解 IG 9.5 萬讚 AI 短片〈開明獸・奔山而來〉：比例反差、唯一紅色、反轉結局，整理成 6 鏡 20 秒公式，做成免登入的山海經神獸分鏡產生器，附原典對照。',
     excerpt:
-      'bywind_art 的 AI 短片〈開明獸・奔山而來〉三週拿到 9.5 萬讚，靠的是巨獸對小人的比例反差，加上一句「它不是來攔路的，它是來見你的」。我把它拆成 6 鏡 20 秒的公式，做成可選 6 隻山海經神獸的分鏡產生器——要注意原典的開明獸是九首人面虎，Reel 畫的是白毛巨獸。',
+      'bywind_art 的 AI 短片〈開明獸・奔山而來〉三週拿到 9.5 萬讚，我拆出的關鍵是巨獸對小人的比例反差，加上一句「它不是來攔路的，它是來見你的」。我把它拆成 6 鏡 20 秒的公式，做成可選 6 隻山海經神獸的分鏡產生器——要注意原典的開明獸是九首人面虎，Reel 畫的是白毛巨獸。',
     category: 'AI 工具',
     tags: ['AI 影片', 'AI 短影音', '山海經', '開明獸', '分鏡', '圖生影片', 'Prompt'],
     publishDate: '2026-10-26',
@@ -4386,6 +4386,156 @@ const posts = [
       {
         q: 'Graphify 的 query 結果被截斷怎麼辦？',
         a: '輸出會寫出需要的預算，例如 --budget 3461。也可以用 explain 查單一符號，或用 --seed 指定起點。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-blender-3d-animation-pdf-storyboard',
+    title: 'Claude 做 3D 動畫：PDF 分鏡寫成 Blender 腳本，72 秒渲染出 8 秒影片',
+    metaDescription:
+      'Threads 爆紅的「PDF 丟進 Opus 5.5 出動畫」其實是 Blender 3D 渲染。我寫 1 頁分鏡、讓 Claude Code 寫 275 行 bpy 腳本，RTX 4070 渲染 72 秒出 8 秒 720p 影片。',
+    excerpt:
+      'Threads 上「一份 PDF 丟進 Claude Opus 5.5 就出動畫」的橘色方塊影片，抽格看是 Blender 3D 渲染：PDF 是分鏡規格，Claude 寫的是 Blender Python 腳本。我照做一次，1 頁分鏡加 275 行腳本，RTX 4070 渲染 72 秒出 8 秒 720p MP4——不用會 Blender 介面，但一定要裝 Blender。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Blender', 'Blender Python', 'AI 動畫', '3D 動畫', 'Opus 5.5', '分鏡'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: '把 PDF 丟給 Claude 就會直接輸出影片嗎？',
+        a: '不會。Claude 輸出的是 Blender Python 腳本，要在本機用 Blender 執行、逐格渲染，再用 ffmpeg 合成 MP4。轉貼者在留言也補充，原作者說要另外裝 Blender 和現成的程式庫。',
+      },
+      {
+        q: '需要會操作 Blender 嗎？',
+        a: '不用會介面。腳本用 blender -b -P 在背景模式執行，整個流程在命令列完成。但要看得懂預覽圖哪裡不對，並把問題描述清楚讓 Claude 改。',
+      },
+      {
+        q: '渲染要多久？',
+        a: '我這支 8 秒、1280×720、192 格的動畫，用 Blender 4.5 的 EEVEE 在 RTX 4070 上花 72 秒。沒有獨立顯示卡會慢很多，我沒有實測 CPU 的時間。',
+      },
+      {
+        q: '影片裡的橘色角色可以商用嗎？',
+        a: '那是 Anthropic 的吉祥物 Clawd。練習可以，公開或商用的作品建議換成自己的角色，腳本裡角色只是幾個方塊，替換不難。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'archify-claude-skill-architecture-diagram',
+    title: 'Archify 是什麼？Claude Skill 讀程式碼畫互動架構圖，實測每個方塊都對回原始碼行號',
+    metaDescription:
+      'Archify 是讓 Claude Code 讀程式碼、自動畫互動架構圖的開源 skill。我拿自己的 LINE 服務實測：14 元件 4 分鐘出圖，四道檢查擋錯，附安裝與私有 repo 去敏做法。',
+    excerpt:
+      'Archify 是 tt-a1i 開源的 agent skill（Apache-2.0、約 9 萬星）：AI 讀程式碼寫成 JSON，它驗過後輸出可點擊、可匯出 PNG／SVG／WebM 的單檔架構圖。我拿 14 個元件的 line-talk 實測，4 分鐘出圖、每個方塊都對回 commit 與行號——但它是快照，私有 repo 公開前要另外去敏。',
+    category: 'AI 工具',
+    tags: ['Archify', 'Claude Code', 'Claude Skill', '系統架構圖', 'AI 工具', '架構圖'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: 'Archify 要付費嗎？',
+        a: '不用。Archify 是 GitHub 上 tt-a1i/archify 的開源專案，Apache-2.0 授權。README 另外寫明第三方線上服務與付費方案由各自業者經營，不代表 Archify。',
+      },
+      {
+        q: 'Archify 畫出來的圖會不會是 AI 亂畫的？',
+        a: '元件之間怎麼分、連線怎麼接，還是寫 spec 的 agent 決定。但只要元件附上原始碼行號，spec 就必須釘住 repo 與 40 碼 commit，finalize 會拿 --repo-root 那份 repo 實際比對，對不上就失敗；排版放錯邊界也會被擋下。',
+      },
+      {
+        q: '沒有程式碼也能用 Archify 嗎？',
+        a: '可以。README 寫不需要 repository，也能直接用文字描述讓它畫，例如一個請求經過 API、Redis、PostgreSQL 的流程。只是這樣就沒有原始碼行號可以核對。',
+      },
+      {
+        q: 'Archify 跟 CodeGraph、Graphify 差在哪？',
+        a: 'CodeGraph 和 Graphify 把整個專案自動建成知識圖，主要給 AI 查程式碼、省 token。Archify 產的是給人看的架構圖，由 agent 做語意分層，再經過版面與來源檢查。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'shopee-affiliate-business-tax-threshold',
+    title: '蝦皮分潤要繳營業稅嗎？單月 5 萬就要稅籍登記，20 萬起改 5%（附試算頁）',
+    metaDescription:
+      '蝦皮分潤算勞務，單月達 5 萬元要辦稅籍登記、國稅局查定 1%，達 20 萬開發票課 5%；免罰輔導期已在 2026-06-30 結束。用 148 天 16 萬分潤的案例實算，附免登入試算頁。',
+    excerpt:
+      'Threads 上自稱「分潤蟑螂」的帳號跑到第 148 天、待撥款 16 萬，蝦皮直接跳出稅籍登記通知：分潤在稅法上算勞務，單月 5 萬元就達營業稅起徵點。反推他的月均只有 3.3 萬，但起徵點看單月不看平均——我把 1%、5% 兩級門檻做成逐月試算頁，填數字就知道哪個月要繳多少。',
+    category: '工程師日常',
+    tags: ['蝦皮分潤', '營業稅', '稅籍登記', '網紅課稅', '分潤收入', '試算工具'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: '蝦皮分潤一年賺超過 60 萬才要繳營業稅嗎？',
+        a: '不是。營業稅起徵點以單月銷售額判斷，分潤屬於勞務，當月達 5 萬元就要辦稅籍登記，跟全年總額或平均月收入無關。',
+      },
+      {
+        q: '分潤收入的營業稅稅率是多少？',
+        a: '當月 5 萬以上、未達 20 萬元，通常是小規模營業人，由國稅局查定課徵 1%；月銷售額達 20 萬元要開立統一發票，稅率 5%。勞務在境內提供、但在境外使用的部分可適用零稅率。',
+      },
+      {
+        q: '現在才辦稅籍登記還能免罰嗎？',
+        a: '財政部給網紅的免罰輔導期到 2026-06-30 為止。輔導期之後經檢舉或調查查到未登記，會依稅法補稅處罰，收到通知就盡快到所在地國稅局辦理。',
+      },
+      {
+        q: '沒達 5 萬元，分潤就完全不用報稅嗎？',
+        a: '不用繳營業稅，但分潤仍是所得，要申報綜合所得稅。試算頁只算營業稅，所得稅另外計算。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'google-egm-elephant-goldfish-spec-review',
+    title: 'Google 大象與金魚（EGM）實測：規格沒寫清楚，AI 實作者只猜對 46% 參數',
+    metaDescription:
+      'Google 開源的 Elephant-Goldfish（EGM）讓零上下文金魚審 AI 寫的規格。我埋 8 個缺陷實測：金魚抓到 6 到 8 個，實作者照初稿只填對 46%，附免裝 plugin 的腳本。',
+    excerpt:
+      'Elephant-Goldfish Model（EGM）是 Google 開源的 Apache 2.0 外掛，讓看過完整對話的「大象」寫規格、零上下文的「金魚」subagent 挑毛病，可裝進 Claude Code 與 Codex。我埋 8 個缺陷實測，金魚抓到 6 到 8 個，但規格交給全新 session 實作只對 46%，冷卻期 72 小時 3 次都被填成 4 小時——補完值的 v2 才到 100%。',
+    category: 'AI 工具',
+    tags: ['Elephant-Goldfish', 'EGM', 'Claude Code', 'Codex', 'Spec-Driven Development', 'AI Coding', '規格審查'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: 'EGM 是 Google 官方產品嗎？',
+        a: 'repo 放在 google 組織下，描述是 created at Google 的開源方法與 skill 集，授權 Apache 2.0；README 頁尾寫明 This is not an officially supported Google product。',
+      },
+      {
+        q: '金魚審查和叫同一個 AI 再檢查一次有什麼不同？',
+        a: '差在 context。同一個 session 自審時，AI 會用對話記憶把文件的空白自動補上，看不出缺漏；金魚只看文件，補不了，就會把空白指出來。EGM 的 brainstorm skill 在沒有 subagent 時會直接拒絕執行。',
+      },
+      {
+        q: '金魚抓不到的缺陷怎麼辦？',
+        a: '實測中金魚最常漏的是只在對話講過、文件完全沒寫的需求（6 次只抓到 1 次）。這類缺漏要靠大象或人拿對話紀錄回頭比對，或另開全新 session 當實作者填參數，看哪些被猜錯。',
+      },
+      {
+        q: '一定要裝 EGM plugin 嗎？',
+        a: '不用。核心是另開全新 session 只讀規格，claude -p、Codex 或任何 subagent 都做得到。想要現成的多 persona 審查與 /egm-resolve 修正流程再裝 plugin。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'touchdesigner-rfid-arduino-serial',
+    title: 'TouchDesigner 接 RFID：放上方塊就辨識，Arduino RC522 用 Serial 傳 tag（附可編譯韌體）',
+    metaDescription:
+      'Threads 爆紅的「放上方塊、畫面辨識標本」原理是木盒下藏 RFID。拆成 RC522、Arduino、Serial、TouchDesigner 四段，附編譯過的韌體、TD callback 與網頁版 POC。',
+    excerpt:
+      'patrick.txrx 在 Threads 公開的 TouchDesigner 作品，把方塊放上木盒畫面就辨識出標本，原理是木盒底下藏 RC522 讀卡機，Arduino 把 tag 的 UID 用 Serial 一行一筆傳給 TD。我重做了一套：韌體 arduino-cli 編譯過、協定測試 6/6、網頁版 5 個狀態全 PASS——關鍵是改用 PICC_WakeupA 才偵測得到拿走，但還沒接真硬體上機。',
+    category: '工程實作',
+    tags: ['TouchDesigner', 'RFID', 'Arduino', 'RC522', 'Serial', 'Web Serial', '互動裝置'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: 'RFID 隔著木板讀得到嗎？',
+        a: '讀得到，前提是木板要薄、tag 要對準讀卡機上方。RC522 是近距離讀卡機，我沒有實測幾公釐會失效，選材時先拿手上的木板試。',
+      },
+      {
+        q: '為什麼 tag 拿走了，Arduino 還是沒反應？',
+        a: '多半是用了 PICC_IsNewCardPresent()。它送 REQA，只叫得醒 IDLE 狀態的卡，讀完 halt 的卡不會再回應。改用 PICC_WakeupA() 每次輪詢，並設連續 3 次讀不到才送 NONE。',
+      },
+      {
+        q: 'TouchDesigner 的 Serial DAT 要怎麼設？',
+        a: 'Port 選 Arduino 的 COM 埠，Baud Rate 和 Serial.begin 一致（文中用 115200），Format 選 One Per Line。之後在 Callbacks DAT 的 onReceive(dat, rowIndex, message, bytes) 解析 TAG: 與 NONE。',
+      },
+      {
+        q: '沒有 TouchDesigner 可以做嗎？',
+        a: '可以。協定是純文字一行一筆，網頁用 Web Serial API（Chrome、Edge，需 HTTPS）、Python 用 pyserial 都能接。自己讀時要先緩衝到換行再解析，Serial 不保證一次收到一整行。',
       },
     ],
     featured: false,
