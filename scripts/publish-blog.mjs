@@ -4520,6 +4520,7 @@ const posts = [
     category: '工程實作',
     tags: ['TouchDesigner', 'RFID', 'Arduino', 'RC522', 'Serial', 'Web Serial', '互動裝置'],
     publishDate: '2026-10-27',
+    published: false,
     faqItems: [
       {
         q: 'RFID 隔著木板讀得到嗎？',
@@ -4749,7 +4750,7 @@ function buildFields(post) {
       },
       readingTime: { integerValue: String(readingTime) },
       featured: { booleanValue: !!post.featured },
-      published: { booleanValue: true },
+      published: { booleanValue: post.published !== false },
       faqItems: {
         arrayValue: {
           values: post.faqItems.map((item) => ({
