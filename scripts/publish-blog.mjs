@@ -4653,6 +4653,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'cloudflare-security-audit-skill-test',
+    title: 'Cloudflare security-audit-skill 實測：AI 互相找碴審資安，貴 26 倍、漏洞沒多抓',
+    metaDescription:
+      'Cloudflare 開源的 security-audit-skill 讓一批 AI 找漏洞、另一批推翻。我用埋 11 個漏洞的小站實測：skill 花 $2.92 指出 10 個，單一 agent 花 $0.11 抓到 11 個，附安裝與適用時機。',
+    excerpt:
+      'Cloudflare 在 2026-06 開源的 security-audit-skill（MIT、近 5 萬星）是一組給 coding agent 讀的資安稽核提示詞，讓一批 AI 找漏洞、另一批全新的 AI 專門推翻。我用埋了 11 個漏洞的小站實測，quick 模式花 $2.92、8 分鐘指出 10 個，單一 agent 花 $0.11、29 秒抓到 11 個——日常審單一 agent 就夠，這個 skill 留給上線前在 Linux 跑多輪。',
+    category: 'AI 工具',
+    tags: ['Cloudflare', 'security-audit-skill', 'Claude Code', 'AI 資安審查', 'Vibe Coding', 'Agent Skills'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: 'Cloudflare security-audit-skill 怎麼安裝？',
+        a: '官方 README 用 Skills CLI：npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit，加 --global 裝到使用者層級。裝好後對 agent 說「security audit this codebase」就會觸發。也可以不裝，在提示詞裡直接指定 SKILL.md 路徑讓 agent 讀。',
+      },
+      {
+        q: '它比直接叫一個 agent 審程式碼多抓到漏洞嗎？',
+        a: '我的實測沒有：11 個種子漏洞，skill quick 模式指出 10 個，單一 agent 抓到 11 個，兩邊陷阱都 0 誤報。issue #20 的第三方盲測（15 個漏洞、各 3 輪）也是 recall 同為 0.467，skill 成本是 14.5 倍。skill 贏在每條都附信任邊界、未確認事實與驗證計畫。',
+      },
+      {
+        q: '為什麼 skill 跑完一條「已確認」都沒有？',
+        a: 'skill 規定 confirmed 必須在沙箱實際重現。我的 Windows 沒有作業系統層級的沙箱，所以提示詞明確禁止它執行目標程式，它就照規矩把所有發現都標成待驗證、不給嚴重度。',
+      },
+      {
+        q: 'Windows 上可以用嗎？',
+        a: '流程可以跑，但兩支官方驗證器會直接 exit 1，錯誤是「OS no-follow and nonblocking input protection is unavailable」，因為 Node 在 win32 沒有 O_NOFOLLOW 和 O_NONBLOCK。整次 run 只能標成 incomplete，要正式用請在 WSL 或 Linux 跑。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
