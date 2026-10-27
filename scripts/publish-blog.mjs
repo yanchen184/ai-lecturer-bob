@@ -4360,6 +4360,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'graphify-token-savings-benchmark',
+    title: 'Graphify 省 70% token？實測算上補讀只剩 54%，跟 CodeGraph 打平',
+    metaDescription:
+      'Graphify 號稱幫 Claude Code 省 70% token。62 檔專案實測 3 題：只看查圖少 72%，算上補讀檔案少 54%，CodeGraph 少 56%。附數據表與重跑指令。',
+    excerpt:
+      'Graphify 是用 tree-sitter 在本機把專案建成知識圖譜的開源工具，IG Reel 宣傳它能讓 Claude Code 省 70% token。我在 62 個 TS 檔的專案量了 3 題：只看查圖確實少 72%，但它只給符號名稱和行號、還得補讀檔案，算進去是少 54%——跟直接附原始碼的 CodeGraph（少 56%）打平。',
+    category: 'AI 工具',
+    tags: ['Graphify', 'Claude Code', 'CodeGraph', 'Token', '知識圖譜', 'AI Coding'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: 'Graphify 建圖要花 token 嗎？',
+        a: '程式碼部分不用。tree-sitter 在本機解析，報告寫 Token cost: 0 input · 0 output，62 個 TS 檔花 41 秒。文件、PDF、圖片的語意抽取才會呼叫模型。',
+      },
+      {
+        q: 'Graphify 的 70% 是哪裡來的數字？',
+        a: '實測 72% 是「只看查圖輸出」對「grep 後整份讀檔」。Graphify 只回符號名稱、檔名與行號，補讀 2 個關鍵檔案後是少 54%。付費雲端版頁面寫的 80% 是廠商宣稱，沒有實測。',
+      },
+      {
+        q: '已經裝了 CodeGraph，還要裝 Graphify 嗎？',
+        a: '只為了省 token 不用，實測三題合計 CodeGraph 13,285 token、Graphify 加補讀 13,746 token。想要互動架構圖，或要把規格書、PDF 跟程式碼放進同一張圖時，Graphify 比較合適。',
+      },
+      {
+        q: 'Graphify 的 query 結果被截斷怎麼辦？',
+        a: '輸出會寫出需要的預算，例如 --budget 3461。也可以用 explain 查單一符號，或用 --seed 指定起點。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
