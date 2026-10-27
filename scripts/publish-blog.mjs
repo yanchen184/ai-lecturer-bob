@@ -4571,6 +4571,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'pseudo-3d-road-coastal-skateboard-game',
+    title: '偽 3D 賽車道路怎麼做？把 AI 海岸滑板 Reel 做成 13 KB 的網頁小遊戲',
+    metaDescription:
+      '用 OutRun 式偽 3D 道路把 AI 海岸下坡滑板 Reel 做成單檔網頁遊戲：投影公式、彎道累加、離心力物理，附 Playwright 自動駕駛實測與原始碼。',
+    excerpt:
+      '我把一支 AI 生成的海岸下坡滑板 Reel 做成能玩的網頁遊戲 Coastal Bomb，用的是 OutRun 那一代的偽 3D 道路：路切成 4,360 段，每段記彎度和高度再投影成梯形，單一 HTML 226 行、零依賴。Playwright 實測放手約 500 m 會被彎道甩出、自動駕駛 25 秒滑了 5,579 m——要做第一人稱往前衝的小遊戲，這個技術比 three.js 輕得多。',
+    category: '工程實作',
+    tags: ['偽 3D', 'Canvas', 'JavaScript', '網頁遊戲', 'OutRun', 'Playwright', 'AI 短影音'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: '偽 3D 道路跟 three.js 差在哪？',
+        a: '偽 3D 道路沒有 3D 模型，只有一條切成小段的路，每段記彎度和高度，投影成梯形畫在 Canvas 2D 上。鏡頭只能沿著路往前，換來的是單檔、零依賴、核心投影三行。要自由視角或真正的立體碰撞，就要用 three.js 這類真 3D 引擎。',
+      },
+      {
+        q: '彎道為什麼只用加法就能畫出來？',
+        a: '每往前一段，路中心的水平偏移量加上目前的斜率，斜率再加上這段的彎度。偏移量會以 3、6、9、12 這樣遞增，投影到螢幕上就是一個越來越急的彎，這是 Lou Gorenfeld 的 Pseudo 3D 教學頁描述的做法。',
+      },
+      {
+        q: '要怎麼確認小遊戲真的能玩？',
+        a: '在頁面留一個唯讀狀態物件，用 Playwright 讀速度、距離和橫向位置。我跑兩支測試：放手不操作約 503 m 會被甩出，簡單的自動駕駛 25 秒滑了 5,579 m、沒有 JS 錯誤。不操作會輸、會操作能贏，兩件事都成立才算能玩。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
