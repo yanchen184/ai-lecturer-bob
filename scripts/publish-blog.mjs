@@ -4623,6 +4623,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'karpathy-asd-ste100-prompt-test',
+    title: 'ASD-STE100 prompt 實測：照 Karpathy 叫 AI 用飛機維修手冊英文寫，違規少 39–69%',
+    metaDescription:
+      'Karpathy 建議叫 LLM「80% 照 ASD-STE100」寫。我用 Claude 跑 5 題 × 4 種 prompt：原話版違規少 39–55%，擴寫版少 59–69%，附線上 STE 檢查器。',
+    excerpt:
+      'ASD-STE100 是 1986 年起用來寫飛機維修手冊的受控英文，Karpathy 在 2026-10-02 的 X 長文說他會叫 LLM「80% of the way to ASD-STE100」來寫。我用 Claude Sonnet 和 Haiku 實測 5 題：只加原話違規少 39–55%，加上流傳的擴寫句少 59–69%，字數不變——寫 README、操作步驟這類英文值得加，聊天類不必。',
+    category: 'AI 教學',
+    tags: ['ASD-STE100', 'Simplified Technical English', 'Prompt Engineering', 'Karpathy', 'Claude', 'LLM 寫作'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: 'ASD-STE100 prompt 的原文是什麼？',
+        a: 'Karpathy 在 2026-10-02 的 X 長文只寫了叫 LLM 用 ASD-STE100 解釋，嫌太嚴時要求「80% of the way to ASD-STE100」。流傳的「Use short sentences, common words, consistent terms, and one action per instruction. Keep the tone natural.」是轉述文章加上去的擴寫。',
+      },
+      {
+        q: '只加 Karpathy 原話跟加擴寫版，差多少？',
+        a: '我用 Claude 測 5 題、每格 1 次：只加原話，違規數 Sonnet 少 39%、Haiku 少 55%；用擴寫版，Sonnet 少 69%、Haiku 少 59%。樣本小，看得出方向，算不出信賴區間。',
+      },
+      {
+        q: 'ASD-STE100 標準要錢嗎？去哪拿？',
+        a: '免費。官網 FAQ 寫明標準對所有人免費、只發 PDF，要到 asd-ste100.org 的 Downloads 頁申請。目前版本是 2025 年 1 月發布的 Issue 9，下一版 Issue 10 預定 2028 年 1 月。',
+      },
+      {
+        q: '什麼內容不適合用 STE 寫法？',
+        a: '需要語氣、要說服人、要表達不確定性的內容。STE 一字一義、一句一事，會把語氣磨平；Karpathy 自己也說全套規格太嚴才改要求 80%。這次只測了英文輸出，用 STE 規則寫中文沒有測。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
