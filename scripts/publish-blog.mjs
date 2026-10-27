@@ -4597,6 +4597,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'free-agentic-ai-courses-2026',
+    title: '免費 Agentic AI 課程怎麼選？7 門逐一查證：3 門限時免費、AutoGen 已封存',
+    metaDescription:
+      'Hugging Face、微軟、LangChain、DeepLearning.AI 共 7 門免費 Agentic AI 課程逐一連線查證：份量、免費條件、框架是否還在維護，附建議學習順序。',
+    excerpt:
+      '一支 Reels 列出 7 門免費 Agentic AI 課、要留言才給連結；其實全是公開官網，我寫腳本逐一連線，2026-10-27 全部回 200，份量從 54 分鐘到 6 小時。要注意的是 DeepLearning.AI 三門只是平台 beta 期間限時免費、AutoGen 官方 README 已宣告封存——建議從 Hugging Face 或微軟入門，主力上 LangGraph。',
+    category: 'AI 教學',
+    tags: ['AI Agent', 'Agentic AI', '免費課程', 'LangGraph', 'crewAI', 'AutoGen', 'Hugging Face', 'DeepLearning.AI'],
+    publishDate: '2026-10-27',
+    faqItems: [
+      {
+        q: '這 7 門 Agentic AI 課真的都免費嗎？',
+        a: 'Hugging Face、微軟和 LangChain Academy 的 4 門免費。DeepLearning.AI 的 3 門課程頁寫的是平台 beta 期間限時免費，結業成就要 PRO 方案，beta 何時結束頁面沒寫。以上是 2026-10-27 讀官方頁的結果。',
+      },
+      {
+        q: '完全沒基礎，該先上哪一門？',
+        a: 'Hugging Face AI Agents Course 或微軟 AI Agents for Beginners 擇一。前者一門課看過 smolagents、LlamaIndex、LangGraph 三個框架；後者 18 課、repo 內有台灣繁中翻譯。上完再進 LangChain Academy 的 LangGraph 課。',
+      },
+      {
+        q: 'AutoGen 封存了，那門課還要上嗎？',
+        a: '當選修。AutoGen 的 GitHub README 已宣告封存、微軟不再提供 bug 與安全修正，繼任者是 Microsoft Agent Framework。課程教的 reflection、tool use、planning、多 agent 協作這些設計模式換框架一樣適用，但不要拿 AutoGen 開新專案。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
