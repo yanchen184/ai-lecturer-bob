@@ -4769,6 +4769,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'youtube-ai-summary-verify-quote-transcript',
+    title: 'YouTube 影片 AI 摘要怎麼驗證？叫 Claude 附原句，32 條全對回字幕',
+    metaDescription:
+      '把英文 YouTube 影片丟給 Claude 拆成繁中步驟，每條附原句與秒數，再用 Python 在前後 90 秒字幕內比對。4 支副業影片 32 條全過，捏造句當場被擋。',
+    excerpt:
+      '一支 87 行的 Python：抓英文 YouTube 字幕、用 claude -p 拆成繁中可執行步驟，每條都附逐字原句與秒數，再由程式回字幕前後 90 秒內比對。四支副業案例影片 32 條全部對得回，捏造、改寫、秒數錯的引文都被擋下——但它證明的是「影片真的這樣說」，不是翻譯準或營收數字是真的。',
+    category: 'AI 教學',
+    tags: ['YouTube 字幕', 'AI 摘要', 'Claude Code', 'youtube-transcript-api', '幻覺檢查', '副業案例'],
+    publishDate: '2026-10-29',
+    faqItems: [
+      {
+        q: '為什麼不直接相信 AI 的影片摘要？',
+        a: '摘要本身看不出哪一句是影片講的、哪一句是模型補的。要求每條步驟附逐字原句和秒數後，程式可以回字幕檢查，人也可以點時間戳一秒對照。',
+      },
+      {
+        q: 'AI 意思對但沒有逐字照抄，會被判失敗嗎？',
+        a: '會。實測改寫句只拿到 0.30 分，低於 0.6 門檻。這是刻意的：程式分不出忠實改寫和看起來像的編造，所以寧可誤擋、再回影片看一眼。',
+      },
+      {
+        q: '沒有字幕的影片可以用嗎？',
+        a: '不行。這支腳本依賴 YouTube 既有的英文字幕；沒有字幕要先用 Whisper 或 WhisperX 自己轉錄，再把轉錄結果當成字幕餵進去。',
+      },
+      {
+        q: 'Justin Welsh 在 YouTube 上有頻道嗎？',
+        a: '我查的時候 @JustinWelsh 沒有影片分頁，他主要經營 LinkedIn、X 和電子報。這次用的是 Peter Yang 訪談他的影片。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
