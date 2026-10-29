@@ -27,5 +27,7 @@
       "ctr": 0,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n曝光從 7 次漲到 16 次，但基數很小，點擊一樣只有 1 次。整體量太少，這週沒有特別事件。\n\n【需要注意】\n28 天內最多曝光的是「k8s 教學」和「k8s 是什麼」，兩個詞平均排第 18.6 名和第 29.6 名，點擊都是 0，近 7 天的前幾名已經看不到它們。NodePort 相關的詞裡，「node port」排第 9 名，其他兩個詞排第 74 和第 99 名。\n\n【今天可以做】\n把 /blog/k8s/nodeport-three-services/ 的 title 和 H1 改成開頭就寫「K8s NodePort」，改完在 GSC 對這頁手動按 Request Indexing。",
+  "analysisGeneratedAt": "2026-10-30T07:07:24+0800"
 }
