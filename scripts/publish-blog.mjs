@@ -4739,6 +4739,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'motion-prompt-animation-names',
+    title: 'Motion Prompt 是什麼？168 個動畫名稱，實測講名稱比講「有質感」準',
+    metaDescription:
+      'Motion Prompt 是 Shohei Ohtaki 開源的動畫名稱庫（MIT，168 個）。我用 Claude Haiku 對照 12 次：說「有質感」停在 1.6～2 秒，說「#005 Mask reveal 0.6 秒」停在 0.7 秒。',
+    excerpt:
+      'Motion Prompt 是日本創作者 Shohei Ohtaki 在 2026-10-14 開源的動畫名稱庫（MIT），7 包 168 個動作，每個都有編號、會動的示範、規格與參考程式碼，還能裝成 Claude Code skill。我用 Claude Haiku 對照 12 次：說「有質感」4 次都是 1.6～2 秒的模糊淡入，說「Mask reveal 0.6 秒」4 次都停在 0.7 秒左右——但貼完整規格時要講明只要進場。',
+    category: 'AI 工具',
+    tags: ['Motion Prompt', 'Claude Code', 'Claude Code Skill', '動效設計', '動畫術語', 'Prompt 技巧'],
+    publishDate: '2026-10-29',
+    faqItems: [
+      {
+        q: 'Motion Prompt 要付費嗎？可以商用嗎？',
+        a: '不用付費。repo 是 MIT 授權，名稱、規格、參考程式碼都可以用在商業專案，保留授權聲明即可。',
+      },
+      {
+        q: '沒有 Claude Code，Motion Prompt 還有用嗎？',
+        a: '有。名稱表和 gallery 本身不需要安裝，把名稱和秒數寫進任何 AI 的 prompt 都行；gallery 的 Copy picks 會把規格和示範網址一起複製，可以貼進沒有 skill 的對話。',
+      },
+      {
+        q: 'Motion Prompt 和 animation-vocabulary skill 差在哪？',
+        a: '方向相反。Motion Prompt 是先看示範、再拿名稱和規格去要，附有參考程式碼；animation-vocabulary 是把模糊描述反查成標準術語，只負責命名、不產生程式碼。兩個都是免費的 skill，可以一起裝。',
+      },
+      {
+        q: '為什麼 AI 照著 Motion Prompt 規格做，動畫播完標題就不見了？',
+        a: 'Motion Prompt 的規格描述的是示範的一整個循環，包含退場。實驗裡貼完整規格的 4 次有 3 次照做了退場。prompt 裡加一句「只要進場，結束後停在最終畫面」就能避開。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
