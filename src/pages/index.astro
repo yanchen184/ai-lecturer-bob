@@ -19,7 +19,7 @@ const latest = posts.slice(0, 3);
 const formatDate = (d: string) => d.replaceAll('-', '/');
 
 // 首頁內容最後更新日——改首頁內容時手動更新（不用 build 時間：daily cron 每天重 build 會讓日期失真）
-const HOME_UPDATED = '2026-09-24';
+const HOME_UPDATED = '2026-10-29';
 
 const stats = [
   { number: '8 年', label: '電商核心系統實戰' },
@@ -103,17 +103,17 @@ const productionCases = [
     color: '#ff6ec7',
   },
   {
-    domain: '企業語音辨識',
-    title: '用聯發科 Breeze-ASR-25 落地',
-    body: '協助企業導入繁體中文語音辨識（基於聯發科開源 ASR 模型），含部署、領域術語調教、品質監控。本土模型也能用得上。',
-    fitFor: '客服中心、醫療逐字稿、會議記錄、客訴分析',
+    domain: '語音 → 文件',
+    title: '訪談錄音 → AI 文件草稿',
+    body: '現場訪談錄音用本地繁中 ASR 轉成逐字稿，LLM 依既有表單格式產出文件草稿，承辦人確認後回寫原系統。錄音不離開內網。',
+    fitFor: '訪談、看診、客服這類「先錄音再寫文件」的流程',
     color: '#ffaa00',
   },
   {
-    domain: '企業內部',
-    title: '會議記錄 RAG 檢索',
-    body: '跨部門會議檔的向量檢索與語意問答，含 ACL 權限切割——不同角色看到不同會議，不靠 prompt 攔截，靠 retrieval 層先過濾。',
-    fitFor: '知識管理、企業內部問答、跨部門資料檢索',
+    domain: '業務 AI',
+    title: '業務資料 AI 助理：查不到就不准答',
+    body: '查內部業務資料、依來信起草回覆。模型只能引用檢索到的資料，沒撈到記錄就直接拒答。資料按客戶隔離，不會把 A 客戶的條件寫進給 B 客戶的信。',
+    fitFor: '想讓 AI 碰業務資料，但承擔不起任何一個編造數字的團隊',
     color: '#7cc0ff',
   },
 ];
