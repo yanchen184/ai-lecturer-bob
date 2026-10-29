@@ -4683,6 +4683,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'grok-bot-what-is-it',
+    title: 'Grok bot 是什麼？X 上的 @grok 跟 2026 新出的 Grok Bot 差在哪',
+    metaDescription:
+      'Grok bot 有兩個意思：X 上標記就公開回覆的 @grok，和 xAI 2026-08 推出、有自己雲端電腦會登入工具做事的 Grok Bot。整理怎麼叫出來、背後模型、價格、爭議與 Telegram／Discord 同名 bot。',
+    excerpt:
+      '「Grok bot」現在有兩個意思：X 上標記就公開回覆的 @grok，以及 xAI（現名 SpaceXSI）2026-08-11 推出、有自己雲端電腦、會登入 Gmail 和 CRM 把工作做完的 Grok Bot。前者是問答、出過 MechaHitler 與性化改圖等大爭議；後者是付費 agent 產品——查證用 @grok、派工才輪到 Grok Bot。',
+    category: 'AI 工具',
+    tags: ['Grok', 'Grok Bot', 'xAI', 'SpaceXSI', 'X', 'AI Agent'],
+    publishDate: '2026-10-29',
+    faqItems: [
+      {
+        q: '在 X 上怎麼叫 Grok 回覆？',
+        a: '在任何貼文底下回覆並加上 @grok 和你的問題，它會讀整串討論後公開回一則。官方公開的 @grok 提示詞要求回覆 550 字元內、不用 markdown、用發文者的語言回答，所以答案會是短的純文字，而且所有人都看得到。',
+      },
+      {
+        q: 'Grok Bot 要付費嗎？',
+        a: '要。2026-08-26 起包含在所有 SuperGrok、Cursor Pro 與 Cursor Teams 方案，用量跟 Grok 聊天、Cursor 分開計算；2026-10-12 推出的 The X Subscription 也把 Grok Bot 綁進同一個方案。各層權益以 x.ai/pricing 為準。',
+      },
+      {
+        q: '@grok 和 @bot 有什麼不同？',
+        a: '@grok 是任何人都能標記、會公開回一則文字答案的官方帳號；@bot 是叫你自己的 Grok Bot 去執行動作，例如存貼文，前提是你有 Grok Bot 帳號並設定好 X plugin。',
+      },
+      {
+        q: 'Telegram 上有官方的 Grok bot 嗎？',
+        a: 'Durov 在 2025-05 宣布與 xAI 合作把 Grok 整合進 Telegram，但 Musk 當時回覆尚未簽約，我查不到後續正式上線的官方紀錄。Telegram 或 Discord 上叫 Grok bot 的，請先當成第三方用 API 自己包的機器人。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
