@@ -4713,6 +4713,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-trading-bot-22h-replay-monte-carlo',
+    title: 'AI 交易機器人 22 小時翻 3.5 倍是真的嗎？我把 GROK BOT 流程跑了 1 萬次',
+    metaDescription:
+      'IG 上 GROK BOT 6 Agent 影片說 $2,500 在 22 小時變 $8,750，面板自己標著 SIMULATED DATA。我復刻流程跑 1 萬次：中位數 $2,102，只有 4 次到 $8,750。',
+    excerpt:
+      'IG 上一支「GROK BOT 6 Agent」影片說 $2,500 在 22 小時變 $8,750，面板右上角其實標著 SIMULATED DATA 與 22H REPLAY。我照同樣的 6 步狙擊流程寫了模擬器跑 1 萬次：中位數 $2,102、三分之二虧錢，到 $8,750 的只有 4 次——影片的數字是從分佈最右端挑出來的那一次。',
+    category: 'AI 工具',
+    tags: ['AI 交易機器人', 'GROK BOT', '迷因幣', '蒙地卡羅模擬', '倖存者偏差', 'AI Agent'],
+    publishDate: '2026-10-29',
+    faqItems: [
+      {
+        q: '影片裡的 GROK BOT 是 xAI 的產品嗎？',
+        a: '我在面板上找不到 xAI 或 SpaceXSI 的標示。xAI 官方 2026-08 推出的 Grok Bot 是處理 Gmail、CRM 等工作的 agent，不是交易機器人。',
+      },
+      {
+        q: '22H REPLAY 是什麼意思？',
+        a: '字面是「22 小時的回放」，也就是把一段已經跑完（或模擬完）的過程重播，不是即時下單。同一個面板右上角標著 SIMULATED DATA，表示播放的資料是模擬的。',
+      },
+      {
+        q: '這個模擬可以拿來決定要不要用交易機器人嗎？',
+        a: '不行。參數是示意值，沒有用真實鏈上資料校準。它只示範「挑最好的一次」能讓一套沒有優勢的流程看起來多好。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
