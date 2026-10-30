@@ -1926,6 +1926,24 @@
         "codeFence": 5
       },
       "wordCount": 6348
+    },
+    "rea-obfuscated-js-dino-speed-rule": {
+      "total": 90,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6867
     }
   }
 }
