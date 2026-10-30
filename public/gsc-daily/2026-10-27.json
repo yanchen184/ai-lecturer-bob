@@ -20,5 +20,7 @@
       "ctr": 0,
       "position": 1
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n量還很小，7 天曝光 17、點擊 1。+143% 是從 7 次漲上來的，基數太低，看不出趨勢。目前唯一的點擊來自 fb.yanchen.app，部落格文章還沒有點擊。\n\n【需要注意】\n查詢幾乎都和 K8s 有關。「k8s 教學」排第 19.2、「k8s 是什麼」排第 29.5，都在第 2～3 頁。「node port」排第 9，但「k8s nodeport」排第 74、「service nodeport」排第 99，說明 NodePort 那篇只對到很窄的字面寫法。\n\n【今天可以做】\n改 /blog/k8s/nodeport-three-services/ 的 title 和 meta description，把「K8s NodePort」和「Service」寫進開頭。改完到 GSC 對這一頁手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-10-31T07:07:31+0800"
 }
