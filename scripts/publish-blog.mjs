@@ -4889,6 +4889,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'instagram-agent-skill-chinese-test',
+    title: 'instagram-agent-skill 中文實測：137 字腳本被算成 2.9 秒，我寫補丁修好估時和套話清理',
+    metaDescription:
+      'instagram-agent-skill 是 3,778 星的免費 Claude IG Skill。我用中英文樣本實測 5 支 Python 工具：英文照宣傳能用，中文幾乎全失效，附安裝步驟與中文補丁。',
+    excerpt:
+      'instagram-agent-skill 是 Jake Schincariol 9 月開源的 MIT Claude Skill 包，13 個 IG 經營指令加 5 支本機 Python 工具，只產出文字、不幫你發文。英文實測跟 README 一致，中文卻幾乎全失效——137 字腳本被算成 8 個字、2.9 秒，提示詞能照用，工具的數字要換中文補丁才能信。',
+    category: 'AI 工具',
+    tags: ['instagram-agent-skill', 'Claude Code', 'Claude Skill', 'Instagram', 'Reels', '中文化', 'Python'],
+    publishDate: '2026-10-30',
+    faqItems: [
+      {
+        q: 'instagram-agent-skill 會幫我自動發 IG 嗎？',
+        a: '不會。每個 Skill 最後都是一段可複製的文字，由你自己貼。README 的理由是自動發文、留言、追蹤靠瀏覽器自動化或第三方工具，違反 Instagram 使用條款，帳號會被限制。',
+      },
+      {
+        q: '用中文經營 IG，裝了還有用嗎？',
+        a: '13 份 SKILL.md 是提示詞，填好 voice.md 後中文 Claude 照樣能產出腳本、文案和週計畫。5 支 Python 工具只會切英文字，中文腳本估時、套話清理、AI 味評分的數字都不能信。',
+      },
+      {
+        q: 'Windows 跑 hookscore.py 出現 UnicodeEncodeError 怎麼辦？',
+        a: '繁中 Windows 的標準輸出是 cp950，沒有 emoji。執行時加 python -X utf8，或設定環境變數 PYTHONUTF8=1。',
+      },
+      {
+        q: 'hookscore 的分數高就代表會爆嗎？',
+        a: '不代表。作者用 74 個真實開場實測，抓爛開場的 AUC 是 0.83，從同一個創作者的作品裡挑贏家只有 0.56，接近擲硬幣。適合拿來刷掉明顯爛的開場。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
