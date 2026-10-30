@@ -1889,7 +1889,25 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 5755
+      "wordCount": 5819
+    },
+    "kdp-ai-coloring-book-side-hustle-royalty-math": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 3709
     }
   }
 }
