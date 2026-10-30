@@ -3326,6 +3326,36 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'rea-obfuscated-js-dino-speed-rule',
+    title: 'REA 實測混淆 JS：小恐龍速度規則全挖出，381KB 大檔卻撞上 2 萬節點上限',
+    metaDescription:
+      '我用 REA 6.8.0 分析混淆過的恐龍遊戲：552 bytes 檔 7 秒挖出初速 6、每幀 +0.001、上限 13；同段程式埋進 381KB bundle，語意圖截斷在 20,000 節點，常數全消失。',
+    excerpt:
+      '照 IG 影片的小恐龍題目，我把自寫的恐龍遊戲用 esbuild 壓縮混淆成 552 bytes 交給 REA 6.8.0，7 秒產出語意圖，初速 6、每幀 +0.001、上限 13 全對上原始碼。但不給證據 Claude 也答得出來，而同一段程式埋進 381KB bundle 時，REA 的語意圖撞到每檔 20,000 節點上限、常數節點 0 個——它的價值在可追溯的證據，大檔要先看 truncated 再下結論。',
+    category: 'AI 工具',
+    tags: ['REA', 'rea-agents', '逆向工程', 'JavaScript', '程式碼混淆', 'esbuild', 'Claude Code', 'MCP'],
+    publishDate: '2026-10-30',
+    faqItems: [
+      {
+        q: 'REA 能還原混淆過的 JavaScript 嗎？',
+        a: '能還原關係，不能還原名稱。我實測 552 bytes、屬性名被混淆成單一字母的 bundle，REA 的語意圖記錄了「哪個常數寫進哪個欄位、哪個函式讀它」，讓 agent 答出初速 6、每幀 +0.001、上限 13。原本的 INITIAL_SPEED 這類名字不會回來。',
+      },
+      {
+        q: '小檔案直接丟給 Claude 讀就好，為什麼要用 REA？',
+        a: '只要答案的話，小檔確實不用。我拿同一個 552 bytes bundle 不給證據直接問 Claude，答案一樣。REA 多給的是可追溯性：每個結論對得回一條帶來源路徑與 sha256 的關係，適合寫進報告或交給別人複查。',
+      },
+      {
+        q: 'REA 分析大檔案有上限嗎？',
+        a: '有。6.8.0 的語意圖每個檔案最多 20,000 個節點、全部最多 100,000 個。我 381.6 KB 的 bundle 就撞到每檔上限，coverage.truncated 為 true，常數節點一個都沒留下。看到 truncated 時要把 bundle 拆小或先定位區段，不能把「沒找到」當成「不存在」。',
+      },
+      {
+        q: 'REA 會執行我要分析的程式嗎？',
+        a: 'analyze-javascript-application 不會。輸出的 limitations 寫明 JavaScript 與 HTML 只當純文字解析，bundle 的啟動程式從未執行。分析在本機跑，但 agent 讀證據時，證據內容會送到模型供應商。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'strata-qwen3-8-flash-next-local-gpu',
     title: 'Strata 是什麼？12GB 顯卡跑 125B 的 Qwen3.8-Flash-Next，門檻與原理拆解',
     excerpt:
