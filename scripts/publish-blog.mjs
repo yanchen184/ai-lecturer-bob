@@ -4799,6 +4799,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'gitdiagram-gitingest-github-url-trick',
+    title: 'GitHub 網址改一個字出架構圖？gitdiagram 與 gitingest 實測，44 萬 token 砍到 11 萬',
+    metaDescription:
+      'github 改成 gitdiagram 出架構圖、改成 gitingest 出 AI 可讀的純文字。實測 pallets/click：全抓 44.3 萬 token，排除 tests、docs 與 uv.lock 後剩 11.0 萬，附私有 repo 注意事項。',
+    excerpt:
+      '把 GitHub 網址的 hub 換成 diagram 或 ingest，就能拿到 LLM 畫的架構圖，或整個 repo 攤平成貼給 AI 的純文字，兩個都是 MIT 開源、星數過萬的工具。實測 pallets/click 全抓有 44.3 萬 token，光一個 uv.lock 就占三分之一——改網址很簡單，真正要做的是先過濾再餵 AI。',
+    category: 'AI 工具',
+    tags: ['gitdiagram', 'gitingest', 'GitHub', '架構圖', 'Token', 'Claude Code'],
+    publishDate: '2026-10-30',
+    faqItems: [
+      {
+        q: 'gitdiagram 和 gitingest 要錢嗎？',
+        a: '開 pallets/click 這個公開 repo 時，兩個網站都沒有要求登入或付費。兩個專案都是 MIT 授權；gitdiagram 產生新的解說影片目前是 early access。',
+      },
+      {
+        q: '為什麼 gitingest 網頁版跟 CLI 抓出來的數字不一樣？',
+        a: '網頁版預設只收 50kB 以下的檔，CLI 預設上限是 10MB。click 在網頁版是 166 個檔、22.0 萬 token，CLI 全抓是 171 個檔、44.3 萬 token。',
+      },
+      {
+        q: 'gitingest 的 token 數準嗎？',
+        a: '摘要寫的是 Estimated tokens，是估算值。拿來比較不同過濾條件的大小很好用，實際消耗以使用的模型計費為準。',
+      },
+      {
+        q: '公司 GitLab 的私有專案可以用嗎？',
+        a: '先 git clone 到本機，再用 gitingest CLI 對資料夾跑，例如 gitingest ./my-project -e "*.lock"，程式碼不會上傳到第三方網站。gitdiagram 是對 GitHub 網址運作，私有 repo 要交出 GitHub token。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
