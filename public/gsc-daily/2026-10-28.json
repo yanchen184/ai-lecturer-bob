@@ -163,5 +163,7 @@
       "ctr": 0,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n量還很小，看不出趨勢。近 7 天曝光 16，比前週多了 5；唯一一次點擊來自 fb.yanchen.app，部落格本身還是 0 點擊。\n\n【需要注意】\n/blog/k8s/nodeport-three-services/ 用「node port」查詢排第 9，但寫成「k8s nodeport」排 74、「service nodeport」排 99，同一頁換個寫法名次差很多。「k8s 教學」「k8s 是什麼」各有 6 次曝光，排名卻在 19 和 29.5，進不了第一頁。\n\n【今天可以做】\n把 NodePort 那篇的 title 和 meta description 改成包含「K8s NodePort」「Service」這兩個寫法，例如「K8s NodePort Service 是什麼？三種 Service 實作比較」。改完到 GSC 對這個網址按一次 Request Indexing。",
+  "analysisGeneratedAt": "2026-11-01T07:07:29+0800"
 }
