@@ -5099,6 +5099,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-motion-prompt-animation-spec',
+    title: 'Claude Code 用 Motion 做動畫網站：只寫「加一點動畫」會怎樣？實測 12 次，差在誰決定',
+    metaDescription:
+      'Claude Code 搭 Motion 做動畫網站，只寫「加一點動畫」其實不只淡入，但動效由模型挑、6 秒後還有 7～39 個在跑。附四欄動效規格寫法與 12 次實測數據。',
+    excerpt:
+      'Motion（前身 Framer Motion）是網頁動畫函式庫，IG 設計帳號 @chloemakesdesign 示範用 Claude Code 加 Motion 做飲料官網，訣竅是把每個動效「誰動、從哪裡來、怎麼動」寫清楚。我用 claude -p 對同一份品牌描述跑 12 次——「加一點動畫」不只給淡入，但每次由模型自己挑、常帶無限循環；寫清楚的 4 次 10 項規格全中、6 秒後全部停下。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Motion', 'Framer Motion', '動效設計', 'Prompt 技巧', 'claude -p'],
+    publishDate: '2026-11-01',
+    faqItems: [
+      {
+        q: '用 Claude Code 做動畫網站一定要用 Motion 嗎？',
+        a: '不用。純 CSS transition、Web Animations API、GSAP 都可以。這篇用 Motion 是照原 Reel 的做法，它的 scroll、inView、stagger、spring 剛好對應四種動效，寫規格時有現成的詞可以用。',
+      },
+      {
+        q: '只寫「加一點動畫」會怎樣？',
+        a: '在我的 12 次實驗裡，Sonnet 5.5 和 Haiku 5.5 都不只給淡入，會自己加位移、逐字、漂浮、跑馬燈。差別是動效由模型挑、每次不同，而且常帶無限循環：Sonnet 模糊版 6 秒後還有 7～39 個動畫在跑。',
+      },
+      {
+        q: '規格要寫到多細？',
+        a: '至少寫元素、起始狀態、曲線節奏、觸發時機四欄。數字可以先抓大概（120px、0.04 秒），看完效果再調；我的具體版 4 次都完整照數字實作。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
