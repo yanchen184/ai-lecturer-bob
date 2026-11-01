@@ -4975,6 +4975,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'instagram-agent-skill-chinese-hook-caption',
+    title: 'instagram-agent-skill 中文 hook 評分與文案檢查：原版 5 句全判弱，補上繁中規則後排序正確',
+    metaDescription:
+      'instagram-agent-skill 的 hookscore 和 caption 只認英文：中文開場 5 句全判 WEAK，中文 hashtag 與「留言拿教學」漏判。我寫了繁中版規則，附設計、程式碼與 7 項測試。',
+    excerpt:
+      '學長 Ethan 推的 13 個免費 Claude IG skill，原始出處是 4,214 星的 instagram-agent-skill，其中 hook 評分和文案檢查的規則寫死成英文。中文開場丟進去 5 句全判 WEAK、「哈囉大家好」沒被擋，換成繁中規則後排序變成 88.4 到 12.8，爛開場正確墊底——但權重是假設值，只適合刷掉爛開場。',
+    category: 'AI 工具',
+    tags: ['instagram-agent-skill', 'Claude Skill', 'Instagram', 'Reels', 'hook', '中文化', 'Python'],
+    publishDate: '2026-11-01',
+    faqItems: [
+      {
+        q: '原版 hookscore 為什麼把中文開場都判成 WEAK？',
+        a: '它用 [A-Za-z0-9$%-]+ 這類 regex 定義一個字，中文字不算字。一句中文開場只數得到 Claude、4000 這種英文 token，長度、前置、利害的判斷全部失準，打招呼清單也只有 hey、hi、hello。',
+      },
+      {
+        q: '原版 caption.py 為什麼數不到中文 hashtag？',
+        a: 'hashtag 的 regex 是 #[A-Za-z0-9_]+，#程式設計、#重構 不符合。行動呼籲的 pattern 也全是英文，所以「留言 PROMPT 我私訊你」會被判成沒有 CTA。',
+      },
+      {
+        q: '中文版的分數可以拿來預測哪支 Reel 會爆嗎？',
+        a: '不行。中文版的權重與每秒 4.5 字的語速是假設值，沒有用留存資料驗證。原版作者實測挑贏家的 AUC 也只有 0.56，這類工具適合刷掉打招呼、前言、太長的爛開場。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
