@@ -5001,6 +5001,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'nvidia-skillspector-claude-code-skill-scan',
+    title: 'NVIDIA SkillSpector 實測：裝 Claude Code skill 前先掃，我的 115 個 skill 有 23 個被判不建議安裝',
+    metaDescription:
+      'NVIDIA SkillSpector 安裝與實測：下毒的 skill 12 秒判 100 分 DO NOT INSTALL；掃自己 115 個 skill 有 23 個被擋。附 exit code 擋安裝、baseline 與 Windows 三個坑。',
+    excerpt:
+      'NVIDIA 在 2026 年 3 月開源的 Apache-2.0 skill 掃描器，裝 Claude Code、Codex 的 skill 前先找 prompt injection、資料外洩與供應鏈風險。實測 v2.13.2：下毒的 skill 12 秒判 100 分 DO NOT INSTALL，掃我自己 115 個 skill 卻擋下 23 個——適合當裝別人 skill 前的關卡，不適合全量擋自己的。',
+    category: 'AI 工具',
+    tags: ['SkillSpector', 'NVIDIA', 'Claude Code', 'Claude Skill', 'Agent Skills', '資安掃描', 'Prompt Injection'],
+    publishDate: '2026-11-01',
+    faqItems: [
+      {
+        q: 'SkillSpector 一定要 API key 嗎？',
+        a: '不用。靜態模式加 --no-llm 完全在本機跑；要開 LLM 複審時，設 SKILLSPECTOR_PROVIDER=claude_cli 就會用本機已登入的 claude CLI，不必另外申請 API key。',
+      },
+      {
+        q: '「每 4 個 skill 就有 1 個有漏洞」是 NVIDIA 的研究嗎？',
+        a: '不是。出處是 arXiv 論文 2601.10338〈Agent Skills in the Wild〉：收集 42,447 個 skill、分析 31,132 個，26.1% 至少有一個漏洞，作者不是 NVIDIA。',
+      },
+      {
+        q: '為什麼一條 issue 都沒有，還是被判 CAUTION？',
+        a: 'v2.13.2 會把沒檢查完整的 skill 判成 CAUTION。我的 115 個 skill 裡有 41 個是這種情況，原因碼都是 reference_missing：SKILL.md 提到的本機路徑在 skill 目錄裡找不到。',
+      },
+      {
+        q: '怎麼用 SkillSpector 擋住危險的 skill 安裝？',
+        a: '看 exit code：0 代表分數 50 以下（SAFE 或 CAUTION），1 代表分數超過 50 或觸發 --fail-on-findings 等條件，2 代表掃描出錯。安裝腳本遇到非 0 就停下來，先讀它抓到的那幾行。',
+      },
+      {
+        q: 'Windows 上 --output 出現 Safe file output is unsupported 怎麼辦？',
+        a: '改用 stdout 重導：skillspector scan ./x --format json > report.json，輸出檔放在掃描目標以外。另外 junction 或 symlink 路徑會被拒絕，要掃實體目錄。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
