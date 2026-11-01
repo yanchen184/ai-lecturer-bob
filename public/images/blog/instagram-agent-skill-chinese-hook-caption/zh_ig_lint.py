@@ -19,7 +19,7 @@ CHARS_PER_SEC = 4.5          # 中文口播語速（字/秒）的假設值，可
 FEED_WINDOW = 125            # 沿用原版的 125 字元摺疊假設
 HASHTAG_CAP = 5              # 沿用原版：2025-12-18 起每篇 5 個
 
-CJK = r"㐀-鿿豈-﫿"
+CJK = r"\u3400-\u9fff\uf900-\ufaff"
 HAN_RE = re.compile(f"[{CJK}]")
 LATIN_WORD_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9$%.,'-]*")
 NUM_RE = re.compile(r"\d[\d,]*(?:\.\d+)?|[一二兩三四五六七八九十百千萬億]+(?:個|次|年|天|分鐘|小時|行|萬|倍|%|元|塊)")
