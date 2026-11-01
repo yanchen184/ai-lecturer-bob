@@ -5069,6 +5069,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'hookace-first-6-seconds-retention',
+    title: 'HookAce 是什麼？付費的短影音前 6 秒留存預測，我用免費規則版 Hook6 對照 Claude 排名',
+    metaDescription:
+      'HookAce 是 Capafy 上預測短影音前 6 秒逐秒留存的付費 Agent，數字是 AI 推估。我做了免費規則版 Hook6，5 段開場和 Claude 排名 Spearman ρ=0.8，附做法與限制。',
+    excerpt:
+      'HookAce 是 Capafy 市集上的付費 Agent，上傳影片或腳本就預測第 1–6 秒每秒留存並給改寫建議，商品頁自己寫明數字是 AI 預測、不是平台數據。我用 10 類 regex 訊號做了免費的單檔版 Hook6，5 段開場和 Claude 排名 ρ = 0.8——只改口播稿用免費版就夠，要分析畫面才值得付費。',
+    category: 'AI 工具',
+    tags: ['HookAce', 'Capafy', '短影音', '前 6 秒留存', 'Hook', 'Reels', 'Shorts', 'Claude'],
+    publishDate: '2026-11-01',
+    faqItems: [
+      {
+        q: 'HookAce 的留存預測是真實數據嗎？',
+        a: '不是。HookAce 商品頁寫明所有結果「皆為 AI 預測，並非平台實際數據」，實際表現還受受眾、流量來源、發布時間與平台分發影響。它適合比較同一支片兩版開場的相對強弱，不適合當流量預測。',
+      },
+      {
+        q: 'HookAce 可以分析哪些輸入？',
+        a: '商品頁列出三種：影片檔、公開影片連結、腳本／口播稿／分鏡表，一次分析一份。連結讀不到時，它建議直接上傳影片檔，不會用使用者的 cookie 或登入狀態繞過驗證。',
+      },
+      {
+        q: 'Hook6 和 HookAce 差在哪？',
+        a: 'Hook6 只吃口播文字，用每秒 4.5 字切秒、10 類 regex 訊號加減分，結果可重現、免費、不上傳資料。HookAce 由模型分析，能吃影片檔，看得到畫面與字幕。只改口播稿時 Hook6 加一段免費 prompt 就夠。',
+      },
+      {
+        q: '規則版和 LLM 評分差多少？',
+        a: '我用 5 段開場對照 Claude Sonnet 5.5，Spearman ρ = 0.8：第 1 名一致，前三名與後兩名的分組一致，只有組內順序互換。樣本只有 5 段，只能說明兩者在明顯好壞上判斷一致。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
