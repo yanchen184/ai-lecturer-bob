@@ -5035,6 +5035,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'harness2-google-self-improving-agent-harness',
+    title: 'Harness² 是什麼？Google 開源讓 AI agent 不換模型自己改 harness，我用 claude -p 實測 18 次',
+    metaDescription:
+      'Harness² 讓另一個 LLM 改 agent 的 prompt、script、skill，模型不動、不需標準答案。實測 Windows 跑官方 demo 要修兩處，再用 claude -p 做迷你版跑 3 題 18 次。',
+    excerpt:
+      'Harness² 是 Google Research 在 2026-10-09 發表的 Apache-2.0 框架，模型權重不動，讓另一個 LLM 比對執行軌跡後改寫 agent 的 prompt、script、skill，並把附證據的經驗存進 library。我用 claude -p 做了迷你版跑 3 題 18 次全對——分數沒有進步空間，變的是做法被固化成 script，值得搬它的 prompt 設計，不建議直接用官方 repo。',
+    category: 'AI 工具',
+    tags: ['Harness²', 'Harness Engineering', 'Google Research', 'AI Agent', 'Claude Code', 'claude -p', 'Agent Skills'],
+    publishDate: '2026-11-01',
+    faqItems: [
+      {
+        q: 'Harness² 要 API key 才能試嗎？',
+        a: '官方 demo 不用。harness2-demo 用確定性編輯器加真的 Python 執行，不需要任何模型憑證；要跑 JobBench、LAB、WorkBuddy-Bench 才需要在 .env 填 Vertex AI 專案並登入 gcloud，會產生 API 費用。',
+      },
+      {
+        q: 'Harness² 可以在 Windows 跑嗎？',
+        a: '官方只支援 Linux。我在 Windows 原生 Python 3.12 改兩處後跑通：在 venv 放一個 no-op 的 fcntl.py（schedule.py 用 fcntl.flock），以及把 tree.py 的 str(p.relative_to(d)) 改成 .as_posix()，否則編輯器寫的 scripts\\ 路徑被判無效、demo 以 StopIteration 結束。',
+      },
+      {
+        q: 'Harness² 能接 Claude 嗎？',
+        a: '官方 repo 不行，執行器只有 OpenCode 與 Codex、模型走 Vertex AI。我自己寫了約 350 行的迷你版，用 claude -p --model haiku 當執行器、claude -p --model sonnet 當編輯器，流程照官方 parallel k=1，可以跑。',
+      },
+      {
+        q: '論文說進步 11.5 分是平均嗎？',
+        a: '不是。原文是 up to：四種模型與 harness 組態中，單一 Harness² 步驟最大的提升，WorkBuddy-Bench 11.5 分、JobBench 4.5 分、LAB 11.8 個百分點，模型是 GLM-5 與 Gemini 3.5 Flash，屬作者自評。',
+      },
+      {
+        q: '沒有標準答案，Harness² 怎麼知道改得好不好？',
+        a: '它比對同一題在不同 harness 下的執行軌跡與產出差異，由 composer 決定採用、修改或保留原 harness（KEEP_BASE）；寫進 library 的經驗必須附 evidence 與 confidence，觀察不到效果就寫 NO_ENTRY。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
