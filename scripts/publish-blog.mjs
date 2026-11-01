@@ -5155,6 +5155,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-reel-auto-edit-pipeline',
+    title: 'Claude Code 剪影片 5 步流程實測：45 秒口播自動剪成 24 秒 Reel，剪空白、上字幕、配樂全在本機',
+    metaDescription:
+      '用 Claude Code 剪 Reel 的 5 步流程實測：faster-whisper 逐字時間軸加 ffmpeg，45 秒剪成 24 秒、繁中字幕、配樂自動閃避，不用付費 API，附程式與限制。',
+    excerpt:
+      'IG 上流傳「5 步用 Claude 剪 Reel」，做法要留言才拿得到；我把它做成一支 178 行的 Python 管線，faster-whisper 產逐字時間軸、ffmpeg 剪空白、燒繁中字幕、配樂自動閃避，全部在本機跑。45.23 秒口播剪成 24.35 秒、停頓 8 段歸零——剪靜音夠用，要剪「嗯、那個」才需要讓 LLM 讀逐字稿的 video-use。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'ffmpeg', 'faster-whisper', '短影音剪輯', 'Reels', '自動字幕', 'OpenCC'],
+    publishDate: '2026-11-01',
+    faqItems: [
+      {
+        q: '用 Claude 剪影片需要付費 API 嗎？',
+        a: '這套不用。轉錄是本機的 faster-whisper，剪接是 ffmpeg，Claude Code 只在寫程式和調參數時用到，執行時不呼叫 LLM。video-use 這類讓 LLM 讀逐字稿挑剪點的方案，才需要轉錄 API 的金鑰（ElevenLabs）。',
+      },
+      {
+        q: 'Whisper 中文輸出是簡體怎麼辦？',
+        a: 'initial_prompt 寫繁體不保證有效，我這次就還是簡體。穩定做法是轉錄後用 OpenCC s2twp 轉台灣繁體，再用自己的專有名詞表修 Whisper 聽錯的字，例如把 Cloud Code 改回 Claude Code。',
+      },
+      {
+        q: '剪掉停頓後字幕為什麼會對不上？',
+        a: 'Whisper 給的是原片時間。剪掉停頓後每一句都提前了，要把每個時間點換算成「它前面保留了多少秒」，也就是文中第 4 步的 remap 函式。',
+      },
+      {
+        q: '背景音樂怎麼在講話時自動變小？',
+        a: '用 ffmpeg 的 sidechaincompress，拿人聲當觸發訊號壓縮音樂軌。我設 threshold=0.02、ratio=10，講話時音樂比停頓時低約 14 dB。混音時 amix 要加 normalize=0，人聲才不會跟著變小。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
