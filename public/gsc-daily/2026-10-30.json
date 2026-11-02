@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-30",
+  "impressions": 31,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 5.4,
+  "queries": [
+    {
+      "query": "ai講師",
+      "page": "/style/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    }
+  ],
+  "pages": [
+    {
+      "page": "/style/",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2.5
+    },
+    {
+      "page": "https://fb.yanchen.app/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "page": "/blog/k8s/deployment-intro/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "page": "/blog/ohwx-companion/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "page": "/blog/seo-content-score/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "page": "/blog/topics/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/blog/topics/ai-video/",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    }
+  ]
+}
