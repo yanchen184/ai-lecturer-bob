@@ -85,5 +85,7 @@
       "ctr": 0,
       "position": 10
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n量太小，看不出趨勢。曝光從 9 漲到 19 看起來是翻倍，但絕對值只多 10 次；這 7 天唯一的 1 次點擊來自 fb.yanchen.app。\n\n【需要注意】\n28 天內曝光最多的「k8s 是什麼」（排名 29.5）和「k8s 教學」（排名 19.4），近 7 天都沒有再出現。「node port」排第 9，是目前唯一擠進第一頁的技術詞，只是還沒有人點。\n\n【今天可以做】\n到 GSC 篩出「node port」，查是哪一頁拿到排名，再把 title 和 H1 開頭改成「K8s NodePort」。改完對那一頁按一次 Request Indexing。",
+  "analysisGeneratedAt": "2026-11-03T07:07:35+0800"
 }
