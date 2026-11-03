@@ -2214,6 +2214,24 @@
         "codeFence": 5
       },
       "wordCount": 7264
+    },
+    "claude-code-auto-sound-effects-openverse-earshot": {
+      "total": 88,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 3,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 8303
     }
   }
 }
