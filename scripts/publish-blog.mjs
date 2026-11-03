@@ -5433,6 +5433,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'mirofish-swarm-intelligence-minifish-poc',
+    title: 'MiroFish 是什麼？拆解大四生的群體智能預測引擎，我用 122 行 Python 讓 8 個 AI 推演珍奶漲價',
+    metaDescription:
+      'MiroFish 群體智能預測引擎拆解：GraphRAG 生成人設、OASIS 跑社群模擬、ReportAgent 寫報告。附 122 行 Python 縮小版，8 個 AI 推演珍奶漲價 10 元。',
+    excerpt:
+      'MiroFish 是大四生郭航江開源的群體智能預測引擎（AGPL-3.0、8.3 萬星），把新聞或公告變成一群有人設的 AI 在模擬社群裡互動，再由 ReportAgent 寫推演報告。我用 122 行 Python 做了縮小版，8 個 AI 推演珍奶漲 10 元，平均購買機率從 49% 到 55%——適合預演公告話術，數字是 AI 自評，別當市調。',
+    category: 'AI 工具',
+    tags: ['MiroFish', '群體智能', '多 agent', 'OASIS', '社群模擬', 'Claude Code', 'Python'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'MiroFish 可以預測股價嗎？',
+        a: 'README 把金融預測標成「coming soon」，目前公開的 demo 是輿情推演和小說結局。它的機制是 LLM 角色扮演的社群模擬，沒有公開的金融回測數據。',
+      },
+      {
+        q: '不裝 MiroFish，最小要做什麼才能體驗群體模擬？',
+        a: '一份情境、幾個人設、一個每輪讓每個 agent 看共享貼文再回 JSON 的迴圈，最後一個讀完整紀錄寫報告的 agent。我的版本是 122 行 Python，LLM 用本機 claude -p，8 個 agent 跑 3 輪約 2 分鐘。',
+      },
+      {
+        q: 'MiroFish 和 OASIS 是什麼關係？',
+        a: 'README 寫明模擬引擎由 CAMEL-AI 的 OASIS 提供。OASIS 負責大規模社群模擬；MiroFish 在外面包了從種子資料生成人設、雙平台整合、ReportAgent 報告和互動介面。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
