@@ -5309,6 +5309,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'tradingagents-install-claude-tsmc',
+    title: 'TradingAgents 安裝教學：用 Claude 訂閱跑 AI 交易團隊分析台積電，兩次結論相反',
+    metaDescription:
+      'TradingAgents 安裝教學：Python 3.11 以上 pip install、用 173 行轉接程式接 Claude 訂閱、以 2330.TW 跑台股，附兩次實測從減碼翻成加碼的原因與資料缺口。',
+    excerpt:
+      'TradingAgents 是 Tauric Research 開源的 Python 框架（Apache-2.0、12 萬星），讓分析師、多空研究員、交易員、風控和投資組合經理用 LangGraph 開會給出五級評等；我照 README 裝起來，用 173 行轉接程式接上 Claude 訂閱跑台積電。同一檔股票跑兩次，結論從減碼翻成加碼，差別只在財報有沒有被防前視機制擋掉——適合學多代理人設計，不適合照評等下單。',
+    category: 'AI 工具',
+    tags: ['TradingAgents', 'AI 交易', '多代理人', 'LangGraph', 'Claude Code', '台股', 'Python'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'TradingAgents 一定要付 API 費嗎？',
+        a: '不一定。它支援 ChatGPT Plus／Pro 訂閱登入、Ollama 本機模型，以及任何 OpenAI 相容端點。我用自寫的轉接程式接 claude -p，扣的是 Claude 訂閱方案的用量。',
+      },
+      {
+        q: 'TradingAgents 可以分析台股嗎？',
+        a: '可以。代號用 Yahoo Finance 格式，上市股票加 .TW，例如台積電是 2330.TW。基準日設在過去時，台股財報會被防前視機制擋掉，基本面報告會是空的。',
+      },
+      {
+        q: '跑一次 TradingAgents 要多久？',
+        a: '三位分析師、辯論各 1 輪、全部角色用 Claude Sonnet 的設定下，一次 203 到 233 秒，15 到 16 次 LLM 呼叫。分析師越多、辯論輪數越多，時間和 token 都會增加。',
+      },
+      {
+        q: '為什麼同一檔股票跑兩次結果不一樣？',
+        a: '我的兩次實測差在基本面資料：基準日在過去的那次財報全被擋，只能靠偏空的技術面，所以給減碼；拿到財報的那次翻成加碼。LLM 輸出本來也有隨機性，資料相同時論點和評等仍可能不同。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
