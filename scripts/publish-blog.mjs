@@ -5185,6 +5185,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-i-have-adhd-skill-ab-test',
+    title: 'Claude Code i-have-adhd skill 實測：24 次中文 A/B，回答短 42%、第一行就給動作',
+    metaDescription:
+      'i-have-adhd skill 中文實測：6 題開發題在 Claude Sonnet 跑 24 次 A/B，字數少 42%、結尾都給下一步。附 Claude Code 安裝指令、驗證方法與該抄哪 3 條規則。',
+    excerpt:
+      'i-have-adhd 是 GitHub 近 6 萬星的 MIT 開源 skill，本體是一份 10 條規則的 SKILL.md，讓 Claude 第一行就給動作、步驟編號、不寫開場白。我用 6 題中文開發題跑 24 次 A/B，平均字數從 1578 降到 910、答案都還在——砍掉的是延伸內容，已經寫過輸出風格 CLAUDE.md 的人挑 3 條抄就好。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'i-have-adhd', 'Claude Code Skill', 'Plugin', 'Prompt', 'CLAUDE.md', 'A/B 測試'],
+    publishDate: '2026-11-01',
+    faqItems: [
+      {
+        q: 'i-have-adhd 裝了之後會自動生效嗎？',
+        a: '不會。SKILL.md 設了 disable-model-invocation: true，要在對話裡打 /i-have-adhd 才套用，之後整個 session 維持，說 stop adhd mode 或 normal mode 關掉。想每次自動套用，建立 ~/.claude/.i-have-adhd-always 旗標檔，plugin 的 SessionStart hook 會注入規則。',
+      },
+      {
+        q: '回答變短，會不會漏掉重要內容？',
+        a: '我測的 6 題裡，修法和關鍵步驟兩組都一樣，少的是 AbortController、預防措施這類延伸。作者自己的英文評測 Correctness 也從 4.333 升到 4.524。想要完整背景就直接說「解釋給我聽」，skill 的破例條款會讓它講完整。',
+      },
+      {
+        q: '已經有 CLAUDE.md 還需要裝嗎？',
+        a: '如果 CLAUDE.md 已經寫了結論先行、不寫開場白，規則 1 和 10 會重複。我的建議是不整包裝，把發送前自查、時間估算用分鐘、清單最多 5 項這三條抄進去。兩份規則同時載入、方向又相反時，模型的取捨比較難預測。',
+      },
+      {
+        q: '除了 Claude Code 還能用在哪些工具？',
+        a: '官方 INSTALL.md 列了 15 種，包括 Codex、Gemini CLI、GitHub Copilot、OpenCode、Cursor 等，規則都是同一份 SKILL.md。我這次只實測 Claude Code。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
