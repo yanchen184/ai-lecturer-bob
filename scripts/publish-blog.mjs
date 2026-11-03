@@ -5369,6 +5369,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'kinetograph-ai-agent-video-engine',
+    title: 'Kinetograph 實測：不開 Chrome 的 Rust 影片引擎，AI 代理 10 秒算出直式短片',
+    metaDescription:
+      'Kinetograph 用 Rust 和 GPU 把 Remotion 寫法的 TSX 算成影片，全程不開 Chrome。我在 Windows 加 RTX 4070 實測 150 格直式短片約 10 秒，附 MCP 接法與 0.2.5 的坑。',
+    excerpt:
+      'Kinetograph 是 2026-10-23 才開的 Rust 影片引擎，沿用 Remotion 的 TSX 寫法或純 HTML，由 GPU 算每一格，不開 Chrome，還內建 14 個 MCP 工具讓 AI 代理直接出片。我在 Windows 加 RTX 4070 算 150 格直式短片約 10 秒——拿來批次產短片很順，但 0.2.5 還是 beta，中文字型和 Windows 路徑有坑。',
+    category: 'AI 工具',
+    tags: ['Kinetograph', 'Remotion', 'HyperFrames', 'MCP', 'AI Agent', '程式化影片', 'Rust'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'Kinetograph 跟 Remotion 差在哪？',
+        a: '寫法相同，都是 TSX 加 useCurrentFrame、spring 這套 API，README 說既有 Remotion 專案可以直接渲染。差別在渲染：Remotion 開無頭 Chrome 逐格截圖，Kinetograph 由 Rust 擴充模組在 GPU 上畫每一格，不需要瀏覽器。',
+      },
+      {
+        q: 'Kinetograph 要錢嗎？',
+        a: '授權是 PolyForm Small Business 1.0.0。個人、非營利組織，以及員工少於 100 人且年營收低於 100 萬美元（2019 年幣值）的公司免費，超過的要另購商用授權。它是 source-available，不是 OSI 開源授權。',
+      },
+      {
+        q: 'Windows 能跑 Kinetograph 嗎？',
+        a: '可以。官方有 Windows x64 預編譯套件，我在 Windows 11、Node 24、RTX 4070 上 doctor 顯示 Skia GPU (Vulkan)。要用 NVENC 硬體編碼得自己裝 ffmpeg，再用 KINETOGRAPH_FFMPEG 指過去並加 --encoder h264_nvenc。',
+      },
+      {
+        q: '怎麼讓 Claude Code 用 Kinetograph 做影片？',
+        a: '官方文件的接法是 claude mcp add kinetograph -- npx -y kinetograph mcp，會開出 compositions、still、render、lint 等 14 個工具。另外可以用 npx skills add 0xS4N4TG/kinetograph 安裝官方的 kinetograph 與 kinetograph-migrate 兩個 skill。',
+      },
+      {
+        q: 'Kinetograph 的中文字要怎麼處理？',
+        a: '引擎沒有內建 CJK 字型，要用 registerFont 註冊字型檔。我實測 Noto Sans TC 可變字型的字重沒有套上，改用分開字重的字型檔才有粗體。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
