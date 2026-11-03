@@ -4029,13 +4029,13 @@ const posts = [
   },
   {
     slug: 'line-talk-claude-code-line-conversation',
-    title: 'LINE 串 Claude Code 怎麼接得上話？每則訊息開新程序、用 --resume 接同一個 session',
+    title: 'LINE 串 Claude Code 怎麼接得上話？每則訊息先讓 Claude 判讀，再用 --resume 接回同一個 session',
     metaDescription:
-      'LINE 官方帳號串 Claude Code，每則訊息都是新的 claude -p 程序，靠 --resume 接同一個 session。照程式碼拆解 state.json、聊天分線、Haiku 分流、長按回覆與背景任務接續。',
+      'LINE 官方帳號串 Claude Code，每則訊息先讓 Claude 判讀新開或接續、要做什麼、屬於哪個分類，再用 claude -p --resume 接回同一個 session。照程式碼拆解判讀、分線與任務卡。',
     excerpt:
-      'line-talk 把家裡桌機的 Claude Code 接上 LINE：每則訊息開一個新的 claude -p 程序，帶 --resume 接回同一個 session，服務只在 state.json 記下一句該接哪個 id。上線兩天，常駐 session 一個檔案接了 11 則聊天——同時問多件事靠 Promise 鏈分線，追問特定任務靠長按回覆查回原本的 session。',
+      'line-talk 把家裡桌機的 Claude Code 接上 LINE：每則訊息開一個新的 claude -p 程序，帶 --resume 接回同一個 session，服務只在 state.json 記下該接哪個 id。訊息進來先交給 Claude（Sonnet）判讀——排任務、聊天還是問進度，新開還是接哪張舊卡，屬於哪個分類——分類存進任務卡，「上次那個」才找得回來；判讀沒回來才退回網址規則與 Haiku。',
     category: '工程實作',
-    tags: ['Claude Code', 'LINE Bot', 'LINE Messaging API', 'line-talk', 'AI Agent', 'Haiku'],
+    tags: ['Claude Code', 'LINE Bot', 'LINE Messaging API', 'line-talk', 'AI Agent', '收訊判讀'],
     publishDate: '2026-10-23',
     faqItems: [
       {
@@ -4048,15 +4048,19 @@ const posts = [
       },
       {
         q: '長按回覆和直接打字差在哪？',
-        a: '直接打字先經過 Haiku 判斷屬於哪條線；長按回覆用被引用訊息的 id 查 state.json，直接 resume 那則訊息背後的 session，連工作資料夾都切回去。',
+        a: '直接打字先經過 Claude 判讀，由它決定新開或接哪張舊卡；長按回覆不經過判讀，用被引用訊息的 id 查 state.json，直接 resume 那則訊息背後的 session，連工作資料夾都切回去。',
+      },
+      {
+        q: '怎麼找到之前相關的對話？',
+        a: '每張任務卡存著判讀給的分類（topic）。下次判讀時，最多 40 張舊卡連分類一起列給 Claude，同網址的標 ★ 排最前面；明顯在延續的就接那張卡的 session，只是主題相近的列為相關，報告路徑附進新任務。',
       },
       {
         q: '背景任務做到一半，可以從電腦接手嗎？',
         a: '可以。任務卡片裡有 cd 到工作資料夾再 claude --resume <sessionId> 的指令，在終端機貼上就是同一個 session。',
       },
       {
-        q: 'Haiku 分流多久回應？',
-        a: '逾時上限 30 秒，超過或格式不對就當新的事處理。這是程式設定值，不是實測平均。',
+        q: '收訊判讀多久回應？判讀失敗會怎樣？',
+        a: '逾時上限 45 秒，這是程式設定值，不是實測平均。逾時或格式不對時，有網址、圖片就照網址規則排任務，其他訊息改用 Haiku 分流（逾時 30 秒）。',
       },
     ],
     featured: false,
