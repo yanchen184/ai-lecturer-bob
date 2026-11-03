@@ -5483,6 +5483,10 @@ const posts = [
         a: 'issue #7271 有人提到在某些情況要用系統管理員身分執行，我這次沒有測。我實測可行的是關掉瀏覽器或改用 cookies.txt。',
       },
       {
+        q: '為什麼指定 profile 後出現 could not find chrome cookies database？',
+        a: '通常是路徑格式。我在 Git Bash 把 profile 寫成 /c/Users/...，yt-dlp 就回這個錯誤；改成 C:\\Users\\... 的 Windows 格式就找到 Network\\Cookies 了。',
+      },
+      {
         q: 'cookies.txt 多久要重新匯出？',
         a: '看網站的 session 什麼時候過期。檔案第五欄是每個 cookie 的到期時間；網站在伺服器端讓 session 失效時，檔案裡的 cookie 就沒用了，要重新匯出。',
       },
