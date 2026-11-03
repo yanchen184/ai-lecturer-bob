@@ -5279,6 +5279,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-video-clipping-diy-200-lines',
+    title: 'AI 切片自己做：184 行 Python 把長片切成 9:16 短影音，拆解 WayinVideo「一天 100 支片」業配',
+    metaDescription:
+      '拆解 IG 爆紅的 WayinVideo AI 切片業配，用 faster-whisper、Claude Haiku、ffmpeg 寫 184 行 Python 重做：轉錄、AI 挑段、9:16 逐字字幕，附實測輸出與限制。',
+    excerpt:
+      'IG 上「一天發 100 支片、月入 3000 美元」的 Reel 是 AI 切片工具 WayinVideo 的業配，我用 faster-whisper、claude -p 和 ffmpeg 寫了 184 行 Python 重做它的主幹：轉錄、LLM 挑段打分、輸出 9:16 逐字字幕短片。4 分鐘的 NASA 影片跑 3 分 49 秒切出 3 支、全部切在完整段落上——付費工具多的是追臉裁切和排程發文，拿別人的片大量切則有 YouTube 營利政策風險。',
+    category: 'AI 工具',
+    tags: ['AI 切片', '短影音', 'WayinVideo', 'faster-whisper', 'ffmpeg', 'Claude Code', 'YouTube Shorts'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'AI 切片工具的原理是什麼？',
+        a: '四步：語音轉錄拿到每個字的時間戳、依標點切句、讓 LLM 從編號逐字稿挑出能獨立成立的連續段落並評分、再用 ffmpeg 裁成 9:16 並燒上逐字字幕。真正需要 AI 判斷的只有挑段那一步。',
+      },
+      {
+        q: '為什麼讓 LLM 回句子編號而不是秒數？',
+        a: '秒數由轉錄的逐字時間戳換算，LLM 只決定從第幾句到第幾句，就不會切在半個字中間，也不會編出不存在的時間點。',
+      },
+      {
+        q: '自己寫的版本跟 WayinVideo 差在哪？',
+        a: '我的 184 行版本只做轉錄、挑段、模糊底置中的 9:16 輸出和逐字字幕。WayinVideo 另外有 AI Reframe 追臉裁切、編輯器、細項評分、排程與多平台發布。每週要大量處理真人長片並發到多平台才值得付費評估。',
+      },
+      {
+        q: '拿別人的影片切片發 YouTube 會被停止營利嗎？',
+        a: 'YouTube 在 2025-07-15 把 repetitious content 政策更名為 inauthentic content，鎖定大量製造、套版的內容；重新利用他人內容另由 reused content 政策規範。即使有切片活動授權，也只解決著作權，不保證頻道符合營利規範。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
