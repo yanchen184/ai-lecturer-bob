@@ -5403,6 +5403,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-auto-sound-effects-openverse-earshot',
+    title: '讓 Claude 自己配音效：Openverse 找素材、earshot 聽檢，實測從錯位 823 毫秒修到 3 毫秒內',
+    metaDescription:
+      'Claude 自動配音效實測：Openverse API 找 CC0／CC BY 素材、Python 對位混音、earshot 讓 AI 聽檢。直接疊最多錯位 823 毫秒，自動修一輪偏差 0 到 3 毫秒；MMAudio 三個撞擊點只對到一個。',
+    excerpt:
+      'IG 上流傳用 Openverse、MMAudio、earshot 三個工具讓 Claude 自己找音效、配上、再自己聽檢，我做了一支撞擊點已知的測試片把三個都跑了一遍。素材直接疊會錯位最多 823 毫秒還爆音，加上量得出來的合格條件讓它自動修一輪，偏差降到 3 毫秒內——關鍵是檢查迴圈，不是工具本身。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Openverse', 'earshot', 'MMAudio', '音效', 'AI 剪片', 'MCP'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'Openverse 的音效可以商用嗎？',
+        a: '看每個素材自己的授權。CC0 和 Public Domain Mark 可以直接用；CC BY 可以商用但要署名作者；有 NC 的不能商用。API 每筆結果都有 license 和 license_url，在程式裡篩掉不要的授權最穩。',
+      },
+      {
+        q: 'earshot 需要 GPU 嗎？',
+        a: '不需要，README 寫明只用 CPU。代價是速度：我實測每次 CLI 呼叫 20 到 40 秒，多次呼叫建議用 MCP server 讓模型保持載入。',
+      },
+      {
+        q: '為什麼不全部交給 MMAudio 生成？',
+        a: '我測的那次三個撞擊點只對到一個，還多生了畫面上沒有的聲音。生成的聲音一樣需要檢查和修正，而生成結果比下載的素材更難局部修改。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
