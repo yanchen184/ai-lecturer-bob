@@ -5456,6 +5456,10 @@ const posts = [
         q: 'MiroFish 和 OASIS 是什麼關係？',
         a: 'README 寫明模擬引擎由 CAMEL-AI 的 OASIS 提供。OASIS 負責大規模社群模擬；MiroFish 在外面包了從種子資料生成人設、雙平台整合、ReportAgent 報告和互動介面。',
       },
+      {
+        q: 'MiroFish 可以放進公司產品嗎？',
+        a: '授權是 AGPL-3.0。修改後透過網路提供服務，就要對使用者公開修改後的原始碼。只在內部發想時拿來跑沒有這個問題，要包成對外服務前先確認公司的授權政策。',
+      },
     ],
     featured: false,
   },
