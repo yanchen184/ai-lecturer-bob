@@ -5339,6 +5339,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'awesome-agentic-ai-zh-review',
+    title: 'awesome-agentic-ai-zh 實測：8.4k 星中文 AI Agent 學習地圖，50 支範例跑過 49 支',
+    metaDescription:
+      'awesome-agentic-ai-zh 是三語 AI Agent 學習路線圖，分 CLI 與自寫 Agent 兩條路。我不帶 API key 跑完 50 支離線測試：49 支通過，附 Stage 4 一題一環境的 uv 裝法。',
+    excerpt:
+      'awesome-agentic-ai-zh 是 Lehigh 博士研究生 Wenyu Chiou 在 2026-05 開的 MIT 授權 repo，用繁中、英文、簡中三語把 AI Agent 從零排到上線，分「用 CLI Agent 做事」和「自己寫 Agent」兩條路，每題附 mock 測試。半年 8.4k 星，我不帶 API key 跑完 50 支測試 49 支通過——當自學或開課骨架可以直接用，只是 Stage 4 框架要一題一個環境裝。',
+    category: 'AI 教學',
+    tags: ['AI Agent', 'awesome-agentic-ai-zh', 'Agentic AI', '學習路線', 'Claude Code', 'LangGraph', 'uv'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'awesome-agentic-ai-zh 要付費或要 API key 嗎？',
+        a: '不用。repo 是 MIT 授權，每個練習都附 mock 測試，不帶 API key 也能驗證程式邏輯。要接真實模型時可以走 Path A 本機 Ollama，或 Path B Anthropic API，後者才有 API 費用。',
+      },
+      {
+        q: 'Track A 和 Track B 該選哪一條？',
+        a: '想把 Claude Code、Codex 這類 CLI Agent 用在工作上選 Track A，README 寫約 8–10 週。想懂 Agent 內部怎麼運作、自己寫 tool calling 和 ReAct loop 選 Track B，主幹約 16–22 週。兩條都先走 Stage 0–2。',
+      },
+      {
+        q: 'Stage 4 的框架為什麼裝不起來？',
+        a: '我把 LangGraph、CrewAI、pydantic-ai、smolagents 的依賴裝進同一個環境，pip 解析 12 分鐘沒結果。改成每題一個 uv venv、只裝該題的 requirements.txt，一題約 30 秒裝好、測試通過。',
+      },
+      {
+        q: '範例可以直接換成最新的 Claude 模型嗎？',
+        a: '範例預設是 claude-haiku-4-5-20251001。repo 的 docs/TESTING_PLAN.md 說明 Haiku 4.5 是相容性基準，換到 Haiku 5.5 要處理框架、token 預算、thinking 重播等差異，不建議只改 model ID 字串。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
