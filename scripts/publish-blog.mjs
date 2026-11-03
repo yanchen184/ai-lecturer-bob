@@ -5463,6 +5463,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'yt-dlp-chrome-cookie-database-windows',
+    title: 'yt-dlp「Could not copy Chrome cookie database」怎麼修？Windows Chrome 156 實測 4 種做法',
+    metaDescription:
+      'yt-dlp 在 Windows 讀 Chrome／Edge cookie 出現 Could not copy Chrome cookie database（Errno 13）的原因與解法。Chrome 156 實測：LockProfileCookieDatabase 旗標無效，關掉瀏覽器或改用 cookies.txt 才讀得到。',
+    excerpt:
+      'Windows 上的 Chrome 和 Edge 開著時會鎖住 cookie 資料庫，yt-dlp 的 --cookies-from-browser 就會報 Could not copy Chrome cookie database。我在 Chrome 156 把四種做法各跑一次——流傳的 LockProfileCookieDatabase 旗標已經沒用，關掉瀏覽器或匯出 cookies.txt 才讀得到。',
+    category: '工程實作',
+    tags: ['yt-dlp', 'Chrome', 'cookies', 'Windows', '影片下載', 'Facebook Reel'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'Edge 也會出現 Could not copy Chrome cookie database 嗎？',
+        a: '會。我 Edge 156 開著時跑 --cookies-from-browser edge，錯誤訊息一字不差，訊息裡寫的也是 Chrome，因為 yt-dlp 對 Chromium 系瀏覽器共用同一段讀取程式。',
+      },
+      {
+        q: '用系統管理員身分執行 yt-dlp 有用嗎？',
+        a: 'issue #7271 有人提到在某些情況要用系統管理員身分執行，我這次沒有測。我實測可行的是關掉瀏覽器或改用 cookies.txt。',
+      },
+      {
+        q: 'cookies.txt 多久要重新匯出？',
+        a: '看網站的 session 什麼時候過期。檔案第五欄是每個 cookie 的到期時間；網站在伺服器端讓 session 失效時，檔案裡的 cookie 就沒用了，要重新匯出。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
