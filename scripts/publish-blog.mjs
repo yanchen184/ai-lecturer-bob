@@ -5249,6 +5249,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-subscription-perks-fact-check',
+    title: 'Claude 隱藏福利查核：ultrareview 3 次免費、Max 每月 100 美元 API 額度，3 處已跟官方不同',
+    metaDescription:
+      'IG 爆紅的 Claude 5 個隱藏福利逐點對官方文件：ultrareview 免費 3 次、Max／Ultra 每月 API 額度、Guest Pass、Limit Reset、Projects beta，附只讀帳號檢查腳本。',
+    excerpt:
+      'IG 帳號 @lynexaai 在 2026-10-30 整理的 Claude 訂閱 5 個隱藏福利，我在 11-03 逐點對 Anthropic 官方文件查核，並寫了一支只讀腳本檢查自己的帳號適用哪幾項。5 點方向都對，但 ultrareview 指令與價格、API 額度的方案名稱已經變了，Guest Pass 也漏了「收到的人必須沒付費訂閱過」——最值錢的是 Max 每月 100 美元 API 額度，不領每月作廢，但 Console 組織綁了就不能自己改。',
+    category: 'AI 工具',
+    tags: ['Claude', 'Claude Code', 'ultrareview', 'Claude API', 'Claude Max', 'Guest Pass', '查核'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'Claude Max 每月 API 額度可以拿來跑 Claude Code 嗎？',
+        a: '互動式 Claude Code 不行，終端機、IDE、桌面版、網頁版和 GitHub Action 都算 Claude Code 用量。例外是用綁定組織發的 API key 跑 claude -p 或 Agent SDK，這時扣的是 API 額度；用訂閱帳號登入跑則扣方案用量。',
+      },
+      {
+        q: 'ultrareview 免費 3 次用完會再補嗎？',
+        a: '不會。官方文件寫 Pro、Max、Ultra 的 3 次是每個帳號一次性的額度，不會刷新。雲端 session 一啟動就算一次，中途停掉或失敗也會扣掉；之後每次約 5 到 25 美元，以 usage credits 計費。',
+      },
+      {
+        q: 'API 額度綁錯 Console 組織可以改嗎？',
+        a: '不能自己改。一個方案只能連一個 Console 組織，一個組織也只能收一個方案的額度，要換只能聯絡客服。所以領之前先決定要綁平常開發用的那個組織。',
+      },
+      {
+        q: 'Guest Pass 可以送給以前訂閱過 Claude 的朋友嗎？',
+        a: '不行。說明中心寫收到的人必須是第一次付費訂閱 Claude。對方拿到 7 天 Pro，要填付款方式，試用期間不扣款，不取消就自動轉成付費 Pro。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
