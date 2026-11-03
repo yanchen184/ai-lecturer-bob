@@ -5219,6 +5219,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-hand-drawn-animation-englishman-in-new-york',
+    title: 'AI 手繪動畫怎麼做？拆解 3,583 萬觀看《Englishman in New York》：同一個主角、同一把傘、13 鏡',
+    metaDescription:
+      '拆解 antrofrog_ 的 47 秒 AI 手繪動畫：ffmpeg 量出 13 鏡、7 鏡約 4 秒整段使用、切點不對拍，固定主角與道具解決角色一致性，附免費分鏡提示詞規劃器。',
+    excerpt:
+      'antrofrog_ 在 2026-10-30 發到 X 的 47 秒 AI 手繪動畫《Englishman in New York》，不到四天累積 3,583 萬觀看，全片就是同一個黑衣主角用一把傘做 13 件小善舉。我用 ffmpeg 拆片，13 鏡裡有 7 鏡約 4 秒、切點不對齊音樂——剪輯跟著生成長度走，固定造型只換場景是它穩住角色的方法，我也把這套結構做成免費的分鏡規劃器。',
+    category: 'AI 工具',
+    tags: ['AI 動畫', 'AI 影片', 'AI 短影音', '手繪動畫', '角色一致性', '分鏡', 'ffmpeg', 'Prompt'],
+    publishDate: '2026-11-03',
+    faqItems: [
+      {
+        q: 'AI 動畫怎麼讓主角每一鏡都長得一樣？',
+        a: '《Englishman in New York》的做法是把主角設計成好複製的樣子：瘦長剪影、黑外套白襯衫的單純配色、每鏡都帶同一把黑傘和外帶咖啡。實作上先生一張定裝圖，之後每一鏡都帶著它當參考圖生關鍵幀，再用圖生影片做動態。',
+      },
+      {
+        q: 'AI 動畫的剪輯要對齊音樂節拍嗎？',
+        a: '這支片沒有對齊。我估音軌約 103.4 BPM，切點換算成拍數是 6.96、13.92、19.67，不在小節線上。13 鏡裡 7 鏡約 4 秒，看起來是單次生成的片段整段直接用。想做 MV 感可以對齊小節，但這支片證明它不是必要條件。',
+      },
+      {
+        q: '怎麼量一支影片有幾個鏡頭、每鏡多長？',
+        a: '用 ffmpeg 的 select 濾鏡搭配 scene 分數（我用大於 0.25）和 showinfo，從輸出抓 pts_time 就是切點。相鄰不到半秒的切點通常是同一鏡裡的閃切，要對照畫面合併。',
+      },
+      {
+        q: '這支動畫是用哪些 AI 工具做的？',
+        a: '二手整理提到作者標註過 Midjourney、Seedance 與 Krea，但我沒有讀到作者本人的原文，所以文章只講從成片量得到的鏡長、切點和角色設計，不假設模型。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
