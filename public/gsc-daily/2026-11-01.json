@@ -5,5 +5,7 @@
   "ctr": 0.0,
   "position": 0.0,
   "queries": [],
-  "pages": []
+  "pages": [],
+  "analysis": "【一句總評】\n量太小，沒什麼好評的：近 7 天曝光 15、點擊 1，跟前週差不多。站內昨天 15 次造訪、12 次文章瀏覽，也沒有異常。\n\n【需要注意】\n唯一一次點擊落在 fb.yanchen.app，主站的 /blog/ 和 / 曝光有了，點擊還是 0。11-01 單日的 GSC 數字全空白，要去後台看是什麼原因。k8s 相關查詢排名在 17～99 名，只有「node port」擠到第 9 名，算是最接近能拿到點擊的一個。\n\n【今天可以做】\n把 NodePort 那篇（或 /blog/k8s/deployment-intro/）的 title 開頭直接改成「K8s NodePort 是什麼」，對準 node port 這個查詢，改完到 GSC 手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-11-05T07:51:22+0800"
 }
