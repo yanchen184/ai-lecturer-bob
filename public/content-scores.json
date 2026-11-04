@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03",
+  "generatedAt": "2026-11-04",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -2268,6 +2268,24 @@
         "codeFence": 5
       },
       "wordCount": 5913
+    },
+    "hyperframes-claude-code-animation-skills": {
+      "total": 80,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5569
     }
   }
 }
