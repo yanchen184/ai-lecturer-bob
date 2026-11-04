@@ -2286,6 +2286,24 @@
         "codeFence": 5
       },
       "wordCount": 5569
+    },
+    "ai-plush-pet-job-micro-drama-storyboard": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4710
     }
   }
 }
