@@ -5493,6 +5493,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'hyperframes-claude-code-animation-skills',
+    title: 'HyperFrames 是什麼？「9 個 Claude 動畫 Skill」實測：Claude Code 寫 HTML 算出 8 秒水墨動畫',
+    metaDescription:
+      'HyperFrames 教學：HeyGen 開源的 HTML 轉影片框架，9 個 Claude Skill 清單、安裝指令與實測。Claude Code 寫 149 行 HTML，29 秒渲染出 1920×1080 水墨山水 MP4。',
+    excerpt:
+      'IG 上「9 個 Claude 動畫 Skill」那種水墨動畫，是 Claude 寫 HTML 與 GSAP 動畫，再由 HeyGen 開源的 HyperFrames 逐格截圖編成 MP4。我用 Claude Code 做了 8 秒、1920×1080 的山水片頭，149 行 HTML、29 秒渲染完——適合片頭與資料動畫，要寫實畫面還是得找影片生成模型。',
+    category: 'AI 工具',
+    tags: ['HyperFrames', 'Claude Code', 'Claude Skills', 'GSAP', '程式碼動畫', 'HeyGen', 'Remotion'],
+    publishDate: '2026-11-04',
+    faqItems: [
+      {
+        q: 'HyperFrames 要錢嗎？',
+        a: 'HyperFrames 本體是 Apache-2.0 開源，本機渲染不用付費。9 個 skill 裡的 /reverse-any-video 和 /style-sampling 標明屬於 HyperFrames Pro，我沒有測。',
+      },
+      {
+        q: 'HyperFrames 和 Remotion 怎麼選？',
+        a: '兩者都用無頭 Chrome 逐格截圖再交給 FFmpeg。HyperFrames 寫純 HTML、不需要建置步驟、授權是 Apache 2.0；Remotion 寫 React 元件、需要 bundler、雲端渲染的 Lambda 比較成熟，授權是 Remotion 自有的 source-available 授權。',
+      },
+      {
+        q: '影片裡的中文字為什麼變成預設字體？',
+        a: '渲染器只認得有 @font-face 宣告的字型。我第一次用 CSS 字型名稱指楷體，check 回報 font_family_without_font_face；把字型檔放進 assets/fonts/ 並用 @font-face 宣告後就正常了。',
+      },
+      {
+        q: '不裝 skill 也能用 HyperFrames 嗎？',
+        a: '可以。hyperframes init 產生的專案裡有一份 CLAUDE.md，寫了指令與規則，我這次就是加 --skip-skills 只在專案內使用。裝 skill 的好處是 Agent 會先讀到渲染規則，例如動畫要註冊在 window.__timelines、不能用 Math.random()。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
