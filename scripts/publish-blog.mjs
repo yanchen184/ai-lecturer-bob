@@ -5583,6 +5583,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ig-comment-for-tutorial-reel-anatomy',
+    title: 'IG「留言拿教程」Reel 怎麼拆？44 秒副業片前 38% 在播別人的影片，附 Reel 解剖腳本',
+    metaDescription:
+      '用 ffmpeg 和 Whisper 拆一支 1,188 則留言的 IG 副業 Reel：前 16.7 秒播借來的動畫、19.6 秒講收益、43 秒叫你留言 AI。附解剖腳本，並算出它推的 CloneCut 月訂 US$29.99 只換 27 次請求。',
+    excerpt:
+      'huajuan0319 這支 44 秒的 AI 副業 Reel 拿到 1,188 則留言，帳號粉絲才 1,252，片尾要你「留言 AI」拿教程；我用 ffmpeg 加 Whisper 把它拆成時間軸，前 38% 的秒數都在播別人頻道的動畫。它推的 CloneCut 月訂 US$29.99 換 27 次請求、每次最多 15 秒——照片中「每天發幾條」的節奏，一個月額度約撐 9 天。',
+    category: 'AI 工具',
+    tags: ['AI 短影音', 'Instagram Reels', '短影音拆解', 'Whisper', 'ffmpeg', 'Capafy', 'CloneCut', '副業'],
+    publishDate: '2026-11-05',
+    faqItems: [
+      {
+        q: 'IG 留言關鍵字拿教程的 Reel，留言數高代表影片好嗎？',
+        a: '不一定。這支片 1,188 則留言，我看得到的最新 12 則全部是「AI」。留言數反映的是「有多少人想拿教程」，跟教學內容的品質是兩回事。',
+      },
+      {
+        q: 'CloneCut 要多少錢？一次能做多長的影片？',
+        a: '2026-11-05 官網價格：週訂 US$12.99（9 次請求）、月訂 US$29.99（27 次）、年訂 US$149.99（156 次）。每次請求最多產出一段 4–15 秒影片，長片要拆成多次請求。',
+      },
+      {
+        q: 'Whisper 轉中文逐字稿，產品名稱一直聽錯怎麼辦？',
+        a: '用 --initial_prompt 寫一句繁體中文，加上產品名稱清單。這支片實測後，Capafy、CloneCut 從「CAPFA」「CloneCAT」變成正確拼法，輸出也從簡體變成繁體；ChatGPT 仍然聽錯，數字類的分析還是要人工複查。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
