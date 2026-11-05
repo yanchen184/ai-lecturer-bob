@@ -5553,6 +5553,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'realistic-ai-pet-short-codex-cli-ffmpeg',
+    title: '寫實 AI 萌寵影片怎麼做？codex CLI 生 3 張角色一致的圖，ffmpeg 合成 18 秒下班 Shorts',
+    metaDescription:
+      '寫實 AI 萌寵影片實作：codex CLI 生 3 張角色一致的橘貓關鍵格，edge-tts 配音、ffmpeg 推軌燒字幕合成 18 秒 Shorts，附可貼指令、參考圖對照與限制。',
+    excerpt:
+      '看到 IG 上 15K 讚的「小斗下班啦」，我做了一支原創版：打領帶的橘貓阿橘下班等超商便當十點打折，用 codex CLI 生 3 張寫實關鍵格、edge-tts 配 4 句音、ffmpeg 合成 18 秒 1080×1920 Shorts。帶 -i 參考圖的那張，臉、毛色和店內場景都跟第 1 鏡接得上，只用文字描述的只鎖得住領帶和識別證——但畫面是靜圖推軌，貓還不會動。',
+    category: 'AI 工具',
+    tags: ['AI 萌寵', 'AI 影片', 'Codex CLI', 'AI 生圖', 'FFmpeg', 'edge-tts', 'YouTube Shorts', '角色一致性'],
+    publishDate: '2026-11-05',
+    faqItems: [
+      {
+        q: 'codex CLI 生的圖存在哪裡？',
+        a: '不在 -C 指定的工作目錄。圖落在 ~/.codex/generated_images/<session id>/exec-*.png，session id 印在 codex exec 的 log 開頭，要自己搬到專案資料夾。',
+      },
+      {
+        q: '不帶參考圖，只用文字描述角色可以嗎？',
+        a: '服裝類特徵可以。我把第 2 鏡改成純文字重生，藏青領帶、藍掛繩、空白識別證都對，但毛色偏淡、臉型不同，整間店的佈置也換了。要讓觀眾覺得是同一隻貓，還是要用 -i 帶第 1 鏡當參考圖。',
+      },
+      {
+        q: '為什麼 ffmpeg 合成後三鏡都是第一張圖？',
+        a: '圖片輸入加了 -loop 1。zoompan 會把每一個輸入格展開成 d 格，結果第一鏡就吃掉整段時間。單張圖直接當輸入、不加 -loop，讓 zoompan 的 d 控制每鏡長度就好。',
+      },
+      {
+        q: '這樣做出來的貓會動嗎？',
+        a: '不會。三張靜圖加 zoompan 推軌，看起來像有聲繪本。要做到原片那種會走會轉頭的效果，要把關鍵格丟進圖生影片模型，這一步我還沒做。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
