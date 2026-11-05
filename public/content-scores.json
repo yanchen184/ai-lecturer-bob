@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04",
+  "generatedAt": "2026-11-05",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -2304,6 +2304,24 @@
         "codeFence": 5
       },
       "wordCount": 4710
+    },
+    "realistic-ai-pet-short-codex-cli-ffmpeg": {
+      "total": 85,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7231
     }
   }
 }
