@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-03",
+  "impressions": 1,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 2.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/yc-plugin-youtube-upload/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ]
+}
