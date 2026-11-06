@@ -20,5 +20,7 @@
       "ctr": 0,
       "position": 5
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n量太小，看不出趨勢。近 7 天曝光 13、點擊 0，從 16 掉到 13 只差 3 次，-19% 不代表什麼。站內昨天 13 次造訪，看起來大多不是從 Google 進來的。\n\n【需要注意】\n「node port」排第 9，卡在第一頁底部。但「k8s nodeport」排 74、「service nodeport」排 99，同一個主題換個說法就掉出前面，K8s 文章只吃到很窄的字。另外 fb.yanchen.app 出現在 Top 頁面，要確認這個子網域是不是本來就想讓 Google 收錄。\n\n【今天可以做】\n到 GSC 用「node port」篩選，看是哪一頁拿到曝光。把那頁的 title 和 H1 改成同時有「NodePort」和「K8s Service」，例如「K8s NodePort 是什麼？Service 對外開 port 教學」。改完對那頁手動 Request Indexing。",
+  "analysisGeneratedAt": "2026-11-06T09:30:35+0800"
 }
