@@ -5640,6 +5640,35 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'claude-stock-mcp-longbridge-taiwan',
+    title: 'Claude 查台股要開 Longbridge 嗎？340 行 Python 免帳號接 MCP',
+    metaDescription:
+      'Claude 查股票用 Longbridge Skill 要有帳號，官方行情文件也沒列台股。本文附免帳號唯讀 MCP 完整程式，實查 2330、0050、AAPL，並與證交所資料比對。',
+    excerpt:
+      'Longbridge 官方 Skill 讓 Claude 用對話查美股、港股、A 股的行情與財報，但 CLI 和 MCP 都要 Longbridge 帳號，行情文件也沒列台股。我另做一支免帳號、只讀的 Python MCP，實查 2330、0050、AAPL，現價與開高低對證交所 8 項全符——看台股收盤資料夠用，盤中即時性還沒驗過。',
+    category: 'AI 工具',
+    tags: ['Claude', 'Longbridge', 'MCP', 'Claude Code', '台股', 'Agent Skill', 'Python'],
+    publishDate: '2026-11-08',
+    faqItems: [
+      {
+        q: 'Longbridge Skill 要開戶才能用嗎？',
+        a: '要有 Longbridge 帳號，官方 FAQ 寫明 CLI 和 MCP 都需要。HK／SG 帳戶區有模擬帳戶，不用開真實證券戶；Longbridge US 帳戶沒有模擬帳戶。',
+      },
+      {
+        q: 'Longbridge 可以查台股嗎？',
+        a: '官方行情文件列的是美股、港股、上海和深圳，沒有台股。我沒有帳號，無法實際送台股代號測試，判斷依據只有官方文件。',
+      },
+      {
+        q: 'Longbridge 的行情是即時的嗎？',
+        a: '基本權限的美股與 A 股是即時，港股約延遲 15 分鐘。港股即時和 LV2 要到 Quote Store 另外購買。',
+      },
+      {
+        q: '不開戶可以讓 Claude 查台股嗎？',
+        a: '可以。本文的 stdio MCP 只用 Python 標準庫和公開資料源，不需要帳號或金鑰，實查上市、上櫃、ETF 和美股都有資料。盤中即時性還沒有驗證。',
+      },
+    ],
+  },
+  {
     slug: 'openart-nursery-rhyme-shorts-557-per-day',
     title: 'OpenArt 童謠 Shorts 日賺 557 美元可信嗎？回推每天要 1,114 萬次觀看，再用本機 ComfyUI 跑一次',
     metaDescription:
