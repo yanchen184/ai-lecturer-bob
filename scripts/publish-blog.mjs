@@ -5609,6 +5609,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'llm-wiki-claude-code-obsidian-setup',
+    title: 'LLM Wiki 實作：Claude Code + Obsidian 把 12 份筆記編成 75 頁知識庫，附 CLAUDE.md 與三個指令',
+    metaDescription:
+      '照 Karpathy LLM Wiki 寫一份 CLAUDE.md，用 claude -p 逐份 ingest 12 份研究報告：632 秒長出 73 頁，lint 補到 207 條連結、0 死連結。附規則檔、自動化腳本、逐份數據與 Windows 實測踩坑。',
+    excerpt:
+      'Karpathy 的 LLM Wiki 起手包其實只有兩個資料夾、一份 CLAUDE.md 和 ingest／query／lint 三個指令，Obsidian 只負責畫關聯圖。我在 Windows 上用 claude -p 跑 12 份研究報告，632 秒長出 73 頁，lint 再補成 75 頁、207 條連結——前 4 份只建新頁，第 5 份起才開始回頭改舊頁，連結就是這樣變密的。',
+    category: 'AI 教學',
+    tags: ['LLM Wiki', 'Karpathy', 'Claude Code', 'Obsidian', '個人知識庫', '第二大腦', 'claude -p'],
+    publishDate: '2026-11-08',
+    faqItems: [
+      {
+        q: 'LLM Wiki 一定要用 Obsidian 嗎？',
+        a: '不用。Claude Code 寫的是一般 markdown 加 [[頁名]] wikilink，任何編輯器都能讀。Obsidian 的用處是打開資料夾就畫出關聯圖，方便看哪些頁是中心、哪些是孤島，不需要裝外掛。',
+      },
+      {
+        q: '跑 ingest 要花多少時間和費用？',
+        a: '我用 claude -p 搭 sonnet 逐份處理，12 份研究報告共 632 秒，每份 40 到 70 秒。消耗的是 Claude 訂閱額度（Pro 以上），不需要另外申請 API key。',
+      },
+      {
+        q: '為什麼關聯圖一開始很稀疏？',
+        a: '前幾份資料彼此沒有重疊的概念，LLM 只會新建頁。我的實測前 4 份「編輯既有頁」都是 0，第 5 份起才開始回頭改舊頁加回連。放入 5 份以上主題有重疊的資料，圖才會開始連起來。',
+      },
+      {
+        q: 'Windows 可以跑 LLM Wiki 嗎？',
+        a: '可以。我在 Windows 11 用 Claude Code 2.1.318 和 Git Bash 跑完整套。唯一要注意的是自動化迴圈是 bash 語法，PowerShell 要改寫，或直接用 Git Bash 執行。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
