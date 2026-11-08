@@ -5825,7 +5825,7 @@ const posts = [
     excerpt: 'vork 是 Nullframe 在 2026 年 11 月放出的無介面 3D／VFX 引擎，用 Rust 和 Slang 寫，agent 寫場景檔、算圖、看圖、再修改，授權是原始碼可見而非開源。我在 RTX 4070 跑通 5 版迭代與實拍合成，540p 五秒片改色重算 32 秒，追蹤誤差平均 0.33 像素——適合程式化片頭與產品動畫，倒影與大場景還到不了電影級。',
     category: 'AI 工具',
     tags: ['vork', 'AI Agent', '3D 引擎', 'VFX', 'Claude Code', 'RTX 4070', 'Slang'],
-    publishDate: '2026-11-09',
+    publishDate: '2026-11-08',
     faqItems: [
       {
         q: 'vork 是開源軟體嗎？',
