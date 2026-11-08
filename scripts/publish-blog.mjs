@@ -5818,6 +5818,34 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'vork-agent-3d-vfx-engine-rtx-4070',
+    title: 'vork 實測：RTX 4070 跑 AI 3D 特效，改色重算 32 秒',
+    metaDescription: 'vork 是給 AI Agent 用的無介面 3D 特效引擎。實測在 RTX 4070 迭代 5 版場景、把 CG 合進實拍，540p 改色重算 32 秒，附安裝指令、授權範圍與實際限制。',
+    excerpt: 'vork 是 Nullframe 在 2026 年 11 月放出的無介面 3D／VFX 引擎，用 Rust 和 Slang 寫，agent 寫場景檔、算圖、看圖、再修改，授權是原始碼可見而非開源。我在 RTX 4070 跑通 5 版迭代與實拍合成，540p 五秒片改色重算 32 秒，追蹤誤差平均 0.33 像素——適合程式化片頭與產品動畫，倒影與大場景還到不了電影級。',
+    category: 'AI 工具',
+    tags: ['vork', 'AI Agent', '3D 引擎', 'VFX', 'Claude Code', 'RTX 4070', 'Slang'],
+    publishDate: '2026-11-09',
+    faqItems: [
+      {
+        q: 'vork 是開源軟體嗎？',
+        a: '不是。LICENSE 明寫 source-available、It is not open source。研究預覽期可免費使用與修改自用，但不可散布修改版，也不可做成讓別人送件算圖的託管服務。',
+      },
+      {
+        q: 'vork 做出來的影片可以商用嗎？',
+        a: '目前版本的授權允許商業使用，也寫明不主張你用它做出的場景、程式與媒體權利，替客戶算圖交片不算託管服務。授權只涵蓋該版本，之後的版本可能改成付費條款；素材仍要各自遵守原授權。',
+      },
+      {
+        q: 'vork 需要什麼 GPU？',
+        a: '需要 Apple Silicon 或近代支援硬體光追的 NVIDIA GPU；A100、H100、H200 這類沒有 RT 的 GPU 不支援。我的實測環境是 RTX 4070 12GB。',
+      },
+      {
+        q: 'vork 跟生成式 AI 影片差在哪？',
+        a: 'vork 的物體、攝影機和材質都是明確數值，改一個參數重算，其他部分不會變。我把兩個材質的發光色換掉後，第 60 幀只有 3.65% 像素變化，實拍背景不動。代價是畫面要靠場景與素材做出來，不是打一句話就有。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
