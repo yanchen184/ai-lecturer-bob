@@ -5640,6 +5640,36 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'openart-nursery-rhyme-shorts-557-per-day',
+    title: 'OpenArt 童謠 Shorts 日賺 557 美元可信嗎？回推每天要 1,114 萬次觀看，再用本機 ComfyUI 跑一次',
+    metaDescription:
+      'OpenArt 童謠 Shorts 日賺 557 美元可信嗎？用兒童 Shorts RPM 回推每天要 1,114 萬次觀看起跳，對照 YouTube 政策，再用 RTX 4070 本機 21 分鐘做出 20 秒試片。',
+    excerpt:
+      'Andre Creates 的 22 秒 Reel 教人抄兒童頻道、用 ChatGPT 寫童謠、貼進 OpenArt 生成，字幕寫日賺 557 美元，全片卻沒有收益畫面，網址列還帶著 influencer 追蹤參數。用公開 RPM 回推每天要 1,114 萬次觀看起跳；我用本機 ComfyUI 21 分鐘重走流程，影片做得出來，賺錢的部分沒有證據。',
+    category: 'AI 工具',
+    tags: ['OpenArt', 'OpenArt Director', 'AI 童謠', 'YouTube Shorts', 'YouTube 營利', 'ComfyUI', 'Wan2.2'],
+    publishDate: '2026-11-08',
+    faqItems: [
+      {
+        q: 'OpenArt 童謠 Shorts 真的能日賺 557 美元嗎？',
+        a: '影片沒有提供收益畫面，無法確認。依第三方統計的兒童 Shorts RPM 回推，需要每天 1,114 萬到 2,785 萬次觀看，新頻道很難靠這套流程在短期達成。',
+      },
+      {
+        q: '用 AI 做兒童影片可以開啟 YouTube 營利嗎？',
+        a: '可以，YouTube 條款允許用 AI 呈現自己發想的角色和故事。看起來像模板量產或重複的內容不能營利，複製他人內容也會被排除。',
+      },
+      {
+        q: 'OpenArt Director 要多少錢？',
+        a: '2026-11-08 官方價格頁顯示 Starter 13 美元（原價 14 美元劃掉），4,000 點，各方案都含 Director 使用權。說明頁沒有列出 Director 消耗多少點數，實際能做幾支要自己試算。',
+      },
+      {
+        q: '沒有 OpenArt 也能做 AI 童謠影片嗎？',
+        a: '可以。我用 RTX 4070 跑本機 ComfyUI 的 Wan2.2，約 21 分鐘做出 20 秒四鏡畫面。配音和配樂要另外處理，我的試片還沒有做這一段。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'ai-kids-cartoon-youtube-income-reel-test',
     title: 'AI 兒童卡通 YouTube 賺錢可信嗎？拆解 14,594 美元收益 Reel，再用本機 ComfyUI 做一支 15 秒試片',
     metaDescription:
