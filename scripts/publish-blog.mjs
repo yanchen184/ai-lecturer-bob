@@ -5669,6 +5669,36 @@ const posts = [
     ],
   },
   {
+    slug: 'interactive-wedding-invitation-dodge-button',
+    title: '互動婚禮邀請函怎麼做？爆紅逃跑按鈕喜帖拆解，20 KB 單檔版實測',
+    metaDescription:
+      '互動婚禮邀請函怎麼做？拆解 8.5 萬讚逃跑按鈕喜帖 Reel，做成 20 KB 單檔網站，連結即設定、免後端，附彈簧閃躲程式碼與實測限制。',
+    excerpt:
+      'yeye_wan 那支 8.5 萬讚的惡搞喜帖 Reel，「不要」按鈕會逃跑、賓客會被判不合格，片尾在介紹建站工具。我用同類機制做了原創的單檔 20 KB 網站，補上婉拒、正式喜帖、行事曆與回覆，連結即設定、免後端——能直接玩，但回覆不會自動集中，連結也沒加密。',
+    category: '工程實作',
+    tags: ['互動婚禮邀請函', '電子喜帖', 'Vibe Coding', '逃跑按鈕', 'Instagram Reels', 'Capafy', 'Claude Code'],
+    publishDate: '2026-11-08',
+    faqItems: [
+      {
+        q: '互動婚禮邀請函一定要會寫程式嗎？',
+        a: '不用。填資料直接用製作頁就能產生連結；想換題目可以請 coding agent 改，改完要自己實測一輪。',
+      },
+      {
+        q: '影片裡的 Picova 可以做到一樣的效果嗎？',
+        a: '我沒有實際用過 Picova，無法比較。影片只展示了成果，我也查不到它的獨立資料。',
+      },
+      {
+        q: '賓客的回覆存在哪裡？',
+        a: '這個版本不存任何回覆。頁面組出一段文字，由賓客傳給新人；要集中統計，得另外接表單或試算表。',
+      },
+      {
+        q: '專屬連結安全嗎？',
+        a: '資料不經過站台主機，但連結本身沒有加密，拿到連結的人都解得出日期和地址，只適合發給你願意讓對方知道場地的人。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'openart-nursery-rhyme-shorts-557-per-day',
     title: 'OpenArt 童謠 Shorts 日賺 557 美元可信嗎？回推每天要 1,114 萬次觀看，再用本機 ComfyUI 跑一次',
     metaDescription:
