@@ -5640,6 +5640,36 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'academic-humanizer-claude-skill-test',
+    title: 'Academic Humanizer 實測：Nature 報導的論文去 AI 味 Claude skill，三組對照看誰會亂編',
+    metaDescription:
+      'Academic Humanizer 是專改 AI 輔助論文與計畫書的 Claude skill。三組中英文對照：AI 套話 29 降到 1，只叫模型去 AI 味會多編 9 處說法，加一句不准新增又留著誇大，附指令與限制。',
+    excerpt:
+      'Academic Humanizer 是 MorphMind 團隊開源的 Claude skill（MIT），用一份 261 行的 SKILL.md 改寫 AI 輔助的論文和 NSF、NIH 計畫書，Nature 在 2026 年 7 月報導過。我用 Sonnet 跑三組對照，AI 套話一句 prompt 也清得掉，它多的價值在刪掉沒證據的主張、列出作者要補的 6 條——樣本小，只看方向。',
+    category: 'AI 工具',
+    tags: ['Academic Humanizer', 'Claude Skill', '論文寫作', '去 AI 味', 'Claude Code', 'AI 學術寫作'],
+    publishDate: '2026-11-08',
+    faqItems: [
+      {
+        q: 'Academic Humanizer 能躲過 AI 偵測器嗎？',
+        a: '我沒有測第三方 AI 偵測器，只用自己寫的 regex 數 AI 套話，所以無法回答。它的 README 寫明不是設計來規避 AI 偵測，使用後仍要依投稿場地規定揭露 AI 協助。',
+      },
+      {
+        q: '自己下一句「幫我去 AI 味」夠用嗎？',
+        a: '清套話夠用，我的測試兩邊都從 29 降到 1。差別在內容：那一句會補出原文沒有的機制和實驗設定。加上「不准新增事實」後捏造明顯變少，但沒證據的誇大會留著。',
+      },
+      {
+        q: 'Academic Humanizer 可以用在中文論文嗎？',
+        a: '可以跑，我的中文段落 AI 套話從 27 降到 2，數字和引用沒有變動。不過它的規則是英文寫的，中文特有的套話沒有專門規則，「據我們所知」就留了下來。',
+      },
+      {
+        q: '改完的稿子可以直接投稿嗎？',
+        a: '不行。它會留下待填空格，並列出作者要補的項目，例如 37% 的比較基準。這些要作者用自己的實驗資料補上，也要再核對全文。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'personal-knowledge-base-para-code-line-tasks',
     title: '個人知識庫怎麼建、怎麼用？CODE 四步、PARA 與卡片盒，加上 196 筆 LINE 交辦整理成 7 類的實測',
     metaDescription:
