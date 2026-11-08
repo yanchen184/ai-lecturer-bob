@@ -5640,6 +5640,36 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'ai-kids-cartoon-youtube-income-reel-test',
+    title: 'AI 兒童卡通 YouTube 賺錢可信嗎？拆解 14,594 美元收益 Reel，再用本機 ComfyUI 做一支 15 秒試片',
+    metaDescription:
+      'AI 兒童卡通 YouTube 賺錢教學值得照做嗎？逐格拆解 14,594 美元收益 Reel，對照官方營利條款，再用 RTX 4070 跑 ComfyUI 26 分鐘做出試片，附參數與限制。',
+    excerpt:
+      'JaseCreates 的 12.77 秒 Reel 把 AI 兒童卡通講成「AI 想點子、Seedance 2.5 生成、秀出 14,594 美元收益」的副業，但收益畫面看不到頻道名稱，當證據的 7,100 萬觀看影片還早於模型推出。我用本機 ComfyUI 花 26 分鐘照做一次，15 秒試片做得出來，量產賺錢的部分證據不足。',
+    category: 'AI 工具',
+    tags: ['AI 兒童卡通', 'YouTube 營利', 'Seedance 2.5', 'Picsart', 'ComfyUI', 'Wan2.2', 'AI 影片'],
+    publishDate: '2026-11-08',
+    faqItems: [
+      {
+        q: 'AI 做的兒童卡通可以在 YouTube 營利嗎？',
+        a: '可以，YouTube 官方條款允許用自動化工具輔助，但成品要呈現創作者自己的構想。用通用模板做出量產印象的 AI 內容會被排除，主打低品質兒童內容的頻道可能被停止合作夥伴資格。',
+      },
+      {
+        q: '14,594 美元的收益截圖是真的嗎？',
+        a: '我無法判斷真假。畫面裁掉了頻道名稱和對應影片，也看不到統計區間，只能確定這張截圖不足以證明收益來自片中的做法。',
+      },
+      {
+        q: '用 RTX 4070 做 AI 兒童卡通要多久？',
+        a: '我的 15 秒三鏡試片全程 26 分鐘，含查資料，每個 5 秒動態鏡頭平均 286 秒。3 分鐘影片約 36 鏡，光動態生成估計要 2.9 小時，重生和挑片另計。',
+      },
+      {
+        q: 'Seedance 2.5 真的能輸出 4K 嗎？',
+        a: 'Reel 字幕寫 4k，但 Picsart 的 Seedance 2.5 頁面在 2026-11-08 寫的是 480p 草稿、1080p 成品，整頁沒有提到 4K。我沒有付費實測這個模型。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'academic-humanizer-claude-skill-test',
     title: 'Academic Humanizer 實測：Nature 報導的論文去 AI 味 Claude skill，三組對照看誰會亂編',
     metaDescription:
