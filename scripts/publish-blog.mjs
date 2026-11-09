@@ -5846,6 +5846,34 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-giant-animal-video-wan22-rtx-4070',
+    title: 'AI 巨大動物影片怎麼做？3 種提示實測，構圖最有效',
+    metaDescription: 'AI 巨大動物影片怎麼做？RTX 4070 跑 Wan2.2 實測 3 種提示，220 秒出片。巨大感靠構圖比形容詞有效，附提示全文、耗時、限制與 Higgsfield 分潤條款。',
+    excerpt: 'Daon&Lui 的巨大貓地鐵 Reel 拿到 18.2 萬讚，是帳號粉絲數的 3.4 倍，我在 RTX 4070 用 ComfyUI 跑 Wan2.2 做了原創的列車長帽巨兔。5 秒影片 220 秒算完，「畫面裝不下」的構圖比描述身高有效得多——可以當試片，480p、無聲，離上架還差放大和音效。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'Higgsfield', 'RTX 4070', 'Instagram Reels'],
+    publishDate: '2026-11-09',
+    faqItems: [
+      {
+        q: 'RTX 4070 12GB 跑得動 Wan2.2 影片嗎？',
+        a: '可以。我用 i2v 14B 的 fp8 模型搭 lightx2v 4 步 LoRA，輸出 480×832、81 幀、5.06 秒，影片生成 220 秒；首幀用 ti2v 5B 出圖，每張 30–40 秒。',
+      },
+      {
+        q: 'AI 為什麼畫不出夠巨大的動物？',
+        a: '我的實測中，提示寫 as tall as a subway train 只做出約半人高的兔子。寫明相對比例會變大，但臉看不清楚；改成「畫面裝不下」並把路人放在背景當尺度參照，效果最好。',
+      },
+      {
+        q: 'Higgsfield 聯盟計畫抽成多少？',
+        a: '官方頁寫最高為方案價格的 25%，依帶來的營收提升，期間最長 12 個月，含續訂和升級；官方頁沒有列出各級比例。Daon&Lui 實際的分潤比例查不到。',
+      },
+      {
+        q: '可以直接照做別人的巨大貓影片嗎？',
+        a: '建議只借「巨大動物＋日常場景＋路人無感」的格式，角色和造型自己設計。我的試片換成戴列車長帽的白兔，沒有使用原帳號的貓、青蛙帽或畫面。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
