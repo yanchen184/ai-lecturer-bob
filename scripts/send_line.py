@@ -4,6 +4,9 @@ Send two LINE messages from daily/post/<DATE>.md and daily/stats/<DATE>.md.
 Required env: LINE_TOKEN, LINE_USER, DATE (YYYY-MM-DD).
 
 Behavior:
+- On a push event, only files added/modified by that push are sent
+  (post and stats arrive in separate commits, each triggering its own run).
+- On workflow_dispatch (no push payload), both are sent.
 - If post file missing  -> send a stub note instead.
 - If stats file missing -> skip stats message (post is what user actually copies).
 - Each LINE text is hard-capped at 4900 chars.
@@ -60,29 +63,42 @@ def read_file(p: pathlib.Path) -> str | None:
         return None
 
 
+def pushed_files(event_path: str | None) -> set[str] | None:
+    """Files added/modified by a push event; None when not a push (send everything)."""
+    if not event_path or not pathlib.Path(event_path).is_file():
+        return None
+    event = json.loads(pathlib.Path(event_path).read_text(encoding="utf-8"))
+    commits = event.get("commits")
+    if commits is None:
+        return None
+    return {f for c in commits for f in c.get("added", []) + c.get("modified", [])}
+
+
 def main() -> int:
     token = os.environ["LINE_TOKEN"]
     user = os.environ["LINE_USER"]
     date = os.environ["DATE"]
 
     repo_root = pathlib.Path(__file__).resolve().parent.parent
-    post_path = repo_root / "daily" / "post" / f"{date}.md"
-    stats_path = repo_root / "daily" / "stats" / f"{date}.md"
+    post_rel = f"daily/post/{date}.md"
+    stats_rel = f"daily/stats/{date}.md"
+    post_path = repo_root / post_rel
+    stats_path = repo_root / stats_rel
+
+    changed = pushed_files(os.environ.get("GITHUB_EVENT_PATH"))
+    want_post = changed is None or post_rel in changed
+    want_stats = changed is None or stats_rel in changed
+    print(f"send post={want_post} stats={want_stats}")
 
     post_body = read_file(post_path)
-    stats_body = read_file(stats_path)
+    stats_body = read_file(stats_path) if want_stats else None
 
-    sent_any = False
+    sent_any = not (want_post or want_stats)
     failed_any = False
 
-    if post_body:
-        if push(post_body, token, user):
-            sent_any = True
-        else:
-            failed_any = True
-    else:
-        msg = f"⚠️ {date} 社群貼文檔案不存在 ({post_path.relative_to(repo_root)})"
-        if push(msg, token, user):
+    if want_post:
+        text = post_body or f"⚠️ {date} 社群貼文檔案不存在 ({post_rel})"
+        if push(text, token, user):
             sent_any = True
         else:
             failed_any = True
