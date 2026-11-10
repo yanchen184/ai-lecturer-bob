@@ -5964,6 +5964,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-remotion-kinetic-typography',
+    title: 'Claude Code 加 Remotion 做文字動畫：不寫程式，一段中文 5 分鐘出片',
+    metaDescription:
+      'Claude Code 裝 Remotion 官方 Agent Skills，只給中文描述就寫出 276 行 TSX 並輸出 MP4。我實測五步流程：5 分 18 秒、US$1.66，6 項效果全做到，附描述範本與授權限制。',
+    excerpt:
+      'Remotion 是用 React 寫影片的框架，裝上官方 Agent Skills 後，Claude Code 能把一段中文畫面描述寫成程式並渲染成 MP4。我照 IG 上的 Reel 教學實測：第一版 5 分 18 秒、US$1.66，壓扁回彈、選取框、逐字出現 6 項全對——程式一次跑通，構圖還是要人看過再下一句修改。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Remotion', 'Agent Skills', '文字動畫', 'Kinetic Typography', '程式化影片', 'React'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: '用 Claude Code 加 Remotion 做動畫，真的不用會寫程式嗎？',
+        a: '不用寫 React，但要會開終端機：先裝 Node.js 與 Claude Code，再用 npm 裝 Remotion、用 npx remotion skills add 裝官方 skill。之後只要用中文描述畫面，程式由 Claude 寫。我實測一段 6 項要求的描述，第一版就全部做到。',
+      },
+      {
+        q: 'Remotion Agent Skills 怎麼安裝？',
+        a: '在 Remotion 專案資料夾執行 npx remotion skills add，會把 13 個 skill 裝進 .agents/skills，並把 .claude/skills 建成指向它的 symlink。官方文件也列出 npx skills add remotion-dev/skills 與 gh skill install remotion-dev/skills 兩種裝法。',
+      },
+      {
+        q: 'Claude Code 做一支 Remotion 動畫要花多少錢？',
+        a: '我用 Claude Opus 5.5 以 API 牌價計算，6 秒直式文字動畫第一版 24 回合、5 分 18 秒、US$1.66；接續對話下一句修改，JSON 累計 US$2.32，推算這一句約 US$0.66。',
+      },
+      {
+        q: 'Remotion 可以免費商用嗎？',
+        a: '個人、非營利組織、員工 3 人以下的營利公司可以免費使用，包含商業用途。超過 3 人的營利公司要購買 Company License。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
