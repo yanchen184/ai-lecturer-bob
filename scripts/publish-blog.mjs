@@ -6106,6 +6106,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'openviking-agent-memory-test',
+    title: 'OpenViking 實測：火山引擎開源的 AI Agent 記憶資料庫，本機跑通 RAG、跨 session 記憶與記憶改寫',
+    metaDescription:
+      'OpenViking v0.5.4 本機實測：4 份文件 3 題檢索全中、對話自動抽記憶、新偏好改寫成 version 2。附 gpt-4o-mini max_tokens 400 錯誤與摘要變簡體的修法。',
+    excerpt:
+      'OpenViking 是火山引擎開源（AGPL-3.0、4.2 萬星）的 AI Agent 上下文資料庫，把知識文件、對話記憶、技能放進同一個 viking:// 檔案系統，每層目錄自動生成摘要讓 agent 先看再讀。我在 Windows 裝 v0.5.4 實測，檢索、跨 session 回想、衝突時改寫記憶都跑通——但用 gpt-4o-mini 要先補 max_tokens，摘要也要指定 zh-TW 才不會變簡體。',
+    category: 'AI 工具',
+    tags: ['OpenViking', 'AI Agent', 'Agent 記憶', 'RAG', '上下文資料庫', '火山引擎', 'OpenAI'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: 'OpenViking 跟一般向量資料庫差在哪？',
+        a: '它把知識、記憶、技能都放在 viking:// 檔案系統，每層目錄自動生成一句摘要（L0）和導覽頁（L1），agent 先看摘要再決定要不要讀原文（L2）。記憶是 Markdown 檔，人可以直接打開修改。',
+      },
+      {
+        q: '用 gpt-4o-mini 記憶萃取出現 max_tokens is too large 怎麼辦？',
+        a: '記憶萃取的預設輸出上限是 32768，gpt-4o-mini 最多 16384。在 ov.conf 的 vlm 區塊加上 "max_tokens": 16000，重啟 server 後再 commit 就會成功，我實測重試 16.6 秒完成。',
+      },
+      {
+        q: 'OpenViking 的摘要為什麼是簡體中文？',
+        a: '語言偵測的中文候選只有 zh-CN，繁體文件也會被判成簡體。在 ov.conf 最外層設 "output_language_override": "zh-TW"，我重匯後摘要變成繁體字，但用詞仍偏對岸。',
+      },
+      {
+        q: 'Windows 能裝 OpenViking 嗎？',
+        a: '官方一鍵安裝腳本要 macOS 或 Linux。Windows 可以用 pip 安裝 openviking 套件直接起 openviking-server，我實測 v0.5.4 在 Windows 11 加 Python 3.11 可以跑；官方另有桌面版。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
