@@ -6017,6 +6017,10 @@ const posts = [
         q: '為什麼不直接叫 Claude 寫，還要查積木庫？',
         a: '通用元件寫過的人已經處理好細節，例如 lt-neon-border 的三層光暈和轉角銜接。叫 Claude 從零寫也做得出來，但要多來回幾次，我手寫 4 種特效時第一輪 check 就有 3 個 error。',
       },
+      {
+        q: '用 hyperframes add 裝進來的積木可以改嗎？',
+        a: '可以。積木是整份 HTML 複製到 compositions/ 底下，直接改就好。之後再對同一個積木執行 add，CLI 預設會保留你改過的檔案，要加 --force 才會用 registry 的版本覆蓋。',
+      },
     ],
     featured: false,
   },
