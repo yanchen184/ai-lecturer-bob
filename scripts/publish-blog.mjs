@@ -5904,6 +5904,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-3d-game-sumiro-video2game',
+    title: 'AI 做 3D 遊戲怎麼做？拆解 Sumiro 24 小時流程，我照做一款水墨跳台',
+    metaDescription:
+      'Sumiro 先生 AI 參考影片、再讓 Claude 照影片做 3D 遊戲。我用 RTX 4070 跑 Wan2.2 生影片 110 秒、寫單檔 Three.js 遊戲，11 項測試全過，附流程、程式與差距分析。',
+    excerpt:
+      'Sumiro 是作者自稱 24 小時、主要靠 Claude Opus 5.5 寫成的水墨 3D 跳台遊戲，做法來自開源的 Video2Game skill：先生一支 AI 影片當設計稿，再讓 agent 照著做。我用本機 RTX 4070 照做一款《燈靈渡海》，參考影片 110 秒、正式站 11 項測試全過——配色和元素對了，角色與質感要靠圖轉 3D 才補得上。',
+    category: '工程實作',
+    tags: ['AI 做遊戲', 'Three.js', 'Claude Code', 'Video2Game', 'Sumiro', 'Wan2.2', 'ComfyUI', 'Verlet 布料'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: 'Sumiro 真的是 24 小時做完的嗎？',
+        a: '這是作者自己在 X 和 GitHub README 的說法，沒有第三方能驗證。README 寫的流程是生參考影片、Blender 重建場景、GPT Image 加 Tripo 做角色、每關最多 8 張概念圖，再讓 Claude Code agent 反覆修 bug。',
+      },
+      {
+        q: 'Video2Game 要花多少錢？',
+        a: 'skill 本身是 MIT 開源免費，但素材要透過 fal 生成。作者 31 款範例共 1,013 次 fal 呼叫、202 美元，平均每款約 6 美元，最便宜 0.79 美元、最貴 15.48 美元。',
+      },
+      {
+        q: '不付費能照這套流程做 3D 遊戲嗎？',
+        a: '可以做到一部分。我用本機 ComfyUI 的 Wan2.2 ti2v 5B 生參考影片（RTX 4070 跑 110 秒），再讓 Claude Code 寫單檔 Three.js 遊戲。配色、石柱、紅圍巾都照影片做出來了，但角色和水墨質感少了圖轉 3D 那一步，看起來是程式幾何體。',
+      },
+      {
+        q: '可以拿 Sumiro 的素材或程式碼來改嗎？',
+        a: '不行。Sumiro 的 GitHub repo 沒有授權條款，只能玩和閱讀。要參考做法可以用 Video2Game，它是 MIT 授權，範例遊戲的程式碼也公開。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
