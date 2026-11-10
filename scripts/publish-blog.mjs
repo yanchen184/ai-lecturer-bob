@@ -5874,6 +5874,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-ui-prompt-modal-popover-toast',
+    title: 'AI 做介面別只說「彈窗」：36 頁實測 Modal、Popover、Toast 寫法',
+    metaDescription:
+      '叫 AI 做介面只說「跳出視窗」，Claude 36 頁只做對 21 項，頭像和提示都變整頁 Modal。寫元件名或白話描述行為都 36/36，附提示詞範本。',
+    excerpt:
+      '叫 AI 做介面只說「彈窗」，它要在 Modal、Popover、Tooltip、Toast 四種元件裡猜；我用同一個待辦頁讓 Claude 三個模型生成 36 頁，以 Playwright 實際點擊判分。只說「跳出視窗」對 21/36，寫元件名或白話描述行為都 36/36——講清楚擋不擋頁面、何時消失才是關鍵。',
+    category: 'AI 教學',
+    tags: ['提示詞', 'UI 元件', 'Modal', 'Popover', 'Tooltip', 'Toast', 'Claude', 'Playwright'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: 'Modal、Popover、Tooltip、Toast 差在哪？',
+        a: 'Modal 會擋住整頁，要先按確認或取消才能回去；Popover 點擊後貼在元素旁邊出現，裡面可以放按鈕；Tooltip 通常滑過出現、只放說明文字；Toast 像通知，浮在角落幾秒後自己消失。',
+      },
+      {
+        q: '只跟 AI 說「跳出視窗」會怎樣？',
+        a: '我的實測中，Claude 三個模型共 9 頁，點頭像的資訊卡只有 2 頁做成 Popover，「已新增」提示只有 1 頁做成 Toast，其餘都做成整頁變暗的 Modal。刪除確認和滑過說明則 9 頁全對。',
+      },
+      {
+        q: '不知道元件名稱，提示詞要怎麼寫？',
+        a: '用白話描述行為也可以，我的實測是 36/36。每個跳出來的東西講清楚三件事：會不會擋住頁面、出現在哪裡、怎麼消失。',
+      },
+      {
+        q: '學會 UI 元件名稱，用 AI 做前端真的能強十倍嗎？',
+        a: '這是 Andrew Gao 在 X 的說法，我沒有找到支撐「十倍」的實驗。我的 36 頁實測只能說明：模糊寫法會被預設成 Modal，指名元件或描述行為能避免這個錯。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
