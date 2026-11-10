@@ -5994,6 +5994,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-animation-effects-hyperframes-catalog',
+    title: 'Claude 動畫特效包是什麼？HyperFrames 448 個現成積木實測，手寫 4 種與套用 1 種的差別',
+    metaDescription:
+      'IG 上「600 種 Claude 動畫特效」的做法：Claude 寫 HTML 與 GSAP，再逐格渲染成 MP4。實測 HyperFrames 448 個開源積木，hyperframes add 1.6 秒裝好霓虹字卡，對照手寫光刃片頭、金屬徽章、霓虹章節。',
+    excerpt:
+      'IG 上「30 種 Claude 動畫特效、整套 600 多種」的特效包，原理是 Claude 寫 HTML 加 GSAP 動畫、再逐格截圖編成 MP4，HeyGen 開源的 HyperFrames 就內建 448 個這類積木。我手寫 4 種特效第一輪被 check 擋下 3 個錯誤，套用現成霓虹字卡 1.6 秒裝好、0 錯誤——通用字卡先查積木庫，頻道片頭再叫 Claude 寫。',
+    category: 'AI 工具',
+    tags: ['HyperFrames', 'Claude Code', '動畫特效', 'GSAP', '程式化影片', '下三分之一字卡', 'HeyGen'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: 'HyperFrames 的積木要錢嗎？',
+        a: '我這次用 hyperframes add 裝的 lt-neon-border 和 count-up 都來自官方 registry，本機渲染不用付費，框架本體是 Apache-2.0。部分 webgpu 著色器積木（例如 liquid-metal、chrome-orb）的描述寫明來自 shaders.com 的 Shaders library（MIT），用之前看一下各自的描述。',
+      },
+      {
+        q: 'HyperFrames 積木可以用在直式 Shorts 嗎？',
+        a: '可以，但大部分積木是 1920×1080 設計的。catalog --tag vertical 只回傳 13 個直式積木，多數是對話框、通知這類介面模擬。我的直式片頭是叫 Claude 自己寫的。',
+      },
+      {
+        q: '為什麼不直接叫 Claude 寫，還要查積木庫？',
+        a: '通用元件寫過的人已經處理好細節，例如 lt-neon-border 的三層光暈和轉角銜接。叫 Claude 從零寫也做得出來，但要多來回幾次，我手寫 4 種特效時第一輪 check 就有 3 個 error。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
