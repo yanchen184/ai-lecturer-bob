@@ -65,6 +65,17 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # 正常同步 5–16 秒；偶發卡在 syncing_files 不動，3 分鐘放棄後用同一份 artifact 重送
     steps:
       - uses: actions/deploy-pages@v4
-        id: deployment
+        id: first
+        continue-on-error: true
+        with:
+          timeout: 180000
+      - uses: actions/deploy-pages@v4
+        id: retry
+        if: steps.first.outcome == 'failure'
+        with:
+          timeout: 300000
+      - id: deployment
+        run: echo "page_url=${{ steps.first.outputs.page_url || steps.retry.outputs.page_url }}" >> "$GITHUB_OUTPUT"
