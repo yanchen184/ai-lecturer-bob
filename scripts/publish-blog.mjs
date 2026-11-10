@@ -6076,6 +6076,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-code-voiceover-animation-short-6-steps',
+    title: 'Claude 做動畫 6 步實跑：23 秒配音直式短片，鏡頭跟著配音秒數切、自檢 6 輪才過',
+    metaDescription:
+      '照 IG「用 Claude 做動畫」6 步實跑：edge-tts 配音抓每句秒數、HyperFrames 逐鏡對齊、check 自檢 6 輪，36 秒渲染出 23 秒直式短片，附程式與踩坑。',
+    excerpt:
+      'IG 上「我用 Claude 做動畫，6 個步驟全部給你」要留言才拿得到指令，我照公開的 6 步自己補上工具：Claude Code 寫程式、edge-tts 配音、HyperFrames 渲染、ComfyUI 生角色，做出 23 秒 1080×1920 的配音短片。關鍵是配音時抓每句秒數當鏡頭切點——check 自檢 6 輪擋下字型、對比、影片層級錯誤，但字幕斷字還是要人眼看。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'HyperFrames', 'AI 動畫', 'edge-tts', 'ComfyUI', 'Wan2.2', '短影音', 'GSAP'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: '不留言拿原作者的指令，也做得出來嗎？',
+        a: '可以。我照貼文公開的 6 步自己挑工具：HyperFrames 渲染、edge-tts 配音、ComfyUI 生角色圖，從開資料夾到成片約 15 分鐘。原作者實際用哪套框架貼文沒寫，我的組合只是其中一種做法。',
+      },
+      {
+        q: '一定要裝 ComfyUI 嗎？',
+        a: '不用。ComfyUI 在這套流程裡只負責角色參考圖和 2 秒揮手動作，換成手繪或圖庫素材，配音、逐鏡合成、check 和渲染都照常跑。',
+      },
+      {
+        q: '配音可以換成自己的聲音嗎？',
+        a: '可以，但要另外拿到每句的起訖秒數。edge-tts 會直接送出句子邊界事件；自己錄音的話，要用語音辨識（例如 faster-whisper）產生逐句時間軸，再餵給 build_comp.py。這個我這次沒有實測。',
+      },
+      {
+        q: 'hyperframes check 全過，影片就沒問題了嗎？',
+        a: '不一定。check 管字型、對比、版面、時間軸和音軌，我的第一版 check 已通過，字幕仍把「抓出」拆成兩行，是看截圖才發現的。渲染後抽幾格截圖檢查，是 check 之外必要的一步。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
