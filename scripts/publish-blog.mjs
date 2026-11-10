@@ -6050,6 +6050,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-avatar-follow-cursor-wan22',
+    title: '會跟著游標轉頭的 AI 頭像怎麼做？拆解 wayturn.dev 的 21 張圖狀態機，再用 Wan2.2 影片抽格重做',
+    metaDescription:
+      'wayturn.dev 會盯著滑鼠轉頭的頭像，原理是 21 張表情圖加 atan2 八方向狀態機。我改用本機 Wan2.2 I2V 從同一張定裝照生 6 支短片、抽 95 格，做成 1.5 MB 單一 HTML，附 prompt、程式與 3 個實際踩坑。',
+    excerpt:
+      'Threads 爆紅的 wayturn.dev 首頁頭像會跟著游標轉頭、眨眼、點了做表情，拆開前端程式是 21 張表情圖加一個 atan2 分 8 方向的狀態機。我改用本機 Wan2.2 從同一張定裝照生 6 支短片抽 95 格重做——轉頭變連續、不用 WebGL，但左右 prompt 會轉同一側、每支片自帶一次眨眼要先處理。',
+    category: '工程實作',
+    tags: ['AI 頭像', '互動網頁', 'Wan2.2', 'ComfyUI', 'MotionSites', '狀態機', 'canvas', 'Claude skill'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: '可以用自己的照片做會跟著游標轉頭的頭像嗎？',
+        a: '可以，把第一步的定裝照換成自己的照片當 Wan2.2 I2V 的起始圖即可。成品會放上公開網站，用真人照片前先確定本人同意；我這次用的是生成出來的虛構人物。',
+      },
+      {
+        q: '一定要用 Wan2.2 14B 嗎？',
+        a: '我只測了 14B 加 lightx2v 4 步 LoRA 的組合，480×480、33 格在 RTX 4070 12GB 上可以跑。5B 只拿來生定裝照，沒拿來生轉頭短片，所以不能保證 5B 的轉頭一樣穩。',
+      },
+      {
+        q: '單檔 1.5 MB 會不會太大？',
+        a: '這是 95 張 400px JPEG 全部 base64 內嵌的結果，好處是單一檔案到哪都能跑。放進正式網站可以改成外部 webp 檔，手機只載入正面與四個方向的少數幾格。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
