@@ -2592,6 +2592,24 @@
         "codeFence": 5
       },
       "wordCount": 6218
+    },
+    "ai-video-camera-movement-terms-wan22-test": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 8010
     }
   }
 }
