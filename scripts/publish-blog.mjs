@@ -6024,6 +6024,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-video-camera-movement-terms-wan22-test',
+    title: 'AI 影片運鏡術語有用嗎？Wan2.2 實測 6 支：dolly in 照做、orbit 失敗（附 24 種中英對照）',
+    metaDescription:
+      'AI 影片 prompt 寫「拍得好看」鏡頭不會動，寫 dolly in 才會推近。本機 Wan2.2 5B 同場景同 seed 實測 6 種運鏡並用 OpenCV 量移動量，附 MiniMax 官方 15 個方括號運鏡指令與 24 種鏡頭運動中英對照表。',
+    excerpt:
+      'Threads 上「AI 聽得懂術語，聽不懂感覺」的 24 種運鏡速查表，我拿本機 Wan2.2 TI2V 5B 同場景、同 seed 只換運鏡一句，產 6 支片再用 OpenCV 量鏡頭實際移動量。寫「拍得好看」累計縮放 ×1.00 完全不動，dolly in 推近 ×1.15 照做，orbit、crane up 都沒做到——術語有效，但小模型只穩定聽懂最基本的推軌。',
+    category: 'AI 工具',
+    tags: ['AI 影片', '運鏡', 'Wan2.2', 'ComfyUI', 'MiniMax Hailuo', 'Seedance', 'prompt', '鏡頭語言'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: 'AI 影片 prompt 用中文寫運鏡可以嗎？',
+        a: '這次我只測了英文寫法。MiniMax 官方的方括號指令全是英文，例如 [Push in]；運鏡術語本身也是英文最統一，建議運鏡那一句用英文寫。',
+      },
+      {
+        q: 'Dolly in 跟 zoom in 差在哪？',
+        a: 'Dolly in 是攝影機整台往前移，前景和背景的相對位置會改變；zoom in 是攝影機不動、焦段變長，畫面像整張被放大。MiniMax 的指令把兩者分開：[Push in] 和 [Zoom in]。',
+      },
+      {
+        q: '為什麼 orbit 在小模型上做不出來？',
+        a: '繞行時模型要生出主角原本看不到的側面和背面，還要讓背景跟著轉，需要較強的 3D 一致性。我這次用 Wan2.2 5B 只得到背影加微推，水平位移 12 px。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
