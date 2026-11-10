@@ -5934,6 +5934,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-mcp-ai-video-higgsfield-local-wan22',
+    title: 'Claude 接 MCP 做 AI 影片：Higgsfield 真的無限免費嗎？我用本機 Wan2.2 做了免費版',
+    metaDescription:
+      'Higgsfield MCP 讓 Claude 直接叫 Kling、Veo 出片，但官方寫明 MCP 一律扣 credits。我用 157 行 Python 接本機 ComfyUI Wan2.2，Claude Code 99 秒出一支 9:16 短片，影片 0 credits。',
+    excerpt:
+      'Higgsfield MCP 是一個 hosted MCP server，接進 Claude 後能直接叫 Kling、Veo、Seedance 生影片；IG 業配說的「3 天免費、無限使用」只適用網頁手動生成，MCP 官方寫明一律扣 credits。我照同樣形狀寫了本機版接 ComfyUI Wan2.2，Claude Code 一支 2 秒短片 99 秒、0.66 美元、影片 0 credits——畫質只到草稿等級。',
+    category: 'AI 工具',
+    tags: ['Higgsfield MCP', 'Claude Code', 'MCP server', 'AI 影片', 'Wan2.2', 'ComfyUI', 'FastMCP', 'RTX 4070'],
+    publishDate: '2026-11-10',
+    faqItems: [
+      {
+        q: 'Higgsfield MCP 接 Claude 真的可以無限免費做影片嗎？',
+        a: '不行。Higgsfield 官方說明頁寫明透過 MCP 生成的內容不論方案一律扣 credits，「Unlimited access and free generations」只適用在 higgsfield.ai 網頁上手動生成。第三方整理指出連 MCP 會拿到 3 天、100 credits 的試用。',
+      },
+      {
+        q: 'Higgsfield MCP 怎麼接到 Claude？',
+        a: '在 Claude 的 Settings → Connectors 新增 custom connector，網址填 https://mcp.higgsfield.ai/mcp，再用 Higgsfield 帳號 OAuth 登入，不需要 API key。官方建議 Claude Code 與 Codex 改用 Higgsfield CLI 加 skills。',
+      },
+      {
+        q: '不付費能讓 Claude 自己做 AI 影片嗎？',
+        a: '可以，前提是有本機顯卡。我用 Python FastMCP 寫了 157 行的 MCP server 接 ComfyUI 的 Wan2.2 TI2V 5B，Claude Code 會自己寫 prompt、送任務、等完成。RTX 4070 上一支 2 秒 9:16 短片全程 99 秒，Claude 費用 0.66 美元，影片不花 credits，畫質到草稿等級。',
+      },
+      {
+        q: '影片類 MCP server 為什麼要有 wait_for_job 這種阻塞工具？',
+        a: '影片要跑一分半以上，只給查詢工具的話 Claude 會一輪一輪回來輪詢，每輪都是一次模型呼叫。我加了在 server 端每 5 秒輪詢、上限 540 秒的 wait_for_job 後，工具呼叫從 5 次以上降到 2 次，費用從 0.96 降到 0.66 美元。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
