@@ -6166,6 +6166,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'blender-mcp-claude-dusk-station',
+    title: 'Blender MCP 實測：讓 Claude 在 Blender 蓋黃昏日本車站，看圖自己修掉 3 個錯',
+    metaDescription:
+      'Blender MCP 安裝與實測：一行 uvx 指令接上 Claude，先灰模、三角度檢查再打光，209 個物件的黃昏車站，附窗戶不亮的除錯過程與安全設定。',
+    excerpt:
+      'Blender MCP 是 3.4 萬星的 MIT 開源插件，讓 Claude 把 Python 直接送進 Blender 執行，再用 look 工具多角度截圖檢查自己的成品。我照 IG 爆紅的黃昏車站流程實測，209 個物件、看圖抓出 3 個錯並修好——做得出有氣氛的低多邊形場景，離原作的寫實程度還很遠，而且它能跑任意 Python，動手前一定要存檔。',
+    category: 'AI 工具',
+    tags: ['Blender MCP', 'Blender', 'Claude Code', 'MCP', '3D 建模', 'Opus 5.5', 'Blender Python'],
+    publishDate: '2026-11-11',
+    faqItems: [
+      {
+        q: 'Blender MCP 怎麼安裝？',
+        a: '前置是 Blender 3.0 以上、Python 3.10 以上和 uv。已有 uv 就跑 uvx mcp-for-blender setup，它會裝好 Blender 插件並幫你選的客戶端加 MCP 設定；只接 Claude Code 也可以用 claude mcp add blender uvx mcp-for-blender。裝完完全重開客戶端，再打開 Blender。',
+      },
+      {
+        q: 'blender-mcp 和 mcp-for-blender 是同一個嗎？',
+        a: '是。PyPI 套件已從 blender-mcp 改名為 mcp-for-blender，README 說舊的 uvx blender-mcp 還能用、不用改設定，新安裝用 mcp-for-blender。我實測的版本是 1.30.0，共 9 個工具。',
+      },
+      {
+        q: 'Blender MCP 安全嗎？',
+        a: 'execute_blender_code 能在 Blender 跑任意 Python，插件的 socket 也沒有驗證，所以只能開在 localhost，動手前先存檔。設 BLENDER_MCP_SAFE_MODE=1 會在執行前擋掉讀寫檔案、跑其他程式、連網路這類操作，建模和渲染照常能用。',
+      },
+      {
+        q: '用 Blender MCP 做得出跟原作一樣寫實的車站嗎？',
+        a: '我這次做不到。成品是方塊、圓柱、圓錐組成的低多邊形場景，打光和氣氛有出來，但模型細節和貼圖差很多。原作據貼文轉述還用了 Tripo、ChatGPT 生貼圖和大量程序材質，作者的 X 原文我沒查到。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
