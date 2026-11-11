@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10",
+  "generatedAt": "2026-11-11",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -2664,6 +2664,24 @@
         "codeFence": 5
       },
       "wordCount": 6998
+    },
+    "one-button-game-simulated-player-test": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5260
     }
   }
 }
