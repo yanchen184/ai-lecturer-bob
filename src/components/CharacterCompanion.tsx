@@ -312,7 +312,7 @@ export default function CharacterCompanion({ embedded = false }: CharacterCompan
       <button
         type="button"
         onClick={() => setCollapsed(false)}
-        className="hidden md:grid fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-[var(--color-neub-yellow)] border-2 border-black place-items-center font-black hover:scale-110 transition-transform"
+        className="hidden md:grid fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-[var(--color-neub-yellow)] border-2 border-black place-items-center font-black motion-safe:hover:scale-110 transition-transform"
         style={{ boxShadow: '3px 3px 0 #0a0a0a' }}
         aria-label="show character"
       >

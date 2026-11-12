@@ -62,7 +62,7 @@ body {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 150ms !important;
+    transition-property: opacity, color, background-color, border-color, text-decoration-color, fill, stroke !important;
     scroll-behavior: auto !important;
   }
   .lift, .lift:hover, .lift:active, .cover-img, .mobile-menu-panel {
@@ -184,6 +184,36 @@ details[open] > summary .toc-caret {
   letter-spacing: -0.005em;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
+}
+.blog-prose h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.blog-prose .blog-faq details {
+  border: 2px solid #000;
+  background: #fff;
+  margin: 0.75rem 0;
+}
+.blog-prose .blog-faq summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+}
+.blog-prose .blog-faq details[open] summary {
+  border-bottom: 1px solid #000;
+}
+.blog-prose .blog-faq details p {
+  margin: 0;
+  padding: 0.75rem 1rem;
+}
+.blog-prose hr {
+  border: 0;
+  border-top: 2px solid #000;
+  margin: 2.5rem 0;
 }
 .blog-prose p {
   line-height: 1.85;
@@ -463,11 +493,15 @@ details[open] > summary .toc-caret {
   font-weight: 800;
 }
 .blog-prose td { min-width: 6ch; }
-/* 捲動提示：表格外層有 data-attr 時顯示 */
+/* 不可斷的長字（URL、類別名）撐破欄寬時，由外層橫捲，表格本身仍是 table 佈局 */
+.blog-prose td { overflow-wrap: anywhere; }
 .blog-prose .table-wrap {
   position: relative;
   margin: 2rem 0;
+  max-width: 100%;
+  overflow-x: auto;
 }
+.blog-prose .table-wrap > table { margin: 0; }
 .blog-prose .table-wrap > .table-hint {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.75rem;

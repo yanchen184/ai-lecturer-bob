@@ -25,11 +25,12 @@
   }
   .reading-progress-bar {
     height: 100%;
-    width: 0%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
     background: #ffeb3b;
     border-bottom: 1px solid #0a0a0a;
-    transition: width 75ms linear;
-    will-change: width;
+    will-change: transform;
   }
 </style>
 
@@ -53,7 +54,7 @@
               1,
             )
           : 0;
-        bar.style.width = (ratio * 100).toFixed(2) + '%';
+        bar.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
         ticking = false;
       }
 

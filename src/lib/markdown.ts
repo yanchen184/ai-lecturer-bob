@@ -106,7 +106,7 @@ export interface RenderedMarkdown {
  */
 export function stripManualTableOfContents(content: string): string {
   return content.replace(
-    /^##\s+(?:本文)?目錄[^\n]*\n([\s\S]*?)(?=^##\s+|\s*$)/gim,
+    /^##\s+(?:本文)?目錄[^\n]*\n([\s\S]*?)(?=^##\s|(?![\s\S]))/gim,
     '',
   );
 }
@@ -168,7 +168,7 @@ function extractToc(content: string): TocItem[] {
   const regex = /^## (.+)$/gm;
   let m: RegExpExecArray | null;
   while ((m = regex.exec(withoutCode)) !== null) {
-    const text = m[1].trim();
+    const text = m[1].trim().replace(/`/g, '');
     let id = slugify(text) || `heading-${items.length}`;
     let unique = id;
     let n = 1;
@@ -183,7 +183,9 @@ function extractToc(content: string): TocItem[] {
 }
 
 /** Markdown → HTML。樣式由 `.blog-prose` 統一處理。 */
-export function renderMarkdown(content: string): RenderedMarkdown {
+export function renderMarkdown(source: string): RenderedMarkdown {
+  // 頁面 H1 由文章 title 產生，正文第一行的 `# 標題` 是重複的，直接拿掉
+  const content = source.replace(/^﻿?\s*# [^\n]*(?:\n|$)/, '');
   const toc = extractToc(content);
   const tocIds = new Set<string>();
   const resolveId = (text: string): string => {
@@ -245,6 +247,15 @@ export function renderMarkdown(content: string): RenderedMarkdown {
     (line) => line
   );
 
+  // 行內 code 也先抽成 placeholder：內容要 escape，且不能再被粗體／連結／標題規則改寫
+  const inlineCodes: string[] = [];
+  html = html.replace(/`([^`\n]+)`/g, (_m, code: string) => {
+    inlineCodes.push(code);
+    return `\u0000INLINECODE${inlineCodes.length - 1}\u0000`;
+  });
+  const inlineCodeRe = /\u0000INLINECODE(\d+)\u0000/g;
+  const plainText = (s: string): string =>
+    s.replace(inlineCodeRe, (_m, n: string) => inlineCodes[Number(n)]);
 
   // GFM tables — must run BEFORE other block-level regexes so `|` pipes aren't
   // mistaken for inline syntax. Matches header + separator + 1+ body rows.
@@ -315,7 +326,7 @@ export function renderMarkdown(content: string): RenderedMarkdown {
       )
       .join('');
 
-    return `<table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table>`;
+    return `<div class="table-wrap"><table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table></div>`;
   });
 
   // YouTube 嵌入：@[youtube](VIDEO_ID) 或 @[youtube](https://youtu.be/VIDEO_ID)
@@ -359,10 +370,12 @@ export function renderMarkdown(content: string): RenderedMarkdown {
 
   html = html
     .replace(/^## (.+)$/gm, (_m, title: string) => {
-      const id = resolveId(title.trim());
+      const id = resolveId(plainText(title).trim());
       return `<h2 id="${id}">${title}</h2>`;
     })
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
+    .replace(/^-{3,}\r?$/gm, '<hr/>')
     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m, alt: string, url: string) => {
       const isLocalRaster = /^\/?[^:]+\.(png|jpe?g)$/i.test(url);
       const isSvg = /\.svg(\?|$)/i.test(url);
@@ -386,7 +399,6 @@ export function renderMarkdown(content: string): RenderedMarkdown {
       return `<a href="${url}"${rel}>${text}</a>`;
     })
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/^- (.+)$/gm, '<li>$1</li>')
     .replace(/^\d+\. (.+)$/gm, '<li class="ol">$1</li>');
 
@@ -405,7 +417,7 @@ export function renderMarkdown(content: string): RenderedMarkdown {
   // Paragraphs: split by blank line, skip lines that already look like block elements
   const isBlock = (line: string): boolean =>
     /^\u0000CODEBLOCK\d+\u0000$/.test(line.trim()) ||
-    /^<(h2|h3|pre|ul|ol|blockquote|img|picture|figure|div|table|svg)\b/.test(
+    /^<(h2|h3|h4|hr|pre|ul|ol|blockquote|img|picture|figure|div|table|svg)\b/.test(
       line.trim()
     );
 
@@ -422,6 +434,10 @@ export function renderMarkdown(content: string): RenderedMarkdown {
   html = html.replace(
     /\u0000CODEBLOCK(\d+)\u0000/g,
     (_m, n: string) => codeBlocks[Number(n)]
+  );
+  html = html.replace(
+    inlineCodeRe,
+    (_m, n: string) => `<code>${escapeHtml(inlineCodes[Number(n)])}</code>`
   );
 
   return { html, toc };

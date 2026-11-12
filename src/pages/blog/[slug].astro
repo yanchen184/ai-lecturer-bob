@@ -31,7 +31,10 @@ interface Props {
 const { post, allPosts } = Astro.props;
 
 const articleContent = stripManualTableOfContents(post.content);
-const { html: rawHtml, toc } = renderMarkdown(articleContent);
+const { html: rawHtml, toc: contentToc } = renderMarkdown(articleContent);
+// FAQ schema 的問題若正文沒寫到，就在文末顯示，讓 JSON-LD 與頁面內容一致
+const visibleFaq = (post.faqItems ?? []).filter((item) => !articleContent.includes(item.q));
+const toc = visibleFaq.length > 0 ? [...contentToc, { id: 'faq', text: '常見問題' }] : contentToc;
 // build 時把 Kroki <figure> 改寫成 inline SVG。
 // fetch 失敗會保留 <img> fallback，不會 break build。
 const html = await inlineKrokiImages(rawHtml);
@@ -190,7 +193,7 @@ const jsonLdSchemas = faqSchema
               )}
             </div>
 
-            <h1 class="text-3xl md:text-4xl lg:text-[2.65rem] font-black leading-[1.12] tracking-tight mb-5">
+            <h1 class="text-3xl md:text-4xl lg:text-[2.65rem] font-black leading-[1.12] tracking-tight mb-5 wrap-anywhere">
               {post.title}
             </h1>
 
@@ -265,7 +268,20 @@ const jsonLdSchemas = faqSchema
           </details>
         )}
 
-        <article data-blog-prose class="blog-prose min-w-0" set:html={html} />
+        <article data-blog-prose class="blog-prose min-w-0">
+          <Fragment set:html={html} />
+          {visibleFaq.length > 0 && (
+            <section class="blog-faq">
+              <h2 id="faq">常見問題</h2>
+              {visibleFaq.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </section>
+          )}
+        </article>
 
         {/* Desktop: 右側浮動 TOC + 作者迷你卡 */}
         <aside class="hidden xl:block">
@@ -282,7 +298,7 @@ const jsonLdSchemas = faqSchema
                       <a
                         href={`#${item.id}`}
                         data-toc-link={item.id}
-                        class="toc-link block px-2 py-1.5 opacity-85 hover:opacity-100 hover:bg-[#ffff00] leading-snug transition-all border-l-2 border-transparent hover:border-black"
+                        class="toc-link block px-2 py-1.5 opacity-85 hover:opacity-100 hover:bg-[#ffff00] leading-snug transition-[opacity,background-color,border-color] border-l-2 border-transparent hover:border-black"
                       >
                         {item.text}
                       </a>
@@ -451,25 +467,27 @@ const jsonLdSchemas = faqSchema
           const targets = document.querySelectorAll('article.blog-prose table, article.blog-prose pre');
           targets.forEach((el) => {
             if (el.dataset.scrollHinted) return;
-            if (el.scrollWidth <= el.clientWidth + 1) return;
             const kind = el.tagName === 'TABLE' ? 'table' : 'pre';
+            // table 的捲動容器是外層 .table-wrap
+            const scroller = (kind === 'table' && el.closest('.table-wrap')) || el;
+            if (scroller.scrollWidth <= scroller.clientWidth + 1) return;
             const labels = LABELS[kind];
             const hint = document.createElement('div');
             hint.className = 'scroll-hint';
             hint.setAttribute('aria-hidden', 'true');
             hint.textContent = labels.idle;
-            // 若 pre 被 .code-block 包起來，把 hint 插在 wrapper 前面；否則插在 el 前
-            const anchor = el.closest('.code-block') || el;
+            // 若 pre 被 .code-block 包起來，把 hint 插在 wrapper 前面；否則插在捲動容器前
+            const anchor = el.closest('.code-block') || scroller;
             anchor.parentNode.insertBefore(hint, anchor);
             el.dataset.scrollHinted = '1';
 
             const update = () => {
-              const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 2;
+              const atEnd = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 2;
               hint.classList.toggle('at-end', atEnd);
               hint.textContent = atEnd ? labels.end : labels.idle;
             };
             update();
-            el.addEventListener('scroll', update, { passive: true });
+            scroller.addEventListener('scroll', update, { passive: true });
           });
         }
         if (document.readyState === 'loading') {
