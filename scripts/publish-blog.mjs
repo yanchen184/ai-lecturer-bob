@@ -6256,6 +6256,32 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'floor-plan-to-3d-walkthrough-threejs',
+    title: '平面圖變可走的 3D 房子：Claude 讀圖成 JSON、three.js 長出牆，一案 5,000 美元賣的是什麼',
+    metaDescription:
+      '照 Threads 爆紅貼文實作平面圖轉 3D 導覽：Claude 把平面圖讀成牆與門窗 JSON，three.js 依開口擠出牆，做成可走動、可換風格的單檔網頁，附判讀準確度與 3D 導覽報價查證。',
+    excerpt:
+      '照 Threads 上 3,961 讚的貼文實作「丟平面圖、變出可走的 3D 房子」：Claude 把平面圖讀成 JSON，three.js 依門窗開口擠出牆，做成 54.7 KB 的單檔網頁，可以走、可以撞牆、能一鍵換三種裝潢。10 面牆全對、11 個開口只偏 5 公分——但 5,000 美元是工作室寫實品質的價格，這東西真正的位置是沒有實體可掃的預售屋。',
+    category: '工程實作',
+    tags: ['three.js', 'Claude', '平面圖', '3D 導覽', '房地產科技', 'Threads'],
+    publishDate: '2026-11-13',
+    faqItems: [
+      {
+        q: '平面圖轉 3D 導覽要用什麼技術？',
+        a: '我的做法分兩段：先讓 Claude 看平面圖，輸出牆的起訖座標、門窗開口（沿牆的起訖公尺數與類型）、房間與家具的 JSON；再用 three.js 讀 JSON，沿每面牆把開口之間的實心段擠成方塊，窗補窗台和玻璃、門只留門楣。原作者則是用 Blender 建模烘光後再做 three.js 網頁導覽。',
+      },
+      {
+        q: 'Claude 看平面圖判讀準嗎？',
+        a: '在我程式畫的乾淨測試圖上，10 面牆全對，11 個門窗開口只有 1 個起點偏了 5 公分。真實建案圖有尺寸線、家具符號、弧形牆和多樓層，我還沒測，準確度要重新驗。',
+      },
+      {
+        q: '3D 導覽一案 5,000 到 10,000 美元是真的嗎？',
+        a: 'CAD Crowd 列的 VR／AR 體驗是每案 5,000–50,000+ 美元，所以數字落在區間低段；但那是工作室寫實渲染加客製互動的價格。現成屋用 Matterport 掃描只要幾百美元，平面圖轉 3D 的優勢在沒有實體房子可掃的預售屋。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
