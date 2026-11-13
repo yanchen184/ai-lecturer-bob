@@ -48,7 +48,7 @@ export const groupMeta: Record<K8sLesson['group'], { label: string; color: strin
 import { k8sLessons } from '../data/k8sLessons';
 
 /**
- * 今天日期（YYYY-MM-DD，用 ISO 字串比對；K8sLesson.publishDate 也是這個格式）。
+ * 今天日期（YYYY-MM-DD，Asia/Taipei 時區，用 ISO 字串比對；K8sLesson.publishDate 也是這個格式）。
  *
  * 環境變數 PUBLISH_OVERRIDE_DATE 可以強制改變「今天」是哪一天，
  * 用於 preview 未來排程效果（例：`PUBLISH_OVERRIDE_DATE=2026-05-30 npm run build`）。
@@ -56,7 +56,7 @@ import { k8sLessons } from '../data/k8sLessons';
 function getToday(): string {
   const override = process.env.PUBLISH_OVERRIDE_DATE;
   if (override && /^\d{4}-\d{2}-\d{2}$/.test(override)) return override;
-  return new Date().toISOString().slice(0, 10);
+  return new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Taipei' }).format(new Date());
 }
 
 /** 是否該發布：未標 draft 且 publishDate <= 今天 */
