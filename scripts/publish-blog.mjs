@@ -6282,6 +6282,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'css-3d-carousel-pop-up-book',
+    title: 'CSS 3D 做 360° 旋轉立體書：6 頁 rotateY 排成星形，紙雕寬度守住 2·d·tan30°',
+    metaDescription:
+      '用純 CSS 3D 做網頁版 360° 旋轉立體書（carousel book）：6 張書頁以書脊為軸 rotateY 排成星形，三層紙雕寬度守住 2·d·tan30° 不穿出書頁，scaleX／scaleY 做出拉開才立起的開書動畫，附線上成品。',
+    excerpt:
+      '照 Threads 上 Opus 5.5 做的《貓頭鷹與小貓》旋轉立體書，我用純 CSS 3D 做了一本 6 幕版本：單一 HTML 檔 25 KB、不用 three.js，可拖曳旋轉、每幕一個互動和即時合成音效。關鍵是一條幾何限制——紙雕層寬度不超過 2·d·tan30°，才卡得進兩頁之間；代價是 60° 的楔形偏窄，要大場景就改 5 幕。',
+    category: '工程實作',
+    tags: ['CSS 3D', 'preserve-3d', '立體書', '互動網頁', 'WebAudio', 'Threads'],
+    publishDate: '2026-11-13',
+    faqItems: [
+      {
+        q: 'CSS 3D 做立體書一定要用 three.js 嗎？',
+        a: '不用。這本書只用 perspective、transform-style: preserve-3d 和 rotateY／translateX／scale，JS 只負責每一幀改 transform 字串。整份是單一 HTML 檔、25,069 bytes，沒有外部套件。',
+      },
+      {
+        q: '360° 立體書的紙雕層為什麼會穿出書頁？',
+        a: '紙雕是平面，站在兩頁夾出的楔形裡；離書脊越近，兩頁之間越窄。6 頁時夾角 60°，距書脊 d 的位置可用寬度是 2·d·tan30°，紙雕寬過這個值邊緣就會穿出書頁背面。',
+      },
+      {
+        q: '要改成 5 幕或 8 幕要動哪裡？',
+        a: '改 N 之後每頁間隔變成 360/N 度，寬度上限變成 2·d·tan(180/N 度)。5 幕時同樣的距離可以放寬約 26%，8 幕則變窄，SLOT 裡每層的寬度要跟著重算。',
+      },
+      {
+        q: '開書時紙雕怎麼做到拉開才立起？',
+        a: 'scaleX 用 tan(目前半角)/tan30° 跟著楔形一起張開，scaleY 在開書進度 15% 之後才從 0 線性長到 1，所以畫面先看到書頁散開、再看到紙雕彈起。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
