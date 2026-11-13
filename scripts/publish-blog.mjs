@@ -6312,6 +6312,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-vs-chatgpt-floor-plan-to-3d',
+    title: 'Claude 和 ChatGPT 平面圖轉 3D 差在哪？生圖重畫會改格局，寫程式建模我盲測三輪全對',
+    metaDescription:
+      'Threads 實測 ChatGPT 改了平面圖、Claude 一次做對。拆解生圖重畫與寫程式建模的差別，附三輪盲測：18 間房 IoU 1.000、35 個門窗誤差 0 cm，含低解析 JPEG 測試與限制。',
+    excerpt:
+      'Threads 上有人拿同一張平面圖比 ChatGPT Pro-6 和 Claude Sonnet 5.5 做 3D：ChatGPT 改了格局、Claude 位置全對，差別在一邊重新生一張渲染圖，一邊寫程式照座標建模。我把讀圖這一步拆出來盲測三輪，18 間房、35 個門窗全對，低解析 JPEG 也一樣——但題目是程式畫的乾淨圖，真實建案圖還沒驗。',
+    category: 'AI 工具',
+    tags: ['Claude', 'ChatGPT', '平面圖', '3D 建模', 'three.js', '盲測'],
+    publishDate: '2026-11-13',
+    faqItems: [
+      {
+        q: '為什麼 ChatGPT 把平面圖做成 3D 會改格局？',
+        a: 'ChatGPT 交出的是生圖模型重新產生的渲染圖，格局在每次生成時都會被模型重新決定。OpenAI 的 GPT Image 提示指南也寫明，重複修改仍可能改掉想保留的細節，不能動的區域建議把修改合成回原圖。',
+      },
+      {
+        q: 'Claude 怎麼把平面圖轉成 3D？',
+        a: 'Claude 不生圖，它讀平面圖寫出房間、牆、門窗座標的 JSON，再寫 three.js 程式依座標把牆擠成 3D。位置等於 JSON 裡的數字，所以準確度只取決於讀圖那一步。',
+      },
+      {
+        q: 'Claude 讀平面圖座標有多準？',
+        a: '我用程式隨機產生三張平面圖做盲測，Claude 只看圖片抽座標：18 間房 IoU 全部 1.000，35 個門窗誤差 0 cm，其中一張是縮成一半的低畫質 JPEG。但測試圖沒有尺寸線、門弧和家具符號，真實建案圖的準確度沒有測。',
+      },
+      {
+        q: '想要好看的室內提案圖，該用哪一個？',
+        a: '要格局正確、尺寸可量，用 LLM 讀圖加程式建模；要材質光影的氛圍圖，生圖模型比較強。兩者都要時，可以先建正確的 3D，再拿 3D 截圖當生圖的構圖參考。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
