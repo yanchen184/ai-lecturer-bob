@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11",
+  "generatedAt": "2026-11-13",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -2700,6 +2700,24 @@
         "codeFence": 5
       },
       "wordCount": 6008
+    },
+    "ai-tool-subscription-site-60-unit-economics": {
+      "total": 95,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5009
     }
   }
 }
