@@ -6342,6 +6342,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'claude-trading-skills-discipline-gate',
+    title: 'claude-trading-skills 實測：4 個紀律 skill 管台股下單，3 個情境擋下 2 個',
+    metaDescription:
+      'claude-trading-skills 紀律閘門實測：用原版 CLI 串 position-sizer、熔斷器與下單前檢查，台股連虧扳回與超額風險都被擋下，附安裝步驟、818 支測試結果與 .TW 代號、美東時區兩個坑。',
+    excerpt:
+      'tradermonty/claude-trading-skills 是 MIT 開源的 Claude 交易 skill 集（3,825 星、74 個 skill），作者明說它不是訊號引擎，而是用寫死的 Python 規則管下單前後的紀律。我串起其中 4 個紀律 skill 跑 3 個台股情境，連虧扳回和超額風險都被擋下——可以用，但代號不能帶 .TW、時間邊界寫死美東，正式管台股前要先改時區。',
+    category: 'AI 工具',
+    tags: ['claude-trading-skills', 'Claude Code', 'Claude Skills', '交易紀律', '風險控管', '台股', 'Python'],
+    publishDate: '2026-11-13',
+    faqItems: [
+      {
+        q: 'claude-trading-skills 會幫我自動下單嗎？',
+        a: '不會。pre-trade-discipline-gate 的 SKILL.md 寫明它刻意離線：不下單、不取消單、不呼叫券商 API、不抓行情。它只讀本機的清單和交易紀錄，輸出 GO、NO_GO 或 REVIEW_REQUIRED，下不下單還是你自己決定。',
+      },
+      {
+        q: 'claude-trading-skills 可以用在台股嗎？',
+        a: '可以跑，但有兩個限制。代號只能寫 2330，寫 2330.TW 會被 thesis id 的正規式擋下；熔斷器和 gate 的日、週、月邊界寫死 America/New_York，台北早上看盤時前一天的虧損會被算成今天，冷卻結束時間也會偏 12 到 13 小時。',
+      },
+      {
+        q: '紀律閘門的判斷是 AI 做的嗎？',
+        a: '不是。position-sizer、drawdown-circuit-breaker、pre-trade-discipline-gate 和 trader-memory-core 的判斷都是確定性的 Python 規則，4 個 skill 共附 818 支測試。Claude 負責填清單、串指令，GO 或 NO_GO 由規則決定。',
+      },
+      {
+        q: '熔斷器預設什麼時候會叫停？',
+        a: '預設是單日已實現虧損達帳戶 2%、連續 2 筆虧損出場（冷卻 24 小時）、週虧 5%、月虧 8%。我的實測情境 B 本週只虧 2.4%，是因為連虧 2 筆觸發冷卻才被擋。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
