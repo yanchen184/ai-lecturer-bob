@@ -6406,6 +6406,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'ai-kpop-dance-video-storyboard-comfyui-wan22',
+    title: 'AI K-pop 跳舞影片怎麼做？角色照→6 格分鏡→舞台影片，本機 ComfyUI Wan2.2 實測 13 分鐘',
+    metaDescription:
+      'Threads 爆紅的 ChatGPT 分鏡＋Gemini K-pop 影片，我用 RTX 4070 跑 ComfyUI Wan2.2 重做：6 格姿勢分鏡、12 秒舞台影片、純生成 13 分鐘，附腳本與 fp8 提速 17 倍設定。',
+    excerpt:
+      'Threads 上 @nkriderking 用兩句 prompt 做出自己角色跳 K-pop 的影片：ChatGPT 把角色照做成多格分鏡，Gemini 再把分鏡變成舞台影片。我在 RTX 4070 用 ComfyUI Wan2.2 5B 重做一遍，主圖跑短 i2v 取最後一幀當分鏡，6 格角色都沒跑掉，12 秒成品純生成約 13 分鐘——代價是段落硬切、沒聲音、只有 480×832。',
+    category: 'AI 工具',
+    tags: ['AI 影片', 'K-pop', 'Wan2.2', 'ComfyUI', '分鏡', '角色一致性', '圖生影片', 'RTX 4070'],
+    publishDate: '2026-11-14',
+    faqItems: [
+      {
+        q: '一定要有 ChatGPT Plus 和 Gemini 付費方案嗎？',
+        a: '原貼文的雲端流程要看當下兩邊的方案和額度；Gemini 的照片轉影片在 Google 官方說明裡是 Google AI Pro／Ultra 的功能。本機版不用訂閱，但要一張夠力的 NVIDIA 顯卡。',
+      },
+      {
+        q: '12GB 顯卡跑 Wan2.2 5B 很慢怎麼辦？',
+        a: '先看 ComfyUI log 有沒有 loaded partially。有的話把 UNETLoader 的 weight_dtype 改成 fp8_e4m3fn，我這次同樣 33 幀從每步 29.8 秒降到約 1.75 秒。',
+      },
+      {
+        q: '為什麼不每格直接文生圖？',
+        a: '每次重新文生圖，臉和衣服都會變。用主圖跑短 i2v 取最後一幀，模型必須讓同一個人連續動作，6 格的長相和服裝都對得上。',
+      },
+      {
+        q: '可以換成自己的角色嗎？',
+        a: '可以。把主圖那步換成上傳自己的角色圖（/upload/image），後面 panels、clips 照跑；要換舞步就改 POSES 裡的 6 句動作描述。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
