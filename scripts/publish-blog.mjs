@@ -6372,6 +6372,40 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'google-agentic-architect-certification',
+    title: 'Google Professional Agentic Architect 認證怎麼考？官方規格查核＋ADK 評測實測',
+    metaDescription:
+      'Google Cloud Professional Agentic Architect 認證考什麼：2 小時 50–60 題、200 美元、選擇題加實作 lab 兩關，5 大範圍權重整理，附 ADK golden evalset 實測，改壞的 agent 3 題全被抓。',
+    excerpt:
+      'Google Cloud 在 2026-11-11 公布的 Professional Agentic Architect 是第一張以 AI agent 為主題的專業認證，選擇題過了還要在 Google Skills 考實作 lab，考綱還直接點名 Claude Code。範圍 3、4 的寫 agent 與評測佔 55%——我用 ADK 跑了一份 golden evalset，正常版全過、改壞版 3 題全被抓，是最值得先練的一段。',
+    category: 'AI 工具',
+    tags: ['Google Cloud', 'Professional Agentic Architect', 'AI Agent', 'ADK', 'Agent 評測', '證照', 'Claude Code'],
+    publishDate: '2026-11-13',
+    faqItems: [
+      {
+        q: 'Professional Agentic Architect 考試幾題、多久、多少錢？',
+        a: '官方認證頁寫的是 2 小時、50–60 題選擇題、報名費 200 美元（另計稅）、英文、線上或考場監考，效期 1 年，沒有報考資格限制。第三方 Beta 版備考文寫的約 80 題、3 小時，準備正式版以官方認證頁為準。',
+      },
+      {
+        q: '只考選擇題就能拿到證照嗎？',
+        a: '不行。認證分兩部分：Pearson 監考的選擇題通過後，會在 CM Connect 收到通知，再到 Google Skills 考 PAA 專屬的實作 lab，在真的雲端環境裡建、測、除錯 agent。',
+      },
+      {
+        q: '考綱裡哪個範圍最重？',
+        a: '範圍 3「開發自訂 agent」約 33%，範圍 4「評測與部署 agent」約 22%，兩項加起來 55%。低程式碼工具的範圍 1 只佔約 13%。',
+      },
+      {
+        q: '考試範圍真的有 Claude Code 嗎？',
+        a: '有。官方 exam guide 2.1 寫「Configuring coding agents with MCP servers, custom skills, and access to tools (e.g., Antigravity and Claude Code on Google Cloud)」。',
+      },
+      {
+        q: 'ADK 的 agent 評測要怎麼開始？',
+        a: '把預期行為寫成 evalset JSON：每筆有使用者問題、預期 tool 呼叫與參數、預期回答，再用 test_config.json 設 tool_trajectory_avg_score 與 response_match_score 門檻，最後用 AgentEvaluator.evaluate 跑。分數低於門檻會丟 AssertionError，可以直接接進 CI。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
