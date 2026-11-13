@@ -2736,6 +2736,24 @@
         "codeFence": 5
       },
       "wordCount": 5640
+    },
+    "floor-plan-to-3d-walkthrough-threejs": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4718
     }
   }
 }
