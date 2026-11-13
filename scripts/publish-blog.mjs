@@ -6226,6 +6226,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'threads-restricted-content-og-meta-check',
+    title: 'Threads「此內容並未開放所有人查看」是什麼？用 og meta 分辨法律限制、不存在與公開貼文',
+    metaDescription:
+      'Threads 顯示「此內容並未開放所有人查看」代表 Meta 依當地法律在該地區限制存取。附 Python 預檢器：用 og:url、og:title 一次分辨公開、法律限制、不存在，並從貼文代號還原發文時間。',
+    excerpt:
+      'Threads 顯示「此內容並未開放所有人查看」，是 Meta 收到法律要求後只在當地限制存取，登入也看不到；我寫了一支只用 Python 標準函式庫的預檢器，抓一次 og meta 就分得出公開、法律限制、不存在三種連結。2026-11-13 實測 4 個網址全判對——但結果綁出口 IP 的地區，換到海外主機跑可能就是公開。',
+    category: '工程實作',
+    tags: ['Threads', 'Open Graph', 'Python', '爬蟲', '內容限制', '自動化'],
+    publishDate: '2026-11-13',
+    faqItems: [
+      {
+        q: 'Threads 顯示「此內容並未開放所有人查看」登入就看得到嗎？',
+        a: '看不到。點「查看原因」寫的是 Meta 收到法律要求，已在內容違反當地法律的地區限制存取；限制依地區生效，同一地區的帳號登入後一樣看不到。',
+      },
+      {
+        q: '怎麼用程式判斷 Threads 貼文被地區限制？',
+        a: '用 facebookexternalhit/1.1 這個 UA 抓貼文頁，把 og:url unescape 後看作者欄：被限制的是 threads.com/@/post/代號（作者被清空），公開的是 @作者/post/代號並帶 on Threads 標題，不存在或私人則導回 Threads • Log in。',
+      },
+      {
+        q: '被限制的 Threads 貼文看得出發文時間嗎？',
+        a: '可以從貼文代號算：用 A–Z、a–z、0–9、-、_ 的 64 進位轉成整數，右移 23 位再加上 1314220021721 毫秒。這是我用公開貼文的顯示時間驗證出來的，不是 Meta 公開文件寫的 API。',
+      },
+      {
+        q: '預檢器能分辨不存在和私人帳號嗎？',
+        a: '不能。兩種情況都會導回登入頁，og:title 都是 Threads • Log in，需要人工確認。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
