@@ -2771,7 +2771,7 @@
         "bannedWords": 5,
         "codeFence": 5
       },
-      "wordCount": 6882
+      "wordCount": 6878
     },
     "claude-vs-chatgpt-floor-plan-to-3d": {
       "total": 85,
@@ -2790,6 +2790,24 @@
         "codeFence": 5
       },
       "wordCount": 5148
+    },
+    "claude-trading-skills-discipline-gate": {
+      "total": 80,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5525
     }
   }
 }
