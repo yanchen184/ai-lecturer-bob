@@ -4632,6 +4632,32 @@ const posts = [
     featured: false,
   },
   {
+    slug: 'threejs-low-poly-game-map',
+    title: 'three.js 低多邊形遊戲地圖怎麼做？22 KB 單檔實作，關掉 3 個渲染設定的對照實驗',
+    metaDescription:
+      '用 three.js 單檔做低多邊形 3D 遊戲地圖：229 個內建幾何體、零模型檔。對照實驗顯示關掉 ACES 色調映射改變 45.8% 像素，附程式碼、踩坑與 Playwright 驗證。',
+    excerpt:
+      '照 Threads 上「Claude 用 three.js 做 3D 遊戲畫面」的方向，我做了一張原創浮島地圖：單一 HTML 22 KB、229 個內建幾何體拼成、零模型檔，點地點角色會沿路走過去。對照實驗裡關掉 ACES 色調映射改變 45.8% 的像素、陰影 10.2%、flatShading 只有 0.6%——畫面質感主要靠這兩行渲染設定，不是靠細節堆出來的。',
+    category: '工程實作',
+    tags: ['three.js', 'Low Poly', '低多邊形', 'WebGL', '網頁遊戲', 'Claude', 'Playwright'],
+    publishDate: '2026-11-14',
+    faqItems: [
+      {
+        q: 'three.js 的 low poly 風格一定要開 flatShading 嗎？',
+        a: '在我這張地圖裡影響很小，關掉只改變 0.6% 的像素。稜角主要來自幾何體的分段數少，例如 0 次細分的二十面體和 8 段圓柱。分段數高的模型才需要靠 flatShading 做出面感。',
+      },
+      {
+        q: '哪個設定對畫面影響最大？',
+        a: 'ACES 色調映射。關掉後 45.8% 的像素明顯改變，天空和草地變得更飽和刺眼。其次是陰影，關掉後島底下的投影消失，島看起來像貼在背景上。',
+      },
+      {
+        q: 'THREE.MathUtils.smoothstep 跟 GLSL 的 smoothstep 有什麼不同？',
+        a: '參數順序相反。three.js 是 smoothstep(x, min, max)，值在第一個；GLSL 是 smoothstep(edge0, edge1, x)，值在最後。照 GLSL 的習慣寫 three.js 版本，結果會錯。',
+      },
+    ],
+    featured: false,
+  },
+  {
     slug: 'free-agentic-ai-courses-2026',
     title: '免費 Agentic AI 課程怎麼選？7 門逐一查證：3 門限時免費、AutoGen 已封存',
     metaDescription:
