@@ -5,5 +5,7 @@
   "ctr": 0.0,
   "position": 0.0,
   "queries": [],
-  "pages": []
+  "pages": [],
+  "analysis": "【一句總評】\n量還很小，7 天只有 14 次曝光，但點擊從 0 變成 6 次，首頁和 fb.yanchen.app 各有 3 次、2 次。昨天站內 45 次造訪、37 次文章瀏覽，大部分流量不是從 Google 來的。\n\n【需要注意】\n11-10 單日曝光與點擊都是 0，要看接下來幾天是不是也一樣。Top 查詢 7 天只有 1 次曝光，跟頁面加總的 24 次對不上，看不出大部分曝光是哪些字帶來的。\n\n【今天可以做】\n「node port」排第 9.0，是唯一接近第一頁的技術字。去 GSC 查這個 query 對應哪一頁，確認 title 和 H1 裡有「NodePort」，再對那頁和 /blog/k8s/deployment-intro/ 按 Request Indexing。",
+  "analysisGeneratedAt": "2026-11-14T18:54:06+0800"
 }
