@@ -5,7 +5,5 @@
   "ctr": 0.0,
   "position": 0.0,
   "queries": [],
-  "pages": [],
-  "analysis": "【一句總評】\n量很小，但這週開始有點擊了：近 7 天 6 次點擊，前週是 0。點擊來自首頁（3）、fb.yanchen.app（2）、/style/（1），文章頁還沒有任何點擊。\n\n【需要注意】\n11-10 單日曝光是 0，跟這週每天約 2 次曝光的節奏對不上，看明天的數據是不是還是 0。28 天查詢裡 NodePort 相關的有 4 個，只有「node port」排到第 9 名，其他都在 38 名以後，這是目前最有機會的主題。\n\n【今天可以做】\n在 GSC 用「node port」篩出它排第 9 的是哪一頁，把 title 和第一個 H2 改成含「K8s NodePort」的寫法，改完對那一頁手動 Request Indexing。",
-  "analysisGeneratedAt": "2026-11-14T18:51:27+0800"
+  "pages": []
 }
