@@ -20,5 +20,7 @@
       "ctr": 0,
       "position": 2.5
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n這週點擊從 1 跳到 7、曝光 10 到 15，方向對，但基數小到一兩次點擊就能翻倍，還稱不上趨勢；昨天站內 75 次造訪、24 次文章瀏覽，幾乎都不是搜尋帶來的。\n\n【需要注意】\n點擊集中在首頁（5 次）和 /style/，/blog/ 曝光 4 次、k8s deployment-intro 曝光 2 次都是零點擊。28 天內 nodeport 相關查詢有四個變體，「node port」排第 9，其餘落在 38～99 名，是目前唯一成形的主題訊號。\n\n【今天可以做】\n把 NodePort 那篇的 title 和 meta description 改成直接含「K8s NodePort」「Service NodePort」字樣，開頭一句講清楚它是什麼、port 範圍多少，先把第 9 名那個查詢推進前五。",
+  "analysisGeneratedAt": "2026-11-15T23:46:43+0800"
 }
