@@ -34,5 +34,7 @@
       "ctr": 0,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n量很小但方向往上：近 7 天曝光 15、點擊 7，都比前 7 天多，點擊幾乎全靠首頁和 fb.yanchen.app。\n\n【需要注意】\n/style/ 曝光 7、/blog/ 曝光 5，點擊都是 0，有被看到但沒人點。近 7 天沒有任何查詢資料，28 天內唯一接近第一頁的非品牌詞是「node port」（排名 9）。\n\n【今天可以做】\n把 NodePort 那篇的 title 和 meta description 改成直接含「NodePort 是什麼」，改完順手 Request Indexing。",
+  "analysisGeneratedAt": "2026-11-16T07:07:40+0800"
 }
