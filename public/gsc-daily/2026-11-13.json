@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-13",
+  "impressions": 5,
+  "clicks": 1,
+  "ctr": 20.0,
+  "position": 3.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/ai-caught-cloudflare-dns-lying/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100,
+      "position": 1
+    },
+    {
+      "page": "/blog/claude-code-teams-plugin-webhook-setup/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/style/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
