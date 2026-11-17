@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-14",
+  "impressions": 1,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 7.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    }
+  ]
+}
