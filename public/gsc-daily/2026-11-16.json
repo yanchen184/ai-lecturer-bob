@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-16",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 6.7,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/ollama-cloud-hermes-langchain/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    }
+  ]
+}
