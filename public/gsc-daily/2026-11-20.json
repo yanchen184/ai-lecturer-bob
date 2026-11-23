@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-20",
+  "impressions": 8,
+  "clicks": 2,
+  "ctr": 25.0,
+  "position": 2.1,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/",
+      "impressions": 6,
+      "clicks": 2,
+      "ctr": 33.33,
+      "position": 1.8
+    },
+    {
+      "page": "/style/",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
