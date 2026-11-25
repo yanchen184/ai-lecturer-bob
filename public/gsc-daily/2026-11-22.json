@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-22",
+  "impressions": 3,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 3.0,
+  "queries": [],
+  "pages": [
+    {
+      "page": "/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "page": "/blog/ai-frontend-purple-problem-explained/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "page": "/style/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    }
+  ]
+}
