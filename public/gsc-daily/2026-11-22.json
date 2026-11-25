@@ -27,5 +27,7 @@
       "ctr": 0,
       "position": 3
     }
-  ]
+  ],
+  "analysis": "【一句總評】\n搜尋流量幾乎沒有起色：一週曝光 20、點擊 3。點擊從 6 掉到 3 看起來是砍半，但基數太小，算不上趨勢。昨天站內 140 次造訪，大部分不是從 Google 搜尋來的。\n\n【需要注意】\n曝光集中在首頁（11 次），文章頁的曝光都只有個位數，代表內容頁還沒被搜尋帶起來。28 天內只有 4 個查詢，各只有 1 次曝光。「ai講師」排第 1，但一個月才出現 1 次，表示幾乎沒人搜這個詞。\n\n【今天可以做】\n到 GSC 用「網址檢查」看 /blog/ai-frontend-purple-problem-explained/ 和 /blog/claude-code-ultrawork-harness-engineering/ 是否已收錄，沒收錄就按「要求建立索引」。順手開一下 sitemap.xml，確認它回 200、而且有列出這兩篇。",
+  "analysisGeneratedAt": "2026-11-26T07:07:52+0800"
 }
