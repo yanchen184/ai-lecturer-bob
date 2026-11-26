@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-23",
+  "impressions": 2,
+  "clicks": 0,
+  "ctr": 0.0,
+  "position": 32.5,
+  "queries": [
+    {
+      "query": "k8s",
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 63
+    }
+  ],
+  "pages": [
+    {
+      "page": "/blog/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "page": "/blog/k8s/kubernetes-intro/",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 63
+    }
+  ]
+}
