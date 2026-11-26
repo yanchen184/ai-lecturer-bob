@@ -37,6 +37,10 @@ const year = new Date().getFullYear();
   <div class="border-t border-white/10">
     <div class="max-w-7xl mx-auto px-6 md:px-10 py-4 text-xs opacity-60 flex flex-wrap justify-between gap-2">
       <span>© {year} 陳彥彤 Bob Chen. All rights reserved.</span>
+      <span class="flex gap-4">
+        <a href={withBase('/privacy')} class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">隱私權政策</a>
+        <a href={withBase('/terms')} class="hover:bg-[var(--color-neub-yellow)] hover:text-black px-1">服務條款</a>
+      </span>
       <span class="font-mono">build: astro-ssg</span>
     </div>
   </div>

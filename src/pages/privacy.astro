@@ -1,0 +1,126 @@
+---
+/** /privacy — ycyt（YouTube Data API 自用工具）隱私權政策，供 Google OAuth 審核。 */
+import RootLayout from '../layouts/RootLayout.astro';
+import NavbarNeub from '../components/NavbarNeub.astro';
+import FooterNeub from '../components/FooterNeub.astro';
+import { CONTACT_EMAIL } from '../data/services';
+
+const EFFECTIVE_DATE = '2026-11-26';
+const h2 = 'text-2xl font-black tracking-tight mt-10 mb-3';
+const p = 'leading-relaxed mb-3';
+const ul = 'list-disc pl-6 space-y-1.5 mb-3 leading-relaxed';
+const a = 'underline decoration-2 underline-offset-2 hover:bg-[var(--color-neub-yellow)] break-all';
+---
+
+<RootLayout
+  title="隱私權政策 Privacy Policy | AI 講師陳彥彤YC"
+  description="ycyt（YouTube Data API 自用工具）的隱私權政策：收集哪些資料、token 存放位置、如何撤銷授權。"
+  canonical="/privacy"
+>
+  <NavbarNeub />
+
+  <main class="font-sans text-[#0a0a0a]">
+    <article class="max-w-3xl mx-auto px-6 md:px-10 py-14 md:py-20">
+      <h1 class="text-4xl md:text-5xl font-black tracking-tighter">隱私權政策</h1>
+      <p class="mt-2 font-mono text-sm opacity-70">Privacy Policy · 生效日期 Effective date：{EFFECTIVE_DATE}</p>
+
+      <section lang="zh-Hant">
+        <h2 class={h2}>適用範圍</h2>
+        <p class={p}>
+          本政策適用於 Google Cloud 專案 yanchen0402 中的 OAuth 應用程式「ycyt」。ycyt 是本網站擁有者陳彥彤（Bob Chen）自用的工具，
+          透過 YouTube Data API 為自己的頻道上傳影片、修改發布排程、讀取觀看數據。
+        </p>
+
+        <h2 class={h2}>申請的權限（OAuth scopes）</h2>
+        <ul class={ul}>
+          <li><code>https://www.googleapis.com/auth/youtube.upload</code></li>
+          <li><code>https://www.googleapis.com/auth/youtube.readonly</code></li>
+          <li><code>https://www.googleapis.com/auth/youtube</code></li>
+          <li><code>https://www.googleapis.com/auth/youtube.force-ssl</code></li>
+        </ul>
+
+        <h2 class={h2}>收集的資料</h2>
+        <p class={p}>ycyt 只會存取：</p>
+        <ul class={ul}>
+          <li>授權帳號自己頻道的 YouTube 資料（影片、排程、觀看數據）。</li>
+          <li>Google 授權後發給的 OAuth token。</li>
+        </ul>
+
+        <h2 class={h2}>資料存放</h2>
+        <p class={p}>OAuth token 只存在使用者本機，不會上傳到任何伺服器。</p>
+
+        <h2 class={h2}>分享與使用</h2>
+        <p class={p}>取得的資料不分享、不出售給任何第三方，也不用於廣告。</p>
+
+        <h2 class={h2}>撤銷授權</h2>
+        <p class={p}>
+          你可以隨時到 Google 帳戶的「第三方存取權」頁面撤銷 ycyt 的授權：
+          <a class={a} href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">https://myaccount.google.com/permissions</a>
+        </p>
+
+        <h2 class={h2}>YouTube API 服務</h2>
+        <p class={p}>
+          ycyt 使用 YouTube API 服務。使用 ycyt 即表示你同意遵守
+          <a class={a} href="https://www.youtube.com/t/terms" target="_blank" rel="noopener">YouTube 服務條款</a>，
+          並適用 <a class={a} href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google 隱私權政策</a>。
+        </p>
+
+        <h2 class={h2}>聯絡方式</h2>
+        <p class={p}>對本政策有任何問題，請寄信至 <a class={a} href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>。</p>
+      </section>
+
+      <hr class="my-14 border-t-[3px] border-black" />
+
+      <section lang="en">
+        <h2 class="text-3xl font-black tracking-tight mb-3">Privacy Policy (English)</h2>
+        <p class="font-mono text-sm opacity-70 mb-6">Effective date: {EFFECTIVE_DATE}</p>
+
+        <h2 class={h2}>Scope</h2>
+        <p class={p}>
+          This policy applies to the OAuth application "ycyt" in Google Cloud project yanchen0402. ycyt is a personal tool used
+          by the owner of this website, Bob Chen, to upload videos, change publishing schedules, and read view statistics for
+          the owner's own YouTube channel through the YouTube Data API.
+        </p>
+
+        <h2 class={h2}>Requested OAuth scopes</h2>
+        <ul class={ul}>
+          <li><code>https://www.googleapis.com/auth/youtube.upload</code></li>
+          <li><code>https://www.googleapis.com/auth/youtube.readonly</code></li>
+          <li><code>https://www.googleapis.com/auth/youtube</code></li>
+          <li><code>https://www.googleapis.com/auth/youtube.force-ssl</code></li>
+        </ul>
+
+        <h2 class={h2}>Data accessed</h2>
+        <p class={p}>ycyt only accesses:</p>
+        <ul class={ul}>
+          <li>YouTube data of the authorized account's own channel (videos, schedules, view statistics).</li>
+          <li>The OAuth token issued by Google after authorization.</li>
+        </ul>
+
+        <h2 class={h2}>Data storage</h2>
+        <p class={p}>OAuth tokens are stored only on the user's local machine and are never uploaded to any server.</p>
+
+        <h2 class={h2}>Sharing and use</h2>
+        <p class={p}>Data is not shared with or sold to any third party, and is not used for advertising.</p>
+
+        <h2 class={h2}>Revoking access</h2>
+        <p class={p}>
+          You can revoke ycyt's access at any time from your Google Account permissions page:
+          <a class={a} href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">https://myaccount.google.com/permissions</a>
+        </p>
+
+        <h2 class={h2}>YouTube API Services</h2>
+        <p class={p}>
+          ycyt uses YouTube API Services. By using ycyt you agree to be bound by the
+          <a class={a} href="https://www.youtube.com/t/terms" target="_blank" rel="noopener">YouTube Terms of Service</a>,
+          and the <a class={a} href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a> applies.
+        </p>
+
+        <h2 class={h2}>Contact</h2>
+        <p class={p}>For questions about this policy, email <a class={a} href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+      </section>
+    </article>
+  </main>
+
+  <FooterNeub />
+</RootLayout>
