@@ -7346,6 +7346,36 @@ const posts = [
     ],
     featured: false,
   },
+  {
+    slug: 'orca-multi-computer-bot-handoff',
+    title: 'Orca 跨電腦派工實測：家用和公司兩台 bot 互相交接，Mac 還沒接上',
+    metaDescription:
+      'Orca 跨電腦派工實測：一條配對連結把家用和公司兩台電腦串起來，bot 用 --on company 互傳 handoff 和 question。附配對步驟、驗證指令、5 個踩坑，以及 Mac 只 ping 得到、還沒接上的原因。',
+    excerpt:
+      '我在 2026-11-26 用 Orca 的配對連結把家用和公司兩台 Windows 串成一組，家用的 bot 加 --on company 就能把工作交接給公司的 bot，公司的 bot 也能反過來發問。兩台互傳訊息已實測打通，跨機器開 worker 和 Mac 配對都還沒做——Mac 目前只 ping 得到。',
+    category: 'AI 工具',
+    tags: ['Orca', 'AI agent', 'Claude Code', 'Tailscale', '多台電腦', 'bot 協作'],
+    publishDate: '2026-11-26',
+    faqItems: [
+      {
+        q: 'Orca 跨電腦派工需要開 SSH 或遠端桌面嗎？',
+        a: '我這次不需要。公司電腦的 SSH、RDP、WinRM 都沒開，配對走 Orca 自己的連線；兩台用 Tailscale 放在同一個私人網路裡。',
+      },
+      {
+        q: 'orca://pair 配對連結可以貼給別人嗎？',
+        a: '不行。連結裡帶著那台的連線位址和裝置金鑰，拿到就能操作那台的 Orca，我把它當密碼處理，只在兩台之間傳。',
+      },
+      {
+        q: '--on 和 --environment 差在哪？',
+        a: '查那台的狀態或專案用 --environment company，例如 orca repo list --environment company；把訊息送給那台上的 bot 用 --on company，而且要寫在 --to 前面。',
+      },
+      {
+        q: 'Mac 也能用同一套方法接上嗎？',
+        a: '步驟應該一樣，在 Mac 的 Orca 產生配對連結再 orca environment add，但我還沒走通。目前 Mac 只有 Tailscale ping 有回應，SSH 和 Orca 連線埠都不通。',
+      },
+    ],
+    featured: false,
+  },
 ]
 
 const wordCountOf = (s) => s.replace(/\s/g, '').length
