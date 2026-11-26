@@ -4553,8 +4553,7 @@ const posts = [
       'patrick.txrx 在 Threads 公開的 TouchDesigner 作品，把方塊放上木盒畫面就辨識出標本，原理是木盒底下藏 RC522 讀卡機，Arduino 把 tag 的 UID 用 Serial 一行一筆傳給 TD。我重做了一套：韌體 arduino-cli 編譯過、協定測試 6/6、網頁版 5 個狀態全 PASS——關鍵是改用 PICC_WakeupA 才偵測得到拿走，但還沒接真硬體上機。',
     category: '工程實作',
     tags: ['TouchDesigner', 'RFID', 'Arduino', 'RC522', 'Serial', 'Web Serial', '互動裝置'],
-    publishDate: '2026-10-27',
-    published: false,
+    publishDate: '2026-11-26',
     faqItems: [
       {
         q: 'RFID 隔著木板讀得到嗎？',
@@ -4640,7 +4639,7 @@ const posts = [
       '照 Threads 上「Claude 用 three.js 做 3D 遊戲畫面」的方向，我做了一張原創浮島地圖：單一 HTML 22 KB、229 個內建幾何體拼成、零模型檔，點地點角色會沿路走過去。對照實驗裡關掉 ACES 色調映射改變 45.8% 的像素、陰影 10.2%、flatShading 只有 0.6%——畫面質感主要靠這兩行渲染設定，不是靠細節堆出來的。',
     category: '工程實作',
     tags: ['three.js', 'Low Poly', '低多邊形', 'WebGL', '網頁遊戲', 'Claude', 'Playwright'],
-    publishDate: '2026-11-14',
+    publishDate: '2026-11-26',
     faqItems: [
       {
         q: 'three.js 的 low poly 風格一定要開 flatShading 嗎？',
@@ -6811,7 +6810,7 @@ const posts = [
       '照官方建議把 description 寫好，skill 還是可能叫不到。我在裝了兩百多個 skill 的 Claude Code 測同一個借用單 skill 的 6 個版本：取名 form-helper 時 description 寫再好都是 0/12，因為清單超出預算時，最少被叫的 skill 會先被拿掉 description，新 skill 只剩名字。調高預算或被叫過之後都變成 12/12。',
     category: 'AI 工具',
     tags: ['Claude Code', 'Claude Code Skill', 'Agent Skills', 'skill-doctor', 'skillOverrides', '觸發測試', 'A/B 測試'],
-    publishDate: '2026-11-25',
+    publishDate: '2026-11-26',
     faqItems: [
       {
         q: '怎麼知道我的 skill 在清單裡有沒有 description？',
@@ -7023,7 +7022,7 @@ const posts = [
       'Bro & Dickens 的 AI 貓短片〈Bro Is Not Much of a Fisherman!〉發布 4 天拿到約 166 萬讚，結構是寫實手機畫面加「貓 vs 大自然，貓輸」的一鏡一梗。我在 RTX 4070 用 Wan2.2 重做原創版，一鏡到底後半貓會變形——從魚打臉那格接第二鏡、prompt 只寫倒地，結尾就完整了。',
     category: 'AI 工具',
     tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'AI 萌寵', 'image-to-video', 'RTX 4070', 'Higgsfield', '短影音'],
-    publishDate: '2026-11-25',
+    publishDate: '2026-11-26',
     faqItems: [
       {
         q: '這支 Bro & Dickens 的貓短片是用什麼做的？',
