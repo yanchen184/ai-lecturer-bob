@@ -25,7 +25,7 @@ async function getOwnerAccessToken() {
     refreshToken = cfg?.tokens?.refresh_token
   } catch {
     throw new Error(
-      `讀不到 firebase CLI 設定 (${cfgPath})。先跑 \`firebase login\` 登入 bobchen184@gmail.com。`
+      `讀不到 firebase CLI 設定 (${cfgPath})。先跑 \`firebase login\` 登入 Firebase 專案擁有者帳號。`
     )
   }
   if (!refreshToken)
@@ -3513,7 +3513,7 @@ const posts = [
     faqItems: [
       {
         q: '這些 skill 可以直接裝來用嗎？',
-        a: '部分可以。/plan、/review-and-clean、/screenshot-review、/blog-create 的流程與 gate 跟專案無關；/wez-cms-scaffold、/springboot-init、/jenkins-docker 綁著我公司的範本、共用模組與部署環境，拿去要改設定才能跑。想要的話寫信到 bobchen184@gmail.com 跟我要。',
+        a: '部分可以。/plan、/review-and-clean、/screenshot-review、/blog-create 的流程與 gate 跟專案無關；/wez-cms-scaffold、/springboot-init、/jenkins-docker 綁著我公司的範本、共用模組與部署環境，拿去要改設定才能跑。想要的話用頁尾的聯絡信箱寫信跟我要。',
       },
       {
         q: '什麼樣的 skill 才算旗艦？',
@@ -6458,6 +6458,890 @@ const posts = [
       {
         q: '可以換成自己的角色嗎？',
         a: '可以。把主圖那步換成上傳自己的角色圖（/upload/image），後面 panels、clips 照跑；要換舞步就改 POSES 裡的 6 句動作描述。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-code-mods-prismantis-flightdeck-usage-guard',
+    title: 'Claude Code Mods 推薦：Prismantis、Flightdeck、Usage Guard 實測，該先裝哪個？',
+    metaDescription:
+      'IG 推薦的三個 Claude Code mods 實測：Usage Guard 上限設 1 派 3 個子代理、2 個被擋；Prismantis 把表格和 mermaid 畫成圖；Flightdeck 測試 59/59。附安裝指令與版本需求。',
+    excerpt:
+      'Prismantis、Flightdeck、Usage Guard 是三個 MIT 授權的 Claude Code mods，分別改回覆畫面、加代理儀表板、在額度燒光前擋子代理，用 /plugin 就能裝。我在 2.1.325 實測：Usage Guard 上限設 1 派 3 個子代理，2 個在啟動前被擋並把理由回給模型——只裝一個就裝它。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code mod', 'Claude Code Plugin', 'Prismantis', 'Flightdeck', 'agent-usage-guard', '子代理', 'AI 工具'],
+    publishDate: '2026-11-14',
+    faqItems: [
+      {
+        q: 'Claude Code mods 跟 skill、MCP 有什麼不同？',
+        a: 'skill 是給模型讀的指示，MCP 是讓模型呼叫外部工具。mods 是跑在 Claude Code 行程裡的程式，可以改畫面、攔截事件，模型不需要知道它存在。',
+      },
+      {
+        q: 'Usage Guard 擋下來之後要怎麼放行？',
+        a: '被擋的訊息裡就寫了：在 Claude Code 裡跑 /agent-guard allow。也可以調高 AGENT_GUARD_AGENT_MAX 之類的環境變數。',
+      },
+      {
+        q: '三個 mods 需要哪個版本的 Claude Code？',
+        a: 'Prismantis 和 Usage Guard 的 README 寫 2.1.287 以上，Flightdeck 寫 2.1.289 以上。用 claude --version 確認。',
+      },
+      {
+        q: 'mods 安全嗎？',
+        a: 'mods 以你的權限執行、沒有沙箱。這三個我 grep 過 hooks 原始碼，沒有網路請求或執行外部程式的呼叫；裝其他 mod 前建議自己看一遍，或先用 --plugin-dir 只載入當次 session 試。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'taigi-tts-ai-video-mazu-comfyui-wan22',
+    title: '免費台語 TTS 怎麼用？意傳 API＋ComfyUI Wan2.2 重做 Claude 閩南語媽祖影片，37 秒實測',
+    metaDescription:
+      'Threads 爆紅的 Claude 閩南語媽祖影片，我用意傳免費台語 TTS API 和本機 Wan2.2 重做：漢字先轉台羅再合成，37 秒雙字幕試片約 12 分鐘，附程式與斷詞踩坑。',
+    excerpt:
+      'Threads 上有人用 Claude Fable 5.2 加付費 VoAI 配音做了閩南語媽祖動畫，我改用意傳科技的兩支免費公開 API（漢字轉台羅、台羅轉語音）加本機 ComfyUI Wan2.2，做出 37 秒漢字＋台羅雙字幕試片。關鍵是合成 API 一定要餵台羅：同一句餵漢字只回 1.76 秒、餵台羅才有 4.86 秒完整語句——發音對不對仍要懂台語的人聽過。',
+    category: 'AI 工具',
+    tags: ['台語 TTS', '閩南語', '意傳', '台羅', 'Claude', 'ComfyUI', 'Wan2.2', 'AI 影片'],
+    publishDate: '2026-11-14',
+    faqItems: [
+      {
+        q: '意傳的台語 TTS 要申請金鑰嗎？',
+        a: '不用。hokbu.ithuan.tw/tau 和 hapsing.ithuan.tw/bangtsam 直接打就能用，我這次沒有帶任何金鑰或帳號。官方沒有公開使用上限，量大時先聯絡意傳。',
+      },
+      {
+        q: '為什麼 TTS 回來的音檔只有一兩秒？',
+        a: '多半是直接餵了漢字。先用 tau 轉成台羅（KIP 欄位）再餵 bangtsam，我實測同一句從 1.76 秒變成 4.86 秒的完整語句。',
+      },
+      {
+        q: 'Claude 寫的台語可以直接用嗎？',
+        a: '用詞方向是對的，但要人校對。發音交給 TTS 時還會遇到斷詞問題，例如「升天成神」被切成 sing thian-sîng sîn；用 tau 回傳的分詞欄位逐詞對照最快。',
+      },
+      {
+        q: '沒有顯示卡可以做嗎？',
+        a: '配音和字幕可以，這兩步只需要網路和 ffmpeg。畫面那步要跑 Wan2.2，本機需要 NVIDIA 顯卡；沒有的話可以改用現成插畫或照片當背景。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'fish-kit-cc0-3d-fish-threejs-fishing-game',
+    title: 'Fish Kit 怎麼用？CC0 會動的 3D 魚包，我用 6 條魚做出 three.js 釣魚遊戲',
+    metaDescription:
+      'nachat_dayo 公開的 Fish Kit：20 種 CC0 3D 魚、10 種動作全在 shader 裡算。附 three.js 最小程式、釣魚狀態機、drive 不會移動魚的坑，與可玩的線上 POC。',
+    excerpt:
+      'Fish Kit 是日本開發者 nachat_dayo 在 2026-11-08 公開的 CC0 魚包：20 種從照片做成的 3D 魚，游泳、咬餌、上鉤掙扎、上岸亂跳等 10 種動作全由一支 fish-kit.js 在 shader 裡算。我用其中 6 種魚接成約 14 KB 的瀏覽器釣魚遊戲並用 Playwright 跑完整流程——動作夠完整，唯一要自己補的是讓魚往前移動。',
+    category: '工程實作',
+    tags: ['Fish Kit', 'three.js', 'CC0', '3D 模型', '網頁遊戲', '釣魚遊戲', 'Claude Code', 'Codex'],
+    publishDate: '2026-11-15',
+    faqItems: [
+      {
+        q: 'Fish Kit 可以商用嗎？要標註作者嗎？',
+        a: '可以商用，不用標註。模型、照片、程式和腳本都是 CC0 1.0。three.js 不在 CC0 範圍，它是 MIT 授權的另一套函式庫，fish-kit.js 不含 three.js，是 import 你專案裡的那份。',
+      },
+      {
+        q: '設了 fish.drive 為什麼魚不會往前游？',
+        a: 'drive 只讓身體擺出對應速度的樣子，不移動位置。README 寫明往前移動 fish.object 要自己做：每幀依朝向把位置加上 fish.currentSpeed × dt。魚頭朝 +Z。',
+      },
+      {
+        q: '可以用在 Unity 或 Godot 嗎？',
+        a: 'GLB 可以當靜態模型用，材質要開 alpha clip 和雙面。Fish Kit 沒有動畫 clip，10 種動作都寫在 fish-kit.js 的 shader 裡，換引擎要自己移植。',
+      },
+      {
+        q: '要用官方 zip 還是 GitHub 上的鏡像？',
+        a: '用官方 zip（cda-social.github.io/fish/gallery）。我比對過，第三方鏡像的 fish-kit.js 比官方舊，少了修正魚離水後過亮的 AIR_LOOK。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'scrapling-python-web-scraping-test',
+    title: 'Scrapling 怎麼用？10 萬星 Python 爬蟲實測：過 Cloudflare、轉 Markdown、MCP 都行，改版追蹤會靜默抓錯',
+    metaDescription:
+      'Scrapling 0.5.1 實測：Cloudflare 示範頁約 35 秒解開、Wikipedia 轉 Markdown 保留表格、MCP 17 個工具可用；adaptive 改版追蹤在元素被刪時會靜默抓錯，附門檻掃描。',
+    excerpt:
+      'Scrapling 是 D4Vinci 開源的 Python 爬蟲框架（BSD-3、10 萬星），把 HTTP、隱身瀏覽器、解析、Spider、MCP 收進同一個套件。我實測 0.5.1：過 Cloudflare、轉 Markdown、MCP 都成立，但「改版不會壞」在元素被刪掉時會悄悄抓回一個像的——下一頁按鈕不見，它改抓標籤連結，沒有任何錯誤。',
+    category: 'AI 工具',
+    tags: ['Scrapling', 'Python 爬蟲', 'Web Scraping', 'Cloudflare', 'MCP', 'RAG', 'Markdown', 'Claude Code'],
+    publishDate: '2026-11-15',
+    faqItems: [
+      {
+        q: 'Scrapling 跟 Scrapy 差在哪？',
+        a: 'Scrapy 專注在排程與大量爬取。Scrapling 也有 Spider，另外把模擬瀏覽器指紋的 HTTP 請求、隱身瀏覽器、Cloudflare 解法、Markdown 輸出和 MCP Server 放在同一個套件。PyPI 近 30 天下載量 Scrapy 約 500 萬、Scrapling 約 141 萬，成熟度還是 Scrapy 高。',
+      },
+      {
+        q: 'adaptive 抓錯要怎麼防？',
+        a: '調高 percentage（我在 quotes.toscrape.com 掃到 60 時誤抓歸零、正向 6 個找回 5 個），並對結果加格式驗證，例如下一頁連結必須符合分頁網址格式。門檻要用你自己的網站重掃。',
+      },
+      {
+        q: '過 Cloudflare 要多久？',
+        a: '我在 nopecha 的 Turnstile 示範頁實測，從偵測到 interactive 驗證到解開約 35 秒。大量抓取時要把這段時間算進去，也要確認目標網站的條款允許抓取。',
+      },
+      {
+        q: '轉出來的 Markdown 可以直接餵給 AI 嗎？',
+        a: 'display:none、visibility:hidden、font-size:0 和 script 都會清掉，但 HTML 的 hidden 屬性段落會留在輸出裡。餵給 agent 前要自己補這條過濾。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'photo-to-riso-symbol-poster-prompt',
+    title: '照片變拓印圖形海報怎麼做？Threads 爆紅 prompt 實測，加一個不用 AI 的瀏覽器產生器',
+    metaDescription:
+      'Chloe_Lai 的「把圖片重新整理成拓印圖形」prompt 實測：Codex image_gen 一次出圖，拆解版面、保真、抽象、材質四層寫法；另附純瀏覽器 riso 海報產生器與它的限制。',
+    excerpt:
+      'Threads 用戶 Chloe_Lai 貼出一段生圖 prompt，把照片排成上半原照、下半 riso 套色幾何符號的 3:4 海報，截圖時已有 1.2 萬讚、3,355 次分享。我用 Codex image_gen 跑原 prompt 一次就出圖，另寫了不用 AI 的瀏覽器版產生器——單一主體可用，畫面一雜就糊成色塊，成品還是交給 AI。',
+    category: 'AI 工具',
+    tags: ['AI 生圖', 'Prompt', '拓印海報', 'Risograph', '平面設計', 'Canvas', 'Codex', 'Threads'],
+    publishDate: '2026-11-15',
+    faqItems: [
+      {
+        q: '原 prompt 可以直接拿去商用嗎？',
+        a: 'prompt 是 Chloe_Lai 的創作，公開引用時建議標註出處並附上原貼文連結。生成出來的圖能不能商用，要看你用的生圖服務的條款。',
+      },
+      {
+        q: '一定要用中文 prompt 嗎？',
+        a: '原 prompt 是簡體中文夾英文設計術語，我實測時沒有翻譯直接用。改成繁體或英文會不會影響結果，我沒有測過。',
+      },
+      {
+        q: '產生器會把我的照片上傳到哪裡嗎？',
+        a: '不會。產生器是一個 HTML 檔，分色、疊印、排版都在瀏覽器的 Canvas 裡完成，沒有任何上傳請求。',
+      },
+      {
+        q: '為什麼我的照片在產生器裡變成一團色塊？',
+        a: '演算法只按顏色分群，不認物體。主體和背景顏色接近、或畫面有很多小物件時就會糊掉。換一張背景乾淨的照片，或把套色數調低、輪廓刻線調高再試。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'study-account-ugc-script-detector',
+    title: '讀書帳是什麼？AI 學習 App 的 UGC 矩陣拆解，我寫了同腳本偵測器抓出 5 種爆款腳本',
+    metaDescription:
+      '郭查理影片揭露讀書帳背後的校園大使合作：養號 SOP、爆款腳本、素材歸公司。查證公司最接近 ThetaWave AI，創辦人自述管理 300 多個矩陣帳號；附同腳本偵測器實測與限制。',
+    excerpt:
+      '郭查理 2026-11-14 的影片說，一家 AI 學習 App 付月費請人開讀書帳、照 SOP 養號、照爆款腳本拍；查證最接近 ThetaWave AI，創辦人受訪自述管理 300 多個「UGC 矩陣」帳號。我寫的同腳本偵測器在 22 段讀書帳台詞裡分出 5 個家族、本人口白 0 誤判——但改寫過的句子抓不到。',
+    category: '工程實作',
+    tags: ['讀書帳', 'UGC 行銷', '爆款腳本', 'ThetaWave', '短影音', '文字相似度', 'faster-whisper', '郭查理'],
+    publishDate: '2026-11-16',
+    faqItems: [
+      {
+        q: '讀書帳都是業配嗎？',
+        a: '不是。讀書帳原本是分享筆記和學習日常的帳號，這篇講的是郭查理收到的一種合作邀約：為合作新開帳號、照公司腳本拍。要判斷單一帳號，看簡介有沒有標記 App、帳號是不是很新、台詞是不是跟其他帳號一字不差。',
+      },
+      {
+        q: '影片裡說的公司確定是 ThetaWave 嗎？',
+        a: '影片口述的名字被轉錄成「Beta Wave」，我照「AI 學習 App」「營運在北京」比對，最接近的是 ThetaWave AI。這是比對結論，影片沒有打出英文公司名。',
+      },
+      {
+        q: '偵測器可以拿去抓我追蹤的帳號嗎？',
+        a: '可以，但要先自己準備逐字稿，一行一支影片，格式是「帳號|台詞」。它只抓字面上照抄的句子，改寫過的抓不到；分到同一群只代表在念同一個骨架，不代表有付費合作。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'teardown-claude-code-skill-3d-engine-pcx125',
+    title: 'Teardown 是什麼？Claude Code 免費 skill 做會動的 3D 引擎，我照它做了 PCX125 驗算排氣量',
+    metaDescription:
+      'Teardown 是 MIT 開源的 Claude Code skill，把機器做成可拆、可剖的單檔 3D HTML。我照它的規則做 Honda PCX125 引擎，排氣量算出 124.76 cc 對上原廠，附安裝與限制。',
+    excerpt:
+      'Teardown 是 elvarofficial 在 2026-10-30 開源的 Claude Code skill（MIT），把機器做成可拆、可剖、會動的離線單檔 3D HTML。我照它的規則做了 Honda PCX125 引擎，排氣量算出 124.76 cc 對上原廠——方法可信，但物理只到示意等級。',
+    category: 'AI 工具',
+    tags: ['Teardown', 'Claude Code', 'Claude Code Skill', 'three.js', '3D 模擬', '引擎原理', 'PCX125', '機械教材'],
+    publishDate: '2026-11-15',
+    faqItems: [
+      {
+        q: 'Teardown 要付費嗎？可以商用嗎？',
+        a: '免費，MIT 授權。它的 kit、逐格擷取和音效引擎來自 whaleyxbt/claude-motion，也是 MIT。產生 3D 場景用的是你自己的 Claude Code 額度。',
+      },
+      {
+        q: '為什麼一定要附實物照片？',
+        a: 'SKILL.md 第 1 條規定從參考資料開始，不從想像開始。沒有照片或剖面圖時，做出來的機器很普通；有東西可以對照，Claude 會照著重建，並先查缸徑、行程、齒數這些真實尺寸。',
+      },
+      {
+        q: '做出來的檔案要架伺服器嗎？',
+        a: '不用。build 出來是一個 HTML 檔，three.js 和字型都內嵌，我的 PCX125 是 769 KB，直接用瀏覽器開，手機也能開。',
+      },
+      {
+        q: '數字可以拿來做工程設計嗎？',
+        a: '不行。缸內壓力、部分油門扭力都是簡化模型，屬示意等級。適合教學和展示，例如看四行程、氣門正時，不適合做設計驗算。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'baseball-game-camera-hitstop-threejs',
+    title: '棒球遊戲運鏡怎麼做？拆解獨立開發者第 45 天更新，用 three.js 重做鏡頭、回傳球與搖桿瞄準',
+    metaDescription:
+      '照 Threads 上個人棒球遊戲的第 45 天更新，用 three.js 單檔重做 7 台鏡頭的導演函式、hit-stop 打擊感、捕手回傳球，以及 Gamepad API 搖桿與滑鼠 raycast 瞄準，附程式與 Playwright 實測。',
+    excerpt:
+      'Threads 上 jackli_yc 一個人做棒球遊戲，第 45 天更新了運鏡、投手接捕手回傳球、搖桿和滑鼠瞄準，7.4 萬瀏覽。我用 three.js 單檔約 32 KB 重做這三件事並放上線——整套轉播感靠一個約 40 行、7 狀態的鏡頭導演函式，打擊感只是三個數字。',
+    category: '工程實作',
+    tags: ['three.js', '遊戲運鏡', '棒球遊戲', 'hit-stop', 'Gamepad API', '網頁遊戲', '獨立遊戲', 'Threads'],
+    publishDate: '2026-11-16',
+    faqItems: [
+      {
+        q: '鏡頭跟隨為什麼要用 1 - exp(-k·dt)，不直接 lerp 0.1？',
+        a: '固定的 lerp(target, 0.1) 每幀追 10%，幀率越高追得越快，60 fps 和 144 fps 的玩家看到的鏡頭不一樣。1 - exp(-k·dt) 把追的比例換算成跟時間有關，任何幀率下軌跡都一致。',
+      },
+      {
+        q: 'hit-stop 期間鏡頭也會停住嗎？',
+        a: '我的做法不會。物理和動畫用乘上 timeScale 的 dt，鏡頭和輸入用真實時間，所以慢動作的 0.12 秒裡鏡頭仍然會滑到擊球瞬間的低角度位置。',
+      },
+      {
+        q: '瀏覽器讀不到搖桿怎麼辦？',
+        a: 'Gamepad API 不會推送事件，要每幀呼叫 navigator.getGamepads()。如果回傳 null，先按一下手把上的任一按鍵；另外要確認手把的 mapping 是 standard，axes[0]、axes[1] 才會是左搖桿。',
+      },
+      {
+        q: '原作者是用什麼引擎做的？',
+        a: '貼文沒有說。這篇的程式全部是我用 three.js 自己重做的原創場景，不是原作者的原始碼。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-sound-effects-stable-audio-3-auto-qc',
+    title: 'AI 音效怎麼大量生成？拆解卡斯伯 10 萬音效站，用 Stable Audio 3 在本機重做生成＋自動 QC 產線',
+    metaDescription:
+      '卡斯伯的免費音效站寫 103,640 個，實際是 9,545 個獨立音效。我照他公開的做法，在 Windows 用 Stable Audio 3 TFLite CPU 版重做「生成 → 9 道自動檢查 → 自動挑選」，附 numpy 檢查程式、pytest 與有聲乒乓成品。',
+    excerpt:
+      '前端講師卡斯伯用本機 Stable Audio 3 生成音效，靠 9 道自動檢查和包絡形狀分數挑版本，做成首頁寫 10 萬個的免費音效站。實際獨立音效是 9,545 個；我在 Windows 免 GPU 重做整條產線，CPU 每版約 10 秒——最難的不是生成，是檢查器本身要先寫測試。',
+    category: '工程實作',
+    tags: ['Stable Audio 3', 'AI 音效', '音效生成', '自動 QC', '網頁遊戲', '免費音效', 'numpy', 'Threads'],
+    publishDate: '2026-11-18',
+    faqItems: [
+      {
+        q: 'Stable Audio 3 Small SFX 一定要登入 Hugging Face 嗎？',
+        a: '官方 stable-audio-3-small-sfx 是 gated，要登入。stable-audio-3-optimized 不是 gated，匿名可下載，裡面的 TFLite 版含 sm-sfx，用 CPU 就能跑。',
+      },
+      {
+        q: '為什麼每版固定生 4 秒，不直接生 0.3 秒？',
+        a: '卡斯伯的 about 頁說要求更短時模型會破音。單一事件的聲音先生 4 秒，再用程式裁到只剩第一下。',
+      },
+      {
+        q: '自動挑選會不會挑到難聽的？',
+        a: '會挑到「形狀最對」的，不保證最好聽。形狀分數只看音量隨時間的變化，不看音色。我的 5 個成品試聽沒有明顯問題，但這是 5 筆的單一經驗，大量生成時仍建議抽樣聽。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-fake-documentary-twist-shorts-wan22',
+    title: 'AI 反轉 Shorts 怎麼做？「前面很真、後面很 AI」用 Wan2.2 最後一格接續，一行指令出一集',
+    metaDescription:
+      '拆解 90 萬觀看的假深海紀錄片反轉 Shorts，在 RTX 4070 用 ComfyUI Wan2.2 重做：5B 生寫實段、最後一格丟 14B i2v 生派對反轉，加 OSD、字幕與合成音軌，一集 10 秒約 11 分鐘，附腳本、prompt 與耗時。',
+    excerpt:
+      '一支 20 秒的章魚 Shorts 先用 13 秒假裝深海紀錄片，再讓章魚戴墨鏡蹦迪，上架 25 天約 90.5 萬觀看。我在 RTX 4070 用 Wan2.2 把這個格式做成一行指令：寫實段最後一格接 i2v 反轉，一集約 11 分鐘——螃蟹這種能戴墨鏡的生物效果最好，水母只剩燈光。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'YouTube Shorts', 'RTX 4070', 'image-to-video', 'ffmpeg'],
+    publishDate: '2026-11-19',
+    faqItems: [
+      {
+        q: '為什麼反轉段一定要從寫實段最後一格接？',
+        a: '兩段各自生成，場景、光線、生物位置都不同，觀眾會看出是兩支片。拿最後一格當 i2v 起始畫面，第一格完全相同，看起來像同一台相機拍到現場突然變了。',
+      },
+      {
+        q: '寫實段可以也用 14B 嗎？',
+        a: '可以，但 14B i2v 需要起始圖。我的流程用 5B 直接從文字生成，省掉另外出圖的步驟；480p 下寫實段的品質已經夠用。',
+      },
+      {
+        q: '一集 11 分鐘能再快嗎？',
+        a: '大部分時間花在寫實段 5B 的 30 步。減少步數或格數會變快，但我這次沒測品質會掉多少，所以沒有列數字。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'java-interview-questions-tier-list-2026',
+    title: 'Java 面試題從夯到拉：2026 年 23 題八股文排行，附每題 30 秒答案與可錄影排行板',
+    metaDescription:
+      '用中文網路的「從夯到拉」五級排行整理 23 題 Java 面試題：哪些每場必考、哪些已經過時。每題附 30 秒答案，版本相關內容對照 OpenJDK JEP，另附可拖曳、可切 9:16 錄影模式的排行板。',
+    excerpt:
+      '「從夯到拉」是中文網路版的 Tier List，IG 工程師用它排 Java 八股文面試題，同系列 SQL 版在 8.5k 粉絲帳號拿到 3 到 6 萬觀看。我照這個格式排了 23 題並附 30 秒答案——HashMap、執行緒池這類五題必考，CMS、finalize 答得出「已過時」就夠。',
+    category: '工程實作',
+    tags: ['Java', 'Java 面試題', '八股文', 'Tier List', '從夯到拉', 'JVM', 'Spring Boot', '短影音'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '2026 年準備 Java 面試，最先要準備哪幾題？',
+        a: 'HashMap、ConcurrentHashMap、執行緒池、JVM 記憶體區域、synchronized 與 ReentrantLock。這五題彼此相關，HashMap 講完通常接著問 ConcurrentHashMap，再問鎖。',
+      },
+      {
+        q: 'CMS 和 finalize 還需要背嗎？',
+        a: '不用背細節。CMS 在 JDK 14 已移除（JEP 363），finalize 在 JDK 18 標記準備移除（JEP 421）。答得出現在改用 G1／ZGC、try-with-resources 或 Cleaner 就夠了。',
+      },
+      {
+        q: '排行板可以換成別的題庫嗎？',
+        a: '題庫寫在 HTML 裡的陣列，每題是題目、級別、評語、答案四個欄位。換成 SQL、Spring 或前端題目，改這個陣列就能做同一系列的其他集。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-pet-body-swap-series-wan22-keyframe-i2v',
+    title: 'AI 萌寵身體互換連續劇怎麼做？Wan2.2 先生關鍵格再 i2v，RTX 4070 實測 15 秒 EP1',
+    metaDescription:
+      '拆解 2.7 萬讚的 IG 貓狗靈魂互換連續劇，在 RTX 4070 用 ComfyUI Wan2.2 做原創 EP1：5B 生關鍵格挑笑點、14B i2v 加 lightx2v 4 步 LoRA 讓它動、ffmpeg 疊字幕，附 prompt、參數與每鏡耗時。',
+    excerpt:
+      'IG 連續劇《和狗互穿的日子是真狗啊》用貓狗靈魂互換加「第一集」鉤子拿到約 2.7 萬讚，我借它的結構，在 RTX 4070 用 Wan2.2 做了原創角色的 15 秒 EP1。關鍵是先用 5B 生出「貓叼球」這種笑點關鍵格再丟 i2v——模型沒演對時改字幕配合畫面，比重跑一鏡 5 到 14 分鐘划算。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'AI 萌寵', 'image-to-video', 'RTX 4070', 'ffmpeg', '短影音'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '為什麼要先生關鍵格，不直接文字生影片？',
+        a: '這類喜劇的笑點是「某隻動物在做不屬於牠的動作」，例如貓嘴裡叼著網球。先用 5B 只生 1 格、一張 85 到 160 秒，可以多抽幾張挑出笑點已經在畫面裡的那張，再讓 14B i2v 只負責讓它動。',
+      },
+      {
+        q: '模型沒照 prompt 演出動作怎麼辦？',
+        a: '我的鏡 2 寫了搖尾巴吐舌，模型只演出叼球後掉球。我沒重跑，把字幕改成「可是嘴巴太小，咬不住…」，掉球變成笑點。字幕最後才疊，改它幾乎沒有成本。',
+      },
+      {
+        q: '角色在不同鏡頭會不會長得不一樣？',
+        a: '我每一鏡都完整寫品種、毛色和項圈顏色，這次三鏡看起來是同一組角色。但這只是 3 鏡的單一經驗，集數多、場景變化大時可能需要參考圖等更強的鎖定方式。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-code-skill-not-triggering-description-budget',
+    title: 'Claude Code skill 叫不到？實測 6 個版本：description 被清單預算拿掉，只剩名字',
+    metaDescription:
+      'Claude Code skill 沒被觸發的實測：同一個 skill 改名稱、description 與清單預算跑 6 版，form-helper 寫滿官方觸發詞仍 0/12，調高 SLASH_COMMAND_TOOL_CHAR_BUDGET 後 12/12。附檢查與修法。',
+    excerpt:
+      '照官方建議把 description 寫好，skill 還是可能叫不到。我在裝了兩百多個 skill 的 Claude Code 測同一個借用單 skill 的 6 個版本：取名 form-helper 時 description 寫再好都是 0/12，因為清單超出預算時，最少被叫的 skill 會先被拿掉 description，新 skill 只剩名字。調高預算或被叫過之後都變成 12/12。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Code Skill', 'Agent Skills', 'skill-doctor', 'skillOverrides', '觸發測試', 'A/B 測試'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '怎麼知道我的 skill 在清單裡有沒有 description？',
+        a: '在專案目錄跑 claude -p「照 skill 清單原文列出某某 skill 那一條，不要改寫」，回來只有名稱就是 description 被拿掉了。/doctor 會估算清單成本，用 --debug 啟動時清單超出預算會在 debug log 留警告。',
+      },
+      {
+        q: '清單預算是多少？可以調嗎？',
+        a: '官方文件寫預算是模型 context window 的 1%。可以在 settings 設 skillListingBudgetFraction（例如 0.02 是 2%），或用環境變數 SLASH_COMMAND_TOOL_CHAR_BUDGET 指定固定字數。調高的代價是每一輪都多佔這些 context。',
+      },
+      {
+        q: '不想調預算，還有什麼辦法？',
+        a: '跑 /skill-doctor 找出從沒用過的 skill，在 skillOverrides 設成 off，或設 name-only 只留名稱。最根本的是名稱直接寫做什麼事，例如 facility-booking-form，description 被拿掉也還叫得到。plugin 的 skill 要從 /plugin 管。',
+      },
+      {
+        q: 'skill 很少的人也會遇到嗎？',
+        a: '不會。清單沒超出預算時每個 skill 的 description 都在，官方建議的 description 寫法就夠用。我是因為環境裡有 242 個從沒用過的 skill 才遇到。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-digital-twin-deep-interview-stanford-test',
+    title: 'AI 數位分身用深度訪談真的比較準？史丹佛 1,052 人論文查證，加上我縮小重做的 12 題實驗',
+    metaDescription:
+      '曾博恩業配引用的史丹佛 AI 數位分身研究：2 小時 AI 深度訪談，新版論文訪談 83%、問卷 82%、人口資料 74%。附可直接貼進 ChatGPT 或 Claude 的訪談提示詞與縮小版實驗結果。',
+    excerpt:
+      '曾博恩幫《AI 超級大腦》業配的「AI 深度訪談數位分身」，出自史丹佛 1,052 人、每人 2 小時 AI 訪談的論文。2026 年新版論文寫的是訪談 83%、問卷 82%、只給人口資料 74%——訪談有用但和填問卷差不多，我縮小重做 12 題也只多猜中 1 題，提示詞免費就能自己跑。',
+    category: 'AI 工具',
+    tags: ['AI 數位分身', 'AI 分身', '深度訪談', '史丹佛', 'Generative Agents', 'ChatGPT', 'Claude', '提示詞'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: 'AI 數位分身的準確度到底是 85% 還是 83%？',
+        a: '兩個都是同一篇論文的數字。2024-11 第一版寫訪談分身達到本人兩週重答一致性的 85%；2026-06 第三版分開列出，只用訪談是 83%，訪談加問卷是 86%。引用時建議寫清楚版本。',
+      },
+      {
+        q: '要做到論文那種效果，需要訪談多久？',
+        a: '論文每人訪談 2 小時。我的縮小版只有 8 輪問答，記憶檔已經能多答對一題，但沒問到的面向一樣猜不中。實際用時，至少把提示詞裡的六個主題都講到。',
+      },
+      {
+        q: '一定要買課程或工具才能做嗎？',
+        a: '不用。方法公開在論文裡，史丹佛的程式碼以 MIT 授權開源，一段訪談提示詞就能在 ChatGPT 或 Claude 裡跑。課程可能有的價值是引導和陪練，但技術本身沒有門檻。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'one-scene-ten-animation-styles-comfyui-wan22',
+    title: '一個場景換十種動畫風格怎麼做？拆解留言比讚多的 IG Reel，用 ComfyUI Wan2.2 本機重做 4 種風格',
+    metaDescription:
+      '拆解 yleintech 的「10 Claude Animation styles」Reel：先鎖構圖生靜態圖、再轉動畫。在 RTX 4070 用 ComfyUI Wan2.2 5B 生圖、i2v 14B 轉 3 秒動畫，重做 Glow Sketch、Lego、Pixel Art、Explainer 3D，附 prompt、耗時與鎖不住構圖的原因。',
+    excerpt:
+      'IG 帳號 yleintech 的 Reel 把同一台紅色敞篷車換成霓虹線稿、樂高、像素等 10 種畫風，靠「留言 Style 拿 prompt」拿到 6,317 則留言、比讚還多。我在 RTX 4070 用 Wan2.2 重做 4 種風格全部出片——只換 prompt 鎖不住構圖，要做到原片效果得補圖片編輯模型。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'AI 動畫', 'image-to-video', 'Instagram Reels', 'RTX 4070', '畫風轉換'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '「一張底圖換十種風格」最少需要哪些模型？',
+        a: '最少一個能生圖的模型加一個 image-to-video 模型。我用 Wan2.2 TI2V 5B 只生 1 格當文生圖、Wan2.2 I2V 14B 轉動畫，不用另外下載圖片模型。要讓構圖完全一樣，再加一個圖片編輯模型或 ControlNet。',
+      },
+      {
+        q: '固定 seed 能不能讓每種風格構圖一樣？',
+        a: '不能。seed 固定只保證同一段 prompt 重跑會得到同一張圖；prompt 換了風格描述，構圖就會變。我實測 4 種風格的車位置和大小都不同。',
+      },
+      {
+        q: 'RTX 4070 12GB 跑得動嗎？',
+        a: '跑得動。靜態圖用 5B fp16、動畫用 14B fp8 加 lightx2v 4 步 LoRA，480×832、49 格，4 種風格都沒有 OOM。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-cat-reel-character-consistency-wan22-i2v',
+    title: 'AI 寫實貓 Reel 怎麼保持同一隻貓？77 萬讚「差點落水裝沒事」用 Wan2.2 定裝圖 i2v 本機重做',
+    metaDescription:
+      '拆解 77 萬讚的 AI 寫實貓 IG Reel，在 RTX 4070 用 ComfyUI Wan2.2 重做：先生一張定裝圖，每個鏡頭都從它跑 i2v 14B，兩鏡同一隻貓。附 prompt、節點設定、耗時，以及從定裝圖或上一鏡最後一格接續的取捨。',
+    excerpt:
+      'IG 帳號 michi_mono_ 的 AI 寫實貓 Reel，貓差點掉進河裡再一臉不爽裝沒事，五天拿到 77 萬讚。我在 RTX 4070 用 Wan2.2 重做：先生定裝圖、每鏡都從它跑 i2v，兩鏡終於是同一隻貓——一集 6 秒本機約 15 分鐘，值得做成系列。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', '角色一致性', 'image-to-video', 'Instagram Reels', 'RTX 4070', 'AI 萌寵'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: 'AI 影片每個鏡頭的角色長得不一樣，最簡單的解法是什麼？',
+        a: '先生一張角色定裝圖，每個鏡頭都用 image-to-video 從這張圖起跑，prompt 只寫動作不再描述外觀。我用 Wan2.2 I2V 14B 實測，兩個鏡頭的花紋、紅項圈和臉型一致；只用文字生成時，第二鏡的貓從立耳變成摺耳。',
+      },
+      {
+        q: '第二個鏡頭要從定裝圖還是上一鏡的最後一格起跑？',
+        a: '從定裝圖起跑角色最穩，但每鏡開頭姿勢相同，剪接會跳；從上一鏡最後一格起跑動作連續，但最後一格沒拍到的細節會消失，我這次的紅項圈就是這樣不見的。要接續，就讓最後一格的角色正面入鏡。',
+      },
+      {
+        q: 'RTX 4070 12GB 跑得動 Wan2.2 I2V 14B 嗎？',
+        a: '跑得動。用 fp8 版本加 lightx2v 4 步 LoRA，480×832、73 格的鏡頭每支約 5 分鐘，沒有 OOM。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ig-choose-your-path-ai-horror-series-comfyui-wan22',
+    title: 'IG「你會怎麼選」AI 互動短劇怎麼做？拆解 6.7 萬讚的留言投票公式，用 ComfyUI Wan2.2 做原創第 1 集',
+    metaDescription:
+      '拆解 IG 帳號 whoisthere.ai 的 AI 懸疑互動連載：七步文案公式、留言 A 或 B 決定下一集。在 RTX 4070 用 ComfyUI Wan2.2 做原創第 1 集，附關鍵格與 i2v 指令、ffmpeg 字幕、計票腳本與實測耗時。',
+    excerpt:
+      'IG 帳號 whoisthere.ai 的 AI 懸疑連載「名單」，用第二人稱、阿嬤傳 LINE 警告和「留言 A 或 B 決定下一集」，一集拿到 6.7 萬讚、2,433 則留言。我照同一套結構在 RTX 4070 用 Wan2.2 做了原創第 1 集——一集約 65 分鐘 GPU、還沒有聲音，值得做但要先補音效、另開帳號。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'AI 短劇', '互動故事', 'Instagram Reels', 'RTX 4070', 'ffmpeg'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '「你會怎麼選」互動短劇的基本結構是什麼？',
+        a: '七步：第二人稱定身分、日常場景出異常、親人傳訊警告、證據釘死、A／B 二選一、留言投票決定下一集、追蹤才看得到結局。重點是兩個選項都合理，觀眾才會想投票。',
+      },
+      {
+        q: 'RTX 4070 做一集要多久？',
+        a: '我的 4 鏡試片：Wan2.2 5B 生 8 張候選關鍵格約 14 分鐘，14B i2v 生 4 個 5 秒鏡頭約 50 分鐘，合計約 65 分鐘，不含排隊時間。',
+      },
+      {
+        q: '畫面裡的中文字可以讓 AI 直接生嗎？',
+        a: '不建議。我這次手機畫面上的 LINE 泡泡是 AI 畫的，裡面全是亂碼。要讓觀眾讀的字，一律用 ffmpeg drawtext 疊上去。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'rgbmocap-video-to-mocap-mediapipe-bvh',
+    title: 'RGBMoCap 是什麼？影片轉 3D 動捕可串 Blender、Unreal，附 MediaPipe 轉 BVH 的 CPU 輕量做法',
+    metaDescription:
+      'Threads 爆紅的 toyxyz RGBMoCap：Windows 影片轉 SMPL-X 動作，匯出 FBX／BVH、即時串 Blender 與 MetaHuman。整理安裝空間 41.23 GiB、模型非商用授權，並實作 MediaPipe 轉 BVH 的 CPU 版，讀回骨頭方向誤差 0°。',
+    excerpt:
+      'RGBMoCap 是 toyxyz 2026-10 開源的 Windows 程式，一段普通影片就能轉成 SMPL-X 動作、匯出 FBX／BVH，還能即時串到 Blender 和 Unreal MetaHuman。基本模型就要 41.23 GiB、多數模型限非商用——我改用 MediaPipe 做 CPU 輕量版，690 幀轉 BVH、骨頭方向誤差 0°，代價是沒有位移、手指和腳底修正。',
+    category: 'AI 工具',
+    tags: ['RGBMoCap', '動作捕捉', 'MoCap', 'MediaPipe', 'BVH', 'three.js', 'Blender', 'Unreal Engine'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: 'RGBMoCap 可以商用嗎？',
+        a: 'App 程式碼是 MIT，但它使用的 GVHMR、PromptHMR、MAMMA 等模型和 SMPL-X 人體模型都限非商用或研究用途，商用前要逐一看模型授權。',
+      },
+      {
+        q: 'RGBMoCap 需要什麼電腦？',
+        a: '64-bit Windows、NVIDIA 顯卡與驅動、OpenGL 4.3。三個基本模型安裝後約 41.23 GiB，六個離線模型全裝約 72.46 GiB；MAMMA 和 PromptHMR 還要 Visual Studio 2022 C++ Build Tools 與 CUDA Toolkit 12.8。',
+      },
+      {
+        q: '沒有 NVIDIA 顯卡能做影片轉動捕嗎？',
+        a: '可以做簡化版。用 MediaPipe PoseLandmarker 在 CPU 上抓 33 個 3D 關節再轉成 BVH，我實測每秒 6.4 幀，但沒有全身位移、手指與腳底接觸修正。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-youtube-learn-skill-reads-captions',
+    title: 'Claude 會看 YouTube 學技能嗎？其實是讀字幕：youtube-learn skill 實測，21 分鐘教學 1 分鐘變 SKILL.md',
+    metaDescription:
+      'IG 爆紅 Reel 說 Claude 能看 YouTube 學任何技能。實際做法是抓字幕和影格交給 Claude 讀。附完整 youtube-learn SKILL.md 與 72 行抓字幕腳本、3 支影片實測、只讀字幕的限制，以及何時改用會抽影格的 claude-video。',
+    excerpt:
+      '一支 40.6 秒的 IG Reel 宣稱「Claude 現在能看 YouTube 影片學任何技能」，3 天拿到 1,707 則留言，靠的是留言 YouTube 換私訊。Claude 其實是讀字幕：我寫的 youtube-learn skill 把 21 分鐘剪映教學在 1 分 03 秒內整理成 165 行 SKILL.md——講方法的影片夠用，軟體操作類要改用會抽影格的 claude-video。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'Claude Skills', 'YouTube 字幕', 'youtube-transcript-api', 'yt-dlp', 'claude-video', 'Instagram Reels', '短影音拆解'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: 'Claude 能直接看 YouTube 影片嗎？',
+        a: 'Claude Code 沒有內建播放 YouTube 的能力。這類 skill 是在你的電腦上用 yt-dlp 或 youtube-transcript-api 抓字幕，進階版再用 ffmpeg 抽影格，把文字和截圖交給 Claude 讀。',
+      },
+      {
+        q: '只讀字幕的做法什麼影片不適用？',
+        a: '沒有字幕的影片做不了，要先用 Whisper 轉錄。軟體操作教學也吃虧，因為「點這裡」的「這裡」只在畫面上，字幕沒有。講方法、講觀念的影片用字幕就夠。',
+      },
+      {
+        q: '要抽影格的話用什麼？',
+        a: 'GitHub 的 bradautomates/claude-video（MIT，2026-11-25 約 2.1 萬星）提供 /watch，會下載影片、抽帶時間點的影格並抓字幕，沒字幕時可用本機 WhisperX。需要 Python 3.10+、FFmpeg、最新版 yt-dlp，抓 YouTube 還要 Deno。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ig-real-or-ai-reel-comment-dare-breakdown',
+    title: 'IG「Can you tell if this is AI?」Reel 怎麼拿到 1.2 萬留言？拆解 31.5 秒一鏡換人換景與留言 DARE，附 ComfyUI 試片',
+    metaDescription:
+      '用 yt-dlp、ffmpeg、Whisper 拆解 hustlewithfranklin 10.8 萬讚的真假猜謎 Reel：0 個剪接點、一句台詞換一次畫面、第 28 秒叫你留言 DARE 拿連結。附 ComfyUI Wan2.2 同格式試片、耗時與值不值得做的判斷。',
+    excerpt:
+      'AI 副業帳號 hustlewithfranklin 的 31.5 秒 Reel 一鏡到底，每講一句話就把懷裡的人、手上的東西或背景換掉，8 天拿到 108,677 讚、12,040 則留言。留言整齊的原因是片尾字卡「Comment down "DARE"」換連結——問句字卡和一句一換可以直接借，真人版我不建議照抄。',
+    category: 'AI 工具',
+    tags: ['Instagram Reels', '短影音拆解', 'AI 影片', 'Real or AI', '留言自動私訊', 'ComfyUI', 'Wan2.2', 'Whisper'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '這支 Reel 是用什麼 AI 工具做的？',
+        a: '影片和說明欄都沒寫，工具連結要留言 DARE 才會私訊給你。我沒有留言去拿，所以不確定。從畫面看是在同一個連續鏡頭裡替換人物、物件和背景，屬於 video-to-video 的局部替換。',
+      },
+      {
+        q: '為什麼留言幾乎都是同一個字？',
+        a: '片尾約第 28 秒起畫面掛「Comment down "DARE"」，口白同時說留言 DARE 就給連結。這是留言關鍵字觸發私訊的做法，留言內容因此整齊得像投票。',
+      },
+      {
+        q: '本機用 ComfyUI 做一支同格式試片要多久？',
+        a: '我在共用的 RTX 4070 12GB 上用 Wan2.2 ti2v 5B，關鍵格 1,306 秒、3 秒影片 1,612 秒，都包含等 GPU 佇列的時間，合計約 49 分鐘。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-cat-fishing-fail-reel-wan22-split-shot',
+    title: 'AI 貓咪出糗影片怎麼做？拆解 166 萬讚釣魚貓，Wan2.2 拆兩鏡解決翻倒變形',
+    metaDescription:
+      '拆解 Bro & Dickens 166 萬讚的 AI 釣魚貓 Reel，在 RTX 4070 用 ComfyUI Wan2.2 重做原創版：5B 生關鍵格、14B i2v 一鏡演出魚打臉，再從第 36 格接第二鏡修好貓翻倒變形，附 prompt、參數與耗時。',
+    excerpt:
+      'Bro & Dickens 的 AI 貓短片〈Bro Is Not Much of a Fisherman!〉發布 4 天拿到約 166 萬讚，結構是寫實手機畫面加「貓 vs 大自然，貓輸」的一鏡一梗。我在 RTX 4070 用 Wan2.2 重做原創版，一鏡到底後半貓會變形——從魚打臉那格接第二鏡、prompt 只寫倒地，結尾就完整了。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'AI 萌寵', 'image-to-video', 'RTX 4070', 'Higgsfield', '短影音'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '這支 Bro & Dickens 的貓短片是用什麼做的？',
+        a: '說明欄寫「Made with @higgsfield.ai」。Higgsfield 是把多家影片模型包在一起的付費平台，這支片實際用哪個底層模型，對方沒有公開。',
+      },
+      {
+        q: 'i2v 影片後半段角色變形怎麼辦？',
+        a: '我的做法是拆鏡：從第一鏡抽出動作轉折那一格（這次是第 36 格，魚剛打到臉），當第二鏡的起始圖，prompt 只寫後半段動作，再把兩鏡在那一格接起來。這次結尾的貓從一團毛球變回頭和四肢完整。',
+      },
+      {
+        q: '本機做一支這種萌寵出糗片要多久？',
+        a: '我在 RTX 4070 上，關鍵格 861 秒、第一鏡 1,047 秒、第二鏡 616 秒，都包含等 GPU 佇列的時間，加起來約 42 分鐘。佇列裡同時有其他任務，單獨跑會短很多。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-cat-night-fishing-reel-phone-footage-prompt-wan22',
+    title: 'AI 寫實貓影片怎麼像手機拍的？拆解 38 萬讚橘貓夜釣 Reel，Wan2.2 同 seed 實測 3 種風格 prompt',
+    metaDescription:
+      '拆解 IG cat_vlog365 38.7 萬讚的 AI 橘貓夜釣 Reel，在 RTX 4070 用 ComfyUI Wan2.2 5B 文生影片重做三鏡 9 秒試片，再用同一個 seed 比較無風格、手機夜拍、第一人稱 POV 三種 prompt，附亮度數據、耗時與道具消失的取捨。',
+    excerpt:
+      'IG 帳號 cat_vlog365 的 AI 橘貓夜釣 Reel 只有一個昏暗的堤防畫面，11 月 1 日發布後拿到 38.7 萬讚。我在 RTX 4070 用 Wan2.2 同 seed 比三種風格字串——加「第一人稱 POV、曝光不足」最像旁人隨手拍，但釣竿會不見，正式版要先做定裝圖。',
+    category: 'AI 工具',
+    tags: ['Wan2.2', 'ComfyUI', 'AI 影片', 'AI 萌寵', 'prompt', 'Instagram Reels', 'RTX 4070', 'Higgsfield'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '這支橘貓釣魚 Reel 是用什麼做的？',
+        a: '說明欄寫「created in @higgsfield.ai」，IG 也標了「AI 內容」。Higgsfield 上面實際用的是哪個影片模型，對方沒有公開。',
+      },
+      {
+        q: '本機做得出同樣的寫實手機感嗎？',
+        a: '做得出接近的效果。我用 Wan2.2 5B 文生影片，在 prompt 後面接「第一人稱 POV、曝光不足、業餘手機畫面」這類字串，畫面亮度和構圖最接近原片；但道具容易消失，正式版要先生定裝圖再走 i2v。',
+      },
+      {
+        q: 'RTX 4070 生一鏡要多久？',
+        a: '480×832、73 格、20 steps 的 5B 文生影片，模型已經載入時一鏡約 105 秒；第一鏡要載入模型，約 189 秒。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-virtual-employee-plumber-ip-short-drama',
+    title: '水電行用 AI 虛擬員工拍短劇怎麼紅？拆解「江澈」換身連續劇的 5 個零件，用 ComfyUI Wan2.2 做一支預告',
+    metaDescription:
+      '嘉義億家水電用 AI 虛擬水電工「江澈」拍換身連續劇，帳號從兩位數讚做到 3.2 萬粉絲。拆解固定主角臉、本業開場、換身反差、中韓雙語字幕、完結前回顧五個零件，並用 ComfyUI Wan2.2 在 RTX 4070 做原創預告，附參數與耗時。',
+    excerpt:
+      '嘉義億家水電用 AI 生成的虛擬水電工「江澈」拍換身連續劇，最終集前的回顧 Reel 三天拿到 8,296 讚，帳號 3.2 萬粉絲。我照同一套結構用 ComfyUI Wan2.2 做了原創預告，一鏡約 105 秒——生成不是瓶頸，沒有固定角色臉就撐不起 IP。',
+    category: 'AI 工具',
+    tags: ['AI 虛擬員工', 'AI 短劇', 'Wan2.2', 'ComfyUI', 'Instagram Reels', '品牌經營', 'ffmpeg', 'RTX 4070'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '江澈是真人還是 AI？',
+        a: 'AI 生成的虛擬水電工。億家水電的 IG 自介寫「江澈｜虛擬水電工」，Reel 也標了「AI 內容」。',
+      },
+      {
+        q: '傳統行業用 AI 虛擬員工拍短劇，最關鍵的是哪一步？',
+        a: '先固定一張主角臉。觀眾追的是同一個角色，每支都換臉就累積不了 IP。我用純文字生成三個鏡頭，第三鏡的角色就變了畫風和長相，正式做要先定角色圖再跑 image-to-video。',
+      },
+      {
+        q: 'RTX 4070 用 Wan2.2 5B 生一個鏡頭要多久？',
+        a: '我的設定是 480×832、73 格、20 steps，每個鏡頭約 105 秒，用 ComfyUI history 的開始和完成時間算出來。',
+      },
+      {
+        q: '雙語字幕要讓 AI 直接生在畫面上嗎？',
+        a: '不要。模型生的字是亂碼，我這次霓虹招牌就生出假中文。字幕用 ffmpeg drawtext 疊，中文用微軟正黑體、韓文用 Malgun Gothic。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'superpower-what-if-shorts-story-script-edge-tts',
+    title: '「超能力？」Shorts 為什麼衝到 36 萬觀看？拆解故事腳本骨架，用 Python + edge-tts 一鍵產原創版',
+    metaDescription:
+      '拆解 172 秒 Shorts〈超能力？〉：36.1 萬觀看是同頻道中位數 3,050 的 100 倍以上，版面沒變，爆的是「先爽、付代價、一路加碼、反轉回扣開頭」的腳本。附 Python + edge-tts + ffmpeg 一鍵產 1080×1920 成片的做法與 Whisper 對齊驗證。',
+    excerpt:
+      '對岸頻道「逆时针川枫李不帅」的 172 秒 Shorts〈超能力？〉用遊戲跑酷當背景、AI 男聲講第二人稱腦洞故事，三天 36.1 萬觀看。同頻道同版面的中位數只有 3,050——爆的是腳本骨架，我照骨架寫了原創腳本，用 Python + edge-tts 一鍵產出 53.6 秒成片。',
+    category: 'AI 工具',
+    tags: ['YouTube Shorts', '短影音拆解', '腳本結構', 'edge-tts', 'ffmpeg', 'Python', 'AI 配音', 'Whisper'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '〈超能力？〉這支 Shorts 的流量是靠什麼撐起來的？',
+        a: '同頻道最近 30 支 Shorts 用的是同一套版面，觀看中位數 3,050，只有這支衝到 36 萬。差別在題材和腳本：第二人稱願望題、每段加碼、結尾回扣開頭的反轉。',
+      },
+      {
+        q: '一鍵產片需要哪些工具？',
+        a: 'Python 3.11 加 edge-tts 套件、有 libass 的 ffmpeg 與 ffprobe、一個中文字型。腳本依標點切短語，逐句合成語音、量長度、產 ASS 字幕，再用 ffmpeg 合成 1080×1920 影片。',
+      },
+      {
+        q: '可以直接用別人的遊戲跑酷畫面當背景嗎？',
+        a: '不建議。有版權問題，也容易被判成重複內容。自己錄一段遊戲畫面循環使用，或用影片生成模型做背景比較安全。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'what-if-tilapia-weight-doubling-exponential-shorts',
+    title: '吳郭魚每小時重量加倍會怎樣？拆解 What-if 爆款 Reel，用 Python 算里程碑、ComfyUI 做試片',
+    metaDescription:
+      '拆解 DudeFishinG 2.8 萬讚的 What-if Reel：1 公斤吳郭魚每小時加倍，第 30 小時比台北 101 重、第 83 小時比地球重。附 log2 里程碑腳本、黑洞公式，以及 RTX 4070 用 ComfyUI Wan2.2 5B 做 12 秒試片的耗時與失敗鏡頭。',
+    excerpt:
+      '台灣釣魚地圖帳號 DudeFishinG 在 2026-11-02 發的 What-if Reel，問「釣到的吳郭魚每小時重量加倍會怎樣」，拿到 2.8 萬讚、230 則留言。我用 log2 腳本算出第 30 小時比台北 101 重、第 128 小時塌成黑洞，再用 ComfyUI Wan2.2 5B 做出 12 秒試片——換題材就能量產，但 5B 畫不準地標和魚種。',
+    category: 'AI 工具',
+    tags: ['AI 影片', 'What-if', '指數成長', 'Wan2.2', 'ComfyUI', 'Instagram Reels', '短影音拆解', 'RTX 4070'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '吳郭魚每小時重量加倍，真的第 30 小時就比台北 101 重嗎？',
+        a: '照數學是。1 公斤加倍 29.4 次就超過 7 億公斤，也就是台北 101 常見引用的約 70 萬公噸。字幕無條件進位寫成第 30 小時。',
+      },
+      {
+        q: '魚為什麼最後會變成黑洞？',
+        a: '假設魚一直維持水的密度，質量到大約 1.3 億個太陽時，它的半徑會等於自身的史瓦西半徑，第 127.6 小時達到。這是理想化計算，真實天體會先被自身重力壓縮。',
+      },
+      {
+        q: '用 RTX 4070 做一支 What-if 短片要多久？',
+        a: 'Wan2.2 ti2v 5B、480×832、49 幀、20 步，沒排隊時一個鏡頭約 90 秒。這次和其他任務共用佇列，4 次生成從送出到全部完成約 24 分鐘。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'ai-absurd-stunt-reel-corn-volcano-wan22',
+    title: 'AI 荒謬特技短片怎麼做？拆解 63 萬讚「玉米倒進火山」，用 Wan2.2 做柴犬原創版',
+    metaDescription:
+      '拆解 uncle.rajuu 63.4 萬讚的 AI 短片：一桶玉米倒進火山變爆米花再噴回直升機。整理一句話假設、固定機位、反咬結尾三個可複製元素，並在 RTX 4070 用 ComfyUI Wan2.2 做 4 鏡柴犬版，附 prompt、耗時與失敗鏡頭。',
+    excerpt:
+      'IG 帳號 uncle.rajuu 的 13 秒 AI 短片讓大叔把一桶玉米倒進火山，火山口變爆米花又噴回機艙淹沒他，兩天 63.4 萬讚。我用 ComfyUI Wan2.2 5B 做了 4 鏡柴犬版，反轉成立，但「倒下去」的動作生不出來——關鍵動作要先生關鍵格再用 14B i2v 補。',
+    category: 'AI 工具',
+    tags: ['AI 影片', 'AI 短劇', 'Wan2.2', 'ComfyUI', 'Instagram Reels', '短影音拆解', 'Higgsfield', 'RTX 4070'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '這支玉米倒火山的影片是用什麼 AI 做的？',
+        a: '說明欄只有 #higgsfield 標籤。Higgsfield 是把多家影片模型包在一起的平台，這支片用了哪個底層模型、有沒有參加 Higgsfield Earn，對方都沒有公開。',
+      },
+      {
+        q: '玉米倒進熔岩真的會變爆米花嗎？',
+        a: '影片是 AI 生成的，畫面不是真實拍攝。我沒有做過實驗，這篇不對真實物理結果下結論。',
+      },
+      {
+        q: '本機做一支 4 鏡的這種短片要多久？',
+        a: '我在 RTX 4070 12GB 上用 Wan2.2 ti2v 5B，4 鏡從送出到完成分別是 1,286、1,031、1,272、665 秒，都包含等 GPU 佇列的時間，合計約 71 分鐘。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-15-animation-styles-ad-skill-starpop',
+    title: '15 種 Claude 動畫風格廣告怎麼做？拆解 agentchad 爆款 Reel，寫成 skill 並用 Wan2.2 實測 4 種',
+    metaDescription:
+      'IG 爆款「15 Claude Animation Styles」拆解：留言比讚多是留言換 skill，畫面出自 Starpop。我把腳本分鏡寫成 Claude skill 實測，再用 RTX 4070 跑 Wan2.2 5B 生成 Pixar、黏土、羊毛氈、紙片 4 種風格對照。',
+    excerpt:
+      'agentchad.io 在 2026-11-11 發的「15 Claude Animation Styles」把同一個書桌場景換成 15 種畫風，4,089 讚、5,123 留言，畫面其實出自 Starpop，Claude 負責腳本和提示詞。我把 Claude 那一半寫成 skill 實測可用，本機 Wan2.2 5B 只做得出 Pixar 這類常見風格——黏土、羊毛氈要先補圖像模型。',
+    category: 'AI 工具',
+    tags: ['Claude', 'Claude Code skill', 'AI 廣告', '動畫風格', 'Starpop', 'ComfyUI', 'Wan2.2', 'Instagram Reels'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '「15 Claude Animation Styles」的畫面是 Claude 生成的嗎？',
+        a: '不是。片頭寫 made with Starpop，畫面出自 Starpop 這個 AI 廣告平台。Claude 是語言模型，負責的是腳本、分鏡、字幕和每種風格的提示詞。',
+      },
+      {
+        q: '為什麼這支 Reel 的留言比讚還多？',
+        a: '說明第一行要觀眾留言 ANIMATE 才送 skill，所以 5,123 則留言大多是索取 skill 的人，不代表討論熱烈。',
+      },
+      {
+        q: '本機 Wan2.2 5B 做得出黏土、羊毛氈風格嗎？',
+        a: '我只靠文字提示詞實測時做不到：黏土那支幾乎是寫實真人，羊毛氈只多了一頂毛線帽。Pixar 和漫畫類風格效果較好。',
+      },
+      {
+        q: '要怎麼讓手作材質風格更像原片？',
+        a: '先用圖像模型或圖片編輯模型把同一張底圖轉成每種風格的第一格，再把它交給 Wan2.2 i2v 做成動畫，材質在出圖那一步就定型。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'sprite-stacking-skill-pseudo-3d-pixel-art',
+    title: 'Sprite Stacking 是什麼？用 AI skill 把 4 張像素圖疊成可旋轉的偽 3D，實測做成小遊戲',
+    metaDescription:
+      'sprite-stacking 是 2026-11 開源的 agent skill：畫俯視、側視、前視、後視 4 張像素圖，它雕成幾十層切片，疊起來就是能轉 360 度的偽 3D 物件。我實測做出 4 個物件和一款可玩小遊戲，附安裝、渲染器寫法與 4 個坑。',
+    excerpt:
+      'danielwh2/sprite-stacking 是 2026-11-20 開源的 MIT agent skill，把 4 張正交像素圖雕成一排俯視切片，每層旋轉後抬 1px 疊起來，就是能轉 360 度的偽 3D 物件。4 天 772 星，我實測切出機車、房子、樹、珍奶杯並接成小遊戲——適合俯視角道具與建築，做會動的角色成本就高了。',
+    category: 'AI 工具',
+    tags: ['sprite stacking', '偽 3D', '像素藝術', 'Claude Code skill', 'agent skill', 'Canvas', '小遊戲'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: 'Sprite stacking 跟真正的 3D 有什麼差別？',
+        a: 'Sprite stacking 只是把一排 2D 俯視切片旋轉後往上疊，畫布仍然是 2D，沒有 3D 模型和光照計算。鏡頭俯角是固定的壓扁比例，看不到物件底部。',
+      },
+      {
+        q: '沒有生圖工具也能用 sprite-stacking skill 嗎？',
+        a: '可以。SKILL.md 寫明沒有生圖工具時，agent 用一段 Python 直接畫出 4 視圖。我這次的 4 個物件都是這樣畫的。',
+      },
+      {
+        q: '切片數要設多少？',
+        a: 'skill 建議 15–20 層是粗獷復古風、32–48 層是細節風。自己用 Python 畫 4 視圖時，切片數設成側視圖原始高度（含外框），每層才會落在原本的像素上。',
+      },
+      {
+        q: '為什麼我的圓形物件被雕成方柱？',
+        a: '圓形部分比底座窄時（塔、氣球、杯子），要加 --round 參數，俯視圖也要畫成像素圓形，否則雕刻結果會是方的。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-canvas-animation-10-styles-one-volcano',
+    title: '一座火山 10 種動畫風格怎麼做？拆解 Matt Penny 的 Claude Reel，用 Canvas 程式動畫重做一版',
+    metaDescription:
+      '拆解 IG「10 Claude Animation styles」火山 Reel：把 prompt 拆成固定主題加風格規則，Claude 寫出水墨、像素、藍圖、霓虹等 10 支 Canvas 動畫，單一 16 KB HTML、無套件。附 prompt、程式結構、Playwright 驗證與限制。',
+    excerpt:
+      'Matt Penny 在 2026-11-21 發的 IG Reel 把同一座火山做成 10 種 Claude 動畫風格，984 讚、569 則留言，留言多是因為「留言 VOLCANO 拿 prompt」。我把 prompt 拆成固定主題加風格規則，讓 Claude 寫出 10 支 Canvas 動畫放進一個 16 KB 的 HTML——零 GPU、換主題就能再出一支，但只做得出幾何類風格。',
+    category: 'AI 工具',
+    tags: ['Claude', 'Claude Code', 'Canvas', '程式動畫', '動畫風格', 'Instagram Reels', 'prompt 設計', 'Playwright'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '「10 Claude Animation styles」的畫面是 Claude 生成的影片嗎？',
+        a: '不是影片模型生成的。Claude 寫的是程式，每種風格是一支 HTML Canvas 動畫，在瀏覽器裡跑起來再錄成影片。我照這個做法重做的 10 格都是 Canvas 2D 程式畫的。',
+      },
+      {
+        q: '要怎麼讓 10 種風格的構圖一致？',
+        a: '把 prompt 拆成兩段：固定的 BASE 寫死尺寸、山的位置、火山口、熔岩柱和火花，只換後面的風格規則。程式上把山形和粒子拋物線抽成共用函式，每種風格只負責外觀。',
+      },
+      {
+        q: '原帖的 10 組 prompt 去哪拿？',
+        a: '原帖要留言 VOLCANO 才會私訊。我沒有留言去拿，文章裡的 10 條風格規則是我自己寫的，完整 prompt 可以在 html.yanchen.app/volcano-10-styles 每一格的 Prompt 按鈕看到。',
+      },
+      {
+        q: '這種程式動畫能做黏土或寫實風格嗎？',
+        a: '很難。Canvas 畫的是線條、色塊和粒子，適合水墨、像素、藍圖、極簡這類幾何風格。黏土、羊毛氈、寫實這種靠材質的風格，要改用圖像或影片模型。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-md-too-long-context-audit',
+    title: 'CLAUDE.md 太長 AI 就不守規則？先量每次載入多少：照官方規則寫體檢腳本，實測 8,405 tokens',
+    metaDescription:
+      '官方建議 CLAUDE.md 每支 200 行內，太長會降低遵守度。我照官方載入規則寫了 121 行 Python 體檢腳本，分出每次載入、碰到 paths 才載入、不載入三類，實測每次只載入 8,405 tokens，附完整程式與 gate。',
+    excerpt:
+      '關登元的 Reel 講全域 CLAUDE.md 長到 812 行、117KB 後 AI 開始不守規則，他分三批搬出去剩 22KB。我照官方載入規則寫了體檢腳本重量自己的設定：629 行的 AGENTS.md 其實不會被讀，每次載入只有 14 支檔、約 8,405 tokens——瘦身前先量對，才不會砍錯地方。',
+    category: 'AI 工具',
+    tags: ['Claude Code', 'CLAUDE.md', 'context', 'rules', 'paths', 'AGENTS.md', 'Python', '體檢腳本'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: 'CLAUDE.md 最長可以寫多長？',
+        a: '官方記憶文件建議每支 CLAUDE.md 目標在 200 行以內，理由是越長越佔 context，遵守度也越低。這是建議值，不是硬上限。',
+      },
+      {
+        q: 'Claude Code 會讀 AGENTS.md 嗎？',
+        a: '工作目錄或上層沒有 CLAUDE.md 時才會讀。已經有 CLAUDE.md 的話，要在 CLAUDE.md 裡寫 @AGENTS.md 匯入，Claude Code 才會讀它。',
+      },
+      {
+        q: '怎麼確認這個 session 實際載入了哪些 CLAUDE.md？',
+        a: '在 Claude Code 裡跑 /context all，載入的指令檔會列在 Memory files 底下。子資料夾的 CLAUDE.md 是讀到那個資料夾的檔案才載入，啟動時不會出現在清單裡。',
+      },
+      {
+        q: '規則只跟某種檔案有關，要怎麼避免每次都載入？',
+        a: '寫成 .claude/rules 底下的 md 檔，在 frontmatter 加 paths，例如 **/*.java。Claude 讀寫到符合的檔案時才會載入這支規則。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'claude-9-animation-styles-threejs-matterjs-to-video',
+    title: 'Claude 9 種動畫風格怎麼做？用 three.js、matter.js 重做，逐格輸出成 27 秒直式影片',
+    metaDescription:
+      '拆解 Matt Penny 的「9 Claude Animation styles」Reel：用 Canvas 2D、three.js 0.170.0、matter.js 0.20.0 在一支 29 KB HTML 重做 9 種風格，靠 renderAt(t) 加 Playwright 逐格截圖、ffmpeg 合成 9:16 影片，附物理模擬 seek 的亂數種子坑與修法。',
+    excerpt:
+      'Matt Penny 的「9 Claude Animation styles」Reel 清單要留言才拿得到，我直接用 Canvas 2D、three.js 和 matter.js 在一支 29 KB 的 HTML 裡重做 9 種風格，逐格輸出成 540×960、27 秒的直式影片。關鍵是讓畫面只由時間 t 決定——物理模擬的亂數種子沒跟著 reset，倒退 seek 的畫面就會跑掉。',
+    category: 'AI 工具',
+    tags: ['Claude', '程式動畫', '動畫風格', 'three.js', 'matter.js', 'Playwright', 'ffmpeg', 'Instagram Reels'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: '這 9 種動畫是 AI 生成的影片嗎？',
+        a: '不是。畫面全部是程式在瀏覽器裡即時畫出來的，再逐格截圖合成影片，沒有用影片模型或生圖模型。',
+      },
+      {
+        q: '沒有顯示卡可以跑 three.js 截圖嗎？',
+        a: '可以。Playwright 啟動 Chromium 時加 --use-angle=swiftshader --enable-unsafe-swiftshader，WebGL 會改用 CPU 算，速度較慢但畫面正確。',
+      },
+      {
+        q: '為什麼不用螢幕錄影就好？',
+        a: '錄影的影格取決於當下機器效能，會掉格，也無法重現。renderAt(t) 加逐格截圖，同一份程式每次輸出相同的 810 格。',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'openjarvis-local-voice-briefing-no-api-key',
+    title: 'OpenJarvis 實測：不用 API 金鑰，本機跑出會念新聞的語音晨報',
+    metaDescription:
+      'OpenJarvis（Stanford 開源、18,657 星、Apache-2.0）在 Windows＋RTX 4070 實測：Hacker News → 本機 gemma3:4b 摘要 → Kokoro 本機語音，產出 57 秒晨報，全程零金鑰。附安裝指令、tts_backend 設定與中文語音限制。',
+    excerpt:
+      'OpenJarvis 是 Stanford 團隊開源的本機 AI 助理框架（Apache-2.0、1.8 萬星），IG 說它能早上念信件給你聽、但語音要走雲端金鑰。我在 RTX 4070 上實測，把 tts_backend 改成本機 Kokoro 就跑出 57 秒新聞晨報、零金鑰——只是官方推薦模型要新版 Ollama，中英夾雜也會念歪。',
+    category: 'AI 工具',
+    tags: ['OpenJarvis', '本機 AI', 'Ollama', 'Kokoro TTS', 'gemma3', '語音助理', 'Claude Code', 'Instagram Reels'],
+    publishDate: '2026-11-25',
+    faqItems: [
+      {
+        q: 'OpenJarvis 一定要 API 金鑰嗎？',
+        a: '不用。模型走本機 Ollama，語音設成 tts_backend = "kokoro" 就在本機合成。只有選 Cartesia、OpenAI、ElevenLabs 這類 TTS，或接 Google 服務時才需要申請憑證。',
+      },
+      {
+        q: '沒有 NVIDIA 顯卡能跑嗎？',
+        a: '我只在 RTX 4070 12GB 上測過。--profile 的能耗數字是讀 NVIDIA 的硬體計數器，其他硬體的表現我沒有實測資料。',
+      },
+      {
+        q: '可以每天早上自動念嗎？',
+        a: 'preset 設定裡有 schedule = "0 7 * * *" 這類排程欄位。我這次是手動跑 jarvis digest --fresh，沒有測排程。',
       },
     ],
     featured: false,

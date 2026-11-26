@@ -30,7 +30,7 @@ async function getOwnerAccessToken() {
     refreshToken = cfg?.tokens?.refresh_token
   } catch {
     throw new Error(
-      `讀不到 firebase CLI 設定 (${cfgPath})。先跑 \`firebase login\` 登入 bobchen184@gmail.com。`,
+      `讀不到 firebase CLI 設定 (${cfgPath})。先跑 \`firebase login\` 登入 Firebase 專案擁有者帳號。`,
     )
   }
   if (!refreshToken)

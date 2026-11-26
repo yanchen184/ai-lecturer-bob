@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13",
+  "generatedAt": "2026-11-26",
   "scores": {
     "langchain-vs-langgraph-2026": {
       "total": 94,
@@ -2844,6 +2844,546 @@
         "codeFence": 5
       },
       "wordCount": 7751
+    },
+    "claude-code-mods-prismantis-flightdeck-usage-guard": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5817
+    },
+    "taigi-tts-ai-video-mazu-comfyui-wan22": {
+      "total": 80,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6557
+    },
+    "fish-kit-cc0-3d-fish-threejs-fishing-game": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6785
+    },
+    "scrapling-python-web-scraping-test": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7193
+    },
+    "photo-to-riso-symbol-poster-prompt": {
+      "total": 79,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5140
+    },
+    "study-account-ugc-script-detector": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5132
+    },
+    "teardown-claude-code-skill-3d-engine-pcx125": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5539
+    },
+    "baseball-game-camera-hitstop-threejs": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6671
+    },
+    "ai-sound-effects-stable-audio-3-auto-qc": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6159
+    },
+    "ai-fake-documentary-twist-shorts-wan22": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5678
+    },
+    "java-interview-questions-tier-list-2026": {
+      "total": 80,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 5,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7800
+    },
+    "ai-pet-body-swap-series-wan22-keyframe-i2v": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5416
+    },
+    "ai-digital-twin-deep-interview-stanford-test": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4430
+    },
+    "one-scene-ten-animation-styles-comfyui-wan22": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5581
+    },
+    "ai-cat-reel-character-consistency-wan22-i2v": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5419
+    },
+    "ig-choose-your-path-ai-horror-series-comfyui-wan22": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4699
+    },
+    "rgbmocap-video-to-mocap-mediapipe-bvh": {
+      "total": 65,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 5,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5356
+    },
+    "claude-youtube-learn-skill-reads-captions": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 7921
+    },
+    "ig-real-or-ai-reel-comment-dare-breakdown": {
+      "total": 65,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 5,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4199
+    },
+    "ai-cat-night-fishing-reel-phone-footage-prompt-wan22": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4775
+    },
+    "ai-virtual-employee-plumber-ip-short-drama": {
+      "total": 80,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5685
+    },
+    "superpower-what-if-shorts-story-script-edge-tts": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4649
+    },
+    "what-if-tilapia-weight-doubling-exponential-shorts": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4646
+    },
+    "ai-absurd-stunt-reel-corn-volcano-wan22": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 4178
+    },
+    "claude-15-animation-styles-ad-skill-starpop": {
+      "total": 85,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5567
+    },
+    "sprite-stacking-skill-pseudo-3d-pixel-art": {
+      "total": 94,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 10,
+        "image": 10,
+        "pitfall": 5,
+        "faq": 10,
+        "extLinks": 5,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6173
+    },
+    "claude-canvas-animation-10-styles-one-volcano": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5273
+    },
+    "claude-md-too-long-context-audit": {
+      "total": 75,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 10,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 8396
+    },
+    "claude-9-animation-styles-threejs-matterjs-to-video": {
+      "total": 70,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 0,
+        "h2Count": 10,
+        "h2Emoji": 0,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 5935
+    },
+    "openjarvis-local-voice-briefing-no-api-key": {
+      "total": 79,
+      "breakdown": {
+        "wordCount": 15,
+        "tldr": 10,
+        "toc": 5,
+        "h2Count": 10,
+        "h2Emoji": 4,
+        "table": 10,
+        "image": 10,
+        "pitfall": 0,
+        "faq": 5,
+        "extLinks": 0,
+        "bannedWords": 5,
+        "codeFence": 5
+      },
+      "wordCount": 6078
     }
   }
 }
