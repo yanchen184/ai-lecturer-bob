@@ -7347,11 +7347,11 @@ const posts = [
   },
   {
     slug: 'orca-multi-computer-bot-handoff',
-    title: 'Orca 跨電腦派工實測：家用和公司兩台 bot 互相交接，Mac 還沒接上',
+    title: 'Orca 跨電腦派工實測：三台電腦 bot 兩兩互通，配對單向要配六次',
     metaDescription:
-      'Orca 跨電腦派工實測：一條配對連結把家用和公司兩台電腦串起來，bot 用 --on company 互傳 handoff 和 question。附配對步驟、驗證指令、5 個踩坑，以及 Mac 只 ping 得到、還沒接上的原因。',
+      'Orca 跨電腦派工實測：用配對連結把公司和兩台家用電腦串起來，bot 用 --on 互傳 handoff 和 question。附 orca pair 配對指令、六方向配對表、repo list 驗證法、配對碼被拒的判斷方式，以及 Mac 還沒接上的原因。',
     excerpt:
-      '我在 2026-11-26 用 Orca 的配對連結把家用和公司兩台 Windows 串成一組，家用的 bot 加 --on company 就能把工作交接給公司的 bot，公司的 bot 也能反過來發問。兩台互傳訊息已實測打通，跨機器開 worker 和 Mac 配對都還沒做——Mac 目前只 ping 得到。',
+      '我在 2026-11-26 用 Orca 的配對連結把家用和公司兩台 Windows 串成一組，11-27 再加入第二台家用電腦，三台的 bot 加 --on 就能互相交接工作、發問。配對是單向的，三台兩兩互通要配六個方向，每個方向都要用 repo list 讀回對方專案才算通——Mac 的 Orca 當時沒開，還沒接上。',
     category: 'AI 工具',
     tags: ['Orca', 'AI agent', 'Claude Code', 'Tailscale', '多台電腦', 'bot 協作'],
     publishDate: '2026-11-26',
@@ -7369,8 +7369,16 @@ const posts = [
         a: '查那台的狀態或專案用 --environment company，例如 orca repo list --environment company；把訊息送給那台上的 bot 用 --on company，而且要寫在 --to 前面。',
       },
       {
+        q: 'Orca 配對碼被拒（The host refused this pairing code）怎麼辦？',
+        a: '我遇到時網路是通的，原因是手上有好幾組碼、貼到另一台已用掉的那組。配對碼是 base64 JSON，解開比對 pairedDeviceId，和主機端未使用的那組對不上就是貼錯；碼的效期 1 小時、只能用一次。',
+      },
+      {
+        q: '三台電腦要配對幾次才能互通？',
+        a: '六次。配對是單向的，A 存了 B 不代表 B 存了 A，所以每台都要各存另外兩台，每個方向再用 orca repo list --environment 讀回對方的專案清單確認。',
+      },
+      {
         q: 'Mac 也能用同一套方法接上嗎？',
-        a: '步驟應該一樣，在 Mac 的 Orca 產生配對連結再 orca environment add，但我還沒走通。目前 Mac 只有 Tailscale ping 有回應，SSH 和 Orca 連線埠都不通。',
+        a: '步驟應該一樣，在 Mac 的 Orca 產生配對連結再 orca environment add，但我還沒走通。11-27 時 Mac 的 Orca 沒開，6768 埠連不上，產不了也收不了配對碼。',
       },
     ],
     featured: false,
