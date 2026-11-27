@@ -12,6 +12,7 @@
  *   </RootLayout>
  */
 import '../styles/global.css';
+import EventTicker from '../components/EventTicker.astro';
 
 interface Props {
   title: string;
@@ -188,6 +189,7 @@ const allJsonLd = Array.isArray(jsonLd)
     }
   </head>
   <body class="bg-[var(--color-neub-bg)]">
+    {!noindex && <EventTicker />}
     <slot />
     {!noindex && (
       <script>

@@ -1,0 +1,141 @@
+---
+/**
+ * 全站頂部活動跑馬燈（AI郵報 OPEN LAB 2026）。
+ * 到期後兩層都不顯示：
+ * - 建置時：deploy.yml 每日排程建置，建置時間超過 END_AT 就不輸出任何 HTML。
+ * - 執行時：元素前的 inline script 在元素解析前比對 Date.now()，過期則加上
+ *   html.event-ticker-expired，CSS 隱藏，不會先畫出來再消失。
+ */
+const END_AT = '2026-12-05T23:59:59+08:00';
+const HREF = 'https://luma.com/zr1k4qa5';
+const MESSAGE =
+  '12/5（六）我會在 AI郵報 OPEN LAB 2026 現場｜AI Talks・工具展示與實作體驗・AI 實作挑戰賽・AI Music & Live Coding｜台北瓶蓋工廠 F 棟｜點我報名 →';
+const SHORT_MESSAGE = '12/5（六）OPEN LAB 2026｜點我報名 →';
+
+const endMs = Date.parse(END_AT);
+const active = Date.now() <= endMs;
+---
+
+{active && (
+  <>
+    <script is:inline define:vars={{ endMs }}>
+      if (Date.now() > endMs) document.documentElement.classList.add('event-ticker-expired');
+    </script>
+    <a
+      class="event-ticker"
+      href={HREF}
+      target="_blank"
+      rel="noopener"
+      aria-label={`${MESSAGE}（另開新分頁）`}
+    >
+      <span class="event-ticker__badge" aria-hidden="true">OPEN LAB</span>
+      <span class="event-ticker__viewport" aria-hidden="true">
+        <span class="event-ticker__track">
+          <span class="event-ticker__item">{MESSAGE}</span>
+          <span class="event-ticker__item">{MESSAGE}</span>
+        </span>
+        <span class="event-ticker__static event-ticker__static--full">{MESSAGE}</span>
+        <span class="event-ticker__static event-ticker__static--short">{SHORT_MESSAGE}</span>
+      </span>
+    </a>
+  </>
+)}
+
+<style>
+  .event-ticker {
+    --ticker-h: 36px;
+    display: flex;
+    align-items: stretch;
+    height: var(--ticker-h);
+    overflow: hidden;
+    background: var(--color-neub-black);
+    color: var(--color-neub-yellow);
+    border-bottom: 3px solid var(--color-neub-black);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :global(html.event-ticker-expired) .event-ticker {
+    display: none;
+  }
+
+  .event-ticker__badge {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    background: var(--color-neub-yellow);
+    color: var(--color-neub-black);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    border-right: 3px solid var(--color-neub-black);
+  }
+
+  .event-ticker__viewport {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .event-ticker__track {
+    display: flex;
+    width: max-content;
+    animation: event-ticker-scroll 38s linear infinite;
+    will-change: transform;
+  }
+  .event-ticker__item {
+    flex: none;
+    padding-right: 4rem;
+    white-space: nowrap;
+  }
+  .event-ticker:hover .event-ticker__track,
+  .event-ticker:focus-visible .event-ticker__track {
+    animation-play-state: paused;
+  }
+  .event-ticker:hover .event-ticker__item,
+  .event-ticker:focus-visible .event-ticker__item {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .event-ticker:active .event-ticker__viewport {
+    opacity: 0.75;
+  }
+  .event-ticker:focus-visible {
+    outline: 3px solid var(--color-neub-yellow);
+    outline-offset: -3px;
+  }
+
+  .event-ticker__static {
+    display: none;
+    padding: 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @keyframes event-ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 767px) {
+    .event-ticker { font-size: 12px; }
+    .event-ticker__badge { padding: 0 10px; font-size: 10px; }
+    .event-ticker__track { animation-duration: 30s; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .event-ticker__track { display: none; }
+    .event-ticker__static--full { display: block; }
+  }
+  @media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+    .event-ticker__static--full { display: none; }
+    .event-ticker__static--short { display: block; }
+  }
+</style>
