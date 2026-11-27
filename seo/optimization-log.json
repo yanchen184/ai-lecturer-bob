@@ -1,0 +1,45 @@
+[
+  {
+    "date": "2026-11-27",
+    "page": "/blog/k8s/nodeport-three-services/",
+    "url": "https://yanchen.app/blog/k8s/nodeport-three-services/",
+    "targetQuery": "node port",
+    "changes": [
+      { "field": "title/H1", "before": "Kubernetes NodePort 是什麼？K8s 三種 Service 一張表選對", "after": "Kubernetes NodePort 是什麼？Node Port 開法與三種 Service 比較" },
+      { "field": "description", "before": "Kubernetes NodePort 是什麼？ClusterIP 只在叢集內、NodePort 開 Node port 讓外網連、LoadBalancer 走雲端。一張對照表 + 實作講清楚 K8s 三種 Service 怎麼選。", "after": "Kubernetes NodePort（node port）是什麼？NodePort 在每個 Node 開一個 30000-32767 的 port，讓外網連進 Pod。用實作講清楚 nodePort、port、targetPort 的差別，附 ClusterIP／NodePort／LoadBalancer 對照表。" },
+      { "field": "H2", "before": "NodePort 是什麼？", "after": "Kubernetes NodePort 是什麼？" }
+    ],
+    "baseline": {
+      "window28d": { "start": "2026-10-28", "end": "2026-11-24", "impressions": 3, "clicks": 0, "position": 40.0 },
+      "window90d": { "start": "2026-08-27", "end": "2026-11-24", "impressions": 14, "clicks": 0, "position": 65.3 },
+      "targetQuery28d": { "query": "node port", "impressions": 1, "clicks": 0, "position": 9.0 }
+    },
+    "reviewDate": "2026-12-11",
+    "result": null,
+    "resultNote": null
+  },
+  {
+    "date": "2026-11-27",
+    "page": "/blog/k8s/kubernetes-intro/",
+    "url": "https://yanchen.app/blog/k8s/kubernetes-intro/",
+    "targetQuery": "k8s 是什麼",
+    "changes": [
+      { "field": "title/H1", "before": "Kubernetes 是什麼？為什麼 Docker 不夠用，需要 K8s？", "after": "K8s 是什麼？Kubernetes 入門：為什麼 Docker 不夠用" },
+      { "field": "description", "before": "一個容器跑得很順，但十個、一百個怎麼管？…", "after": "K8s（Kubernetes）是什麼？一個容器跑得很順，但十個、一百個怎麼管？…" }
+    ],
+    "baseline": {
+      "window28d": { "start": "2026-10-28", "end": "2026-11-24", "impressions": 7, "clicks": 0, "position": 15.6 },
+      "window90d": { "start": "2026-08-27", "end": "2026-11-24", "impressions": 32, "clicks": 0, "position": 22.8 },
+      "targetQuery90d": [
+        { "query": "k8s 教學", "impressions": 8, "position": 18.6 },
+        { "query": "k8s是什麼", "impressions": 5, "position": 41.6 },
+        { "query": "k8s教學", "impressions": 4, "position": 20.8 },
+        { "query": "k8s 是什麼", "impressions": 3, "position": 29.7 },
+        { "query": "k8s", "impressions": 2, "position": 50.5 }
+      ]
+    },
+    "reviewDate": "2026-12-11",
+    "result": null,
+    "resultNote": null
+  }
+]

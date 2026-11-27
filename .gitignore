@@ -69,3 +69,6 @@ worker/.dev.vars
 
 # 個人工作筆記（角色 LoRA 生圖腳本，含外部對話連結）
 .character-lora-prompts.md
+
+# SEO 每日候選輸出
+seo/candidates/

@@ -41,9 +41,9 @@ export const k8sLessons: K8sLesson[] = [
     slug: 'kubernetes-intro',
     order: 1,
     group: 'basics',
-    title: 'Kubernetes 是什麼？為什麼 Docker 不夠用，需要 K8s？',
+    title: 'K8s 是什麼？Kubernetes 入門：為什麼 Docker 不夠用',
     excerpt:
-      '一個容器跑得很順，但十個、一百個怎麼管？這就是 Docker 撐不住、Kubernetes 登場的原因。這篇用最白話的方式講清楚 K8s 解決什麼問題、跟 Docker 是什麼關係，新手第一篇就看這個。',
+      'K8s（Kubernetes）是什麼？一個容器跑得很順，但十個、一百個怎麼管？這就是 Docker 撐不住、Kubernetes 登場的原因。這篇用最白話的方式講清楚 K8s 解決什麼問題、跟 Docker 是什麼關係，新手第一篇就看這個。',
     publishDate: '2026-04-28',
     tags: ['Kubernetes', '入門', 'Docker', 'K8s 是什麼'],
     readingTime: 9,
@@ -3503,9 +3503,9 @@ ClusterIP 解決了**叢集內部**的連線。但**外面的使用者**怎麼�
     slug: 'nodeport-three-services',
     order: 18,
     group: 'networking',
-    title: 'Kubernetes NodePort 是什麼？K8s 三種 Service 一張表選對',
+    title: 'Kubernetes NodePort 是什麼？Node Port 開法與三種 Service 比較',
     excerpt:
-      'Kubernetes NodePort 是什麼？ClusterIP 只在叢集內、NodePort 開 Node port 讓外網連、LoadBalancer 走雲端。一張對照表 + 實作講清楚 K8s 三種 Service 怎麼選。',
+      'Kubernetes NodePort（node port）是什麼？NodePort 在每個 Node 開一個 30000-32767 的 port，讓外網連進 Pod。用實作講清楚 nodePort、port、targetPort 的差別，附 ClusterIP／NodePort／LoadBalancer 對照表。',
     publishDate: '2026-05-15',
     tags: ['Kubernetes', 'NodePort', 'LoadBalancer', 'Service'],
     readingTime: 9,
@@ -3520,7 +3520,7 @@ ClusterIP 只在叢集內部可見。你打 \`curl 10.96.0.5\` 從筆電完全�
 
 外面要連進來，需要把 Service 從叢集內「往外開一道門」。這就是 **NodePort**。
 
-## NodePort 是什麼？
+## Kubernetes NodePort 是什麼？
 
 NodePort 在**每個 Node** 上都開一個指定的 port（範圍 30000-32767），任何打到 \`Node IP:NodePort\` 的流量會被導到對應的 Pod。
 
@@ -8751,7 +8751,7 @@ spec:
   - port: 80
 \\\`\\\`\\\`
 
-> ClusterIP / NodePort / LoadBalancer 差在哪、什麼時候用哪個：[Kubernetes NodePort 是什麼？K8s 三種 Service 一張表選對](/blog/k8s/nodeport-three-services)。
+> ClusterIP / NodePort / LoadBalancer 差在哪、什麼時候用哪個：[Kubernetes NodePort 是什麼？Node Port 開法與三種 Service 比較](/blog/k8s/nodeport-three-services)。
 
 ---
 
