@@ -2508,9 +2508,9 @@ kubectl exec mysql -- env | grep MYSQL
     slug: 'deployment-intro',
     order: 13,
     group: 'workload',
-    title: 'Deployment 是什麼？為什麼不直接用 Pod？',
+    title: 'K8s Deployment 是什麼？為什麼不直接用 Pod？',
     excerpt:
-      'Pod 自己掛了不會自動補，刪了就沒了。Deployment 是 Pod 的「保母」：跑幾份、版本是什麼、掛了怎麼辦，全部交給 K8s 照顧。',
+      'K8s Deployment（Kubernetes Deployment）是什麼？Pod 自己掛了不會自動補，刪了就沒了。Deployment 是 Pod 的「保母」：replicas 決定跑幾份、ReplicaSet 掛了自動補回、一行指令擴縮容。附 Deployment 與 Pod YAML 對照和刪 Pod 實驗。',
     publishDate: '2026-05-10',
     tags: ['Kubernetes', 'Deployment', '入門', 'ReplicaSet'],
     readingTime: 9,
