@@ -341,9 +341,10 @@ async function main() {
   await writeFile(outPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
 
   const c = report.candidates;
+  const obsNote = (r) => (r.observingUntil ? ` (觀察至 ${r.observingUntil})` : '');
   console.log(`[seo-daily] ${startDate}~${endDate} source=${source} imp=${report.totals.impressions} clk=${report.totals.clicks} crawled=${report.crawledPages}`);
-  console.log(`  a 排名5-20: ${c.a_rank5to20.length}  ${c.a_rank5to20.slice(0, 5).map((r) => `「${r.query}」${r.page} pos=${r.position} imp=${r.impressions}${r.observingUntil ? ` (觀察至 ${r.observingUntil})` : ''}`).join(' | ')}`);
-  console.log(`  b 有曝光零點擊: ${c.b_impressionsNoClicks.length}  ${c.b_impressionsNoClicks.slice(0, 5).map((r) => `${r.page} imp=${r.impressions}`).join(' | ')}`);
+  console.log(`  a 排名5-20: ${c.a_rank5to20.length}  ${c.a_rank5to20.slice(0, 5).map((r) => `「${r.query}」${r.page} pos=${r.position} imp=${r.impressions}${obsNote(r)}`).join(' | ')}`);
+  console.log(`  b 有曝光零點擊: ${c.b_impressionsNoClicks.length}  ${c.b_impressionsNoClicks.slice(0, 5).map((r) => `${r.page} imp=${r.impressions}${obsNote(r)}`).join(' | ')}`);
   console.log(`  c 內鏈: 首頁未連 ${c.c_internalLinks.homeMissingLinks.length}、入鏈<3 ${c.c_internalLinks.weakInbound.length}、k8s 互鏈不足 ${c.c_internalLinks.k8sSeries.length}`);
   console.log(`  d 有需求無文章: ${c.d_demandWithoutArticle.length}  ${c.d_demandWithoutArticle.slice(0, 5).map((r) => `「${r.query}」imp=${r.impressions} best=${r.bestPosition}`).join(' | ')}`);
   console.log(`  e 技術: ${c.e_technical.length}  ${c.e_technical.slice(0, 5).map((r) => `${r.page} ${r.issue}`).join(' | ')}`);
